@@ -1,15 +1,15 @@
 /**
- * UltraLink Database Exporter
+ * Database Exporter
  * 
- * This module implements an exporter for SQL database format.
+ * Exports UltraLink data to database-compatible formats.
  */
 
-const { Exporter } = require('./base');
+const { BaseExporter } = require('./base');
 
 /**
- * Exporter for SQL database format
+ * Exporter for database formats
  */
-class DatabaseExporter extends Exporter {
+class DatabaseExporter extends BaseExporter {
   constructor(store) {
     super(store);
   }

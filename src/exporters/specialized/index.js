@@ -1,9 +1,11 @@
+/**
+ * Specialized Exporters Index
+ * 
+ * This module exports all specialized exporters for UltraLink.
+ */
+
 const BayesianGraphExporter = require('./bayesian-graph');
-const HTMLWebsiteExporter = require('./html-website');
-const ObsidianKnowledgeBaseExporter = require('./obsidian-knowledge-base');
 
 module.exports = {
   BayesianGraphExporter,
-  HTMLWebsiteExporter,
-  ObsidianKnowledgeBaseExporter
 }; 

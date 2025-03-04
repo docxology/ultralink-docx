@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="startYear" for="node" attr.name="startYear" attr.type="int"/>
+  <key id="endYear" for="node" attr.name="endYear" attr.type="int"/>
+  <key id="description" for="node" attr.name="description" attr.type="string"/>
+  <key id="date" for="node" attr.name="date" attr.type="string"/>
+  <key id="location" for="node" attr.name="location" attr.type="string"/>
+  <key id="significance" for="node" attr.name="significance" attr.type="string"/>
+  <key id="vector" for="node" attr.name="vector" attr.type="string"/>
+  <key id="keywords" for="node" attr.name="keywords" attr.type="string"/>
+  <key id="endDate" for="node" attr.name="endDate" attr.type="string"/>
+  <key id="birth" for="node" attr.name="birth" attr.type="string"/>
+  <key id="death" for="node" attr.name="death" attr.type="string"/>
+  <key id="role" for="node" attr.name="role" attr.type="string"/>
+  <key id="authors" for="node" attr.name="authors" attr.type="string"/>
+  <key id="entityId" for="node" attr.name="entityId" attr.type="string"/>
+  <key id="timestamp" for="node" attr.name="timestamp" attr.type="string"/>
+  <key id="popularity" for="node" attr.name="popularity" attr.type="double"/>
+  <key id="global_influence" for="node" attr.name="global_influence" attr.type="double"/>
+  <key id="acceptance" for="node" attr.name="acceptance" attr.type="double"/>
+  <key id="economic_importance" for="node" attr.name="economic_importance" attr.type="double"/>
+  <key id="dimensions" for="node" attr.name="dimensions" attr.type="string"/>
+  <key id="centerVector" for="node" attr.name="centerVector" attr.type="string"/>
+  <key id="vectorSpace" for="node" attr.name="vectorSpace" attr.type="string"/>
+  <key id="entities" for="node" attr.name="entities" attr.type="string"/>
+  <key id="similarity" for="node" attr.name="similarity" attr.type="double"/>
+  <key id="interpretation" for="node" attr.name="interpretation" attr.type="string"/>
+  <key id="concept" for="node" attr.name="concept" attr.type="string"/>
+  <key id="startPoint" for="node" attr.name="startPoint" attr.type="string"/>
+  <key id="endPoint" for="node" attr.name="endPoint" attr.type="string"/>
+  <key id="drift" for="node" attr.name="drift" attr.type="double"/>
+  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="colonial-period">
+      <data key="type">time_period</data>
+      <data key="name">Colonial Period</data>
+      <data key="startYear">1607</data>
+      <data key="endYear">1776</data>
+      <data key="description">Period of American colonization by European powers, primarily Great Britain</data>
+    </node>
+    <node id="revolutionary-war">
+      <data key="type">time_period</data>
+      <data key="name">American Revolution</data>
+      <data key="startYear">1775</data>
+      <data key="endYear">1783</data>
+      <data key="description">War for independence from Great Britain</data>
+    </node>
+    <node id="early-republic">
+      <data key="type">time_period</data>
+      <data key="name">Early Republic</data>
+      <data key="startYear">1783</data>
+      <data key="endYear">1815</data>
+      <data key="description">Formation and early development of the United States government</data>
+    </node>
+    <node id="antebellum">
+      <data key="type">time_period</data>
+      <data key="name">Antebellum Era</data>
+      <data key="startYear">1815</data>
+      <data key="endYear">1861</data>
+      <data key="description">Period of growth and division leading to the Civil War</data>
+    </node>
+    <node id="civil-war">
+      <data key="type">time_period</data>
+      <data key="name">Civil War</data>
+      <data key="startYear">1861</data>
+      <data key="endYear">1865</data>
+      <data key="description">War between the Union and Confederate states</data>
+    </node>
+    <node id="reconstruction">
+      <data key="type">time_period</data>
+      <data key="name">Reconstruction</data>
+      <data key="startYear">1865</data>
+      <data key="endYear">1877</data>
+      <data key="description">Post-Civil War rebuilding and integration of Southern states</data>
+    </node>
+    <node id="gilded-age">
+      <data key="type">time_period</data>
+      <data key="name">Gilded Age</data>
+      <data key="startYear">1877</data>
+      <data key="endYear">1900</data>
+      <data key="description">Era of rapid economic growth, industrialization, and wealth inequality</data>
+    </node>
+    <node id="progressive-era">
+      <data key="type">time_period</data>
+      <data key="name">Progressive Era</data>
+      <data key="startYear">1900</data>
+      <data key="endYear">1920</data>
+      <data key="description">Period of social activism and political reform</data>
+    </node>
+    <node id="roaring-twenties">
+      <data key="type">time_period</data>
+      <data key="name">Roaring Twenties</data>
+      <data key="startYear">1920</data>
+      <data key="endYear">1929</data>
+      <data key="description">Period of economic prosperity and cultural dynamism</data>
+    </node>
+    <node id="great-depression">
+      <data key="type">time_period</data>
+      <data key="name">Great Depression</data>
+      <data key="startYear">1929</data>
+      <data key="endYear">1941</data>
+      <data key="description">Severe economic downturn causing high unemployment and economic hardship</data>
+    </node>
+    <node id="world-war-2">
+      <data key="type">time_period</data>
+      <data key="name">World War II</data>
+      <data key="startYear">1941</data>
+      <data key="endYear">1945</data>
+      <data key="description">American involvement in the global conflict</data>
+    </node>
+    <node id="cold-war">
+      <data key="type">time_period</data>
+      <data key="name">Cold War</data>
+      <data key="startYear">1945</data>
+      <data key="endYear">1991</data>
+      <data key="description">Geopolitical tension between the United States and Soviet Union</data>
+    </node>
+    <node id="civil-rights">
+      <data key="type">time_period</data>
+      <data key="name">Civil Rights Movement</data>
+      <data key="startYear">1954</data>
+      <data key="endYear">1968</data>
+      <data key="description">Movement for racial equality and ending discrimination</data>
+    </node>
+    <node id="modern-era">
+      <data key="type">time_period</data>
+      <data key="name">Modern Era</data>
+      <data key="startYear">1991</data>
+      <data key="endYear">2023</data>
+      <data key="description">Post-Cold War period to present day</data>
+    </node>
+    <node id="jamestown-founding">
+      <data key="type">event</data>
+      <data key="name">Founding of Jamestown</data>
+      <data key="date">1607-05-14</data>
+      <data key="location">Virginia</data>
+      <data key="description">First permanent English settlement in North America</data>
+      <data key="significance">Established English presence in North America</data>
+      <data key="vector">-0.12,0.35,0.02,0.41,-0.18,0.22</data>
+    </node>
+    <node id="plymouth-colony">
+      <data key="type">event</data>
+      <data key="name">Plymouth Colony Established</data>
+      <data key="date">1620-12-21</data>
+      <data key="location">Massachusetts</data>
+      <data key="description">Pilgrims establish Plymouth Colony after arriving on the Mayflower</data>
+      <data key="significance">Early religious settlement that shaped New England culture</data>
+      <data key="vector">-0.1,0.32,0.05,0.4,-0.15,0.25</data>
+    </node>
+    <node id="declaration-independence">
+      <data key="type">event</data>
+      <data key="name">Declaration of Independence</data>
+      <data key="date">1776-07-04</data>
+      <data key="location">Philadelphia, Pennsylvania</data>
+      <data key="description">Formal declaration of independence from Great Britain</data>
+      <data key="significance">Foundational document establishing American independence</data>
+      <data key="keywords">independence,liberty,revolution,rights</data>
+      <data key="vector">0.45,0.28,0.34,0.12,0.22,-0.15</data>
+    </node>
+    <node id="constitutional-convention">
+      <data key="type">event</data>
+      <data key="name">Constitutional Convention</data>
+      <data key="date">1787-05-25</data>
+      <data key="endDate">1787-09-17</data>
+      <data key="location">Philadelphia, Pennsylvania</data>
+      <data key="description">Convention to create a new constitution for the United States</data>
+      <data key="significance">Created the United States Constitution</data>
+      <data key="keywords">constitution,government,federalism,compromise</data>
+      <data key="vector">0.42,0.25,0.38,0.1,0.24,-0.12</data>
+    </node>
+    <node id="louisiana-purchase">
+      <data key="type">event</data>
+      <data key="name">Louisiana Purchase</data>
+      <data key="date">1803-04-30</data>
+      <data key="location">Paris, France</data>
+      <data key="description">Purchase of the Louisiana Territory from France</data>
+      <data key="significance">Doubled the size of the United States</data>
+      <data key="keywords">expansion,territory,Jefferson,Napoleon</data>
+      <data key="vector">0.05,0.42,-0.15,0.28,0.33,0.22</data>
+    </node>
+    <node id="civil-war-start">
+      <data key="type">event</data>
+      <data key="name">Civil War Begins</data>
+      <data key="date">1861-04-12</data>
+      <data key="location">Fort Sumter, South Carolina</data>
+      <data key="description">Confederate forces attack Fort Sumter, beginning the Civil War</data>
+      <data key="significance">Started the bloodiest conflict in American history</data>
+      <data key="keywords">war,slavery,secession,conflict</data>
+      <data key="vector">-0.35,-0.22,-0.42,-0.18,-0.3,-0.25</data>
+    </node>
+    <node id="emancipation-proclamation">
+      <data key="type">event</data>
+      <data key="name">Emancipation Proclamation</data>
+      <data key="date">1863-01-01</data>
+      <data key="location">Washington, D.C.</data>
+      <data key="description">Lincoln declares slaves in Confederate states to be free</data>
+      <data key="significance">Changed the character of the Civil War and began the process of ending slavery</data>
+      <data key="keywords">slavery,freedom,Lincoln,abolition</data>
+      <data key="vector">0.48,0.3,0.38,0.15,0.25,-0.1</data>
+    </node>
+    <node id="civil-war-end">
+      <data key="type">event</data>
+      <data key="name">Civil War Ends</data>
+      <data key="date">1865-04-09</data>
+      <data key="location">Appomattox Court House, Virginia</data>
+      <data key="description">General Lee surrenders to General Grant, effectively ending the Civil War</data>
+      <data key="significance">Ended the Civil War and preserved the Union</data>
+      <data key="keywords">surrender,war end,Lee,Grant,reconciliation</data>
+      <data key="vector">0.1,0.15,0.2,0.3,0.25,0.22</data>
+    </node>
+    <node id="womens-suffrage">
+      <data key="type">event</data>
+      <data key="name">19th Amendment</data>
+      <data key="date">1920-08-18</data>
+      <data key="location">United States</data>
+      <data key="description">Constitutional amendment giving women the right to vote</data>
+      <data key="significance">Major achievement for women&apos;s rights and democracy</data>
+      <data key="keywords">women,voting,rights,suffrage,equality</data>
+      <data key="vector">0.46,0.32,0.33,0.14,0.26,-0.12</data>
+    </node>
+    <node id="stock-market-crash">
+      <data key="type">event</data>
+      <data key="name">Stock Market Crash</data>
+      <data key="date">1929-10-29</data>
+      <data key="location">New York, New York</data>
+      <data key="description">Stock market crashes, triggering the Great Depression</data>
+      <data key="significance">Led to the worst economic crisis in American history</data>
+      <data key="keywords">depression,economy,crash,financial,poverty</data>
+      <data key="vector">-0.32,-0.18,-0.38,-0.25,-0.28,-0.2</data>
+    </node>
+    <node id="pearl-harbor">
+      <data key="type">event</data>
+      <data key="name">Attack on Pearl Harbor</data>
+      <data key="date">1941-12-07</data>
+      <data key="location">Pearl Harbor, Hawaii</data>
+      <data key="description">Japanese forces attack the US Naval base at Pearl Harbor</data>
+      <data key="significance">Brought the United States into World War II</data>
+      <data key="keywords">war,Japan,attack,World War II,Roosevelt</data>
+      <data key="vector">-0.38,-0.28,-0.42,-0.2,-0.32,-0.3</data>
+    </node>
+    <node id="mlk-speech">
+      <data key="type">event</data>
+      <data key="name">I Have a Dream Speech</data>
+      <data key="date">1963-08-28</data>
+      <data key="location">Washington, D.C.</data>
+      <data key="description">Martin Luther King Jr. delivers his famous speech during the March on Washington</data>
+      <data key="significance">Defining moment in the Civil Rights Movement</data>
+      <data key="keywords">civil rights,equality,King,dream,racial justice</data>
+      <data key="vector">0.5,0.35,0.4,0.18,0.28,-0.08</data>
+    </node>
+    <node id="moon-landing">
+      <data key="type">event</data>
+      <data key="name">Moon Landing</data>
+      <data key="date">1969-07-20</data>
+      <data key="location">Moon</data>
+      <data key="description">NASA&apos;s Apollo 11 mission lands humans on the Moon</data>
+      <data key="significance">Major achievement in space exploration and technology</data>
+      <data key="keywords">space,NASA,Apollo,Armstrong,technology</data>
+      <data key="vector">0.25,0.45,0.05,0.38,0.15,0.42</data>
+    </node>
+    <node id="september-11">
+      <data key="type">event</data>
+      <data key="name">September 11 Attacks</data>
+      <data key="date">2001-09-11</data>
+      <data key="location">New York, Washington D.C., Pennsylvania</data>
+      <data key="description">Terrorist attacks using hijacked airplanes</data>
+      <data key="significance">Deadliest terrorist attack in history, led to major changes in US foreign policy</data>
+      <data key="keywords">terrorism,attack,security,war on terror,tragedy</data>
+      <data key="vector">-0.42,-0.35,-0.48,-0.25,-0.38,-0.32</data>
+    </node>
+    <node id="obama-election">
+      <data key="type">event</data>
+      <data key="name">Barack Obama Elected President</data>
+      <data key="date">2008-11-04</data>
+      <data key="location">United States</data>
+      <data key="description">Barack Obama elected as first African American president of the United States</data>
+      <data key="significance">Historic milestone in American race relations and politics</data>
+      <data key="keywords">election,Obama,presidency,African American,milestone</data>
+      <data key="vector">0.42,0.3,0.35,0.2,0.28,0.15</data>
+    </node>
+    <node id="washington">
+      <data key="type">person</data>
+      <data key="name">George Washington</data>
+      <data key="birth">1732-02-22</data>
+      <data key="death">1799-12-14</data>
+      <data key="role">Military leader, 1st President</data>
+      <data key="significance">Led Continental Army, first US President, established presidential precedents</data>
+      <data key="keywords">president,revolutionary war,founding father,Mount Vernon</data>
+      <data key="vector">0.4,0.32,0.28,0.25,0.38,0.22</data>
+    </node>
+    <node id="jefferson">
+      <data key="type">person</data>
+      <data key="name">Thomas Jefferson</data>
+      <data key="birth">1743-04-13</data>
+      <data key="death">1826-07-04</data>
+      <data key="role">Statesman, 3rd President</data>
+      <data key="significance">Authored Declaration of Independence, expanded US territory, founded University of Virginia</data>
+      <data key="keywords">declaration,president,founding father,Monticello,Louisiana Purchase</data>
+      <data key="vector">0.38,0.35,0.32,0.3,0.25,0.18</data>
+    </node>
+    <node id="lincoln">
+      <data key="type">person</data>
+      <data key="name">Abraham Lincoln</data>
+      <data key="birth">1809-02-12</data>
+      <data key="death">1865-04-15</data>
+      <data key="role">16th President</data>
+      <data key="significance">Preserved the Union during Civil War, emancipated slaves, modernized economy</data>
+      <data key="keywords">civil war,emancipation,Gettysburg,assassination,union</data>
+      <data key="vector">0.42,0.36,0.3,0.28,0.32,0.15</data>
+    </node>
+    <node id="douglass">
+      <data key="type">person</data>
+      <data key="name">Frederick Douglass</data>
+      <data key="birth">1818-02-01</data>
+      <data key="death">1895-02-20</data>
+      <data key="role">Abolitionist, Writer</data>
+      <data key="significance">Escaped slave who became leading abolitionist and advocate for equality</data>
+      <data key="keywords">abolition,slavery,civil rights,orator,writer</data>
+      <data key="vector">0.44,0.36,0.34,0.25,0.3,0.12</data>
+    </node>
+    <node id="roosevelt-fdr">
+      <data key="type">person</data>
+      <data key="name">Franklin D. Roosevelt</data>
+      <data key="birth">1882-01-30</data>
+      <data key="death">1945-04-12</data>
+      <data key="role">32nd President</data>
+      <data key="significance">Led US through Great Depression and most of World War II, established New Deal programs</data>
+      <data key="keywords">New Deal,depression,World War II,polio,four terms</data>
+      <data key="vector">0.4,0.34,0.3,0.25,0.35,0.2</data>
+    </node>
+    <node id="mlk">
+      <data key="type">person</data>
+      <data key="name">Martin Luther King Jr.</data>
+      <data key="birth">1929-01-15</data>
+      <data key="death">1968-04-04</data>
+      <data key="role">Civil Rights Leader</data>
+      <data key="significance">Led nonviolent civil rights movement, advocated for racial equality</data>
+      <data key="keywords">civil rights,nonviolence,dream speech,equality,Nobel Peace Prize</data>
+      <data key="vector">0.48,0.38,0.42,0.3,0.35,0.15</data>
+    </node>
+    <node id="democracy">
+      <data key="type">concept</data>
+      <data key="name">Democracy</data>
+      <data key="description">System of government by the people, typically through elected representatives</data>
+      <data key="keywords">voting,representation,elections,governance,people</data>
+      <data key="vector">0.35,0.3,0.4,0.25,0.32,0.22</data>
+    </node>
+    <node id="slavery">
+      <data key="type">concept</data>
+      <data key="name">Slavery</data>
+      <data key="description">System of forced labor where people are owned as property</data>
+      <data key="keywords">bondage,plantation,abolition,slaves,human property</data>
+      <data key="vector">-0.4,-0.32,-0.45,-0.38,-0.42,-0.3</data>
+    </node>
+    <node id="manifest-destiny">
+      <data key="type">concept</data>
+      <data key="name">Manifest Destiny</data>
+      <data key="description">Belief that American settlers were destined to expand across North America</data>
+      <data key="keywords">expansion,westward,territory,settlement,imperialism</data>
+      <data key="vector">0.1,0.38,-0.05,0.42,0.25,0.3</data>
+    </node>
+    <node id="civil-rights-concept">
+      <data key="type">concept</data>
+      <data key="name">Civil Rights</data>
+      <data key="description">Rights to personal liberty and equality under the law</data>
+      <data key="keywords">equality,rights,discrimination,freedom,justice</data>
+      <data key="vector">0.46,0.35,0.42,0.28,0.32,0.15</data>
+    </node>
+    <node id="american-dream">
+      <data key="type">concept</data>
+      <data key="name">American Dream</data>
+      <data key="description">Belief that anyone can achieve success and prosperity through hard work</data>
+      <data key="keywords">opportunity,success,prosperity,upward mobility,work ethic</data>
+      <data key="vector">0.35,0.42,0.3,0.25,0.28,0.38</data>
+    </node>
+    <node id="declaration-doc">
+      <data key="type">document</data>
+      <data key="name">Declaration of Independence</data>
+      <data key="date">1776-07-04</data>
+      <data key="authors">Thomas Jefferson,Continental Congress</data>
+      <data key="description">Document declaring the thirteen American colonies as independent sovereign states</data>
+      <data key="significance">Foundational document of the United States</data>
+      <data key="keywords">independence,liberty,rights,revolution,Jefferson</data>
+      <data key="vector">0.45,0.3,0.35,0.15,0.25,-0.1</data>
+    </node>
+    <node id="constitution-doc">
+      <data key="type">document</data>
+      <data key="name">United States Constitution</data>
+      <data key="date">1787-09-17</data>
+      <data key="authors">Constitutional Convention Delegates</data>
+      <data key="description">Supreme law of the United States establishing the structure of the federal government</data>
+      <data key="significance">Foundational legal document of the United States</data>
+      <data key="keywords">government,law,rights,federalism,branches</data>
+      <data key="vector">0.42,0.28,0.38,0.12,0.22,-0.08</data>
+    </node>
+    <node id="gettysburg-address">
+      <data key="type">document</data>
+      <data key="name">Gettysburg Address</data>
+      <data key="date">1863-11-19</data>
+      <data key="authors">Abraham Lincoln</data>
+      <data key="description">Speech given by President Lincoln during the Civil War</data>
+      <data key="significance">Redefined the purpose of the Civil War and American democracy</data>
+      <data key="keywords">civil war,liberty,democracy,equality,Lincoln</data>
+      <data key="vector">0.44,0.32,0.36,0.18,0.28,-0.05</data>
+    </node>
+    <node id="democracy-1776">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">democracy</data>
+      <data key="timestamp">1776</data>
+      <data key="popularity">0.4</data>
+      <data key="global_influence">0.2</data>
+      <data key="description">Democracy at founding of United States</data>
+    </node>
+    <node id="democracy-1800">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">democracy</data>
+      <data key="timestamp">1800</data>
+      <data key="popularity">0.5</data>
+      <data key="global_influence">0.3</data>
+      <data key="description">Democracy in early republic era</data>
+    </node>
+    <node id="democracy-1850">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">democracy</data>
+      <data key="timestamp">1850</data>
+      <data key="popularity">0.6</data>
+      <data key="global_influence">0.4</data>
+      <data key="description">Democracy in pre-Civil War America</data>
+    </node>
+    <node id="democracy-1900">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">democracy</data>
+      <data key="timestamp">1900</data>
+      <data key="popularity">0.7</data>
+      <data key="global_influence">0.5</data>
+      <data key="description">Democracy during Progressive Era</data>
+    </node>
+    <node id="democracy-1950">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">democracy</data>
+      <data key="timestamp">1950</data>
+      <data key="popularity">0.8</data>
+      <data key="global_influence">0.7</data>
+      <data key="description">Democracy during Cold War</data>
+    </node>
+    <node id="democracy-2000">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">democracy</data>
+      <data key="timestamp">2000</data>
+      <data key="popularity">0.9</data>
+      <data key="global_influence">0.8</data>
+      <data key="description">Democracy in modern era</data>
+    </node>
+    <node id="democracy-2020">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">democracy</data>
+      <data key="timestamp">2020</data>
+      <data key="popularity">0.85</data>
+      <data key="global_influence">0.75</data>
+      <data key="description">Democracy in contemporary America</data>
+    </node>
+    <node id="slavery-1700">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">slavery</data>
+      <data key="timestamp">1700</data>
+      <data key="acceptance">0.8</data>
+      <data key="economic_importance">0.7</data>
+      <data key="description">Slavery in colonial America</data>
+    </node>
+    <node id="slavery-1776">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">slavery</data>
+      <data key="timestamp">1776</data>
+      <data key="acceptance">0.7</data>
+      <data key="economic_importance">0.8</data>
+      <data key="description">Slavery at founding of United States</data>
+    </node>
+    <node id="slavery-1800">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">slavery</data>
+      <data key="timestamp">1800</data>
+      <data key="acceptance">0.65</data>
+      <data key="economic_importance">0.85</data>
+      <data key="description">Slavery during early republic</data>
+    </node>
+    <node id="slavery-1850">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">slavery</data>
+      <data key="timestamp">1850</data>
+      <data key="acceptance">0.5</data>
+      <data key="economic_importance">0.8</data>
+      <data key="description">Slavery during antebellum period</data>
+    </node>
+    <node id="slavery-1863">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">slavery</data>
+      <data key="timestamp">1863</data>
+      <data key="acceptance">0.3</data>
+      <data key="economic_importance">0.6</data>
+      <data key="description">Slavery during Civil War</data>
+    </node>
+    <node id="slavery-1870">
+      <data key="type">temporal_snapshot</data>
+      <data key="entityId">slavery</data>
+      <data key="timestamp">1870</data>
+      <data key="acceptance">0.1</data>
+      <data key="economic_importance">0.1</data>
+      <data key="description">Slavery after emancipation</data>
+    </node>
+    <node id="founding-era">
+      <data key="type">historical_snapshot</data>
+      <data key="date">1789-04-30</data>
+      <data key="description">Beginning of George Washington&apos;s presidency</data>
+      <data key="significance">Start of the Constitutional government of the United States</data>
+    </node>
+    <node id="pre-civil-war">
+      <data key="type">historical_snapshot</data>
+      <data key="date">1860-11-06</data>
+      <data key="description">Election of Abraham Lincoln</data>
+      <data key="significance">Event that triggered secession of Southern states</data>
+    </node>
+    <node id="civil-rights-era">
+      <data key="type">historical_snapshot</data>
+      <data key="date">1964-07-02</data>
+      <data key="description">Civil Rights Act of 1964</data>
+      <data key="significance">Landmark civil rights legislation</data>
+    </node>
+    <node id="post-cold-war">
+      <data key="type">historical_snapshot</data>
+      <data key="date">1991-12-26</data>
+      <data key="description">Dissolution of the Soviet Union</data>
+      <data key="significance">End of the Cold War and beginning of a new geopolitical era</data>
+    </node>
+    <node id="ideological-space">
+      <data key="type">vector_space</data>
+      <data key="name">Ideological Positions</data>
+      <data key="description">Ideological positions and political philosophies</data>
+      <data key="dimensions">individual_liberty,equality,government_role,tradition,progress,isolationism</data>
+    </node>
+    <node id="social-values-space">
+      <data key="type">vector_space</data>
+      <data key="name">Social Values</data>
+      <data key="description">Social and cultural values across time</data>
+      <data key="dimensions">individualism,community,diversity,spirituality,materialism,civic_duty</data>
+    </node>
+    <node id="founding-principles-cluster">
+      <data key="type">semantic_cluster</data>
+      <data key="name">Founding Principles</data>
+      <data key="centerVector">0.4,0.35,0.25,0.3,0.25,0.1</data>
+      <data key="vectorSpace">ideological-space</data>
+      <data key="description">Cluster representing founding principles of American democracy</data>
+    </node>
+    <node id="civil-rights-cluster">
+      <data key="type">semantic_cluster</data>
+      <data key="name">Civil Rights Movement</data>
+      <data key="centerVector">0.45,0.4,0.3,0.2,0.35,0.15</data>
+      <data key="vectorSpace">ideological-space</data>
+      <data key="description">Cluster representing civil rights movement principles</data>
+    </node>
+    <node id="economic-development-cluster">
+      <data key="type">semantic_cluster</data>
+      <data key="name">Economic Development</data>
+      <data key="centerVector">0.3,0.25,0.35,0.25,0.3,0.25</data>
+      <data key="vectorSpace">ideological-space</data>
+      <data key="description">Cluster representing economic development principles</data>
+    </node>
+    <node id="democracy-rights-similarity">
+      <data key="type">similarity_analysis</data>
+      <data key="name">Democracy and Civil Rights Relationship</data>
+      <data key="entities">democracy,civil-rights-concept</data>
+      <data key="similarity">0.85</data>
+      <data key="interpretation">Strong conceptual link between democratic governance and civil rights</data>
+    </node>
+    <node id="liberty-dream-similarity">
+      <data key="type">similarity_analysis</data>
+      <data key="name">Liberty and American Dream Relationship</data>
+      <data key="entities">declaration-independence,american-dream</data>
+      <data key="similarity">0.78</data>
+      <data key="interpretation">American founding principles closely aligned with aspirational values</data>
+    </node>
+    <node id="democracy-evolution">
+      <data key="type">concept_drift</data>
+      <data key="name">Evolution of Democracy</data>
+      <data key="concept">democracy</data>
+      <data key="startPoint">1776</data>
+      <data key="endPoint">2020</data>
+      <data key="drift">0.35</data>
+      <data key="interpretation">Significant expansion of democratic concepts to include broader participation</data>
+    </node>
+    <node id="equality-evolution">
+      <data key="type">concept_drift</data>
+      <data key="name">Evolution of Equality</data>
+      <data key="concept">civil-rights-concept</data>
+      <data key="startPoint">1776</data>
+      <data key="endPoint">2020</data>
+      <data key="drift">0.62</data>
+      <data key="interpretation">Major transformation in understanding of equality across demographic groups</data>
+    </node>
+    <edge source="jamestown-founding" target="colonial-period">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="plymouth-colony" target="colonial-period">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="declaration-independence" target="revolutionary-war">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="constitutional-convention" target="early-republic">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="louisiana-purchase" target="early-republic">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="civil-war-start" target="civil-war">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="emancipation-proclamation" target="civil-war">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="civil-war-end" target="civil-war">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="womens-suffrage" target="progressive-era">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="stock-market-crash" target="great-depression">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="pearl-harbor" target="world-war-2">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="mlk-speech" target="civil-rights">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="mlk-speech" target="cold-war">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="moon-landing" target="cold-war">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="september-11" target="modern-era">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="obama-election" target="modern-era">
+      <data key="type">occurred_during</data>
+    </edge>
+    <edge source="washington" target="declaration-independence">
+      <data key="type">participated_in</data>
+    </edge>
+    <edge source="jefferson" target="declaration-independence">
+      <data key="type">created</data>
+    </edge>
+    <edge source="jefferson" target="louisiana-purchase">
+      <data key="type">initiated</data>
+    </edge>
+    <edge source="lincoln" target="civil-war-start">
+      <data key="type">led_during</data>
+    </edge>
+    <edge source="lincoln" target="emancipation-proclamation">
+      <data key="type">issued</data>
+    </edge>
+    <edge source="lincoln" target="civil-war-end">
+      <data key="type">led_during</data>
+    </edge>
+    <edge source="roosevelt-fdr" target="pearl-harbor">
+      <data key="type">led_during</data>
+    </edge>
+    <edge source="mlk" target="mlk-speech">
+      <data key="type">delivered</data>
+    </edge>
+    <edge source="washington" target="democracy">
+      <data key="type">championed</data>
+    </edge>
+    <edge source="jefferson" target="democracy">
+      <data key="type">championed</data>
+    </edge>
+    <edge source="douglass" target="slavery">
+      <data key="type">opposed</data>
+    </edge>
+    <edge source="douglass" target="civil-rights-concept">
+      <data key="type">championed</data>
+    </edge>
+    <edge source="lincoln" target="slavery">
+      <data key="type">opposed</data>
+    </edge>
+    <edge source="mlk" target="civil-rights-concept">
+      <data key="type">championed</data>
+    </edge>
+    <edge source="declaration-independence" target="democracy">
+      <data key="type">exemplifies</data>
+    </edge>
+    <edge source="emancipation-proclamation" target="slavery">
+      <data key="type">opposed</data>
+    </edge>
+    <edge source="louisiana-purchase" target="manifest-destiny">
+      <data key="type">exemplifies</data>
+    </edge>
+    <edge source="mlk-speech" target="civil-rights-concept">
+      <data key="type">exemplifies</data>
+    </edge>
+    <edge source="obama-election" target="american-dream">
+      <data key="type">exemplifies</data>
+    </edge>
+    <edge source="declaration-doc" target="jefferson">
+      <data key="type">authored_by</data>
+    </edge>
+    <edge source="constitution-doc" target="washington">
+      <data key="type">supported_by</data>
+    </edge>
+    <edge source="gettysburg-address" target="lincoln">
+      <data key="type">authored_by</data>
+    </edge>
+    <edge source="declaration-doc" target="declaration-independence">
+      <data key="type">produced_during</data>
+    </edge>
+    <edge source="constitution-doc" target="constitutional-convention">
+      <data key="type">produced_during</data>
+    </edge>
+    <edge source="gettysburg-address" target="civil-war">
+      <data key="type">produced_during</data>
+    </edge>
+    <edge source="democracy" target="democracy-1776">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="democracy" target="democracy-1800">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="democracy" target="democracy-1850">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="democracy" target="democracy-1900">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="democracy" target="democracy-1950">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="democracy" target="democracy-2000">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="democracy" target="democracy-2020">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="slavery" target="slavery-1700">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="slavery" target="slavery-1776">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="slavery" target="slavery-1800">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="slavery" target="slavery-1850">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="slavery" target="slavery-1863">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="slavery" target="slavery-1870">
+      <data key="type">has_state_at</data>
+    </edge>
+    <edge source="democracy" target="founding-principles-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="declaration-doc" target="founding-principles-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="constitution-doc" target="founding-principles-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="washington" target="founding-principles-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="jefferson" target="founding-principles-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="civil-rights-concept" target="civil-rights-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="mlk" target="civil-rights-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="mlk-speech" target="civil-rights-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="douglass" target="civil-rights-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="american-dream" target="economic-development-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="roosevelt-fdr" target="economic-development-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+    <edge source="stock-market-crash" target="economic-development-cluster">
+      <data key="type">belongs_to_cluster</data>
+    </edge>
+  </graph>
+</graphml>

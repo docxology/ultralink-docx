@@ -1,117 +1,166 @@
-/* Theme: light */
-body.theme-light {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-    margin: 0;
-    padding: 20px;
-    
-    background: #ffffff; color: #000000;
-    
-    
+/* Default Theme CSS */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --link-color: #0066cc;
+  --accent-color: #4a9eff;
+  --border-color: #dddddd;
+  --node-hover: #ff6600;
 }
 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout */
 header {
-    margin-bottom: 2em;
-    padding: 1em;
-    background: #f0f0f0;
-    border-radius: 8px;
-}
-
-h1 {
-    margin: 0 0 0.5em;
-}
-
-.controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1em;
-    gap: 2em;
-}
-
-.legend {
-    flex: 1;
-}
-
-.legend-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-}
-
-.legend-color {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.filters {
-    flex: 2;
-    display: flex;
-    gap: 1em;
-}
-
-.filters label {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-}
-
-select, input {
-    padding: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 main {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2em;
+  display: flex;
+  height: calc(100vh - 180px);
 }
 
 #graph {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #ffffff;
-    overflow: hidden;
+  flex: 1;
+  background: rgba(249, 250, 251, 0.8);
+  border-right: 1px solid var(--border-color);
 }
 
 .details-panel {
-    padding: 1em;
-    background: #f9f9f9;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+  width: 300px;
+  padding: 1rem;
+  overflow-y: auto;
 }
 
-.details-panel h2 {
-    margin-top: 0;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #ccc;
+/* Entity styles */
+.entity-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-.node text {
-    pointer-events: none;
-    text-shadow: 0 1px 0 #fff,
-                 1px 0 0 #fff,
-                 0 -1px 0 #fff,
-                 -1px 0 0 #fff;
+.entity-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
 }
 
-.node:hover {
-    cursor: pointer;
+.attribute-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.node circle {
-    transition: r 0.2s;
+.attribute-table th, .attribute-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.node:hover circle {
-    r: 10;
+.attribute-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.relationship-item {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.relationship-attributes {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.zoom-controls {
+  position: absolute;
+  right: 1rem;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.zoom-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: white;
+  cursor: pointer;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  #graph {
+    height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .details-panel {
+    width: 100%;
+  }
+  
+  .zoom-controls {
+    bottom: 50vh;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .filters {
+    flex-direction: column;
+    width: 100%;
+  }
 }

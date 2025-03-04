@@ -24,6 +24,11 @@ const colors = {
 // Test suites to run in order
 const testSuites = [
   { 
+    name: 'Performance Tests',
+    command: 'npx jest tests/performance',
+    required: false
+  },
+  { 
     name: 'Unit Tests',
     command: 'npx jest tests/unit',
     required: true
@@ -42,11 +47,6 @@ const testSuites = [
     name: 'End-to-End Tests',
     command: 'npx jest tests/e2e',
     required: true
-  },
-  { 
-    name: 'Performance Tests',
-    command: 'npx jest tests/performance',
-    required: false
   }
 ];
 

@@ -6,12 +6,12 @@
   <key id="name" for="node" attr.name="name" attr.type="string"/>
   <key id="type" for="node" attr.name="type" attr.type="string"/>
   <key id="scientificName" for="node" attr.name="scientificName" attr.type="string"/>
-  <key id="lifespan" for="node" attr.name="lifespan" attr.type="string"/>
+  <key id="lifespan" for="node" attr.name="lifespan" attr.type="int"/>
   <key id="diet" for="node" attr.name="diet" attr.type="string"/>
   <key id="status" for="node" attr.name="status" attr.type="string"/>
   <key id="description" for="node" attr.name="description" attr.type="string"/>
   <key id="adaptations" for="node" attr.name="adaptations" attr.type="string"/>
-  <key id="height" for="node" attr.name="height" attr.type="string"/>
+  <key id="height" for="node" attr.name="height" attr.type="int"/>
   <key id="waterRequirement" for="node" attr.name="waterRequirement" attr.type="string"/>
   <key id="impact" for="node" attr.name="impact" attr.type="string"/>
   <key id="area" for="node" attr.name="area" attr.type="string"/>
@@ -19,9 +19,14 @@
   <key id="participants" for="node" attr.name="participants" attr.type="string"/>
   <key id="strength" for="node" attr.name="strength" attr.type="string"/>
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
+  <key id="adaptationMechanism" for="edge" attr.name="adaptationMechanism" attr.type="string"/>
+  <key id="strength" for="edge" attr.name="strength" attr.type="string"/>
+  <key id="frequency" for="edge" attr.name="frequency" attr.type="string"/>
+  <key id="dependency" for="edge" attr.name="dependency" attr.type="string"/>
+  <key id="method" for="edge" attr.name="method" attr.type="string"/>
+  <key id="relationship" for="edge" attr.name="relationship" attr.type="string"/>
+  <key id="description" for="edge" attr.name="description" attr.type="string"/>
   <graph id="G" edgedefault="directed">
-    <node id="metadata">
-    </node>
     <node id="camel">
       <data key="type">animal</data>
       <data key="name">Dromedary Camel</data>
@@ -419,144 +424,239 @@
     </node>
     <edge source="camel" target="heat">
       <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Physiological temperature regulation</data>
+      <data key="strength">extreme</data>
     </edge>
     <edge source="fennec_fox" target="heat">
       <data key="type">adapted_to</data>
-    </edge>
-    <edge source="desert_monitor" target="scorpion">
-      <data key="type">preys_on</data>
-    </edge>
-    <edge source="sidewinder" target="sand_dunes">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="sidewinder" target="dune_field">
-      <data key="type">lives_in</data>
-    </edge>
-    <edge source="sidewinder" target="kangaroo_rat">
-      <data key="type">preys_on</data>
-    </edge>
-    <edge source="scorpion" target="rocky_slope">
-      <data key="type">lives_in</data>
+      <data key="adaptationMechanism">Large ears for heat dissipation</data>
+      <data key="strength">strong</data>
     </edge>
     <edge source="darkling_beetle" target="aridity">
       <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Water harvesting from air</data>
+      <data key="strength">extreme</data>
     </edge>
-    <edge source="roadrunner" target="scorpion">
-      <data key="type">preys_on</data>
-    </edge>
-    <edge source="roadrunner" target="sidewinder">
-      <data key="type">preys_on</data>
+    <edge source="sidewinder" target="sand_dunes">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Specialized locomotion</data>
+      <data key="strength">extreme</data>
     </edge>
     <edge source="desert_tortoise" target="aridity">
       <data key="type">adapted_to</data>
-    </edge>
-    <edge source="desert_tortoise" target="rocky_slope">
-      <data key="type">lives_in</data>
-    </edge>
-    <edge source="desert_tortoise" target="desert_poppy">
-      <data key="type">consumes</data>
-    </edge>
-    <edge source="cactus_wren" target="heat">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="cactus_wren" target="wash">
-      <data key="type">lives_in</data>
+      <data key="adaptationMechanism">Water storage in bladder</data>
+      <data key="strength">extreme</data>
     </edge>
     <edge source="kangaroo_rat" target="aridity">
       <data key="type">adapted_to</data>
-    </edge>
-    <edge source="kangaroo_rat" target="dune_field">
-      <data key="type">lives_in</data>
-    </edge>
-    <edge source="kangaroo_rat" target="mesquite">
-      <data key="type">consumes</data>
+      <data key="adaptationMechanism">Metabolic water production</data>
+      <data key="strength">extreme</data>
     </edge>
     <edge source="gila_monster" target="heat">
       <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Fat storage and seasonal activity</data>
+      <data key="strength">strong</data>
     </edge>
-    <edge source="gila_monster" target="rocky_slope">
-      <data key="type">lives_in</data>
-    </edge>
-    <edge source="gila_monster" target="cactus_wren">
-      <data key="type">preys_on</data>
+    <edge source="cactus_wren" target="heat">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Behavioral thermoregulation</data>
+      <data key="strength">strong</data>
     </edge>
     <edge source="javelina" target="aridity">
       <data key="type">adapted_to</data>
-    </edge>
-    <edge source="javelina" target="canyon">
-      <data key="type">lives_in</data>
-    </edge>
-    <edge source="javelina" target="prickly_pear">
-      <data key="type">consumes</data>
-    </edge>
-    <edge source="saguaro" target="heat">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="saguaro" target="rocky_slope">
-      <data key="type">grows_in</data>
-    </edge>
-    <edge source="barrel_cactus" target="aridity">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="mesquite" target="aridity">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="mesquite" target="wash">
-      <data key="type">grows_in</data>
-    </edge>
-    <edge source="mesquite" target="desert_poppy">
-      <data key="type">facilitates</data>
-    </edge>
-    <edge source="creosote_bush" target="aridity">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="creosote_bush" target="other_plants">
-      <data key="type">inhibits</data>
-    </edge>
-    <edge source="ocotillo" target="temperature_variation">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="brittlebush" target="heat">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="brittlebush" target="rocky_slope">
-      <data key="type">grows_in</data>
-    </edge>
-    <edge source="desert_ironwood" target="aridity">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="desert_ironwood" target="wash">
-      <data key="type">grows_in</data>
-    </edge>
-    <edge source="desert_ironwood" target="saguaro">
-      <data key="type">nurses</data>
-    </edge>
-    <edge source="agave" target="aridity">
-      <data key="type">adapted_to</data>
-    </edge>
-    <edge source="joshua_tree" target="sandy_soil">
-      <data key="type">grows_in</data>
-    </edge>
-    <edge source="joshua_tree" target="yucca_moth">
-      <data key="type">mutual_dependency</data>
+      <data key="adaptationMechanism">Consumption of water-rich cacti</data>
+      <data key="strength">moderate</data>
     </edge>
     <edge source="yucca_moth" target="aridity">
       <data key="type">adapted_to</data>
-    </edge>
-    <edge source="yucca_moth" target="joshua_tree">
-      <data key="type">mutual_dependency</data>
+      <data key="adaptationMechanism">Short lifecycle synchronized with yucca flowering</data>
+      <data key="strength">extreme</data>
     </edge>
     <edge source="coyote" target="aridity">
       <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Obtaining moisture from prey</data>
+      <data key="strength">strong</data>
+    </edge>
+    <edge source="saguaro" target="heat">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Pleated structure for expansion</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="barrel_cactus" target="aridity">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Water storage tissue</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="mesquite" target="aridity">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Deep root system</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="creosote_bush" target="aridity">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Resinous coating on leaves</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="ocotillo" target="temperature_variation">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Rapid leaf production after rain</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="brittlebush" target="heat">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Reflective leaf surfaces</data>
+      <data key="strength">strong</data>
+    </edge>
+    <edge source="desert_ironwood" target="aridity">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">Dense wood tissue</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="agave" target="aridity">
+      <data key="type">adapted_to</data>
+      <data key="adaptationMechanism">CAM photosynthesis</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="joshua_tree" target="sandy_soil">
+      <data key="type">grows_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">high</data>
+    </edge>
+    <edge source="sidewinder" target="dune_field">
+      <data key="type">lives_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">high</data>
+    </edge>
+    <edge source="desert_tortoise" target="rocky_slope">
+      <data key="type">lives_in</data>
+      <data key="frequency">seasonal</data>
+      <data key="dependency">medium</data>
+    </edge>
+    <edge source="cactus_wren" target="wash">
+      <data key="type">lives_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">medium</data>
+    </edge>
+    <edge source="gila_monster" target="rocky_slope">
+      <data key="type">lives_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">high</data>
+    </edge>
+    <edge source="javelina" target="canyon">
+      <data key="type">lives_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">medium</data>
+    </edge>
+    <edge source="kangaroo_rat" target="dune_field">
+      <data key="type">lives_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">high</data>
+    </edge>
+    <edge source="scorpion" target="rocky_slope">
+      <data key="type">lives_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">medium</data>
     </edge>
     <edge source="coyote" target="canyon">
       <data key="type">lives_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">low</data>
+    </edge>
+    <edge source="saguaro" target="rocky_slope">
+      <data key="type">grows_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">medium</data>
+    </edge>
+    <edge source="mesquite" target="wash">
+      <data key="type">grows_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">high</data>
+    </edge>
+    <edge source="desert_ironwood" target="wash">
+      <data key="type">grows_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">medium</data>
+    </edge>
+    <edge source="brittlebush" target="rocky_slope">
+      <data key="type">grows_in</data>
+      <data key="frequency">permanent</data>
+      <data key="dependency">medium</data>
     </edge>
     <edge source="coyote" target="kangaroo_rat">
       <data key="type">preys_on</data>
+      <data key="frequency">common</data>
+      <data key="method">hunting</data>
     </edge>
     <edge source="coyote" target="desert_tortoise">
       <data key="type">preys_on</data>
+      <data key="frequency">rare</data>
+      <data key="method">opportunistic</data>
+    </edge>
+    <edge source="sidewinder" target="kangaroo_rat">
+      <data key="type">preys_on</data>
+      <data key="frequency">common</data>
+      <data key="method">ambush</data>
+    </edge>
+    <edge source="desert_monitor" target="scorpion">
+      <data key="type">preys_on</data>
+      <data key="frequency">occasional</data>
+      <data key="method">hunting</data>
+    </edge>
+    <edge source="gila_monster" target="cactus_wren">
+      <data key="type">preys_on</data>
+      <data key="frequency">occasional</data>
+      <data key="method">raiding nests</data>
+    </edge>
+    <edge source="roadrunner" target="scorpion">
+      <data key="type">preys_on</data>
+      <data key="frequency">common</data>
+      <data key="method">hunting</data>
+    </edge>
+    <edge source="roadrunner" target="sidewinder">
+      <data key="type">preys_on</data>
+      <data key="frequency">occasional</data>
+      <data key="method">hunting</data>
+    </edge>
+    <edge source="javelina" target="prickly_pear">
+      <data key="type">consumes</data>
+      <data key="frequency">common</data>
+      <data key="method">grazing</data>
+    </edge>
+    <edge source="desert_tortoise" target="desert_poppy">
+      <data key="type">consumes</data>
+      <data key="frequency">seasonal</data>
+      <data key="method">grazing</data>
+    </edge>
+    <edge source="kangaroo_rat" target="mesquite">
+      <data key="type">consumes</data>
+      <data key="frequency">common</data>
+      <data key="method">seed collection</data>
+    </edge>
+    <edge source="desert_ironwood" target="saguaro">
+      <data key="type">nurses</data>
+      <data key="relationship">provides shade and protection</data>
+      <data key="strength">strong</data>
+    </edge>
+    <edge source="mesquite" target="desert_poppy">
+      <data key="type">facilitates</data>
+      <data key="relationship">improves soil conditions</data>
+      <data key="strength">moderate</data>
+    </edge>
+    <edge source="creosote_bush" target="other_plants">
+      <data key="type">inhibits</data>
+      <data key="relationship">allelopathy</data>
+      <data key="strength">strong</data>
+      <data key="description">Creosote bushes release toxins that inhibit growth of other plants nearby</data>
+    </edge>
+    <edge source="joshua_tree" target="yucca_moth">
+      <data key="type">mutual_dependency</data>
+      <data key="relationship">obligate reproductive site</data>
+      <data key="strength">extreme</data>
+    </edge>
+    <edge source="yucca_moth" target="joshua_tree">
+      <data key="type">mutual_dependency</data>
+      <data key="relationship">obligate reproductive site</data>
+      <data key="strength">extreme</data>
     </edge>
   </graph>
 </graphml>

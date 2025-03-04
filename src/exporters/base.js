@@ -5,70 +5,62 @@
  * to various output formats.
  */
 
-/**
- * Abstract base exporter class
- */
-class Exporter {
-  constructor(store) {
-    this.store = store;
-  }
-  
-  /**
-   * Export the entire entity store
-   * @returns {*} - Format-specific output
-   */
-  exportAll() {
-    throw new Error('exportAll method must be implemented by subclasses');
-  }
-  
-  /**
-   * Export a single entity
-   * @param {string} entityId - ID of the entity to export
-   * @returns {*} - Format-specific output
-   */
-  exportEntity(entityId) {
-    throw new Error('exportEntity method must be implemented by subclasses');
-  }
-  
-  /**
-   * Export a specific relationship type
-   * @param {string} type - Relationship type to export
-   * @returns {*} - Format-specific output
-   */
-  exportRelationshipType(type) {
-    throw new Error('exportRelationshipType method must be implemented by subclasses');
-  }
-}
-
 const fs = require('fs');
 const path = require('path');
 
 /**
- * Base class for specialized exporters
+ * Base exporter class
  */
-class SpecializedExporter {
+class BaseExporter {
   /**
    * @param {Object} store - The UltraLink entity store
    * @param {Object} options - Configuration options
    */
   constructor(store, options = {}) {
     this.store = store;
+    this.options = options;
+  }
+  
+  /**
+   * Get information about what this exporter does
+   * @returns {Object} - Information about the exporter
+   */
+  getInfo() {
+    return {
+      name: 'BaseExporter',
+      description: 'Base exporter class',
+      outputFormats: [],
+      supportedOptions: {}
+    };
+  }
+}
+
+/**
+ * Specialized exporter base class
+ */
+class SpecializedExporter extends BaseExporter {
+  /**
+   * @param {Object} store - The UltraLink entity store
+   * @param {Object} options - Configuration options
+   */
+  constructor(store, options = {}) {
+    super(store, options);
     this.options = {
       outputPath: './output',
       entityFilter: null,
       ...options
     };
   }
-
+  
   /**
    * Export an entity
    * @param {Object} entity - The entity to export
-   * @returns {string} Exported content
+   * @returns {Object} Exported entity
    */
   exportEntity(entity) {
-    throw new Error('exportEntity() must be implemented by subclass');
+    throw new Error('exportEntity must be implemented by subclasses');
   }
-
+  
   /**
    * Export all entities
    * @returns {Object} Map of filenames to content
@@ -148,9 +140,22 @@ class SpecializedExporter {
     }
     fs.writeFileSync(outputPath, content);
   }
+  
+  /**
+   * Get information about what this exporter does
+   * @returns {Object} - Information about the exporter
+   */
+  getInfo() {
+    return {
+      name: 'SpecializedExporter',
+      description: 'Base class for specialized exporters',
+      outputFormats: [],
+      supportedOptions: {}
+    };
+  }
 }
 
 module.exports = {
-  Exporter,
+  BaseExporter,
   SpecializedExporter
 }; 

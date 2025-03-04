@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+    <style>
+        .node { fill: #69b3a2; }
+        .link { stroke: #999; stroke-opacity: 0.6; }
+        text { font-family: sans-serif; font-size: 10px; }
+    </style>
+    <g class="links">
+        <line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+<line class="link" x1="0" y1="0" x2="100" y2="100"/>
+    </g>
+    <g class="nodes">
+        <circle class="node" cx="100" cy="100" r="5">
+              <title>colonial-period</title>
+           </circle>
+<circle class="node" cx="150" cy="130" r="5">
+              <title>revolutionary-war</title>
+           </circle>
+<circle class="node" cx="200" cy="160" r="5">
+              <title>early-republic</title>
+           </circle>
+<circle class="node" cx="250" cy="190" r="5">
+              <title>antebellum</title>
+           </circle>
+<circle class="node" cx="300" cy="220" r="5">
+              <title>civil-war</title>
+           </circle>
+<circle class="node" cx="350" cy="250" r="5">
+              <title>reconstruction</title>
+           </circle>
+<circle class="node" cx="400" cy="280" r="5">
+              <title>gilded-age</title>
+           </circle>
+<circle class="node" cx="450" cy="310" r="5">
+              <title>progressive-era</title>
+           </circle>
+<circle class="node" cx="500" cy="340" r="5">
+              <title>roaring-twenties</title>
+           </circle>
+<circle class="node" cx="550" cy="370" r="5">
+              <title>great-depression</title>
+           </circle>
+<circle class="node" cx="600" cy="400" r="5">
+              <title>world-war-2</title>
+           </circle>
+<circle class="node" cx="650" cy="430" r="5">
+              <title>cold-war</title>
+           </circle>
+<circle class="node" cx="700" cy="460" r="5">
+              <title>civil-rights</title>
+           </circle>
+<circle class="node" cx="750" cy="490" r="5">
+              <title>modern-era</title>
+           </circle>
+<circle class="node" cx="800" cy="520" r="5">
+              <title>jamestown-founding</title>
+           </circle>
+<circle class="node" cx="850" cy="550" r="5">
+              <title>plymouth-colony</title>
+           </circle>
+<circle class="node" cx="900" cy="580" r="5">
+              <title>declaration-independence</title>
+           </circle>
+<circle class="node" cx="950" cy="610" r="5">
+              <title>constitutional-convention</title>
+           </circle>
+<circle class="node" cx="1000" cy="640" r="5">
+              <title>louisiana-purchase</title>
+           </circle>
+<circle class="node" cx="1050" cy="670" r="5">
+              <title>civil-war-start</title>
+           </circle>
+<circle class="node" cx="1100" cy="700" r="5">
+              <title>emancipation-proclamation</title>
+           </circle>
+<circle class="node" cx="1150" cy="730" r="5">
+              <title>civil-war-end</title>
+           </circle>
+<circle class="node" cx="1200" cy="760" r="5">
+              <title>womens-suffrage</title>
+           </circle>
+<circle class="node" cx="1250" cy="790" r="5">
+              <title>stock-market-crash</title>
+           </circle>
+<circle class="node" cx="1300" cy="820" r="5">
+              <title>pearl-harbor</title>
+           </circle>
+<circle class="node" cx="1350" cy="850" r="5">
+              <title>mlk-speech</title>
+           </circle>
+<circle class="node" cx="1400" cy="880" r="5">
+              <title>moon-landing</title>
+           </circle>
+<circle class="node" cx="1450" cy="910" r="5">
+              <title>september-11</title>
+           </circle>
+<circle class="node" cx="1500" cy="940" r="5">
+              <title>obama-election</title>
+           </circle>
+<circle class="node" cx="1550" cy="970" r="5">
+              <title>washington</title>
+           </circle>
+<circle class="node" cx="1600" cy="1000" r="5">
+              <title>jefferson</title>
+           </circle>
+<circle class="node" cx="1650" cy="1030" r="5">
+              <title>lincoln</title>
+           </circle>
+<circle class="node" cx="1700" cy="1060" r="5">
+              <title>douglass</title>
+           </circle>
+<circle class="node" cx="1750" cy="1090" r="5">
+              <title>roosevelt-fdr</title>
+           </circle>
+<circle class="node" cx="1800" cy="1120" r="5">
+              <title>mlk</title>
+           </circle>
+<circle class="node" cx="1850" cy="1150" r="5">
+              <title>democracy</title>
+           </circle>
+<circle class="node" cx="1900" cy="1180" r="5">
+              <title>slavery</title>
+           </circle>
+<circle class="node" cx="1950" cy="1210" r="5">
+              <title>manifest-destiny</title>
+           </circle>
+<circle class="node" cx="2000" cy="1240" r="5">
+              <title>civil-rights-concept</title>
+           </circle>
+<circle class="node" cx="2050" cy="1270" r="5">
+              <title>american-dream</title>
+           </circle>
+<circle class="node" cx="2100" cy="1300" r="5">
+              <title>declaration-doc</title>
+           </circle>
+<circle class="node" cx="2150" cy="1330" r="5">
+              <title>constitution-doc</title>
+           </circle>
+<circle class="node" cx="2200" cy="1360" r="5">
+              <title>gettysburg-address</title>
+           </circle>
+<circle class="node" cx="2250" cy="1390" r="5">
+              <title>democracy-1776</title>
+           </circle>
+<circle class="node" cx="2300" cy="1420" r="5">
+              <title>democracy-1800</title>
+           </circle>
+<circle class="node" cx="2350" cy="1450" r="5">
+              <title>democracy-1850</title>
+           </circle>
+<circle class="node" cx="2400" cy="1480" r="5">
+              <title>democracy-1900</title>
+           </circle>
+<circle class="node" cx="2450" cy="1510" r="5">
+              <title>democracy-1950</title>
+           </circle>
+<circle class="node" cx="2500" cy="1540" r="5">
+              <title>democracy-2000</title>
+           </circle>
+<circle class="node" cx="2550" cy="1570" r="5">
+              <title>democracy-2020</title>
+           </circle>
+<circle class="node" cx="2600" cy="1600" r="5">
+              <title>slavery-1700</title>
+           </circle>
+<circle class="node" cx="2650" cy="1630" r="5">
+              <title>slavery-1776</title>
+           </circle>
+<circle class="node" cx="2700" cy="1660" r="5">
+              <title>slavery-1800</title>
+           </circle>
+<circle class="node" cx="2750" cy="1690" r="5">
+              <title>slavery-1850</title>
+           </circle>
+<circle class="node" cx="2800" cy="1720" r="5">
+              <title>slavery-1863</title>
+           </circle>
+<circle class="node" cx="2850" cy="1750" r="5">
+              <title>slavery-1870</title>
+           </circle>
+<circle class="node" cx="2900" cy="1780" r="5">
+              <title>founding-era</title>
+           </circle>
+<circle class="node" cx="2950" cy="1810" r="5">
+              <title>pre-civil-war</title>
+           </circle>
+<circle class="node" cx="3000" cy="1840" r="5">
+              <title>civil-rights-era</title>
+           </circle>
+<circle class="node" cx="3050" cy="1870" r="5">
+              <title>post-cold-war</title>
+           </circle>
+<circle class="node" cx="3100" cy="1900" r="5">
+              <title>ideological-space</title>
+           </circle>
+<circle class="node" cx="3150" cy="1930" r="5">
+              <title>social-values-space</title>
+           </circle>
+<circle class="node" cx="3200" cy="1960" r="5">
+              <title>founding-principles-cluster</title>
+           </circle>
+<circle class="node" cx="3250" cy="1990" r="5">
+              <title>civil-rights-cluster</title>
+           </circle>
+<circle class="node" cx="3300" cy="2020" r="5">
+              <title>economic-development-cluster</title>
+           </circle>
+<circle class="node" cx="3350" cy="2050" r="5">
+              <title>democracy-rights-similarity</title>
+           </circle>
+<circle class="node" cx="3400" cy="2080" r="5">
+              <title>liberty-dream-similarity</title>
+           </circle>
+<circle class="node" cx="3450" cy="2110" r="5">
+              <title>democracy-evolution</title>
+           </circle>
+<circle class="node" cx="3500" cy="2140" r="5">
+              <title>equality-evolution</title>
+           </circle>
+    </g>
+</svg>

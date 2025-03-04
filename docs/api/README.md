@@ -1,838 +1,296 @@
-# UltraLink API Reference 📚
+# UltraLink API Reference
 
-## Overview
+This section provides detailed documentation for UltraLink's API. The API is organized into several functional areas, each with its own set of methods and classes.
 
-This document provides a comprehensive reference for the UltraLink API, including all classes, methods, parameters, and examples. The API is organized by module and includes detailed descriptions of each component.
+## API Structure
 
-## Table of Contents
+The UltraLink API is organized into the following main areas:
 
-- [Core API](#core-api)
-- [Entity Management](#entity-management)
-- [Relationship Management](#relationship-management)
-- [Vector Operations](#vector-operations)
-- [Temporal Management](#temporal-management)
-- [Visualization](#visualization)
-- [Export](#export)
-- [LLM Integration](#llm-integration)
-- [Utilities](#utilities)
+1. **Core API**: Essential methods for managing entities and relationships
+2. **Vector Operations API**: Methods for working with vector embeddings
+3. **Export API**: Methods for exporting knowledge graphs to different formats
+4. **LLM Integration API**: Methods for working with language models
+5. **Temporal API**: Methods for tracking and analyzing temporal changes
+6. **Extension API**: Methods for extending UltraLink with plugins and custom functionality
 
 ## Core API
 
-### UltraLink Class
-
-The main class that provides access to all UltraLink functionality.
-
-```typescript
-class UltraLink {
-    // Constructor
-    constructor(options?: UltraLinkOptions);
-    
-    // Properties
-    entities: Map<string, Entity>;
-    links: Map<string, Link[]>;
-    metadata: Metadata;
-    
-    // Core Methods
-    addEntity(id: string, type: string, attributes?: object): Entity;
-    getEntity(id: string): Entity | undefined;
-    removeEntity(id: string): boolean;
-    updateEntity(id: string, updates: object): Entity;
-    
-    addLink(source: string, target: string, type: string, attributes?: object): Link;
-    getLinks(source: string, options?: LinkQueryOptions): Link[];
-    removeLink(source: string, target: string, type?: string): boolean;
-    updateLink(source: string, target: string, type: string, updates: object): Link;
-    
-    // Export Methods
-    toJSON(): object;
-    toCSV(options?: CSVOptions): string;
-    toGraphML(options?: GraphMLOptions): string;
-    toObsidian(options?: ObsidianOptions): string;
-    toDOT(options?: DOTOptions): string;
-    
-    // Vector Methods
-    generateVectors(options?: VectorOptions): Promise<void>;
-    findSimilar(entityId: string, options?: SimilarityOptions): Entity[];
-    
-    // Analysis Methods
-    analyze(options?: AnalysisOptions): AnalysisResult;
-}
-```
-
-#### UltraLinkOptions
-
-```typescript
-interface UltraLinkOptions {
-    // Storage options
-    storage?: 'memory' | 'file' | 'database';
-    
-    // Vector options
-    vectorDimensions?: number;
-    vectorModel?: string;
-    
-    // Performance options
-    caching?: boolean;
-    indexing?: boolean;
-    
-    // Integration options
-    llmIntegration?: boolean;
-    llmOptions?: LLMOptions;
-}
-```
-
-#### Examples
+The Core API provides fundamental methods for creating and managing knowledge graphs:
 
 ```javascript
-// Create a new UltraLink instance
-const ultralink = new UltraLink({
-    storage: 'memory',
-    vectorDimensions: 1536,
-    caching: true
-});
+// Creating a new UltraLink instance
+const graph = new UltraLink(options);
 
-// Add entities and links
-const entity1 = ultralink.addEntity('doc-1', 'document', { title: 'Introduction to UltraLink' });
-const entity2 = ultralink.addEntity('doc-2', 'document', { title: 'Advanced UltraLink Usage' });
-const link = ultralink.addLink('doc-1', 'doc-2', 'references', { strength: 0.85 });
+// Entity Management
+const entity = graph.createEntity(type, id, attributes);
+const retrievedEntity = graph.getEntity(id);
+const updatedEntity = graph.updateEntity(id, updates);
+const deleted = graph.deleteEntity(id);
 
-// Export to different formats
-const jsonData = ultralink.toJSON();
-const csvData = ultralink.toCSV();
-const graphMLData = ultralink.toGraphML();
+// Relationship Management
+const link = graph.createLink(sourceId, targetId, type, attributes);
+const links = graph.getLinks(entityId);
+const updatedLink = graph.updateLink(sourceId, targetId, updates);
+const deleted = graph.deleteLink(sourceId, targetId);
+
+// Query Operations
+const entities = graph.findEntities({ type, attributes });
+const paths = graph.findPaths(sourceId, targetId, options);
 ```
 
-## Entity Management
+Learn more in the [Core API Reference](./core-api.md).
 
-### Entity Class
+## Vector Operations API
 
-Represents a node in the knowledge graph.
-
-```typescript
-class Entity {
-    // Properties
-    id: string;
-    type: string;
-    attributes: Map<string, any>;
-    
-    // Methods
-    addAttribute(key: string, value: any): void;
-    getAttribute(key: string): any;
-    removeAttribute(key: string): boolean;
-    updateAttribute(key: string, value: any): void;
-    
-    // Vector Methods
-    hasVector(): boolean;
-    getVector(): number[] | undefined;
-    setVector(vector: number[]): void;
-    
-    // Temporal Methods
-    getHistory(): Change[];
-    getVersion(version: string): EntityVersion;
-    revertTo(version: string): void;
-}
-```
-
-#### EntityOptions
-
-```typescript
-interface EntityOptions {
-    id: string;
-    type: string;
-    attributes?: Record<string, any>;
-    vector?: number[];
-    temporal?: TemporalData;
-}
-```
-
-#### Examples
+The Vector Operations API provides methods for working with vector embeddings:
 
 ```javascript
-// Create entity
-const entity = ultralink.addEntity('concept-1', 'concept', {
-    name: 'Vector Embeddings',
-    description: 'Numerical representations of text in vector space'
+// Adding vector embeddings
+graph.addVectorEmbedding(entityId, vector);
+
+// Finding similar entities
+const similar = graph.findSimilar(entityId, {
+  threshold: 0.7,
+  limit: 5
 });
 
-// Update entity
-entity.addAttribute('importance', 0.85);
-entity.updateAttribute('description', 'Numerical representations of semantic meaning in vector space');
+// Clustering entities
+const clusters = graph.analyzeClusters({
+  method: 'kmeans',
+  k: 5
+});
 
-// Vector operations
-await ultralink.generateVectors({ entities: [entity] });
-const vector = entity.getVector();
+// Dimensionality reduction for visualization
+const reduced = graph.reduceDimensions({
+  method: 'tsne',
+  dimensions: 2
+});
 ```
 
-## Relationship Management
+Learn more in the [Vector Operations API Reference](./vector-operations.md).
 
-### Link Class
+## Export API
 
-Represents a directed edge between two entities.
-
-```typescript
-class Link {
-    // Properties
-    source: string;
-    target: string;
-    type: string;
-    attributes: Map<string, any>;
-    
-    // Methods
-    addAttribute(key: string, value: any): void;
-    getAttribute(key: string): any;
-    removeAttribute(key: string): boolean;
-    updateAttribute(key: string, value: any): void;
-    
-    // Utility Methods
-    getStrength(): number;
-    setStrength(strength: number): void;
-    getReciprocal(): Link | undefined;
-}
-```
-
-#### LinkOptions
-
-```typescript
-interface LinkOptions {
-    source: string;
-    target: string;
-    type: string;
-    attributes?: Record<string, any>;
-    bidirectional?: boolean;
-    strength?: number;
-}
-```
-
-#### LinkQueryOptions
-
-```typescript
-interface LinkQueryOptions {
-    type?: string | string[];
-    targetType?: string | string[];
-    minStrength?: number;
-    maxStrength?: number;
-    limit?: number;
-    sortBy?: 'strength' | 'type' | 'created';
-    direction?: 'outgoing' | 'incoming' | 'both';
-}
-```
-
-#### Examples
+The Export API provides methods for exporting knowledge graphs to different formats:
 
 ```javascript
-// Create link
-const link = ultralink.addLink('concept-1', 'concept-2', 'related_to', {
-    strength: 0.75,
-    context: 'semantic similarity'
+// Exporting to JSON
+const jsonData = graph.toJSON();
+
+// Exporting to CSV
+const csvData = graph.toCSV();
+
+// Exporting to GraphML
+const graphMLData = graph.toGraphML();
+
+// Exporting to Obsidian Markdown
+const obsidianFiles = graph.toObsidian();
+
+// Exporting to HTML website
+const htmlFiles = graph.toHTMLWebsite();
+
+// Exporting to Bayesian Network
+const bayesianNetwork = graph.toBayesianNetwork();
+
+// Exporting to KIF
+const kifData = graph.toKIF();
+
+// Creating an export stream for large datasets
+const exportStream = graph.createExportStream('json', {
+  batch_size: 1000,
+  compress: true
 });
-
-// Query links
-const outgoingLinks = ultralink.getLinks('concept-1', {
-    type: 'related_to',
-    minStrength: 0.5,
-    sortBy: 'strength'
-});
-
-// Update link
-link.updateAttribute('strength', 0.85);
 ```
 
-## Vector Operations
+Learn more in the [Export API Reference](./export-api.md).
 
-### VectorManager Class
+## LLM Integration API
 
-Manages vector operations including generation, similarity, and clustering.
-
-```typescript
-class VectorManager {
-    // Constructor
-    constructor(ultralink: UltraLink, options?: VectorManagerOptions);
-    
-    // Generation Methods
-    generateVector(text: string, options?: VectorGenerationOptions): Promise<number[]>;
-    generateVectorsForEntities(entities: Entity[], options?: VectorGenerationOptions): Promise<void>;
-    
-    // Similarity Methods
-    calculateSimilarity(vector1: number[], vector2: number[]): number;
-    findSimilarEntities(entity: Entity, options?: SimilaritySearchOptions): Entity[];
-    findSimilarByVector(vector: number[], options?: SimilaritySearchOptions): Entity[];
-    
-    // Clustering Methods
-    clusterEntities(entities: Entity[], options?: ClusteringOptions): Cluster[];
-    
-    // Dimensionality Reduction
-    reduceVectorDimensions(vectors: number[][], dimensions: number, method?: ReductionMethod): number[][];
-}
-```
-
-#### VectorManagerOptions
-
-```typescript
-interface VectorManagerOptions {
-    defaultModel?: string;
-    dimensions?: number;
-    normalization?: boolean;
-    caching?: boolean;
-    storage?: VectorStorageOptions;
-}
-```
-
-#### VectorGenerationOptions
-
-```typescript
-interface VectorGenerationOptions {
-    model?: string;
-    dimensions?: number;
-    normalize?: boolean;
-    contextual?: boolean;
-    batchSize?: number;
-}
-```
-
-#### SimilaritySearchOptions
-
-```typescript
-interface SimilaritySearchOptions {
-    minSimilarity?: number;
-    maxResults?: number;
-    types?: string[];
-    includeMetadata?: boolean;
-    sortBy?: 'similarity' | 'type' | 'created';
-}
-```
-
-#### Examples
+The LLM Integration API provides methods for integrating with language models:
 
 ```javascript
-// Generate vectors
-const vectorManager = ultralink.vectors;
-await vectorManager.generateVectorsForEntities(ultralink.entities.values());
-
-// Find similar entities
-const similar = vectorManager.findSimilarEntities(entity, {
-    minSimilarity: 0.7,
-    maxResults: 10
+// Generating insights for an entity
+const insights = await graph.generateInsights(entityId, {
+  model: 'gpt-4',
+  aspects: ['technical', 'applications', 'limitations']
 });
 
-// Cluster entities
-const clusters = vectorManager.clusterEntities(Array.from(ultralink.entities.values()), {
-    method: 'kmeans',
-    numberOfClusters: 5
+// Updating entities with insights
+graph.updateWithInsights(insights, {
+  confidence_threshold: 0.8,
+  require_evidence: true
+});
+
+// Analyzing content to extract entities and relationships
+const analysis = await graph.analyzeContent(text, {
+  extractEntities: true,
+  generateEmbeddings: true,
+  inferRelationships: true
 });
 ```
 
-## Temporal Management
+Learn more in the [LLM Integration API Reference](./llm-api.md).
 
-### TemporalManager Class
+## Temporal API
 
-Manages temporal aspects of entities and relationships.
-
-```typescript
-class TemporalManager {
-    // Constructor
-    constructor(ultralink: UltraLink, options?: TemporalManagerOptions);
-    
-    // Versioning Methods
-    createVersion(options?: VersionOptions): Version;
-    getVersion(versionId: string): Version;
-    listVersions(options?: ListVersionOptions): Version[];
-    
-    // Change Tracking
-    trackChanges(entity: Entity, options?: TrackChangesOptions): Change[];
-    revertChange(changeId: string): boolean;
-    
-    // Evolution Analysis
-    analyzeEvolution(entityId: string, options?: EvolutionOptions): EvolutionResult;
-    compareVersions(version1: string, version2: string): VersionDiff;
-    
-    // Temporal Queries
-    queryAtTime(timestamp: Date, options?: TemporalQueryOptions): TemporalSnapshot;
-    getHistory(entityId: string, options?: HistoryOptions): TemporalHistory;
-}
-```
-
-#### TemporalManagerOptions
-
-```typescript
-interface TemporalManagerOptions {
-    versioningStrategy?: 'semantic' | 'timestamp' | 'incremental';
-    changeTracking?: boolean;
-    historyRetention?: number; // in days
-    changeGranularity?: 'entity' | 'attribute';
-}
-```
-
-#### VersionOptions
-
-```typescript
-interface VersionOptions {
-    name?: string;
-    description?: string;
-    type?: 'major' | 'minor' | 'patch';
-    entities?: string[];
-    metadata?: Record<string, any>;
-}
-```
-
-#### Examples
+The Temporal API provides methods for tracking and analyzing temporal changes:
 
 ```javascript
-// Create a version
-const version = ultralink.temporal.createVersion({
-    name: 'v1.0.0',
-    description: 'Initial release',
-    type: 'major'
+// Getting temporal changes for an entity
+const changes = graph.getTemporalChanges(entityId, {
+  startDate: '2023-01-01',
+  endDate: '2023-12-31',
+  granularity: 'month'
 });
 
-// Track changes
-const changes = ultralink.temporal.trackChanges(entity, {
-    startDate: new Date('2023-01-01'),
-    endDate: new Date('2023-12-31')
+// Tracking knowledge evolution
+graph.trackEvolution({
+  aspects: ['concepts', 'relationships'],
+  timeframe: '6 months'
 });
 
-// Analyze evolution
-const evolution = ultralink.temporal.analyzeEvolution('concept-1', {
-    metrics: ['complexity', 'centrality', 'connections'],
-    interval: 'month'
-});
+// Getting version history
+const history = graph.getVersionHistory(entityId);
 ```
 
-## Visualization
+Learn more in the [Temporal API Reference](./temporal-api.md).
 
-### VisualizationManager Class
+## Extension API
 
-Manages the creation and configuration of visualizations.
-
-```typescript
-class VisualizationManager {
-    // Constructor
-    constructor(ultralink: UltraLink, options?: VisualizationManagerOptions);
-    
-    // Creation Methods
-    createNetworkVisualization(options?: NetworkVisualizationOptions): NetworkVisualization;
-    createVectorVisualization(options?: VectorVisualizationOptions): VectorVisualization;
-    createTimelineVisualization(options?: TimelineVisualizationOptions): TimelineVisualization;
-    createMatrixVisualization(options?: MatrixVisualizationOptions): MatrixVisualization;
-    
-    // Dashboard
-    createDashboard(options?: DashboardOptions): Dashboard;
-    
-    // Utility Methods
-    registerVisualizationType(name: string, creator: VisualizationCreator): void;
-    getAvailableVisualizationTypes(): string[];
-}
-```
-
-#### VisualizationManagerOptions
-
-```typescript
-interface VisualizationManagerOptions {
-    defaultRenderer?: 'svg' | 'canvas' | 'webgl';
-    defaultTheme?: 'light' | 'dark' | 'custom';
-    interactive?: boolean;
-    responsive?: boolean;
-    accessibility?: boolean;
-}
-```
-
-#### NetworkVisualizationOptions
-
-```typescript
-interface NetworkVisualizationOptions {
-    container?: string | HTMLElement;
-    layout?: 'force' | 'hierarchical' | 'circular' | 'grid';
-    nodeSize?: number | ((node: Entity) => number);
-    nodeColor?: string | ((node: Entity) => string);
-    edgeWidth?: number | ((edge: Link) => number);
-    edgeColor?: string | ((edge: Link) => string);
-    labels?: boolean | LabelOptions;
-    events?: VisualizationEvents;
-}
-```
-
-#### Examples
+The Extension API provides methods for extending UltraLink with plugins and custom functionality:
 
 ```javascript
-// Create network visualization
-const networkViz = ultralink.visualize.createNetworkVisualization({
-    container: '#visualization',
-    layout: 'force',
-    nodeSize: node => node.getAttribute('importance') * 10 || 5,
-    nodeColor: node => colorByType(node.type),
-    labels: true
-});
+// Registering a custom entity type
+graph.registerEntityType(type, entityClass);
 
-// Create dashboard
-const dashboard = ultralink.visualize.createDashboard({
-    container: '#dashboard',
-    layout: 'grid',
-    views: [
-        { type: 'network', options: networkOptions },
-        { type: 'vector', options: vectorOptions },
-        { type: 'timeline', options: timelineOptions }
-    ]
+// Registering a plugin
+graph.registerPlugin(plugin);
+
+// Registering a custom transformation
+graph.registerTransformation(transformation);
+
+// Registering an event listener
+graph.on('entity:created', (entity) => {
+  console.log(`New entity created: ${entity.id}`);
 });
 ```
 
-## Export
+Learn more in the [Extension API Reference](./extension-api.md).
 
-### ExportManager Class
+## Configuration Options
 
-Manages the export of UltraLink data to various formats.
-
-```typescript
-class ExportManager {
-    // Constructor
-    constructor(ultralink: UltraLink, options?: ExportManagerOptions);
-    
-    // Export Methods
-    toJSON(options?: JSONExportOptions): string;
-    toCSV(options?: CSVExportOptions): string;
-    toGraphML(options?: GraphMLExportOptions): string;
-    toObsidian(options?: ObsidianExportOptions): ObsidianExport;
-    toDOT(options?: DOTExportOptions): string;
-    
-    // File Export
-    exportToFile(format: ExportFormat, filePath: string, options?: any): Promise<void>;
-    
-    // Batch Export
-    batchExport(exports: BatchExportItem[]): Promise<BatchExportResult>;
-}
-```
-
-#### ExportManagerOptions
-
-```typescript
-interface ExportManagerOptions {
-    defaultFormat?: ExportFormat;
-    prettyPrint?: boolean;
-    includeMetadata?: boolean;
-    filesystem?: FileSystemOptions;
-}
-```
-
-#### JSONExportOptions
-
-```typescript
-interface JSONExportOptions {
-    pretty?: boolean;
-    includeVectors?: boolean;
-    includeTemporal?: boolean;
-    filter?: ExportFilter;
-}
-```
-
-#### Examples
+When creating a new UltraLink instance, you can provide various configuration options:
 
 ```javascript
-// Export to JSON
-const jsonData = ultralink.export.toJSON({
-    pretty: true,
-    includeVectors: true
-});
-
-// Export to GraphML
-const graphMLData = ultralink.export.toGraphML({
-    includeAttributes: true,
-    includeMetadata: true
-});
-
-// Batch export
-const exportResult = await ultralink.export.batchExport([
-    { format: 'json', options: jsonOptions, path: 'export/data.json' },
-    { format: 'csv', options: csvOptions, path: 'export/data.csv' },
-    { format: 'graphml', options: graphmlOptions, path: 'export/data.graphml' }
-]);
-```
-
-## LLM Integration
-
-### LLMManager Class
-
-Manages the integration with Large Language Models for content enhancement.
-
-```typescript
-class LLMManager {
-    // Constructor
-    constructor(ultralink: UltraLink, options?: LLMManagerOptions);
-    
-    // Configuration
-    configure(options: LLMConfigOptions): void;
-    getConfiguration(): LLMConfigOptions;
-    
-    // Content Generation
-    generateInsights(content: string, options?: InsightOptions): Promise<Insights>;
-    enhanceEntity(entity: Entity, options?: EnhancementOptions): Promise<Entity>;
-    
-    // Relation Extraction
-    extractRelations(content: string, options?: RelationExtractionOptions): Promise<ExtractedRelation[]>;
-    
-    // Utility Methods
-    definePrompt(name: string, template: string, options?: PromptOptions): void;
-    process(content: string, promptName: string, options?: ProcessOptions): Promise<any>;
-}
-```
-
-#### LLMManagerOptions
-
-```typescript
-interface LLMManagerOptions {
-    provider?: 'openai' | 'anthropic' | 'local' | 'custom';
-    defaultModel?: string;
-    apiKey?: string;
-    endpoint?: string;
-    timeout?: number;
-    caching?: boolean;
-}
-```
-
-#### InsightOptions
-
-```typescript
-interface InsightOptions {
-    aspects?: string[];
-    depth?: 'basic' | 'detailed' | 'comprehensive';
-    format?: 'text' | 'json' | 'structured';
-    maxResults?: number;
-    language?: string;
-}
-```
-
-#### Examples
-
-```javascript
-// Configure LLM integration
-ultralink.llm.configure({
+const graph = new UltraLink({
+  // Core configuration
+  validateOnCreate: true,
+  strictMode: true,
+  
+  // Vector configuration
+  vectorDimensions: 768,
+  similarityMetric: 'cosine',
+  
+  // Storage configuration
+  storage: {
+    type: 'memory', // or 'file', 'indexeddb', etc.
+    options: {
+      // Storage-specific options
+    }
+  },
+  
+  // LLM configuration
+  llm: {
     provider: 'openai',
-    defaultModel: 'gpt-4',
+    model: 'gpt-4',
     apiKey: process.env.OPENAI_API_KEY
-});
-
-// Generate insights
-const insights = await ultralink.llm.generateInsights(documentContent, {
-    aspects: ['technical', 'implications', 'risks'],
-    depth: 'detailed',
-    format: 'json'
-});
-
-// Extract relations
-const relations = await ultralink.llm.extractRelations(documentContent, {
-    relationTypes: ['depends_on', 'references', 'contradicts'],
-    confidence: true
+  },
+  
+  // Event system configuration
+  events: {
+    captureSourceLocation: false,
+    asyncEventEmission: true
+  }
 });
 ```
 
-## Utilities
+Learn more in the [Configuration Reference](../reference/configuration.md).
 
-### SearchManager Class
+## Error Handling
 
-Provides search functionality across the UltraLink graph.
-
-```typescript
-class SearchManager {
-    // Constructor
-    constructor(ultralink: UltraLink, options?: SearchManagerOptions);
-    
-    // Search Methods
-    searchByText(query: string, options?: TextSearchOptions): SearchResult[];
-    searchByVector(vector: number[], options?: VectorSearchOptions): SearchResult[];
-    searchByAttributes(attributes: Record<string, any>, options?: AttributeSearchOptions): SearchResult[];
-    
-    // Advanced Search
-    query(queryObject: QueryObject): SearchResult[];
-    
-    // Index Management
-    buildIndex(options?: IndexOptions): Promise<void>;
-    updateIndex(entityIds?: string[]): Promise<void>;
-}
-```
-
-#### SearchManagerOptions
-
-```typescript
-interface SearchManagerOptions {
-    indexing?: boolean;
-    defaultSearchFields?: string[];
-    fuzzyMatching?: boolean;
-    maxResults?: number;
-}
-```
-
-#### TextSearchOptions
-
-```typescript
-interface TextSearchOptions {
-    fields?: string[];
-    fuzzy?: boolean;
-    boost?: Record<string, number>;
-    filter?: SearchFilter;
-    limit?: number;
-}
-```
-
-#### Examples
+UltraLink uses a consistent error handling approach throughout the API:
 
 ```javascript
-// Text search
-const results = ultralink.search.searchByText('machine learning', {
-    fields: ['title', 'content', 'description'],
-    fuzzy: true,
-    limit: 10
-});
-
-// Vector search
-const similarResults = ultralink.search.searchByVector(queryVector, {
-    minSimilarity: 0.7,
-    types: ['document', 'concept'],
-    limit: 5
-});
-
-// Advanced query
-const queryResults = ultralink.search.query({
-    must: [
-        { field: 'type', value: 'document' },
-        { field: 'attributes.status', value: 'published' }
-    ],
-    should: [
-        { field: 'content', value: 'machine learning', boost: 2.0 },
-        { field: 'content', value: 'deep learning', boost: 1.5 }
-    ],
-    mustNot: [
-        { field: 'attributes.deprecated', value: true }
-    ]
-});
-```
-
-### ValidationManager Class
-
-Provides validation functionality for UltraLink data.
-
-```typescript
-class ValidationManager {
-    // Constructor
-    constructor(ultralink: UltraLink, options?: ValidationManagerOptions);
-    
-    // Validation Methods
-    validateEntity(entity: Entity, schema?: EntitySchema): ValidationResult;
-    validateLink(link: Link, schema?: LinkSchema): ValidationResult;
-    validateGraph(options?: GraphValidationOptions): ValidationResult;
-    
-    // Schema Management
-    defineEntitySchema(type: string, schema: EntitySchema): void;
-    defineLinkSchema(type: string, schema: LinkSchema): void;
-    
-    // Fixing Methods
-    fixValidationIssues(issues: ValidationIssue[]): FixResult;
+try {
+  const entity = graph.createEntity('invalid-type', 'entity-1', {});
+} catch (error) {
+  if (error instanceof UltraLink.EntityValidationError) {
+    console.error('Validation error:', error.message);
+    console.error('Validation details:', error.details);
+  } else if (error instanceof UltraLink.StorageError) {
+    console.error('Storage error:', error.message);
+  } else {
+    console.error('Unknown error:', error);
+  }
 }
 ```
 
-#### ValidationManagerOptions
+Learn more in the [Error Handling Guide](../guides/error-handling.md).
+
+## TypeScript Support
+
+UltraLink includes full TypeScript type definitions:
 
 ```typescript
-interface ValidationManagerOptions {
-    autoValidate?: boolean;
-    strictMode?: boolean;
-    defaultSchemas?: Record<string, any>;
-}
+import { UltraLink, Entity, Link, VectorOptions } from 'ultralink';
+
+const graph = new UltraLink();
+
+const entity: Entity = graph.createEntity('person', 'person-1', {
+  name: 'Alice',
+  age: 30
+});
+
+const link: Link = graph.createLink('person-1', 'person-2', 'knows', {
+  since: 2020,
+  strength: 0.8
+});
+
+const vectorOptions: VectorOptions = {
+  dimensions: 768,
+  metric: 'cosine'
+};
 ```
 
-#### Examples
+Learn more in the [TypeScript Guide](../guides/typescript.md).
 
-```javascript
-// Validate entity
-const validationResult = ultralink.validate.validateEntity(entity, {
-    required: ['title', 'content'],
-    properties: {
-        title: { type: 'string', minLength: 3 },
-        content: { type: 'string' },
-        importance: { type: 'number', minimum: 0, maximum: 1 }
-    }
-});
+## Best Practices
 
-// Define schema
-ultralink.validate.defineEntitySchema('document', {
-    required: ['title', 'content'],
-    properties: {
-        title: { type: 'string', minLength: 3 },
-        content: { type: 'string' },
-        status: { type: 'string', enum: ['draft', 'review', 'published'] }
-    }
-});
+When using the UltraLink API, consider these best practices:
 
-// Validate graph
-const graphValidation = ultralink.validate.validateGraph({
-    checkConsistency: true,
-    checkConnectivity: true,
-    checkOrphans: true
-});
-```
+1. **Use Typed Entities**: Consistently use entity types to organize your knowledge graph
+2. **Meaningful IDs**: Create meaningful, consistent IDs for entities
+3. **Structured Attributes**: Use consistent attribute structures for similar entities
+4. **Error Handling**: Always handle potential errors, especially for operations that may fail
+5. **Batch Operations**: Use batch operations for better performance with large datasets
+6. **Event Listeners**: Use event listeners for reactive programming
+7. **Proper Cleanup**: Call `graph.dispose()` when you're done to release resources
 
-## Event System
+Learn more in the [API Best Practices Guide](../guides/api-best-practices.md).
 
-### EventManager Class
+## API Stability and Versioning
 
-Manages the event system for UltraLink.
+UltraLink follows semantic versioning:
 
-```typescript
-class EventManager {
-    // Constructor
-    constructor(ultralink: UltraLink);
-    
-    // Event Methods
-    on(event: EventType, handler: EventHandler): void;
-    off(event: EventType, handler?: EventHandler): void;
-    once(event: EventType, handler: EventHandler): void;
-    
-    // Emission Methods
-    emit(event: EventType, data: any): void;
-    
-    // Utility Methods
-    getListeners(event: EventType): EventHandler[];
-    clearListeners(event?: EventType): void;
-}
-```
+- **MAJOR** version changes indicate breaking API changes
+- **MINOR** version changes add functionality in a backward-compatible manner
+- **PATCH** version changes fix bugs in a backward-compatible manner
 
-#### EventTypes
+Methods marked as **@experimental** may change between minor versions. Methods marked as **@deprecated** will be removed in a future version.
 
-```typescript
-type EventType = 
-    // Entity events
-    'entity:added' | 'entity:updated' | 'entity:removed' |
-    
-    // Link events
-    'link:added' | 'link:updated' | 'link:removed' |
-    
-    // Vector events
-    'vector:generated' | 'vector:updated' |
-    
-    // Data events
-    'data:imported' | 'data:exported' |
-    
-    // System events
-    'system:error' | 'system:warning' | 'system:info';
-```
+## Next Steps
 
-#### Examples
-
-```javascript
-// Subscribe to entity events
-ultralink.events.on('entity:added', (entity) => {
-    console.log(`Entity added: ${entity.id}`);
-});
-
-// Subscribe to link events
-ultralink.events.on('link:added', (link) => {
-    console.log(`Link added: ${link.source} -> ${link.target}`);
-});
-
-// One-time event
-ultralink.events.once('data:exported', (data) => {
-    console.log(`Data exported: ${data.format}`);
-});
-```
-
-## Further Reading
-
-- [Getting Started Guide](../guides/getting-started.md)
-- [Examples Repository](https://github.com/ultralink/examples)
-- [Contribution Guidelines](../contributing.md)
-- [Changelog](../changelog.md) 
+- Explore the [Core API Reference](./core-api.md) to learn about essential methods
+- Check out the [Export API Reference](./export-api.md) for exporting your knowledge graphs
+- See the [Vector Operations API Reference](./vector-operations.md) for working with embeddings
+- Learn about [LLM Integration](./llm-api.md) for AI-enhanced knowledge graphs 

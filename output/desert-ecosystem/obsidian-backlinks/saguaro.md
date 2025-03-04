@@ -21,7 +21,3 @@ id: saguaro
 
 - [[aridity|Aridity]] (mechanism: Water storage in stem, efficiency: 0.95)
 
-## Backlinks
-
-- [[saguaro|Saguaro Cactus]] (adapts_to)
-

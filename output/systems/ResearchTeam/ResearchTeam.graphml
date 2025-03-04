@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="alice-chen">
+      <data key="type">person</data>
+      <data key="name">Alice Chen</data>
+    </node>
+    <node id="bob-smith">
+      <data key="type">person</data>
+      <data key="name">Bob Smith</data>
+    </node>
+    <node id="carol-jones">
+      <data key="type">person</data>
+      <data key="name">Carol Jones</data>
+    </node>
+    <node id="david-patel">
+      <data key="type">person</data>
+      <data key="name">David Patel</data>
+    </node>
+    <node id="elena-rodriguez">
+      <data key="type">person</data>
+      <data key="name">Elena Rodriguez</data>
+    </node>
+    <node id="frank-zhang">
+      <data key="type">person</data>
+      <data key="name">Frank Zhang</data>
+    </node>
+    <node id="grace-kim">
+      <data key="type">person</data>
+      <data key="name">Grace Kim</data>
+    </node>
+    <node id="computer-vision-project">
+      <data key="type">project</data>
+    </node>
+    <node id="nlp-project">
+      <data key="type">project</data>
+    </node>
+    <node id="federated-learning-project">
+      <data key="type">project</data>
+    </node>
+    <node id="quantum-ml-project">
+      <data key="type">project</data>
+    </node>
+    <node id="adaptive-robotics-project">
+      <data key="type">project</data>
+    </node>
+    <node id="vision-paper-2022">
+      <data key="type">publication</data>
+    </node>
+    <node id="nlp-paper-2023">
+      <data key="type">publication</data>
+    </node>
+    <node id="federated-paper-2023">
+      <data key="type">publication</data>
+    </node>
+    <node id="robotics-paper-2022">
+      <data key="type">publication</data>
+    </node>
+    <node id="quantum-paper-2023">
+      <data key="type">publication</data>
+    </node>
+    <node id="survey-paper-2023">
+      <data key="type">publication</data>
+    </node>
+    <node id="gpu-cluster">
+      <data key="type">equipment</data>
+      <data key="name">High-Performance GPU Cluster</data>
+    </node>
+    <node id="robotics-lab">
+      <data key="type">facility</data>
+      <data key="name">Robotics Laboratory</data>
+    </node>
+    <node id="quantum-computer">
+      <data key="type">equipment</data>
+      <data key="name">Quantum Computing Access</data>
+    </node>
+    <node id="hpc-cluster">
+      <data key="type">equipment</data>
+      <data key="name">University High-Performance Computing Cluster</data>
+    </node>
+    <node id="data-collection-system">
+      <data key="type">equipment</data>
+      <data key="name">Field Data Collection System</data>
+    </node>
+    <node id="conference-room">
+      <data key="type">facility</data>
+      <data key="name">Research Team Conference Room</data>
+    </node>
+    <node id="visualization-lab">
+      <data key="type">facility</data>
+      <data key="name">Data Visualization Laboratory</data>
+    </node>
+    <node id="machine-learning-theory">
+      <data key="type">knowledge-area</data>
+      <data key="name">Machine Learning Theory</data>
+    </node>
+    <node id="computer-vision">
+      <data key="type">knowledge-area</data>
+      <data key="name">Computer Vision</data>
+    </node>
+    <node id="nlp">
+      <data key="type">knowledge-area</data>
+      <data key="name">Natural Language Processing</data>
+    </node>
+    <node id="privacy-ml">
+      <data key="type">knowledge-area</data>
+      <data key="name">Privacy-Preserving Machine Learning</data>
+    </node>
+    <node id="quantum-ml">
+      <data key="type">knowledge-area</data>
+      <data key="name">Quantum Machine Learning</data>
+    </node>
+    <node id="robotics">
+      <data key="type">knowledge-area</data>
+      <data key="name">Robotics</data>
+    </node>
+    <node id="reinforcement-learning">
+      <data key="type">knowledge-area</data>
+      <data key="name">Reinforcement Learning</data>
+    </node>
+    <node id="nsf-grant">
+      <data key="type">funding</data>
+      <data key="name">NSF Research Grant</data>
+    </node>
+    <node id="tech-partner">
+      <data key="type">funding</data>
+      <data key="name">Tech Industry Partnership</data>
+    </node>
+    <node id="university-fund">
+      <data key="type">funding</data>
+      <data key="name">University Research Excellence Fund</data>
+    </node>
+    <edge source="alice-chen" target="computer-vision-project">
+      <data key="type">leads</data>
+    </edge>
+    <edge source="alice-chen" target="nlp-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="bob-smith" target="nlp-project">
+      <data key="type">leads</data>
+    </edge>
+    <edge source="carol-jones" target="computer-vision-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="david-patel" target="federated-learning-project">
+      <data key="type">leads</data>
+    </edge>
+    <edge source="alice-chen" target="federated-learning-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="frank-zhang" target="quantum-ml-project">
+      <data key="type">leads</data>
+    </edge>
+    <edge source="david-patel" target="quantum-ml-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="carol-jones" target="adaptive-robotics-project">
+      <data key="type">leads</data>
+    </edge>
+    <edge source="elena-rodriguez" target="adaptive-robotics-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="elena-rodriguez" target="computer-vision-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="david-patel" target="nlp-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="bob-smith" target="federated-learning-project">
+      <data key="type">contributes_to</data>
+    </edge>
+    <edge source="alice-chen" target="carol-jones">
+      <data key="type">mentors</data>
+    </edge>
+    <edge source="alice-chen" target="david-patel">
+      <data key="type">mentors</data>
+    </edge>
+    <edge source="bob-smith" target="elena-rodriguez">
+      <data key="type">mentors</data>
+    </edge>
+    <edge source="david-patel" target="elena-rodriguez">
+      <data key="type">mentors</data>
+    </edge>
+    <edge source="carol-jones" target="elena-rodriguez">
+      <data key="type">mentors</data>
+    </edge>
+    <edge source="alice-chen" target="vision-paper-2022">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="carol-jones" target="vision-paper-2022">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="bob-smith" target="nlp-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="alice-chen" target="nlp-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="david-patel" target="federated-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="alice-chen" target="federated-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="frank-zhang" target="federated-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="carol-jones" target="robotics-paper-2022">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="alice-chen" target="robotics-paper-2022">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="frank-zhang" target="quantum-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="david-patel" target="quantum-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="david-patel" target="survey-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="bob-smith" target="survey-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="alice-chen" target="survey-paper-2023">
+      <data key="type">authored</data>
+    </edge>
+    <edge source="computer-vision-project" target="vision-paper-2022">
+      <data key="type">produced</data>
+    </edge>
+    <edge source="nlp-project" target="nlp-paper-2023">
+      <data key="type">produced</data>
+    </edge>
+    <edge source="federated-learning-project" target="federated-paper-2023">
+      <data key="type">produced</data>
+    </edge>
+    <edge source="federated-learning-project" target="survey-paper-2023">
+      <data key="type">produced</data>
+    </edge>
+    <edge source="adaptive-robotics-project" target="robotics-paper-2022">
+      <data key="type">produced</data>
+    </edge>
+    <edge source="quantum-ml-project" target="quantum-paper-2023">
+      <data key="type">produced</data>
+    </edge>
+    <edge source="computer-vision-project" target="gpu-cluster">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="nlp-project" target="gpu-cluster">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="carol-jones" target="robotics-lab">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="federated-learning-project" target="gpu-cluster">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="federated-learning-project" target="hpc-cluster">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="quantum-ml-project" target="quantum-computer">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="quantum-ml-project" target="hpc-cluster">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="adaptive-robotics-project" target="robotics-lab">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="adaptive-robotics-project" target="data-collection-system">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="elena-rodriguez" target="visualization-lab">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="david-patel" target="hpc-cluster">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="frank-zhang" target="quantum-computer">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="machine-learning-theory" target="computer-vision">
+      <data key="type">foundational_for</data>
+    </edge>
+    <edge source="machine-learning-theory" target="nlp">
+      <data key="type">foundational_for</data>
+    </edge>
+    <edge source="alice-chen" target="computer-vision">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="bob-smith" target="nlp">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="carol-jones" target="machine-learning-theory">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="machine-learning-theory" target="privacy-ml">
+      <data key="type">foundational_for</data>
+    </edge>
+    <edge source="machine-learning-theory" target="quantum-ml">
+      <data key="type">foundational_for</data>
+    </edge>
+    <edge source="machine-learning-theory" target="reinforcement-learning">
+      <data key="type">foundational_for</data>
+    </edge>
+    <edge source="reinforcement-learning" target="robotics">
+      <data key="type">foundational_for</data>
+    </edge>
+    <edge source="david-patel" target="privacy-ml">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="david-patel" target="machine-learning-theory">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="frank-zhang" target="quantum-ml">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="carol-jones" target="reinforcement-learning">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="carol-jones" target="robotics">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="alice-chen" target="privacy-ml">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="bob-smith" target="privacy-ml">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="elena-rodriguez" target="computer-vision">
+      <data key="type">expertise_in</data>
+    </edge>
+    <edge source="computer-vision-project" target="computer-vision">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="computer-vision-project" target="machine-learning-theory">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="nlp-project" target="nlp">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="nlp-project" target="machine-learning-theory">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="federated-learning-project" target="privacy-ml">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="federated-learning-project" target="machine-learning-theory">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="quantum-ml-project" target="quantum-ml">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="quantum-ml-project" target="machine-learning-theory">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="adaptive-robotics-project" target="robotics">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="adaptive-robotics-project" target="reinforcement-learning">
+      <data key="type">applies</data>
+    </edge>
+    <edge source="nsf-grant" target="computer-vision-project">
+      <data key="type">funds</data>
+    </edge>
+    <edge source="nsf-grant" target="adaptive-robotics-project">
+      <data key="type">funds</data>
+    </edge>
+    <edge source="tech-partner" target="federated-learning-project">
+      <data key="type">funds</data>
+    </edge>
+    <edge source="tech-partner" target="nlp-project">
+      <data key="type">funds</data>
+    </edge>
+    <edge source="university-fund" target="quantum-ml-project">
+      <data key="type">funds</data>
+    </edge>
+    <edge source="grace-kim" target="computer-vision-project">
+      <data key="type">administers</data>
+    </edge>
+    <edge source="grace-kim" target="nlp-project">
+      <data key="type">administers</data>
+    </edge>
+    <edge source="grace-kim" target="federated-learning-project">
+      <data key="type">administers</data>
+    </edge>
+    <edge source="grace-kim" target="quantum-ml-project">
+      <data key="type">administers</data>
+    </edge>
+    <edge source="grace-kim" target="adaptive-robotics-project">
+      <data key="type">administers</data>
+    </edge>
+    <edge source="survey-paper-2023" target="federated-paper-2023">
+      <data key="type">cites</data>
+    </edge>
+    <edge source="survey-paper-2023" target="vision-paper-2022">
+      <data key="type">cites</data>
+    </edge>
+    <edge source="survey-paper-2023" target="nlp-paper-2023">
+      <data key="type">cites</data>
+    </edge>
+    <edge source="robotics-paper-2022" target="vision-paper-2022">
+      <data key="type">cites</data>
+    </edge>
+    <edge source="quantum-paper-2023" target="survey-paper-2023">
+      <data key="type">cites</data>
+    </edge>
+  </graph>
+</graphml>

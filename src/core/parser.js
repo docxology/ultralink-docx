@@ -63,48 +63,59 @@ class UltraLinkParser {
    * Parse content and extract entities and links
    * @param {string} content - Text content to parse
    * @param {string} sourceId - ID of the source document/entity
-   * @returns {Object} - Extracted entities and links
+   * @returns {Promise<Object>} - Extracted entities and links
    */
   parse(content, sourceId) {
-    // Extract basic Obsidian links
-    const obsidianLinks = extractObsidianLinks(content);
-    
-    // Create source entity if it doesn't exist
-    if (sourceId && !this.store.getEntity(sourceId)) {
-      this.store.createEntity(sourceId, 'document', { content });
-    }
-    
-    // Process Obsidian links
-    obsidianLinks.forEach(targetId => {
-      // Create target entity if it doesn't exist
-      if (!this.store.getEntity(targetId)) {
-        this.store.createEntity(targetId, 'reference');
-      }
-      
-      // Create link from source to target
-      if (sourceId) {
-        this.store.createLink(sourceId, targetId);
-      }
-    });
-    
-    // Process custom parsers
-    this.customParsers.forEach(({ regex, handler }) => {
-      const links = extractCustomLinks(content, regex, handler);
-      links.forEach(link => {
-        if (!this.store.getEntity(link.target)) {
-          this.store.createEntity(link.target, 'reference');
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Extract basic Obsidian links
+        const obsidianLinks = extractObsidianLinks(content);
+        
+        // Create source entity if it doesn't exist
+        if (sourceId && !this.store.getEntity(sourceId)) {
+          await this.store.createEntity(sourceId, 'document', { content });
         }
         
-        if (sourceId) {
-          this.store.createLink(sourceId, link.target, link.type, link.metadata);
+        // Process Obsidian links
+        for (const targetId of obsidianLinks) {
+          // Create target entity if it doesn't exist
+          if (!this.store.getEntity(targetId)) {
+            await this.store.createEntity(targetId, 'reference');
+          }
+          
+          // Create link from source to target
+          if (sourceId) {
+            await this.store.createLink(sourceId, targetId);
+          }
         }
-      });
+        
+        // Process custom parsers
+        for (const { regex, handler } of this.customParsers) {
+          const links = extractCustomLinks(content, regex, handler);
+          for (const link of links) {
+            if (!this.store.getEntity(link.target)) {
+              await this.store.createEntity(link.target, 'reference');
+            }
+            
+            if (sourceId) {
+              await this.store.createLink(sourceId, link.target, link.type, link.metadata);
+            }
+          }
+        }
+        
+        resolve({
+          links: obsidianLinks.map(target => ({ source: sourceId, target })),
+          store: this.store
+        });
+      } catch (error) {
+        // Gracefully handle errors
+        console.error("Error parsing content:", error);
+        resolve({
+          links: [],
+          store: this.store
+        });
+      }
     });
-    
-    return {
-      links: obsidianLinks.map(target => ({ source: sourceId, target })),
-      store: this.store
-    };
   }
 }
 

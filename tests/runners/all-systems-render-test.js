@@ -12,6 +12,8 @@ const path = require('path');
 const { createDesertEcosystemDataset } = require('../fixtures/Systems/DesertEcosystem/desert-ecosystem');
 const { createResearchTeamDataset } = require('../fixtures/Systems/ResearchTeam/research-team');
 const { createActiveInferenceLabDataset } = require('../fixtures/Systems/ActiveInferenceLab/active-inference-lab');
+const { createUSAHistoryDataset } = require('../fixtures/Systems/USAHistory/usa-history');
+const { createNeurofeedbackResearchDataset } = require('../fixtures/Systems/NeurofeedbackResearch/neurofeedback-research');
 const OutputValidator = require('./output-validator');
 
 // Configure paths
@@ -24,7 +26,10 @@ const FORMATS = [
   'json',
   'graphml',
   'csv',
-  'obsidian'
+  'obsidian',
+  'bayesian',
+  'html-website',
+  'visualization'
 ];
 
 /**
@@ -88,6 +93,10 @@ async function createSystem(systemName) {
       return createResearchTeamDataset();
     case 'ActiveInferenceLab':
       return createActiveInferenceLabDataset();
+    case 'USAHistory':
+      return createUSAHistoryDataset();
+    case 'NeurofeedbackResearch':
+      return createNeurofeedbackResearchDataset();
     default:
       throw new Error(`Unknown system: ${systemName}`);
   }
@@ -135,11 +144,14 @@ async function renderSystem(systemName, system, logger) {
           const csvDir = path.join(systemOutputDir, 'csv');
           await fs.mkdir(csvDir, { recursive: true });
           
-          const entityCsv = await system.toCSV({ type: 'entities' });
-          await fs.writeFile(path.join(csvDir, 'entities.csv'), entityCsv);
+          // Get both entities and relationships CSV in one call
+          const csvOutput = await system.toCSV();
           
-          const relationshipCsv = await system.toCSV({ type: 'relationships' });
-          await fs.writeFile(path.join(csvDir, 'relationships.csv'), relationshipCsv);
+          // Write entities CSV
+          await fs.writeFile(path.join(csvDir, 'entities.csv'), csvOutput.entities);
+          
+          // Write relationships CSV
+          await fs.writeFile(path.join(csvDir, 'relationships.csv'), csvOutput.relationships);
           
           outputPath = csvDir;
           break;
@@ -156,6 +168,97 @@ async function renderSystem(systemName, system, logger) {
           }
           
           outputPath = obsidianDir;
+          break;
+
+        case 'bayesian':
+          const bayesianDir = path.join(systemOutputDir, 'bayesian');
+          await fs.mkdir(bayesianDir, { recursive: true });
+          
+          // Generate Bayesian Network representation
+          output = await system.toBayesianNetwork({ 
+            format: 'json', 
+            includeParameters: true 
+          });
+          outputPath = path.join(bayesianDir, `${systemName}-bayesian.json`);
+          
+          if (typeof output !== 'string') {
+            output = JSON.stringify(output, null, 2);
+          }
+          await fs.writeFile(outputPath, output);
+          
+          // Additionally generate BIF format for interoperability
+          const bifOutput = await system.toBayesianNetwork({ format: 'bif' });
+          await fs.writeFile(path.join(bayesianDir, `${systemName}.bif`), bifOutput);
+          
+          outputPath = bayesianDir;
+          break;
+          
+        case 'html-website':
+          const websiteDir = path.join(systemOutputDir, 'website');
+          await fs.mkdir(websiteDir, { recursive: true });
+          
+          // Generate HTML website
+          const htmlOutput = await system.toHTMLWebsite({
+            title: `${systemName} Knowledge Graph`,
+            description: `Interactive exploration of the ${systemName} knowledge graph`,
+            theme: 'default',
+            features: {
+              search: true,
+              filters: true,
+              visualization: true,
+              export: true
+            }
+          });
+          
+          // Write HTML files
+          if (typeof htmlOutput === 'string') {
+            // Single file output
+            outputPath = path.join(websiteDir, 'index.html');
+            await fs.writeFile(outputPath, htmlOutput);
+          } else {
+            // Multi-file output
+            for (const [filename, content] of Object.entries(htmlOutput)) {
+              const filePath = path.join(websiteDir, filename);
+              
+              // Create subdirectories if needed
+              const dirPath = path.dirname(filePath);
+              await fs.mkdir(dirPath, { recursive: true });
+              
+              await fs.writeFile(filePath, content);
+            }
+          }
+          
+          outputPath = websiteDir;
+          break;
+          
+        case 'visualization':
+          const vizDir = path.join(systemOutputDir, 'visualization');
+          await fs.mkdir(vizDir, { recursive: true });
+          
+          // Generate visualizations
+          const vizOutput = await system.toVisualization({
+            formats: ['png', 'svg', 'd3'],
+            options: {
+              layout: 'force',
+              width: 1200,
+              height: 900,
+              nodeSize: 'degree',
+              colorScheme: 'category10'
+            }
+          });
+          
+          // Write visualization files
+          for (const [format, content] of Object.entries(vizOutput)) {
+            if (format === 'd3') {
+              // Write D3 visualization as HTML
+              await fs.writeFile(path.join(vizDir, `${systemName}-d3.html`), content);
+            } else {
+              // Write image files
+              await fs.writeFile(path.join(vizDir, `${systemName}.${format}`), content);
+            }
+          }
+          
+          outputPath = vizDir;
           break;
       }
       
@@ -200,6 +303,10 @@ async function validateSystemOutputs(systemName, outputPaths, logger) {
     // Validate Obsidian output
     logger.log('Validating Obsidian output');
     await validator.validateObsidian(outputPaths.obsidian);
+    
+    // Validate Bayesian network output
+    logger.log('Validating Bayesian network output');
+    await validator.validateBayesianNetwork(path.join(outputPaths.bayesian, `${systemName}-bayesian.json`));
     
     logger.log('Validation complete');
     

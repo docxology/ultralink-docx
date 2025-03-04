@@ -342,6 +342,58 @@ class OutputValidator {
   }
 
   /**
+   * Validates a Bayesian Network output file
+   * @param {string} filePath - Path to the Bayesian Network JSON file
+   */
+  async validateBayesianNetwork(filePath) {
+    try {
+      const content = await fs.readFile(filePath, 'utf8');
+      const data = JSON.parse(content);
+      
+      // Basic Bayesian network validation
+      assert(data, 'Bayesian network data should exist');
+      
+      // Check for nodes
+      assert(data.nodes, 'Bayesian network should have nodes');
+      assert(typeof data.nodes === 'object', 'Nodes should be an object');
+      this.addResult('bayesian-has-nodes', true);
+      
+      // Check node structure if nodes exist
+      const nodeIds = Object.keys(data.nodes);
+      if (nodeIds.length > 0) {
+        const firstNode = data.nodes[nodeIds[0]];
+        assert(firstNode.id, 'Node should have an ID');
+        assert(firstNode.states, 'Node should have states');
+        assert(Array.isArray(firstNode.states), 'States should be an array');
+        assert(firstNode.cpt, 'Node should have a CPT (Conditional Probability Table)');
+        this.addResult('bayesian-node-structure', true);
+      }
+      
+      // Check for edges
+      assert(data.edges, 'Bayesian network should have edges');
+      assert(Array.isArray(data.edges), 'Edges should be an array');
+      this.addResult('bayesian-has-edges', true);
+      
+      // Check edge structure if edges exist
+      if (data.edges.length > 0) {
+        const firstEdge = data.edges[0];
+        assert(firstEdge.source, 'Edge should have a source');
+        assert(firstEdge.target, 'Edge should have a target');
+        assert(firstEdge.type, 'Edge should have a type');
+        this.addResult('bayesian-edge-structure', true);
+      }
+      
+      this.addResult('bayesian-validation', true, { path: filePath });
+    } catch (error) {
+      this.addResult('bayesian-validation', false, { 
+        path: filePath,
+        error: error.message 
+      });
+      throw error;
+    }
+  }
+
+  /**
    * Generates a report of all validation results
    * @returns {Object} Validation report
    */

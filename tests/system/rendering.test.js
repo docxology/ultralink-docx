@@ -20,7 +20,8 @@ const OUTPUT_DIR = path.join(process.cwd(), 'output/systems');
 const SYSTEMS = {
   ResearchTeam: createResearchTeamDataset,
   DesertEcosystem: createDesertEcosystemDataset,
-  ActiveInferenceLab: createActiveInferenceLabDataset
+  ActiveInferenceLab: createActiveInferenceLabDataset,
+  USAHistory: require('../fixtures/Systems/USAHistory/usa-history').createUSAHistoryDataset
 };
 
 // Formats to render
@@ -30,7 +31,8 @@ const FORMATS = [
   'obsidian',
   'html-website',
   'visualization',
-  'csv'
+  'csv',
+  'kif'
 ];
 
 // Visualization formats
@@ -48,6 +50,17 @@ const HTML_THEMES = [
   'light',
   'academic',
   'ocean'
+];
+
+const RENDERING_TARGETS = [
+  'json',
+  'graphml',
+  'csv',
+  'obsidian',
+  'bayesian',
+  'website',
+  'visualization',
+  'kif'
 ];
 
 // Ensure output directories exist
@@ -147,6 +160,17 @@ describe('System Rendering Tests', () => {
                 });
                 break;
                 
+              case 'kif':
+                const kifOutputPath = path.join(outputPath, `${systemName.toLowerCase()}.kif`);
+                fs.writeFileSync(kifOutputPath, system.toKIF({
+                  includeMetaKnowledge: true,
+                  includeFunctions: true,
+                  includeRules: true,
+                  prettyPrint: true
+                }));
+                outputFiles.push(kifOutputPath);
+                break;
+                
               case 'html-website':
                 // Test each theme
                 HTML_THEMES.forEach(theme => {
@@ -239,6 +263,32 @@ describe('System Rendering Tests', () => {
                     expect(file.endsWith(`.${vizFormat}`)).toBe(true);
                   });
                 });
+                break;
+
+              case 'kif':
+                const kifFilePath = path.join(outputPath, `${systemName.toLowerCase()}.kif`);
+                expect(fs.existsSync(kifFilePath)).toBe(true);
+                const kifContent = fs.readFileSync(kifFilePath, 'utf8');
+                
+                // KIF structure validation
+                expect(kifContent).toContain(';; UltraLink Knowledge Interchange Format (KIF) Export');
+                expect(kifContent).toContain(';; Entities and their attributes');
+                expect(kifContent).toContain(';; Relationships');
+                
+                // Structure should contain instance definitions
+                expect(kifContent).toMatch(/\(instance [a-zA-Z0-9\-_]+ [A-Z][a-zA-Z0-9_]+\)/);
+                
+                // Meta-knowledge validation (should be included since we requested it)
+                expect(kifContent).toContain(';; Meta-knowledge');
+                expect(kifContent).toMatch(/\(= \(entityCount UltraLinkExport\) [0-9]+\)/);
+                
+                // Functions validation (should be included since we requested it)
+                expect(kifContent).toContain(';; Functions');
+                expect(kifContent).toMatch(/\(deffunction relationshipCount/);
+                
+                // Rules validation (should be included since we requested it)
+                expect(kifContent).toContain(';; Rules');
+                expect(kifContent).toMatch(/\(defrule/);
                 break;
             }
           });

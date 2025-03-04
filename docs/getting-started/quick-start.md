@@ -1,295 +1,310 @@
-# UltraLink Quick Start Guide 🚀
+# UltraLink Quick Start Guide
 
-This guide will help you quickly get up and running with UltraLink, providing step-by-step instructions for common tasks and pointing you to additional resources for more detailed information.
+This guide will help you get started with UltraLink quickly. We'll cover the essential steps to create a knowledge graph, add entities and relationships, and perform basic operations.
 
-## Installation
+## Prerequisites
 
-```bash
-# Using npm
-npm install ultralink
+Before starting, ensure you have:
 
-# Using yarn
-yarn add ultralink
+- Installed UltraLink (see [Installation Guide](./installation-guide.md))
+- Basic understanding of JavaScript
+- Node.js environment or browser setup ready
 
-# Using pnpm
-pnpm add ultralink
-```
+## Creating Your First Knowledge Graph
 
-## Basic Usage
+Let's create a simple knowledge graph about research papers and their authors.
 
-Here's a minimal example to get you started with the core functionality:
+### Step 1: Initialize UltraLink
 
-```javascript
-// Import UltraLink
-const { UltraLink } = require('ultralink');
-
-// Create a new UltraLink instance
-const ultralink = new UltraLink();
-
-// Add entities
-const paper = ultralink.addEntity('paper-1', 'document', {
-  title: 'Introduction to UltraLink',
-  content: 'UltraLink is a revolutionary framework...'
-});
-
-const concept = ultralink.addEntity('vector-embeddings', 'concept', {
-  name: 'Vector Embeddings',
-  description: 'Numerical representations of semantic meaning in vector space'
-});
-
-// Create relationships
-ultralink.addLink('paper-1', 'vector-embeddings', 'explains', {
-  strength: 0.85,
-  context: 'core concept'
-});
-
-// Export to different formats
-const jsonData = ultralink.toJSON();
-const csvData = ultralink.toCSV();
-const graphMLData = ultralink.toGraphML();
-
-console.log('Created a basic UltraLink graph with entities and relationships!');
-```
-
-## Step-by-Step Guide
-
-### 1. Create an UltraLink Instance
+First, create a new JavaScript file and import UltraLink:
 
 ```javascript
 // Import UltraLink
 const { UltraLink } = require('ultralink');
 
-// Create a new instance with default options
-const basicUltralink = new UltraLink();
+// Create a new instance
+const graph = new UltraLink();
 
-// Or with custom configuration
-const customUltralink = new UltraLink({
-  storage: 'memory',
-  vectorDimensions: 1536,
-  caching: true,
-  llmIntegration: false
-});
+console.log('UltraLink initialized successfully!');
 ```
 
-**Learn more**: [Configuration Options](../reference/configuration.md)
+### Step 2: Create Entities
 
-### 2. Add Entities
-
-Entities are the nodes in your knowledge graph. They can represent anything you want to track:
+Next, let's add some entities to our knowledge graph:
 
 ```javascript
-// Add a simple entity
-const person = ultralink.addEntity('alice', 'person', {
-  name: 'Alice Chen',
-  role: 'Lead Researcher'
+// Add researchers as entities
+const researcher1 = graph.createEntity('person', 'researcher-1', {
+  name: 'Dr. Alice Johnson',
+  institution: 'Stanford University',
+  field: 'Machine Learning',
+  h_index: 25
 });
 
-// Add an entity with more complex attributes
-const project = ultralink.addEntity('project-x', 'project', {
-  title: 'Project X',
-  description: 'A revolutionary research project',
-  status: 'active',
-  priority: 'high',
-  startDate: '2023-06-01',
-  members: ['alice', 'bob', 'charlie']
+const researcher2 = graph.createEntity('person', 'researcher-2', {
+  name: 'Dr. Bob Smith',
+  institution: 'MIT',
+  field: 'Natural Language Processing',
+  h_index: 18
 });
+
+// Add research papers as entities
+const paper1 = graph.createEntity('paper', 'paper-1', {
+  title: 'Advances in Knowledge Graph Embedding',
+  year: 2022,
+  journal: 'Journal of AI Research',
+  doi: '10.1234/jair.2022.123'
+});
+
+const paper2 = graph.createEntity('paper', 'paper-2', {
+  title: 'Vector Representation in Knowledge Systems',
+  year: 2021,
+  journal: 'Computational Linguistics',
+  doi: '10.5678/cl.2021.456'
+});
+
+console.log('Created entities:', graph.getEntitiesCount());
 ```
 
-**Learn more**: [Entity Management](../concepts/relational-paradigm.md#entity-system)
+### Step 3: Create Relationships
 
-### 3. Create Relationships
-
-Relationships (links) connect entities and can include attributes:
+Now let's establish relationships between the entities:
 
 ```javascript
-// Create a simple relationship
-ultralink.addLink('alice', 'project-x', 'leads');
-
-// Create a relationship with attributes
-ultralink.addLink('project-x', 'vector-embeddings', 'uses', {
-  importance: 0.9,
-  context: 'core technology',
-  since: '2023-06-15'
+// Create author relationships
+graph.createLink('researcher-1', 'paper-1', 'authored', {
+  role: 'lead author',
+  year: 2022
 });
 
-// Create bidirectional relationships
-ultralink.addLink('alice', 'bob', 'collaborates_with', {
-  strength: 0.8,
-  bidirectional: true
+graph.createLink('researcher-2', 'paper-1', 'authored', {
+  role: 'co-author',
+  year: 2022
 });
+
+graph.createLink('researcher-2', 'paper-2', 'authored', {
+  role: 'lead author',
+  year: 2021
+});
+
+// Create citation relationship
+graph.createLink('paper-2', 'paper-1', 'cites', {
+  section: 'methods',
+  context: 'Building upon the vector representation approach...'
+});
+
+console.log('Created relationships:', graph.getLinksCount());
 ```
 
-**Learn more**: [Relationship Management](../concepts/relational-paradigm.md#relationship-system)
+### Step 4: Query the Knowledge Graph
 
-### 4. Add Vector Embeddings
-
-Vector embeddings enable semantic search and analysis:
+Now we can query our knowledge graph to extract information:
 
 ```javascript
-// Generate vectors for all entities
-await ultralink.generateVectors();
+// Get all papers authored by Researcher 2
+const researcherLinks = graph.getLinks('researcher-2');
+console.log('Dr. Bob Smith\'s publications:');
 
-// Generate vectors for specific entities
-await ultralink.generateVectors({
-  entities: ['project-x', 'vector-embeddings'],
-  model: 'text-embedding-3-large'
-});
+for (const link of researcherLinks) {
+  if (link.type === 'authored') {
+    const paper = graph.getEntity(link.target);
+    console.log(`- ${paper.attributes.title} (${paper.attributes.year}), role: ${link.attributes.role}`);
+  }
+}
 
-// Find similar entities
-const similar = ultralink.findSimilar('vector-embeddings', {
-  minSimilarity: 0.7,
-  maxResults: 5
-});
+// Find who authored "Advances in Knowledge Graph Embedding"
+const paper1Links = graph.getLinks('paper-1');
+console.log('\nAuthors of "Advances in Knowledge Graph Embedding":');
 
-console.log('Similar entities:', similar);
+for (const link of paper1Links) {
+  if (link.type === 'authored') {
+    const researcher = graph.getEntity(link.source);
+    console.log(`- ${researcher.attributes.name} (${link.attributes.role})`);
+  }
+}
+
+// Find papers that cite other papers
+console.log('\nCitation network:');
+const allEntities = graph.getAllEntities();
+
+for (const entity of allEntities) {
+  if (entity.type === 'paper') {
+    const outgoingLinks = graph.getLinks(entity.id);
+    
+    for (const link of outgoingLinks) {
+      if (link.type === 'cites') {
+        const citedPaper = graph.getEntity(link.target);
+        console.log(`- "${entity.attributes.title}" cites "${citedPaper.attributes.title}"`);
+      }
+    }
+  }
+}
 ```
 
-**Learn more**: [Vector Space Model](../concepts/vector-space.md)
+### Step 5: Add Vector Embeddings
 
-### 5. Export Your Data
+To enable semantic search and similarity analysis, let's add vector embeddings:
 
-Export your knowledge graph to various formats:
+```javascript
+// This requires the vector extension: npm install ultralink @ultralink/vector
+// Add vector embeddings to papers (typically you would use a pre-trained model)
+graph.addVectorEmbedding('paper-1', [0.2, 0.5, 0.1, 0.8, 0.3]);
+graph.addVectorEmbedding('paper-2', [0.3, 0.4, 0.2, 0.7, 0.1]);
+
+// Find similar papers based on vector similarity
+const similarPapers = graph.findSimilar('paper-1', {
+  threshold: 0.7,
+  limit: 5
+});
+
+console.log('\nSimilar papers to "Advances in Knowledge Graph Embedding":');
+for (const result of similarPapers) {
+  const paper = graph.getEntity(result.id);
+  console.log(`- ${paper.attributes.title} (similarity: ${result.similarity.toFixed(2)})`);
+}
+```
+
+### Step 6: Export the Knowledge Graph
+
+Finally, let's export our knowledge graph to different formats:
 
 ```javascript
 // Export to JSON
-const jsonData = ultralink.toJSON({
-  pretty: true,
-  includeVectors: true
-});
-fs.writeFileSync('ultralink-data.json', jsonData);
+const jsonExport = graph.toJSON();
+console.log('\nJSON Export:', JSON.stringify(jsonExport, null, 2).substring(0, 200) + '...');
 
 // Export to CSV
-const csvData = ultralink.toCSV();
-fs.writeFileSync('ultralink-data.csv', csvData);
+const csvExport = graph.toCSV();
+console.log('\nCSV Export (first few lines):', csvExport.split('\n').slice(0, 3).join('\n'));
 
-// Export to GraphML for visualization tools
-const graphMLData = ultralink.toGraphML();
-fs.writeFileSync('ultralink-data.graphml', graphMLData);
+// Export to GraphML
+const graphMLExport = graph.toGraphML();
+console.log('\nGraphML Export (preview):', graphMLExport.substring(0, 200) + '...');
 
-// Export to Obsidian knowledge base
-await ultralink.toObsidian({
-  directory: './obsidian-kb',
-  includeBacklinks: true
-});
+// Export to Obsidian format (returns an object with filenames as keys and content as values)
+const obsidianExport = graph.toObsidian();
+const firstFile = Object.keys(obsidianExport)[0];
+console.log('\nObsidian Export (first file):', firstFile);
+console.log(obsidianExport[firstFile].substring(0, 200) + '...');
 ```
 
-**Learn more**: [Export Formats](../guides/export-formats.md)
+## Complete Example
 
-### 6. Create Interactive Visualizations
-
-Create interactive visualizations to explore your data:
+Here's the complete example script:
 
 ```javascript
-// Create a simple network visualization
-const networkViz = ultralink.createVisualization('network', {
-  container: '#network-container',
-  layout: 'force-directed',
-  interactive: true
+const { UltraLink } = require('ultralink');
+
+// Create a new instance
+const graph = new UltraLink();
+console.log('UltraLink initialized successfully!');
+
+// Add researchers as entities
+const researcher1 = graph.createEntity('person', 'researcher-1', {
+  name: 'Dr. Alice Johnson',
+  institution: 'Stanford University',
+  field: 'Machine Learning',
+  h_index: 25
 });
 
-// Create a multi-view dashboard
-const dashboard = ultralink.createDashboard({
-  container: '#dashboard-container',
-  views: [
-    { type: 'network', options: { layout: 'force-directed' } },
-    { type: 'vector-space', options: { dimensions: 2 } },
-    { type: 'timeline', options: { events: true } }
-  ],
-  controls: true,
-  theme: 'light'
+const researcher2 = graph.createEntity('person', 'researcher-2', {
+  name: 'Dr. Bob Smith',
+  institution: 'MIT',
+  field: 'Natural Language Processing',
+  h_index: 18
 });
+
+// Add research papers as entities
+const paper1 = graph.createEntity('paper', 'paper-1', {
+  title: 'Advances in Knowledge Graph Embedding',
+  year: 2022,
+  journal: 'Journal of AI Research',
+  doi: '10.1234/jair.2022.123'
+});
+
+const paper2 = graph.createEntity('paper', 'paper-2', {
+  title: 'Vector Representation in Knowledge Systems',
+  year: 2021,
+  journal: 'Computational Linguistics',
+  doi: '10.5678/cl.2021.456'
+});
+
+console.log('Created entities:', graph.getEntitiesCount());
+
+// Create author relationships
+graph.createLink('researcher-1', 'paper-1', 'authored', {
+  role: 'lead author',
+  year: 2022
+});
+
+graph.createLink('researcher-2', 'paper-1', 'authored', {
+  role: 'co-author',
+  year: 2022
+});
+
+graph.createLink('researcher-2', 'paper-2', 'authored', {
+  role: 'lead author',
+  year: 2021
+});
+
+// Create citation relationship
+graph.createLink('paper-2', 'paper-1', 'cites', {
+  section: 'methods',
+  context: 'Building upon the vector representation approach...'
+});
+
+console.log('Created relationships:', graph.getLinksCount());
+
+// Query the knowledge graph
+const researcherLinks = graph.getLinks('researcher-2');
+console.log('Dr. Bob Smith\'s publications:');
+
+for (const link of researcherLinks) {
+  if (link.type === 'authored') {
+    const paper = graph.getEntity(link.target);
+    console.log(`- ${paper.attributes.title} (${paper.attributes.year}), role: ${link.attributes.role}`);
+  }
+}
+
+// Get authors of a paper
+const paper1Links = graph.getLinks('paper-1');
+console.log('\nAuthors of "Advances in Knowledge Graph Embedding":');
+
+for (const link of paper1Links) {
+  if (link.type === 'authored') {
+    const researcher = graph.getEntity(link.source);
+    console.log(`- ${researcher.attributes.name} (${link.attributes.role})`);
+  }
+}
+
+// Export to JSON
+const jsonExport = graph.toJSON();
+console.log('\nJSON Export successfully generated!');
 ```
 
-**Learn more**: [Visualization Guide](../guides/visualization.md)
+Save this file as `quickstart.js` and run it with Node.js:
+
+```bash
+node quickstart.js
+```
 
 ## Next Steps
 
-Now that you've got the basics, here are some suggestions for next steps:
+Now that you've created your first knowledge graph with UltraLink, you can:
 
-### Explore Advanced Features
+1. **Explore advanced features**:
+   - Add vector embeddings for semantic search
+   - Use temporal tracking for version history
+   - Implement LLM integration for content analysis
 
-- [**LLM Integration**](../guides/llm-integration.md) - Enhance your data with LLM-generated insights
-- [**Temporal Evolution**](../concepts/temporal-evolution.md) - Track changes over time
-- [**Network Analysis**](../concepts/network-analysis.md) - Analyze your knowledge graph
+2. **Learn about specific use cases**:
+   - [Building a Citation Network](../tutorials/citation-network.md)
+   - [Creating a Semantic Knowledge Base](../tutorials/semantic-knowledge-base.md)
+   - [Implementing a Recommendation System](../tutorials/recommendation-system.md)
 
-### Try Example Applications
+3. **Dive deeper into the API**:
+   - [Core API Reference](../api/core-api.md)
+   - [Vector Operations](../api/vector-operations.md)
+   - [Export Functions](../api/export-functions.md)
 
-- [**Research Knowledge Graph**](../examples/research-knowledge-graph.md) - Research papers and findings
-- [**Documentation System**](../examples/documentation-system.md) - Interconnected documentation
-- [**Vector Space Explorer**](../examples/vector-space-explorer.md) - Interactive vector visualization
-
-### Learn More
-
-- [**Core Concepts**](../concepts/README.md) - Understand UltraLink's foundational concepts
-- [**API Reference**](../api/README.md) - Complete API documentation
-- [**Integration Guides**](../guides/README.md) - Integration with other systems
-
-## Common Questions
-
-### How do I handle large datasets?
-
-For large datasets, consider using the batch processing and optimization features:
-
-```javascript
-// Configure for large datasets
-ultralink.configure({
-  largeDatasets: {
-    incrementalLoading: true,
-    chunkSize: 1000,
-    optimizeMemory: true
-  }
-});
-
-// Import large dataset in batches
-await ultralink.importBatch('./large-dataset.json', {
-  batchSize: 500,
-  onProgress: progress => console.log(`Progress: ${progress.toFixed(2)}%`)
-});
-```
-
-See [Performance Optimization](../guides/performance.md) for more details.
-
-### How do I extend UltraLink's functionality?
-
-UltraLink can be extended with plugins and custom components:
-
-```javascript
-// Register a custom entity type
-ultralink.registerEntityType('custom-type', {
-  schema: customSchema,
-  validators: customValidators,
-  processors: customProcessors
-});
-
-// Create a plugin
-const myPlugin = {
-  name: 'my-plugin',
-  initialize: (context) => {
-    // Setup code
-  },
-  methods: {
-    customFunction: () => {
-      // Implementation
-    }
-  }
-};
-
-// Register plugin
-ultralink.registerPlugin(myPlugin);
-```
-
-See [Extension Development](../guides/extension-development.md) for more details.
-
-## Troubleshooting
-
-If you encounter issues, check the [Troubleshooting Guide](../guides/troubleshooting.md) or consider these common solutions:
-
-- **Performance Issues**: Enable caching and optimize memory usage.
-- **Vector Generation Errors**: Check API keys and model availability.
-- **Visualization Not Appearing**: Check container size and browser console errors.
-
-## Community and Support
-
-- [**GitHub Discussions**](https://github.com/ultralink/ultralink/discussions)
-- [**Stack Overflow**](https://stackoverflow.com/questions/tagged/ultralink)
-- [**Discord Community**](https://discord.gg/ultralink) 
+For more detailed information, check out the [full tutorials](../tutorials/README.md) and [API reference](../api/README.md). 

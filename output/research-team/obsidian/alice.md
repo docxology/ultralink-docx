@@ -25,7 +25,11 @@ id: alice
 
 - [[climate-impact|Climate Impact Assessment]] (startDate: 2022-10-01, role: Consultant)
 
+### reports_to
+
+- [[alice|Alice Chen]] (startDate: 2023-02-01)
+
 ## Backlinks
 
-- [[alice|Alice Chen]] (leads, contributes_to)
+- [[bob|Bob Smith]] (reports_to)
 

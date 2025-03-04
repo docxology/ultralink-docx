@@ -1,1 +1,85 @@
-{}
+{
+  "entities": [
+    {
+      "id": "alice",
+      "type": "researcher",
+      "attributes": {
+        "name": "Alice Chen",
+        "role": "Principal Investigator",
+        "department": "Biology",
+        "email": "alice.chen@example.edu",
+        "publications": 42
+      }
+    },
+    {
+      "id": "bob",
+      "type": "researcher",
+      "attributes": {
+        "name": "Bob Smith",
+        "role": "Postdoc",
+        "department": "Biology",
+        "email": "bob.smith@example.edu",
+        "publications": 18
+      }
+    },
+    {
+      "id": "desert-ecology",
+      "type": "project",
+      "attributes": {
+        "name": "Desert Ecology Study",
+        "title": "Desert Ecology Study",
+        "startDate": "2023-01-15",
+        "budget": 150000,
+        "status": "Active"
+      }
+    },
+    {
+      "id": "climate-impact",
+      "type": "project",
+      "attributes": {
+        "name": "Climate Impact Assessment",
+        "title": "Climate Impact Assessment",
+        "startDate": "2022-08-10",
+        "budget": 220000,
+        "status": "Active"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source": "alice",
+      "target": "desert-ecology",
+      "type": "leads",
+      "attributes": {
+        "startDate": "2023-01-15",
+        "role": "Principal Investigator"
+      }
+    },
+    {
+      "source": "alice",
+      "target": "climate-impact",
+      "type": "contributes_to",
+      "attributes": {
+        "startDate": "2022-10-01",
+        "role": "Consultant"
+      }
+    },
+    {
+      "source": "bob",
+      "target": "desert-ecology",
+      "type": "works_on",
+      "attributes": {
+        "startDate": "2023-02-01",
+        "role": "Data Analyst"
+      }
+    },
+    {
+      "source": "bob",
+      "target": "alice",
+      "type": "reports_to",
+      "attributes": {
+        "startDate": "2023-02-01"
+      }
+    }
+  ]
+}

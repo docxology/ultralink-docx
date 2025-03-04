@@ -1,0 +1,55 @@
+;; UltraLink Knowledge Interchange Format (KIF) Export
+;; Generated: 2025-03-04T21:52:39.552Z
+
+;; Entities and their attributes
+(instance saguaro Organism)
+(name saguaro "Saguaro Cactus")
+(scientificName saguaro "Carnegiea gigantea")
+(type saguaro "plant")
+(height saguaro "15-50 feet")
+(lifespan saguaro "150-200 years")
+
+(instance kangaroo-rat Organism)
+(name kangaroo-rat "Kangaroo Rat")
+(scientificName kangaroo-rat "Dipodomys")
+(type kangaroo-rat "mammal")
+(weight kangaroo-rat "100-150g")
+(nocturnal kangaroo-rat true)
+
+(instance aridity Environmental_factor)
+(name aridity "Aridity")
+(description aridity "Extremely dry conditions with minimal rainfall")
+(annualRainfall aridity "3-15 inches")
+
+;; Relationships
+(adapts_to saguaro aridity)
+(= (mechanism-adapts_to saguaro aridity) "Water storage in stem")
+(= (efficiency-adapts_to saguaro aridity) 0.95)
+
+(adapts_to kangaroo-rat aridity)
+(= (mechanism-adapts_to kangaroo-rat aridity) "Metabolic water production")
+(= (efficiency-adapts_to kangaroo-rat aridity) 0.88)
+
+;; Rules
+(forall (?x ?y)
+  (=> (and (instance ?x Organism) 
+           (instance ?y EnvironmentalFactor)
+           (adapts-to ?x ?y)
+           (> (adaptationEfficiency ?x ?y) 0.9))
+      (well-adapted ?x ?y)))
+
+(defrule entity-relationship-rule
+  (entity ?id ?type)
+  (relationship ?src ?dest ?type)
+  =>
+  (assert (connected ?src ?dest)))
+
+;; Functions
+(deffunction relationshipCount (?x)
+  (length (getRelationships ?x)))
+
+;; Meta-knowledge
+(= (creationDate UltraLinkExport) "2025-03-04T21:52:39.552Z")
+(= (entityCount UltraLinkExport) 3)
+(= (relationshipCount UltraLinkExport) 2)
+

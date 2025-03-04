@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques - ResearchTeam Knowledge Graph</title>
+    <meta name="description" content="Details about A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques">
+    <link rel="stylesheet" href="styles/ocean.css">
+    <style>
+    /* Default Theme CSS */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --link-color: #0066cc;
+  --accent-color: #4a9eff;
+  --border-color: #dddddd;
+  --node-hover: #ff6600;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout */
+header {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  display: flex;
+  height: calc(100vh - 180px);
+}
+
+#graph {
+  flex: 1;
+  background: rgba(249, 250, 251, 0.8);
+  border-right: 1px solid var(--border-color);
+}
+
+.details-panel {
+  width: 300px;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+/* Entity styles */
+.entity-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.entity-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.attribute-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attribute-table th, .attribute-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.attribute-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.relationship-item {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.relationship-attributes {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.zoom-controls {
+  position: absolute;
+  right: 1rem;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.zoom-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: white;
+  cursor: pointer;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  #graph {
+    height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .details-panel {
+    width: 100%;
+  }
+  
+  .zoom-controls {
+    bottom: 50vh;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .filters {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+    </style>
+</head>
+<body class="theme-ocean">
+    <header>
+        <h1>A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</h1>
+        <p><a href="index.html">Back to Graph</a></p>
+    </header>
+    <main class="entity-page">
+        <div class="entity-details">
+            <h2>Details</h2>
+            <div class="entity-section">
+                <p><strong>ID:</strong> survey-paper-2023</p>
+                <p><strong>Type:</strong> publication</p>
+            </div>
+            
+            <h3>Attributes</h3>
+            <div class="entity-section">
+                <table class="attribute-table">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>title</td>
+                            <td>A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</td>
+                          </tr>
+<tr>
+                            <td>authors</td>
+                            <td>["david-patel","bob-smith","alice-chen"]</td>
+                          </tr>
+<tr>
+                            <td>venue</td>
+                            <td>ACM Computing Surveys</td>
+                          </tr>
+<tr>
+                            <td>year</td>
+                            <td>2023</td>
+                          </tr>
+<tr>
+                            <td>doi</td>
+                            <td>10.1234/surveys2023</td>
+                          </tr>
+<tr>
+                            <td>citations</td>
+                            <td>78</td>
+                          </tr>
+<tr>
+                            <td>abstract</td>
+                            <td>This survey provides a comprehensive overview of privacy-preserving machine learning techniques, including differential privacy, federated learning, secure multi-party computation, and homomorphic encryption...</td>
+                          </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Relationships</h3>
+            <div class="entity-section">
+                <ul class="relationships-list">
+                    <li class="relationship-item">
+                        <strong>cites</strong> →
+                        <a href="javascript:void(0)" onclick="selectEntityById('federated-paper-2023')">Communication-Efficient Federated Learning with Adaptive Compression</a>
+                        
+                      </li>
+<li class="relationship-item">
+                        <strong>cites</strong> →
+                        <a href="javascript:void(0)" onclick="selectEntityById('vision-paper-2022')">Novel Approaches to Low-Light Computer Vision</a>
+                        
+                      </li>
+<li class="relationship-item">
+                        <strong>cites</strong> →
+                        <a href="javascript:void(0)" onclick="selectEntityById('nlp-paper-2023')">Context-Aware Language Understanding in Multi-Domain Settings</a>
+                        
+                      </li>
+                    <li class="relationship-item">
+                        <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')">Alice Chen</a>
+                        → <strong>authored</strong>
+                        
+                      </li>
+<li class="relationship-item">
+                        <a href="javascript:void(0)" onclick="selectEntityById('bob-smith')">Bob Smith</a>
+                        → <strong>authored</strong>
+                        
+                      </li>
+<li class="relationship-item">
+                        <a href="javascript:void(0)" onclick="selectEntityById('david-patel')">David Patel</a>
+                        → <strong>authored</strong>
+                        
+                      </li>
+<li class="relationship-item">
+                        <a href="javascript:void(0)" onclick="selectEntityById('federated-learning-project')">Privacy-Preserving Federated Learning</a>
+                        → <strong>produced</strong>
+                        
+                      </li>
+<li class="relationship-item">
+                        <a href="javascript:void(0)" onclick="selectEntityById('quantum-paper-2023')">Quantum Circuit Learning for Computer Vision Tasks</a>
+                        → <strong>cites</strong>
+                        
+                      </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Function to navigate to entity page
+        window.selectEntityById = (id) => {
+            window.location.href = id + '.html';
+        };
+    </script>
+</body>
+</html>

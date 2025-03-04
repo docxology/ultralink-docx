@@ -1,0 +1,284 @@
+network {
+  name = "UltraLink Bayesian Network";
+}
+
+variable alice-chen {
+  type discrete[2] { true, false };
+}
+
+variable bob-smith {
+  type discrete[2] { true, false };
+}
+
+variable carol-jones {
+  type discrete[2] { true, false };
+}
+
+variable david-patel {
+  type discrete[2] { true, false };
+}
+
+variable elena-rodriguez {
+  type discrete[2] { true, false };
+}
+
+variable frank-zhang {
+  type discrete[2] { true, false };
+}
+
+variable grace-kim {
+  type discrete[2] { true, false };
+}
+
+variable computer-vision-project {
+  type discrete[2] { true, false };
+}
+
+variable nlp-project {
+  type discrete[2] { true, false };
+}
+
+variable federated-learning-project {
+  type discrete[2] { true, false };
+}
+
+variable quantum-ml-project {
+  type discrete[2] { true, false };
+}
+
+variable adaptive-robotics-project {
+  type discrete[2] { true, false };
+}
+
+variable vision-paper-2022 {
+  type discrete[2] { true, false };
+}
+
+variable nlp-paper-2023 {
+  type discrete[2] { true, false };
+}
+
+variable federated-paper-2023 {
+  type discrete[2] { true, false };
+}
+
+variable robotics-paper-2022 {
+  type discrete[2] { true, false };
+}
+
+variable quantum-paper-2023 {
+  type discrete[2] { true, false };
+}
+
+variable survey-paper-2023 {
+  type discrete[2] { true, false };
+}
+
+variable gpu-cluster {
+  type discrete[2] { true, false };
+}
+
+variable robotics-lab {
+  type discrete[2] { true, false };
+}
+
+variable quantum-computer {
+  type discrete[2] { true, false };
+}
+
+variable hpc-cluster {
+  type discrete[2] { true, false };
+}
+
+variable data-collection-system {
+  type discrete[2] { true, false };
+}
+
+variable conference-room {
+  type discrete[2] { true, false };
+}
+
+variable visualization-lab {
+  type discrete[2] { true, false };
+}
+
+variable machine-learning-theory {
+  type discrete[2] { true, false };
+}
+
+variable computer-vision {
+  type discrete[2] { true, false };
+}
+
+variable nlp {
+  type discrete[2] { true, false };
+}
+
+variable privacy-ml {
+  type discrete[2] { true, false };
+}
+
+variable quantum-ml {
+  type discrete[2] { true, false };
+}
+
+variable robotics {
+  type discrete[2] { true, false };
+}
+
+variable reinforcement-learning {
+  type discrete[2] { true, false };
+}
+
+variable nsf-grant {
+  type discrete[2] { true, false };
+}
+
+variable tech-partner {
+  type discrete[2] { true, false };
+}
+
+variable university-fund {
+  type discrete[2] { true, false };
+}
+
+probability ( alice-chen ) {
+  table 0.5, 0.5;
+}
+
+probability ( bob-smith ) {
+  table 0.5, 0.5;
+}
+
+probability ( carol-jones ) {
+  table 0.5, 0.5;
+}
+
+probability ( david-patel ) {
+  table 0.5, 0.5;
+}
+
+probability ( elena-rodriguez ) {
+  table 0.5, 0.5;
+}
+
+probability ( frank-zhang ) {
+  table 0.5, 0.5;
+}
+
+probability ( grace-kim ) {
+  table 0.5, 0.5;
+}
+
+probability ( computer-vision-project ) {
+  table 0.5, 0.5;
+}
+
+probability ( nlp-project ) {
+  table 0.5, 0.5;
+}
+
+probability ( federated-learning-project ) {
+  table 0.5, 0.5;
+}
+
+probability ( quantum-ml-project ) {
+  table 0.5, 0.5;
+}
+
+probability ( adaptive-robotics-project ) {
+  table 0.5, 0.5;
+}
+
+probability ( vision-paper-2022 ) {
+  table 0.5, 0.5;
+}
+
+probability ( nlp-paper-2023 ) {
+  table 0.5, 0.5;
+}
+
+probability ( federated-paper-2023 ) {
+  table 0.5, 0.5;
+}
+
+probability ( robotics-paper-2022 ) {
+  table 0.5, 0.5;
+}
+
+probability ( quantum-paper-2023 ) {
+  table 0.5, 0.5;
+}
+
+probability ( survey-paper-2023 ) {
+  table 0.5, 0.5;
+}
+
+probability ( gpu-cluster ) {
+  table 0.5, 0.5;
+}
+
+probability ( robotics-lab ) {
+  table 0.5, 0.5;
+}
+
+probability ( quantum-computer ) {
+  table 0.5, 0.5;
+}
+
+probability ( hpc-cluster ) {
+  table 0.5, 0.5;
+}
+
+probability ( data-collection-system ) {
+  table 0.5, 0.5;
+}
+
+probability ( conference-room ) {
+  table 0.5, 0.5;
+}
+
+probability ( visualization-lab ) {
+  table 0.5, 0.5;
+}
+
+probability ( machine-learning-theory ) {
+  table 0.5, 0.5;
+}
+
+probability ( computer-vision ) {
+  table 0.5, 0.5;
+}
+
+probability ( nlp ) {
+  table 0.5, 0.5;
+}
+
+probability ( privacy-ml ) {
+  table 0.5, 0.5;
+}
+
+probability ( quantum-ml ) {
+  table 0.5, 0.5;
+}
+
+probability ( robotics ) {
+  table 0.5, 0.5;
+}
+
+probability ( reinforcement-learning ) {
+  table 0.5, 0.5;
+}
+
+probability ( nsf-grant ) {
+  table 0.5, 0.5;
+}
+
+probability ( tech-partner ) {
+  table 0.5, 0.5;
+}
+
+probability ( university-fund ) {
+  table 0.5, 0.5;
+}
+

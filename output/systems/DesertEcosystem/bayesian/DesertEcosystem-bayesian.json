@@ -1,0 +1,1116 @@
+{
+  "nodes": {
+    "camel": {
+      "id": "camel",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "fennec_fox": {
+      "id": "fennec_fox",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "desert_monitor": {
+      "id": "desert_monitor",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "sidewinder": {
+      "id": "sidewinder",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "scorpion": {
+      "id": "scorpion",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "darkling_beetle": {
+      "id": "darkling_beetle",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "roadrunner": {
+      "id": "roadrunner",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "desert_tortoise": {
+      "id": "desert_tortoise",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "cactus_wren": {
+      "id": "cactus_wren",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "kangaroo_rat": {
+      "id": "kangaroo_rat",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "gila_monster": {
+      "id": "gila_monster",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "javelina": {
+      "id": "javelina",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "saguaro": {
+      "id": "saguaro",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "barrel_cactus": {
+      "id": "barrel_cactus",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "mesquite": {
+      "id": "mesquite",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "creosote_bush": {
+      "id": "creosote_bush",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "desert_poppy": {
+      "id": "desert_poppy",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "ocotillo": {
+      "id": "ocotillo",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "brittlebush": {
+      "id": "brittlebush",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "desert_ironwood": {
+      "id": "desert_ironwood",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "agave": {
+      "id": "agave",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "joshua_tree": {
+      "id": "joshua_tree",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "prickly_pear": {
+      "id": "prickly_pear",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "cholla_cactus": {
+      "id": "cholla_cactus",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "other_plants": {
+      "id": "other_plants",
+      "type": "plant",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "heat": {
+      "id": "heat",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "temperature_variation": {
+      "id": "temperature_variation",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "aridity": {
+      "id": "aridity",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "sand_dunes": {
+      "id": "sand_dunes",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "rocky_outcrops": {
+      "id": "rocky_outcrops",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "oasis": {
+      "id": "oasis",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "ephemeral_streams": {
+      "id": "ephemeral_streams",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "sandy_soil": {
+      "id": "sandy_soil",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "desert_pavement": {
+      "id": "desert_pavement",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "desert_varnish": {
+      "id": "desert_varnish",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "playa": {
+      "id": "playa",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "flash_floods": {
+      "id": "flash_floods",
+      "type": "abiotic_factor",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "wash": {
+      "id": "wash",
+      "type": "microhabitat",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "dune_field": {
+      "id": "dune_field",
+      "type": "microhabitat",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "rocky_slope": {
+      "id": "rocky_slope",
+      "type": "microhabitat",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "canyon": {
+      "id": "canyon",
+      "type": "microhabitat",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "pollination_yucca": {
+      "id": "pollination_yucca",
+      "type": "interaction",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "nurse_plant": {
+      "id": "nurse_plant",
+      "type": "interaction",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "seed_dispersal": {
+      "id": "seed_dispersal",
+      "type": "interaction",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "yucca_moth": {
+      "id": "yucca_moth",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    },
+    "coyote": {
+      "id": "coyote",
+      "type": "animal",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "children": [],
+      "weights": {
+        "incoming": {},
+        "outgoing": {}
+      }
+    }
+  },
+  "edges": [
+    {
+      "source": "camel",
+      "target": "heat",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "fennec_fox",
+      "target": "heat",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "desert_monitor",
+      "target": "scorpion",
+      "type": "preys_on",
+      "weight": 1
+    },
+    {
+      "source": "sidewinder",
+      "target": "sand_dunes",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "sidewinder",
+      "target": "dune_field",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "sidewinder",
+      "target": "kangaroo_rat",
+      "type": "preys_on",
+      "weight": 1
+    },
+    {
+      "source": "scorpion",
+      "target": "rocky_slope",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "darkling_beetle",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "roadrunner",
+      "target": "scorpion",
+      "type": "preys_on",
+      "weight": 1
+    },
+    {
+      "source": "roadrunner",
+      "target": "sidewinder",
+      "type": "preys_on",
+      "weight": 1
+    },
+    {
+      "source": "desert_tortoise",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "desert_tortoise",
+      "target": "rocky_slope",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "desert_tortoise",
+      "target": "desert_poppy",
+      "type": "consumes",
+      "weight": 1
+    },
+    {
+      "source": "cactus_wren",
+      "target": "heat",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "cactus_wren",
+      "target": "wash",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "kangaroo_rat",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "kangaroo_rat",
+      "target": "dune_field",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "kangaroo_rat",
+      "target": "mesquite",
+      "type": "consumes",
+      "weight": 1
+    },
+    {
+      "source": "gila_monster",
+      "target": "heat",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "gila_monster",
+      "target": "rocky_slope",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "gila_monster",
+      "target": "cactus_wren",
+      "type": "preys_on",
+      "weight": 1
+    },
+    {
+      "source": "javelina",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "javelina",
+      "target": "canyon",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "javelina",
+      "target": "prickly_pear",
+      "type": "consumes",
+      "weight": 1
+    },
+    {
+      "source": "saguaro",
+      "target": "heat",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "saguaro",
+      "target": "rocky_slope",
+      "type": "grows_in",
+      "weight": 1
+    },
+    {
+      "source": "barrel_cactus",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "mesquite",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "mesquite",
+      "target": "wash",
+      "type": "grows_in",
+      "weight": 1
+    },
+    {
+      "source": "mesquite",
+      "target": "desert_poppy",
+      "type": "facilitates",
+      "weight": 1
+    },
+    {
+      "source": "creosote_bush",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "creosote_bush",
+      "target": "other_plants",
+      "type": "inhibits",
+      "weight": 1
+    },
+    {
+      "source": "ocotillo",
+      "target": "temperature_variation",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "brittlebush",
+      "target": "heat",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "brittlebush",
+      "target": "rocky_slope",
+      "type": "grows_in",
+      "weight": 1
+    },
+    {
+      "source": "desert_ironwood",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "desert_ironwood",
+      "target": "wash",
+      "type": "grows_in",
+      "weight": 1
+    },
+    {
+      "source": "desert_ironwood",
+      "target": "saguaro",
+      "type": "nurses",
+      "weight": 1
+    },
+    {
+      "source": "agave",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "joshua_tree",
+      "target": "sandy_soil",
+      "type": "grows_in",
+      "weight": 1
+    },
+    {
+      "source": "joshua_tree",
+      "target": "yucca_moth",
+      "type": "mutual_dependency",
+      "weight": 1
+    },
+    {
+      "source": "yucca_moth",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "yucca_moth",
+      "target": "joshua_tree",
+      "type": "mutual_dependency",
+      "weight": 1
+    },
+    {
+      "source": "coyote",
+      "target": "aridity",
+      "type": "adapted_to",
+      "weight": 1
+    },
+    {
+      "source": "coyote",
+      "target": "canyon",
+      "type": "lives_in",
+      "weight": 1
+    },
+    {
+      "source": "coyote",
+      "target": "kangaroo_rat",
+      "type": "preys_on",
+      "weight": 1
+    },
+    {
+      "source": "coyote",
+      "target": "desert_tortoise",
+      "type": "preys_on",
+      "weight": 1
+    }
+  ]
+}

@@ -112,20 +112,135 @@ describe('UltraLink Data Export', () => {
   });
   
   describe('CSV Export', () => {
-    it('should export to CSV format', () => {
+    test('should export to CSV format', () => {
+      // Create test data
+      const ultralink = new UltraLink();
+      ultralink.addEntity('person1', 'person', { name: 'Alice', age: 30 });
+      ultralink.addEntity('person2', 'person', { name: 'Bob', age: 25 });
+      ultralink.addLink('person1', 'person2', 'knows');
+      
+      // Export to CSV
       const csvResult = ultralink.toCSV();
       
       expect(csvResult).toBeDefined();
-      expect(typeof csvResult).toBe('string');
+      expect(typeof csvResult).toBe('object');
+      expect(csvResult).toHaveProperty('entities');
+      expect(csvResult).toHaveProperty('relationships');
       
       // Check CSV contains entity data
-      expect(csvResult).toContain('person1');
-      expect(csvResult).toContain('person2');
-      expect(csvResult).toContain('project1');
+      expect(csvResult.entities).toContain('person1');
+      expect(csvResult.entities).toContain('Alice');
       
-      // Check relationships are included
-      expect(csvResult).toContain('manages');
-      expect(csvResult).toContain('contributes_to');
+      // Check CSV contains relationship data
+      expect(csvResult.relationships).toContain('person1');
+      expect(csvResult.relationships).toContain('person2');
+      expect(csvResult.relationships).toContain('knows');
+    });
+  });
+
+  describe('KIF Format Export', () => {
+    it('should export to KIF format with correct structure', () => {
+      // Create a new UltraLink instance with test data
+      const ultralink = new UltraLink();
+      ultralink.addEntity('person1', 'person', { name: 'Alice', age: 30 });
+      ultralink.addEntity('person2', 'person', { name: 'Bob', age: 25 });
+      ultralink.addEntity('project1', 'project', { title: 'Project Alpha', status: 'active' });
+      
+      // Add relationships
+      ultralink.addLink('person1', 'project1', 'manages', { startDate: '2023-01-01' });
+      ultralink.addLink('person2', 'project1', 'contributes_to', { role: 'developer' });
+      
+      // Export to KIF
+      const kif = ultralink.toKIF();
+      
+      // Verify KIF structure
+      expect(kif).toBeDefined();
+      expect(typeof kif).toBe('string');
+      
+      // Check header
+      expect(kif).toContain(';; UltraLink Knowledge Interchange Format (KIF) Export');
+      expect(kif).toContain(';; Generated:');
+      
+      // Check entity definitions
+      expect(kif).toContain('(instance person1 Person)');
+      expect(kif).toContain('(name person1 "Alice")');
+      expect(kif).toContain('(age person1 30)');
+      
+      expect(kif).toContain('(instance person2 Person)');
+      expect(kif).toContain('(name person2 "Bob")');
+      expect(kif).toContain('(age person2 25)');
+      
+      expect(kif).toContain('(instance project1 Project)');
+      expect(kif).toContain('(title project1 "Project Alpha")');
+      expect(kif).toContain('(status project1 "active")');
+      
+      // Check relationships
+      expect(kif).toContain('(manages person1 project1)');
+      expect(kif).toContain('(contributes_to person2 project1)');
+      
+      // Check relationship attributes
+      expect(kif).toContain('(= (startDate-manages person1 project1) "2023-01-01")');
+      expect(kif).toContain('(= (role-contributes_to person2 project1) "developer")');
+    });
+    
+    it('should include meta-knowledge when requested', () => {
+      // Create a simple UltraLink instance
+      const ultralink = new UltraLink();
+      ultralink.addEntity('person1', 'person', { name: 'Alice' });
+      ultralink.addEntity('person2', 'person', { name: 'Bob' });
+      ultralink.addLink('person1', 'person2', 'knows');
+      
+      // Export to KIF with meta-knowledge
+      const kif = ultralink.toKIF({ includeMetaKnowledge: true });
+      
+      // Verify meta-knowledge sections
+      expect(kif).toContain(';; Meta-knowledge');
+      expect(kif).toContain('(= (creationDate UltraLinkExport)');
+      expect(kif).toContain('(= (entityCount UltraLinkExport) 2)');
+      expect(kif).toContain('(= (relationshipCount UltraLinkExport) 1)');
+    });
+    
+    it('should include functions and rules when requested', () => {
+      const ultralink = new UltraLink();
+      
+      // Export with functions and rules
+      const kif = ultralink.toKIF({
+        includeFunctions: true,
+        includeRules: true
+      });
+      
+      // Verify functions section
+      expect(kif).toContain(';; Functions');
+      expect(kif).toContain('(deffunction relationshipCount (?x)');
+      
+      // Verify rules section
+      expect(kif).toContain(';; Rules');
+      expect(kif).toContain('(forall (?x ?y)');
+      expect(kif).toContain('(well-adapted ?x ?y)');
+    });
+    
+    it('should handle complex entity attributes correctly', () => {
+      const ultralink = new UltraLink();
+      
+      // Add entity with special characters and complex attributes
+      ultralink.addEntity('test-entity', 'complex_type', {
+        'name with spaces': 'Test Entity',
+        numeric: 42,
+        boolean: true,
+        'nested.property': 'nested value',
+        'special"characters': 'value with "quotes"'
+      });
+      
+      // Export to KIF
+      const kif = ultralink.toKIF();
+      
+      // Verify complex attributes are properly escaped
+      expect(kif).toContain('(instance test-entity Complex_type)');
+      expect(kif).toContain('(name with spaces test-entity "Test Entity")');
+      expect(kif).toContain('(numeric test-entity 42)');
+      expect(kif).toContain('(boolean test-entity true)');
+      expect(kif).toContain('(nested.property test-entity "nested value")');
+      expect(kif).toContain('(special"characters test-entity "value with \\"quotes\\"")');
     });
   });
 }); 

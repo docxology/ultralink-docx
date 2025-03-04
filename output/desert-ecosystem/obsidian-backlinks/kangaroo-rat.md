@@ -21,7 +21,3 @@ id: kangaroo-rat
 
 - [[aridity|Aridity]] (mechanism: Metabolic water production, efficiency: 0.88)
 
-## Backlinks
-
-- [[kangaroo-rat|Kangaroo Rat]] (adapts_to)
-

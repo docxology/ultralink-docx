@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="camel">
+      <data key="type">animal</data>
+      <data key="name">Dromedary Camel</data>
+    </node>
+    <node id="fennec_fox">
+      <data key="type">animal</data>
+      <data key="name">Fennec Fox</data>
+    </node>
+    <node id="desert_monitor">
+      <data key="type">animal</data>
+      <data key="name">Desert Monitor</data>
+    </node>
+    <node id="sidewinder">
+      <data key="type">animal</data>
+      <data key="name">Sidewinder Rattlesnake</data>
+    </node>
+    <node id="scorpion">
+      <data key="type">animal</data>
+      <data key="name">Deathstalker Scorpion</data>
+    </node>
+    <node id="darkling_beetle">
+      <data key="type">animal</data>
+      <data key="name">Darkling Beetle</data>
+    </node>
+    <node id="roadrunner">
+      <data key="type">animal</data>
+      <data key="name">Greater Roadrunner</data>
+    </node>
+    <node id="desert_tortoise">
+      <data key="type">animal</data>
+      <data key="name">Desert Tortoise</data>
+    </node>
+    <node id="cactus_wren">
+      <data key="type">animal</data>
+      <data key="name">Cactus Wren</data>
+    </node>
+    <node id="kangaroo_rat">
+      <data key="type">animal</data>
+      <data key="name">Merriam&apos;s Kangaroo Rat</data>
+    </node>
+    <node id="gila_monster">
+      <data key="type">animal</data>
+      <data key="name">Gila Monster</data>
+    </node>
+    <node id="javelina">
+      <data key="type">animal</data>
+      <data key="name">Javelina</data>
+    </node>
+    <node id="saguaro">
+      <data key="type">plant</data>
+      <data key="name">Saguaro Cactus</data>
+    </node>
+    <node id="barrel_cactus">
+      <data key="type">plant</data>
+      <data key="name">Barrel Cactus</data>
+    </node>
+    <node id="mesquite">
+      <data key="type">plant</data>
+      <data key="name">Honey Mesquite</data>
+    </node>
+    <node id="creosote_bush">
+      <data key="type">plant</data>
+      <data key="name">Creosote Bush</data>
+    </node>
+    <node id="desert_poppy">
+      <data key="type">plant</data>
+      <data key="name">Desert Poppy</data>
+    </node>
+    <node id="ocotillo">
+      <data key="type">plant</data>
+      <data key="name">Ocotillo</data>
+    </node>
+    <node id="brittlebush">
+      <data key="type">plant</data>
+      <data key="name">Brittlebush</data>
+    </node>
+    <node id="desert_ironwood">
+      <data key="type">plant</data>
+      <data key="name">Desert Ironwood</data>
+    </node>
+    <node id="agave">
+      <data key="type">plant</data>
+      <data key="name">Century Plant</data>
+    </node>
+    <node id="joshua_tree">
+      <data key="type">plant</data>
+      <data key="name">Joshua Tree</data>
+    </node>
+    <node id="prickly_pear">
+      <data key="type">plant</data>
+      <data key="name">Prickly Pear Cactus</data>
+    </node>
+    <node id="cholla_cactus">
+      <data key="type">plant</data>
+      <data key="name">Cholla Cactus</data>
+    </node>
+    <node id="other_plants">
+      <data key="type">plant</data>
+      <data key="name">Various Desert Plants</data>
+    </node>
+    <node id="heat">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Extreme Heat</data>
+    </node>
+    <node id="temperature_variation">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Temperature Variation</data>
+    </node>
+    <node id="aridity">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Aridity</data>
+    </node>
+    <node id="sand_dunes">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Sand Dunes</data>
+    </node>
+    <node id="rocky_outcrops">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Rocky Outcrops</data>
+    </node>
+    <node id="oasis">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Oasis</data>
+    </node>
+    <node id="ephemeral_streams">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Ephemeral Streams</data>
+    </node>
+    <node id="sandy_soil">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Sandy Soil</data>
+    </node>
+    <node id="desert_pavement">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Desert Pavement</data>
+    </node>
+    <node id="desert_varnish">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Desert Varnish</data>
+    </node>
+    <node id="playa">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Playa</data>
+    </node>
+    <node id="flash_floods">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Flash Floods</data>
+    </node>
+    <node id="wash">
+      <data key="type">microhabitat</data>
+      <data key="name">Desert Wash</data>
+    </node>
+    <node id="dune_field">
+      <data key="type">microhabitat</data>
+      <data key="name">Sand Dune Field</data>
+    </node>
+    <node id="rocky_slope">
+      <data key="type">microhabitat</data>
+      <data key="name">Rocky Slope</data>
+    </node>
+    <node id="canyon">
+      <data key="type">microhabitat</data>
+      <data key="name">Desert Canyon</data>
+    </node>
+    <node id="pollination_yucca">
+      <data key="type">interaction</data>
+      <data key="name">Yucca-Moth Pollination</data>
+    </node>
+    <node id="nurse_plant">
+      <data key="type">interaction</data>
+      <data key="name">Nurse Plant Relationship</data>
+    </node>
+    <node id="seed_dispersal">
+      <data key="type">interaction</data>
+      <data key="name">Seed Dispersal</data>
+    </node>
+    <node id="yucca_moth">
+      <data key="type">animal</data>
+      <data key="name">Yucca Moth</data>
+    </node>
+    <node id="coyote">
+      <data key="type">animal</data>
+      <data key="name">Coyote</data>
+    </node>
+    <edge source="camel" target="heat">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="fennec_fox" target="heat">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="darkling_beetle" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="sidewinder" target="sand_dunes">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="desert_tortoise" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="kangaroo_rat" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="gila_monster" target="heat">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="cactus_wren" target="heat">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="javelina" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="yucca_moth" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="coyote" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="saguaro" target="heat">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="barrel_cactus" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="mesquite" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="creosote_bush" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="ocotillo" target="temperature_variation">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="brittlebush" target="heat">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="desert_ironwood" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="agave" target="aridity">
+      <data key="type">adapted_to</data>
+    </edge>
+    <edge source="joshua_tree" target="sandy_soil">
+      <data key="type">grows_in</data>
+    </edge>
+    <edge source="sidewinder" target="dune_field">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="desert_tortoise" target="rocky_slope">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="cactus_wren" target="wash">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="gila_monster" target="rocky_slope">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="javelina" target="canyon">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="kangaroo_rat" target="dune_field">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="scorpion" target="rocky_slope">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="coyote" target="canyon">
+      <data key="type">lives_in</data>
+    </edge>
+    <edge source="saguaro" target="rocky_slope">
+      <data key="type">grows_in</data>
+    </edge>
+    <edge source="mesquite" target="wash">
+      <data key="type">grows_in</data>
+    </edge>
+    <edge source="desert_ironwood" target="wash">
+      <data key="type">grows_in</data>
+    </edge>
+    <edge source="brittlebush" target="rocky_slope">
+      <data key="type">grows_in</data>
+    </edge>
+    <edge source="coyote" target="kangaroo_rat">
+      <data key="type">preys_on</data>
+    </edge>
+    <edge source="coyote" target="desert_tortoise">
+      <data key="type">preys_on</data>
+    </edge>
+    <edge source="sidewinder" target="kangaroo_rat">
+      <data key="type">preys_on</data>
+    </edge>
+    <edge source="desert_monitor" target="scorpion">
+      <data key="type">preys_on</data>
+    </edge>
+    <edge source="gila_monster" target="cactus_wren">
+      <data key="type">preys_on</data>
+    </edge>
+    <edge source="roadrunner" target="scorpion">
+      <data key="type">preys_on</data>
+    </edge>
+    <edge source="roadrunner" target="sidewinder">
+      <data key="type">preys_on</data>
+    </edge>
+    <edge source="javelina" target="prickly_pear">
+      <data key="type">consumes</data>
+    </edge>
+    <edge source="desert_tortoise" target="desert_poppy">
+      <data key="type">consumes</data>
+    </edge>
+    <edge source="kangaroo_rat" target="mesquite">
+      <data key="type">consumes</data>
+    </edge>
+    <edge source="desert_ironwood" target="saguaro">
+      <data key="type">nurses</data>
+    </edge>
+    <edge source="mesquite" target="desert_poppy">
+      <data key="type">facilitates</data>
+    </edge>
+    <edge source="creosote_bush" target="other_plants">
+      <data key="type">inhibits</data>
+    </edge>
+    <edge source="joshua_tree" target="yucca_moth">
+      <data key="type">mutual_dependency</data>
+    </edge>
+    <edge source="yucca_moth" target="joshua_tree">
+      <data key="type">mutual_dependency</data>
+    </edge>
+  </graph>
+</graphml>

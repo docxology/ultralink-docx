@@ -1,0 +1,203 @@
+{
+  "timestamp": "2025-03-04T21:25:45.274Z",
+  "environment": {
+    "node": "v23.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpus": 8
+  },
+  "tests": {
+    "create_small": {
+      "durationMs": 0.990084,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.12500762939453125
+      }
+    },
+    "create_medium": {
+      "durationMs": 9.638208,
+      "memoryDelta": {
+        "rss": 1.828125,
+        "heapTotal": 2.234375,
+        "heapUsed": -10.986854553222656
+      }
+    },
+    "create_large": {
+      "durationMs": 24.511125,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 3.8839111328125
+      }
+    },
+    "find_by_type_small": {
+      "durationMs": 0.389333,
+      "memoryDelta": {
+        "rss": 0.015625,
+        "heapTotal": 0,
+        "heapUsed": 0.02240753173828125
+      }
+    },
+    "find_by_attribute_small": {
+      "durationMs": 0.10275,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.0213165283203125
+      }
+    },
+    "get_relationships_small": {
+      "durationMs": 0.442125,
+      "memoryDelta": {
+        "rss": 0.03125,
+        "heapTotal": 0,
+        "heapUsed": 0.054290771484375
+      }
+    },
+    "find_by_type_medium": {
+      "durationMs": 0.258291,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.08904266357421875
+      }
+    },
+    "find_by_attribute_medium": {
+      "durationMs": 0.380666,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.18135833740234375
+      }
+    },
+    "get_relationships_medium": {
+      "durationMs": 0.392916,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.3718109130859375
+      }
+    },
+    "find_by_type_large": {
+      "durationMs": 1.051667,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.3714599609375
+      }
+    },
+    "find_by_attribute_large": {
+      "durationMs": 1.344583,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.7192916870117188
+      }
+    },
+    "get_relationships_large": {
+      "durationMs": 3.405542,
+      "memoryDelta": {
+        "rss": 0.09375,
+        "heapTotal": 1,
+        "heapUsed": 1.9843902587890625
+      }
+    },
+    "json_export_small": {
+      "durationMs": 0.367458,
+      "memoryDelta": {
+        "rss": 0.015625,
+        "heapTotal": 0,
+        "heapUsed": 0.0483245849609375
+      }
+    },
+    "graphml_export_small": {
+      "durationMs": 1.556791,
+      "memoryDelta": {
+        "rss": 0.046875,
+        "heapTotal": 0,
+        "heapUsed": 0.3181915283203125
+      }
+    },
+    "json_export_medium": {
+      "durationMs": 1.441125,
+      "memoryDelta": {
+        "rss": 0.515625,
+        "heapTotal": 0.21875,
+        "heapUsed": 0.4435272216796875
+      }
+    },
+    "graphml_export_medium": {
+      "durationMs": 4.9395,
+      "memoryDelta": {
+        "rss": 0.015625,
+        "heapTotal": 0,
+        "heapUsed": 2.7642822265625
+      }
+    },
+    "json_export_large": {
+      "durationMs": 6.693833,
+      "memoryDelta": {
+        "rss": 1.796875,
+        "heapTotal": 0.890625,
+        "heapUsed": 1.7064666748046875
+      }
+    },
+    "graphml_export_large": {
+      "durationMs": 24.087958,
+      "memoryDelta": {
+        "rss": 3.125,
+        "heapTotal": 3.890625,
+        "heapUsed": -0.41074371337890625
+      }
+    },
+    "full_blob_export_small": {
+      "durationMs": 0.435792,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.06060028076171875
+      }
+    },
+    "compressed_full_blob_export_small": {
+      "durationMs": 0.094166,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.048797607421875
+      }
+    },
+    "full_blob_import_small": {
+      "durationMs": 0.366292,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.06999969482421875
+      }
+    },
+    "full_blob_export_medium": {
+      "durationMs": 0.723334,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.4749755859375
+      }
+    },
+    "compressed_full_blob_export_medium": {
+      "durationMs": 8.29925,
+      "memoryDelta": {
+        "rss": -0.03125,
+        "heapTotal": -0.640625,
+        "heapUsed": -26.89710235595703
+      }
+    },
+    "full_blob_import_medium": {
+      "durationMs": 1.483791,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.6128311157226562
+      }
+    }
+  }
+}

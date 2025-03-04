@@ -25,7 +25,3 @@ id: bob
 
 - [[alice|Alice Chen]] (startDate: 2023-02-01)
 
-## Backlinks
-
-- [[bob|Bob Smith]] (works_on, reports_to)
-

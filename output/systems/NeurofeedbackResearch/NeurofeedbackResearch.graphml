@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="eeg-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">EEG Neurofeedback</data>
+    </node>
+    <node id="fmri-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">fMRI Neurofeedback</data>
+    </node>
+    <node id="fnirs-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">fNIRS Neurofeedback</data>
+    </node>
+    <node id="meg-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">MEG Neurofeedback</data>
+    </node>
+    <node id="smr-training">
+      <data key="type">protocol</data>
+      <data key="name">SMR Training</data>
+    </node>
+    <node id="alpha-training">
+      <data key="type">protocol</data>
+      <data key="name">Alpha Training</data>
+    </node>
+    <node id="theta-training">
+      <data key="type">protocol</data>
+      <data key="name">Theta Training</data>
+    </node>
+    <node id="beta-training">
+      <data key="type">protocol</data>
+      <data key="name">Beta Training</data>
+    </node>
+    <node id="alpha-theta-training">
+      <data key="type">protocol</data>
+      <data key="name">Alpha-Theta Training</data>
+    </node>
+    <node id="infra-low-frequency">
+      <data key="type">protocol</data>
+      <data key="name">Infra-Low Frequency Training</data>
+    </node>
+    <node id="adhd-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">ADHD Treatment</data>
+    </node>
+    <node id="anxiety-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">Anxiety Treatment</data>
+    </node>
+    <node id="epilepsy-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">Epilepsy Treatment</data>
+    </node>
+    <node id="insomnia-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">Insomnia Treatment</data>
+    </node>
+    <node id="ptsd-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">PTSD Treatment</data>
+    </node>
+    <node id="sterman-mb">
+      <data key="type">researcher</data>
+      <data key="name">M. Barry Sterman</data>
+    </node>
+    <node id="lubar-jf">
+      <data key="type">researcher</data>
+      <data key="name">Joel F. Lubar</data>
+    </node>
+    <node id="peniston-eg">
+      <data key="type">researcher</data>
+      <data key="name">Eugene G. Peniston</data>
+    </node>
+    <node id="othmer-sf">
+      <data key="type">researcher</data>
+      <data key="name">Siegfried Othmer</data>
+    </node>
+    <node id="eeg-amplifier">
+      <data key="type">equipment</data>
+      <data key="name">EEG Amplifier</data>
+    </node>
+    <node id="eeg-cap">
+      <data key="type">equipment</data>
+      <data key="name">EEG Cap/Headset</data>
+    </node>
+    <node id="nf-software">
+      <data key="type">equipment</data>
+      <data key="name">Neurofeedback Software</data>
+    </node>
+    <node id="sterman-epilepsy-1972">
+      <data key="type">research_study</data>
+    </node>
+    <node id="lubar-adhd-1976">
+      <data key="type">research_study</data>
+    </node>
+    <node id="peniston-alcoholism-1989">
+      <data key="type">research_study</data>
+    </node>
+    <node id="arns-tdcs-2012">
+      <data key="type">research_study</data>
+    </node>
+    <node id="operant-conditioning">
+      <data key="type">theoretical_framework</data>
+      <data key="name">Operant Conditioning</data>
+    </node>
+    <node id="neuroplasticity">
+      <data key="type">theoretical_framework</data>
+      <data key="name">Neuroplasticity</data>
+    </node>
+    <node id="arousal-model">
+      <data key="type">theoretical_framework</data>
+      <data key="name">Arousal Model of Neurofeedback</data>
+    </node>
+    <edge source="eeg-neurofeedback" target="smr-training">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="alpha-training">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="beta-training">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="theta-training">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="infra-low-frequency">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="fmri-neurofeedback" target="alpha-training">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="smr-training" target="adhd-treatment">
+      <data key="type">used_for</data>
+    </edge>
+    <edge source="beta-training" target="adhd-treatment">
+      <data key="type">used_for</data>
+    </edge>
+    <edge source="alpha-training" target="anxiety-treatment">
+      <data key="type">used_for</data>
+    </edge>
+    <edge source="smr-training" target="epilepsy-treatment">
+      <data key="type">used_for</data>
+    </edge>
+    <edge source="alpha-theta-training" target="ptsd-treatment">
+      <data key="type">used_for</data>
+    </edge>
+    <edge source="infra-low-frequency" target="ptsd-treatment">
+      <data key="type">used_for</data>
+    </edge>
+    <edge source="sterman-mb" target="smr-training">
+      <data key="type">developed</data>
+    </edge>
+    <edge source="lubar-jf" target="beta-training">
+      <data key="type">developed</data>
+    </edge>
+    <edge source="peniston-eg" target="alpha-theta-training">
+      <data key="type">developed</data>
+    </edge>
+    <edge source="othmer-sf" target="infra-low-frequency">
+      <data key="type">developed</data>
+    </edge>
+    <edge source="sterman-mb" target="sterman-epilepsy-1972">
+      <data key="type">conducted</data>
+    </edge>
+    <edge source="lubar-jf" target="lubar-adhd-1976">
+      <data key="type">conducted</data>
+    </edge>
+    <edge source="peniston-eg" target="peniston-alcoholism-1989">
+      <data key="type">conducted</data>
+    </edge>
+    <edge source="eeg-amplifier" target="eeg-neurofeedback">
+      <data key="type">enables</data>
+    </edge>
+    <edge source="eeg-cap" target="eeg-neurofeedback">
+      <data key="type">enables</data>
+    </edge>
+    <edge source="nf-software" target="smr-training">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="nf-software" target="alpha-training">
+      <data key="type">implements</data>
+    </edge>
+    <edge source="operant-conditioning" target="smr-training">
+      <data key="type">explains</data>
+    </edge>
+    <edge source="neuroplasticity" target="eeg-neurofeedback">
+      <data key="type">explains</data>
+    </edge>
+    <edge source="arousal-model" target="adhd-treatment">
+      <data key="type">explains</data>
+    </edge>
+  </graph>
+</graphml>

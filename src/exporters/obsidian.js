@@ -1,15 +1,17 @@
 /**
- * UltraLink Obsidian Exporter
+ * Obsidian Exporter
  * 
- * This module implements an exporter for Obsidian markdown format.
+ * Exports UltraLink data to Obsidian-compatible markdown files with wiki-links.
  */
 
-const { Exporter } = require('./base');
+const fs = require('fs');
+const path = require('path');
+const { BaseExporter } = require('./base');
 
 /**
- * Exporter for Obsidian markdown format
+ * Exporter for Obsidian markdown files
  */
-class ObsidianExporter extends Exporter {
+class ObsidianExporter extends BaseExporter {
   constructor(store) {
     super(store);
   }

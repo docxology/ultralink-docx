@@ -79,6 +79,15 @@ class EntityStore {
   }
 
   /**
+   * Clears all entities from the store
+   * @returns {Promise<void>} Promise that resolves when the store is cleared
+   */
+  clear() {
+    this.entities.clear();
+    return Promise.resolve();
+  }
+
+  /**
    * Create a bidirectional link between two entities
    */
   createLink(sourceId, targetId, type = "default", metadata = {}) {

@@ -1279,6 +1279,78 @@ class UltraLink {
     
     return html;
   }
+
+  /**
+   * Convert UltraLink data to a Bayesian Network representation
+   * @param {Object} options - Configuration options
+   * @param {String} options.format - Output format ('json' or 'bif')
+   * @param {Boolean} options.includeParameters - Whether to include CPT parameters
+   * @param {Boolean} options.autoGenerateProbabilities - Generate placeholder probabilities if missing
+   * @param {String} options.nodeTypeMapping - Entity type to use as nodes (default: all types)
+   * @param {Array} options.edgeTypeMapping - Link types to use as edges
+   * @returns {Object|string} Bayesian network representation
+   */
+  toBayesianNetwork(options = {}) {
+    const BayesianGraphExporter = require('./exporters/specialized/bayesian-graph');
+    const exporter = new BayesianGraphExporter(this, options);
+    const network = exporter.exportNetwork();
+    
+    // Return different formats based on options
+    if (options.format === 'bif') {
+      return this._convertToBIF(network);
+    }
+    
+    return network;
+  }
+  
+  /**
+   * Convert network object to BIF (Bayesian Interchange Format)
+   * @private
+   * @param {Object} network - The network object
+   * @returns {string} BIF formatted string
+   */
+  _convertToBIF(network) {
+    let bif = 'network {\n';
+    bif += '  name = "UltraLink Bayesian Network";\n';
+    bif += '}\n\n';
+    
+    // Convert nodes (variables)
+    for (const [id, node] of Object.entries(network.nodes)) {
+      bif += `variable ${id} {\n`;
+      bif += `  type discrete[${node.states.length}] { ${node.states.join(', ')} };\n`;
+      bif += '}\n\n';
+    }
+    
+    // Convert CPTs
+    for (const [id, node] of Object.entries(network.nodes)) {
+      bif += `probability ( ${id} `;
+      
+      // Add parents if any
+      if (node.parents.length > 0) {
+        const parentIds = node.parents.map(parent => parent.id);
+        bif += `| ${parentIds.join(', ')} `;
+      }
+      
+      bif += ') {\n';
+      
+      // Add CPT values
+      if (node.parents.length === 0) {
+        // Simple table for root nodes
+        bif += '  table ';
+        const values = node.states.map(state => node.cpt[state] || (1.0 / node.states.length));
+        bif += values.join(', ');
+        bif += ';\n';
+      } else {
+        // Conditional probability table
+        bif += '  // Conditional probabilities omitted for brevity\n';
+        bif += '  // Use specialized BIF tools to view or edit\n';
+      }
+      
+      bif += '}\n\n';
+    }
+    
+    return bif;
+  }
 }
 
 module.exports = {

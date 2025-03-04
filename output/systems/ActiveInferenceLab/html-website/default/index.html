@@ -6,7 +6,176 @@
     <title>ActiveInferenceLab Knowledge Graph</title>
     <meta name="description" content="Interactive visualization of ActiveInferenceLab relationships">
     <link rel="stylesheet" href="styles/default.css">
+    <style>
+    /* Default Theme CSS */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --link-color: #0066cc;
+  --accent-color: #4a9eff;
+  --border-color: #dddddd;
+  --node-hover: #ff6600;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout */
+header {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  display: flex;
+  height: calc(100vh - 180px);
+}
+
+#graph {
+  flex: 1;
+  background: rgba(249, 250, 251, 0.8);
+  border-right: 1px solid var(--border-color);
+}
+
+.details-panel {
+  width: 300px;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+/* Entity styles */
+.entity-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.entity-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.attribute-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attribute-table th, .attribute-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.attribute-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.relationship-item {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.relationship-attributes {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.zoom-controls {
+  position: absolute;
+  right: 1rem;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.zoom-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: white;
+  cursor: pointer;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  #graph {
+    height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .details-panel {
+    width: 100%;
+  }
+  
+  .zoom-controls {
+    bottom: 50vh;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .filters {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+    </style>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- const name = entity.attributes.name || entity.attributes.title || entity.id; -->
 </head>
 <body class="theme-default">
     <header>
@@ -23,7 +192,13 @@
                 <label>Search:
                     <input type="text" id="searchInput" placeholder="Search nodes...">
                 </label>
+                <button class="btn" id="clear-filters">Clear Filters</button>
             </div>
+        </div>
+        <div class="zoom-controls">
+            <button class="zoom-btn" id="zoom-in">+</button>
+            <button class="zoom-btn" id="zoom-reset">⟳</button>
+            <button class="zoom-btn" id="zoom-out">−</button>
         </div>
     </header>
     <main>
@@ -38,7 +213,7 @@
     <script>
         const data = {
             entities: [{"id":"alice","type":"researcher","attributes":{"name":"Dr. Alice Chen","role":"Principal Investigator","department":"Cognitive Science","email":"alice.chen@example.edu","publications":42,"expertise":["active inference","computational neuroscience","bayesian modeling"],"yearsExperience":15}},{"id":"bob","type":"researcher","attributes":{"name":"Dr. Bob Smith","role":"Senior Researcher","department":"Biology","email":"bob.smith@example.edu","publications":28,"expertise":["ant colony behavior","entomology","swarm intelligence"],"yearsExperience":12}},{"id":"carol","type":"researcher","attributes":{"name":"Dr. Carol Jimenez","role":"Postdoctoral Researcher","department":"Cognitive Science","email":"carol.jimenez@example.edu","publications":11,"expertise":["active inference","machine learning","cognitive modeling"],"yearsExperience":3}},{"id":"david","type":"researcher","attributes":{"name":"David Wilson","role":"PhD Student","department":"Biology","email":"david.wilson@example.edu","publications":3,"expertise":["ant colony optimization","collective behavior","stigmergy"],"yearsExperience":3}},{"id":"emma","type":"researcher","attributes":{"name":"Emma Taylor","role":"PhD Student","department":"Computer Science","email":"emma.taylor@example.edu","publications":4,"expertise":["machine learning","reinforcement learning","neural networks"],"yearsExperience":2}},{"id":"frank","type":"researcher","attributes":{"name":"Dr. Frank Martinez","role":"Research Associate","department":"Mathematics","email":"frank.martinez@example.edu","publications":16,"expertise":["dynamical systems","chaos theory","mathematical modeling"],"yearsExperience":8}},{"id":"grace","type":"researcher","attributes":{"name":"Grace Kim","role":"Lab Technician","department":"Biology","email":"grace.kim@example.edu","publications":0,"expertise":["ant husbandry","experiment design","data collection"],"yearsExperience":4}},{"id":"active-inference-model","type":"project","attributes":{"name":"Active Inference Modeling of Collective Behavior","status":"Active","startDate":"2023-01-15","endDate":"2025-01-14","funding":750000,"fundingSource":"National Science Foundation","description":"Developing computational models of collective behavior using the Active Inference framework"}},{"id":"ant-colony-study","type":"project","attributes":{"name":"Ant Colony Decision Making Study","status":"Active","startDate":"2023-06-01","endDate":"2024-12-31","funding":250000,"fundingSource":"University Grant","description":"Field study of ant colony decision-making processes in natural environments"}},{"id":"neural-basis","type":"project","attributes":{"name":"Neural Basis of Active Inference","status":"Planning","startDate":"2024-01-01","endDate":"2026-12-31","funding":1200000,"fundingSource":"NIH","description":"Investigation of neural mechanisms underlying active inference in biological systems"}},{"id":"active-inference","type":"concept","attributes":{"name":"Active Inference","field":"Computational Neuroscience","description":"Framework for understanding perception and action based on free energy minimization","keyPapers":["10.1038/nn.2635","10.1016/j.tics.2009.04.005"]}},{"id":"collective-behavior","type":"concept","attributes":{"name":"Collective Behavior","field":"Biology","description":"Emergent properties and dynamics of group behavior in social organisms","keyPapers":["10.1016/j.tree.2018.01.003"]}},{"id":"swarm-intelligence","type":"concept","attributes":{"name":"Swarm Intelligence","field":"Computer Science","description":"Collective problem-solving abilities emerging from local interactions","keyPapers":["10.1007/s11721-007-0004-y"]}},{"id":"ant-tracking","type":"equipment","attributes":{"name":"Ant Tracking System","type":"Imaging","status":"Operational","location":"Main Lab","cost":75000,"purchaseDate":"2023-02-15","maintenanceSchedule":"Monthly"}},{"id":"neural-recording","type":"equipment","attributes":{"name":"Neural Recording Setup","type":"Electrophysiology","status":"Operational","location":"Neuroscience Lab","cost":150000,"purchaseDate":"2023-05-01","maintenanceSchedule":"Weekly"}},{"id":"computation-cluster","type":"equipment","attributes":{"name":"High Performance Computing Cluster","type":"Computing","status":"Operational","location":"Server Room","cost":200000,"purchaseDate":"2022-11-01","maintenanceSchedule":"Monthly"}},{"id":"paper-2023a","type":"publication","attributes":{"title":"Active Inference Framework for Collective Behavior Analysis","authors":["alice","carol","david"],"journal":"Nature Computational Science","year":2023,"doi":"10.1038/s41467-023-0001-1","citations":15}},{"id":"paper-2023b","type":"publication","attributes":{"title":"Decision Making Patterns in Ant Colonies: A Field Study","authors":["bob","emma","frank"],"journal":"Behavioral Ecology","year":2023,"doi":"10.1093/beheco/2023-0002","citations":8}},{"id":"paper-2024","type":"publication","attributes":{"title":"Computational Models of Active Inference in Social Insects","authors":["alice","bob","carol","david"],"journal":"PLOS Computational Biology","year":2024,"doi":"10.1371/journal.pcbi.2024-0001","citations":3}}],
-            relationships: [{"source":"alice","target":"active-inference-model","type":"leads"},{"source":"alice","target":"david","type":"mentors"},{"source":"alice","target":"carol","type":"mentors"},{"source":"alice","target":"paper-2023a","type":"authored"},{"source":"alice","target":"paper-2024","type":"authored"},{"source":"bob","target":"ant-colony-study","type":"leads"},{"source":"bob","target":"active-inference-model","type":"contributes_to"},{"source":"bob","target":"emma","type":"mentors"},{"source":"bob","target":"paper-2023a","type":"authored"},{"source":"bob","target":"paper-2023b","type":"authored"},{"source":"bob","target":"paper-2024","type":"authored"},{"source":"carol","target":"active-inference-model","type":"contributes"},{"source":"carol","target":"active-inference-model","type":"contributes_to"},{"source":"carol","target":"active-inference-model","type":"contributes_to"},{"source":"carol","target":"alice","type":"reports_to"},{"source":"carol","target":"paper-2023a","type":"authored"},{"source":"carol","target":"paper-2024","type":"authored"},{"source":"david","target":"active-inference-model","type":"contributes"},{"source":"david","target":"ant-colony-study","type":"contributes_to"},{"source":"david","target":"ant-colony-study","type":"contributes_to"},{"source":"david","target":"bob","type":"reports_to"},{"source":"david","target":"paper-2024","type":"authored"},{"source":"emma","target":"ant-colony-study","type":"contributes"},{"source":"emma","target":"ant-colony-study","type":"contributes_to"},{"source":"emma","target":"alice","type":"reports_to"},{"source":"emma","target":"paper-2023b","type":"authored"},{"source":"frank","target":"ant-colony-study","type":"contributes"},{"source":"frank","target":"ant-colony-study","type":"contributes_to"},{"source":"frank","target":"emma","type":"co_advises"},{"source":"frank","target":"paper-2023b","type":"authored"},{"source":"grace","target":"ant-colony-study","type":"contributes_to"},{"source":"grace","target":"bob","type":"reports_to"},{"source":"grace","target":"paper-2024","type":"authored"},{"source":"active-inference-model","target":"active-inference","type":"applies"},{"source":"active-inference-model","target":"computation-cluster","type":"uses"},{"source":"ant-colony-study","target":"collective-behavior","type":"applies"},{"source":"ant-colony-study","target":"ant-tracking","type":"uses"},{"source":"neural-basis","target":"neural-recording","type":"uses"},{"source":"active-inference","target":"collective-behavior","type":"relates_to"},{"source":"paper-2023a","target":"active-inference-model","type":"results_from"},{"source":"paper-2023a","target":"active-inference","type":"discusses"},{"source":"paper-2023b","target":"ant-colony-study","type":"results_from"},{"source":"paper-2023b","target":"collective-behavior","type":"discusses"},{"source":"paper-2024","target":"active-inference-model","type":"results_from"},{"source":"paper-2024","target":"ant-colony-study","type":"results_from"},{"source":"paper-2024","target":"swarm-intelligence","type":"discusses"}]
+            relationships: [{"source":"alice","target":"active-inference-model","type":"leads","attributes":{"role":"Principal Investigator","timeCommitment":0.4}},{"source":"alice","target":"david","type":"mentors","attributes":{"type":"PhD Advisor","startDate":"2022-09-01"}},{"source":"alice","target":"carol","type":"mentors","attributes":{"type":"Postdoc Advisor","startDate":"2023-01-15"}},{"source":"alice","target":"paper-2023a","type":"authored","attributes":{"contributionType":"corresponding author","contributionPercentage":40}},{"source":"alice","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":25}},{"source":"bob","target":"ant-colony-study","type":"leads","attributes":{"role":"Principal Investigator","timeCommitment":0.5}},{"source":"bob","target":"active-inference-model","type":"contributes_to","attributes":{"role":"Co-Investigator","startDate":"2022-03-15"}},{"source":"bob","target":"emma","type":"mentors","attributes":{"type":"PhD Advisor","startDate":"2022-09-01"}},{"source":"bob","target":"paper-2023a","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30}},{"source":"bob","target":"paper-2023b","type":"authored","attributes":{"contributionType":"corresponding author","contributionPercentage":50}},{"source":"bob","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30}},{"source":"carol","target":"active-inference-model","type":"contributes","attributes":{"role":"Lead Developer","timeCommitment":0.6}},{"source":"carol","target":"active-inference-model","type":"contributes_to","attributes":{"role":"Lead Researcher","startDate":"2022-09-01"}},{"source":"carol","target":"alice","type":"reports_to","attributes":{"startDate":"2022-01-15"}},{"source":"carol","target":"paper-2023a","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30}},{"source":"carol","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30}},{"source":"david","target":"active-inference-model","type":"contributes","attributes":{"role":"Data Analyst","timeCommitment":0.8}},{"source":"david","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Behavioral Consultant","startDate":"2024-02-10","timeCommitment":"25%"}},{"source":"david","target":"bob","type":"reports_to","attributes":{"startDate":"2021-09-01"}},{"source":"david","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30}},{"source":"emma","target":"ant-colony-study","type":"contributes","attributes":{"role":"Field Researcher","timeCommitment":0.7}},{"source":"emma","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Algorithm Developer","startDate":"2024-01-05"}},{"source":"emma","target":"alice","type":"reports_to","attributes":{"startDate":"2022-09-01"}},{"source":"emma","target":"paper-2023b","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30}},{"source":"frank","target":"ant-colony-study","type":"contributes","attributes":{"role":"Lab Manager","timeCommitment":0.3}},{"source":"frank","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Mathematical Modeling","startDate":"2022-11-15"}},{"source":"frank","target":"emma","type":"co_advises","attributes":{"startDate":"2022-09-01"}},{"source":"frank","target":"paper-2023b","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":20}},{"source":"grace","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Lab Technician","startDate":"2023-01-10"}},{"source":"grace","target":"bob","type":"reports_to","attributes":{"startDate":"2020-05-15"}},{"source":"grace","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":20}},{"source":"active-inference-model","target":"active-inference","type":"applies","attributes":{"centrality":"Core","innovation":"Novel application to collective behavior"}},{"source":"active-inference-model","target":"computation-cluster","type":"uses","attributes":{"frequency":"Continuous","priority":"High"}},{"source":"ant-colony-study","target":"collective-behavior","type":"applies","attributes":{"centrality":"Core","innovation":"Field validation of theoretical predictions"}},{"source":"ant-colony-study","target":"ant-tracking","type":"uses","attributes":{"frequency":"Daily","priority":"High"}},{"source":"neural-basis","target":"neural-recording","type":"uses","attributes":{"frequency":"Daily","priority":"High"}},{"source":"active-inference","target":"collective-behavior","type":"relates_to","attributes":{"relationship":"Theoretical framework application","strength":"Strong"}},{"source":"paper-2023a","target":"active-inference-model","type":"results_from","attributes":{"contribution":"Primary theoretical framework"}},{"source":"paper-2023a","target":"active-inference","type":"discusses","attributes":{"depth":"comprehensive"}},{"source":"paper-2023b","target":"ant-colony-study","type":"results_from","attributes":{"contribution":"Initial field study findings"}},{"source":"paper-2023b","target":"collective-behavior","type":"discusses","attributes":{"depth":"substantial"}},{"source":"paper-2024","target":"active-inference-model","type":"results_from","attributes":{"contribution":"Computational modeling results"}},{"source":"paper-2024","target":"ant-colony-study","type":"results_from","attributes":{"contribution":"Empirical validation"}},{"source":"paper-2024","target":"swarm-intelligence","type":"discusses","attributes":{"depth":"comprehensive"}}]
         };
         
         // Color scale for different node types
@@ -51,8 +226,10 @@
         
         const svg = d3.select('#graph')
             .append('svg')
-            .attr('width', width + margin.left + margin.right)
-            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox', [0, 0, width, height])
+            .attr('preserveAspectRatio', 'xMidYMid meet')
             .append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
             
@@ -115,7 +292,7 @@
         nodes.append('text')
             .attr('dx', 12)
             .attr('dy', '.35em')
-            .text(d => d.attributes.name || d.id)
+            .text(d => d.attributes.name || d.attributes.title || d.id)
             .attr('font-size', '12px')
             .attr('fill', '#333');
             
@@ -159,11 +336,60 @@
         // Add event listeners
         typeFilter.addEventListener('change', filterNodes);
         document.getElementById('searchInput').addEventListener('input', filterNodes);
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        clearFiltersBtn.addEventListener('click', clearFilters);
+        
+        // Get all type filter checkboxes
+        const typeFilters = document.querySelector('.filters');
+        Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
+            input.checked = true;
+        });
+        
+        // Zoom controls
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+        
+        zoomInBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+        });
+        
+        zoomOutBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+        });
+        
+        zoomResetBtn.addEventListener('click', () => {
+            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+        });
+        
+        // Interactive entity selection
+        window.selectEntityById = (id) => {
+            const selectedNode = data.entities.find(d => d.id === id);
+            if (selectedNode) {
+                // Highlight the node
+                highlightNode(selectedNode);
+                
+                // Center the view on the node
+                const scale = 1.5;
+                const x = width / 2 - scale * selectedNode.x;
+                const y = height / 2 - scale * selectedNode.y;
+                svg.transition().duration(500)
+                   .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+                
+                // Show node details
+                showNodeDetails(selectedNode);
+            }
+        };
         
         // Node click handler
         nodes.on('click', (event, d) => {
             showNodeDetails(d);
+            // Navigate to entity page
+            window.location.href = d.id + '.html';
         });
+        
+        // Example of interactive relationship navigation
+        // href="javascript:void(0)" onclick="selectEntityById
         
         // Hover effects
         nodes
@@ -200,11 +426,11 @@
         
         function showNodeDetails(node) {
             const details = document.getElementById('nodeDetails');
-            let html = '<h3>' + (node.attributes.name || node.id) + '</h3>' +
+            let html = '<h3>' + (node.attributes.name || node.attributes.title || node.id) + '</h3>' +
                       '<p><strong>Type:</strong> ' + node.type + '</p>';
             
             for (const [key, value] of Object.entries(node.attributes)) {
-                if (key !== 'name' && typeof value !== 'object') {
+                if (key !== 'name' && key !== 'title' && typeof value !== 'object') {
                     html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
                 }
             }
@@ -237,10 +463,29 @@
             d3.select(event.currentTarget).style('opacity', 1);
         }
         
+        function highlightNode(node) {
+            // Reset all nodes and links
+            resetHighlight();
+            
+            // Find the DOM element for this node
+            const nodeElement = nodes.filter(d => d.id === node.id);
+            
+            // Highlight it
+            nodeElement.select('circle')
+                .attr('r', 12)
+                .attr('stroke', '#ff6600')
+                .attr('stroke-width', 3);
+        }
+        
         function resetHighlight() {
             nodes.style('opacity', 1);
             links.style('opacity', 0.6)
                 .style('stroke-width', 1);
+                
+            nodes.select('circle')
+                .attr('r', 8)
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2);
         }
         
         function filterNodes() {
@@ -251,7 +496,8 @@
                 const matchesType = selectedType === 'all' || d.type === selectedType;
                 const matchesSearch = !searchText || 
                     d.id.toLowerCase().includes(searchText) || 
-                    (d.attributes.name && d.attributes.name.toLowerCase().includes(searchText));
+                    (d.attributes.name && d.attributes.name.toLowerCase().includes(searchText)) ||
+                    (d.attributes.title && d.attributes.title.toLowerCase().includes(searchText));
                 return matchesType && matchesSearch ? null : 'none';
             });
             
@@ -260,6 +506,12 @@
                 const targetVisible = selectedType === 'all' || d.target.type === selectedType;
                 return sourceVisible && targetVisible ? null : 'none';
             });
+        }
+        
+        function clearFilters() {
+            typeFilter.value = 'all';
+            document.getElementById('searchInput').value = '';
+            filterNodes();
         }
     </script>
 </body>

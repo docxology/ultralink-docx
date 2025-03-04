@@ -103,7 +103,7 @@ class BayesianGraphExporter extends SpecializedExporter {
     for (const [id, otherEntity] of this.store.entities) {
       if (id === entity.id) continue;
       
-      const relationships = this.store.getRelationships(id);
+      const relationships = this.getRelationships(id);
       for (const rel of relationships) {
         if (rel.target === entity.id && rel.type === 'influences') {
           parents.push(otherEntity);
@@ -120,7 +120,7 @@ class BayesianGraphExporter extends SpecializedExporter {
    */
   getChildNodes(entity) {
     const children = [];
-    const relationships = this.store.getRelationships(entity.id);
+    const relationships = this.getRelationships(entity.id);
     
     for (const rel of relationships) {
       if (rel.type === 'influences') {
@@ -132,6 +132,21 @@ class BayesianGraphExporter extends SpecializedExporter {
     }
     
     return children;
+  }
+  
+  /**
+   * Get relationships for an entity
+   * @param {string} entityId - Entity ID
+   * @returns {Array} Relationships
+   */
+  getRelationships(entityId) {
+    const relationships = [];
+    for (const [key, rel] of this.store.relationships) {
+      if (rel.source === entityId) {
+        relationships.push(rel);
+      }
+    }
+    return relationships;
   }
   
   /**
@@ -148,19 +163,19 @@ class BayesianGraphExporter extends SpecializedExporter {
     // Calculate incoming weights
     const parents = this.getParentNodes(entity);
     parents.forEach(parent => {
-      const relationships = this.store.getRelationships(parent.id);
+      const relationships = this.getRelationships(parent.id);
       for (const rel of relationships) {
         if (rel.target === entity.id && rel.type === 'influences') {
-          weights.incoming[parent.id] = rel.attributes.weight || 1.0;
+          weights.incoming[parent.id] = rel.attributes?.weight || 1.0;
         }
       }
     });
 
     // Calculate outgoing weights
-    const relationships = this.store.getRelationships(entity.id);
+    const relationships = this.getRelationships(entity.id);
     for (const rel of relationships) {
       if (rel.type === 'influences') {
-        weights.outgoing[rel.target] = rel.attributes.weight || 1.0;
+        weights.outgoing[rel.target] = rel.attributes?.weight || 1.0;
       }
     }
 
@@ -214,14 +229,14 @@ class BayesianGraphExporter extends SpecializedExporter {
 
     // Export edges
     for (const entity of this.store.entities.values()) {
-      const relationships = this.store.getRelationships(entity.id);
+      const relationships = this.getRelationships(entity.id);
       for (const rel of relationships) {
         // Add all relationships as edges, not just influences
         network.edges.push({
           source: entity.id,
           target: rel.target,
           type: rel.type,
-          weight: rel.attributes.weight || 1.0
+          weight: rel.attributes?.weight || 1.0
         });
       }
     }

@@ -1,0 +1,556 @@
+network {
+  name = "UltraLink Bayesian Network";
+}
+
+variable colonial-period {
+  type discrete[2] { true, false };
+}
+
+variable revolutionary-war {
+  type discrete[2] { true, false };
+}
+
+variable early-republic {
+  type discrete[2] { true, false };
+}
+
+variable antebellum {
+  type discrete[2] { true, false };
+}
+
+variable civil-war {
+  type discrete[2] { true, false };
+}
+
+variable reconstruction {
+  type discrete[2] { true, false };
+}
+
+variable gilded-age {
+  type discrete[2] { true, false };
+}
+
+variable progressive-era {
+  type discrete[2] { true, false };
+}
+
+variable roaring-twenties {
+  type discrete[2] { true, false };
+}
+
+variable great-depression {
+  type discrete[2] { true, false };
+}
+
+variable world-war-2 {
+  type discrete[2] { true, false };
+}
+
+variable cold-war {
+  type discrete[2] { true, false };
+}
+
+variable civil-rights {
+  type discrete[2] { true, false };
+}
+
+variable modern-era {
+  type discrete[2] { true, false };
+}
+
+variable jamestown-founding {
+  type discrete[2] { true, false };
+}
+
+variable plymouth-colony {
+  type discrete[2] { true, false };
+}
+
+variable declaration-independence {
+  type discrete[2] { true, false };
+}
+
+variable constitutional-convention {
+  type discrete[2] { true, false };
+}
+
+variable louisiana-purchase {
+  type discrete[2] { true, false };
+}
+
+variable civil-war-start {
+  type discrete[2] { true, false };
+}
+
+variable emancipation-proclamation {
+  type discrete[2] { true, false };
+}
+
+variable civil-war-end {
+  type discrete[2] { true, false };
+}
+
+variable womens-suffrage {
+  type discrete[2] { true, false };
+}
+
+variable stock-market-crash {
+  type discrete[2] { true, false };
+}
+
+variable pearl-harbor {
+  type discrete[2] { true, false };
+}
+
+variable mlk-speech {
+  type discrete[2] { true, false };
+}
+
+variable moon-landing {
+  type discrete[2] { true, false };
+}
+
+variable september-11 {
+  type discrete[2] { true, false };
+}
+
+variable obama-election {
+  type discrete[2] { true, false };
+}
+
+variable washington {
+  type discrete[2] { true, false };
+}
+
+variable jefferson {
+  type discrete[2] { true, false };
+}
+
+variable lincoln {
+  type discrete[2] { true, false };
+}
+
+variable douglass {
+  type discrete[2] { true, false };
+}
+
+variable roosevelt-fdr {
+  type discrete[2] { true, false };
+}
+
+variable mlk {
+  type discrete[2] { true, false };
+}
+
+variable democracy {
+  type discrete[2] { true, false };
+}
+
+variable slavery {
+  type discrete[2] { true, false };
+}
+
+variable manifest-destiny {
+  type discrete[2] { true, false };
+}
+
+variable civil-rights-concept {
+  type discrete[2] { true, false };
+}
+
+variable american-dream {
+  type discrete[2] { true, false };
+}
+
+variable declaration-doc {
+  type discrete[2] { true, false };
+}
+
+variable constitution-doc {
+  type discrete[2] { true, false };
+}
+
+variable gettysburg-address {
+  type discrete[2] { true, false };
+}
+
+variable democracy-1776 {
+  type discrete[2] { true, false };
+}
+
+variable democracy-1800 {
+  type discrete[2] { true, false };
+}
+
+variable democracy-1850 {
+  type discrete[2] { true, false };
+}
+
+variable democracy-1900 {
+  type discrete[2] { true, false };
+}
+
+variable democracy-1950 {
+  type discrete[2] { true, false };
+}
+
+variable democracy-2000 {
+  type discrete[2] { true, false };
+}
+
+variable democracy-2020 {
+  type discrete[2] { true, false };
+}
+
+variable slavery-1700 {
+  type discrete[2] { true, false };
+}
+
+variable slavery-1776 {
+  type discrete[2] { true, false };
+}
+
+variable slavery-1800 {
+  type discrete[2] { true, false };
+}
+
+variable slavery-1850 {
+  type discrete[2] { true, false };
+}
+
+variable slavery-1863 {
+  type discrete[2] { true, false };
+}
+
+variable slavery-1870 {
+  type discrete[2] { true, false };
+}
+
+variable founding-era {
+  type discrete[2] { true, false };
+}
+
+variable pre-civil-war {
+  type discrete[2] { true, false };
+}
+
+variable civil-rights-era {
+  type discrete[2] { true, false };
+}
+
+variable post-cold-war {
+  type discrete[2] { true, false };
+}
+
+variable ideological-space {
+  type discrete[2] { true, false };
+}
+
+variable social-values-space {
+  type discrete[2] { true, false };
+}
+
+variable founding-principles-cluster {
+  type discrete[2] { true, false };
+}
+
+variable civil-rights-cluster {
+  type discrete[2] { true, false };
+}
+
+variable economic-development-cluster {
+  type discrete[2] { true, false };
+}
+
+variable democracy-rights-similarity {
+  type discrete[2] { true, false };
+}
+
+variable liberty-dream-similarity {
+  type discrete[2] { true, false };
+}
+
+variable democracy-evolution {
+  type discrete[2] { true, false };
+}
+
+variable equality-evolution {
+  type discrete[2] { true, false };
+}
+
+probability ( colonial-period ) {
+  table 0.5, 0.5;
+}
+
+probability ( revolutionary-war ) {
+  table 0.5, 0.5;
+}
+
+probability ( early-republic ) {
+  table 0.5, 0.5;
+}
+
+probability ( antebellum ) {
+  table 0.5, 0.5;
+}
+
+probability ( civil-war ) {
+  table 0.5, 0.5;
+}
+
+probability ( reconstruction ) {
+  table 0.5, 0.5;
+}
+
+probability ( gilded-age ) {
+  table 0.5, 0.5;
+}
+
+probability ( progressive-era ) {
+  table 0.5, 0.5;
+}
+
+probability ( roaring-twenties ) {
+  table 0.5, 0.5;
+}
+
+probability ( great-depression ) {
+  table 0.5, 0.5;
+}
+
+probability ( world-war-2 ) {
+  table 0.5, 0.5;
+}
+
+probability ( cold-war ) {
+  table 0.5, 0.5;
+}
+
+probability ( civil-rights ) {
+  table 0.5, 0.5;
+}
+
+probability ( modern-era ) {
+  table 0.5, 0.5;
+}
+
+probability ( jamestown-founding ) {
+  table 0.5, 0.5;
+}
+
+probability ( plymouth-colony ) {
+  table 0.5, 0.5;
+}
+
+probability ( declaration-independence ) {
+  table 0.5, 0.5;
+}
+
+probability ( constitutional-convention ) {
+  table 0.5, 0.5;
+}
+
+probability ( louisiana-purchase ) {
+  table 0.5, 0.5;
+}
+
+probability ( civil-war-start ) {
+  table 0.5, 0.5;
+}
+
+probability ( emancipation-proclamation ) {
+  table 0.5, 0.5;
+}
+
+probability ( civil-war-end ) {
+  table 0.5, 0.5;
+}
+
+probability ( womens-suffrage ) {
+  table 0.5, 0.5;
+}
+
+probability ( stock-market-crash ) {
+  table 0.5, 0.5;
+}
+
+probability ( pearl-harbor ) {
+  table 0.5, 0.5;
+}
+
+probability ( mlk-speech ) {
+  table 0.5, 0.5;
+}
+
+probability ( moon-landing ) {
+  table 0.5, 0.5;
+}
+
+probability ( september-11 ) {
+  table 0.5, 0.5;
+}
+
+probability ( obama-election ) {
+  table 0.5, 0.5;
+}
+
+probability ( washington ) {
+  table 0.5, 0.5;
+}
+
+probability ( jefferson ) {
+  table 0.5, 0.5;
+}
+
+probability ( lincoln ) {
+  table 0.5, 0.5;
+}
+
+probability ( douglass ) {
+  table 0.5, 0.5;
+}
+
+probability ( roosevelt-fdr ) {
+  table 0.5, 0.5;
+}
+
+probability ( mlk ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy ) {
+  table 0.5, 0.5;
+}
+
+probability ( slavery ) {
+  table 0.5, 0.5;
+}
+
+probability ( manifest-destiny ) {
+  table 0.5, 0.5;
+}
+
+probability ( civil-rights-concept ) {
+  table 0.5, 0.5;
+}
+
+probability ( american-dream ) {
+  table 0.5, 0.5;
+}
+
+probability ( declaration-doc ) {
+  table 0.5, 0.5;
+}
+
+probability ( constitution-doc ) {
+  table 0.5, 0.5;
+}
+
+probability ( gettysburg-address ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-1776 ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-1800 ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-1850 ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-1900 ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-1950 ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-2000 ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-2020 ) {
+  table 0.5, 0.5;
+}
+
+probability ( slavery-1700 ) {
+  table 0.5, 0.5;
+}
+
+probability ( slavery-1776 ) {
+  table 0.5, 0.5;
+}
+
+probability ( slavery-1800 ) {
+  table 0.5, 0.5;
+}
+
+probability ( slavery-1850 ) {
+  table 0.5, 0.5;
+}
+
+probability ( slavery-1863 ) {
+  table 0.5, 0.5;
+}
+
+probability ( slavery-1870 ) {
+  table 0.5, 0.5;
+}
+
+probability ( founding-era ) {
+  table 0.5, 0.5;
+}
+
+probability ( pre-civil-war ) {
+  table 0.5, 0.5;
+}
+
+probability ( civil-rights-era ) {
+  table 0.5, 0.5;
+}
+
+probability ( post-cold-war ) {
+  table 0.5, 0.5;
+}
+
+probability ( ideological-space ) {
+  table 0.5, 0.5;
+}
+
+probability ( social-values-space ) {
+  table 0.5, 0.5;
+}
+
+probability ( founding-principles-cluster ) {
+  table 0.5, 0.5;
+}
+
+probability ( civil-rights-cluster ) {
+  table 0.5, 0.5;
+}
+
+probability ( economic-development-cluster ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-rights-similarity ) {
+  table 0.5, 0.5;
+}
+
+probability ( liberty-dream-similarity ) {
+  table 0.5, 0.5;
+}
+
+probability ( democracy-evolution ) {
+  table 0.5, 0.5;
+}
+
+probability ( equality-evolution ) {
+  table 0.5, 0.5;
+}
+

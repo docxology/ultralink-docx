@@ -1,0 +1,372 @@
+network {
+  name = "UltraLink Bayesian Network";
+}
+
+variable camel {
+  type discrete[2] { true, false };
+}
+
+variable fennec_fox {
+  type discrete[2] { true, false };
+}
+
+variable desert_monitor {
+  type discrete[2] { true, false };
+}
+
+variable sidewinder {
+  type discrete[2] { true, false };
+}
+
+variable scorpion {
+  type discrete[2] { true, false };
+}
+
+variable darkling_beetle {
+  type discrete[2] { true, false };
+}
+
+variable roadrunner {
+  type discrete[2] { true, false };
+}
+
+variable desert_tortoise {
+  type discrete[2] { true, false };
+}
+
+variable cactus_wren {
+  type discrete[2] { true, false };
+}
+
+variable kangaroo_rat {
+  type discrete[2] { true, false };
+}
+
+variable gila_monster {
+  type discrete[2] { true, false };
+}
+
+variable javelina {
+  type discrete[2] { true, false };
+}
+
+variable saguaro {
+  type discrete[2] { true, false };
+}
+
+variable barrel_cactus {
+  type discrete[2] { true, false };
+}
+
+variable mesquite {
+  type discrete[2] { true, false };
+}
+
+variable creosote_bush {
+  type discrete[2] { true, false };
+}
+
+variable desert_poppy {
+  type discrete[2] { true, false };
+}
+
+variable ocotillo {
+  type discrete[2] { true, false };
+}
+
+variable brittlebush {
+  type discrete[2] { true, false };
+}
+
+variable desert_ironwood {
+  type discrete[2] { true, false };
+}
+
+variable agave {
+  type discrete[2] { true, false };
+}
+
+variable joshua_tree {
+  type discrete[2] { true, false };
+}
+
+variable prickly_pear {
+  type discrete[2] { true, false };
+}
+
+variable cholla_cactus {
+  type discrete[2] { true, false };
+}
+
+variable other_plants {
+  type discrete[2] { true, false };
+}
+
+variable heat {
+  type discrete[2] { true, false };
+}
+
+variable temperature_variation {
+  type discrete[2] { true, false };
+}
+
+variable aridity {
+  type discrete[2] { true, false };
+}
+
+variable sand_dunes {
+  type discrete[2] { true, false };
+}
+
+variable rocky_outcrops {
+  type discrete[2] { true, false };
+}
+
+variable oasis {
+  type discrete[2] { true, false };
+}
+
+variable ephemeral_streams {
+  type discrete[2] { true, false };
+}
+
+variable sandy_soil {
+  type discrete[2] { true, false };
+}
+
+variable desert_pavement {
+  type discrete[2] { true, false };
+}
+
+variable desert_varnish {
+  type discrete[2] { true, false };
+}
+
+variable playa {
+  type discrete[2] { true, false };
+}
+
+variable flash_floods {
+  type discrete[2] { true, false };
+}
+
+variable wash {
+  type discrete[2] { true, false };
+}
+
+variable dune_field {
+  type discrete[2] { true, false };
+}
+
+variable rocky_slope {
+  type discrete[2] { true, false };
+}
+
+variable canyon {
+  type discrete[2] { true, false };
+}
+
+variable pollination_yucca {
+  type discrete[2] { true, false };
+}
+
+variable nurse_plant {
+  type discrete[2] { true, false };
+}
+
+variable seed_dispersal {
+  type discrete[2] { true, false };
+}
+
+variable yucca_moth {
+  type discrete[2] { true, false };
+}
+
+variable coyote {
+  type discrete[2] { true, false };
+}
+
+probability ( camel ) {
+  table 0.5, 0.5;
+}
+
+probability ( fennec_fox ) {
+  table 0.5, 0.5;
+}
+
+probability ( desert_monitor ) {
+  table 0.5, 0.5;
+}
+
+probability ( sidewinder ) {
+  table 0.5, 0.5;
+}
+
+probability ( scorpion ) {
+  table 0.5, 0.5;
+}
+
+probability ( darkling_beetle ) {
+  table 0.5, 0.5;
+}
+
+probability ( roadrunner ) {
+  table 0.5, 0.5;
+}
+
+probability ( desert_tortoise ) {
+  table 0.5, 0.5;
+}
+
+probability ( cactus_wren ) {
+  table 0.5, 0.5;
+}
+
+probability ( kangaroo_rat ) {
+  table 0.5, 0.5;
+}
+
+probability ( gila_monster ) {
+  table 0.5, 0.5;
+}
+
+probability ( javelina ) {
+  table 0.5, 0.5;
+}
+
+probability ( saguaro ) {
+  table 0.5, 0.5;
+}
+
+probability ( barrel_cactus ) {
+  table 0.5, 0.5;
+}
+
+probability ( mesquite ) {
+  table 0.5, 0.5;
+}
+
+probability ( creosote_bush ) {
+  table 0.5, 0.5;
+}
+
+probability ( desert_poppy ) {
+  table 0.5, 0.5;
+}
+
+probability ( ocotillo ) {
+  table 0.5, 0.5;
+}
+
+probability ( brittlebush ) {
+  table 0.5, 0.5;
+}
+
+probability ( desert_ironwood ) {
+  table 0.5, 0.5;
+}
+
+probability ( agave ) {
+  table 0.5, 0.5;
+}
+
+probability ( joshua_tree ) {
+  table 0.5, 0.5;
+}
+
+probability ( prickly_pear ) {
+  table 0.5, 0.5;
+}
+
+probability ( cholla_cactus ) {
+  table 0.5, 0.5;
+}
+
+probability ( other_plants ) {
+  table 0.5, 0.5;
+}
+
+probability ( heat ) {
+  table 0.5, 0.5;
+}
+
+probability ( temperature_variation ) {
+  table 0.5, 0.5;
+}
+
+probability ( aridity ) {
+  table 0.5, 0.5;
+}
+
+probability ( sand_dunes ) {
+  table 0.5, 0.5;
+}
+
+probability ( rocky_outcrops ) {
+  table 0.5, 0.5;
+}
+
+probability ( oasis ) {
+  table 0.5, 0.5;
+}
+
+probability ( ephemeral_streams ) {
+  table 0.5, 0.5;
+}
+
+probability ( sandy_soil ) {
+  table 0.5, 0.5;
+}
+
+probability ( desert_pavement ) {
+  table 0.5, 0.5;
+}
+
+probability ( desert_varnish ) {
+  table 0.5, 0.5;
+}
+
+probability ( playa ) {
+  table 0.5, 0.5;
+}
+
+probability ( flash_floods ) {
+  table 0.5, 0.5;
+}
+
+probability ( wash ) {
+  table 0.5, 0.5;
+}
+
+probability ( dune_field ) {
+  table 0.5, 0.5;
+}
+
+probability ( rocky_slope ) {
+  table 0.5, 0.5;
+}
+
+probability ( canyon ) {
+  table 0.5, 0.5;
+}
+
+probability ( pollination_yucca ) {
+  table 0.5, 0.5;
+}
+
+probability ( nurse_plant ) {
+  table 0.5, 0.5;
+}
+
+probability ( seed_dispersal ) {
+  table 0.5, 0.5;
+}
+
+probability ( yucca_moth ) {
+  table 0.5, 0.5;
+}
+
+probability ( coyote ) {
+  table 0.5, 0.5;
+}
+

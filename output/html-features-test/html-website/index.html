@@ -6,7 +6,176 @@
     <title>HTML Features Test</title>
     <meta name="description" content="Testing HTML website features">
     <link rel="stylesheet" href="styles/default.css">
+    <style>
+    /* Default Theme CSS */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --link-color: #0066cc;
+  --accent-color: #4a9eff;
+  --border-color: #dddddd;
+  --node-hover: #ff6600;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout */
+header {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  display: flex;
+  height: calc(100vh - 180px);
+}
+
+#graph {
+  flex: 1;
+  background: rgba(249, 250, 251, 0.8);
+  border-right: 1px solid var(--border-color);
+}
+
+.details-panel {
+  width: 300px;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+/* Entity styles */
+.entity-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.entity-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.attribute-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attribute-table th, .attribute-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.attribute-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.relationship-item {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.relationship-attributes {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-color);
+  font-size: 0.9rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.zoom-controls {
+  position: absolute;
+  right: 1rem;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.zoom-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: white;
+  cursor: pointer;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  #graph {
+    height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .details-panel {
+    width: 100%;
+  }
+  
+  .zoom-controls {
+    bottom: 50vh;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .filters {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+    </style>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- const name = entity.attributes.name || entity.attributes.title || entity.id; -->
 </head>
 <body class="theme-default">
     <header>
@@ -23,7 +192,13 @@
                 <label>Search:
                     <input type="text" id="searchInput" placeholder="Search nodes...">
                 </label>
+                <button class="btn" id="clear-filters">Clear Filters</button>
             </div>
+        </div>
+        <div class="zoom-controls">
+            <button class="zoom-btn" id="zoom-in">+</button>
+            <button class="zoom-btn" id="zoom-reset">⟳</button>
+            <button class="zoom-btn" id="zoom-out">−</button>
         </div>
     </header>
     <main>
@@ -38,7 +213,7 @@
     <script>
         const data = {
             entities: [{"id":"entity1","type":"person","attributes":{"name":"John Doe","age":30,"email":"john@example.com"}},{"id":"entity2","type":"project","attributes":{"title":"Project Alpha","status":"Active","priority":"High"}},{"id":"entity3","type":"resource","attributes":{"type":"Document","url":"https://example.com/doc"}}],
-            relationships: [{"source":"entity1","target":"entity2","type":"manages"},{"source":"entity1","target":"entity3","type":"created"},{"source":"entity2","target":"entity3","type":"contains"}]
+            relationships: [{"source":"entity1","target":"entity2","type":"manages","attributes":{"role":"Project Manager","since":"2023-01-15"}},{"source":"entity1","target":"entity3","type":"created","attributes":{"date":"2023-02-10"}},{"source":"entity2","target":"entity3","type":"contains","attributes":{"section":"Documentation"}}]
         };
         
         // Color scale for different node types
@@ -51,8 +226,10 @@
         
         const svg = d3.select('#graph')
             .append('svg')
-            .attr('width', width + margin.left + margin.right)
-            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox', [0, 0, width, height])
+            .attr('preserveAspectRatio', 'xMidYMid meet')
             .append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
             
@@ -115,7 +292,7 @@
         nodes.append('text')
             .attr('dx', 12)
             .attr('dy', '.35em')
-            .text(d => d.attributes.name || d.id)
+            .text(d => d.attributes.name || d.attributes.title || d.id)
             .attr('font-size', '12px')
             .attr('fill', '#333');
             
@@ -159,11 +336,60 @@
         // Add event listeners
         typeFilter.addEventListener('change', filterNodes);
         document.getElementById('searchInput').addEventListener('input', filterNodes);
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        clearFiltersBtn.addEventListener('click', clearFilters);
+        
+        // Get all type filter checkboxes
+        const typeFilters = document.querySelector('.filters');
+        Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
+            input.checked = true;
+        });
+        
+        // Zoom controls
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+        
+        zoomInBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+        });
+        
+        zoomOutBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+        });
+        
+        zoomResetBtn.addEventListener('click', () => {
+            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+        });
+        
+        // Interactive entity selection
+        window.selectEntityById = (id) => {
+            const selectedNode = data.entities.find(d => d.id === id);
+            if (selectedNode) {
+                // Highlight the node
+                highlightNode(selectedNode);
+                
+                // Center the view on the node
+                const scale = 1.5;
+                const x = width / 2 - scale * selectedNode.x;
+                const y = height / 2 - scale * selectedNode.y;
+                svg.transition().duration(500)
+                   .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+                
+                // Show node details
+                showNodeDetails(selectedNode);
+            }
+        };
         
         // Node click handler
         nodes.on('click', (event, d) => {
             showNodeDetails(d);
+            // Navigate to entity page
+            window.location.href = d.id + '.html';
         });
+        
+        // Example of interactive relationship navigation
+        // href="javascript:void(0)" onclick="selectEntityById
         
         // Hover effects
         nodes
@@ -200,11 +426,11 @@
         
         function showNodeDetails(node) {
             const details = document.getElementById('nodeDetails');
-            let html = '<h3>' + (node.attributes.name || node.id) + '</h3>' +
+            let html = '<h3>' + (node.attributes.name || node.attributes.title || node.id) + '</h3>' +
                       '<p><strong>Type:</strong> ' + node.type + '</p>';
             
             for (const [key, value] of Object.entries(node.attributes)) {
-                if (key !== 'name' && typeof value !== 'object') {
+                if (key !== 'name' && key !== 'title' && typeof value !== 'object') {
                     html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
                 }
             }
@@ -237,10 +463,29 @@
             d3.select(event.currentTarget).style('opacity', 1);
         }
         
+        function highlightNode(node) {
+            // Reset all nodes and links
+            resetHighlight();
+            
+            // Find the DOM element for this node
+            const nodeElement = nodes.filter(d => d.id === node.id);
+            
+            // Highlight it
+            nodeElement.select('circle')
+                .attr('r', 12)
+                .attr('stroke', '#ff6600')
+                .attr('stroke-width', 3);
+        }
+        
         function resetHighlight() {
             nodes.style('opacity', 1);
             links.style('opacity', 0.6)
                 .style('stroke-width', 1);
+                
+            nodes.select('circle')
+                .attr('r', 8)
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2);
         }
         
         function filterNodes() {
@@ -251,7 +496,8 @@
                 const matchesType = selectedType === 'all' || d.type === selectedType;
                 const matchesSearch = !searchText || 
                     d.id.toLowerCase().includes(searchText) || 
-                    (d.attributes.name && d.attributes.name.toLowerCase().includes(searchText));
+                    (d.attributes.name && d.attributes.name.toLowerCase().includes(searchText)) ||
+                    (d.attributes.title && d.attributes.title.toLowerCase().includes(searchText));
                 return matchesType && matchesSearch ? null : 'none';
             });
             
@@ -260,6 +506,12 @@
                 const targetVisible = selectedType === 'all' || d.target.type === selectedType;
                 return sourceVisible && targetVisible ? null : 'none';
             });
+        }
+        
+        function clearFilters() {
+            typeFilter.value = 'all';
+            document.getElementById('searchInput').value = '';
+            filterNodes();
         }
     </script>
 </body>
