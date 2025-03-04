@@ -53,6 +53,7 @@
           height: 600px;
           border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 4px;
+          position: relative;
         }
         
         .entity-list {
@@ -95,6 +96,21 @@
           margin-bottom: 0.5rem;
         }
         
+        .btn {
+          padding: 0.5rem 1rem;
+          margin-top: 0.5rem;
+          background-color: var(--node-color);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+          background-color: var(--highlight-color);
+        }
+        
         .node {
           fill: var(--node-color);
           stroke: #fff;
@@ -117,12 +133,68 @@
           pointer-events: none;
         }
         
+        .zoom-controls {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          flex-direction: column;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 4px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+          z-index: 10;
+        }
+        
+        .zoom-btn {
+          width: 30px;
+          height: 30px;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          user-select: none;
+          border: none;
+          background: none;
+          padding: 0;
+        }
+        
+        .zoom-btn:hover {
+          background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .entity-card {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .entity-card h2 {
+          margin-top: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          padding-bottom: 0.5rem;
+        }
+        
         /* Theme-specific styles */
         
         
         
         
         
+        
+        @media (max-width: 768px) {
+          main {
+            flex-direction: column;
+          }
+          
+          .sidebar {
+            width: auto;
+            border-right: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+        }
       </style>
     </head>
     <body>
@@ -139,6 +211,7 @@
           <div class="filter-group">
             <h3>Entity Types</h3>
             <div id="type-filters"></div>
+            <button class="btn" id="clear-filters">Clear Filters</button>
           </div>
           
           <h3>Entities</h3>
@@ -146,8 +219,14 @@
         </div>
         
         <div class="content">
-          <div class="visualization" id="graph-container"></div>
-          <div id="entity-details"></div>
+          <div class="visualization" id="graph-container">
+            <div class="zoom-controls">
+              <button class="zoom-btn" id="zoom-in">+</button>
+              <button class="zoom-btn" id="zoom-reset">⟳</button>
+              <button class="zoom-btn" id="zoom-out">−</button>
+            </div>
+          </div>
+          <div id="entity-details" class="entity-card"></div>
         </div>
       </main>
       
@@ -155,170 +234,7 @@
       
       <script>
         // UltraLink data
-        const data = {
-  "entities": [
-    {
-      "id": "machine-learning",
-      "type": "concept",
-      "attributes": {
-        "name": "Machine Learning",
-        "description": "A field of AI focused on algorithms that learn from data"
-      },
-      "metadata": {
-        "created": "2025-03-04T00:39:49.196Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "id": "data-analysis",
-      "type": "concept",
-      "attributes": {
-        "name": "Data Analysis",
-        "description": "The process of inspecting and modeling data"
-      },
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "id": "project-management",
-      "type": "concept",
-      "attributes": {
-        "name": "Project Management",
-        "description": "The practice of planning and organizing projects"
-      },
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "id": "project-alpha",
-      "type": "project",
-      "attributes": {
-        "name": "Project Alpha",
-        "status": "In Progress",
-        "dueDate": "2023-12-31"
-      },
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "id": "project-beta",
-      "type": "project",
-      "attributes": {
-        "name": "Project Beta",
-        "status": "Planning",
-        "dueDate": "2024-03-15"
-      },
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "id": "alice-smith",
-      "type": "person",
-      "attributes": {
-        "name": "Alice Smith",
-        "role": "Project Manager",
-        "email": "alice@example.com"
-      },
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "id": "bob-johnson",
-      "type": "person",
-      "attributes": {
-        "name": "Bob Johnson",
-        "role": "Developer",
-        "email": "bob@example.com"
-      },
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    }
-  ],
-  "relationships": [
-    {
-      "source": "project-alpha",
-      "target": "machine-learning",
-      "type": "uses",
-      "attributes": {},
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "source": "project-alpha",
-      "target": "data-analysis",
-      "type": "uses",
-      "attributes": {},
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "source": "project-beta",
-      "target": "machine-learning",
-      "type": "uses",
-      "attributes": {},
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "source": "alice-smith",
-      "target": "project-alpha",
-      "type": "manages",
-      "attributes": {},
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "source": "alice-smith",
-      "target": "project-beta",
-      "type": "manages",
-      "attributes": {},
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "source": "bob-johnson",
-      "target": "project-alpha",
-      "type": "works_on",
-      "attributes": {},
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    },
-    {
-      "source": "bob-johnson",
-      "target": "project-beta",
-      "type": "works_on",
-      "attributes": {},
-      "metadata": {
-        "created": "2025-03-04T00:39:49.200Z",
-        "modified": "2025-03-04T00:39:49.200Z"
-      }
-    }
-  ]
-};
+        const data = {"entities":[{"id":"machine-learning","type":"concept","attributes":{"name":"Machine Learning","description":"A field of AI focused on algorithms that learn from data"},"metadata":{"created":"2025-03-04T02:34:14.123Z","modified":"2025-03-04T02:34:14.124Z"}},{"id":"data-analysis","type":"concept","attributes":{"name":"Data Analysis","description":"The process of inspecting and modeling data"},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"id":"project-management","type":"concept","attributes":{"name":"Project Management","description":"The practice of planning and organizing projects"},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"id":"project-alpha","type":"project","attributes":{"name":"Project Alpha","status":"In Progress","dueDate":"2023-12-31"},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"id":"project-beta","type":"project","attributes":{"name":"Project Beta","status":"Planning","dueDate":"2024-03-15"},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"id":"alice-smith","type":"person","attributes":{"name":"Alice Smith","role":"Project Manager","email":"alice@example.com"},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"id":"bob-johnson","type":"person","attributes":{"name":"Bob Johnson","role":"Developer","email":"bob@example.com"},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}}],"relationships":[{"source":"project-alpha","target":"machine-learning","type":"uses","attributes":{},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"source":"project-alpha","target":"data-analysis","type":"uses","attributes":{},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"source":"project-beta","target":"machine-learning","type":"uses","attributes":{},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"source":"alice-smith","target":"project-alpha","type":"manages","attributes":{},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"source":"alice-smith","target":"project-beta","type":"manages","attributes":{},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"source":"bob-johnson","target":"project-alpha","type":"works_on","attributes":{},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}},{"source":"bob-johnson","target":"project-beta","type":"works_on","attributes":{},"metadata":{"created":"2025-03-04T02:34:14.124Z","modified":"2025-03-04T02:34:14.124Z"}}]};
         
         // DOM elements
         const graphContainer = document.getElementById('graph-container');
@@ -326,10 +242,15 @@
         const entityDetails = document.getElementById('entity-details');
         const searchInput = document.getElementById('search-input');
         const typeFilters = document.getElementById('type-filters');
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+        const zoomOutBtn = document.getElementById('zoom-out');
         
         // State
         let selectedEntity = null;
         let filteredEntities = data.entities;
+        let currentZoom = d3.zoomIdentity;
         
         // Initialize
         function init() {
@@ -341,12 +262,41 @@
           searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             filteredEntities = data.entities.filter(entity => {
-              const name = entity.attributes.name || entity.id;
+              const name = entity.attributes.name || entity.attributes.title || entity.id;
               return name.toLowerCase().includes(searchTerm);
             });
             renderEntityList();
+            updateGraph();
           });
           
+          // Set up clear filters button
+          clearFiltersBtn.addEventListener('click', () => {
+            // Reset checkboxes
+            Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
+              input.checked = true;
+            });
+            
+            // Reset search
+            searchInput.value = '';
+            
+            // Reset filtered entities
+            filteredEntities = data.entities;
+            renderEntityList();
+            updateGraph();
+          });
+          
+          // Set up zoom controls
+          zoomInBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+          });
+          
+          zoomOutBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+          });
+          
+          zoomResetBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
+          });
         }
         
         // Render entity list
@@ -360,7 +310,7 @@
               li.classList.add('active');
             }
             
-            const name = entity.attributes.name || entity.id;
+            const name = entity.attributes.name || entity.attributes.title || entity.id;
             li.textContent = name;
             
             li.addEventListener('click', () => {
@@ -417,29 +367,34 @@
             return;
           }
           
-          const name = entity.attributes.name || entity.id;
+          const name = entity.attributes.name || entity.attributes.title || entity.id;
           
           let html = `
             <h2>${name}</h2>
-            <p><strong>Type:</strong> ${entity.type}</p>
-            <p><strong>ID:</strong> ${entity.id}</p>
+            <div class="entity-meta">
+              <p><span class="label">Type:</span> ${entity.type}</p>
+              <p><span class="label">ID:</span> ${entity.id}</p>
+            </div>
           `;
           
           // Attributes
           if (Object.keys(entity.attributes).length > 0) {
-            html += '<h3>Attributes</h3><ul>';
+            html += '<h3>Attributes</h3><dl class="attribute-list">';
             
             for (const [key, value] of Object.entries(entity.attributes)) {
-              if (key === 'name') continue; // Skip name as it's in the header
+              if (key === 'name' || key === 'title') continue; // Skip name as it's in the header
               
               const formattedValue = typeof value === 'object' 
                 ? JSON.stringify(value) 
                 : value;
                 
-              html += `<li><strong>${key}:</strong> ${formattedValue}</li>`;
+              html += `
+                <dt>${key}</dt>
+                <dd>${formattedValue}</dd>
+              `;
             }
             
-            html += '</ul>';
+            html += '</dl>';
           }
           
           // Relationships
@@ -447,26 +402,39 @@
           const incomingLinks = data.relationships.filter(rel => rel.target === entity.id);
           
           if (outgoingLinks.length > 0) {
-            html += '<h3>Outgoing Relationships</h3><ul>';
+            html += '<h3>Outgoing Relationships</h3><ul class="relationship-list">';
             
             for (const link of outgoingLinks) {
               const targetEntity = data.entities.find(e => e.id === link.target);
-              const targetName = targetEntity?.attributes?.name || link.target;
+              const targetName = targetEntity?.attributes?.name || targetEntity?.attributes?.title || link.target;
               
-              html += `<li>${link.type} → ${targetName}</li>`;
+              let relInfo = `${link.type} → <a href="javascript:void(0)" onclick="selectEntityById('${link.target}')">${targetName}</a>`;
+              
+              // Add relationship attributes if any
+              if (link.attributes && Object.keys(link.attributes).length > 0) {
+                relInfo += ' (';
+                const attrs = [];
+                for (const [key, value] of Object.entries(link.attributes)) {
+                  attrs.push(`${key}: ${value}`);
+                }
+                relInfo += attrs.join(', ');
+                relInfo += ')';
+              }
+              
+              html += `<li>${relInfo}</li>`;
             }
             
             html += '</ul>';
           }
           
           if (incomingLinks.length > 0) {
-            html += '<h3>Incoming Relationships</h3><ul>';
+            html += '<h3>Incoming Relationships</h3><ul class="relationship-list">';
             
             for (const link of incomingLinks) {
               const sourceEntity = data.entities.find(e => e.id === link.source);
-              const sourceName = sourceEntity?.attributes?.name || link.source;
+              const sourceName = sourceEntity?.attributes?.name || sourceEntity?.attributes?.title || link.source;
               
-              html += `<li>${sourceName} → ${link.type}</li>`;
+              html += `<li><a href="javascript:void(0)" onclick="selectEntityById('${link.source}')">${sourceName}</a> → ${link.type}</li>`;
             }
             
             html += '</ul>';
@@ -475,20 +443,45 @@
           entityDetails.innerHTML = html;
         }
         
+        // Global function to select entity by ID (for link clicking)
+        window.selectEntityById = (id) => {
+          selectedEntity = id;
+          const entity = data.entities.find(e => e.id === id);
+          renderEntityList();
+          renderEntityDetails(entity);
+          highlightNode(id);
+        };
+        
         // D3 graph visualization
-        let simulation, svg, link, node, nodeLabels;
+        let simulation, svg, link, node, nodeLabels, zoom, g;
         
         function renderGraph() {
           const width = graphContainer.clientWidth;
           const height = graphContainer.clientHeight;
           
+          // Create SVG with viewBox for responsiveness
           svg = d3.select('#graph-container')
             .append('svg')
-            .attr('width', width)
-            .attr('height', height);
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox', [0, 0, width, height])
+            .attr('preserveAspectRatio', 'xMidYMid meet');
+          
+          // Set up zoom behavior
+          zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on('zoom', (event) => {
+              currentZoom = event.transform;
+              g.attr('transform', event.transform);
+            });
+          
+          svg.call(zoom);
+          
+          // Create a container group for all elements that will be transformed
+          g = svg.append('g');
           
           // Create links
-          link = svg.append('g')
+          link = g.append('g')
             .selectAll('line')
             .data(data.relationships)
             .enter()
@@ -496,7 +489,7 @@
             .attr('class', 'link');
           
           // Create nodes
-          node = svg.append('g')
+          node = g.append('g')
             .selectAll('circle')
             .data(data.entities)
             .enter()
@@ -512,14 +505,14 @@
             });
           
           // Add node labels
-          nodeLabels = svg.append('g')
+          nodeLabels = g.append('g')
             .selectAll('text')
             .data(data.entities)
             .enter()
             .append('text')
             .attr('class', 'node-label')
             .attr('dy', -12)
-            .text(d => d.attributes.name || d.id);
+            .text(d => d.attributes.name || d.attributes.title || d.id);
           
           // Set up force simulation
           simulation = d3.forceSimulation(data.entities)
@@ -543,6 +536,23 @@
                 .attr('x', d => d.x)
                 .attr('y', d => d.y);
             });
+          
+          // Add double-click to zoom
+          svg.on('dblclick.zoom', null); // Remove default double-click behavior
+          node.on('dblclick', (event, d) => {
+            event.stopPropagation();
+            const scale = 2;
+            const x = width / 2 - scale * d.x;
+            const y = height / 2 - scale * d.y;
+            svg.transition().duration(500)
+              .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+          });
+          
+          // Add double-click on background to reset zoom
+          svg.on('dblclick', () => {
+            svg.transition().duration(500)
+              .call(zoom.transform, d3.zoomIdentity);
+          });
         }
         
         function updateGraph() {
@@ -573,6 +583,19 @@
           // Highlight selected node
           if (id) {
             d3.select(`#node-${id}`).classed('highlighted', true);
+            
+            // Find node and center view on it
+            const selectedNode = data.entities.find(e => e.id === id);
+            if (selectedNode && selectedNode.x && selectedNode.y) {
+              const width = graphContainer.clientWidth;
+              const height = graphContainer.clientHeight;
+              const scale = currentZoom.k; // Keep current zoom level
+              const x = width / 2 - scale * selectedNode.x;
+              const y = height / 2 - scale * selectedNode.y;
+              
+              svg.transition().duration(500)
+                .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+            }
           }
         }
         

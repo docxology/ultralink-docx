@@ -46,11 +46,13 @@ describe('UltraLink Data Export', () => {
   
   describe('JSON Export', () => {
     it('should export to JSON format', () => {
-      const json = ultralink.toJSON();
+      const jsonStr = ultralink.toJSON();
       
-      expect(json).toBeDefined();
+      expect(jsonStr).toBeDefined();
+      expect(typeof jsonStr).toBe('string');
       
-      // Check that entities are included
+      // Parse and check JSON structure
+      const json = JSON.parse(jsonStr);
       expect(Array.isArray(json.entities)).toBe(true);
       expect(json.entities.length).toBe(3);
       
@@ -78,12 +80,18 @@ describe('UltraLink Data Export', () => {
       const person1 = ultralink.entities.get('person1');
       person1.vector = new Float32Array([0.1, 0.2, 0.3]);
       
-      const json = ultralink.toJSON({ includeVectors: true });
+      const jsonStr = ultralink.toJSON({ includeVectors: true });
+      expect(typeof jsonStr).toBe('string');
       
+      const json = JSON.parse(jsonStr);
       const exportedEntity = json.entities.find(e => e.id === 'person1');
       expect(exportedEntity.vector).toBeDefined();
       expect(Array.isArray(exportedEntity.vector)).toBe(true);
-      expect(exportedEntity.vector).toEqual([0.1, 0.2, 0.3]);
+      
+      // Check vector values with tolerance for Float32Array precision differences
+      expect(Math.abs(exportedEntity.vector[0] - 0.1)).toBeLessThan(0.0001);
+      expect(Math.abs(exportedEntity.vector[1] - 0.2)).toBeLessThan(0.0001);
+      expect(Math.abs(exportedEntity.vector[2] - 0.3)).toBeLessThan(0.0001);
     });
   });
   

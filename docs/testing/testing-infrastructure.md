@@ -14,6 +14,10 @@ UltraLink employs a multi-layered testing approach to ensure quality across diff
 
 The test suite is orchestrated through a centralized test runner that manages the execution of all test types, collects results, and generates comprehensive reports.
 
+For detailed information about specific testing areas, see the following documents:
+- [Export Format Testing](./export-testing.md): Details on testing JSON, GraphML, Blob exports
+- [Test Suite Overview](./test-suite.md): Details on Systems of Interest testing methodology
+
 ## Directory Structure
 
 ```

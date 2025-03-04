@@ -1,0 +1,696 @@
+{
+  "entities": [
+    {
+      "id": "alice",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Alice Chen",
+        "role": "Principal Investigator",
+        "department": "Cognitive Science",
+        "email": "alice.chen@example.edu",
+        "publications": 42,
+        "expertise": [
+          "active inference",
+          "computational neuroscience",
+          "bayesian modeling"
+        ],
+        "yearsExperience": 15
+      },
+      "links": [
+        {
+          "target": "active-inference-model",
+          "type": "leads"
+        },
+        {
+          "target": "prediction-error-minimization",
+          "type": "leads"
+        },
+        {
+          "target": "carol",
+          "type": "mentors"
+        },
+        {
+          "target": "emma",
+          "type": "mentors"
+        },
+        {
+          "target": "active-inference",
+          "type": "specializes_in"
+        },
+        {
+          "target": "free-energy-principle",
+          "type": "specializes_in"
+        },
+        {
+          "target": "paper-active-inference",
+          "type": "authored"
+        },
+        {
+          "target": "paper-prediction-error",
+          "type": "authored"
+        },
+        {
+          "target": "paper-algorithm",
+          "type": "authored"
+        }
+      ]
+    },
+    {
+      "id": "bob",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Bob Smith",
+        "role": "Senior Researcher",
+        "department": "Biology",
+        "email": "bob.smith@example.edu",
+        "publications": 28,
+        "expertise": [
+          "ant colony behavior",
+          "entomology",
+          "swarm intelligence"
+        ],
+        "yearsExperience": 12
+      },
+      "links": [
+        {
+          "target": "ant-colony-tracking",
+          "type": "leads"
+        },
+        {
+          "target": "active-inference-model",
+          "type": "contributes_to"
+        },
+        {
+          "target": "david",
+          "type": "mentors"
+        },
+        {
+          "target": "ant-colony-behavior",
+          "type": "specializes_in"
+        },
+        {
+          "target": "stigmergy",
+          "type": "specializes_in"
+        },
+        {
+          "target": "paper-active-inference",
+          "type": "authored"
+        },
+        {
+          "target": "paper-tracking-system",
+          "type": "authored"
+        }
+      ]
+    },
+    {
+      "id": "carol",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Carol Jimenez",
+        "role": "Postdoctoral Researcher",
+        "department": "Cognitive Science",
+        "email": "carol.jimenez@example.edu",
+        "publications": 11,
+        "expertise": [
+          "active inference",
+          "free energy principle",
+          "predictive processing"
+        ],
+        "yearsExperience": 5
+      },
+      "links": [
+        {
+          "target": "active-inference-model",
+          "type": "contributes_to"
+        },
+        {
+          "target": "prediction-error-minimization",
+          "type": "contributes_to"
+        },
+        {
+          "target": "alice",
+          "type": "reports_to"
+        },
+        {
+          "target": "predictive-coding",
+          "type": "specializes_in"
+        },
+        {
+          "target": "free-energy-principle",
+          "type": "specializes_in"
+        },
+        {
+          "target": "paper-active-inference",
+          "type": "authored"
+        },
+        {
+          "target": "paper-prediction-error",
+          "type": "authored"
+        }
+      ]
+    },
+    {
+      "id": "david",
+      "type": "researcher",
+      "attributes": {
+        "name": "David Wilson",
+        "role": "PhD Student",
+        "department": "Biology",
+        "email": "david.wilson@example.edu",
+        "publications": 3,
+        "expertise": [
+          "ant colony optimization",
+          "collective behavior",
+          "stigmergy"
+        ],
+        "yearsExperience": 3
+      },
+      "links": [
+        {
+          "target": "ant-colony-tracking",
+          "type": "contributes_to"
+        },
+        {
+          "target": "algorithm-development",
+          "type": "contributes_to"
+        },
+        {
+          "target": "bob",
+          "type": "reports_to"
+        },
+        {
+          "target": "ant-colony-behavior",
+          "type": "specializes_in"
+        },
+        {
+          "target": "paper-tracking-system",
+          "type": "authored"
+        }
+      ]
+    },
+    {
+      "id": "emma",
+      "type": "researcher",
+      "attributes": {
+        "name": "Emma Taylor",
+        "role": "PhD Student",
+        "department": "Computer Science",
+        "email": "emma.taylor@example.edu",
+        "publications": 4,
+        "expertise": [
+          "machine learning",
+          "reinforcement learning",
+          "neural networks"
+        ],
+        "yearsExperience": 2
+      },
+      "links": [
+        {
+          "target": "algorithm-development",
+          "type": "contributes_to"
+        },
+        {
+          "target": "alice",
+          "type": "reports_to"
+        },
+        {
+          "target": "active-inference",
+          "type": "specializes_in"
+        },
+        {
+          "target": "paper-algorithm",
+          "type": "authored"
+        }
+      ]
+    },
+    {
+      "id": "frank",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Frank Martinez",
+        "role": "Research Associate",
+        "department": "Mathematics",
+        "email": "frank.martinez@example.edu",
+        "publications": 16,
+        "expertise": [
+          "dynamical systems",
+          "chaos theory",
+          "mathematical modeling"
+        ],
+        "yearsExperience": 8
+      },
+      "links": [
+        {
+          "target": "algorithm-development",
+          "type": "leads"
+        },
+        {
+          "target": "prediction-error-minimization",
+          "type": "contributes_to"
+        },
+        {
+          "target": "emma",
+          "type": "co_advises"
+        },
+        {
+          "target": "free-energy-principle",
+          "type": "specializes_in"
+        },
+        {
+          "target": "paper-prediction-error",
+          "type": "authored"
+        },
+        {
+          "target": "paper-algorithm",
+          "type": "authored"
+        }
+      ]
+    },
+    {
+      "id": "grace",
+      "type": "researcher",
+      "attributes": {
+        "name": "Grace Kim",
+        "role": "Lab Technician",
+        "department": "Biology",
+        "email": "grace.kim@example.edu",
+        "publications": 0,
+        "expertise": [
+          "ant husbandry",
+          "experiment design",
+          "data collection"
+        ],
+        "yearsExperience": 4
+      },
+      "links": [
+        {
+          "target": "ant-colony-tracking",
+          "type": "contributes_to"
+        },
+        {
+          "target": "bob",
+          "type": "reports_to"
+        },
+        {
+          "target": "paper-tracking-system",
+          "type": "authored"
+        }
+      ]
+    },
+    {
+      "id": "active-inference-model",
+      "type": "project",
+      "attributes": {
+        "name": "Active Inference Modeling of Collective Behavior",
+        "title": "Active Inference Modeling of Collective Behavior",
+        "startDate": "2022-03-15",
+        "endDate": "2025-03-14",
+        "budget": 750000,
+        "status": "Active",
+        "fundingSource": "National Science Foundation",
+        "description": "Developing computational models of ant colony behavior using active inference principles"
+      },
+      "links": [
+        {
+          "target": "active-inference",
+          "type": "applies"
+        },
+        {
+          "target": "ant-colony-behavior",
+          "type": "studies"
+        },
+        {
+          "target": "free-energy-principle",
+          "type": "applies"
+        },
+        {
+          "target": "hpc-cluster",
+          "type": "uses"
+        },
+        {
+          "target": "ant-colony-lab",
+          "type": "uses"
+        }
+      ]
+    },
+    {
+      "id": "ant-colony-tracking",
+      "type": "project",
+      "attributes": {
+        "name": "Ant Colony Tracking System",
+        "title": "Ant Colony Tracking System",
+        "startDate": "2023-01-10",
+        "endDate": "2024-12-31",
+        "budget": 320000,
+        "status": "Active",
+        "fundingSource": "University Research Grant",
+        "description": "Developing an advanced tracking system to monitor individual and collective ant behavior"
+      },
+      "links": [
+        {
+          "target": "ant-colony-behavior",
+          "type": "studies"
+        },
+        {
+          "target": "stigmergy",
+          "type": "investigates"
+        },
+        {
+          "target": "tracking-system",
+          "type": "uses"
+        },
+        {
+          "target": "ant-colony-lab",
+          "type": "uses"
+        }
+      ]
+    },
+    {
+      "id": "prediction-error-minimization",
+      "type": "project",
+      "attributes": {
+        "name": "Prediction Error Minimization in Insect Colonies",
+        "title": "Prediction Error Minimization in Insect Colonies",
+        "startDate": "2022-09-01",
+        "endDate": "2024-08-31",
+        "budget": 450000,
+        "status": "Active",
+        "fundingSource": "Industry Partner - BioTech Innovations",
+        "description": "Investigating how ant colonies minimize prediction error through collective behavior"
+      },
+      "links": [
+        {
+          "target": "predictive-coding",
+          "type": "applies"
+        },
+        {
+          "target": "ant-colony-behavior",
+          "type": "studies"
+        },
+        {
+          "target": "environmental-chamber",
+          "type": "uses"
+        },
+        {
+          "target": "tracking-system",
+          "type": "uses"
+        }
+      ]
+    },
+    {
+      "id": "algorithm-development",
+      "type": "project",
+      "attributes": {
+        "name": "Bio-inspired Algorithm Development",
+        "title": "Bio-inspired Algorithm Development",
+        "startDate": "2024-01-05",
+        "budget": 280000,
+        "status": "New",
+        "fundingSource": "Industry Partner - AI Systems Inc.",
+        "description": "Translating ant colony behaviors into optimization algorithms for complex problems"
+      },
+      "links": [
+        {
+          "target": "active-inference",
+          "type": "applies"
+        },
+        {
+          "target": "stigmergy",
+          "type": "applies"
+        },
+        {
+          "target": "hpc-cluster",
+          "type": "uses"
+        }
+      ]
+    },
+    {
+      "id": "active-inference",
+      "type": "concept",
+      "attributes": {
+        "name": "Active Inference",
+        "description": "A theory of brain function that combines perception and action through the minimization of free energy or prediction error",
+        "relatedFields": [
+          "computational neuroscience",
+          "cognitive science",
+          "artificial intelligence"
+        ],
+        "keyPapers": [
+          "Friston et al. 2006",
+          "Friston et al. 2010",
+          "Parr & Friston 2019"
+        ]
+      },
+      "links": []
+    },
+    {
+      "id": "ant-colony-behavior",
+      "type": "concept",
+      "attributes": {
+        "name": "Ant Colony Behavior",
+        "description": "Collective behaviors exhibited by ant colonies, including foraging, nest building, and division of labor",
+        "relatedFields": [
+          "entomology",
+          "collective intelligence",
+          "evolutionary biology"
+        ],
+        "keyPapers": [
+          "Wilson 1971",
+          "Hölldobler & Wilson 1990",
+          "Gordon 2010"
+        ]
+      },
+      "links": []
+    },
+    {
+      "id": "free-energy-principle",
+      "type": "concept",
+      "attributes": {
+        "name": "Free Energy Principle",
+        "description": "States that all adaptive systems minimize variational free energy, which bounds surprise",
+        "relatedFields": [
+          "computational neuroscience",
+          "thermodynamics",
+          "information theory"
+        ],
+        "keyPapers": [
+          "Friston 2010",
+          "Friston & Stephan 2007"
+        ]
+      },
+      "links": []
+    },
+    {
+      "id": "stigmergy",
+      "type": "concept",
+      "attributes": {
+        "name": "Stigmergy",
+        "description": "Mechanism of indirect coordination among agents through modifications to the environment",
+        "relatedFields": [
+          "collective behavior",
+          "self-organization",
+          "swarm intelligence"
+        ],
+        "keyPapers": [
+          "Grassé 1959",
+          "Theraulaz & Bonabeau 1999"
+        ]
+      },
+      "links": []
+    },
+    {
+      "id": "predictive-coding",
+      "type": "concept",
+      "attributes": {
+        "name": "Predictive Coding",
+        "description": "Framework proposing that the brain constantly generates predictions of sensory input and updates its models based on prediction errors",
+        "relatedFields": [
+          "neuroscience",
+          "machine learning",
+          "cognitive science"
+        ],
+        "keyPapers": [
+          "Rao & Ballard 1999",
+          "Clark 2013",
+          "Hohwy 2013"
+        ]
+      },
+      "links": []
+    },
+    {
+      "id": "ant-colony-lab",
+      "type": "equipment",
+      "attributes": {
+        "name": "Ant Colony Laboratory",
+        "location": "Building C, Room 305",
+        "size": "500 sq ft",
+        "features": [
+          "Climate control",
+          "Observation chambers",
+          "Artificial nests"
+        ],
+        "speciesHoused": [
+          "Lasius niger",
+          "Camponotus pennsylvanicus",
+          "Pogonomyrmex barbatus"
+        ]
+      },
+      "links": []
+    },
+    {
+      "id": "hpc-cluster",
+      "type": "equipment",
+      "attributes": {
+        "name": "High-Performance Computing Cluster",
+        "location": "University Computing Center",
+        "processors": 128,
+        "totalRAM": "512GB",
+        "storageCapacity": "100TB",
+        "purpose": "Running large-scale simulations and data analysis"
+      },
+      "links": []
+    },
+    {
+      "id": "tracking-system",
+      "type": "equipment",
+      "attributes": {
+        "name": "Automated Tracking System",
+        "manufacturer": "BioVision Technologies",
+        "cameras": 8,
+        "resolution": "4K",
+        "framerate": "120fps",
+        "software": "AntTrack Pro 3.0"
+      },
+      "links": []
+    },
+    {
+      "id": "environmental-chamber",
+      "type": "equipment",
+      "attributes": {
+        "name": "Environmental Test Chamber",
+        "manufacturer": "EcoSim Systems",
+        "temperatureRange": "-10°C to 50°C",
+        "humidityControl": "10% to 95% RH",
+        "dimensions": "2m x 2m x 2m"
+      },
+      "links": []
+    },
+    {
+      "id": "paper-active-inference",
+      "type": "publication",
+      "attributes": {
+        "name": "Active Inference and Collective Behavior in Ant Colonies",
+        "authors": [
+          "Chen, A.",
+          "Smith, B.",
+          "Jimenez, C."
+        ],
+        "journal": "Journal of Theoretical Biology",
+        "year": 2023,
+        "doi": "10.1234/jtb.2023.045",
+        "citations": 12
+      },
+      "links": [
+        {
+          "target": "active-inference-model",
+          "type": "resulted_from"
+        },
+        {
+          "target": "active-inference",
+          "type": "discusses"
+        },
+        {
+          "target": "ant-colony-behavior",
+          "type": "discusses"
+        }
+      ]
+    },
+    {
+      "id": "paper-tracking-system",
+      "type": "publication",
+      "attributes": {
+        "name": "Novel Tracking System for Monitoring Individual Ants in Colony Settings",
+        "authors": [
+          "Smith, B.",
+          "Wilson, D.",
+          "Kim, G."
+        ],
+        "journal": "Methods in Ecology and Evolution",
+        "year": 2023,
+        "doi": "10.5678/mee.2023.078",
+        "citations": 8
+      },
+      "links": [
+        {
+          "target": "ant-colony-tracking",
+          "type": "resulted_from"
+        },
+        {
+          "target": "ant-colony-behavior",
+          "type": "discusses"
+        }
+      ]
+    },
+    {
+      "id": "paper-prediction-error",
+      "type": "publication",
+      "attributes": {
+        "name": "Prediction Error Minimization through Stigmergic Communication in Ants",
+        "authors": [
+          "Jimenez, C.",
+          "Chen, A.",
+          "Martinez, F."
+        ],
+        "journal": "Frontiers in Computational Neuroscience",
+        "year": 2024,
+        "doi": "10.9012/fcn.2024.012",
+        "citations": 3
+      },
+      "links": [
+        {
+          "target": "prediction-error-minimization",
+          "type": "resulted_from"
+        },
+        {
+          "target": "predictive-coding",
+          "type": "discusses"
+        },
+        {
+          "target": "free-energy-principle",
+          "type": "discusses"
+        }
+      ]
+    },
+    {
+      "id": "paper-algorithm",
+      "type": "publication",
+      "attributes": {
+        "name": "Bio-inspired Algorithms Based on Active Inference Principles",
+        "authors": [
+          "Taylor, E.",
+          "Martinez, F.",
+          "Chen, A."
+        ],
+        "journal": "Nature Machine Intelligence",
+        "year": 2024,
+        "doi": "10.3456/nmi.2024.034",
+        "citations": 2
+      },
+      "links": [
+        {
+          "target": "algorithm-development",
+          "type": "resulted_from"
+        },
+        {
+          "target": "active-inference",
+          "type": "discusses"
+        },
+        {
+          "target": "stigmergy",
+          "type": "discusses"
+        }
+      ]
+    }
+  ],
+  "metadata": {}
+}

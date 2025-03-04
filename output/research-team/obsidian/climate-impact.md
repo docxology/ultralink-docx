@@ -3,7 +3,7 @@ type: project
 id: climate-impact
 ---
 
-# climate-impact
+# Climate Impact Assessment
 
 **Type**: project
 **ID**: climate-impact

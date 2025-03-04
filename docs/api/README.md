@@ -485,7 +485,7 @@ class ExportManager {
     constructor(ultralink: UltraLink, options?: ExportManagerOptions);
     
     // Export Methods
-    toJSON(options?: JSONExportOptions): object;
+    toJSON(options?: JSONExportOptions): string;
     toCSV(options?: CSVExportOptions): string;
     toGraphML(options?: GraphMLExportOptions): string;
     toObsidian(options?: ObsidianExportOptions): ObsidianExport;

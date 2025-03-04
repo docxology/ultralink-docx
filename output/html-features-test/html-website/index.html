@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>HTML Features Test</title>
+      <style>
+        :root {
+          --node-color: #4285f4;
+          --edge-color: #5f6368;
+          --text-color: #202124;
+          --bg-color: #f8f9fa;
+          --highlight-color: #ea4335;
+        }
+        
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          margin: 0;
+          padding: 0;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+        }
+        
+        header {
+          padding: 1rem;
+          background-color: rgba(0, 0, 0, 0.1);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        main {
+          display: flex;
+          flex: 1;
+        }
+        
+        .sidebar {
+          width: 250px;
+          padding: 1rem;
+          border-right: 1px solid rgba(0, 0, 0, 0.1);
+          overflow-y: auto;
+        }
+        
+        .content {
+          flex: 1;
+          padding: 1rem;
+          overflow-y: auto;
+        }
+        
+        .visualization {
+          width: 100%;
+          height: 600px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 4px;
+          position: relative;
+        }
+        
+        .entity-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        
+        .entity-item {
+          padding: 0.5rem;
+          margin-bottom: 0.25rem;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        
+        .entity-item:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .entity-item.active {
+          background-color: var(--node-color);
+          color: white;
+        }
+        
+        .search-box {
+          width: 100%;
+          padding: 0.5rem;
+          margin-bottom: 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          border-radius: 4px;
+        }
+        
+        .filter-group {
+          margin-bottom: 1rem;
+        }
+        
+        .filter-group h3 {
+          margin-top: 0;
+          margin-bottom: 0.5rem;
+        }
+        
+        .btn {
+          padding: 0.5rem 1rem;
+          margin-top: 0.5rem;
+          background-color: var(--node-color);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+          background-color: var(--highlight-color);
+        }
+        
+        .node {
+          fill: var(--node-color);
+          stroke: #fff;
+          stroke-width: 1.5px;
+        }
+        
+        .node.highlighted {
+          fill: var(--highlight-color);
+        }
+        
+        .link {
+          stroke: var(--edge-color);
+          stroke-opacity: 0.6;
+        }
+        
+        .node-label {
+          font-size: 10px;
+          fill: var(--text-color);
+          text-anchor: middle;
+          pointer-events: none;
+        }
+        
+        .zoom-controls {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          flex-direction: column;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 4px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+          z-index: 10;
+        }
+        
+        .zoom-btn {
+          width: 30px;
+          height: 30px;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          user-select: none;
+          border: none;
+          background: none;
+          padding: 0;
+        }
+        
+        .zoom-btn:hover {
+          background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .entity-card {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .entity-card h2 {
+          margin-top: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          padding-bottom: 0.5rem;
+        }
+        
+        /* Theme-specific styles */
+        
+        
+        
+        
+        
+        
+        @media (max-width: 768px) {
+          main {
+            flex-direction: column;
+          }
+          
+          .sidebar {
+            width: auto;
+            border-right: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <header>
+        <h1>HTML Features Test</h1>
+        <p>Testing HTML website features</p>
+      </header>
+      
+      <main>
+        <div class="sidebar">
+          
+          <input type="text" class="search-box" placeholder="Search entities..." id="search-input">
+          
+          <div class="filter-group">
+            <h3>Entity Types</h3>
+            <div id="type-filters"></div>
+            <button class="btn" id="clear-filters">Clear Filters</button>
+          </div>
+          
+          <h3>Entities</h3>
+          <ul class="entity-list" id="entity-list"></ul>
+        </div>
+        
+        <div class="content">
+          <div class="visualization" id="graph-container">
+            <div class="zoom-controls">
+              <button class="zoom-btn" id="zoom-in">+</button>
+              <button class="zoom-btn" id="zoom-reset">⟳</button>
+              <button class="zoom-btn" id="zoom-out">−</button>
+            </div>
+          </div>
+          <div id="entity-details" class="entity-card"></div>
+        </div>
+      </main>
+      
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      
+      <script>
+        // UltraLink data
+        const data = {"entities":[{"id":"entity1","type":"person","attributes":{"name":"John Doe","age":30,"email":"john@example.com"},"metadata":{"created":"2025-03-04T02:34:13.276Z","modified":"2025-03-04T02:34:13.276Z"}},{"id":"entity2","type":"project","attributes":{"title":"Project Alpha","status":"Active","priority":"High"},"metadata":{"created":"2025-03-04T02:34:13.276Z","modified":"2025-03-04T02:34:13.276Z"}},{"id":"entity3","type":"resource","attributes":{"type":"Document","url":"https://example.com/doc"},"metadata":{"created":"2025-03-04T02:34:13.276Z","modified":"2025-03-04T02:34:13.276Z"}}],"relationships":[{"source":"entity1","target":"entity2","type":"manages","attributes":{"role":"Project Manager","since":"2023-01-15"},"metadata":{"created":"2025-03-04T02:34:13.276Z","modified":"2025-03-04T02:34:13.276Z"}},{"source":"entity1","target":"entity3","type":"created","attributes":{"date":"2023-02-10"},"metadata":{"created":"2025-03-04T02:34:13.276Z","modified":"2025-03-04T02:34:13.276Z"}},{"source":"entity2","target":"entity3","type":"contains","attributes":{"section":"Documentation"},"metadata":{"created":"2025-03-04T02:34:13.276Z","modified":"2025-03-04T02:34:13.276Z"}}]};
+        
+        // DOM elements
+        const graphContainer = document.getElementById('graph-container');
+        const entityList = document.getElementById('entity-list');
+        const entityDetails = document.getElementById('entity-details');
+        const searchInput = document.getElementById('search-input');
+        const typeFilters = document.getElementById('type-filters');
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        
+        // State
+        let selectedEntity = null;
+        let filteredEntities = data.entities;
+        let currentZoom = d3.zoomIdentity;
+        
+        // Initialize
+        function init() {
+          renderEntityList();
+          renderTypeFilters();
+          renderGraph();
+          
+          // Set up search
+          searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filteredEntities = data.entities.filter(entity => {
+              const name = entity.attributes.name || entity.attributes.title || entity.id;
+              return name.toLowerCase().includes(searchTerm);
+            });
+            renderEntityList();
+            updateGraph();
+          });
+          
+          // Set up clear filters button
+          clearFiltersBtn.addEventListener('click', () => {
+            // Reset checkboxes
+            Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
+              input.checked = true;
+            });
+            
+            // Reset search
+            searchInput.value = '';
+            
+            // Reset filtered entities
+            filteredEntities = data.entities;
+            renderEntityList();
+            updateGraph();
+          });
+          
+          // Set up zoom controls
+          zoomInBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+          });
+          
+          zoomOutBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+          });
+          
+          zoomResetBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
+          });
+        }
+        
+        // Render entity list
+        function renderEntityList() {
+          entityList.innerHTML = '';
+          
+          filteredEntities.forEach(entity => {
+            const li = document.createElement('li');
+            li.className = 'entity-item';
+            if (selectedEntity === entity.id) {
+              li.classList.add('active');
+            }
+            
+            const name = entity.attributes.name || entity.attributes.title || entity.id;
+            li.textContent = name;
+            
+            li.addEventListener('click', () => {
+              selectedEntity = entity.id;
+              renderEntityList();
+              renderEntityDetails(entity);
+              highlightNode(entity.id);
+            });
+            
+            entityList.appendChild(li);
+          });
+        }
+        
+        // Render type filters
+        function renderTypeFilters() {
+          const types = [...new Set(data.entities.map(e => e.type))];
+          
+          types.forEach(type => {
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.style.marginBottom = '0.25rem';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = true;
+            checkbox.dataset.type = type;
+            
+            checkbox.addEventListener('change', updateFilters);
+            
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(' ' + type));
+            
+            typeFilters.appendChild(label);
+          });
+        }
+        
+        // Update filters
+        function updateFilters() {
+          const checkedTypes = Array.from(typeFilters.querySelectorAll('input:checked'))
+            .map(input => input.dataset.type);
+          
+          filteredEntities = data.entities.filter(entity => 
+            checkedTypes.includes(entity.type)
+          );
+          
+          renderEntityList();
+          updateGraph();
+        }
+        
+        // Render entity details
+        function renderEntityDetails(entity) {
+          if (!entity) {
+            entityDetails.innerHTML = '<p>Select an entity to view details</p>';
+            return;
+          }
+          
+          const name = entity.attributes.name || entity.attributes.title || entity.id;
+          
+          let html = `
+            <h2>${name}</h2>
+            <div class="entity-meta">
+              <p><span class="label">Type:</span> ${entity.type}</p>
+              <p><span class="label">ID:</span> ${entity.id}</p>
+            </div>
+          `;
+          
+          // Attributes
+          if (Object.keys(entity.attributes).length > 0) {
+            html += '<h3>Attributes</h3><dl class="attribute-list">';
+            
+            for (const [key, value] of Object.entries(entity.attributes)) {
+              if (key === 'name' || key === 'title') continue; // Skip name as it's in the header
+              
+              const formattedValue = typeof value === 'object' 
+                ? JSON.stringify(value) 
+                : value;
+                
+              html += `
+                <dt>${key}</dt>
+                <dd>${formattedValue}</dd>
+              `;
+            }
+            
+            html += '</dl>';
+          }
+          
+          // Relationships
+          const outgoingLinks = data.relationships.filter(rel => rel.source === entity.id);
+          const incomingLinks = data.relationships.filter(rel => rel.target === entity.id);
+          
+          if (outgoingLinks.length > 0) {
+            html += '<h3>Outgoing Relationships</h3><ul class="relationship-list">';
+            
+            for (const link of outgoingLinks) {
+              const targetEntity = data.entities.find(e => e.id === link.target);
+              const targetName = targetEntity?.attributes?.name || targetEntity?.attributes?.title || link.target;
+              
+              let relInfo = `${link.type} → <a href="javascript:void(0)" onclick="selectEntityById('${link.target}')">${targetName}</a>`;
+              
+              // Add relationship attributes if any
+              if (link.attributes && Object.keys(link.attributes).length > 0) {
+                relInfo += ' (';
+                const attrs = [];
+                for (const [key, value] of Object.entries(link.attributes)) {
+                  attrs.push(`${key}: ${value}`);
+                }
+                relInfo += attrs.join(', ');
+                relInfo += ')';
+              }
+              
+              html += `<li>${relInfo}</li>`;
+            }
+            
+            html += '</ul>';
+          }
+          
+          if (incomingLinks.length > 0) {
+            html += '<h3>Incoming Relationships</h3><ul class="relationship-list">';
+            
+            for (const link of incomingLinks) {
+              const sourceEntity = data.entities.find(e => e.id === link.source);
+              const sourceName = sourceEntity?.attributes?.name || sourceEntity?.attributes?.title || link.source;
+              
+              html += `<li><a href="javascript:void(0)" onclick="selectEntityById('${link.source}')">${sourceName}</a> → ${link.type}</li>`;
+            }
+            
+            html += '</ul>';
+          }
+          
+          entityDetails.innerHTML = html;
+        }
+        
+        // Global function to select entity by ID (for link clicking)
+        window.selectEntityById = (id) => {
+          selectedEntity = id;
+          const entity = data.entities.find(e => e.id === id);
+          renderEntityList();
+          renderEntityDetails(entity);
+          highlightNode(id);
+        };
+        
+        // D3 graph visualization
+        let simulation, svg, link, node, nodeLabels, zoom, g;
+        
+        function renderGraph() {
+          const width = graphContainer.clientWidth;
+          const height = graphContainer.clientHeight;
+          
+          // Create SVG with viewBox for responsiveness
+          svg = d3.select('#graph-container')
+            .append('svg')
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox', [0, 0, width, height])
+            .attr('preserveAspectRatio', 'xMidYMid meet');
+          
+          // Set up zoom behavior
+          zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on('zoom', (event) => {
+              currentZoom = event.transform;
+              g.attr('transform', event.transform);
+            });
+          
+          svg.call(zoom);
+          
+          // Create a container group for all elements that will be transformed
+          g = svg.append('g');
+          
+          // Create links
+          link = g.append('g')
+            .selectAll('line')
+            .data(data.relationships)
+            .enter()
+            .append('line')
+            .attr('class', 'link');
+          
+          // Create nodes
+          node = g.append('g')
+            .selectAll('circle')
+            .data(data.entities)
+            .enter()
+            .append('circle')
+            .attr('class', 'node')
+            .attr('r', 8)
+            .attr('id', d => `node-${d.id}`)
+            .on('click', (event, d) => {
+              selectedEntity = d.id;
+              renderEntityList();
+              renderEntityDetails(d);
+              highlightNode(d.id);
+            });
+          
+          // Add node labels
+          nodeLabels = g.append('g')
+            .selectAll('text')
+            .data(data.entities)
+            .enter()
+            .append('text')
+            .attr('class', 'node-label')
+            .attr('dy', -12)
+            .text(d => d.attributes.name || d.attributes.title || d.id);
+          
+          // Set up force simulation
+          simulation = d3.forceSimulation(data.entities)
+            .force('link', d3.forceLink(data.relationships)
+              .id(d => d.id)
+              .distance(100))
+            .force('charge', d3.forceManyBody().strength(-200))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .on('tick', () => {
+              link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+              
+              node
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+              
+              nodeLabels
+                .attr('x', d => d.x)
+                .attr('y', d => d.y);
+            });
+          
+          // Add double-click to zoom
+          svg.on('dblclick.zoom', null); // Remove default double-click behavior
+          node.on('dblclick', (event, d) => {
+            event.stopPropagation();
+            const scale = 2;
+            const x = width / 2 - scale * d.x;
+            const y = height / 2 - scale * d.y;
+            svg.transition().duration(500)
+              .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+          });
+          
+          // Add double-click on background to reset zoom
+          svg.on('dblclick', () => {
+            svg.transition().duration(500)
+              .call(zoom.transform, d3.zoomIdentity);
+          });
+        }
+        
+        function updateGraph() {
+          // Update nodes and links based on filtered entities
+          const filteredNodeIds = filteredEntities.map(e => e.id);
+          const filteredLinks = data.relationships.filter(
+            rel => filteredNodeIds.includes(rel.source) && filteredNodeIds.includes(rel.target)
+          );
+          
+          node.style('display', d => filteredNodeIds.includes(d.id) ? null : 'none');
+          nodeLabels.style('display', d => filteredNodeIds.includes(d.id) ? null : 'none');
+          
+          link.style('display', d => 
+            filteredNodeIds.includes(d.source.id) && filteredNodeIds.includes(d.target.id) 
+              ? null : 'none'
+          );
+          
+          // Restart simulation
+          simulation.nodes(filteredEntities);
+          simulation.force('link').links(filteredLinks);
+          simulation.alpha(0.3).restart();
+        }
+        
+        function highlightNode(id) {
+          // Reset all nodes
+          node.classed('highlighted', false);
+          
+          // Highlight selected node
+          if (id) {
+            d3.select(`#node-${id}`).classed('highlighted', true);
+            
+            // Find node and center view on it
+            const selectedNode = data.entities.find(e => e.id === id);
+            if (selectedNode && selectedNode.x && selectedNode.y) {
+              const width = graphContainer.clientWidth;
+              const height = graphContainer.clientHeight;
+              const scale = currentZoom.k; // Keep current zoom level
+              const x = width / 2 - scale * selectedNode.x;
+              const y = height / 2 - scale * selectedNode.y;
+              
+              svg.transition().duration(500)
+                .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+            }
+          }
+        }
+        
+        // Initialize the application
+        init();
+        
+      </script>
+    </body>
+    </html>

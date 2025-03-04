@@ -19,11 +19,11 @@ id: alice
 
 ### leads
 
-- [[desert-ecology|desert-ecology]] (startDate: 2023-01-15, role: Principal Investigator)
+- [[desert-ecology|Desert Ecology Study]] (startDate: 2023-01-15, role: Principal Investigator)
 
 ### contributes_to
 
-- [[climate-impact|climate-impact]] (startDate: 2022-10-01, role: Consultant)
+- [[climate-impact|Climate Impact Assessment]] (startDate: 2022-10-01, role: Consultant)
 
 ## Backlinks
 

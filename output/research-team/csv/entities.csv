@@ -1,5 +1,5 @@
 id,type,name,role,department,email,publications,title,startDate,budget,status
 alice,researcher,Alice Chen,Principal Investigator,Biology,alice.chen@example.edu,42,,,,
 bob,researcher,Bob Smith,Postdoc,Biology,bob.smith@example.edu,18,,,,
-desert-ecology,project,,,,,,Desert Ecology Study,2023-01-15,150000,Active
-climate-impact,project,,,,,,Climate Impact Assessment,2022-08-10,220000,Active
+desert-ecology,project,Desert Ecology Study,,,,,Desert Ecology Study,2023-01-15,150000,Active
+climate-impact,project,Climate Impact Assessment,,,,,Climate Impact Assessment,2022-08-10,220000,Active

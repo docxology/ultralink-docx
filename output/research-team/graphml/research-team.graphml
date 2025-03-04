@@ -35,6 +35,7 @@
     </node>
     <node id="desert-ecology">
       <data key="type">project</data>
+      <data key="name">Desert Ecology Study</data>
       <data key="title">Desert Ecology Study</data>
       <data key="startDate">2023-01-15</data>
       <data key="budget">150000</data>
@@ -42,6 +43,7 @@
     </node>
     <node id="climate-impact">
       <data key="type">project</data>
+      <data key="name">Climate Impact Assessment</data>
       <data key="title">Climate Impact Assessment</data>
       <data key="startDate">2022-08-10</data>
       <data key="budget">220000</data>

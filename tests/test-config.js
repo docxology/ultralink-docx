@@ -23,6 +23,12 @@ module.exports = {
       datasetModule: './test-datasets',
       datasetFunction: 'createResearchTeamDataset',
       required: true
+    },
+    {
+      name: 'ActiveInferenceLab',
+      datasetModule: './fixtures/Systems/ActiveInferenceLab/active-inference-lab',
+      datasetFunction: 'createActiveInferenceLabDataset',
+      required: true
     }
   ],
   
@@ -50,7 +56,7 @@ module.exports = {
     },
     {
       name: 'HTML Website',
-      directory: 'website',
+      directory: 'html-website',
       required: true
     },
     {

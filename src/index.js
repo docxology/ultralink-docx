@@ -80,18 +80,34 @@ class UltraLink {
 
   /**
    * Export the entire graph to JSON format
-   * @returns {Object} JSON representation of the graph
+   * @param {Object} options - Export options
+   * @param {boolean} options.pretty - Whether to format the JSON with indentation (default: false)
+   * @param {boolean} options.includeVectors - Whether to include entity vectors (default: false)
+   * @returns {string} JSON representation of the graph as a string
    */
-  toJSON() {
-    const entities = Array.from(this.entities.values()).map(entity => ({
-      ...entity,
-      links: Array.from(this.getLinks(entity.id))
-    }));
+  toJSON(options = {}) {
+    const { pretty = false, includeVectors = false } = options;
+    
+    const entities = Array.from(this.entities.values()).map(entity => {
+      const result = {
+        ...entity,
+        links: Array.from(this.getLinks(entity.id))
+      };
+      
+      // Include vector if requested and available
+      if (includeVectors && entity.vector) {
+        result.vector = Array.from(entity.vector);
+      }
+      
+      return result;
+    });
 
-    return {
+    const data = {
       entities,
       metadata: this.metadata
     };
+    
+    return pretty ? JSON.stringify(data, null, 2) : JSON.stringify(data);
   }
 
   /**

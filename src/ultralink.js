@@ -226,7 +226,7 @@ class UltraLink {
    * @param {boolean} options.pretty - Whether to format the JSON with indentation (default: false)
    * @param {boolean} options.includeVectors - Whether to include entity vectors (default: false)
    * @param {boolean} options.includeHistory - Whether to include historical data (default: false)
-   * @returns {Object} The JSON representation as an object
+   * @returns {string} The JSON representation as a string
    */
   toJSON(options = {}) {
     const { pretty = false, includeVectors = false, includeHistory = false } = options;
@@ -275,8 +275,8 @@ class UltraLink {
       relationships
     };
     
-    // Return as object or JSON string based on options
-    return pretty ? JSON.stringify(data, null, 2) : data;
+    // Always return a JSON string - pretty parameter controls formatting
+    return pretty ? JSON.stringify(data, null, 2) : JSON.stringify(data);
   }
 
   /**
@@ -295,18 +295,17 @@ class UltraLink {
       includeHistory = false
     } = options;
     
-    // Prepare data to serialize
-    const data = this.toJSON({ includeVectors, includeHistory });
+    // Get JSON string directly from toJSON
+    const jsonString = this.toJSON({ includeVectors, includeHistory });
     
     // Handle compression
     if (compress) {
-      // Create JSON string and compress it
-      const jsonString = JSON.stringify(data);
+      // Compress the JSON string
       return Buffer.from(jsonString).toString('base64');
     }
     
-    // Return uncompressed blob
-    return data;
+    // Return uncompressed JSON string
+    return jsonString;
   }
 
   /**
@@ -960,6 +959,7 @@ class UltraLink {
           height: 600px;
           border: 1px solid rgba(0, 0, 0, 0.1);
           border-radius: 4px;
+          position: relative;
         }
         
         .entity-list {
@@ -1002,6 +1002,21 @@ class UltraLink {
           margin-bottom: 0.5rem;
         }
         
+        .btn {
+          padding: 0.5rem 1rem;
+          margin-top: 0.5rem;
+          background-color: var(--node-color);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+          background-color: var(--highlight-color);
+        }
+        
         .node {
           fill: var(--node-color);
           stroke: #fff;
@@ -1022,6 +1037,50 @@ class UltraLink {
           fill: var(--text-color);
           text-anchor: middle;
           pointer-events: none;
+        }
+        
+        .zoom-controls {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          flex-direction: column;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 4px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+          z-index: 10;
+        }
+        
+        .zoom-btn {
+          width: 30px;
+          height: 30px;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          user-select: none;
+          border: none;
+          background: none;
+          padding: 0;
+        }
+        
+        .zoom-btn:hover {
+          background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .entity-card {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .entity-card h2 {
+          margin-top: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          padding-bottom: 0.5rem;
         }
         
         /* Theme-specific styles */
@@ -1065,7 +1124,31 @@ class UltraLink {
           color: #e8eaed;
           border-color: #5f6368;
         }
+        
+        .zoom-controls {
+          background: rgba(32, 33, 36, 0.8);
+        }
+        
+        .zoom-btn {
+          color: #e8eaed;
+        }
+        
+        .entity-card {
+          background: rgba(255, 255, 255, 0.05);
+        }
         ` : ''}
+        
+        @media (max-width: 768px) {
+          main {
+            flex-direction: column;
+          }
+          
+          .sidebar {
+            width: auto;
+            border-right: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+        }
       </style>
     </head>
     <body>
@@ -1082,6 +1165,7 @@ class UltraLink {
           <div class="filter-group">
             <h3>Entity Types</h3>
             <div id="type-filters"></div>
+            <button class="btn" id="clear-filters">Clear Filters</button>
           </div>
           
           <h3>Entities</h3>
@@ -1089,8 +1173,14 @@ class UltraLink {
         </div>
         
         <div class="content">
-          <div class="visualization" id="graph-container"></div>
-          <div id="entity-details"></div>
+          <div class="visualization" id="graph-container">
+            <div class="zoom-controls">
+              <button class="zoom-btn" id="zoom-in">+</button>
+              <button class="zoom-btn" id="zoom-reset">⟳</button>
+              <button class="zoom-btn" id="zoom-out">−</button>
+            </div>
+          </div>
+          <div id="entity-details" class="entity-card"></div>
         </div>
       </main>
       
@@ -1098,7 +1188,7 @@ class UltraLink {
       
       <script>
         // UltraLink data
-        const data = ${JSON.stringify(this.toJSON(), null, 2)};
+        const data = ${JSON.stringify(JSON.parse(this.toJSON()))};
         
         // DOM elements
         const graphContainer = document.getElementById('graph-container');
@@ -1106,10 +1196,15 @@ class UltraLink {
         const entityDetails = document.getElementById('entity-details');
         const searchInput = document.getElementById('search-input');
         const typeFilters = document.getElementById('type-filters');
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+        const zoomOutBtn = document.getElementById('zoom-out');
         
         // State
         let selectedEntity = null;
         let filteredEntities = data.entities;
+        let currentZoom = d3.zoomIdentity;
         
         // Initialize
         function init() {
@@ -1121,12 +1216,41 @@ class UltraLink {
           searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             filteredEntities = data.entities.filter(entity => {
-              const name = entity.attributes.name || entity.id;
+              const name = entity.attributes.name || entity.attributes.title || entity.id;
               return name.toLowerCase().includes(searchTerm);
             });
             renderEntityList();
+            updateGraph();
           });
           
+          // Set up clear filters button
+          clearFiltersBtn.addEventListener('click', () => {
+            // Reset checkboxes
+            Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
+              input.checked = true;
+            });
+            
+            // Reset search
+            searchInput.value = '';
+            
+            // Reset filtered entities
+            filteredEntities = data.entities;
+            renderEntityList();
+            updateGraph();
+          });
+          
+          // Set up zoom controls
+          zoomInBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+          });
+          
+          zoomOutBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+          });
+          
+          zoomResetBtn.addEventListener('click', () => {
+            svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
+          });
         }
         
         // Render entity list
@@ -1140,7 +1264,7 @@ class UltraLink {
               li.classList.add('active');
             }
             
-            const name = entity.attributes.name || entity.id;
+            const name = entity.attributes.name || entity.attributes.title || entity.id;
             li.textContent = name;
             
             li.addEventListener('click', () => {
@@ -1197,29 +1321,34 @@ class UltraLink {
             return;
           }
           
-          const name = entity.attributes.name || entity.id;
+          const name = entity.attributes.name || entity.attributes.title || entity.id;
           
           let html = \`
             <h2>\${name}</h2>
-            <p><strong>Type:</strong> \${entity.type}</p>
-            <p><strong>ID:</strong> \${entity.id}</p>
+            <div class="entity-meta">
+              <p><span class="label">Type:</span> \${entity.type}</p>
+              <p><span class="label">ID:</span> \${entity.id}</p>
+            </div>
           \`;
           
           // Attributes
           if (Object.keys(entity.attributes).length > 0) {
-            html += '<h3>Attributes</h3><ul>';
+            html += '<h3>Attributes</h3><dl class="attribute-list">';
             
             for (const [key, value] of Object.entries(entity.attributes)) {
-              if (key === 'name') continue; // Skip name as it's in the header
+              if (key === 'name' || key === 'title') continue; // Skip name as it's in the header
               
               const formattedValue = typeof value === 'object' 
                 ? JSON.stringify(value) 
                 : value;
                 
-              html += \`<li><strong>\${key}:</strong> \${formattedValue}</li>\`;
+              html += \`
+                <dt>\${key}</dt>
+                <dd>\${formattedValue}</dd>
+              \`;
             }
             
-            html += '</ul>';
+            html += '</dl>';
           }
           
           // Relationships
@@ -1227,26 +1356,39 @@ class UltraLink {
           const incomingLinks = data.relationships.filter(rel => rel.target === entity.id);
           
           if (outgoingLinks.length > 0) {
-            html += '<h3>Outgoing Relationships</h3><ul>';
+            html += '<h3>Outgoing Relationships</h3><ul class="relationship-list">';
             
             for (const link of outgoingLinks) {
               const targetEntity = data.entities.find(e => e.id === link.target);
-              const targetName = targetEntity?.attributes?.name || link.target;
+              const targetName = targetEntity?.attributes?.name || targetEntity?.attributes?.title || link.target;
               
-              html += \`<li>\${link.type} → \${targetName}</li>\`;
+              let relInfo = \`\${link.type} → <a href="javascript:void(0)" onclick="selectEntityById('\${link.target}')">\${targetName}</a>\`;
+              
+              // Add relationship attributes if any
+              if (link.attributes && Object.keys(link.attributes).length > 0) {
+                relInfo += ' (';
+                const attrs = [];
+                for (const [key, value] of Object.entries(link.attributes)) {
+                  attrs.push(\`\${key}: \${value}\`);
+                }
+                relInfo += attrs.join(', ');
+                relInfo += ')';
+              }
+              
+              html += \`<li>\${relInfo}</li>\`;
             }
             
             html += '</ul>';
           }
           
           if (incomingLinks.length > 0) {
-            html += '<h3>Incoming Relationships</h3><ul>';
+            html += '<h3>Incoming Relationships</h3><ul class="relationship-list">';
             
             for (const link of incomingLinks) {
               const sourceEntity = data.entities.find(e => e.id === link.source);
-              const sourceName = sourceEntity?.attributes?.name || link.source;
+              const sourceName = sourceEntity?.attributes?.name || sourceEntity?.attributes?.title || link.source;
               
-              html += \`<li>\${sourceName} → \${link.type}</li>\`;
+              html += \`<li><a href="javascript:void(0)" onclick="selectEntityById('\${link.source}')">\${sourceName}</a> → \${link.type}</li>\`;
             }
             
             html += '</ul>';
@@ -1255,20 +1397,45 @@ class UltraLink {
           entityDetails.innerHTML = html;
         }
         
+        // Global function to select entity by ID (for link clicking)
+        window.selectEntityById = (id) => {
+          selectedEntity = id;
+          const entity = data.entities.find(e => e.id === id);
+          renderEntityList();
+          renderEntityDetails(entity);
+          highlightNode(id);
+        };
+        
         // D3 graph visualization
-        let simulation, svg, link, node, nodeLabels;
+        let simulation, svg, link, node, nodeLabels, zoom, g;
         
         function renderGraph() {
           const width = graphContainer.clientWidth;
           const height = graphContainer.clientHeight;
           
+          // Create SVG with viewBox for responsiveness
           svg = d3.select('#graph-container')
             .append('svg')
-            .attr('width', width)
-            .attr('height', height);
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox', [0, 0, width, height])
+            .attr('preserveAspectRatio', 'xMidYMid meet');
+          
+          // Set up zoom behavior
+          zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on('zoom', (event) => {
+              currentZoom = event.transform;
+              g.attr('transform', event.transform);
+            });
+          
+          svg.call(zoom);
+          
+          // Create a container group for all elements that will be transformed
+          g = svg.append('g');
           
           // Create links
-          link = svg.append('g')
+          link = g.append('g')
             .selectAll('line')
             .data(data.relationships)
             .enter()
@@ -1276,7 +1443,7 @@ class UltraLink {
             .attr('class', 'link');
           
           // Create nodes
-          node = svg.append('g')
+          node = g.append('g')
             .selectAll('circle')
             .data(data.entities)
             .enter()
@@ -1292,14 +1459,14 @@ class UltraLink {
             });
           
           // Add node labels
-          nodeLabels = svg.append('g')
+          nodeLabels = g.append('g')
             .selectAll('text')
             .data(data.entities)
             .enter()
             .append('text')
             .attr('class', 'node-label')
             .attr('dy', -12)
-            .text(d => d.attributes.name || d.id);
+            .text(d => d.attributes.name || d.attributes.title || d.id);
           
           // Set up force simulation
           simulation = d3.forceSimulation(data.entities)
@@ -1323,6 +1490,23 @@ class UltraLink {
                 .attr('x', d => d.x)
                 .attr('y', d => d.y);
             });
+          
+          // Add double-click to zoom
+          svg.on('dblclick.zoom', null); // Remove default double-click behavior
+          node.on('dblclick', (event, d) => {
+            event.stopPropagation();
+            const scale = 2;
+            const x = width / 2 - scale * d.x;
+            const y = height / 2 - scale * d.y;
+            svg.transition().duration(500)
+              .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+          });
+          
+          // Add double-click on background to reset zoom
+          svg.on('dblclick', () => {
+            svg.transition().duration(500)
+              .call(zoom.transform, d3.zoomIdentity);
+          });
         }
         
         function updateGraph() {
@@ -1353,6 +1537,19 @@ class UltraLink {
           // Highlight selected node
           if (id) {
             d3.select(\`#node-\${id}\`).classed('highlighted', true);
+            
+            // Find node and center view on it
+            const selectedNode = data.entities.find(e => e.id === id);
+            if (selectedNode && selectedNode.x && selectedNode.y) {
+              const width = graphContainer.clientWidth;
+              const height = graphContainer.clientHeight;
+              const scale = currentZoom.k; // Keep current zoom level
+              const x = width / 2 - scale * selectedNode.x;
+              const y = height / 2 - scale * selectedNode.y;
+              
+              svg.transition().duration(500)
+                .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+            }
           }
         }
         
@@ -1367,7 +1564,7 @@ class UltraLink {
     
     // Generate entity detail pages
     for (const entity of this.entities.values()) {
-      const name = entity.attributes.name || entity.id;
+      const name = entity.attributes.name || entity.attributes.title || entity.id;
       const entityHTML = `<!DOCTYPE html>
       <html lang="en">
       <head>
@@ -1407,12 +1604,19 @@ class UltraLink {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
           }
           
           .attribute-table th, .attribute-table td {
-            padding: 0.5rem;
+            padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          .attribute-table th {
+            background-color: rgba(0, 0, 0, 0.05);
           }
           
           .relationship-list {
@@ -1422,8 +1626,11 @@ class UltraLink {
           }
           
           .relationship-item {
-            padding: 0.5rem 0;
+            padding: 0.75rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
           }
           
           a {
@@ -1438,6 +1645,29 @@ class UltraLink {
           .back-link {
             display: inline-block;
             margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--node-color);
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+          }
+          
+          .back-link:hover {
+            background-color: var(--highlight-color);
+            text-decoration: none;
+          }
+          
+          .entity-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+          }
+          
+          .entity-section h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 0.5rem;
           }
           
           /* Theme-specific styles */
@@ -1450,6 +1680,14 @@ class UltraLink {
           h1, h2, h3 {
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
           }
+          
+          .back-link {
+            background-color: #7b1fa2;
+          }
+          
+          .back-link:hover {
+            background-color: #ff9800;
+          }
           ` : ''}
           
           ${theme === 'ocean' ? `
@@ -1457,7 +1695,21 @@ class UltraLink {
             background-color: #00897b;
             color: white;
           }
+          
+          .back-link {
+            background-color: #00897b;
+          }
+          
+          .back-link:hover {
+            background-color: #ff6d00;
+          }
           ` : ''}
+          
+          @media (max-width: 768px) {
+            .container {
+              padding: 0.5rem;
+            }
+          }
         </style>
       </head>
       <body>
@@ -1471,31 +1723,38 @@ class UltraLink {
         <div class="container">
           <a href="index.html" class="back-link">← Back to Network View</a>
           
-          <h2>Entity Details</h2>
-          <p><strong>ID:</strong> ${entity.id}</p>
+          <div class="entity-section">
+            <h2>Entity Details</h2>
+            <p><strong>ID:</strong> ${entity.id}</p>
+            <p><strong>Type:</strong> ${entity.type}</p>
+          </div>
           
-          <h3>Attributes</h3>
-          <table class="attribute-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${Object.entries(entity.attributes)
-                .filter(([key]) => key !== 'name')
-                .map(([key, value]) => `
-                  <tr>
-                    <td>${key}</td>
-                    <td>${value}</td>
-                  </tr>
-                `).join('')}
-            </tbody>
-          </table>
+          <div class="entity-section">
+            <h3>Attributes</h3>
+            <table class="attribute-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${Object.entries(entity.attributes)
+                  .filter(([key]) => key !== 'name' && key !== 'title')
+                  .map(([key, value]) => `
+                    <tr>
+                      <td>${key}</td>
+                      <td>${value}</td>
+                    </tr>
+                  `).join('')}
+              </tbody>
+            </table>
+          </div>
           
-          <h3>Relationships</h3>
-          ${this._generateRelationshipHTML(entity.id)}
+          <div class="entity-section">
+            <h3>Relationships</h3>
+            ${this._generateRelationshipHTML(entity.id)}
+          </div>
         </div>
       </body>
       </html>`;
@@ -1525,11 +1784,22 @@ class UltraLink {
       html += '<ul class="relationship-list">';
       
       for (const rel of outgoing) {
-        const targetName = this.entities.get(rel.target)?.attributes?.name || rel.target;
+        const targetEntity = this.entities.get(rel.target);
+        const targetName = targetEntity?.attributes?.name || targetEntity?.attributes?.title || rel.target;
         
         html += `<li class="relationship-item">
-          <strong>${rel.type}</strong> → <a href="${rel.target}.html">${targetName}</a>
-        </li>`;
+          <strong>${rel.type}</strong> → <a href="${rel.target}.html">${targetName}</a>`;
+          
+        // Add relationship attributes if present
+        if (Object.keys(rel.attributes).length > 0) {
+          html += '<div class="relationship-attributes">';
+          for (const [key, value] of Object.entries(rel.attributes)) {
+            html += `<small><strong>${key}:</strong> ${value}</small>`;
+          }
+          html += '</div>';
+        }
+        
+        html += `</li>`;
       }
       
       html += '</ul>';
@@ -1540,7 +1810,8 @@ class UltraLink {
       html += '<ul class="relationship-list">';
       
       for (const rel of incoming) {
-        const sourceName = this.entities.get(rel.source)?.attributes?.name || rel.source;
+        const sourceEntity = this.entities.get(rel.source);
+        const sourceName = sourceEntity?.attributes?.name || sourceEntity?.attributes?.title || rel.source;
         
         html += `<li class="relationship-item">
           <a href="${rel.source}.html">${sourceName}</a> → <strong>${rel.type}</strong>

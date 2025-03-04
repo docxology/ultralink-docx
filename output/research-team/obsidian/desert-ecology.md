@@ -3,7 +3,7 @@ type: project
 id: desert-ecology
 ---
 
-# desert-ecology
+# Desert Ecology Study
 
 **Type**: project
 **ID**: desert-ecology

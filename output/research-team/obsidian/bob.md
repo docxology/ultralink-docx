@@ -19,7 +19,7 @@ id: bob
 
 ### works_on
 
-- [[desert-ecology|desert-ecology]] (startDate: 2023-02-01, role: Data Analyst)
+- [[desert-ecology|Desert Ecology Study]] (startDate: 2023-02-01, role: Data Analyst)
 
 ### reports_to
 

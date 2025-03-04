@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Project Alpha - HTML Features Test</title>
+        <style>
+          :root {
+            --node-color: #4285f4;
+            --edge-color: #5f6368;
+            --text-color: #202124;
+            --bg-color: #f8f9fa;
+            --highlight-color: #ea4335;
+          }
+          
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+          }
+          
+          header {
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+          }
+          
+          .attribute-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+          }
+          
+          .attribute-table th, .attribute-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          .attribute-table th {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
+          
+          .relationship-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+          }
+          
+          .relationship-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+          }
+          
+          a {
+            color: var(--node-color);
+            text-decoration: none;
+          }
+          
+          a:hover {
+            text-decoration: underline;
+          }
+          
+          .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--node-color);
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+          }
+          
+          .back-link:hover {
+            background-color: var(--highlight-color);
+            text-decoration: none;
+          }
+          
+          .entity-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+          }
+          
+          .entity-section h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 0.5rem;
+          }
+          
+          /* Theme-specific styles */
+          
+          
+          
+          
+          @media (max-width: 768px) {
+            .container {
+              padding: 0.5rem;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <header>
+          <div class="container">
+            <h1>Project Alpha</h1>
+            <p>project</p>
+          </div>
+        </header>
+        
+        <div class="container">
+          <a href="index.html" class="back-link">← Back to Network View</a>
+          
+          <div class="entity-section">
+            <h2>Entity Details</h2>
+            <p><strong>ID:</strong> entity2</p>
+            <p><strong>Type:</strong> project</p>
+          </div>
+          
+          <div class="entity-section">
+            <h3>Attributes</h3>
+            <table class="attribute-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                    <tr>
+                      <td>status</td>
+                      <td>Active</td>
+                    </tr>
+                  
+                    <tr>
+                      <td>priority</td>
+                      <td>High</td>
+                    </tr>
+                  
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="entity-section">
+            <h3>Relationships</h3>
+            <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+          <strong>contains</strong> → <a href="entity3.html">entity3</a><div class="relationship-attributes"><small><strong>section:</strong> Documentation</small></div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+          <a href="entity1.html">John Doe</a> → <strong>manages</strong>
+        </li></ul>
+          </div>
+        </div>
+      </body>
+      </html>

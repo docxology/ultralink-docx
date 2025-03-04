@@ -37,12 +37,19 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
           }
           
           .attribute-table th, .attribute-table td {
-            padding: 0.5rem;
+            padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          .attribute-table th {
+            background-color: rgba(0, 0, 0, 0.05);
           }
           
           .relationship-list {
@@ -52,8 +59,11 @@
           }
           
           .relationship-item {
-            padding: 0.5rem 0;
+            padding: 0.75rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
           }
           
           a {
@@ -68,6 +78,29 @@
           .back-link {
             display: inline-block;
             margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--node-color);
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+          }
+          
+          .back-link:hover {
+            background-color: var(--highlight-color);
+            text-decoration: none;
+          }
+          
+          .entity-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+          }
+          
+          .entity-section h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 0.5rem;
           }
           
           /* Theme-specific styles */
@@ -81,8 +114,22 @@
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
           }
           
+          .back-link {
+            background-color: #7b1fa2;
+          }
+          
+          .back-link:hover {
+            background-color: #ff9800;
+          }
           
           
+          
+          
+          @media (max-width: 768px) {
+            .container {
+              padding: 0.5rem;
+            }
+          }
         </style>
       </head>
       <body>
@@ -96,48 +143,53 @@
         <div class="container">
           <a href="index.html" class="back-link">← Back to Network View</a>
           
-          <h2>Entity Details</h2>
-          <p><strong>ID:</strong> bob</p>
+          <div class="entity-section">
+            <h2>Entity Details</h2>
+            <p><strong>ID:</strong> bob</p>
+            <p><strong>Type:</strong> researcher</p>
+          </div>
           
-          <h3>Attributes</h3>
-          <table class="attribute-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-                  <tr>
-                    <td>role</td>
-                    <td>Postdoc</td>
-                  </tr>
+          <div class="entity-section">
+            <h3>Attributes</h3>
+            <table class="attribute-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
                 
-                  <tr>
-                    <td>department</td>
-                    <td>Biology</td>
-                  </tr>
-                
-                  <tr>
-                    <td>email</td>
-                    <td>bob.smith@example.edu</td>
-                  </tr>
-                
-                  <tr>
-                    <td>publications</td>
-                    <td>18</td>
-                  </tr>
-                
-            </tbody>
-          </table>
+                    <tr>
+                      <td>role</td>
+                      <td>Postdoc</td>
+                    </tr>
+                  
+                    <tr>
+                      <td>department</td>
+                      <td>Biology</td>
+                    </tr>
+                  
+                    <tr>
+                      <td>email</td>
+                      <td>bob.smith@example.edu</td>
+                    </tr>
+                  
+                    <tr>
+                      <td>publications</td>
+                      <td>18</td>
+                    </tr>
+                  
+              </tbody>
+            </table>
+          </div>
           
-          <h3>Relationships</h3>
-          <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-          <strong>works_on</strong> → <a href="desert-ecology.html">desert-ecology</a>
-        </li><li class="relationship-item">
-          <strong>reports_to</strong> → <a href="alice.html">Alice Chen</a>
-        </li></ul>
+          <div class="entity-section">
+            <h3>Relationships</h3>
+            <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+          <strong>works_on</strong> → <a href="desert-ecology.html">Desert Ecology Study</a><div class="relationship-attributes"><small><strong>startDate:</strong> 2023-02-01</small><small><strong>role:</strong> Data Analyst</small></div></li><li class="relationship-item">
+          <strong>reports_to</strong> → <a href="alice.html">Alice Chen</a><div class="relationship-attributes"><small><strong>startDate:</strong> 2023-02-01</small></div></li></ul>
+          </div>
         </div>
       </body>
       </html>

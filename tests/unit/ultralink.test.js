@@ -290,9 +290,14 @@ describe('UltraLink', () => {
     });
     
     it('should export to JSON format', () => {
-      const json = ultralink.toJSON();
+      const jsonString = ultralink.toJSON();
       
-      expect(json).toBeDefined();
+      expect(jsonString).toBeDefined();
+      expect(typeof jsonString).toBe('string');
+      
+      // Parse the JSON string
+      const json = JSON.parse(jsonString);
+      
       expect(json.entities).toBeDefined();
       expect(json.relationships).toBeDefined();
       expect(Array.isArray(json.entities)).toBe(true);

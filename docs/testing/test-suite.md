@@ -139,6 +139,34 @@ The test suite includes a comprehensive validation system that checks the integr
 - **CSV Output**: Column structure, data integrity
 - **Obsidian Output**: File structure, markdown format, links
 
+### Full Blob Validation
+
+When working with Full Blob exports, special attention should be paid to:
+
+1. **Export Format**: Verify the format matches expectations (string for both compressed and uncompressed)
+2. **Parameter Consistency**: When importing compressed blobs, always include the `{ compressed: true }` parameter
+3. **Data Integrity**: Verify all entities and relationships are preserved after roundtrip export/import
+
+Example of correct Full Blob validation:
+
+```javascript
+// Export with compression
+const compressedBlob = ultralink.toFullBlob({ compress: true });
+
+// Verify it's a string
+expect(typeof compressedBlob).toBe('string');
+
+// Create a new instance and import the blob with correct parameters
+const newUltralink = new UltraLink();
+newUltralink.fromFullBlob(compressedBlob, { compressed: true });
+
+// Verify entities and relationships were imported correctly
+expect(newUltralink.entities.size).toBe(ultralink.entities.size);
+expect(newUltralink.relationships.size).toBe(ultralink.relationships.size);
+```
+
+For more detailed information about export testing, see [Export Format Testing](./export-testing.md).
+
 ## Extending the Test Suite
 
 The Systems test framework can be extended in several ways:

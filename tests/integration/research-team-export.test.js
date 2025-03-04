@@ -43,6 +43,7 @@ describe('Research Team Export Tests', () => {
     
     // Add projects
     ultralink.addEntity('desert-ecology', 'project', {
+      name: 'Desert Ecology Study',
       title: 'Desert Ecology Study',
       startDate: '2023-01-15',
       budget: 150000,
@@ -50,6 +51,7 @@ describe('Research Team Export Tests', () => {
     });
     
     ultralink.addEntity('climate-impact', 'project', {
+      name: 'Climate Impact Assessment',
       title: 'Climate Impact Assessment',
       startDate: '2022-08-10',
       budget: 220000,

@@ -11,6 +11,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const { createDesertEcosystemDataset } = require('../fixtures/Systems/DesertEcosystem/desert-ecosystem');
 const { createResearchTeamDataset } = require('../fixtures/Systems/ResearchTeam/research-team');
+const { createActiveInferenceLabDataset } = require('../fixtures/Systems/ActiveInferenceLab/active-inference-lab');
 const OutputValidator = require('./output-validator');
 
 // Configure paths
@@ -85,6 +86,8 @@ async function createSystem(systemName) {
       return createDesertEcosystemDataset();
     case 'ResearchTeam':
       return createResearchTeamDataset();
+    case 'ActiveInferenceLab':
+      return createActiveInferenceLabDataset();
     default:
       throw new Error(`Unknown system: ${systemName}`);
   }

@@ -37,12 +37,19 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
           }
           
           .attribute-table th, .attribute-table td {
-            padding: 0.5rem;
+            padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          .attribute-table th {
+            background-color: rgba(0, 0, 0, 0.05);
           }
           
           .relationship-list {
@@ -52,8 +59,11 @@
           }
           
           .relationship-item {
-            padding: 0.5rem 0;
+            padding: 0.75rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
           }
           
           a {
@@ -68,12 +78,41 @@
           .back-link {
             display: inline-block;
             margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--node-color);
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+          }
+          
+          .back-link:hover {
+            background-color: var(--highlight-color);
+            text-decoration: none;
+          }
+          
+          .entity-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+          }
+          
+          .entity-section h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 0.5rem;
           }
           
           /* Theme-specific styles */
           
           
           
+          
+          @media (max-width: 768px) {
+            .container {
+              padding: 0.5rem;
+            }
+          }
         </style>
       </head>
       <body>
@@ -87,38 +126,45 @@
         <div class="container">
           <a href="index.html" class="back-link">← Back to Network View</a>
           
-          <h2>Entity Details</h2>
-          <p><strong>ID:</strong> aridity</p>
+          <div class="entity-section">
+            <h2>Entity Details</h2>
+            <p><strong>ID:</strong> aridity</p>
+            <p><strong>Type:</strong> environmental_factor</p>
+          </div>
           
-          <h3>Attributes</h3>
-          <table class="attribute-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-                  <tr>
-                    <td>description</td>
-                    <td>Extremely dry conditions with minimal rainfall</td>
-                  </tr>
+          <div class="entity-section">
+            <h3>Attributes</h3>
+            <table class="attribute-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
                 
-                  <tr>
-                    <td>annualRainfall</td>
-                    <td>3-15 inches</td>
-                  </tr>
-                
-            </tbody>
-          </table>
+                    <tr>
+                      <td>description</td>
+                      <td>Extremely dry conditions with minimal rainfall</td>
+                    </tr>
+                  
+                    <tr>
+                      <td>annualRainfall</td>
+                      <td>3-15 inches</td>
+                    </tr>
+                  
+              </tbody>
+            </table>
+          </div>
           
-          <h3>Relationships</h3>
-          <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+          <div class="entity-section">
+            <h3>Relationships</h3>
+            <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
           <a href="saguaro.html">Saguaro Cactus</a> → <strong>adapts_to</strong>
         </li><li class="relationship-item">
           <a href="kangaroo-rat.html">Kangaroo Rat</a> → <strong>adapts_to</strong>
         </li></ul>
+          </div>
         </div>
       </body>
       </html>
