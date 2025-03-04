@@ -1,0 +1,23 @@
+# rocky_slope
+
+Type: microhabitat
+
+## Metadata
+
+- name: Rocky Slope
+- description: Elevated area with exposed bedrock and boulders, providing shade and shelter.
+- type: lithic
+- area: medium
+- soilMoisture: very low
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[scorpion]] -> lives_in
+- [[desert_tortoise]] -> lives_in
+- [[gila_monster]] -> lives_in
+- [[saguaro]] -> grows_in
+- [[brittlebush]] -> grows_in

@@ -1,0 +1,24 @@
+# coyote
+
+Type: animal
+
+## Metadata
+
+- name: Coyote
+- scientificName: Canis latrans
+- lifespan: 14
+- diet: omnivore
+- status: least concern
+- description: Adaptable canid found throughout North American deserts and beyond.
+- adaptations: ["Can survive on minimal water obtained from prey","Opportunistic feeding habits","Highly adaptable to different habitats","Active during cooler parts of day","Efficient predator of small desert mammals"]
+
+## Links
+
+- adapted_to -> [[aridity]]
+- lives_in -> [[canyon]]
+- preys_on -> [[kangaroo_rat]]
+- preys_on -> [[desert_tortoise]]
+
+## Backlinks
+
+No backlinks

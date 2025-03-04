@@ -1,12 +1,10 @@
 /**
- * Active Inference and Ant Colony Research Lab Dataset
+ * Active Inference Lab Test Dataset
  * 
- * A comprehensive dataset representing a research team studying 
- * Active Inference models and Ant Colony behavior with multiple
- * researchers, projects, concepts, equipment, and publications.
+ * This module provides test data for an active inference research lab.
  */
 
-const { UltraLink } = require('../../src/ultralink');
+const { UltraLink } = require('../../src');
 
 /**
  * Creates a research team dataset focused on Active Inference and Ant Colony research

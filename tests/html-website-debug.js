@@ -1,13 +1,12 @@
 /**
- * HTML Website Export Debug Script
+ * HTML Website Debug Script
  * 
- * This script tests the HTML website export functionality for both
- * the Desert Ecosystem and Research Team systems.
+ * This script generates HTML website output for manual inspection and debugging.
  */
 
 const fs = require('fs');
 const path = require('path');
-const { UltraLink } = require('../src/ultralink');
+const { UltraLink } = require('../src');
 
 // Ensure output directories exist
 const OUTPUT_DIR = path.join(__dirname, '../output/systems');

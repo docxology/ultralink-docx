@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { createDesertEcosystemDataset, createResearchTeamDataset } = require('./test-datasets');
-const { UltraLink } = require('../src/ultralink');
+const { UltraLink } = require('../src');
 
 const OUTPUT_DIR = path.join(__dirname, '../output/systems');
 

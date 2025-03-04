@@ -1,0 +1,31 @@
+# ant-colony-study
+
+Type: project
+
+## Metadata
+
+- name: Ant Colony Decision Making Study
+- status: Active
+- startDate: 2023-06-01
+- endDate: 2024-12-31
+- funding: 250000
+- fundingSource: University Grant
+- description: Field study of ant colony decision-making processes in natural environments
+
+## Links
+
+- applies -> [[collective-behavior]]
+- uses -> [[ant-tracking]]
+
+## Backlinks
+
+- [[bob]] -> leads
+- [[david]] -> contributes_to
+- [[david]] -> contributes_to
+- [[emma]] -> contributes
+- [[emma]] -> contributes_to
+- [[frank]] -> contributes
+- [[frank]] -> contributes_to
+- [[grace]] -> contributes_to
+- [[paper-2023b]] -> results_from
+- [[paper-2024]] -> results_from

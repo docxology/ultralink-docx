@@ -1,14 +1,12 @@
 /**
- * Integration tests for export formats
+ * Export Formats Integration Tests
  * 
- * These tests verify that UltraLink can correctly export data to
- * all supported formats, and that the exported data maintains
- * all entities, relationships, and attributes.
+ * Tests for various export formats supported by UltraLink.
  */
 
-const { UltraLink } = require('../../src/ultralink');
 const fs = require('fs');
 const path = require('path');
+const { UltraLink } = require('../../src');
 const { createTestDataset, getSystemOutputPath } = require('../test-utils');
 
 // System names for organizing output

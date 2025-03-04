@@ -283,82 +283,99 @@ class UltraLink {
    * Export to a full blob format for complete data serialization
    * 
    * @param {Object} options - Export options
-   * @param {boolean} options.compress - Whether to compress the output (default: false)
    * @param {boolean} options.includeVectors - Whether to include entity vectors (default: false)
    * @param {boolean} options.includeHistory - Whether to include historical data (default: false)
-   * @returns {Object|string} The full data blob (compressed or as object)
+   * @param {string} options.compression - Compression type ('none' or 'gzip')
+   * @returns {Buffer} The full blob as a buffer
    */
-  toFullBlob(options = {}) {
-    const { 
-      compress = false, 
-      includeVectors = false,
-      includeHistory = false
-    } = options;
+  async toFullBlob(options = {}) {
+    const { includeVectors = false, includeHistory = false, compression = 'none' } = options;
     
-    // Get JSON string directly from toJSON
-    const jsonString = this.toJSON({ includeVectors, includeHistory });
+    // Create full data object
+    const data = {
+      version: '1.0.0',
+      timestamp: new Date().toISOString(),
+      config: this.config,
+      entities: Array.from(this.entities.values()).map(entity => {
+        const result = {
+          id: entity.id,
+          type: entity.type,
+          attributes: { ...entity.attributes },
+          metadata: { ...entity.metadata }
+        };
+        
+        if (includeVectors && entity.vector) {
+          result.vector = Array.from(entity.vector);
+        }
+        
+        if (includeHistory && entity.history) {
+          result.history = entity.history;
+        }
+        
+        return result;
+      }),
+      relationships: Array.from(this.relationships.values())
+    };
     
-    // Handle compression
-    if (compress) {
-      // Compress the JSON string
-      return Buffer.from(jsonString).toString('base64');
+    // Convert to JSON string
+    const jsonString = JSON.stringify(data);
+    
+    // Apply compression if requested
+    if (compression === 'gzip') {
+      return new Promise((resolve, reject) => {
+        zlib.gzip(jsonString, (err, compressed) => {
+          if (err) reject(err);
+          else resolve(compressed);
+        });
+      });
     }
     
-    // Return uncompressed JSON string
-    return jsonString;
+    // Return uncompressed buffer
+    return Buffer.from(jsonString);
   }
 
   /**
-   * Import from a full blob
-   * 
-   * @param {Object|string} blob - The blob data to import
+   * Import data from a full blob
+   * @param {Buffer} blob - The blob to import
    * @param {Object} options - Import options
-   * @param {boolean} options.compressed - Whether the blob is compressed (default: false)
-   * @param {boolean} options.clearExisting - Whether to clear existing data (default: true)
-   * @returns {void}
+   * @param {string} options.compression - Compression type ('none' or 'gzip')
+   * @returns {Promise<void>}
    */
-  fromFullBlob(blob, options = {}) {
-    const { compressed = false, clearExisting = true } = options;
+  async fromFullBlob(blob, options = {}) {
+    const { compression = 'none' } = options;
     
-    // Handle compressed data
-    let data = blob;
-    if (compressed) {
-      try {
-        // Decompress from base64
-        const decompressed = Buffer.from(blob, 'base64').toString();
-        data = JSON.parse(decompressed);
-      } catch (error) {
-        console.error('Error decompressing blob:', error);
-        throw new Error('Failed to decompress data blob');
-      }
-    } else if (typeof blob === 'string') {
-      // If it's a string but not compressed, parse it as JSON
-      try {
-        data = JSON.parse(blob);
-      } catch (error) {
-        console.error('Error parsing blob JSON:', error);
-        throw new Error('Failed to parse data blob as JSON');
-      }
+    // Decompress if needed
+    let jsonString;
+    if (compression === 'gzip') {
+      jsonString = await new Promise((resolve, reject) => {
+        zlib.gunzip(blob, (err, decompressed) => {
+          if (err) reject(err);
+          else resolve(decompressed.toString());
+        });
+      });
+    } else {
+      jsonString = blob.toString();
     }
     
-    // Clear existing data if requested
-    if (clearExisting) {
-      this.entities.clear();
-      this.relationships.clear();
+    // Parse data
+    const data = JSON.parse(jsonString);
+    
+    // Clear existing data
+    this.entities.clear();
+    this.relationships.clear();
+    
+    // Import config
+    this.config = data.config;
+    
+    // Import entities
+    for (const entity of data.entities) {
+      this.entities.set(entity.id, entity);
     }
     
-    // Import the entities
-    if (data.entities && Array.isArray(data.entities)) {
-      for (const entity of data.entities) {
-        this.addEntity(entity.id, entity.type, entity.attributes);
-      }
-    }
-    
-    // Import the relationships
-    if (data.relationships && Array.isArray(data.relationships)) {
-      for (const rel of data.relationships) {
-        this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-      }
+    // Import relationships
+    for (const rel of data.relationships) {
+      const key = `${rel.source}:${rel.target}:${rel.type}`;
+      this.relationships.set(key, rel);
     }
   }
 
@@ -845,923 +862,358 @@ class UltraLink {
   }
 
   /**
-   * Export to HTML Website format
-   * 
-   * @param {Object} options - Export options
-   * @param {string} options.title - Website title (default: 'UltraLink Network')
-   * @param {string} options.description - Website description (default: 'Interactive visualization of entity relationships')
-   * @param {string} options.theme - Color theme (default: 'default', options: 'default', 'dark', 'light', 'academic', 'ocean')
+   * Generate an HTML website representation of the knowledge graph
+   * @param {Object} options - Configuration options
+   * @param {string} options.title - Website title
+   * @param {string} options.description - Website description
+   * @param {string} options.theme - Theme name ('dark', 'light', 'academic', 'ocean')
    * @returns {Object} Object with filenames as keys and HTML content as values
    */
   toHTMLWebsite(options = {}) {
-    const { 
-      title = 'UltraLink Network',
-      description = 'Interactive visualization of entity relationships',
+    const {
+      title = 'Knowledge Graph',
+      description = 'Interactive visualization of relationships',
       theme = 'default'
     } = options;
-    
-    const files = {};
-    
+
     // Define theme variables
-    let nodeColor, edgeColor, textColor, bgColor, highlightColor;
-    
-    switch (theme) {
-      case 'dark':
-        nodeColor = '#8ab4f8';
-        edgeColor = '#4d5b69';
-        textColor = '#e8eaed';
-        bgColor = '#202124';
-        highlightColor = '#f28b82';
-        break;
-      case 'light':
-        nodeColor = '#4285f4';
-        edgeColor = '#dadce0';
-        textColor = '#202124';
-        bgColor = '#ffffff';
-        highlightColor = '#ea4335';
-        break;
-      case 'academic':
-        nodeColor = '#7b1fa2';
-        edgeColor = '#3f51b5';
-        textColor = '#212121';
-        bgColor = '#f5f5f5';
-        highlightColor = '#ff9800';
-        break;
-      case 'ocean':
-        nodeColor = '#00897b';
-        edgeColor = '#0277bd';
-        textColor = '#263238';
-        bgColor = '#e0f7fa';
-        highlightColor = '#ff6d00';
-        break;
-      default: // 'default'
-        nodeColor = '#4285f4';
-        edgeColor = '#5f6368';
-        textColor = '#202124';
-        bgColor = '#f8f9fa';
-        highlightColor = '#ea4335';
-        break;
-    }
-    
-    // Generate index page
+    const themes = {
+      dark: {
+        background: '#1a1a1a',
+        text: '#ffffff',
+        link: '#4a9eff',
+        accent: '#666666',
+        border: '#333333'
+      },
+      light: {
+        background: '#ffffff', 
+        text: '#000000',
+        link: '#0066cc',
+        accent: '#666666',
+        border: '#dddddd'
+      },
+      academic: {
+        background: '#f5f5f5',
+        text: '#333333', 
+        link: '#990000',
+        accent: '#666666',
+        border: '#cccccc'
+      },
+      ocean: {
+        background: '#f0f8ff',
+        text: '#333333',
+        link: '#006699',
+        accent: '#4a9eff',
+        border: '#b3d9ff'
+      },
+      default: {
+        background: '#ffffff',
+        text: '#000000',
+        link: '#0066cc',
+        accent: '#666666',
+        border: '#dddddd'
+      }
+    };
+
+    const themeVars = themes[theme] || themes.default;
+
+    const files = {};
+
+    // Generate index.html
     const indexHTML = `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>${title}</title>
-      <style>
-        :root {
-          --node-color: ${nodeColor};
-          --edge-color: ${edgeColor};
-          --text-color: ${textColor};
-          --bg-color: ${bgColor};
-          --highlight-color: ${highlightColor};
-        }
-        
-        body {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-          margin: 0;
-          padding: 0;
-          color: var(--text-color);
-          background-color: var(--bg-color);
-          display: flex;
-          flex-direction: column;
-          height: 100vh;
-        }
-        
-        header {
-          padding: 1rem;
-          background-color: rgba(0, 0, 0, 0.1);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        main {
-          display: flex;
-          flex: 1;
-        }
-        
-        .sidebar {
-          width: 250px;
-          padding: 1rem;
-          border-right: 1px solid rgba(0, 0, 0, 0.1);
-          overflow-y: auto;
-        }
-        
-        .content {
-          flex: 1;
-          padding: 1rem;
-          overflow-y: auto;
-        }
-        
-        .visualization {
-          width: 100%;
-          height: 600px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: 4px;
-          position: relative;
-        }
-        
-        .entity-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        
-        .entity-item {
-          padding: 0.5rem;
-          margin-bottom: 0.25rem;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.2s;
-        }
-        
-        .entity-item:hover {
-          background-color: rgba(0, 0, 0, 0.05);
-        }
-        
-        .entity-item.active {
-          background-color: var(--node-color);
-          color: white;
-        }
-        
-        .search-box {
-          width: 100%;
-          padding: 0.5rem;
-          margin-bottom: 1rem;
-          border: 1px solid rgba(0, 0, 0, 0.2);
-          border-radius: 4px;
-        }
-        
-        .filter-group {
-          margin-bottom: 1rem;
-        }
-        
-        .filter-group h3 {
-          margin-top: 0;
-          margin-bottom: 0.5rem;
-        }
-        
-        .btn {
-          padding: 0.5rem 1rem;
-          margin-top: 0.5rem;
-          background-color: var(--node-color);
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.2s;
-        }
-        
-        .btn:hover {
-          background-color: var(--highlight-color);
-        }
-        
-        .node {
-          fill: var(--node-color);
-          stroke: #fff;
-          stroke-width: 1.5px;
-        }
-        
-        .node.highlighted {
-          fill: var(--highlight-color);
-        }
-        
-        .link {
-          stroke: var(--edge-color);
-          stroke-opacity: 0.6;
-        }
-        
-        .node-label {
-          font-size: 10px;
-          fill: var(--text-color);
-          text-anchor: middle;
-          pointer-events: none;
-        }
-        
-        .zoom-controls {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          display: flex;
-          flex-direction: column;
-          background: rgba(255, 255, 255, 0.8);
-          border-radius: 4px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-          z-index: 10;
-        }
-        
-        .zoom-btn {
-          width: 30px;
-          height: 30px;
-          font-size: 18px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          user-select: none;
-          border: none;
-          background: none;
-          padding: 0;
-        }
-        
-        .zoom-btn:hover {
-          background: rgba(0, 0, 0, 0.1);
-        }
-        
-        .entity-card {
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
-          padding: 1rem;
-          margin-bottom: 1rem;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .entity-card h2 {
-          margin-top: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          padding-bottom: 0.5rem;
-        }
-        
-        /* Theme-specific styles */
-        ${theme === 'academic' ? `
-        header {
-          background-color: #7b1fa2;
-          color: white;
-        }
-        
-        h1, h2, h3 {
-          font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-        }
-        
-        .visualization {
-          border: 2px solid #3f51b5;
-        }
-        ` : ''}
-        
-        ${theme === 'ocean' ? `
-        header {
-          background-color: #00897b;
-          color: white;
-        }
-        
-        .sidebar {
-          background-color: #e0f7fa;
-        }
-        
-        .visualization {
-          border: 2px solid #0277bd;
-        }
-        ` : ''}
-        
-        ${theme === 'dark' ? `
-        .entity-item:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .search-box {
-          background-color: #303134;
-          color: #e8eaed;
-          border-color: #5f6368;
-        }
-        
-        .zoom-controls {
-          background: rgba(32, 33, 36, 0.8);
-        }
-        
-        .zoom-btn {
-          color: #e8eaed;
-        }
-        
-        .entity-card {
-          background: rgba(255, 255, 255, 0.05);
-        }
-        ` : ''}
-        
-        @media (max-width: 768px) {
-          main {
-            flex-direction: column;
-          }
-          
-          .sidebar {
-            width: auto;
-            border-right: none;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          }
-        }
-      </style>
-    </head>
-    <body>
-      <header>
-        <h1>${title}</h1>
-        <p>${description}</p>
-      </header>
-      
-      <main>
-        <div class="sidebar">
-          
-          <input type="text" class="search-box" placeholder="Search entities..." id="search-input">
-          
-          <div class="filter-group">
-            <h3>Entity Types</h3>
-            <div id="type-filters"></div>
-            <button class="btn" id="clear-filters">Clear Filters</button>
-          </div>
-          
-          <h3>Entities</h3>
-          <ul class="entity-list" id="entity-list"></ul>
-        </div>
-        
-        <div class="content">
-          <div class="visualization" id="graph-container">
-            <div class="zoom-controls">
-              <button class="zoom-btn" id="zoom-in">+</button>
-              <button class="zoom-btn" id="zoom-reset">⟳</button>
-              <button class="zoom-btn" id="zoom-out">−</button>
-            </div>
-          </div>
-          <div id="entity-details" class="entity-card"></div>
-        </div>
-      </main>
-      
-      <script src="https://d3js.org/d3.v7.min.js"></script>
-      
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <style>
+    :root {
+      --background: ${themeVars.background};
+      --text: ${themeVars.text};
+      --link: ${themeVars.link};
+      --accent: ${themeVars.accent};
+      --border: ${themeVars.border};
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--text);
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      height: 100vh;
+    }
+    .sidebar {
+      padding: 20px;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+    }
+    .main {
+      padding: 20px;
+      overflow-y: auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+      margin-top: 0;
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .entity-list {
+      list-style: none;
+      padding: 0;
+    }
+    .entity-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+    }
+    #graph {
+      width: 100%;
+      height: 600px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-list {
+      list-style: none;
+      padding: 0;
+    }
+    .relationship-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-attributes {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+  </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>${title}</h2>
+      <p>${description}</p>
+      <h3>Entities</h3>
+      <ul class="entity-list">
+        ${Array.from(this.entities.values()).map(entity => `
+          <li class="entity-item">
+            <a href="${entity.id}.html">
+              ${entity.attributes.name || entity.attributes.title || entity.id}
+            </a>
+            <div class="entity-type">${entity.type}</div>
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+    <div class="main">
+      <div id="graph"></div>
       <script>
-        // UltraLink data
-        const data = ${JSON.stringify(JSON.parse(this.toJSON()))};
-        
-        // DOM elements
-        const graphContainer = document.getElementById('graph-container');
-        const entityList = document.getElementById('entity-list');
-        const entityDetails = document.getElementById('entity-details');
-        const searchInput = document.getElementById('search-input');
-        const typeFilters = document.getElementById('type-filters');
-        const clearFiltersBtn = document.getElementById('clear-filters');
-        const zoomInBtn = document.getElementById('zoom-in');
-        const zoomResetBtn = document.getElementById('zoom-reset');
-        const zoomOutBtn = document.getElementById('zoom-out');
-        
-        // State
-        let selectedEntity = null;
-        let filteredEntities = data.entities;
-        let currentZoom = d3.zoomIdentity;
-        
-        // Initialize
-        function init() {
-          renderEntityList();
-          renderTypeFilters();
-          renderGraph();
-          
-          // Set up search
-          searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            filteredEntities = data.entities.filter(entity => {
-              const name = entity.attributes.name || entity.attributes.title || entity.id;
-              return name.toLowerCase().includes(searchTerm);
-            });
-            renderEntityList();
-            updateGraph();
-          });
-          
-          // Set up clear filters button
-          clearFiltersBtn.addEventListener('click', () => {
-            // Reset checkboxes
-            Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
-              input.checked = true;
-            });
-            
-            // Reset search
-            searchInput.value = '';
-            
-            // Reset filtered entities
-            filteredEntities = data.entities;
-            renderEntityList();
-            updateGraph();
-          });
-          
-          // Set up zoom controls
-          zoomInBtn.addEventListener('click', () => {
-            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
-          });
-          
-          zoomOutBtn.addEventListener('click', () => {
-            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
-          });
-          
-          zoomResetBtn.addEventListener('click', () => {
-            svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
-          });
-        }
-        
-        // Render entity list
-        function renderEntityList() {
-          entityList.innerHTML = '';
-          
-          filteredEntities.forEach(entity => {
-            const li = document.createElement('li');
-            li.className = 'entity-item';
-            if (selectedEntity === entity.id) {
-              li.classList.add('active');
-            }
-            
-            const name = entity.attributes.name || entity.attributes.title || entity.id;
-            li.textContent = name;
-            
-            li.addEventListener('click', () => {
-              selectedEntity = entity.id;
-              renderEntityList();
-              renderEntityDetails(entity);
-              highlightNode(entity.id);
-            });
-            
-            entityList.appendChild(li);
-          });
-        }
-        
-        // Render type filters
-        function renderTypeFilters() {
-          const types = [...new Set(data.entities.map(e => e.type))];
-          
-          types.forEach(type => {
-            const label = document.createElement('label');
-            label.style.display = 'block';
-            label.style.marginBottom = '0.25rem';
-            
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = true;
-            checkbox.dataset.type = type;
-            
-            checkbox.addEventListener('change', updateFilters);
-            
-            label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(' ' + type));
-            
-            typeFilters.appendChild(label);
-          });
-        }
-        
-        // Update filters
-        function updateFilters() {
-          const checkedTypes = Array.from(typeFilters.querySelectorAll('input:checked'))
-            .map(input => input.dataset.type);
-          
-          filteredEntities = data.entities.filter(entity => 
-            checkedTypes.includes(entity.type)
-          );
-          
-          renderEntityList();
-          updateGraph();
-        }
-        
-        // Render entity details
-        function renderEntityDetails(entity) {
-          if (!entity) {
-            entityDetails.innerHTML = '<p>Select an entity to view details</p>';
-            return;
-          }
-          
-          const name = entity.attributes.name || entity.attributes.title || entity.id;
-          
-          let html = \`
-            <h2>\${name}</h2>
-            <div class="entity-meta">
-              <p><span class="label">Type:</span> \${entity.type}</p>
-              <p><span class="label">ID:</span> \${entity.id}</p>
-            </div>
-          \`;
-          
-          // Attributes
-          if (Object.keys(entity.attributes).length > 0) {
-            html += '<h3>Attributes</h3><dl class="attribute-list">';
-            
-            for (const [key, value] of Object.entries(entity.attributes)) {
-              if (key === 'name' || key === 'title') continue; // Skip name as it's in the header
-              
-              const formattedValue = typeof value === 'object' 
-                ? JSON.stringify(value) 
-                : value;
-                
-              html += \`
-                <dt>\${key}</dt>
-                <dd>\${formattedValue}</dd>
-              \`;
-            }
-            
-            html += '</dl>';
-          }
-          
-          // Relationships
-          const outgoingLinks = data.relationships.filter(rel => rel.source === entity.id);
-          const incomingLinks = data.relationships.filter(rel => rel.target === entity.id);
-          
-          if (outgoingLinks.length > 0) {
-            html += '<h3>Outgoing Relationships</h3><ul class="relationship-list">';
-            
-            for (const link of outgoingLinks) {
-              const targetEntity = data.entities.find(e => e.id === link.target);
-              const targetName = targetEntity?.attributes?.name || targetEntity?.attributes?.title || link.target;
-              
-              let relInfo = \`\${link.type} → <a href="javascript:void(0)" onclick="selectEntityById('\${link.target}')">\${targetName}</a>\`;
-              
-              // Add relationship attributes if any
-              if (link.attributes && Object.keys(link.attributes).length > 0) {
-                relInfo += ' (';
-                const attrs = [];
-                for (const [key, value] of Object.entries(link.attributes)) {
-                  attrs.push(\`\${key}: \${value}\`);
-                }
-                relInfo += attrs.join(', ');
-                relInfo += ')';
-              }
-              
-              html += \`<li>\${relInfo}</li>\`;
-            }
-            
-            html += '</ul>';
-          }
-          
-          if (incomingLinks.length > 0) {
-            html += '<h3>Incoming Relationships</h3><ul class="relationship-list">';
-            
-            for (const link of incomingLinks) {
-              const sourceEntity = data.entities.find(e => e.id === link.source);
-              const sourceName = sourceEntity?.attributes?.name || sourceEntity?.attributes?.title || link.source;
-              
-              html += \`<li><a href="javascript:void(0)" onclick="selectEntityById('\${link.source}')">\${sourceName}</a> → \${link.type}</li>\`;
-            }
-            
-            html += '</ul>';
-          }
-          
-          entityDetails.innerHTML = html;
-        }
-        
-        // Global function to select entity by ID (for link clicking)
-        window.selectEntityById = (id) => {
-          selectedEntity = id;
-          const entity = data.entities.find(e => e.id === id);
-          renderEntityList();
-          renderEntityDetails(entity);
-          highlightNode(id);
+        // Graph visualization code
+        const data = {
+          nodes: ${JSON.stringify(Array.from(this.entities.values()).map(entity => ({
+            id: entity.id,
+            name: entity.attributes.name || entity.attributes.title || entity.id,
+            type: entity.type
+          })))},
+          links: ${JSON.stringify(Array.from(this.relationships.values()).map(rel => ({
+            source: rel.source,
+            target: rel.target,
+            type: rel.type
+          })))}
         };
-        
-        // D3 graph visualization
-        let simulation, svg, link, node, nodeLabels, zoom, g;
-        
-        function renderGraph() {
-          const width = graphContainer.clientWidth;
-          const height = graphContainer.clientHeight;
-          
-          // Create SVG with viewBox for responsiveness
-          svg = d3.select('#graph-container')
-            .append('svg')
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('viewBox', [0, 0, width, height])
-            .attr('preserveAspectRatio', 'xMidYMid meet');
-          
-          // Set up zoom behavior
-          zoom = d3.zoom()
-            .scaleExtent([0.1, 4])
-            .on('zoom', (event) => {
-              currentZoom = event.transform;
-              g.attr('transform', event.transform);
-            });
-          
-          svg.call(zoom);
-          
-          // Create a container group for all elements that will be transformed
-          g = svg.append('g');
-          
-          // Create links
-          link = g.append('g')
-            .selectAll('line')
-            .data(data.relationships)
-            .enter()
-            .append('line')
-            .attr('class', 'link');
-          
-          // Create nodes
-          node = g.append('g')
-            .selectAll('circle')
-            .data(data.entities)
-            .enter()
-            .append('circle')
-            .attr('class', 'node')
-            .attr('r', 8)
-            .attr('id', d => \`node-\${d.id}\`)
-            .on('click', (event, d) => {
-              selectedEntity = d.id;
-              renderEntityList();
-              renderEntityDetails(d);
-              highlightNode(d.id);
-            });
-          
-          // Add node labels
-          nodeLabels = g.append('g')
-            .selectAll('text')
-            .data(data.entities)
-            .enter()
-            .append('text')
-            .attr('class', 'node-label')
-            .attr('dy', -12)
-            .text(d => d.attributes.name || d.attributes.title || d.id);
-          
-          // Set up force simulation
-          simulation = d3.forceSimulation(data.entities)
-            .force('link', d3.forceLink(data.relationships)
-              .id(d => d.id)
-              .distance(100))
-            .force('charge', d3.forceManyBody().strength(-200))
-            .force('center', d3.forceCenter(width / 2, height / 2))
-            .on('tick', () => {
-              link
-                .attr('x1', d => d.source.x)
-                .attr('y1', d => d.source.y)
-                .attr('x2', d => d.target.x)
-                .attr('y2', d => d.target.y);
-              
-              node
-                .attr('cx', d => d.x)
-                .attr('cy', d => d.y);
-              
-              nodeLabels
-                .attr('x', d => d.x)
-                .attr('y', d => d.y);
-            });
-          
-          // Add double-click to zoom
-          svg.on('dblclick.zoom', null); // Remove default double-click behavior
-          node.on('dblclick', (event, d) => {
-            event.stopPropagation();
-            const scale = 2;
-            const x = width / 2 - scale * d.x;
-            const y = height / 2 - scale * d.y;
-            svg.transition().duration(500)
-              .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
-          });
-          
-          // Add double-click on background to reset zoom
-          svg.on('dblclick', () => {
-            svg.transition().duration(500)
-              .call(zoom.transform, d3.zoomIdentity);
-          });
-        }
-        
-        function updateGraph() {
-          // Update nodes and links based on filtered entities
-          const filteredNodeIds = filteredEntities.map(e => e.id);
-          const filteredLinks = data.relationships.filter(
-            rel => filteredNodeIds.includes(rel.source) && filteredNodeIds.includes(rel.target)
-          );
-          
-          node.style('display', d => filteredNodeIds.includes(d.id) ? null : 'none');
-          nodeLabels.style('display', d => filteredNodeIds.includes(d.id) ? null : 'none');
-          
-          link.style('display', d => 
-            filteredNodeIds.includes(d.source.id) && filteredNodeIds.includes(d.target.id) 
-              ? null : 'none'
-          );
-          
-          // Restart simulation
-          simulation.nodes(filteredEntities);
-          simulation.force('link').links(filteredLinks);
-          simulation.alpha(0.3).restart();
-        }
-        
-        function highlightNode(id) {
-          // Reset all nodes
-          node.classed('highlighted', false);
-          
-          // Highlight selected node
-          if (id) {
-            d3.select(\`#node-\${id}\`).classed('highlighted', true);
-            
-            // Find node and center view on it
-            const selectedNode = data.entities.find(e => e.id === id);
-            if (selectedNode && selectedNode.x && selectedNode.y) {
-              const width = graphContainer.clientWidth;
-              const height = graphContainer.clientHeight;
-              const scale = currentZoom.k; // Keep current zoom level
-              const x = width / 2 - scale * selectedNode.x;
-              const y = height / 2 - scale * selectedNode.y;
-              
-              svg.transition().duration(500)
-                .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
-            }
+
+        const width = document.getElementById('graph').clientWidth;
+        const height = 600;
+
+        const simulation = d3.forceSimulation(data.nodes)
+          .force('link', d3.forceLink(data.links).id(d => d.id))
+          .force('charge', d3.forceManyBody().strength(-100))
+          .force('center', d3.forceCenter(width / 2, height / 2));
+
+        const svg = d3.select('#graph')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height);
+
+        const link = svg.append('g')
+          .selectAll('line')
+          .data(data.links)
+          .join('line')
+          .attr('stroke', 'var(--border)')
+          .attr('stroke-width', 1);
+
+        const node = svg.append('g')
+          .selectAll('circle')
+          .data(data.nodes)
+          .join('circle')
+          .attr('r', 5)
+          .attr('fill', 'var(--link)')
+          .call(drag(simulation));
+
+        node.append('title')
+          .text(d => d.name);
+
+        simulation.on('tick', () => {
+          link
+            .attr('x1', d => d.source.x)
+            .attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x)
+            .attr('y2', d => d.target.y);
+
+          node
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y);
+        });
+
+        function drag(simulation) {
+          function dragstarted(event) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            event.subject.fx = event.subject.x;
+            event.subject.fy = event.subject.y;
           }
+          
+          function dragged(event) {
+            event.subject.fx = event.x;
+            event.subject.fy = event.y;
+          }
+          
+          function dragended(event) {
+            if (!event.active) simulation.alphaTarget(0);
+            event.subject.fx = null;
+            event.subject.fy = null;
+          }
+          
+          return d3.drag()
+            .on('start', dragstarted)
+            .on('drag', dragged)
+            .on('end', dragended);
         }
-        
-        // Initialize the application
-        init();
-        
       </script>
-    </body>
-    </html>`;
-    
+    </div>
+  </div>
+</body>
+</html>`;
+
     files['index.html'] = indexHTML;
-    
-    // Generate entity detail pages
+
+    // Generate individual entity pages
     for (const entity of this.entities.values()) {
-      const name = entity.attributes.name || entity.attributes.title || entity.id;
       const entityHTML = `<!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${name} - ${title}</title>
-        <style>
-          :root {
-            --node-color: ${nodeColor};
-            --edge-color: ${edgeColor};
-            --text-color: ${textColor};
-            --bg-color: ${bgColor};
-            --highlight-color: ${highlightColor};
-          }
-          
-          body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-          }
-          
-          header {
-            padding: 1rem;
-            background-color: rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          }
-          
-          .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1rem;
-          }
-          
-          .attribute-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-          }
-          
-          .attribute-table th, .attribute-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          }
-          
-          .attribute-table th {
-            background-color: rgba(0, 0, 0, 0.05);
-          }
-          
-          .relationship-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-          }
-          
-          .relationship-item {
-            padding: 0.75rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 0.5rem;
-            border-radius: 4px;
-          }
-          
-          a {
-            color: var(--node-color);
-            text-decoration: none;
-          }
-          
-          a:hover {
-            text-decoration: underline;
-          }
-          
-          .back-link {
-            display: inline-block;
-            margin-bottom: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: var(--node-color);
-            color: white;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-          }
-          
-          .back-link:hover {
-            background-color: var(--highlight-color);
-            text-decoration: none;
-          }
-          
-          .entity-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-          }
-          
-          .entity-section h3 {
-            margin-top: 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            padding-bottom: 0.5rem;
-          }
-          
-          /* Theme-specific styles */
-          ${theme === 'academic' ? `
-          header {
-            background-color: #7b1fa2;
-            color: white;
-          }
-          
-          h1, h2, h3 {
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-          }
-          
-          .back-link {
-            background-color: #7b1fa2;
-          }
-          
-          .back-link:hover {
-            background-color: #ff9800;
-          }
-          ` : ''}
-          
-          ${theme === 'ocean' ? `
-          header {
-            background-color: #00897b;
-            color: white;
-          }
-          
-          .back-link {
-            background-color: #00897b;
-          }
-          
-          .back-link:hover {
-            background-color: #ff6d00;
-          }
-          ` : ''}
-          
-          @media (max-width: 768px) {
-            .container {
-              padding: 0.5rem;
-            }
-          }
-        </style>
-      </head>
-      <body>
-        <header>
-          <div class="container">
-            <h1>${name}</h1>
-            <p>${entity.type}</p>
-          </div>
-        </header>
-        
-        <div class="container">
-          <a href="index.html" class="back-link">← Back to Network View</a>
-          
-          <div class="entity-section">
-            <h2>Entity Details</h2>
-            <p><strong>ID:</strong> ${entity.id}</p>
-            <p><strong>Type:</strong> ${entity.type}</p>
-          </div>
-          
-          <div class="entity-section">
-            <h3>Attributes</h3>
-            <table class="attribute-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${Object.entries(entity.attributes)
-                  .filter(([key]) => key !== 'name' && key !== 'title')
-                  .map(([key, value]) => `
-                    <tr>
-                      <td>${key}</td>
-                      <td>${value}</td>
-                    </tr>
-                  `).join('')}
-              </tbody>
-            </table>
-          </div>
-          
-          <div class="entity-section">
-            <h3>Relationships</h3>
-            ${this._generateRelationshipHTML(entity.id)}
-          </div>
-        </div>
-      </body>
-      </html>`;
-      
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${entity.attributes.name || entity.attributes.title || entity.id} - ${title}</title>
+  <style>
+    :root {
+      --background: ${themeVars.background};
+      --text: ${themeVars.text};
+      --link: ${themeVars.link};
+      --accent: ${themeVars.accent};
+      --border: ${themeVars.border};
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--background);
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .attributes {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .attribute-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .attribute-row:last-child {
+      border-bottom: none;
+    }
+    .attribute-key {
+      color: var(--accent);
+    }
+    .relationship-list {
+      list-style: none;
+      padding: 0;
+    }
+    .relationship-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-attributes {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">← Back to Graph</a>
+  <h1>${entity.attributes.name || entity.attributes.title || entity.id}</h1>
+  <div class="entity-type">${entity.type}</div>
+  
+  <h3>Attributes</h3>
+  <div class="attributes">
+    ${Object.entries(entity.attributes).map(([key, value]) => `
+      <div class="attribute-row">
+        <div class="attribute-key">${key}</div>
+        <div class="attribute-value">${value}</div>
+      </div>
+    `).join('')}
+  </div>
+
+  <h3>Relationships</h3>
+  ${this._generateRelationshipHTML(entity.id)}
+</body>
+</html>`;
+
       files[`${entity.id}.html`] = entityHTML;
     }
-    
+
     return files;
   }
   

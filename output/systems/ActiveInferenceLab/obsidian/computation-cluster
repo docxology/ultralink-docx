@@ -1,0 +1,21 @@
+# computation-cluster
+
+Type: equipment
+
+## Metadata
+
+- name: High Performance Computing Cluster
+- type: Computing
+- status: Operational
+- location: Server Room
+- cost: 200000
+- purchaseDate: 2022-11-01
+- maintenanceSchedule: Monthly
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[active-inference-model]] -> uses

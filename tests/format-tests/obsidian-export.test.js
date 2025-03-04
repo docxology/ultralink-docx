@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { UltraLink } = require('../../src/ultralink');
+const { UltraLink } = require('../../src');
 const { getSystemOutputPath } = require('../test-utils');
 
 // Create a logger

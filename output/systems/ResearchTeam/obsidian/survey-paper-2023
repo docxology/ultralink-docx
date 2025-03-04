@@ -1,0 +1,27 @@
+# survey-paper-2023
+
+Type: publication
+
+## Metadata
+
+- title: A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques
+- authors: ["david-patel","bob-smith","alice-chen"]
+- venue: ACM Computing Surveys
+- year: 2023
+- doi: 10.1234/surveys2023
+- citations: 78
+- abstract: This survey provides a comprehensive overview of privacy-preserving machine learning techniques, including differential privacy, federated learning, secure multi-party computation, and homomorphic encryption...
+
+## Links
+
+- cites -> [[federated-paper-2023]]
+- cites -> [[vision-paper-2022]]
+- cites -> [[nlp-paper-2023]]
+
+## Backlinks
+
+- [[alice-chen]] -> authored
+- [[bob-smith]] -> authored
+- [[david-patel]] -> authored
+- [[federated-learning-project]] -> produced
+- [[quantum-paper-2023]] -> cites

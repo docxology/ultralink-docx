@@ -1,0 +1,19 @@
+# quantum-ml
+
+Type: knowledge-area
+
+## Metadata
+
+- name: Quantum Machine Learning
+- description: Intersection of quantum computing and machine learning
+- topics: ["Quantum Neural Networks","Quantum Kernels","Quantum Circuit Learning","Quantum Advantage in ML"]
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[frank-zhang]] -> expertise_in
+- [[quantum-ml-project]] -> applies
+- [[machine-learning-theory]] -> foundational_for

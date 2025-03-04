@@ -1,0 +1,25 @@
+# hpc-cluster
+
+Type: equipment
+
+## Metadata
+
+- name: University High-Performance Computing Cluster
+- description: Shared computing facility for computation-intensive research
+- location: Data Center Building C
+- specifications_cores: 4096
+- specifications_memory: 16TB
+- specifications_storage: 1PB
+- specifications_interconnect: InfiniBand
+- status: operational
+- accessLevel: shared
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[david-patel]] -> uses
+- [[federated-learning-project]] -> uses
+- [[quantum-ml-project]] -> uses

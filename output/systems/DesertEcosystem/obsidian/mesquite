@@ -1,0 +1,22 @@
+# mesquite
+
+Type: plant
+
+## Metadata
+
+- name: Honey Mesquite
+- scientificName: Prosopis glandulosa
+- height: 900
+- waterRequirement: low
+- description: Deciduous tree with deep roots that can access groundwater.
+- adaptations: ["Extremely deep taproots can reach 50m below surface","Small leaves reduce water loss","Drought deciduous - can shed leaves during extreme drought","Nitrogen fixing ability improves soil quality"]
+
+## Links
+
+- adapted_to -> [[aridity]]
+- grows_in -> [[wash]]
+- facilitates -> [[desert_poppy]]
+
+## Backlinks
+
+- [[kangaroo_rat]] -> consumes

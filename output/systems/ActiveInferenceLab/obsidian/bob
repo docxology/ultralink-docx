@@ -1,0 +1,27 @@
+# bob
+
+Type: researcher
+
+## Metadata
+
+- name: Dr. Bob Smith
+- role: Senior Researcher
+- department: Biology
+- email: bob.smith@example.edu
+- publications: 28
+- expertise: ["ant colony behavior","entomology","swarm intelligence"]
+- yearsExperience: 12
+
+## Links
+
+- leads -> [[ant-colony-study]]
+- contributes_to -> [[active-inference-model]]
+- mentors -> [[emma]]
+- authored -> [[paper-2023a]]
+- authored -> [[paper-2023b]]
+- authored -> [[paper-2024]]
+
+## Backlinks
+
+- [[david]] -> reports_to
+- [[grace]] -> reports_to

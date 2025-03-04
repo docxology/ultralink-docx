@@ -22,7 +22,7 @@ function createActiveInferenceLabDataset() {
   const ultralink = new UltraLink();
   
   // Add researchers with various roles
-  ultralink.createEntity('researcher', 'alice', {
+  ultralink.addEntity('alice', 'researcher', {
     name: 'Dr. Alice Chen',
     role: 'Principal Investigator',
     department: 'Cognitive Science',
@@ -32,7 +32,7 @@ function createActiveInferenceLabDataset() {
     yearsExperience: 15
   });
   
-  ultralink.createEntity('researcher', 'bob', {
+  ultralink.addEntity('bob', 'researcher', {
     name: 'Dr. Bob Smith',
     role: 'Senior Researcher',
     department: 'Biology',
@@ -42,17 +42,17 @@ function createActiveInferenceLabDataset() {
     yearsExperience: 12
   });
   
-  ultralink.createEntity('researcher', 'carol', {
+  ultralink.addEntity('carol', 'researcher', {
     name: 'Dr. Carol Jimenez',
     role: 'Postdoctoral Researcher',
     department: 'Cognitive Science',
     email: 'carol.jimenez@example.edu',
     publications: 11,
-    expertise: ['active inference', 'free energy principle', 'predictive processing'],
-    yearsExperience: 5
+    expertise: ['active inference', 'machine learning', 'cognitive modeling'],
+    yearsExperience: 3
   });
 
-  ultralink.createEntity('researcher', 'david', {
+  ultralink.addEntity('david', 'researcher', {
     name: 'David Wilson',
     role: 'PhD Student',
     department: 'Biology',
@@ -62,7 +62,7 @@ function createActiveInferenceLabDataset() {
     yearsExperience: 3
   });
 
-  ultralink.createEntity('researcher', 'emma', {
+  ultralink.addEntity('emma', 'researcher', {
     name: 'Emma Taylor',
     role: 'PhD Student',
     department: 'Computer Science',
@@ -72,7 +72,7 @@ function createActiveInferenceLabDataset() {
     yearsExperience: 2
   });
 
-  ultralink.createEntity('researcher', 'frank', {
+  ultralink.addEntity('frank', 'researcher', {
     name: 'Dr. Frank Martinez',
     role: 'Research Associate',
     department: 'Mathematics',
@@ -82,7 +82,7 @@ function createActiveInferenceLabDataset() {
     yearsExperience: 8
   });
 
-  ultralink.createEntity('researcher', 'grace', {
+  ultralink.addEntity('grace', 'researcher', {
     name: 'Grace Kim',
     role: 'Lab Technician',
     department: 'Biology',
@@ -93,475 +93,344 @@ function createActiveInferenceLabDataset() {
   });
 
   // Add research projects
-  ultralink.createEntity('project', 'active-inference-model', {
+  ultralink.addEntity('active-inference-model', 'project', {
     name: 'Active Inference Modeling of Collective Behavior',
-    title: 'Active Inference Modeling of Collective Behavior',
-    startDate: '2022-03-15',
-    endDate: '2025-03-14',
-    budget: 750000,
     status: 'Active',
+    startDate: '2023-01-15',
+    endDate: '2025-01-14',
+    funding: 750000,
     fundingSource: 'National Science Foundation',
-    description: 'Developing computational models of ant colony behavior using active inference principles'
+    description: 'Developing computational models of collective behavior using the Active Inference framework'
   });
   
-  ultralink.createEntity('project', 'ant-colony-tracking', {
-    name: 'Ant Colony Tracking System',
-    title: 'Ant Colony Tracking System',
-    startDate: '2023-01-10',
+  ultralink.addEntity('ant-colony-study', 'project', {
+    name: 'Ant Colony Decision Making Study',
+    status: 'Active',
+    startDate: '2023-06-01',
     endDate: '2024-12-31',
-    budget: 320000,
-    status: 'Active',
-    fundingSource: 'University Research Grant',
-    description: 'Developing an advanced tracking system to monitor individual and collective ant behavior'
+    funding: 250000,
+    fundingSource: 'University Grant',
+    description: 'Field study of ant colony decision-making processes in natural environments'
   });
 
-  ultralink.createEntity('project', 'prediction-error-minimization', {
-    name: 'Prediction Error Minimization in Insect Colonies',
-    title: 'Prediction Error Minimization in Insect Colonies',
-    startDate: '2022-09-01',
-    endDate: '2024-08-31',
-    budget: 450000,
-    status: 'Active',
-    fundingSource: 'Industry Partner - BioTech Innovations',
-    description: 'Investigating how ant colonies minimize prediction error through collective behavior'
-  });
-
-  ultralink.createEntity('project', 'algorithm-development', {
-    name: 'Bio-inspired Algorithm Development',
-    title: 'Bio-inspired Algorithm Development',
-    startDate: '2024-01-05',
-    budget: 280000,
-    status: 'New',
-    fundingSource: 'Industry Partner - AI Systems Inc.',
-    description: 'Translating ant colony behaviors into optimization algorithms for complex problems'
+  ultralink.addEntity('neural-basis', 'project', {
+    name: 'Neural Basis of Active Inference',
+    status: 'Planning',
+    startDate: '2024-01-01',
+    endDate: '2026-12-31',
+    funding: 1200000,
+    fundingSource: 'NIH',
+    description: 'Investigation of neural mechanisms underlying active inference in biological systems'
   });
 
   // Add research concepts/topics
-  ultralink.createEntity('concept', 'active-inference', {
+  ultralink.addEntity('active-inference', 'concept', {
     name: 'Active Inference',
-    description: 'A theory of brain function that combines perception and action through the minimization of free energy or prediction error',
-    relatedFields: ['computational neuroscience', 'cognitive science', 'artificial intelligence'],
-    keyPapers: ['Friston et al. 2006', 'Friston et al. 2010', 'Parr & Friston 2019']
+    field: 'Computational Neuroscience',
+    description: 'Framework for understanding perception and action based on free energy minimization',
+    keyPapers: ['10.1038/nn.2635', '10.1016/j.tics.2009.04.005']
   });
 
-  ultralink.createEntity('concept', 'ant-colony-behavior', {
-    name: 'Ant Colony Behavior',
-    description: 'Collective behaviors exhibited by ant colonies, including foraging, nest building, and division of labor',
-    relatedFields: ['entomology', 'collective intelligence', 'evolutionary biology'],
-    keyPapers: ['Wilson 1971', 'Hölldobler & Wilson 1990', 'Gordon 2010']
+  ultralink.addEntity('collective-behavior', 'concept', {
+    name: 'Collective Behavior',
+    field: 'Biology',
+    description: 'Emergent properties and dynamics of group behavior in social organisms',
+    keyPapers: ['10.1016/j.tree.2018.01.003']
   });
 
-  ultralink.createEntity('concept', 'free-energy-principle', {
-    name: 'Free Energy Principle',
-    description: 'States that all adaptive systems minimize variational free energy, which bounds surprise',
-    relatedFields: ['computational neuroscience', 'thermodynamics', 'information theory'],
-    keyPapers: ['Friston 2010', 'Friston & Stephan 2007']
-  });
-
-  ultralink.createEntity('concept', 'stigmergy', {
-    name: 'Stigmergy',
-    description: 'Mechanism of indirect coordination among agents through modifications to the environment',
-    relatedFields: ['collective behavior', 'self-organization', 'swarm intelligence'],
-    keyPapers: ['Grassé 1959', 'Theraulaz & Bonabeau 1999']
-  });
-
-  ultralink.createEntity('concept', 'predictive-coding', {
-    name: 'Predictive Coding',
-    description: 'Framework proposing that the brain constantly generates predictions of sensory input and updates its models based on prediction errors',
-    relatedFields: ['neuroscience', 'machine learning', 'cognitive science'],
-    keyPapers: ['Rao & Ballard 1999', 'Clark 2013', 'Hohwy 2013']
+  ultralink.addEntity('swarm-intelligence', 'concept', {
+    name: 'Swarm Intelligence',
+    field: 'Computer Science',
+    description: 'Collective problem-solving abilities emerging from local interactions',
+    keyPapers: ['10.1007/s11721-007-0004-y']
   });
 
   // Add equipment/resources
-  ultralink.createEntity('equipment', 'ant-colony-lab', {
-    name: 'Ant Colony Laboratory',
-    location: 'Building C, Room 305',
-    size: '500 sq ft',
-    features: ['Climate control', 'Observation chambers', 'Artificial nests'],
-    speciesHoused: ['Lasius niger', 'Camponotus pennsylvanicus', 'Pogonomyrmex barbatus']
+  ultralink.addEntity('ant-tracking', 'equipment', {
+    name: 'Ant Tracking System',
+    type: 'Imaging',
+    status: 'Operational',
+    location: 'Main Lab',
+    cost: 75000,
+    purchaseDate: '2023-02-15',
+    maintenanceSchedule: 'Monthly'
   });
 
-  ultralink.createEntity('equipment', 'hpc-cluster', {
-    name: 'High-Performance Computing Cluster',
-    location: 'University Computing Center',
-    processors: 128,
-    totalRAM: '512GB',
-    storageCapacity: '100TB',
-    purpose: 'Running large-scale simulations and data analysis'
+  ultralink.addEntity('neural-recording', 'equipment', {
+    name: 'Neural Recording Setup',
+    type: 'Electrophysiology',
+    status: 'Operational',
+    location: 'Neuroscience Lab',
+    cost: 150000,
+    purchaseDate: '2023-05-01',
+    maintenanceSchedule: 'Weekly'
   });
 
-  ultralink.createEntity('equipment', 'tracking-system', {
-    name: 'Automated Tracking System',
-    manufacturer: 'BioVision Technologies',
-    cameras: 8,
-    resolution: '4K',
-    framerate: '120fps',
-    software: 'AntTrack Pro 3.0'
-  });
-
-  ultralink.createEntity('equipment', 'environmental-chamber', {
-    name: 'Environmental Test Chamber',
-    manufacturer: 'EcoSim Systems',
-    temperatureRange: '-10°C to 50°C',
-    humidityControl: '10% to 95% RH',
-    dimensions: '2m x 2m x 2m'
+  ultralink.addEntity('computation-cluster', 'equipment', {
+    name: 'High Performance Computing Cluster',
+    type: 'Computing',
+    status: 'Operational',
+    location: 'Server Room',
+    cost: 200000,
+    purchaseDate: '2022-11-01',
+    maintenanceSchedule: 'Monthly'
   });
 
   // Add publications
-  ultralink.createEntity('publication', 'paper-active-inference', {
-    name: 'Active Inference and Collective Behavior in Ant Colonies',
-    authors: ['Chen, A.', 'Smith, B.', 'Jimenez, C.'],
-    journal: 'Journal of Theoretical Biology',
+  ultralink.addEntity('paper-2023a', 'publication', {
+    title: 'Active Inference Framework for Collective Behavior Analysis',
+    authors: ['alice', 'carol', 'david'],
+    journal: 'Nature Computational Science',
     year: 2023,
-    doi: '10.1234/jtb.2023.045',
-    citations: 12
+    doi: '10.1038/s41467-023-0001-1',
+    citations: 15
   });
 
-  ultralink.createEntity('publication', 'paper-tracking-system', {
-    name: 'Novel Tracking System for Monitoring Individual Ants in Colony Settings',
-    authors: ['Smith, B.', 'Wilson, D.', 'Kim, G.'],
-    journal: 'Methods in Ecology and Evolution',
+  ultralink.addEntity('paper-2023b', 'publication', {
+    title: 'Decision Making Patterns in Ant Colonies: A Field Study',
+    authors: ['bob', 'emma', 'frank'],
+    journal: 'Behavioral Ecology',
     year: 2023,
-    doi: '10.5678/mee.2023.078',
+    doi: '10.1093/beheco/2023-0002',
     citations: 8
   });
 
-  ultralink.createEntity('publication', 'paper-prediction-error', {
-    name: 'Prediction Error Minimization through Stigmergic Communication in Ants',
-    authors: ['Jimenez, C.', 'Chen, A.', 'Martinez, F.'],
-    journal: 'Frontiers in Computational Neuroscience',
+  ultralink.addEntity('paper-2024', 'publication', {
+    title: 'Computational Models of Active Inference in Social Insects',
+    authors: ['alice', 'bob', 'carol', 'david'],
+    journal: 'PLOS Computational Biology',
     year: 2024,
-    doi: '10.9012/fcn.2024.012',
+    doi: '10.1371/journal.pcbi.2024-0001',
     citations: 3
-  });
-
-  ultralink.createEntity('publication', 'paper-algorithm', {
-    name: 'Bio-inspired Algorithms Based on Active Inference Principles',
-    authors: ['Taylor, E.', 'Martinez, F.', 'Chen, A.'],
-    journal: 'Nature Machine Intelligence',
-    year: 2024,
-    doi: '10.3456/nmi.2024.034',
-    citations: 2
   });
 
   // Add relationships
 
   // Research leadership
-  ultralink.createLink('alice', 'active-inference-model', 'leads', {
+  ultralink.addLink('alice', 'active-inference-model', 'leads', {
     role: 'Principal Investigator',
-    startDate: '2022-03-15'
+    timeCommitment: 0.4
   });
 
-  ultralink.createLink('bob', 'ant-colony-tracking', 'leads', {
+  ultralink.addLink('bob', 'ant-colony-study', 'leads', {
     role: 'Principal Investigator',
-    startDate: '2023-01-10'
+    timeCommitment: 0.5
   });
 
-  ultralink.createLink('alice', 'prediction-error-minimization', 'leads', {
-    role: 'Principal Investigator',
-    startDate: '2022-09-01'
+  ultralink.addLink('carol', 'active-inference-model', 'contributes', {
+    role: 'Lead Developer',
+    timeCommitment: 0.6
   });
 
-  ultralink.createLink('frank', 'algorithm-development', 'leads', {
-    role: 'Principal Investigator',
-    startDate: '2024-01-05'
+  ultralink.addLink('david', 'active-inference-model', 'contributes', {
+    role: 'Data Analyst',
+    timeCommitment: 0.8
+  });
+
+  ultralink.addLink('emma', 'ant-colony-study', 'contributes', {
+    role: 'Field Researcher',
+    timeCommitment: 0.7
+  });
+
+  ultralink.addLink('frank', 'ant-colony-study', 'contributes', {
+    role: 'Lab Manager',
+    timeCommitment: 0.3
   });
 
   // Project participation
-  ultralink.createLink('bob', 'active-inference-model', 'contributes_to', {
+  ultralink.addLink('bob', 'active-inference-model', 'contributes_to', {
     role: 'Co-Investigator',
     startDate: '2022-03-15'
   });
 
-  ultralink.createLink('carol', 'active-inference-model', 'contributes_to', {
+  ultralink.addLink('carol', 'active-inference-model', 'contributes_to', {
     role: 'Postdoc Researcher',
     startDate: '2022-05-01'
   });
 
-  ultralink.createLink('david', 'ant-colony-tracking', 'contributes_to', {
+  ultralink.addLink('david', 'ant-colony-study', 'contributes_to', {
     role: 'PhD Researcher',
     startDate: '2023-01-10'
   });
 
-  ultralink.createLink('grace', 'ant-colony-tracking', 'contributes_to', {
+  ultralink.addLink('grace', 'ant-colony-study', 'contributes_to', {
     role: 'Lab Technician',
     startDate: '2023-01-10'
   });
 
-  ultralink.createLink('carol', 'prediction-error-minimization', 'contributes_to', {
+  ultralink.addLink('carol', 'active-inference-model', 'contributes_to', {
     role: 'Lead Researcher',
     startDate: '2022-09-01'
   });
 
-  ultralink.createLink('frank', 'prediction-error-minimization', 'contributes_to', {
+  ultralink.addLink('frank', 'ant-colony-study', 'contributes_to', {
     role: 'Mathematical Modeling',
     startDate: '2022-11-15'
   });
 
-  ultralink.createLink('emma', 'algorithm-development', 'contributes_to', {
+  ultralink.addLink('emma', 'ant-colony-study', 'contributes_to', {
     role: 'Algorithm Developer',
     startDate: '2024-01-05'
   });
 
-  ultralink.createLink('david', 'algorithm-development', 'contributes_to', {
+  ultralink.addLink('david', 'ant-colony-study', 'contributes_to', {
     role: 'Behavioral Consultant',
     startDate: '2024-02-10',
     timeCommitment: '25%'
   });
 
   // Mentorship and reporting relationships
-  ultralink.createLink('alice', 'carol', 'mentors', {
+  ultralink.addLink('alice', 'david', 'mentors', {
+    type: 'PhD Advisor',
+    startDate: '2022-09-01'
+  });
+
+  ultralink.addLink('bob', 'emma', 'mentors', {
+    type: 'PhD Advisor',
+    startDate: '2022-09-01'
+  });
+
+  ultralink.addLink('alice', 'carol', 'mentors', {
+    type: 'Postdoc Advisor',
+    startDate: '2023-01-15'
+  });
+
+  ultralink.addLink('frank', 'emma', 'co_advises', {
+    startDate: '2022-09-01'
+  });
+
+  ultralink.addLink('carol', 'alice', 'reports_to', {
     startDate: '2022-01-15'
   });
 
-  ultralink.createLink('bob', 'david', 'mentors', {
+  ultralink.addLink('david', 'bob', 'reports_to', {
     startDate: '2021-09-01'
   });
 
-  ultralink.createLink('alice', 'emma', 'mentors', {
+  ultralink.addLink('emma', 'alice', 'reports_to', {
     startDate: '2022-09-01'
   });
 
-  ultralink.createLink('frank', 'emma', 'co_advises', {
-    startDate: '2022-09-01'
-  });
-
-  ultralink.createLink('carol', 'alice', 'reports_to', {
-    startDate: '2022-01-15'
-  });
-
-  ultralink.createLink('david', 'bob', 'reports_to', {
-    startDate: '2021-09-01'
-  });
-
-  ultralink.createLink('emma', 'alice', 'reports_to', {
-    startDate: '2022-09-01'
-  });
-
-  ultralink.createLink('grace', 'bob', 'reports_to', {
+  ultralink.addLink('grace', 'bob', 'reports_to', {
     startDate: '2020-05-15'
   });
 
   // Research concept relationships
-  ultralink.createLink('active-inference-model', 'active-inference', 'applies', {
-    centrality: 'primary'
+  ultralink.addLink('active-inference-model', 'active-inference', 'applies', {
+    centrality: 'Core',
+    innovation: 'Novel application to collective behavior'
   });
 
-  ultralink.createLink('active-inference-model', 'ant-colony-behavior', 'studies', {
-    centrality: 'primary'
+  ultralink.addLink('ant-colony-study', 'collective-behavior', 'applies', {
+    centrality: 'Core',
+    innovation: 'Field validation of theoretical predictions'
   });
 
-  ultralink.createLink('active-inference-model', 'free-energy-principle', 'applies', {
-    centrality: 'primary'
-  });
-
-  ultralink.createLink('ant-colony-tracking', 'ant-colony-behavior', 'studies', {
-    centrality: 'primary'
-  });
-
-  ultralink.createLink('ant-colony-tracking', 'stigmergy', 'investigates', {
-    centrality: 'secondary'
-  });
-
-  ultralink.createLink('prediction-error-minimization', 'predictive-coding', 'applies', {
-    centrality: 'primary'
-  });
-
-  ultralink.createLink('prediction-error-minimization', 'ant-colony-behavior', 'studies', {
-    centrality: 'primary'
-  });
-
-  ultralink.createLink('algorithm-development', 'active-inference', 'applies', {
-    centrality: 'primary'
-  });
-
-  ultralink.createLink('algorithm-development', 'stigmergy', 'applies', {
-    centrality: 'secondary'
-  });
-
-  // Researcher expertise
-  ultralink.createLink('alice', 'active-inference', 'specializes_in', {
-    yearsExperience: 12,
-    expertiseLevel: 'expert'
-  });
-
-  ultralink.createLink('alice', 'free-energy-principle', 'specializes_in', {
-    yearsExperience: 10,
-    expertiseLevel: 'expert'
-  });
-
-  ultralink.createLink('bob', 'ant-colony-behavior', 'specializes_in', {
-    yearsExperience: 15,
-    expertiseLevel: 'expert'
-  });
-
-  ultralink.createLink('bob', 'stigmergy', 'specializes_in', {
-    yearsExperience: 8,
-    expertiseLevel: 'advanced'
-  });
-
-  ultralink.createLink('carol', 'predictive-coding', 'specializes_in', {
-    yearsExperience: 5,
-    expertiseLevel: 'advanced'
-  });
-
-  ultralink.createLink('carol', 'free-energy-principle', 'specializes_in', {
-    yearsExperience: 4,
-    expertiseLevel: 'intermediate'
-  });
-
-  ultralink.createLink('david', 'ant-colony-behavior', 'specializes_in', {
-    yearsExperience: 3,
-    expertiseLevel: 'intermediate'
-  });
-
-  ultralink.createLink('emma', 'active-inference', 'specializes_in', {
-    yearsExperience: 2,
-    expertiseLevel: 'beginner'
-  });
-
-  ultralink.createLink('frank', 'free-energy-principle', 'specializes_in', {
-    yearsExperience: 6,
-    expertiseLevel: 'advanced',
-    focus: 'mathematical formulations'
+  ultralink.addLink('active-inference', 'collective-behavior', 'relates_to', {
+    relationship: 'Theoretical framework application',
+    strength: 'Strong'
   });
 
   // Equipment usage
-  ultralink.createLink('ant-colony-tracking', 'tracking-system', 'uses', {
-    usageFrequency: 'daily'
+  ultralink.addLink('ant-colony-study', 'ant-tracking', 'uses', {
+    frequency: 'Daily',
+    priority: 'High'
   });
 
-  ultralink.createLink('ant-colony-tracking', 'ant-colony-lab', 'uses', {
-    usageFrequency: 'daily'
+  ultralink.addLink('active-inference-model', 'computation-cluster', 'uses', {
+    frequency: 'Continuous',
+    priority: 'High'
   });
 
-  ultralink.createLink('active-inference-model', 'hpc-cluster', 'uses', {
-    usageFrequency: 'weekly',
-    computeHours: 2000
-  });
-
-  ultralink.createLink('active-inference-model', 'ant-colony-lab', 'uses', {
-    usageFrequency: 'weekly'
-  });
-
-  ultralink.createLink('prediction-error-minimization', 'environmental-chamber', 'uses', {
-    usageFrequency: 'weekly'
-  });
-
-  ultralink.createLink('prediction-error-minimization', 'tracking-system', 'uses', {
-    usageFrequency: 'weekly'
-  });
-
-  ultralink.createLink('algorithm-development', 'hpc-cluster', 'uses', {
-    usageFrequency: 'daily',
-    computeHours: 5000
+  ultralink.addLink('neural-basis', 'neural-recording', 'uses', {
+    frequency: 'Daily',
+    priority: 'High'
   });
 
   // Publication authorship
-  ultralink.createLink('alice', 'paper-active-inference', 'authored', {
+  ultralink.addLink('alice', 'paper-2023a', 'authored', {
     contributionType: 'corresponding author',
     contributionPercentage: 40
   });
 
-  ultralink.createLink('bob', 'paper-active-inference', 'authored', {
+  ultralink.addLink('bob', 'paper-2023a', 'authored', {
     contributionType: 'co-author',
     contributionPercentage: 30
   });
 
-  ultralink.createLink('carol', 'paper-active-inference', 'authored', {
+  ultralink.addLink('carol', 'paper-2023a', 'authored', {
     contributionType: 'co-author',
     contributionPercentage: 30
   });
 
-  ultralink.createLink('bob', 'paper-tracking-system', 'authored', {
+  ultralink.addLink('bob', 'paper-2023b', 'authored', {
     contributionType: 'corresponding author',
     contributionPercentage: 50
   });
 
-  ultralink.createLink('david', 'paper-tracking-system', 'authored', {
+  ultralink.addLink('emma', 'paper-2023b', 'authored', {
     contributionType: 'co-author',
     contributionPercentage: 30
   });
 
-  ultralink.createLink('grace', 'paper-tracking-system', 'authored', {
+  ultralink.addLink('frank', 'paper-2023b', 'authored', {
     contributionType: 'co-author',
     contributionPercentage: 20
   });
 
-  ultralink.createLink('carol', 'paper-prediction-error', 'authored', {
-    contributionType: 'corresponding author',
-    contributionPercentage: 50
-  });
-
-  ultralink.createLink('alice', 'paper-prediction-error', 'authored', {
-    contributionType: 'co-author',
-    contributionPercentage: 30
-  });
-
-  ultralink.createLink('frank', 'paper-prediction-error', 'authored', {
-    contributionType: 'co-author',
-    contributionPercentage: 20
-  });
-
-  ultralink.createLink('emma', 'paper-algorithm', 'authored', {
-    contributionType: 'first author',
-    contributionPercentage: 45
-  });
-
-  ultralink.createLink('frank', 'paper-algorithm', 'authored', {
-    contributionType: 'co-author',
-    contributionPercentage: 30
-  });
-
-  ultralink.createLink('alice', 'paper-algorithm', 'authored', {
+  ultralink.addLink('alice', 'paper-2024', 'authored', {
     contributionType: 'co-author',
     contributionPercentage: 25
   });
 
+  ultralink.addLink('bob', 'paper-2024', 'authored', {
+    contributionType: 'co-author',
+    contributionPercentage: 30
+  });
+
+  ultralink.addLink('carol', 'paper-2024', 'authored', {
+    contributionType: 'co-author',
+    contributionPercentage: 30
+  });
+
+  ultralink.addLink('david', 'paper-2024', 'authored', {
+    contributionType: 'co-author',
+    contributionPercentage: 30
+  });
+
+  ultralink.addLink('grace', 'paper-2024', 'authored', {
+    contributionType: 'co-author',
+    contributionPercentage: 20
+  });
+
   // Publication-project relationships
-  ultralink.createLink('paper-active-inference', 'active-inference-model', 'resulted_from', {
-    publicationType: 'primary research'
+  ultralink.addLink('paper-2023a', 'active-inference-model', 'results_from', {
+    contribution: 'Primary theoretical framework'
   });
 
-  ultralink.createLink('paper-tracking-system', 'ant-colony-tracking', 'resulted_from', {
-    publicationType: 'methods paper'
+  ultralink.addLink('paper-2023b', 'ant-colony-study', 'results_from', {
+    contribution: 'Initial field study findings'
   });
 
-  ultralink.createLink('paper-prediction-error', 'prediction-error-minimization', 'resulted_from', {
-    publicationType: 'primary research'
+  ultralink.addLink('paper-2024', 'active-inference-model', 'results_from', {
+    contribution: 'Computational modeling results'
   });
 
-  ultralink.createLink('paper-algorithm', 'algorithm-development', 'resulted_from', {
-    publicationType: 'primary research'
+  ultralink.addLink('paper-2024', 'ant-colony-study', 'results_from', {
+    contribution: 'Empirical validation'
   });
 
   // Publication-concept relationships
-  ultralink.createLink('paper-active-inference', 'active-inference', 'discusses', {
+  ultralink.addLink('paper-2023a', 'active-inference', 'discusses', {
     depth: 'comprehensive'
   });
 
-  ultralink.createLink('paper-active-inference', 'ant-colony-behavior', 'discusses', {
+  ultralink.addLink('paper-2023b', 'collective-behavior', 'discusses', {
     depth: 'substantial'
   });
 
-  ultralink.createLink('paper-tracking-system', 'ant-colony-behavior', 'discusses', {
-    depth: 'moderate'
-  });
-
-  ultralink.createLink('paper-prediction-error', 'predictive-coding', 'discusses', {
+  ultralink.addLink('paper-2024', 'swarm-intelligence', 'discusses', {
     depth: 'comprehensive'
-  });
-
-  ultralink.createLink('paper-prediction-error', 'free-energy-principle', 'discusses', {
-    depth: 'substantial'
-  });
-
-  ultralink.createLink('paper-algorithm', 'active-inference', 'discusses', {
-    depth: 'substantial'
-  });
-
-  ultralink.createLink('paper-algorithm', 'stigmergy', 'discusses', {
-    depth: 'moderate'
   });
 
   return ultralink;
@@ -607,19 +476,14 @@ function createActiveInferenceLabSubset(subset) {
         status: 'Active'
       });
       
-      ultralink.createEntity('project', 'ant-colony-tracking', {
-        name: 'Ant Colony Tracking System',
+      ultralink.createEntity('project', 'ant-colony-study', {
+        name: 'Ant Colony Decision Making Study',
         status: 'Active'
       });
       
-      ultralink.createEntity('project', 'prediction-error-minimization', {
-        name: 'Prediction Error Minimization in Insect Colonies',
-        status: 'Active'
-      });
-      
-      ultralink.createEntity('project', 'algorithm-development', {
-        name: 'Bio-inspired Algorithm Development',
-        status: 'New'
+      ultralink.createEntity('project', 'neural-basis', {
+        name: 'Neural Basis of Active Inference',
+        status: 'Planning'
       });
       break;
       
@@ -629,20 +493,12 @@ function createActiveInferenceLabSubset(subset) {
         name: 'Active Inference'
       });
       
-      ultralink.createEntity('concept', 'ant-colony-behavior', {
-        name: 'Ant Colony Behavior'
+      ultralink.createEntity('concept', 'collective-behavior', {
+        name: 'Collective Behavior'
       });
       
-      ultralink.createEntity('concept', 'free-energy-principle', {
-        name: 'Free Energy Principle'
-      });
-      
-      ultralink.createEntity('concept', 'stigmergy', {
-        name: 'Stigmergy'
-      });
-      
-      ultralink.createEntity('concept', 'predictive-coding', {
-        name: 'Predictive Coding'
+      ultralink.createEntity('concept', 'swarm-intelligence', {
+        name: 'Swarm Intelligence'
       });
       break;
       

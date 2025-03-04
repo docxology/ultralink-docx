@@ -1,0 +1,30 @@
+# federated-learning-project
+
+Type: project
+
+## Metadata
+
+- title: Privacy-Preserving Federated Learning
+- description: Developing techniques for training models across distributed data sources while preserving privacy
+- startDate: 2022-03-01
+- endDate: 2025-02-28
+- status: active
+- budget: 650000
+- objectives: ["Reduce communication overhead in federated systems","Enhance privacy guarantees beyond differential privacy","Deploy to real-world healthcare applications"]
+
+## Links
+
+- produced -> [[federated-paper-2023]]
+- produced -> [[survey-paper-2023]]
+- uses -> [[gpu-cluster]]
+- uses -> [[hpc-cluster]]
+- applies -> [[privacy-ml]]
+- applies -> [[machine-learning-theory]]
+
+## Backlinks
+
+- [[alice-chen]] -> contributes_to
+- [[bob-smith]] -> contributes_to
+- [[david-patel]] -> leads
+- [[grace-kim]] -> administers
+- [[tech-partner]] -> funds

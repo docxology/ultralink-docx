@@ -1,0 +1,19 @@
+# seed_dispersal
+
+Type: interaction
+
+## Metadata
+
+- name: Seed Dispersal
+- description: Movement of plant seeds by desert animals, aiding plant reproduction and distribution.
+- type: mutualism
+- participants: ["mesquite","coyote"]
+- strength: facultative
+
+## Links
+
+No links
+
+## Backlinks
+
+No backlinks

@@ -1,0 +1,26 @@
+# alice
+
+Type: researcher
+
+## Metadata
+
+- name: Dr. Alice Chen
+- role: Principal Investigator
+- department: Cognitive Science
+- email: alice.chen@example.edu
+- publications: 42
+- expertise: ["active inference","computational neuroscience","bayesian modeling"]
+- yearsExperience: 15
+
+## Links
+
+- leads -> [[active-inference-model]]
+- mentors -> [[david]]
+- mentors -> [[carol]]
+- authored -> [[paper-2023a]]
+- authored -> [[paper-2024]]
+
+## Backlinks
+
+- [[carol]] -> reports_to
+- [[emma]] -> reports_to

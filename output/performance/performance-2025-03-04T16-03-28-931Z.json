@@ -1,0 +1,59 @@
+{
+  "timestamp": "2025-03-04T16:03:28.647Z",
+  "environment": {
+    "node": "v23.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpus": 8
+  },
+  "tests": {
+    "create_small": {
+      "durationMs": 0.958625,
+      "memoryDelta": {
+        "rss": 0.125,
+        "heapTotal": 0,
+        "heapUsed": 0.158355712890625
+      }
+    },
+    "create_medium": {
+      "durationMs": 6.291417,
+      "memoryDelta": {
+        "rss": 1.25,
+        "heapTotal": 0,
+        "heapUsed": 1.3159637451171875
+      }
+    },
+    "create_large": {
+      "durationMs": 34.2365,
+      "memoryDelta": {
+        "rss": 4.390625,
+        "heapTotal": 2.46875,
+        "heapUsed": -3.71868896484375
+      }
+    },
+    "json_export_small": {
+      "durationMs": 0.442916,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.04900360107421875
+      }
+    },
+    "json_export_medium": {
+      "durationMs": 3.205375,
+      "memoryDelta": {
+        "rss": 0.25,
+        "heapTotal": 0.25,
+        "heapUsed": 0.45923614501953125
+      }
+    },
+    "json_export_large": {
+      "durationMs": 12.009584,
+      "memoryDelta": {
+        "rss": 4.0625,
+        "heapTotal": 1.28125,
+        "heapUsed": 2.2646408081054688
+      }
+    }
+  }
+}

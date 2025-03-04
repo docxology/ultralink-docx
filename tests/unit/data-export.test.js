@@ -35,13 +35,13 @@ describe('UltraLink Data Export', () => {
     ultralink = new UltraLink();
     
     // Add test data
-    ultralink.createEntity('person', 'person1', { name: 'Alice', age: 30 });
-    ultralink.createEntity('person', 'person2', { name: 'Bob', age: 25 });
-    ultralink.createEntity('project', 'project1', { name: 'Project Alpha', status: 'active' });
+    ultralink.addEntity('person1', 'person', { name: 'Alice', age: 30 });
+    ultralink.addEntity('person2', 'person', { name: 'Bob', age: 25 });
+    ultralink.addEntity('project1', 'project', { name: 'Project Alpha', status: 'active' });
     
     // Add some relationships
-    ultralink.createLink('person1', 'project1', 'manages');
-    ultralink.createLink('person2', 'project1', 'contributes_to');
+    ultralink.addLink('person1', 'project1', 'manages');
+    ultralink.addLink('person2', 'project1', 'contributes_to');
   });
   
   describe('JSON Export', () => {

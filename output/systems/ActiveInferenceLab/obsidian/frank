@@ -1,0 +1,24 @@
+# frank
+
+Type: researcher
+
+## Metadata
+
+- name: Dr. Frank Martinez
+- role: Research Associate
+- department: Mathematics
+- email: frank.martinez@example.edu
+- publications: 16
+- expertise: ["dynamical systems","chaos theory","mathematical modeling"]
+- yearsExperience: 8
+
+## Links
+
+- contributes -> [[ant-colony-study]]
+- contributes_to -> [[ant-colony-study]]
+- co_advises -> [[emma]]
+- authored -> [[paper-2023b]]
+
+## Backlinks
+
+No backlinks

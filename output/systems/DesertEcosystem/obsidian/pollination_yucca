@@ -1,0 +1,19 @@
+# pollination_yucca
+
+Type: interaction
+
+## Metadata
+
+- name: Yucca-Moth Pollination
+- description: Specialized mutualistic relationship between yucca plants and yucca moths.
+- type: mutualism
+- participants: ["joshua_tree","yucca_moth"]
+- strength: obligate
+
+## Links
+
+No links
+
+## Backlinks
+
+No backlinks

@@ -1,0 +1,20 @@
+# computer-vision
+
+Type: knowledge-area
+
+## Metadata
+
+- name: Computer Vision
+- description: Visual information processing and understanding
+- topics: ["Object Detection","Image Segmentation","Visual Recognition"]
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[alice-chen]] -> expertise_in
+- [[elena-rodriguez]] -> expertise_in
+- [[computer-vision-project]] -> applies
+- [[machine-learning-theory]] -> foundational_for

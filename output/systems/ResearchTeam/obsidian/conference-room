@@ -1,0 +1,20 @@
+# conference-room
+
+Type: facility
+
+## Metadata
+
+- name: Research Team Conference Room
+- description: Meeting and presentation space with advanced AV equipment
+- location: Building A, Room 210
+- equipment: ["projector","video-conferencing","interactive-whiteboard"]
+- capacity: 20
+- status: active
+
+## Links
+
+No links
+
+## Backlinks
+
+No backlinks

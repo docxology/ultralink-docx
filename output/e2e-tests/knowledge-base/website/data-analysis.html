@@ -1,163 +1,103 @@
 <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Data Analysis - Knowledge Base</title>
-        <style>
-          :root {
-            --node-color: #4285f4;
-            --edge-color: #5f6368;
-            --text-color: #202124;
-            --bg-color: #f8f9fa;
-            --highlight-color: #ea4335;
-          }
-          
-          body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-          }
-          
-          header {
-            padding: 1rem;
-            background-color: rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          }
-          
-          .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1rem;
-          }
-          
-          .attribute-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-          }
-          
-          .attribute-table th, .attribute-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          }
-          
-          .attribute-table th {
-            background-color: rgba(0, 0, 0, 0.05);
-          }
-          
-          .relationship-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-          }
-          
-          .relationship-item {
-            padding: 0.75rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 0.5rem;
-            border-radius: 4px;
-          }
-          
-          a {
-            color: var(--node-color);
-            text-decoration: none;
-          }
-          
-          a:hover {
-            text-decoration: underline;
-          }
-          
-          .back-link {
-            display: inline-block;
-            margin-bottom: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: var(--node-color);
-            color: white;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-          }
-          
-          .back-link:hover {
-            background-color: var(--highlight-color);
-            text-decoration: none;
-          }
-          
-          .entity-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-          }
-          
-          .entity-section h3 {
-            margin-top: 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            padding-bottom: 0.5rem;
-          }
-          
-          /* Theme-specific styles */
-          
-          
-          
-          
-          @media (max-width: 768px) {
-            .container {
-              padding: 0.5rem;
-            }
-          }
-        </style>
-      </head>
-      <body>
-        <header>
-          <div class="container">
-            <h1>Data Analysis</h1>
-            <p>concept</p>
-          </div>
-        </header>
-        
-        <div class="container">
-          <a href="index.html" class="back-link">← Back to Network View</a>
-          
-          <div class="entity-section">
-            <h2>Entity Details</h2>
-            <p><strong>ID:</strong> data-analysis</p>
-            <p><strong>Type:</strong> concept</p>
-          </div>
-          
-          <div class="entity-section">
-            <h3>Attributes</h3>
-            <table class="attribute-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                    <tr>
-                      <td>description</td>
-                      <td>The process of inspecting and modeling data</td>
-                    </tr>
-                  
-              </tbody>
-            </table>
-          </div>
-          
-          <div class="entity-section">
-            <h3>Relationships</h3>
-            <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Analysis - Knowledge Base</title>
+  <style>
+    :root {
+      --background: #ffffff;
+      --text: #000000;
+      --link: #0066cc;
+      --accent: #666666;
+      --border: #dddddd;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--background);
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .attributes {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .attribute-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .attribute-row:last-child {
+      border-bottom: none;
+    }
+    .attribute-key {
+      color: var(--accent);
+    }
+    .relationship-list {
+      list-style: none;
+      padding: 0;
+    }
+    .relationship-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-attributes {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">← Back to Graph</a>
+  <h1>Data Analysis</h1>
+  <div class="entity-type">concept</div>
+  
+  <h3>Attributes</h3>
+  <div class="attributes">
+    
+      <div class="attribute-row">
+        <div class="attribute-key">name</div>
+        <div class="attribute-value">Data Analysis</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">description</div>
+        <div class="attribute-value">The process of inspecting and modeling data</div>
+      </div>
+    
+  </div>
+
+  <h3>Relationships</h3>
+  <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
           <a href="project-alpha.html">Project Alpha</a> → <strong>uses</strong>
         </li></ul>
-          </div>
-        </div>
-      </body>
-      </html>
+</body>
+</html>

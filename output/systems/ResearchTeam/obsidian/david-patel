@@ -1,0 +1,29 @@
+# david-patel
+
+Type: person
+
+## Metadata
+
+- name: David Patel
+- title: Postdoctoral Researcher
+- expertise: ["Federated Learning","Privacy-Preserving AI","Distributed Systems"]
+- email: david.patel@research.org
+- joinDate: 2021-02-15
+- status: active
+
+## Links
+
+- leads -> [[federated-learning-project]]
+- contributes_to -> [[quantum-ml-project]]
+- contributes_to -> [[nlp-project]]
+- mentors -> [[elena-rodriguez]]
+- authored -> [[federated-paper-2023]]
+- authored -> [[quantum-paper-2023]]
+- authored -> [[survey-paper-2023]]
+- uses -> [[hpc-cluster]]
+- expertise_in -> [[privacy-ml]]
+- expertise_in -> [[machine-learning-theory]]
+
+## Backlinks
+
+- [[alice-chen]] -> mentors

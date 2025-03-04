@@ -1,0 +1,29 @@
+# active-inference-model
+
+Type: project
+
+## Metadata
+
+- name: Active Inference Modeling of Collective Behavior
+- status: Active
+- startDate: 2023-01-15
+- endDate: 2025-01-14
+- funding: 750000
+- fundingSource: National Science Foundation
+- description: Developing computational models of collective behavior using the Active Inference framework
+
+## Links
+
+- applies -> [[active-inference]]
+- uses -> [[computation-cluster]]
+
+## Backlinks
+
+- [[alice]] -> leads
+- [[bob]] -> contributes_to
+- [[carol]] -> contributes
+- [[carol]] -> contributes_to
+- [[carol]] -> contributes_to
+- [[david]] -> contributes
+- [[paper-2023a]] -> results_from
+- [[paper-2024]] -> results_from

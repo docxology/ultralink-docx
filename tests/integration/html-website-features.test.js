@@ -8,7 +8,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const { UltraLink } = require('../../src/ultralink');
+const { UltraLink } = require('../../src');
 const { getSystemOutputPath } = require('../test-utils');
 
 // System name for organizing output

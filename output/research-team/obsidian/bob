@@ -1,0 +1,20 @@
+# bob
+
+Type: researcher
+
+## Metadata
+
+- name: Bob Smith
+- role: Postdoc
+- department: Biology
+- email: bob.smith@example.edu
+- publications: 18
+
+## Links
+
+- works_on -> [[desert-ecology]]
+- reports_to -> [[alice]]
+
+## Backlinks
+
+No backlinks

@@ -1,0 +1,21 @@
+# neural-basis
+
+Type: project
+
+## Metadata
+
+- name: Neural Basis of Active Inference
+- status: Planning
+- startDate: 2024-01-01
+- endDate: 2026-12-31
+- funding: 1200000
+- fundingSource: NIH
+- description: Investigation of neural mechanisms underlying active inference in biological systems
+
+## Links
+
+- uses -> [[neural-recording]]
+
+## Backlinks
+
+No backlinks

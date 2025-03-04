@@ -1,0 +1,19 @@
+# nurse_plant
+
+Type: interaction
+
+## Metadata
+
+- name: Nurse Plant Relationship
+- description: Protection of seedlings by established desert plants providing shade and improved soil.
+- type: commensalism
+- participants: ["desert_ironwood","saguaro"]
+- strength: facultative
+
+## Links
+
+No links
+
+## Backlinks
+
+No backlinks

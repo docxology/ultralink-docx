@@ -1,0 +1,20 @@
+# canyon
+
+Type: microhabitat
+
+## Metadata
+
+- name: Desert Canyon
+- description: Deep, narrow channel with steep walls, often with increased moisture and biodiversity.
+- type: erosional
+- area: variable
+- soilMoisture: variable
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[javelina]] -> lives_in
+- [[coyote]] -> lives_in

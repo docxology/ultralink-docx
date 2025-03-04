@@ -1,0 +1,23 @@
+# gila_monster
+
+Type: animal
+
+## Metadata
+
+- name: Gila Monster
+- scientificName: Heloderma suspectum
+- lifespan: 20
+- diet: carnivore
+- status: near threatened
+- description: Venomous lizard of the southwestern US and northwestern Mexico.
+- adaptations: ["Stores fat in tail for long periods without food","Venomous bite for efficient predation","Thick skin reduces water loss","Slow metabolism allows for infrequent feeding","Can survive on as few as 3-4 meals per year"]
+
+## Links
+
+- adapted_to -> [[heat]]
+- lives_in -> [[rocky_slope]]
+- preys_on -> [[cactus_wren]]
+
+## Backlinks
+
+No backlinks

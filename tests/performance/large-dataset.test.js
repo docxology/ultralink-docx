@@ -5,10 +5,10 @@
  * large datasets, including creation, querying, and export operations.
  */
 
-const { UltraLink } = require('../../src/ultralink');
-const { createPerformanceDataset } = require('../test-datasets');
 const fs = require('fs');
 const path = require('path');
+const { UltraLink } = require('../../src');
+const { createPerformanceDataset } = require('../test-datasets');
 
 // Define dataset sizes
 const DATASET_SIZES = {

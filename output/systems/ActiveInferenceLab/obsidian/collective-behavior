@@ -1,0 +1,20 @@
+# collective-behavior
+
+Type: concept
+
+## Metadata
+
+- name: Collective Behavior
+- field: Biology
+- description: Emergent properties and dynamics of group behavior in social organisms
+- keyPapers: ["10.1016/j.tree.2018.01.003"]
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[ant-colony-study]] -> applies
+- [[active-inference]] -> relates_to
+- [[paper-2023b]] -> discusses

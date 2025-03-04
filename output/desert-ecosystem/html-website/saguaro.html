@@ -1,177 +1,117 @@
 <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Saguaro Cactus - Desert Ecosystem</title>
-        <style>
-          :root {
-            --node-color: #4285f4;
-            --edge-color: #5f6368;
-            --text-color: #202124;
-            --bg-color: #f8f9fa;
-            --highlight-color: #ea4335;
-          }
-          
-          body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-          }
-          
-          header {
-            padding: 1rem;
-            background-color: rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          }
-          
-          .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1rem;
-          }
-          
-          .attribute-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-          }
-          
-          .attribute-table th, .attribute-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          }
-          
-          .attribute-table th {
-            background-color: rgba(0, 0, 0, 0.05);
-          }
-          
-          .relationship-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-          }
-          
-          .relationship-item {
-            padding: 0.75rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 0.5rem;
-            border-radius: 4px;
-          }
-          
-          a {
-            color: var(--node-color);
-            text-decoration: none;
-          }
-          
-          a:hover {
-            text-decoration: underline;
-          }
-          
-          .back-link {
-            display: inline-block;
-            margin-bottom: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: var(--node-color);
-            color: white;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-          }
-          
-          .back-link:hover {
-            background-color: var(--highlight-color);
-            text-decoration: none;
-          }
-          
-          .entity-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-          }
-          
-          .entity-section h3 {
-            margin-top: 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            padding-bottom: 0.5rem;
-          }
-          
-          /* Theme-specific styles */
-          
-          
-          
-          
-          @media (max-width: 768px) {
-            .container {
-              padding: 0.5rem;
-            }
-          }
-        </style>
-      </head>
-      <body>
-        <header>
-          <div class="container">
-            <h1>Saguaro Cactus</h1>
-            <p>organism</p>
-          </div>
-        </header>
-        
-        <div class="container">
-          <a href="index.html" class="back-link">← Back to Network View</a>
-          
-          <div class="entity-section">
-            <h2>Entity Details</h2>
-            <p><strong>ID:</strong> saguaro</p>
-            <p><strong>Type:</strong> organism</p>
-          </div>
-          
-          <div class="entity-section">
-            <h3>Attributes</h3>
-            <table class="attribute-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                    <tr>
-                      <td>scientificName</td>
-                      <td>Carnegiea gigantea</td>
-                    </tr>
-                  
-                    <tr>
-                      <td>type</td>
-                      <td>plant</td>
-                    </tr>
-                  
-                    <tr>
-                      <td>height</td>
-                      <td>15-50 feet</td>
-                    </tr>
-                  
-                    <tr>
-                      <td>lifespan</td>
-                      <td>150-200 years</td>
-                    </tr>
-                  
-              </tbody>
-            </table>
-          </div>
-          
-          <div class="entity-section">
-            <h3>Relationships</h3>
-            <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saguaro Cactus - Desert Ecosystem</title>
+  <style>
+    :root {
+      --background: #ffffff;
+      --text: #000000;
+      --link: #0066cc;
+      --accent: #666666;
+      --border: #dddddd;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--background);
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .attributes {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .attribute-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .attribute-row:last-child {
+      border-bottom: none;
+    }
+    .attribute-key {
+      color: var(--accent);
+    }
+    .relationship-list {
+      list-style: none;
+      padding: 0;
+    }
+    .relationship-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-attributes {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">← Back to Graph</a>
+  <h1>Saguaro Cactus</h1>
+  <div class="entity-type">organism</div>
+  
+  <h3>Attributes</h3>
+  <div class="attributes">
+    
+      <div class="attribute-row">
+        <div class="attribute-key">name</div>
+        <div class="attribute-value">Saguaro Cactus</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">scientificName</div>
+        <div class="attribute-value">Carnegiea gigantea</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">type</div>
+        <div class="attribute-value">plant</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">height</div>
+        <div class="attribute-value">15-50 feet</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">lifespan</div>
+        <div class="attribute-value">150-200 years</div>
+      </div>
+    
+  </div>
+
+  <h3>Relationships</h3>
+  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
           <strong>adapts_to</strong> → <a href="aridity.html">Aridity</a><div class="relationship-attributes"><small><strong>mechanism:</strong> Water storage in stem</small><small><strong>efficiency:</strong> 0.95</small></div></li></ul>
-          </div>
-        </div>
-      </body>
-      </html>
+</body>
+</html>

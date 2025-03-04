@@ -19,7 +19,7 @@ function createDesertEcosystemDataset() {
   const desertEcosystem = new UltraLink();
   
   // Add Desert Animals
-  desertEcosystem.createEntity('animal', 'camel', {
+  desertEcosystem.addEntity('camel', 'animal', {
     name: 'Dromedary Camel',
     scientificName: 'Camelus dromedarius',
     lifespan: 40,
@@ -35,7 +35,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'fennec_fox', {
+  desertEcosystem.addEntity('fennec_fox', 'animal', {
     name: 'Fennec Fox',
     scientificName: 'Vulpes zerda',
     lifespan: 12,
@@ -51,7 +51,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'desert_monitor', {
+  desertEcosystem.addEntity('desert_monitor', 'animal', {
     name: 'Desert Monitor',
     scientificName: 'Varanus griseus',
     lifespan: 15,
@@ -66,7 +66,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'sidewinder', {
+  desertEcosystem.addEntity('sidewinder', 'animal', {
     name: 'Sidewinder Rattlesnake',
     scientificName: 'Crotalus cerastes',
     lifespan: 20,
@@ -81,7 +81,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'scorpion', {
+  desertEcosystem.addEntity('scorpion', 'animal', {
     name: 'Deathstalker Scorpion',
     scientificName: 'Leiurus quinquestriatus',
     lifespan: 5,
@@ -96,7 +96,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'darkling_beetle', {
+  desertEcosystem.addEntity('darkling_beetle', 'animal', {
     name: 'Darkling Beetle',
     scientificName: 'Tenebrionidae family',
     lifespan: 2,
@@ -111,7 +111,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'roadrunner', {
+  desertEcosystem.addEntity('roadrunner', 'animal', {
     name: 'Greater Roadrunner',
     scientificName: 'Geococcyx californianus',
     lifespan: 8,
@@ -127,7 +127,7 @@ function createDesertEcosystemDataset() {
   });
 
   // NEW DESERT ANIMALS
-  desertEcosystem.createEntity('animal', 'desert_tortoise', {
+  desertEcosystem.addEntity('desert_tortoise', 'animal', {
     name: 'Desert Tortoise',
     scientificName: 'Gopherus agassizii',
     lifespan: 80,
@@ -143,7 +143,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'cactus_wren', {
+  desertEcosystem.addEntity('cactus_wren', 'animal', {
     name: 'Cactus Wren',
     scientificName: 'Campylorhynchus brunneicapillus',
     lifespan: 7,
@@ -158,7 +158,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'kangaroo_rat', {
+  desertEcosystem.addEntity('kangaroo_rat', 'animal', {
     name: 'Merriam\'s Kangaroo Rat',
     scientificName: 'Dipodomys merriami',
     lifespan: 5,
@@ -174,7 +174,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'gila_monster', {
+  desertEcosystem.addEntity('gila_monster', 'animal', {
     name: 'Gila Monster',
     scientificName: 'Heloderma suspectum',
     lifespan: 20,
@@ -190,7 +190,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('animal', 'javelina', {
+  desertEcosystem.addEntity('javelina', 'animal', {
     name: 'Javelina',
     scientificName: 'Pecari tajacu',
     lifespan: 10,
@@ -206,22 +206,22 @@ function createDesertEcosystemDataset() {
   });
 
   // Add Desert Plants
-  desertEcosystem.createEntity('plant', 'saguaro', {
+  desertEcosystem.addEntity('saguaro', 'plant', {
     name: 'Saguaro Cactus',
     scientificName: 'Carnegiea gigantea',
-    height: 1500, // up to 15 meters
+    height: 1200, // up to 12 meters
     waterRequirement: 'very low',
-    description: 'Iconic columnar cactus of the Sonoran Desert, can live for 150-200 years.',
+    description: 'Iconic columnar cactus with arm-like branches.',
     adaptations: [
-      'Pleated surface expands when absorbing water',
-      'Extensive shallow root system to quickly absorb rainwater',
-      'Spines provide shade and protect from herbivores',
-      'Waxy skin to prevent water loss',
-      'Nocturnal flowering to conserve water'
+      'Accordion-like pleats expand when absorbing water',
+      'Extensive shallow root system',
+      'Thick waxy coating to reduce water loss',
+      'Slow growth to conserve energy',
+      'CAM photosynthesis for water conservation'
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'barrel_cactus', {
+  desertEcosystem.addEntity('barrel_cactus', 'plant', {
     name: 'Barrel Cactus',
     scientificName: 'Ferocactus wislizeni',
     height: 150, // up to 1.5 meters
@@ -235,7 +235,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'mesquite', {
+  desertEcosystem.addEntity('mesquite', 'plant', {
     name: 'Honey Mesquite',
     scientificName: 'Prosopis glandulosa',
     height: 900, // up to 9 meters
@@ -249,7 +249,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'creosote_bush', {
+  desertEcosystem.addEntity('creosote_bush', 'plant', {
     name: 'Creosote Bush',
     scientificName: 'Larrea tridentata',
     height: 300, // up to 3 meters
@@ -263,7 +263,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'desert_poppy', {
+  desertEcosystem.addEntity('desert_poppy', 'plant', {
     name: 'Desert Poppy',
     scientificName: 'Eschscholzia glyptosperma',
     height: 30,
@@ -278,22 +278,22 @@ function createDesertEcosystemDataset() {
   });
 
   // NEW DESERT PLANTS
-  desertEcosystem.createEntity('plant', 'ocotillo', {
+  desertEcosystem.addEntity('ocotillo', 'plant', {
     name: 'Ocotillo',
     scientificName: 'Fouquieria splendens',
-    height: 600, // up to 6 meters
-    waterRequirement: 'very low',
-    description: 'Distinctive desert plant with long, spiny stems that leaf out after rain.',
+    height: 500, // up to 5 meters
+    waterRequirement: 'low',
+    description: 'Spindly desert plant with bright red flowers.',
     adaptations: [
-      'Drops leaves during drought to conserve water',
-      'Rapid leaf development after rainfall',
-      'Shallow, widespread root system to capture surface moisture',
-      'CAM photosynthesis for water conservation',
-      'Waxy coating on stems reduces water loss'
+      'Drought deciduous - drops leaves during dry periods',
+      'Grows leaves quickly after rain',
+      'Deep tap root',
+      'Waxy coating on stems',
+      'Thorns for protection'
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'brittlebush', {
+  desertEcosystem.addEntity('brittlebush', 'plant', {
     name: 'Brittlebush',
     scientificName: 'Encelia farinosa',
     height: 150, // up to 1.5 meters
@@ -308,7 +308,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'desert_ironwood', {
+  desertEcosystem.addEntity('desert_ironwood', 'plant', {
     name: 'Desert Ironwood',
     scientificName: 'Olneya tesota',
     height: 1000, // up to 10 meters
@@ -323,7 +323,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'agave', {
+  desertEcosystem.addEntity('agave', 'plant', {
     name: 'Century Plant',
     scientificName: 'Agave americana',
     height: 200, // up to 2 meters (rosette, flower stalk much taller)
@@ -338,7 +338,7 @@ function createDesertEcosystemDataset() {
     ]
   });
 
-  desertEcosystem.createEntity('plant', 'joshua_tree', {
+  desertEcosystem.addEntity('joshua_tree', 'plant', {
     name: 'Joshua Tree',
     scientificName: 'Yucca brevifolia',
     height: 1200, // up to 12 meters
@@ -353,92 +353,126 @@ function createDesertEcosystemDataset() {
     ]
   });
 
+  // Add prickly pear cactus entity
+  desertEcosystem.addEntity('prickly_pear', 'plant', {
+    name: 'Prickly Pear Cactus',
+    scientificName: 'Opuntia spp.',
+    height: 200, // up to 2 meters
+    waterRequirement: 'very low',
+    description: 'Flat-padded cacti with colorful fruits and sharp spines.',
+    adaptations: [
+      'Flat pads maximize photosynthesis while minimizing surface area',
+      'Waxy coating reduces water loss',
+      'Shallow, extensive root system',
+      'Spines protect from herbivores and provide shade'
+    ]
+  });
+
+  desertEcosystem.addEntity('cholla_cactus', 'plant', {
+    name: 'Cholla Cactus',
+    scientificName: 'Cylindropuntia spp.',
+    height: 300, // up to 3 meters
+    waterRequirement: 'very low',
+    description: 'Known for detachable barbed spines that easily attach to passersby.',
+    adaptations: [
+      'Segmented structure allows for vegetative reproduction',
+      'Dense, barbed spines deter predation',
+      'Water storage in stem segments',
+      'Shallow but extensive root system'
+    ]
+  });
+  
+  // Group entity for general desert plants
+  desertEcosystem.addEntity('other_plants', 'plant', {
+    name: 'Various Desert Plants',
+    description: 'Collection of various smaller desert plants and grasses',
+    waterRequirement: 'low to moderate',
+    adaptations: [
+      'Various drought adaptations',
+      'Seasonal growth patterns',
+      'Seed dormancy during dry periods'
+    ]
+  });
+
   // Add Abiotic Factors
-  desertEcosystem.createEntity('abiotic_factor', 'heat', {
+  desertEcosystem.addEntity('heat', 'abiotic_factor', {
     name: 'Extreme Heat',
     type: 'climate',
     description: 'Daytime temperatures regularly exceeding 40°C (104°F) in summer.',
     impact: 'extreme'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'temperature_variation', {
+  desertEcosystem.addEntity('temperature_variation', 'abiotic_factor', {
     name: 'Temperature Variation',
     type: 'climate',
     description: 'Large daily temperature fluctuations, often exceeding 20°C between day and night.',
     impact: 'high'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'aridity', {
+  desertEcosystem.addEntity('aridity', 'abiotic_factor', {
     name: 'Aridity',
     type: 'climate',
     description: 'Low precipitation, typically less than 250mm annually, with high evaporation rates.',
     impact: 'extreme'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'sand_dunes', {
+  desertEcosystem.addEntity('sand_dunes', 'abiotic_factor', {
     name: 'Sand Dunes',
     type: 'geological',
     description: 'Mounds of windblown sand that can move and shift over time.',
     impact: 'high'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'rocky_outcrops', {
+  desertEcosystem.addEntity('rocky_outcrops', 'abiotic_factor', {
     name: 'Rocky Outcrops',
     type: 'geological',
     description: 'Exposed rock formations that provide shade and shelter.',
     impact: 'medium'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'oasis', {
+  desertEcosystem.addEntity('oasis', 'abiotic_factor', {
     name: 'Oasis',
     type: 'water',
     description: 'Isolated water source surrounded by desert, often fed by underground springs.',
     impact: 'high'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'ephemeral_streams', {
+  desertEcosystem.addEntity('ephemeral_streams', 'abiotic_factor', {
     name: 'Ephemeral Streams',
     type: 'water',
     description: 'Temporary waterways that flow only after rainfall events.',
     impact: 'medium'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'sandy_soil', {
+  desertEcosystem.addEntity('sandy_soil', 'abiotic_factor', {
     name: 'Sandy Soil',
     type: 'soil',
     description: 'Coarse-grained soil with poor water retention but good drainage.',
     impact: 'high'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'desert_pavement', {
+  desertEcosystem.addEntity('desert_pavement', 'abiotic_factor', {
     name: 'Desert Pavement',
     type: 'geological',
     description: 'Dense layer of pebbles and rocks at the surface, formed by wind removing fine particles.',
     impact: 'high'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'desert_varnish', {
+  desertEcosystem.addEntity('desert_varnish', 'abiotic_factor', {
     name: 'Desert Varnish',
     type: 'geological',
     description: 'Dark coating on exposed rock surfaces, composed of clay minerals with iron and manganese oxides.',
     impact: 'low'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'playa', {
+  desertEcosystem.addEntity('playa', 'abiotic_factor', {
     name: 'Playa',
     type: 'geological',
     description: 'Flat, dry lake bed that occasionally floods after heavy rain.',
     impact: 'medium'
   });
 
-  desertEcosystem.createEntity('abiotic_factor', 'desert_soil', {
-    name: 'Desert Soil',
-    type: 'soil',
-    description: 'Thin, mineral-rich but organic-poor soil with limited water retention capacity.',
-    impact: 'high'
-  });
-
-  desertEcosystem.createEntity('abiotic_factor', 'flash_floods', {
+  desertEcosystem.addEntity('flash_floods', 'abiotic_factor', {
     name: 'Flash Floods',
     type: 'water',
     description: 'Sudden, intense flooding events often occurring in desert washes after heavy rainfall.',
@@ -446,7 +480,7 @@ function createDesertEcosystemDataset() {
   });
 
   // Add Microhabitats
-  desertEcosystem.createEntity('microhabitat', 'wash', {
+  desertEcosystem.addEntity('wash', 'microhabitat', {
     name: 'Desert Wash',
     description: 'Dry streambed that carries water only after rainfall, often with distinct vegetation.',
     type: 'seasonal_wetland',
@@ -454,7 +488,7 @@ function createDesertEcosystemDataset() {
     soilMoisture: 'higher than surroundings'
   });
 
-  desertEcosystem.createEntity('microhabitat', 'dune_field', {
+  desertEcosystem.addEntity('dune_field', 'microhabitat', {
     name: 'Sand Dune Field',
     description: 'Area of wind-deposited sand formations with specialized plant and animal communities.',
     type: 'aeolian',
@@ -462,7 +496,7 @@ function createDesertEcosystemDataset() {
     soilMoisture: 'extremely low'
   });
 
-  desertEcosystem.createEntity('microhabitat', 'rocky_slope', {
+  desertEcosystem.addEntity('rocky_slope', 'microhabitat', {
     name: 'Rocky Slope',
     description: 'Elevated area with exposed bedrock and boulders, providing shade and shelter.',
     type: 'lithic',
@@ -470,7 +504,7 @@ function createDesertEcosystemDataset() {
     soilMoisture: 'very low'
   });
 
-  desertEcosystem.createEntity('microhabitat', 'canyon', {
+  desertEcosystem.addEntity('canyon', 'microhabitat', {
     name: 'Desert Canyon',
     description: 'Deep, narrow channel with steep walls, often with increased moisture and biodiversity.',
     type: 'erosional',
@@ -479,7 +513,7 @@ function createDesertEcosystemDataset() {
   });
 
   // Add Biological Interactions
-  desertEcosystem.createEntity('interaction', 'pollination_yucca', {
+  desertEcosystem.addEntity('pollination_yucca', 'interaction', {
     name: 'Yucca-Moth Pollination',
     description: 'Specialized mutualistic relationship between yucca plants and yucca moths.',
     type: 'mutualism',
@@ -487,7 +521,7 @@ function createDesertEcosystemDataset() {
     strength: 'obligate'
   });
 
-  desertEcosystem.createEntity('interaction', 'nurse_plant', {
+  desertEcosystem.addEntity('nurse_plant', 'interaction', {
     name: 'Nurse Plant Relationship',
     description: 'Protection of seedlings by established desert plants providing shade and improved soil.',
     type: 'commensalism',
@@ -495,7 +529,7 @@ function createDesertEcosystemDataset() {
     strength: 'facultative'
   });
 
-  desertEcosystem.createEntity('interaction', 'seed_dispersal', {
+  desertEcosystem.addEntity('seed_dispersal', 'interaction', {
     name: 'Seed Dispersal',
     description: 'Movement of plant seeds by desert animals, aiding plant reproduction and distribution.',
     type: 'mutualism',
@@ -504,7 +538,7 @@ function createDesertEcosystemDataset() {
   });
 
   // Add missing animal for yucca moth relationship
-  desertEcosystem.createEntity('animal', 'yucca_moth', {
+  desertEcosystem.addEntity('yucca_moth', 'animal', {
     name: 'Yucca Moth',
     scientificName: 'Tegeticula yuccasella',
     lifespan: 0.5, // months
@@ -520,7 +554,7 @@ function createDesertEcosystemDataset() {
   });
 
   // Add missing animal for seed dispersal relationship
-  desertEcosystem.createEntity('animal', 'coyote', {
+  desertEcosystem.addEntity('coyote', 'animal', {
     name: 'Coyote',
     scientificName: 'Canis latrans',
     lifespan: 14,
@@ -539,321 +573,252 @@ function createDesertEcosystemDataset() {
   // Establish Relationships
   
   // Adaptation Relationships - Animals to Abiotic Factors
-  desertEcosystem.createLink('camel', 'heat', 'adapted_to', {
+  desertEcosystem.addLink('camel', 'heat', 'adapted_to', {
     adaptationMechanism: 'Physiological temperature regulation',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('fennec_fox', 'heat', 'adapted_to', {
+  desertEcosystem.addLink('fennec_fox', 'heat', 'adapted_to', {
     adaptationMechanism: 'Large ears for heat dissipation',
     strength: 'strong'
   });
   
-  desertEcosystem.createLink('darkling_beetle', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('darkling_beetle', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Water harvesting from air',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('sidewinder', 'sand_dunes', 'adapted_to', {
+  desertEcosystem.addLink('sidewinder', 'sand_dunes', 'adapted_to', {
     adaptationMechanism: 'Specialized locomotion',
     strength: 'extreme'
   });
 
   // NEW ANIMAL ADAPTATIONS
-  desertEcosystem.createLink('desert_tortoise', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('desert_tortoise', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Water storage in bladder',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('kangaroo_rat', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('kangaroo_rat', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Metabolic water production',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('gila_monster', 'heat', 'adapted_to', {
+  desertEcosystem.addLink('gila_monster', 'heat', 'adapted_to', {
     adaptationMechanism: 'Fat storage and seasonal activity',
     strength: 'strong'
   });
   
-  desertEcosystem.createLink('cactus_wren', 'heat', 'adapted_to', {
+  desertEcosystem.addLink('cactus_wren', 'heat', 'adapted_to', {
     adaptationMechanism: 'Behavioral thermoregulation',
     strength: 'strong'
   });
   
-  desertEcosystem.createLink('javelina', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('javelina', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Consumption of water-rich cacti',
     strength: 'moderate'
   });
   
-  desertEcosystem.createLink('yucca_moth', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('yucca_moth', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Short lifecycle synchronized with yucca flowering',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('coyote', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('coyote', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Obtaining moisture from prey',
     strength: 'strong'
   });
   
   // Adaptation Relationships - Plants to Abiotic Factors
-  desertEcosystem.createLink('saguaro', 'heat', 'adapted_to', {
+  desertEcosystem.addLink('saguaro', 'heat', 'adapted_to', {
     adaptationMechanism: 'Pleated structure for expansion',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('barrel_cactus', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('barrel_cactus', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Water storage tissue',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('mesquite', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('mesquite', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Deep root system',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('creosote_bush', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('creosote_bush', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Resinous coating on leaves',
     strength: 'extreme'
   });
 
   // NEW PLANT ADAPTATIONS
-  desertEcosystem.createLink('ocotillo', 'temperature_variation', 'adapted_to', {
+  desertEcosystem.addLink('ocotillo', 'temperature_variation', 'adapted_to', {
     adaptationMechanism: 'Rapid leaf production after rain',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('brittlebush', 'heat', 'adapted_to', {
+  desertEcosystem.addLink('brittlebush', 'heat', 'adapted_to', {
     adaptationMechanism: 'Reflective leaf surfaces',
     strength: 'strong'
   });
   
-  desertEcosystem.createLink('desert_ironwood', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('desert_ironwood', 'aridity', 'adapted_to', {
     adaptationMechanism: 'Dense wood tissue',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('agave', 'aridity', 'adapted_to', {
+  desertEcosystem.addLink('agave', 'aridity', 'adapted_to', {
     adaptationMechanism: 'CAM photosynthesis',
     strength: 'extreme'
   });
   
-  desertEcosystem.createLink('joshua_tree', 'aridity', 'adapted_to', {
-    adaptationMechanism: 'Specialized water storage',
-    strength: 'strong'
-  });
-  
-  // Habitat Relationships - Animals to Microhabitats
-  desertEcosystem.createLink('sidewinder', 'dune_field', 'lives_in', {
+  desertEcosystem.addLink('joshua_tree', 'sandy_soil', 'grows_in', {
     frequency: 'permanent',
     dependency: 'high'
   });
   
-  desertEcosystem.createLink('desert_tortoise', 'rocky_slope', 'lives_in', {
+  // Habitat Relationships - Animals to Microhabitats
+  desertEcosystem.addLink('sidewinder', 'dune_field', 'lives_in', {
+    frequency: 'permanent',
+    dependency: 'high'
+  });
+  
+  desertEcosystem.addLink('desert_tortoise', 'rocky_slope', 'lives_in', {
     frequency: 'seasonal',
     dependency: 'medium'
   });
   
-  desertEcosystem.createLink('cactus_wren', 'wash', 'lives_in', {
+  desertEcosystem.addLink('cactus_wren', 'wash', 'lives_in', {
     frequency: 'permanent',
     dependency: 'medium'
   });
   
-  desertEcosystem.createLink('gila_monster', 'rocky_slope', 'lives_in', {
+  desertEcosystem.addLink('gila_monster', 'rocky_slope', 'lives_in', {
     frequency: 'permanent',
     dependency: 'high'
   });
   
-  desertEcosystem.createLink('javelina', 'canyon', 'lives_in', {
+  desertEcosystem.addLink('javelina', 'canyon', 'lives_in', {
     frequency: 'permanent',
     dependency: 'medium'
   });
   
-  desertEcosystem.createLink('kangaroo_rat', 'dune_field', 'lives_in', {
+  desertEcosystem.addLink('kangaroo_rat', 'dune_field', 'lives_in', {
     frequency: 'permanent',
     dependency: 'high'
   });
   
-  desertEcosystem.createLink('scorpion', 'rocky_slope', 'lives_in', {
+  desertEcosystem.addLink('scorpion', 'rocky_slope', 'lives_in', {
     frequency: 'permanent',
     dependency: 'medium'
   });
   
-  desertEcosystem.createLink('coyote', 'canyon', 'lives_in', {
+  desertEcosystem.addLink('coyote', 'canyon', 'lives_in', {
     frequency: 'permanent',
     dependency: 'low'
   });
   
   // Habitat Relationships - Plants to Microhabitats
-  desertEcosystem.createLink('saguaro', 'rocky_slope', 'grows_in', {
+  desertEcosystem.addLink('saguaro', 'rocky_slope', 'grows_in', {
     frequency: 'permanent',
     dependency: 'medium'
   });
   
-  desertEcosystem.createLink('mesquite', 'wash', 'grows_in', {
+  desertEcosystem.addLink('mesquite', 'wash', 'grows_in', {
     frequency: 'permanent',
     dependency: 'high'
   });
   
-  desertEcosystem.createLink('desert_ironwood', 'wash', 'grows_in', {
+  desertEcosystem.addLink('desert_ironwood', 'wash', 'grows_in', {
     frequency: 'permanent',
     dependency: 'medium'
   });
   
-  desertEcosystem.createLink('brittlebush', 'rocky_slope', 'grows_in', {
+  desertEcosystem.addLink('brittlebush', 'rocky_slope', 'grows_in', {
     frequency: 'permanent',
     dependency: 'medium'
-  });
-  
-  desertEcosystem.createLink('joshua_tree', 'desert_soil', 'grows_in', {
-    frequency: 'permanent',
-    dependency: 'high'
   });
   
   // Feeding Relationships
-  desertEcosystem.createLink('coyote', 'kangaroo_rat', 'preys_on', {
+  desertEcosystem.addLink('coyote', 'kangaroo_rat', 'preys_on', {
     frequency: 'common',
     method: 'hunting'
   });
   
-  desertEcosystem.createLink('coyote', 'desert_tortoise', 'preys_on', {
+  desertEcosystem.addLink('coyote', 'desert_tortoise', 'preys_on', {
     frequency: 'rare',
     method: 'opportunistic'
   });
   
-  desertEcosystem.createLink('sidewinder', 'kangaroo_rat', 'preys_on', {
+  desertEcosystem.addLink('sidewinder', 'kangaroo_rat', 'preys_on', {
     frequency: 'common',
     method: 'ambush'
   });
   
-  desertEcosystem.createLink('desert_monitor', 'scorpion', 'preys_on', {
+  desertEcosystem.addLink('desert_monitor', 'scorpion', 'preys_on', {
     frequency: 'occasional',
     method: 'hunting'
   });
   
-  desertEcosystem.createLink('gila_monster', 'cactus_wren', 'preys_on', {
+  desertEcosystem.addLink('gila_monster', 'cactus_wren', 'preys_on', {
     frequency: 'occasional',
     method: 'raiding nests'
   });
   
-  desertEcosystem.createLink('roadrunner', 'scorpion', 'preys_on', {
+  desertEcosystem.addLink('roadrunner', 'scorpion', 'preys_on', {
     frequency: 'common',
     method: 'hunting'
   });
   
-  desertEcosystem.createLink('roadrunner', 'sidewinder', 'preys_on', {
+  desertEcosystem.addLink('roadrunner', 'sidewinder', 'preys_on', {
     frequency: 'occasional',
     method: 'hunting'
   });
   
-  desertEcosystem.createLink('javelina', 'prickly_pear', 'consumes', {
+  desertEcosystem.addLink('javelina', 'prickly_pear', 'consumes', {
     frequency: 'common',
     method: 'grazing'
   });
   
-  desertEcosystem.createLink('desert_tortoise', 'desert_poppy', 'consumes', {
+  desertEcosystem.addLink('desert_tortoise', 'desert_poppy', 'consumes', {
     frequency: 'seasonal',
     method: 'grazing'
   });
   
-  desertEcosystem.createLink('kangaroo_rat', 'mesquite', 'consumes', {
+  desertEcosystem.addLink('kangaroo_rat', 'mesquite', 'consumes', {
     frequency: 'common',
     method: 'seed collection'
   });
   
   // Plant-Plant Interactions
-  desertEcosystem.createLink('desert_ironwood', 'saguaro', 'nurses', {
+  desertEcosystem.addLink('desert_ironwood', 'saguaro', 'nurses', {
     relationship: 'provides shade and protection',
     strength: 'strong'
   });
   
-  desertEcosystem.createLink('mesquite', 'desert_poppy', 'facilitates', {
+  desertEcosystem.addLink('mesquite', 'desert_poppy', 'facilitates', {
     relationship: 'improves soil conditions',
     strength: 'moderate'
   });
   
-  desertEcosystem.createLink('creosote_bush', 'other_plants', 'inhibits', {
+  desertEcosystem.addLink('creosote_bush', 'other_plants', 'inhibits', {
     relationship: 'allelopathy',
-    strength: 'strong'
+    strength: 'strong',
+    description: 'Creosote bushes release toxins that inhibit growth of other plants nearby'
   });
   
   // Symbiotic Relationships
-  desertEcosystem.createLink('joshua_tree', 'yucca_moth', 'mutual_dependency', {
-    relationship: 'obligate pollination mutualism',
-    strength: 'extreme'
-  });
-  
-  desertEcosystem.createLink('yucca_moth', 'joshua_tree', 'mutual_dependency', {
+  desertEcosystem.addLink('joshua_tree', 'yucca_moth', 'mutual_dependency', {
     relationship: 'obligate reproductive site',
     strength: 'extreme'
   });
   
-  // Add missing prickly pear cactus for javelina relationship
-  desertEcosystem.createEntity('plant', 'prickly_pear', {
-    name: 'Prickly Pear Cactus',
-    scientificName: 'Opuntia spp.',
-    height: 200, // up to 2 meters
-    waterRequirement: 'very low',
-    description: 'Flat-padded cacti with colorful fruits and sharp spines.',
-    adaptations: [
-      'Flat pads maximize photosynthesis while minimizing surface area',
-      'Waxy coating reduces water loss',
-      'Shallow, extensive root system',
-      'Spines provide protection from herbivores',
-      'CAM photosynthesis for water conservation'
-    ]
+  desertEcosystem.addLink('yucca_moth', 'joshua_tree', 'mutual_dependency', {
+    relationship: 'obligate reproductive site',
+    strength: 'extreme'
   });
   
-  // Missing object for creosote bush relationship
-  desertEcosystem.createEntity('concept', 'other_plants', {
-    name: 'Competing Desert Plants',
-    description: 'Generic representation of plants that compete with creosote bush',
-    type: 'conceptual',
-    note: 'Used to represent competition relationships'
-  });
-  
-  // Missing relationship type for plants
-  desertEcosystem.createRelationshipType('grows_in', {
-    attributes: {
-      frequency: { type: 'enum', values: ['temporary', 'seasonal', 'permanent'] },
-      dependency: { type: 'enum', values: ['low', 'medium', 'high', 'exclusive'] }
-    }
-  });
-  
-  // New relationship types
-  desertEcosystem.createRelationshipType('consumes', {
-    attributes: {
-      frequency: { type: 'enum', values: ['rare', 'seasonal', 'occasional', 'common', 'primary'] },
-      method: { type: 'string' }
-    }
-  });
-  
-  desertEcosystem.createRelationshipType('nurses', {
-    attributes: {
-      relationship: { type: 'string' },
-      strength: { type: 'enum', values: ['weak', 'moderate', 'strong', 'extreme'] }
-    }
-  });
-  
-  desertEcosystem.createRelationshipType('facilitates', {
-    attributes: {
-      relationship: { type: 'string' },
-      strength: { type: 'enum', values: ['weak', 'moderate', 'strong', 'extreme'] }
-    }
-  });
-  
-  desertEcosystem.createRelationshipType('inhibits', {
-    attributes: {
-      relationship: { type: 'string' },
-      strength: { type: 'enum', values: ['weak', 'moderate', 'strong', 'extreme'] }
-    }
-  });
-  
-  desertEcosystem.createRelationshipType('mutual_dependency', {
-    attributes: {
-      relationship: { type: 'string' },
-      strength: { type: 'enum', values: ['weak', 'moderate', 'strong', 'extreme'] }
-    }
-  });
+  // Relationship type definitions removed as createRelationshipType is not implemented in UltraLink class
+  // These would define proper relationship schemas when the feature is implemented
   
   return desertEcosystem;
 }
@@ -876,68 +841,68 @@ function createDesertEcosystemSubset(subset) {
       // Create animal entities
       for (const id of [...new Set([...predators, ...prey])]) {
         // We'd need to add the appropriate attributes here in a real implementation
-        desertEcosystem.createEntity('animal', id, { name: id.replace('_', ' ') });
+        desertEcosystem.addEntity(id, 'animal', { name: id.replace('_', ' ') });
       }
       
       // Create predator-prey relationships
-      desertEcosystem.createLink('fennec_fox', 'darkling_beetle', 'preys_on');
-      desertEcosystem.createLink('sidewinder', 'fennec_fox', 'preys_on');
-      desertEcosystem.createLink('roadrunner', 'scorpion', 'preys_on');
-      desertEcosystem.createLink('desert_monitor', 'sidewinder', 'preys_on');
+      desertEcosystem.addLink('fennec_fox', 'darkling_beetle', 'preys_on');
+      desertEcosystem.addLink('sidewinder', 'fennec_fox', 'preys_on');
+      desertEcosystem.addLink('roadrunner', 'scorpion', 'preys_on');
+      desertEcosystem.addLink('desert_monitor', 'sidewinder', 'preys_on');
       break;
       
     case 'adaptations':
       // Only create adaptation relationships
       // Animals
-      desertEcosystem.createEntity('animal', 'camel', { name: 'Dromedary Camel' });
-      desertEcosystem.createEntity('animal', 'fennec_fox', { name: 'Fennec Fox' });
-      desertEcosystem.createEntity('animal', 'darkling_beetle', { name: 'Darkling Beetle' });
-      desertEcosystem.createEntity('animal', 'scorpion', { name: 'Deathstalker Scorpion' });
+      desertEcosystem.addEntity('camel', 'animal', { name: 'Dromedary Camel' });
+      desertEcosystem.addEntity('fennec_fox', 'animal', { name: 'Fennec Fox' });
+      desertEcosystem.addEntity('darkling_beetle', 'animal', { name: 'Darkling Beetle' });
+      desertEcosystem.addEntity('scorpion', 'animal', { name: 'Deathstalker Scorpion' });
       
       // Plants
-      desertEcosystem.createEntity('plant', 'saguaro', { name: 'Saguaro Cactus' });
-      desertEcosystem.createEntity('plant', 'creosote_bush', { name: 'Creosote Bush' });
-      desertEcosystem.createEntity('plant', 'mesquite', { name: 'Honey Mesquite' });
-      desertEcosystem.createEntity('plant', 'desert_poppy', { name: 'Desert Poppy' });
+      desertEcosystem.addEntity('saguaro', 'plant', { name: 'Saguaro Cactus' });
+      desertEcosystem.addEntity('creosote_bush', 'plant', { name: 'Creosote Bush' });
+      desertEcosystem.addEntity('mesquite', 'plant', { name: 'Honey Mesquite' });
+      desertEcosystem.addEntity('desert_poppy', 'plant', { name: 'Desert Poppy' });
       
       // Abiotic factors
-      desertEcosystem.createEntity('abiotic_factor', 'heat', { name: 'Extreme Heat', type: 'climate' });
-      desertEcosystem.createEntity('abiotic_factor', 'aridity', { name: 'Aridity', type: 'climate' });
-      desertEcosystem.createEntity('abiotic_factor', 'temperature_variation', { name: 'Temperature Variation', type: 'climate' });
+      desertEcosystem.addEntity('heat', 'abiotic_factor', { name: 'Extreme Heat', type: 'climate' });
+      desertEcosystem.addEntity('aridity', 'abiotic_factor', { name: 'Aridity', type: 'climate' });
+      desertEcosystem.addEntity('temperature_variation', 'abiotic_factor', { name: 'Temperature Variation', type: 'climate' });
       
       // Adaptations
-      desertEcosystem.createLink('camel', 'heat', 'adapted_to');
-      desertEcosystem.createLink('camel', 'aridity', 'adapted_to');
-      desertEcosystem.createLink('fennec_fox', 'heat', 'adapted_to');
-      desertEcosystem.createLink('darkling_beetle', 'aridity', 'adapted_to');
-      desertEcosystem.createLink('scorpion', 'temperature_variation', 'adapted_to');
-      desertEcosystem.createLink('saguaro', 'aridity', 'adapted_to');
-      desertEcosystem.createLink('creosote_bush', 'aridity', 'adapted_to');
-      desertEcosystem.createLink('mesquite', 'aridity', 'adapted_to');
-      desertEcosystem.createLink('desert_poppy', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('camel', 'heat', 'adapted_to');
+      desertEcosystem.addLink('camel', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('fennec_fox', 'heat', 'adapted_to');
+      desertEcosystem.addLink('darkling_beetle', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('scorpion', 'temperature_variation', 'adapted_to');
+      desertEcosystem.addLink('saguaro', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('creosote_bush', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('mesquite', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('desert_poppy', 'aridity', 'adapted_to');
       break;
       
     case 'water_relationships':
       // Only create water-related entities and relationships
       // Animals
-      desertEcosystem.createEntity('animal', 'camel', { name: 'Dromedary Camel' });
+      desertEcosystem.addEntity('camel', 'animal', { name: 'Dromedary Camel' });
       
       // Plants
-      desertEcosystem.createEntity('plant', 'saguaro', { name: 'Saguaro Cactus' });
-      desertEcosystem.createEntity('plant', 'mesquite', { name: 'Honey Mesquite' });
+      desertEcosystem.addEntity('saguaro', 'plant', { name: 'Saguaro Cactus' });
+      desertEcosystem.addEntity('mesquite', 'plant', { name: 'Honey Mesquite' });
       
       // Water sources
-      desertEcosystem.createEntity('abiotic_factor', 'oasis', { name: 'Oasis', type: 'water' });
-      desertEcosystem.createEntity('abiotic_factor', 'ephemeral_streams', { name: 'Ephemeral Streams', type: 'water' });
-      desertEcosystem.createEntity('abiotic_factor', 'aridity', { name: 'Aridity', type: 'climate' });
+      desertEcosystem.addEntity('oasis', 'abiotic_factor', { name: 'Oasis', type: 'water' });
+      desertEcosystem.addEntity('ephemeral_streams', 'abiotic_factor', { name: 'Ephemeral Streams', type: 'water' });
+      desertEcosystem.addEntity('aridity', 'abiotic_factor', { name: 'Aridity', type: 'climate' });
       
       // Water relationships
-      desertEcosystem.createLink('camel', 'oasis', 'requires');
-      desertEcosystem.createLink('saguaro', 'ephemeral_streams', 'requires');
-      desertEcosystem.createLink('mesquite', 'oasis', 'requires');
-      desertEcosystem.createLink('camel', 'aridity', 'adapted_to');
-      desertEcosystem.createLink('saguaro', 'aridity', 'adapted_to');
-      desertEcosystem.createLink('mesquite', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('camel', 'oasis', 'requires');
+      desertEcosystem.addLink('saguaro', 'ephemeral_streams', 'requires');
+      desertEcosystem.addLink('mesquite', 'oasis', 'requires');
+      desertEcosystem.addLink('camel', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('saguaro', 'aridity', 'adapted_to');
+      desertEcosystem.addLink('mesquite', 'aridity', 'adapted_to');
       break;
       
     default:

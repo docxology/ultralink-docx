@@ -1,0 +1,26 @@
+# paper-2024
+
+Type: publication
+
+## Metadata
+
+- title: Computational Models of Active Inference in Social Insects
+- authors: ["alice","bob","carol","david"]
+- journal: PLOS Computational Biology
+- year: 2024
+- doi: 10.1371/journal.pcbi.2024-0001
+- citations: 3
+
+## Links
+
+- results_from -> [[active-inference-model]]
+- results_from -> [[ant-colony-study]]
+- discusses -> [[swarm-intelligence]]
+
+## Backlinks
+
+- [[alice]] -> authored
+- [[bob]] -> authored
+- [[carol]] -> authored
+- [[david]] -> authored
+- [[grace]] -> authored

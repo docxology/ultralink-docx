@@ -1,0 +1,23 @@
+# javelina
+
+Type: animal
+
+## Metadata
+
+- name: Javelina
+- scientificName: Pecari tajacu
+- lifespan: 10
+- diet: omnivore
+- status: least concern
+- description: Also known as collared peccary, a pig-like mammal adapted to desert environments.
+- adaptations: ["Can consume water-rich cacti including prickly pear","Active in early morning and evening to avoid heat","Social behavior reduces predation risk","Specialized digestive system for desert plants"]
+
+## Links
+
+- adapted_to -> [[aridity]]
+- lives_in -> [[canyon]]
+- consumes -> [[prickly_pear]]
+
+## Backlinks
+
+No backlinks

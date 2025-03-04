@@ -1,0 +1,23 @@
+# quantum-paper-2023
+
+Type: publication
+
+## Metadata
+
+- title: Quantum Circuit Learning for Computer Vision Tasks
+- authors: ["frank-zhang","david-patel"]
+- venue: Quantum Machine Intelligence Journal
+- year: 2023
+- doi: 10.1234/qmi2023
+- citations: 5
+- abstract: This study explores the application of parameterized quantum circuits for image classification tasks, demonstrating advantages in specific constrained scenarios...
+
+## Links
+
+- cites -> [[survey-paper-2023]]
+
+## Backlinks
+
+- [[david-patel]] -> authored
+- [[frank-zhang]] -> authored
+- [[quantum-ml-project]] -> produced

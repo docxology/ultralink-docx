@@ -1,0 +1,19 @@
+# active-inference
+
+Type: concept
+
+## Metadata
+
+- name: Active Inference
+- field: Computational Neuroscience
+- description: Framework for understanding perception and action based on free energy minimization
+- keyPapers: ["10.1038/nn.2635","10.1016/j.tics.2009.04.005"]
+
+## Links
+
+- relates_to -> [[collective-behavior]]
+
+## Backlinks
+
+- [[active-inference-model]] -> applies
+- [[paper-2023a]] -> discusses

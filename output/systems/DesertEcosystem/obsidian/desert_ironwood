@@ -1,0 +1,22 @@
+# desert_ironwood
+
+Type: plant
+
+## Metadata
+
+- name: Desert Ironwood
+- scientificName: Olneya tesota
+- height: 1000
+- waterRequirement: low
+- description: Long-lived desert tree with extremely dense wood, can live 800+ years.
+- adaptations: ["Nitrogen fixing capability improves soil","Extremely deep root system","Small, drought-deciduous leaves","Dense wood stores water","Provides \"nurse plant\" habitat for other species"]
+
+## Links
+
+- adapted_to -> [[aridity]]
+- grows_in -> [[wash]]
+- nurses -> [[saguaro]]
+
+## Backlinks
+
+No backlinks

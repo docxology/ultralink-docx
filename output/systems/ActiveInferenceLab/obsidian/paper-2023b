@@ -1,0 +1,23 @@
+# paper-2023b
+
+Type: publication
+
+## Metadata
+
+- title: Decision Making Patterns in Ant Colonies: A Field Study
+- authors: ["bob","emma","frank"]
+- journal: Behavioral Ecology
+- year: 2023
+- doi: 10.1093/beheco/2023-0002
+- citations: 8
+
+## Links
+
+- results_from -> [[ant-colony-study]]
+- discusses -> [[collective-behavior]]
+
+## Backlinks
+
+- [[bob]] -> authored
+- [[emma]] -> authored
+- [[frank]] -> authored

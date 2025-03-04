@@ -1,0 +1,26 @@
+# carol
+
+Type: researcher
+
+## Metadata
+
+- name: Dr. Carol Jimenez
+- role: Postdoctoral Researcher
+- department: Cognitive Science
+- email: carol.jimenez@example.edu
+- publications: 11
+- expertise: ["active inference","machine learning","cognitive modeling"]
+- yearsExperience: 3
+
+## Links
+
+- contributes -> [[active-inference-model]]
+- contributes_to -> [[active-inference-model]]
+- contributes_to -> [[active-inference-model]]
+- reports_to -> [[alice]]
+- authored -> [[paper-2023a]]
+- authored -> [[paper-2024]]
+
+## Backlinks
+
+- [[alice]] -> mentors

@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { UltraLink } = require('../src/ultralink');
+const { UltraLink } = require('../src');
 const config = require('./test-config');
 
 /**

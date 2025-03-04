@@ -1,0 +1,22 @@
+# data-collection-system
+
+Type: equipment
+
+## Metadata
+
+- name: Field Data Collection System
+- description: Mobile sensors and data collection equipment for field research
+- location: Equipment Room 105
+- specifications_sensors: ["environmental","biometric","geospatial"]
+- specifications_storage: 2TB
+- specifications_battery: 72 hours
+- status: operational
+- purchaseDate: 2022-05-15
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[adaptive-robotics-project]] -> uses

@@ -4,186 +4,93 @@
  * Tests to verify UltraLink can handle complex research team dataset
  */
 
+const { UltraLink } = require('../../src');
 const { createResearchTeamDataset, createResearchTeamSubset } = require('../fixtures/research-team');
 
-describe('Research Team Dataset', () => {
-  let dataset;
-  
+describe('Research Team Integration Tests', () => {
+  let ultralink;
+
   beforeEach(() => {
-    dataset = createResearchTeamDataset();
+    ultralink = createResearchTeamDataset();
   });
-  
-  it('should create a complete research team dataset', () => {
-    expect(dataset).toBeDefined();
-    expect(dataset.entities.size).toBeGreaterThan(0);
-    
-    // Check if relationships or links is used
-    const relationshipsField = dataset.relationships || dataset.links;
-    expect(relationshipsField.size).toBeGreaterThan(0);
-    
-    // Test for specific entities that should exist
-    expect(dataset.entities.get('alice-chen')).toBeDefined();
-    expect(dataset.entities.get('computer-vision-project')).toBeDefined();
-    expect(dataset.entities.get('vision-paper-2022')).toBeDefined();
-    expect(dataset.entities.get('gpu-cluster')).toBeDefined();
-    expect(dataset.entities.get('machine-learning-theory')).toBeDefined();
+
+  test('should correctly identify all researchers', () => {
+    const researchers = ultralink.findEntitiesByType('person');
+    expect(researchers.length).toBe(6);
+    expect(researchers.map(r => r.attributes.name)).toContain('Alice Chen');
+    expect(researchers.map(r => r.attributes.name)).toContain('Bob Smith');
   });
-  
-  it('should have correct relationships between entities', () => {
-    // Get Alice's relationships
-    const aliceRelationships = dataset.getLinks('alice-chen');
-    expect(aliceRelationships).toBeDefined();
-    expect(aliceRelationships.size).toBeGreaterThan(0);
-    
-    // Check specific relationships
-    const leadsProject = Array.from(aliceRelationships).some(rel => 
-      rel.type === 'leads' && rel.target === 'computer-vision-project'
-    );
-    expect(leadsProject).toBe(true);
-    
-    const mentorsCarol = Array.from(aliceRelationships).some(rel => 
-      rel.type === 'mentors' && rel.target === 'carol-jones'
-    );
-    expect(mentorsCarol).toBe(true);
-  });
-  
-  it('should correctly identify backlinks', () => {
-    // Since getLinks doesn't support incoming option, we'll manually check for backlinks
-    // by iterating through all entities and their links
-    
-    // Find links pointing to the computer vision project
-    const projectBacklinks = [];
-    for (const [entityId, links] of dataset.links.entries()) {
-      for (const link of links) {
-        if (link.target === 'computer-vision-project') {
-          projectBacklinks.push({ source: entityId, ...link });
-        }
-      }
-    }
-    
-    expect(projectBacklinks.length).toBeGreaterThan(0);
-    
-    // Verify backlinks from team members to the project
-    const aliceLeadsProject = projectBacklinks.some(rel => 
-      rel.source === 'alice-chen' && rel.type === 'leads'
-    );
-    expect(aliceLeadsProject).toBe(true);
-    
-    const carolContributesToProject = projectBacklinks.some(rel => 
-      rel.source === 'carol-jones' && rel.type === 'contributes_to'
-    );
-    expect(carolContributesToProject).toBe(true);
-  });
-  
-  it('should filter entities by type', () => {
-    // Find all people
-    const people = Array.from(dataset.entities.values()).filter(entity => entity.type === 'person');
-    expect(people.length).toBeGreaterThan(5); // We know there are multiple people
-    
-    // Verify all results are actually people
-    people.forEach(person => {
-      expect(person.type).toBe('person');
-    });
-    
-    // Find all projects
-    const projects = Array.from(dataset.entities.values()).filter(entity => entity.type === 'project');
-    expect(projects.length).toBeGreaterThan(2); // We know there are multiple projects
-    
-    // Verify all results are actually projects
-    projects.forEach(project => {
-      expect(project.type).toBe('project');
-    });
-  });
-  
-  it('should filter entities by attribute', () => {
-    // Find active entities
-    const activeEntities = Array.from(dataset.entities.values())
-      .filter(entity => entity.attributes && entity.attributes.status === 'active');
+
+  test('should find entities by attribute value', () => {
+    const activeEntities = ultralink.findEntitiesByAttribute('status', 'active');
     expect(activeEntities.length).toBeGreaterThan(0);
-    
-    // Find entities with specific expertise
-    const mlExperts = Array.from(dataset.entities.values())
-      .filter(entity => 
-        entity.type === 'person' && 
-        entity.attributes.expertise && 
-        entity.attributes.expertise.includes('Machine Learning')
-      );
-    expect(mlExperts.length).toBeGreaterThan(0);
-    
-    // Verify Alice is among ML experts
-    const aliceFound = mlExperts.some(expert => expert.id === 'alice-chen');
-    expect(aliceFound).toBe(true);
+    expect(activeEntities.every(e => e.attributes.status === 'active')).toBe(true);
   });
-  
-  it('should create valid subsets of data', () => {
-    // Test people subset
-    const peopleSubset = createResearchTeamSubset('people');
-    expect(peopleSubset).toBeDefined();
-    expect(peopleSubset.entities.size).toBeGreaterThan(0);
-    
-    // Verify only people are included
-    for (const [_, entity] of peopleSubset.entities) {
-      expect(entity.type).toBe('person');
-    }
-    
-    // Test projects subset
-    const projectsSubset = createResearchTeamSubset('projects');
-    expect(projectsSubset).toBeDefined();
-    
-    // Verify projects and people are included
-    const hasProjects = Array.from(projectsSubset.entities.values())
-      .some(entity => entity.type === 'project');
-    const hasPeople = Array.from(projectsSubset.entities.values())
-      .some(entity => entity.type === 'person');
-    
-    expect(hasProjects).toBe(true);
-    expect(hasPeople).toBe(true);
+
+  test('should identify all project leads', () => {
+    const leads = ultralink.findRelationships('leads');
+    expect(leads.length).toBe(2);
+    expect(leads.map(l => l.source)).toContain('alice-chen');
+    expect(leads.map(l => l.source)).toContain('bob-smith');
   });
-  
-  it('should export and import the complex dataset', () => {
-    // Export to JSON
-    const jsonString = dataset.toJSON();
-    expect(jsonString).toBeDefined();
-    expect(typeof jsonString).toBe('string');
-    
-    // Parse the JSON string
-    const json = JSON.parse(jsonString);
-    expect(json.entities.length).toBe(dataset.entities.size);
-    
-    // Check for links in the JSON
-    const firstEntity = json.entities[0];
-    expect(firstEntity.links).toBeDefined();
-    
-    // Create a new instance and import
-    const { UltraLink } = require('../../src/index');
-    const newDataset = new UltraLink();
-    
-    // Import the blob by manually creating entities and links
-    json.entities.forEach(entity => {
-      newDataset.createEntity(entity.type, entity.id, entity.attributes || {});
-    });
-    
-    // Import links
-    json.entities.forEach(entity => {
-      if (entity.links && entity.links.length > 0) {
-        entity.links.forEach(link => {
-          try {
-            newDataset.createLink(entity.id, link.target, link.type);
-          } catch (err) {
-            // Skip links to entities that don't exist
-            console.warn(`Skipping link from ${entity.id} to ${link.target}: ${err.message}`);
-          }
-        });
-      }
-    });
-    
-    // Verify imported data
-    expect(newDataset.entities.size).toBe(dataset.entities.size);
-    
-    // Check specific entity was imported correctly
-    const alice = newDataset.entities.get('alice-chen');
-    expect(alice).toBeDefined();
-    expect(alice.attributes.name).toBe('Alice Chen');
-    expect(alice.attributes.expertise).toContain('Machine Learning');
+
+  test('should find all mentorship relationships', () => {
+    const mentorships = ultralink.findRelationships('mentors');
+    expect(mentorships.length).toBe(2);
+    expect(mentorships.some(m => 
+      m.source === 'alice-chen' && m.target === 'carol-jones'
+    )).toBe(true);
+  });
+
+  test('should identify equipment usage', () => {
+    const equipmentUsage = ultralink.findRelationships('uses');
+    expect(equipmentUsage.length).toBe(4);
+    expect(equipmentUsage.some(u => 
+      u.source === 'computer-vision-project' && u.target === 'gpu-cluster'
+    )).toBe(true);
+  });
+
+  test('should find all publications by author', () => {
+    const alicePublications = ultralink.findRelationships('authored', 'alice-chen');
+    expect(alicePublications.length).toBe(1);
+    expect(alicePublications[0].target).toBe('vision-paper-2022');
+  });
+
+  test('should identify knowledge area expertise', () => {
+    const expertise = ultralink.findRelationships('has_expertise_in');
+    expect(expertise.length).toBe(7);
+    expect(expertise.filter(e => e.source === 'alice-chen').length).toBe(2);
+  });
+
+  test('should find project focus areas', () => {
+    const focusAreas = ultralink.findRelationships('focuses_on');
+    expect(focusAreas.length).toBe(3);
+    expect(focusAreas.some(f => 
+      f.source === 'computer-vision-project' && f.target === 'computer-vision'
+    )).toBe(true);
+  });
+
+  test('should create valid subset of people data', () => {
+    const peopleSubset = ultralink.createSubset('people');
+    expect(peopleSubset.entities.size).toBe(6);
+    expect(peopleSubset.links.size).toBe(0);
+  });
+
+  test('should create valid subset of project data', () => {
+    const projectSubset = ultralink.createSubset('projects');
+    expect(projectSubset.entities.size).toBe(9); // 3 projects + 6 people
+    expect(projectSubset.links.size).toBeGreaterThan(0);
+  });
+
+  test('should create valid subset of publication data', () => {
+    const pubSubset = ultralink.createSubset('publications');
+    expect(pubSubset.entities.size).toBe(8); // 2 publications + 6 people
+    expect(pubSubset.links.size).toBeGreaterThan(0);
+  });
+
+  test('should handle invalid subset type', () => {
+    expect(() => {
+      ultralink.createSubset('invalid');
+    }).toThrow('Unknown aspect: invalid');
   });
 }); 

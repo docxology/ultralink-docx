@@ -1,0 +1,24 @@
+# kangaroo_rat
+
+Type: animal
+
+## Metadata
+
+- name: Merriam's Kangaroo Rat
+- scientificName: Dipodomys merriami
+- lifespan: 5
+- diet: granivore
+- status: least concern
+- description: Small desert rodent with highly specialized adaptations for water conservation.
+- adaptations: ["Can survive without drinking water","Extracts water metabolically from dry seeds","Specialized kidneys concentrate urine","Nocturnal to avoid daytime heat","Burrows underground during day to avoid heat"]
+
+## Links
+
+- adapted_to -> [[aridity]]
+- lives_in -> [[dune_field]]
+- consumes -> [[mesquite]]
+
+## Backlinks
+
+- [[sidewinder]] -> preys_on
+- [[coyote]] -> preys_on

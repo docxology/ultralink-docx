@@ -15,42 +15,42 @@ function createResearchTeamDataset() {
   const ultralink = new UltraLink();
   
   // Create people
-  ultralink.createEntity('person', 'alice-chen', {
+  ultralink.addEntity('alice-chen', 'person', {
     name: 'Alice Chen',
     title: 'Principal Investigator',
     expertise: ['Machine Learning', 'Computer Vision', 'Research Management'],
     status: 'active'
   });
   
-  ultralink.createEntity('person', 'bob-smith', {
+  ultralink.addEntity('bob-smith', 'person', {
     name: 'Bob Smith',
     title: 'Senior Researcher',
     expertise: ['Natural Language Processing', 'Deep Learning'],
     status: 'active'
   });
   
-  ultralink.createEntity('person', 'carol-jones', {
+  ultralink.addEntity('carol-jones', 'person', {
     name: 'Carol Jones',
     title: 'PhD Student',
     expertise: ['Computer Vision', 'Image Processing'],
     status: 'active'
   });
   
-  ultralink.createEntity('person', 'david-lee', {
+  ultralink.addEntity('david-lee', 'person', {
     name: 'David Lee',
     title: 'Research Assistant',
     expertise: ['Data Analysis', 'Statistical Methods'],
     status: 'active'
   });
   
-  ultralink.createEntity('person', 'emma-wilson', {
+  ultralink.addEntity('emma-wilson', 'person', {
     name: 'Emma Wilson',
     title: 'Lab Manager',
     expertise: ['Project Management', 'Research Administration'],
     status: 'active'
   });
   
-  ultralink.createEntity('person', 'frank-miller', {
+  ultralink.addEntity('frank-miller', 'person', {
     name: 'Frank Miller',
     title: 'Visiting Researcher',
     expertise: ['Reinforcement Learning', 'Robotics'],
@@ -58,40 +58,40 @@ function createResearchTeamDataset() {
   });
   
   // Create knowledge areas
-  ultralink.createEntity('knowledge-area', 'machine-learning-theory', {
+  ultralink.addEntity('machine-learning-theory', 'knowledge-area', {
     name: 'Machine Learning Theory',
     description: 'Theoretical foundations of machine learning algorithms',
     status: 'active'
   });
   
-  ultralink.createEntity('knowledge-area', 'computer-vision', {
+  ultralink.addEntity('computer-vision', 'knowledge-area', {
     name: 'Computer Vision',
     description: 'Processing and analyzing visual data',
     status: 'active'
   });
   
-  ultralink.createEntity('knowledge-area', 'nlp', {
+  ultralink.addEntity('nlp', 'knowledge-area', {
     name: 'Natural Language Processing',
     description: 'Processing and analyzing natural language',
     status: 'active'
   });
   
   // Create projects
-  ultralink.createEntity('project', 'computer-vision-project', {
+  ultralink.addEntity('computer-vision-project', 'project', {
     name: 'Advanced Computer Vision Project',
     description: 'Research on novel computer vision algorithms for low-light conditions',
     start_date: '2021-01-15',
     status: 'active'
   });
   
-  ultralink.createEntity('project', 'nlp-project', {
+  ultralink.addEntity('nlp-project', 'project', {
     name: 'NLP Understanding Project',
     description: 'Research on contextual understanding in NLP models',
     start_date: '2021-03-10',
     status: 'active'
   });
   
-  ultralink.createEntity('project', 'ml-theory-project', {
+  ultralink.addEntity('ml-theory-project', 'project', {
     name: 'ML Theory Advancement',
     description: 'Theoretical research on convergence properties of ML algorithms',
     start_date: '2022-01-05',
@@ -99,7 +99,7 @@ function createResearchTeamDataset() {
   });
   
   // Create publications
-  ultralink.createEntity('publication', 'vision-paper-2022', {
+  ultralink.addEntity('vision-paper-2022', 'publication', {
     title: 'Novel Approaches to Low-Light Computer Vision',
     authors: ['Alice Chen', 'Carol Jones'],
     publication_date: '2022-06-15',
@@ -107,7 +107,7 @@ function createResearchTeamDataset() {
     status: 'published'
   });
   
-  ultralink.createEntity('publication', 'nlp-paper-2022', {
+  ultralink.addEntity('nlp-paper-2022', 'publication', {
     title: 'Contextual Understanding in Large Language Models',
     authors: ['Bob Smith', 'David Lee'],
     publication_date: '2022-08-22',
@@ -116,14 +116,14 @@ function createResearchTeamDataset() {
   });
   
   // Create equipment
-  ultralink.createEntity('equipment', 'gpu-cluster', {
+  ultralink.addEntity('gpu-cluster', 'equipment', {
     name: 'GPU Computing Cluster',
     description: 'High-performance GPU cluster for ML research',
     acquisition_date: '2020-11-30',
     status: 'operational'
   });
   
-  ultralink.createEntity('equipment', 'dataset-server', {
+  ultralink.addEntity('dataset-server', 'equipment', {
     name: 'Dataset Storage Server',
     description: 'High-capacity storage for research datasets',
     acquisition_date: '2021-02-15',
@@ -131,47 +131,47 @@ function createResearchTeamDataset() {
   });
   
   // Create relationships between people and projects
-  ultralink.createLink('alice-chen', 'computer-vision-project', 'leads');
-  ultralink.createLink('bob-smith', 'nlp-project', 'leads');
-  ultralink.createLink('carol-jones', 'computer-vision-project', 'contributes_to');
-  ultralink.createLink('david-lee', 'nlp-project', 'contributes_to');
-  ultralink.createLink('emma-wilson', 'computer-vision-project', 'manages');
-  ultralink.createLink('emma-wilson', 'nlp-project', 'manages');
-  ultralink.createLink('frank-miller', 'computer-vision-project', 'contributes_to');
+  ultralink.addLink('alice-chen', 'computer-vision-project', 'leads');
+  ultralink.addLink('bob-smith', 'nlp-project', 'leads');
+  ultralink.addLink('carol-jones', 'computer-vision-project', 'contributes_to');
+  ultralink.addLink('david-lee', 'nlp-project', 'contributes_to');
+  ultralink.addLink('emma-wilson', 'computer-vision-project', 'manages');
+  ultralink.addLink('emma-wilson', 'nlp-project', 'manages');
+  ultralink.addLink('frank-miller', 'computer-vision-project', 'contributes_to');
   
   // Create mentorship relationships
-  ultralink.createLink('alice-chen', 'carol-jones', 'mentors');
-  ultralink.createLink('bob-smith', 'david-lee', 'mentors');
+  ultralink.addLink('alice-chen', 'carol-jones', 'mentors');
+  ultralink.addLink('bob-smith', 'david-lee', 'mentors');
   
   // Create knowledge area expertise
-  ultralink.createLink('alice-chen', 'machine-learning-theory', 'has_expertise_in');
-  ultralink.createLink('alice-chen', 'computer-vision', 'has_expertise_in');
-  ultralink.createLink('bob-smith', 'machine-learning-theory', 'has_expertise_in');
-  ultralink.createLink('bob-smith', 'nlp', 'has_expertise_in');
-  ultralink.createLink('carol-jones', 'computer-vision', 'has_expertise_in');
-  ultralink.createLink('david-lee', 'nlp', 'has_expertise_in');
-  ultralink.createLink('frank-miller', 'machine-learning-theory', 'has_expertise_in');
+  ultralink.addLink('alice-chen', 'machine-learning-theory', 'has_expertise_in');
+  ultralink.addLink('alice-chen', 'computer-vision', 'has_expertise_in');
+  ultralink.addLink('bob-smith', 'machine-learning-theory', 'has_expertise_in');
+  ultralink.addLink('bob-smith', 'nlp', 'has_expertise_in');
+  ultralink.addLink('carol-jones', 'computer-vision', 'has_expertise_in');
+  ultralink.addLink('david-lee', 'nlp', 'has_expertise_in');
+  ultralink.addLink('frank-miller', 'machine-learning-theory', 'has_expertise_in');
   
   // Create project-knowledge area relationships
-  ultralink.createLink('computer-vision-project', 'computer-vision', 'focuses_on');
-  ultralink.createLink('computer-vision-project', 'machine-learning-theory', 'applies');
-  ultralink.createLink('nlp-project', 'nlp', 'focuses_on');
-  ultralink.createLink('nlp-project', 'machine-learning-theory', 'applies');
-  ultralink.createLink('ml-theory-project', 'machine-learning-theory', 'focuses_on');
+  ultralink.addLink('computer-vision-project', 'computer-vision', 'focuses_on');
+  ultralink.addLink('computer-vision-project', 'machine-learning-theory', 'applies');
+  ultralink.addLink('nlp-project', 'nlp', 'focuses_on');
+  ultralink.addLink('nlp-project', 'machine-learning-theory', 'applies');
+  ultralink.addLink('ml-theory-project', 'machine-learning-theory', 'focuses_on');
   
   // Create publication relationships
-  ultralink.createLink('vision-paper-2022', 'computer-vision-project', 'resulted_from');
-  ultralink.createLink('nlp-paper-2022', 'nlp-project', 'resulted_from');
-  ultralink.createLink('alice-chen', 'vision-paper-2022', 'authored');
-  ultralink.createLink('carol-jones', 'vision-paper-2022', 'authored');
-  ultralink.createLink('bob-smith', 'nlp-paper-2022', 'authored');
-  ultralink.createLink('david-lee', 'nlp-paper-2022', 'authored');
+  ultralink.addLink('vision-paper-2022', 'computer-vision-project', 'resulted_from');
+  ultralink.addLink('nlp-paper-2022', 'nlp-project', 'resulted_from');
+  ultralink.addLink('alice-chen', 'vision-paper-2022', 'authored');
+  ultralink.addLink('carol-jones', 'vision-paper-2022', 'authored');
+  ultralink.addLink('bob-smith', 'nlp-paper-2022', 'authored');
+  ultralink.addLink('david-lee', 'nlp-paper-2022', 'authored');
   
   // Create equipment usage relationships
-  ultralink.createLink('computer-vision-project', 'gpu-cluster', 'uses');
-  ultralink.createLink('nlp-project', 'gpu-cluster', 'uses');
-  ultralink.createLink('computer-vision-project', 'dataset-server', 'uses');
-  ultralink.createLink('nlp-project', 'dataset-server', 'uses');
+  ultralink.addLink('computer-vision-project', 'gpu-cluster', 'uses');
+  ultralink.addLink('nlp-project', 'gpu-cluster', 'uses');
+  ultralink.addLink('computer-vision-project', 'dataset-server', 'uses');
+  ultralink.addLink('nlp-project', 'dataset-server', 'uses');
   
   return ultralink;
 }
@@ -190,8 +190,8 @@ function createResearchTeamSubset(aspect) {
       // Only include people entities
       for (const entity of fullDataset.entities.values()) {
         if (entity.type === 'person') {
-          // Use createEntity instead of directly setting in the map
-          ultralink.createEntity(entity.type, entity.id, entity.attributes);
+          // Use addEntity instead of directly setting in the map
+          ultralink.addEntity(entity.id, entity.type, entity.attributes);
         }
       }
       break;
@@ -200,8 +200,8 @@ function createResearchTeamSubset(aspect) {
       // Include projects and related people
       for (const entity of fullDataset.entities.values()) {
         if (entity.type === 'project' || entity.type === 'person') {
-          // Use createEntity instead of directly setting in the map
-          ultralink.createEntity(entity.type, entity.id, entity.attributes);
+          // Use addEntity instead of directly setting in the map
+          ultralink.addEntity(entity.id, entity.type, entity.attributes);
         }
       }
       
@@ -210,7 +210,7 @@ function createResearchTeamSubset(aspect) {
         if (ultralink.entities.has(entityId)) {
           for (const link of links) {
             if (ultralink.entities.has(link.target)) {
-              ultralink.createLink(entityId, link.target, link.type);
+              ultralink.addLink(entityId, link.target, link.type);
             }
           }
         }
@@ -221,8 +221,8 @@ function createResearchTeamSubset(aspect) {
       // Include publications and authors
       for (const entity of fullDataset.entities.values()) {
         if (entity.type === 'publication' || entity.type === 'person') {
-          // Use createEntity instead of directly setting in the map
-          ultralink.createEntity(entity.type, entity.id, entity.attributes);
+          // Use addEntity instead of directly setting in the map
+          ultralink.addEntity(entity.id, entity.type, entity.attributes);
         }
       }
       
@@ -231,7 +231,7 @@ function createResearchTeamSubset(aspect) {
         if (ultralink.entities.has(entityId)) {
           for (const link of links) {
             if (ultralink.entities.has(link.target) && link.type === 'authored') {
-              ultralink.createLink(entityId, link.target, link.type);
+              ultralink.addLink(entityId, link.target, link.type);
             }
           }
         }

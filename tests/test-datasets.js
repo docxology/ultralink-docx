@@ -1,4 +1,4 @@
-const { UltraLink } = require('../src/ultralink');
+const { UltraLink } = require('../src');
 
 /**
  * Create a Desert Ecosystem dataset for testing

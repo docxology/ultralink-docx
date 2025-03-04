@@ -1,0 +1,26 @@
+# machine-learning-theory
+
+Type: knowledge-area
+
+## Metadata
+
+- name: Machine Learning Theory
+- description: Fundamental theoretical concepts in machine learning
+- topics: ["Statistical Learning","Optimization","Information Theory"]
+
+## Links
+
+- foundational_for -> [[computer-vision]]
+- foundational_for -> [[nlp]]
+- foundational_for -> [[privacy-ml]]
+- foundational_for -> [[quantum-ml]]
+- foundational_for -> [[reinforcement-learning]]
+
+## Backlinks
+
+- [[carol-jones]] -> expertise_in
+- [[david-patel]] -> expertise_in
+- [[computer-vision-project]] -> applies
+- [[nlp-project]] -> applies
+- [[federated-learning-project]] -> applies
+- [[quantum-ml-project]] -> applies

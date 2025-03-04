@@ -1,0 +1,24 @@
+# quantum-computer
+
+Type: equipment
+
+## Metadata
+
+- name: Quantum Computing Access
+- description: Cloud access to IBM Quantum systems
+- location: Remote/Cloud
+- specifications_qubits: 127
+- specifications_access: Priority research queue
+- specifications_quota: 20 hours/month
+- status: operational
+- acquisitionDate: 2022-11-01
+- contractRenewal: 2024-10-31
+
+## Links
+
+No links
+
+## Backlinks
+
+- [[frank-zhang]] -> uses
+- [[quantum-ml-project]] -> uses

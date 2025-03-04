@@ -8,10 +8,8 @@
 
 const path = require('path');
 const fs = require('fs');
-const { UltraLink } = require('../../src/ultralink');
-const BayesianGraphExporter = require('../../src/exporters/specialized/bayesian-graph');
-const HTMLWebsiteExporter = require('../../src/exporters/specialized/html-website');
-const ObsidianKnowledgeBaseExporter = require('../../src/exporters/specialized/obsidian-knowledge-base');
+const { UltraLink } = require('../../src');
+const { BayesianGraphExporter, HTMLWebsiteExporter, ObsidianKnowledgeBaseExporter } = require('../../src/exporters');
 const { createResearchTeamDataset } = require('../test-datasets');
 const { getSystemOutputPath } = require('../test-utils');
 

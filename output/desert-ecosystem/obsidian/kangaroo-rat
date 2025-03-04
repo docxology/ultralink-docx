@@ -1,0 +1,19 @@
+# kangaroo-rat
+
+Type: organism
+
+## Metadata
+
+- name: Kangaroo Rat
+- scientificName: Dipodomys
+- type: mammal
+- weight: 100-150g
+- nocturnal: true
+
+## Links
+
+- adapts_to -> [[aridity]]
+
+## Backlinks
+
+No backlinks
