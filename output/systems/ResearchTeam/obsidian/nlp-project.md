@@ -1,0 +1,20 @@
+# nlp-project
+
+Type: project
+
+## Metadata
+
+- title: Natural Language Understanding
+- description: Advanced NLP techniques for context-aware language understanding
+- startDate: 2021-06-01
+- endDate: 2024-05-31
+- status: active
+- budget: 400000
+- objectives: ["Enhance contextual understanding","Improve multilingual capabilities","Develop efficient training methods"]
+
+## Links
+
+- produced -> [[nlp-paper-2023]]
+- uses -> [[gpu-cluster]]
+- applies -> [[nlp]]
+- applies -> [[machine-learning-theory]]

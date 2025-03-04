@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Renderer Validation Report</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .summary {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .renderer {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .success { color: #22c55e; }
+    .failure { color: #ef4444; }
+    .details {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+    pre {
+      background: #f1f5f9;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Renderer Validation Report</h1>
+  <p>Generated: 2025-03-03T20:56:39.519Z</p>
+  
+  <div class="summary">
+    <h2>Summary</h2>
+    <p>Total Renderers: 1</p>
+    <p>Passed: <span class="success">1</span></p>
+    <p>Failed: <span class="failure">0</span></p>
+  </div>
+
+  <h2>Renderer Details</h2>
+  
+    <div class="renderer">
+      <h3>html Renderer</h3>
+      <p>Status: <span class="success">
+        PASSED
+      </span></p>
+      
+      
+        <div class="details">
+          <h4>Validation Details:</h4>
+          <pre>{
+  "summary": {
+    "total": 6,
+    "passed": 4,
+    "failed": 2,
+    "successRate": "66.67%"
+  },
+  "tests": [
+    {
+      "name": "HTML Validation",
+      "passed": false,
+      "details": {
+        "error": "Should include vector visualization"
+      },
+      "timestamp": "2025-03-03T20:56:39.794Z"
+    },
+    {
+      "name": "JSON Validation",
+      "passed": true,
+      "details": {
+        "entityCount": 12,
+        "metadataKeys": [
+          "graph_metrics",
+          "cluster_analysis",
+          "temporal_analysis"
+        ],
+        "entityTypes": [
+          "person",
+          "project",
+          "publication",
+          "equipment",
+          "facility",
+          "knowledge-area"
+        ],
+        "vectorClusters": [
+          "core-ml-concepts",
+          "applied-ml"
+        ]
+      },
+      "timestamp": "2025-03-03T20:56:39.794Z"
+    },
+    {
+      "name": "GraphML Validation",
+      "passed": true,
+      "details": {
+        "nodeCount": 13,
+        "edgeCount": 23,
+        "attributeKeys": [
+          "name",
+          "title",
+          "expertise",
+          "email",
+          "joinDate",
+          "status",
+          "collaboration_metrics",
+          "collaboration_metrics_expertise_vector",
+          "collaboration_metrics_team_impact",
+          "collaboration_metrics_team_impact_mentorship_effectiveness",
+          "collaboration_metrics_team_impact_project_contributions",
+          "collaboration_metrics_team_impact_project_contributions_0_project_id",
+          "collaboration_metrics_team_impact_project_contributions_0_role",
+          "collaboration_metrics_team_impact_project_contributions_0_impact_score",
+          "collaboration_metrics_team_impact_project_contributions_0_key_contributions",
+          "collaboration_metrics_knowledge_transfer",
+          "collaboration_metrics_knowledge_transfer_topics_taught",
+          "collaboration_metrics_knowledge_transfer_topics_taught_0_topic",
+          "collaboration_metrics_knowledge_transfer_topics_taught_0_students",
+          "collaboration_metrics_knowledge_transfer_topics_taught_0_effectiveness_score",
+          "advisor",
+          "description",
+          "startDate",
+          "endDate",
+          "budget",
+          "objectives",
+          "llm_insights",
+          "llm_insights_key_findings",
+          "llm_insights_key_findings_0_statement",
+          "llm_insights_key_findings_0_justification",
+          "llm_insights_key_findings_0_confidence",
+          "llm_insights_key_findings_0_supporting_evidence",
+          "llm_insights_key_findings_1_statement",
+          "llm_insights_key_findings_1_justification",
+          "llm_insights_key_findings_1_confidence",
+          "llm_insights_key_findings_1_supporting_evidence",
+          "llm_insights_confidence",
+          "llm_insights_critical_parameters",
+          "llm_insights_critical_parameters_learning_rate",
+          "llm_insights_critical_parameters_learning_rate_value",
+          "llm_insights_critical_parameters_learning_rate_justification",
+          "llm_insights_critical_parameters_batch_size",
+          "llm_insights_critical_parameters_batch_size_value",
+          "llm_insights_critical_parameters_batch_size_justification",
+          "llm_insights_risk_assessment",
+          "llm_insights_risk_assessment_technical_risks",
+          "llm_insights_risk_assessment_technical_risks_0_risk",
+          "llm_insights_risk_assessment_technical_risks_0_probability",
+          "llm_insights_risk_assessment_technical_risks_0_impact",
+          "llm_insights_risk_assessment_technical_risks_1_risk",
+          "llm_insights_risk_assessment_technical_risks_1_probability",
+          "llm_insights_risk_assessment_technical_risks_1_impact",
+          "authors",
+          "venue",
+          "year",
+          "doi",
+          "citations",
+          "abstract",
+          "impact_metrics",
+          "impact_metrics_citation_network",
+          "impact_metrics_citation_network_vector",
+          "impact_metrics_citation_network_influential_citations",
+          "impact_metrics_citation_network_influential_citations_0_paper_id",
+          "impact_metrics_citation_network_influential_citations_0_title",
+          "impact_metrics_citation_network_influential_citations_0_impact_score",
+          "impact_metrics_citation_network_research_threads",
+          "impact_metrics_citation_network_research_threads_0_topic",
+          "impact_metrics_citation_network_research_threads_0_papers",
+          "impact_metrics_citation_network_research_threads_0_coherence_score",
+          "impact_metrics_methodology_assessment",
+          "impact_metrics_methodology_assessment_novelty_score",
+          "impact_metrics_methodology_assessment_reproducibility_score",
+          "impact_metrics_methodology_assessment_justification",
+          "location",
+          "specifications",
+          "specifications_gpus",
+          "specifications_memory",
+          "specifications_storage",
+          "purchaseDate",
+          "maintenanceSchedule",
+          "utilization_analytics",
+          "utilization_analytics_usage_patterns",
+          "utilization_analytics_usage_patterns_vector",
+          "utilization_analytics_usage_patterns_peak_times",
+          "utilization_analytics_usage_patterns_peak_times_0_timeframe",
+          "utilization_analytics_usage_patterns_peak_times_0_utilization",
+          "utilization_analytics_usage_patterns_peak_times_1_timeframe",
+          "utilization_analytics_usage_patterns_peak_times_1_utilization",
+          "utilization_analytics_usage_patterns_project_allocation",
+          "utilization_analytics_usage_patterns_project_allocation_0_project_id",
+          "utilization_analytics_usage_patterns_project_allocation_0_gpu_hours",
+          "utilization_analytics_usage_patterns_project_allocation_0_efficiency_score",
+          "utilization_analytics_usage_patterns_project_allocation_1_project_id",
+          "utilization_analytics_usage_patterns_project_allocation_1_gpu_hours",
+          "utilization_analytics_usage_patterns_project_allocation_1_efficiency_score",
+          "utilization_analytics_optimization_recommendations",
+          "utilization_analytics_optimization_recommendations_0_recommendation",
+          "utilization_analytics_optimization_recommendations_0_expected_impact",
+          "utilization_analytics_optimization_recommendations_0_justification",
+          "equipment",
+          "capacity",
+          "topics",
+          "vector",
+          "vector_embedding",
+          "vector_cluster",
+          "vector_centroid_distance",
+          "vector_similar_concepts",
+          "vector_similar_concepts_0_id",
+          "vector_similar_concepts_0_similarity",
+          "vector_similar_concepts_1_id",
+          "vector_similar_concepts_1_similarity",
+          "metadata_graph_metrics",
+          "metadata_graph_metrics_density",
+          "metadata_graph_metrics_clustering_coefficient",
+          "metadata_graph_metrics_average_path_length",
+          "metadata_cluster_analysis",
+          "metadata_cluster_analysis_0_name",
+          "metadata_cluster_analysis_0_centroid",
+          "metadata_cluster_analysis_0_members",
+          "metadata_cluster_analysis_0_coherence",
+          "metadata_cluster_analysis_1_name",
+          "metadata_cluster_analysis_1_centroid",
+          "metadata_cluster_analysis_1_members",
+          "metadata_cluster_analysis_1_coherence",
+          "metadata_temporal_analysis",
+          "metadata_temporal_analysis_knowledge_evolution",
+          "metadata_temporal_analysis_knowledge_evolution_0_timeframe",
+          "metadata_temporal_analysis_knowledge_evolution_0_key_developments",
+          "metadata_temporal_analysis_knowledge_evolution_0_impact_score",
+          "metadata_temporal_analysis_knowledge_evolution_1_timeframe",
+          "metadata_temporal_analysis_knowledge_evolution_1_key_developments",
+          "metadata_temporal_analysis_knowledge_evolution_1_impact_score",
+          "type"
+        ],
+        "hasMetadataNode": true
+      },
+      "timestamp": "2025-03-03T20:56:39.800Z"
+    },
+    {
+      "name": "CSV Validation",
+      "passed": false,
+      "details": {
+        "error": "Should have temporal_ columns"
+      },
+      "timestamp": "2025-03-03T20:56:39.801Z"
+    },
+    {
+      "name": "Obsidian Validation",
+      "passed": true,
+      "details": {
+        "fileCount": 12,
+        "validations": [
+          {
+            "file": "alice-chen.md",
+            "valid": true,
+            "sections": [
+              "# alice-chen",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 6,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "bob-smith.md",
+            "valid": false,
+            "sections": [
+              "# bob-smith",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 3,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "carol-jones.md",
+            "valid": false,
+            "sections": [
+              "# carol-jones",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 4,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "computer-vision-project.md",
+            "valid": false,
+            "sections": [
+              "# computer-vision-project",
+              "Metadata",
+              "LLM Insights",
+              "Links"
+            ],
+            "linkCount": 8,
+            "hasVectorData": false,
+            "hasLLMInsights": true
+          },
+          {
+            "file": "computer-vision.md",
+            "valid": true,
+            "sections": [
+              "# computer-vision",
+              "Metadata",
+              "Vector Metadata",
+              "Links"
+            ],
+            "linkCount": 2,
+            "hasVectorData": true,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "gpu-cluster.md",
+            "valid": false,
+            "sections": [
+              "# gpu-cluster",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 0,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "machine-learning-theory.md",
+            "valid": true,
+            "sections": [
+              "# machine-learning-theory",
+              "Metadata",
+              "Vector Metadata",
+              "Links"
+            ],
+            "linkCount": 4,
+            "hasVectorData": true,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "nlp-paper-2023.md",
+            "valid": false,
+            "sections": [
+              "# nlp-paper-2023",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 0,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "nlp-project.md",
+            "valid": false,
+            "sections": [
+              "# nlp-project",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 4,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "nlp.md",
+            "valid": false,
+            "sections": [
+              "# nlp",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 0,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "robotics-lab.md",
+            "valid": false,
+            "sections": [
+              "# robotics-lab",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 0,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          },
+          {
+            "file": "vision-paper-2022.md",
+            "valid": false,
+            "sections": [
+              "# vision-paper-2022",
+              "Metadata",
+              "Links"
+            ],
+            "linkCount": 0,
+            "hasVectorData": false,
+            "hasLLMInsights": false
+          }
+        ],
+        "allValid": false,
+        "averageLinkCount": 2.5833333333333335
+      },
+      "timestamp": "2025-03-03T20:56:39.802Z"
+    },
+    {
+      "name": "Timeline Validation",
+      "passed": true,
+      "details": {
+        "eventCount": 2,
+        "timeRange": "2021-Q1 to 2023-Q4",
+        "timeframes": [
+          "2021-Q1",
+          "2022-Q2"
+        ],
+        "averageImpact": 0.815,
+        "maxImpact": 0.85,
+        "averageDevelopments": 1
+      },
+      "timestamp": "2025-03-03T20:56:39.803Z"
+    }
+  ]
+}</pre>
+        </div>
+      
+    </div>
+  
+</body>
+</html>

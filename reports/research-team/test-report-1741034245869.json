@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "startTime": "2025-03-03T20:37:25.854Z",
+    "endTime": "2025-03-03T20:37:25.869Z",
+    "duration": "15ms",
+    "totalTests": 3,
+    "passedTests": 1,
+    "failedTests": 2,
+    "successRate": "33.33%"
+  },
+  "testSuites": [
+    {
+      "name": "Render Tests",
+      "passed": true,
+      "details": {
+        "message": "All render tests completed successfully"
+      },
+      "timestamp": "2025-03-03T20:37:25.866Z"
+    },
+    {
+      "name": "Unit Tests",
+      "passed": false,
+      "details": {
+        "error": "describe is not defined",
+        "stack": "ReferenceError: describe is not defined\n    at Object.<anonymous> (/Users/tetra/Documents/GitHub/ultralink/tests/research-team-llm.test.js:3:1)\n    at Module._compile (node:internal/modules/cjs/loader:1734:14)\n    at Object..js (node:internal/modules/cjs/loader:1899:10)\n    at Module.load (node:internal/modules/cjs/loader:1469:32)\n    at Function._load (node:internal/modules/cjs/loader:1286:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1491:12)\n    at require (node:internal/modules/helpers:135:16)\n    at runAllTests (/Users/tetra/Documents/GitHub/ultralink/tests/run-research-team-tests.js:185:7)"
+      },
+      "timestamp": "2025-03-03T20:37:25.867Z"
+    },
+    {
+      "name": "Export Tests",
+      "passed": false,
+      "details": {
+        "error": "describe is not defined",
+        "stack": "ReferenceError: describe is not defined\n    at Object.<anonymous> (/Users/tetra/Documents/GitHub/ultralink/tests/research-team-llm-export.test.js:3:1)\n    at Module._compile (node:internal/modules/cjs/loader:1734:14)\n    at Object..js (node:internal/modules/cjs/loader:1899:10)\n    at Module.load (node:internal/modules/cjs/loader:1469:32)\n    at Function._load (node:internal/modules/cjs/loader:1286:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1491:12)\n    at require (node:internal/modules/helpers:135:16)\n    at runAllTests (/Users/tetra/Documents/GitHub/ultralink/tests/run-research-team-tests.js:198:7)"
+      },
+      "timestamp": "2025-03-03T20:37:25.867Z"
+    }
+  ],
+  "outputValidation": {
+    "summary": {
+      "total": 6,
+      "passed": 0,
+      "failed": 6,
+      "successRate": "0.00%"
+    },
+    "tests": [
+      {
+        "name": "JSON Validation",
+        "passed": false,
+        "details": {
+          "error": "ENOENT: no such file or directory, open '/Users/tetra/Documents/GitHub/ultralink/output/research-team/raw/research-team.json'"
+        },
+        "timestamp": "2025-03-03T20:37:25.868Z"
+      },
+      {
+        "name": "CSV Validation",
+        "passed": false,
+        "details": {
+          "error": "ENOENT: no such file or directory, open '/Users/tetra/Documents/GitHub/ultralink/output/research-team/raw/research-team.csv'"
+        },
+        "timestamp": "2025-03-03T20:37:25.868Z"
+      },
+      {
+        "name": "GraphML Validation",
+        "passed": false,
+        "details": {
+          "error": "ENOENT: no such file or directory, open '/Users/tetra/Documents/GitHub/ultralink/output/research-team/graph/research-team.graphml'"
+        },
+        "timestamp": "2025-03-03T20:37:25.869Z"
+      },
+      {
+        "name": "HTML Validation",
+        "passed": false,
+        "details": {
+          "error": "ENOENT: no such file or directory, open '/Users/tetra/Documents/GitHub/ultralink/output/research-team/docs/research-team.html'"
+        },
+        "timestamp": "2025-03-03T20:37:25.869Z"
+      },
+      {
+        "name": "Obsidian Validation",
+        "passed": false,
+        "details": {
+          "error": "ENOENT: no such file or directory, scandir '/Users/tetra/Documents/GitHub/ultralink/output/research-team/knowledge/obsidian'"
+        },
+        "timestamp": "2025-03-03T20:37:25.869Z"
+      },
+      {
+        "name": "Timeline Validation",
+        "passed": false,
+        "details": {
+          "error": "ENOENT: no such file or directory, open '/Users/tetra/Documents/GitHub/ultralink/output/research-team/temporal/timeline.json'"
+        },
+        "timestamp": "2025-03-03T20:37:25.869Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+source,target,type,startDate,role
+alice,desert-ecology,leads,2023-01-15,Principal Investigator
+alice,climate-impact,contributes_to,2022-10-01,Consultant
+bob,desert-ecology,works_on,2023-02-01,Data Analyst
+bob,alice,reports_to,2023-02-01,

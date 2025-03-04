@@ -1,0 +1,18 @@
+# roadrunner
+
+Type: animal
+
+## Metadata
+
+- name: Greater Roadrunner
+- scientificName: Geococcyx californianus
+- lifespan: 8
+- diet: carnivore
+- status: least concern
+- description: Fast-running ground cuckoo that rarely flies.
+- adaptations: ["Can extract water from prey","Salt glands to excrete excess salt","Ground-dwelling to avoid flying in thin, hot air","Special feathers for insulation"]
+
+## Links
+
+- preys_on -> [[scorpion]]
+- lives_in -> [[rocky_outcrops]]

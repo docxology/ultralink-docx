@@ -1,0 +1,14 @@
+# rocky_outcrops
+
+Type: abiotic_factor
+
+## Metadata
+
+- name: Rocky Outcrops
+- type: geological
+- description: Exposed rock formations that provide shade and shelter.
+- impact: medium
+
+## Links
+
+No links

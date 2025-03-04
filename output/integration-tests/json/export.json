@@ -1,0 +1,75 @@
+{
+  "entities": [
+    {
+      "id": "saguaro",
+      "type": "organism",
+      "attributes": {
+        "name": "Saguaro Cactus",
+        "scientificName": "Carnegiea gigantea",
+        "type": "plant",
+        "height": "15-50 feet",
+        "lifespan": "150-200 years"
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.111Z",
+        "modified": "2025-03-04T00:39:48.111Z"
+      }
+    },
+    {
+      "id": "kangaroo-rat",
+      "type": "organism",
+      "attributes": {
+        "name": "Kangaroo Rat",
+        "scientificName": "Dipodomys",
+        "type": "mammal",
+        "weight": "100-150g",
+        "nocturnal": true
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.111Z",
+        "modified": "2025-03-04T00:39:48.111Z"
+      }
+    },
+    {
+      "id": "aridity",
+      "type": "environmental_factor",
+      "attributes": {
+        "name": "Aridity",
+        "description": "Extremely dry conditions with minimal rainfall",
+        "annualRainfall": "3-15 inches"
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.111Z",
+        "modified": "2025-03-04T00:39:48.111Z"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source": "saguaro",
+      "target": "aridity",
+      "type": "adapts_to",
+      "attributes": {
+        "mechanism": "Water storage in stem",
+        "efficiency": 0.95
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.111Z",
+        "modified": "2025-03-04T00:39:48.111Z"
+      }
+    },
+    {
+      "source": "kangaroo-rat",
+      "target": "aridity",
+      "type": "adapts_to",
+      "attributes": {
+        "mechanism": "Metabolic water production",
+        "efficiency": 0.88
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.111Z",
+        "modified": "2025-03-04T00:39:48.111Z"
+      }
+    }
+  ]
+}

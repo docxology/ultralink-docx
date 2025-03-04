@@ -1,0 +1,96 @@
+{
+  "name": "ultralink",
+  "version": "0.1.0",
+  "description": "A meta-linking paradigm for plain text relational content with deterministic deployment capabilities",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node tests/utils/run-tests.js",
+    "test:unit": "jest tests/unit",
+    "test:integration": "jest tests/integration",
+    "test:system": "jest tests/system",
+    "test:e2e": "jest tests/e2e",
+    "test:performance": "jest tests/performance",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "build": "webpack --mode production",
+    "test:research-team": "node tests/run-research-team-tests.js",
+    "test:all-systems": "node tests/runners/all-systems-render-test.js",
+    "test:systems": "npm run test:all-systems",
+    "test:html-website": "node tests/html-website-export.test.js",
+    "test:full-blob": "node tests/full-blob-export.test.js",
+    "test:exports": "npm run test:systems && npm run test:html-website && npm run test:full-blob",
+    "docs:build": "jsdoc -c jsdoc.json",
+    "docs:serve": "http-server ./docs/generated -o",
+    "example:basic": "node examples/basic-usage.js",
+    "example:database": "node examples/database-export.js",
+    "example:integrity": "node examples/integrity-checking.js",
+    "lint": "eslint src tests examples",
+    "lint:fix": "eslint --fix src tests examples"
+  },
+  "keywords": [
+    "hyperlink",
+    "meta-link",
+    "plain-text",
+    "relational",
+    "obsidian",
+    "knowledge-graph"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/ultralink.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/ultralink/issues"
+  },
+  "homepage": "https://github.com/yourusername/ultralink#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "canvas": "^3.1.0",
+    "d3": "^7.9.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-jest": "^27.9.0",
+    "eslint-plugin-node": "^11.1.0",
+    "http-server": "^14.1.1",
+    "jest": "^29.7.0",
+    "jsdoc": "^4.0.2",
+    "prettier": "^2.8.8",
+    "xml2js": "^0.6.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "reporters": [
+      "default",
+      ["<rootDir>/tests/utils/custom-reporter.js", {}]
+    ],
+    "verbose": true,
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "dependencies": {
+    "csv-parser": "^3.2.0"
+  }
+}

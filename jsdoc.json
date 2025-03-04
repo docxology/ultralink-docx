@@ -1,0 +1,114 @@
+{
+  "source": {
+    "include": ["src", "README.md"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(node_modules/|docs/|tests/)"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "destination": "./docs/generated",
+    "recurse": true,
+    "readme": "README.md",
+    "template": "node_modules/clean-jsdoc-theme",
+    "theme_opts": {
+      "default_theme": "light",
+      "title": "UltraLink API Documentation",
+      "homepageTitle": "UltraLink: A meta-linking paradigm for plain text relational content",
+      "includeFilesListInHomepage": true,
+      "menu": [
+        {
+          "title": "GitHub",
+          "link": "https://github.com/yourusername/ultralink",
+          "target": "_blank"
+        },
+        {
+          "title": "npm",
+          "link": "https://www.npmjs.com/package/ultralink",
+          "target": "_blank"
+        }
+      ],
+      "sections": [
+        "Classes",
+        "Modules",
+        "Externals",
+        "Events",
+        "Namespaces",
+        "Mixins",
+        "Tutorials",
+        "Interfaces",
+        "Global"
+      ],
+      "meta": [
+        {
+          "name": "author",
+          "content": "UltraLink Team"
+        },
+        {
+          "name": "description",
+          "content": "API documentation for UltraLink - a meta-linking paradigm for plain text relational content"
+        }
+      ],
+      "search": true,
+      "create_index": true,
+      "resizeable": {
+        "navbar": {
+          "min": "300",
+          "max": "600"
+        }
+      }
+    }
+  },
+  "markdown": {
+    "hardwrap": false,
+    "idInHeadings": true
+  },
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": false,
+    "default": {
+      "outputSourceFiles": true,
+      "includeDate": false,
+      "useLongnameInNav": true
+    }
+  },
+  "docdash": {
+    "static": false,
+    "sort": true,
+    "sectionOrder": [
+      "Classes",
+      "Modules",
+      "Externals",
+      "Events",
+      "Namespaces",
+      "Mixins",
+      "Tutorials",
+      "Interfaces",
+      "Global"
+    ],
+    "meta": {
+      "title": "UltraLink API Documentation",
+      "description": "API documentation for UltraLink - a meta-linking paradigm for plain text relational content",
+      "keyword": "hyperlink, meta-link, plain-text, relational, obsidian, knowledge-graph"
+    },
+    "search": true,
+    "collapse": true,
+    "wrap": true,
+    "typedefs": true,
+    "navLevel": 3,
+    "private": false,
+    "removeQuotes": "none",
+    "scripts": [],
+    "menu": {
+      "GitHub": {
+        "href": "https://github.com/yourusername/ultralink",
+        "target": "_blank"
+      },
+      "npm": {
+        "href": "https://www.npmjs.com/package/ultralink",
+        "target": "_blank"
+      }
+    }
+  }
+} 

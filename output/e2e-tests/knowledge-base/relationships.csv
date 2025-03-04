@@ -1,0 +1,8 @@
+source,target,type
+project-alpha,machine-learning,uses
+project-alpha,data-analysis,uses
+project-beta,machine-learning,uses
+alice-smith,project-alpha,manages
+alice-smith,project-beta,manages
+bob-johnson,project-alpha,works_on
+bob-johnson,project-beta,works_on

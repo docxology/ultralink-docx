@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Desert Ecosystem</title>
+      <style>
+        :root {
+          --node-color: #4285f4;
+          --edge-color: #5f6368;
+          --text-color: #202124;
+          --bg-color: #f8f9fa;
+          --highlight-color: #ea4335;
+        }
+        
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          margin: 0;
+          padding: 0;
+          color: var(--text-color);
+          background-color: var(--bg-color);
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+        }
+        
+        header {
+          padding: 1rem;
+          background-color: rgba(0, 0, 0, 0.1);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        main {
+          display: flex;
+          flex: 1;
+        }
+        
+        .sidebar {
+          width: 250px;
+          padding: 1rem;
+          border-right: 1px solid rgba(0, 0, 0, 0.1);
+          overflow-y: auto;
+        }
+        
+        .content {
+          flex: 1;
+          padding: 1rem;
+          overflow-y: auto;
+        }
+        
+        .visualization {
+          width: 100%;
+          height: 600px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: 4px;
+        }
+        
+        .entity-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        
+        .entity-item {
+          padding: 0.5rem;
+          margin-bottom: 0.25rem;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        
+        .entity-item:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .entity-item.active {
+          background-color: var(--node-color);
+          color: white;
+        }
+        
+        .search-box {
+          width: 100%;
+          padding: 0.5rem;
+          margin-bottom: 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          border-radius: 4px;
+        }
+        
+        .filter-group {
+          margin-bottom: 1rem;
+        }
+        
+        .filter-group h3 {
+          margin-top: 0;
+          margin-bottom: 0.5rem;
+        }
+        
+        .node {
+          fill: var(--node-color);
+          stroke: #fff;
+          stroke-width: 1.5px;
+        }
+        
+        .node.highlighted {
+          fill: var(--highlight-color);
+        }
+        
+        .link {
+          stroke: var(--edge-color);
+          stroke-opacity: 0.6;
+        }
+        
+        .node-label {
+          font-size: 10px;
+          fill: var(--text-color);
+          text-anchor: middle;
+          pointer-events: none;
+        }
+        
+        /* Theme-specific styles */
+        
+        
+        
+        
+        
+      </style>
+    </head>
+    <body>
+      <header>
+        <h1>Desert Ecosystem</h1>
+        <p>Interactive visualization of desert ecosystem relationships</p>
+      </header>
+      
+      <main>
+        <div class="sidebar">
+          
+          <input type="text" class="search-box" placeholder="Search entities..." id="search-input">
+          
+          <div class="filter-group">
+            <h3>Entity Types</h3>
+            <div id="type-filters"></div>
+          </div>
+          
+          <h3>Entities</h3>
+          <ul class="entity-list" id="entity-list"></ul>
+        </div>
+        
+        <div class="content">
+          <div class="visualization" id="graph-container"></div>
+          <div id="entity-details"></div>
+        </div>
+      </main>
+      
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      
+      <script>
+        // UltraLink data
+        const data = {
+  "entities": [
+    {
+      "id": "saguaro",
+      "type": "organism",
+      "attributes": {
+        "name": "Saguaro Cactus",
+        "scientificName": "Carnegiea gigantea",
+        "type": "plant",
+        "height": "15-50 feet",
+        "lifespan": "150-200 years"
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.108Z",
+        "modified": "2025-03-04T00:39:48.108Z"
+      }
+    },
+    {
+      "id": "kangaroo-rat",
+      "type": "organism",
+      "attributes": {
+        "name": "Kangaroo Rat",
+        "scientificName": "Dipodomys",
+        "type": "mammal",
+        "weight": "100-150g",
+        "nocturnal": true
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.108Z",
+        "modified": "2025-03-04T00:39:48.108Z"
+      }
+    },
+    {
+      "id": "aridity",
+      "type": "environmental_factor",
+      "attributes": {
+        "name": "Aridity",
+        "description": "Extremely dry conditions with minimal rainfall",
+        "annualRainfall": "3-15 inches"
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.108Z",
+        "modified": "2025-03-04T00:39:48.108Z"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source": "saguaro",
+      "target": "aridity",
+      "type": "adapts_to",
+      "attributes": {
+        "mechanism": "Water storage in stem",
+        "efficiency": 0.95
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.108Z",
+        "modified": "2025-03-04T00:39:48.108Z"
+      }
+    },
+    {
+      "source": "kangaroo-rat",
+      "target": "aridity",
+      "type": "adapts_to",
+      "attributes": {
+        "mechanism": "Metabolic water production",
+        "efficiency": 0.88
+      },
+      "metadata": {
+        "created": "2025-03-04T00:39:48.108Z",
+        "modified": "2025-03-04T00:39:48.108Z"
+      }
+    }
+  ]
+};
+        
+        // DOM elements
+        const graphContainer = document.getElementById('graph-container');
+        const entityList = document.getElementById('entity-list');
+        const entityDetails = document.getElementById('entity-details');
+        const searchInput = document.getElementById('search-input');
+        const typeFilters = document.getElementById('type-filters');
+        
+        // State
+        let selectedEntity = null;
+        let filteredEntities = data.entities;
+        
+        // Initialize
+        function init() {
+          renderEntityList();
+          renderTypeFilters();
+          renderGraph();
+          
+          // Set up search
+          searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filteredEntities = data.entities.filter(entity => {
+              const name = entity.attributes.name || entity.id;
+              return name.toLowerCase().includes(searchTerm);
+            });
+            renderEntityList();
+          });
+          
+        }
+        
+        // Render entity list
+        function renderEntityList() {
+          entityList.innerHTML = '';
+          
+          filteredEntities.forEach(entity => {
+            const li = document.createElement('li');
+            li.className = 'entity-item';
+            if (selectedEntity === entity.id) {
+              li.classList.add('active');
+            }
+            
+            const name = entity.attributes.name || entity.id;
+            li.textContent = name;
+            
+            li.addEventListener('click', () => {
+              selectedEntity = entity.id;
+              renderEntityList();
+              renderEntityDetails(entity);
+              highlightNode(entity.id);
+            });
+            
+            entityList.appendChild(li);
+          });
+        }
+        
+        // Render type filters
+        function renderTypeFilters() {
+          const types = [...new Set(data.entities.map(e => e.type))];
+          
+          types.forEach(type => {
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.style.marginBottom = '0.25rem';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = true;
+            checkbox.dataset.type = type;
+            
+            checkbox.addEventListener('change', updateFilters);
+            
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(' ' + type));
+            
+            typeFilters.appendChild(label);
+          });
+        }
+        
+        // Update filters
+        function updateFilters() {
+          const checkedTypes = Array.from(typeFilters.querySelectorAll('input:checked'))
+            .map(input => input.dataset.type);
+          
+          filteredEntities = data.entities.filter(entity => 
+            checkedTypes.includes(entity.type)
+          );
+          
+          renderEntityList();
+          updateGraph();
+        }
+        
+        // Render entity details
+        function renderEntityDetails(entity) {
+          if (!entity) {
+            entityDetails.innerHTML = '<p>Select an entity to view details</p>';
+            return;
+          }
+          
+          const name = entity.attributes.name || entity.id;
+          
+          let html = `
+            <h2>${name}</h2>
+            <p><strong>Type:</strong> ${entity.type}</p>
+            <p><strong>ID:</strong> ${entity.id}</p>
+          `;
+          
+          // Attributes
+          if (Object.keys(entity.attributes).length > 0) {
+            html += '<h3>Attributes</h3><ul>';
+            
+            for (const [key, value] of Object.entries(entity.attributes)) {
+              if (key === 'name') continue; // Skip name as it's in the header
+              
+              const formattedValue = typeof value === 'object' 
+                ? JSON.stringify(value) 
+                : value;
+                
+              html += `<li><strong>${key}:</strong> ${formattedValue}</li>`;
+            }
+            
+            html += '</ul>';
+          }
+          
+          // Relationships
+          const outgoingLinks = data.relationships.filter(rel => rel.source === entity.id);
+          const incomingLinks = data.relationships.filter(rel => rel.target === entity.id);
+          
+          if (outgoingLinks.length > 0) {
+            html += '<h3>Outgoing Relationships</h3><ul>';
+            
+            for (const link of outgoingLinks) {
+              const targetEntity = data.entities.find(e => e.id === link.target);
+              const targetName = targetEntity?.attributes?.name || link.target;
+              
+              html += `<li>${link.type} → ${targetName}</li>`;
+            }
+            
+            html += '</ul>';
+          }
+          
+          if (incomingLinks.length > 0) {
+            html += '<h3>Incoming Relationships</h3><ul>';
+            
+            for (const link of incomingLinks) {
+              const sourceEntity = data.entities.find(e => e.id === link.source);
+              const sourceName = sourceEntity?.attributes?.name || link.source;
+              
+              html += `<li>${sourceName} → ${link.type}</li>`;
+            }
+            
+            html += '</ul>';
+          }
+          
+          entityDetails.innerHTML = html;
+        }
+        
+        // D3 graph visualization
+        let simulation, svg, link, node, nodeLabels;
+        
+        function renderGraph() {
+          const width = graphContainer.clientWidth;
+          const height = graphContainer.clientHeight;
+          
+          svg = d3.select('#graph-container')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+          
+          // Create links
+          link = svg.append('g')
+            .selectAll('line')
+            .data(data.relationships)
+            .enter()
+            .append('line')
+            .attr('class', 'link');
+          
+          // Create nodes
+          node = svg.append('g')
+            .selectAll('circle')
+            .data(data.entities)
+            .enter()
+            .append('circle')
+            .attr('class', 'node')
+            .attr('r', 8)
+            .attr('id', d => `node-${d.id}`)
+            .on('click', (event, d) => {
+              selectedEntity = d.id;
+              renderEntityList();
+              renderEntityDetails(d);
+              highlightNode(d.id);
+            });
+          
+          // Add node labels
+          nodeLabels = svg.append('g')
+            .selectAll('text')
+            .data(data.entities)
+            .enter()
+            .append('text')
+            .attr('class', 'node-label')
+            .attr('dy', -12)
+            .text(d => d.attributes.name || d.id);
+          
+          // Set up force simulation
+          simulation = d3.forceSimulation(data.entities)
+            .force('link', d3.forceLink(data.relationships)
+              .id(d => d.id)
+              .distance(100))
+            .force('charge', d3.forceManyBody().strength(-200))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .on('tick', () => {
+              link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+              
+              node
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+              
+              nodeLabels
+                .attr('x', d => d.x)
+                .attr('y', d => d.y);
+            });
+        }
+        
+        function updateGraph() {
+          // Update nodes and links based on filtered entities
+          const filteredNodeIds = filteredEntities.map(e => e.id);
+          const filteredLinks = data.relationships.filter(
+            rel => filteredNodeIds.includes(rel.source) && filteredNodeIds.includes(rel.target)
+          );
+          
+          node.style('display', d => filteredNodeIds.includes(d.id) ? null : 'none');
+          nodeLabels.style('display', d => filteredNodeIds.includes(d.id) ? null : 'none');
+          
+          link.style('display', d => 
+            filteredNodeIds.includes(d.source.id) && filteredNodeIds.includes(d.target.id) 
+              ? null : 'none'
+          );
+          
+          // Restart simulation
+          simulation.nodes(filteredEntities);
+          simulation.force('link').links(filteredLinks);
+          simulation.alpha(0.3).restart();
+        }
+        
+        function highlightNode(id) {
+          // Reset all nodes
+          node.classed('highlighted', false);
+          
+          // Highlight selected node
+          if (id) {
+            d3.select(`#node-${id}`).classed('highlighted', true);
+          }
+        }
+        
+        // Initialize the application
+        init();
+        
+      </script>
+    </body>
+    </html>

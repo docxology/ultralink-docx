@@ -1,0 +1,113 @@
+{
+  "summary": {
+    "startTime": "2025-03-03T20:38:42.128Z",
+    "endTime": "2025-03-03T20:38:43.391Z",
+    "duration": "1263ms",
+    "totalTests": 4,
+    "passedTests": 4,
+    "failedTests": 0,
+    "successRate": "100.00%"
+  },
+  "testSuites": [
+    {
+      "name": "Pipeline Execution",
+      "passed": true,
+      "details": {
+        "message": "Pipeline completed successfully"
+      },
+      "timestamp": "2025-03-03T20:38:42.166Z"
+    },
+    {
+      "name": "Render Tests",
+      "passed": true,
+      "details": {
+        "message": "All render tests completed successfully"
+      },
+      "timestamp": "2025-03-03T20:38:42.176Z"
+    },
+    {
+      "name": "Unit Tests",
+      "passed": true,
+      "details": {
+        "message": "All unit tests completed successfully"
+      },
+      "timestamp": "2025-03-03T20:38:43.010Z"
+    },
+    {
+      "name": "Export Tests",
+      "passed": true,
+      "details": {
+        "message": "All export tests completed successfully"
+      },
+      "timestamp": "2025-03-03T20:38:43.383Z"
+    }
+  ],
+  "outputValidation": {
+    "summary": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "successRate": "100.00%"
+    },
+    "tests": [
+      {
+        "name": "JSON Validation",
+        "passed": true,
+        "details": {
+          "entityCount": 12,
+          "metadataKeys": [
+            "graph_metrics",
+            "cluster_analysis",
+            "temporal_analysis"
+          ]
+        },
+        "timestamp": "2025-03-03T20:38:43.384Z"
+      },
+      {
+        "name": "CSV Validation",
+        "passed": true,
+        "details": {
+          "columnCount": 136,
+          "rowCount": 12
+        },
+        "timestamp": "2025-03-03T20:38:43.384Z"
+      },
+      {
+        "name": "GraphML Validation",
+        "passed": true,
+        "details": {
+          "nodeCount": 13,
+          "edgeCount": 23
+        },
+        "timestamp": "2025-03-03T20:38:43.391Z"
+      },
+      {
+        "name": "HTML Validation",
+        "passed": true,
+        "details": {
+          "size": 3925,
+          "hasStyles": true
+        },
+        "timestamp": "2025-03-03T20:38:43.391Z"
+      },
+      {
+        "name": "Obsidian Validation",
+        "passed": true,
+        "details": {
+          "fileCount": 12,
+          "sampleFileName": "alice-chen.md"
+        },
+        "timestamp": "2025-03-03T20:38:43.391Z"
+      },
+      {
+        "name": "Timeline Validation",
+        "passed": true,
+        "details": {
+          "eventCount": 2,
+          "timeRange": "2021-Q1 to 2023-Q4"
+        },
+        "timestamp": "2025-03-03T20:38:43.391Z"
+      }
+    ]
+  }
+}

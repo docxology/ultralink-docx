@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Research Team Test Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .summary { background: #f5f5f5; padding: 20px; border-radius: 5px; }
+    .success { color: green; }
+    .failure { color: red; }
+    .test-suite { margin: 20px 0; padding: 10px; border: 1px solid #ddd; }
+    .validation { background: #e1f5fe; padding: 15px; margin: 10px 0; }
+    pre { background: #f8f8f8; padding: 10px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Research Team Test Report</h1>
+  
+  <div class="summary">
+    <h2>Summary</h2>
+    <p>Start Time: 2025-03-03T20:38:42.128Z</p>
+    <p>End Time: 2025-03-03T20:38:43.391Z</p>
+    <p>Duration: 1263ms</p>
+    <p>Total Tests: 4</p>
+    <p>Passed Tests: <span class="success">4</span></p>
+    <p>Failed Tests: <span class="failure">0</span></p>
+    <p>Success Rate: 100.00%</p>
+  </div>
+
+  <h2>Test Suites</h2>
+  
+    <div class="test-suite">
+      <h3>Pipeline Execution</h3>
+      <p>Status: <span class="success">PASSED</span></p>
+      <p>Timestamp: Mon Mar 03 2025 12:38:42 GMT-0800 (Pacific Standard Time)</p>
+      <pre>{
+  "message": "Pipeline completed successfully"
+}</pre>
+    </div>
+  
+    <div class="test-suite">
+      <h3>Render Tests</h3>
+      <p>Status: <span class="success">PASSED</span></p>
+      <p>Timestamp: Mon Mar 03 2025 12:38:42 GMT-0800 (Pacific Standard Time)</p>
+      <pre>{
+  "message": "All render tests completed successfully"
+}</pre>
+    </div>
+  
+    <div class="test-suite">
+      <h3>Unit Tests</h3>
+      <p>Status: <span class="success">PASSED</span></p>
+      <p>Timestamp: Mon Mar 03 2025 12:38:43 GMT-0800 (Pacific Standard Time)</p>
+      <pre>{
+  "message": "All unit tests completed successfully"
+}</pre>
+    </div>
+  
+    <div class="test-suite">
+      <h3>Export Tests</h3>
+      <p>Status: <span class="success">PASSED</span></p>
+      <p>Timestamp: Mon Mar 03 2025 12:38:43 GMT-0800 (Pacific Standard Time)</p>
+      <pre>{
+  "message": "All export tests completed successfully"
+}</pre>
+    </div>
+  
+
+  <h2>Output Validation</h2>
+  <div class="validation">
+    <h3>Validation Summary</h3>
+    <p>Total Validations: 6</p>
+    <p>Passed: <span class="success">6</span></p>
+    <p>Failed: <span class="failure">0</span></p>
+    <p>Success Rate: 100.00%</p>
+    
+    <h3>Validation Details</h3>
+    
+      <div class="test-suite">
+        <h4>JSON Validation</h4>
+        <p>Status: <span class="success">PASSED</span></p>
+        <pre>{
+  "entityCount": 12,
+  "metadataKeys": [
+    "graph_metrics",
+    "cluster_analysis",
+    "temporal_analysis"
+  ]
+}</pre>
+      </div>
+    
+      <div class="test-suite">
+        <h4>CSV Validation</h4>
+        <p>Status: <span class="success">PASSED</span></p>
+        <pre>{
+  "columnCount": 136,
+  "rowCount": 12
+}</pre>
+      </div>
+    
+      <div class="test-suite">
+        <h4>GraphML Validation</h4>
+        <p>Status: <span class="success">PASSED</span></p>
+        <pre>{
+  "nodeCount": 13,
+  "edgeCount": 23
+}</pre>
+      </div>
+    
+      <div class="test-suite">
+        <h4>HTML Validation</h4>
+        <p>Status: <span class="success">PASSED</span></p>
+        <pre>{
+  "size": 3925,
+  "hasStyles": true
+}</pre>
+      </div>
+    
+      <div class="test-suite">
+        <h4>Obsidian Validation</h4>
+        <p>Status: <span class="success">PASSED</span></p>
+        <pre>{
+  "fileCount": 12,
+  "sampleFileName": "alice-chen.md"
+}</pre>
+      </div>
+    
+      <div class="test-suite">
+        <h4>Timeline Validation</h4>
+        <p>Status: <span class="success">PASSED</span></p>
+        <pre>{
+  "eventCount": 2,
+  "timeRange": "2021-Q1 to 2023-Q4"
+}</pre>
+      </div>
+    
+  </div>
+</body>
+</html>

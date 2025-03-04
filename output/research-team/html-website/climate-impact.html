@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>climate-impact - Research Team Portal</title>
+        <style>
+          :root {
+            --node-color: #7b1fa2;
+            --edge-color: #3f51b5;
+            --text-color: #212121;
+            --bg-color: #f5f5f5;
+            --highlight-color: #ff9800;
+          }
+          
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+          }
+          
+          header {
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+          }
+          
+          .attribute-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+          }
+          
+          .attribute-table th, .attribute-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          .relationship-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+          }
+          
+          .relationship-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          }
+          
+          a {
+            color: var(--node-color);
+            text-decoration: none;
+          }
+          
+          a:hover {
+            text-decoration: underline;
+          }
+          
+          .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+          }
+          
+          /* Theme-specific styles */
+          
+          header {
+            background-color: #7b1fa2;
+            color: white;
+          }
+          
+          h1, h2, h3 {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+          }
+          
+          
+          
+        </style>
+      </head>
+      <body>
+        <header>
+          <div class="container">
+            <h1>climate-impact</h1>
+            <p>project</p>
+          </div>
+        </header>
+        
+        <div class="container">
+          <a href="index.html" class="back-link">← Back to Network View</a>
+          
+          <h2>Entity Details</h2>
+          <p><strong>ID:</strong> climate-impact</p>
+          
+          <h3>Attributes</h3>
+          <table class="attribute-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                  <tr>
+                    <td>title</td>
+                    <td>Climate Impact Assessment</td>
+                  </tr>
+                
+                  <tr>
+                    <td>startDate</td>
+                    <td>2022-08-10</td>
+                  </tr>
+                
+                  <tr>
+                    <td>budget</td>
+                    <td>220000</td>
+                  </tr>
+                
+                  <tr>
+                    <td>status</td>
+                    <td>Active</td>
+                  </tr>
+                
+            </tbody>
+          </table>
+          
+          <h3>Relationships</h3>
+          <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+          <a href="alice.html">Alice Chen</a> → <strong>contributes_to</strong>
+        </li></ul>
+        </div>
+      </body>
+      </html>

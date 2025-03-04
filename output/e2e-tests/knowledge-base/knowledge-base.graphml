@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="description" for="node" attr.name="description" attr.type="string"/>
+  <key id="status" for="node" attr.name="status" attr.type="string"/>
+  <key id="dueDate" for="node" attr.name="dueDate" attr.type="string"/>
+  <key id="role" for="node" attr.name="role" attr.type="string"/>
+  <key id="email" for="node" attr.name="email" attr.type="string"/>
+  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="machine-learning">
+      <data key="type">concept</data>
+      <data key="name">Machine Learning</data>
+      <data key="description">A field of AI focused on algorithms that learn from data</data>
+    </node>
+    <node id="data-analysis">
+      <data key="type">concept</data>
+      <data key="name">Data Analysis</data>
+      <data key="description">The process of inspecting and modeling data</data>
+    </node>
+    <node id="project-management">
+      <data key="type">concept</data>
+      <data key="name">Project Management</data>
+      <data key="description">The practice of planning and organizing projects</data>
+    </node>
+    <node id="project-alpha">
+      <data key="type">project</data>
+      <data key="name">Project Alpha</data>
+      <data key="status">In Progress</data>
+      <data key="dueDate">2023-12-31</data>
+    </node>
+    <node id="project-beta">
+      <data key="type">project</data>
+      <data key="name">Project Beta</data>
+      <data key="status">Planning</data>
+      <data key="dueDate">2024-03-15</data>
+    </node>
+    <node id="alice-smith">
+      <data key="type">person</data>
+      <data key="name">Alice Smith</data>
+      <data key="role">Project Manager</data>
+      <data key="email">alice@example.com</data>
+    </node>
+    <node id="bob-johnson">
+      <data key="type">person</data>
+      <data key="name">Bob Johnson</data>
+      <data key="role">Developer</data>
+      <data key="email">bob@example.com</data>
+    </node>
+    <edge source="project-alpha" target="machine-learning">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="project-alpha" target="data-analysis">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="project-beta" target="machine-learning">
+      <data key="type">uses</data>
+    </edge>
+    <edge source="alice-smith" target="project-alpha">
+      <data key="type">manages</data>
+    </edge>
+    <edge source="alice-smith" target="project-beta">
+      <data key="type">manages</data>
+    </edge>
+    <edge source="bob-johnson" target="project-alpha">
+      <data key="type">works_on</data>
+    </edge>
+    <edge source="bob-johnson" target="project-beta">
+      <data key="type">works_on</data>
+    </edge>
+  </graph>
+</graphml>

@@ -1,0 +1,24 @@
+{
+  "startTime": "2025-03-04T00:48:40.689Z",
+  "endTime": "2025-03-04T00:48:41.467Z",
+  "tests": [
+    {
+      "name": "Unit Tests",
+      "status": "failed",
+      "duration": 775,
+      "startTime": "2025-03-04T00:48:40.692Z",
+      "endTime": "2025-03-04T00:48:41.467Z",
+      "error": {
+        "code": 1,
+        "message": "Test 'Unit Tests' failed with exit code 1"
+      }
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0
+  },
+  "error": "Unit Tests failed with exit code 1"
+}

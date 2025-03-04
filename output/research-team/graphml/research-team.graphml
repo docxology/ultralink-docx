@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="role" for="node" attr.name="role" attr.type="string"/>
+  <key id="department" for="node" attr.name="department" attr.type="string"/>
+  <key id="email" for="node" attr.name="email" attr.type="string"/>
+  <key id="publications" for="node" attr.name="publications" attr.type="string"/>
+  <key id="title" for="node" attr.name="title" attr.type="string"/>
+  <key id="startDate" for="node" attr.name="startDate" attr.type="string"/>
+  <key id="budget" for="node" attr.name="budget" attr.type="string"/>
+  <key id="status" for="node" attr.name="status" attr.type="string"/>
+  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+  <key id="startDate" for="edge" attr.name="startDate" attr.type="string"/>
+  <key id="role" for="edge" attr.name="role" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="alice">
+      <data key="type">researcher</data>
+      <data key="name">Alice Chen</data>
+      <data key="role">Principal Investigator</data>
+      <data key="department">Biology</data>
+      <data key="email">alice.chen@example.edu</data>
+      <data key="publications">42</data>
+    </node>
+    <node id="bob">
+      <data key="type">researcher</data>
+      <data key="name">Bob Smith</data>
+      <data key="role">Postdoc</data>
+      <data key="department">Biology</data>
+      <data key="email">bob.smith@example.edu</data>
+      <data key="publications">18</data>
+    </node>
+    <node id="desert-ecology">
+      <data key="type">project</data>
+      <data key="title">Desert Ecology Study</data>
+      <data key="startDate">2023-01-15</data>
+      <data key="budget">150000</data>
+      <data key="status">Active</data>
+    </node>
+    <node id="climate-impact">
+      <data key="type">project</data>
+      <data key="title">Climate Impact Assessment</data>
+      <data key="startDate">2022-08-10</data>
+      <data key="budget">220000</data>
+      <data key="status">Active</data>
+    </node>
+    <edge source="alice" target="desert-ecology">
+      <data key="type">leads</data>
+      <data key="startDate">2023-01-15</data>
+      <data key="role">Principal Investigator</data>
+    </edge>
+    <edge source="alice" target="climate-impact">
+      <data key="type">contributes_to</data>
+      <data key="startDate">2022-10-01</data>
+      <data key="role">Consultant</data>
+    </edge>
+    <edge source="bob" target="desert-ecology">
+      <data key="type">works_on</data>
+      <data key="startDate">2023-02-01</data>
+      <data key="role">Data Analyst</data>
+    </edge>
+    <edge source="bob" target="alice">
+      <data key="type">reports_to</data>
+      <data key="startDate">2023-02-01</data>
+    </edge>
+  </graph>
+</graphml>

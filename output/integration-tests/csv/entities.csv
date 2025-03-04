@@ -1,0 +1,4 @@
+id,type,name,scientificName,type,height,lifespan,weight,nocturnal,description,annualRainfall
+saguaro,organism,Saguaro Cactus,Carnegiea gigantea,plant,15-50 feet,150-200 years,,,,
+kangaroo-rat,organism,Kangaroo Rat,Dipodomys,mammal,,,100-150g,true,,
+aridity,environmental_factor,Aridity,,,,,,,Extremely dry conditions with minimal rainfall,3-15 inches

@@ -1,0 +1,3 @@
+source,target,type,mechanism,efficiency
+saguaro,aridity,adapts_to,Water storage in stem,0.95
+kangaroo-rat,aridity,adapts_to,Metabolic water production,0.88

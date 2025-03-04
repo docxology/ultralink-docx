@@ -1,0 +1,14 @@
+# sand_dunes
+
+Type: abiotic_factor
+
+## Metadata
+
+- name: Sand Dunes
+- type: geological
+- description: Mounds of windblown sand that can move and shift over time.
+- impact: high
+
+## Links
+
+No links
