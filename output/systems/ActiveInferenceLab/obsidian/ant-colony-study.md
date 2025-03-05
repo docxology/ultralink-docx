@@ -1,8 +1,8 @@
 ---
 type: project
 id: ant-colony-study
-created: 2025-03-05T00:58:30.717Z
-modified: 2025-03-05T00:58:30.717Z
+created: 2025-03-05T01:16:02.671Z
+modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Ant Colony Decision Making Study

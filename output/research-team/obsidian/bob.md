@@ -1,8 +1,8 @@
 ---
 type: researcher
 id: bob
-created: 2025-03-05T00:58:29.958Z
-modified: 2025-03-05T00:58:29.958Z
+created: 2025-03-05T01:10:35.700Z
+modified: 2025-03-05T01:10:35.700Z
 ---
 
 # Bob Smith

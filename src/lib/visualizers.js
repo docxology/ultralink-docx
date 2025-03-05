@@ -542,20 +542,122 @@ class ForceSimulation {
 
 /**
  * Convert UltraLink data to a Bayesian Network structure
- * @param {UltraLink} data - The UltraLink instance
- * @returns {Object} - Bayesian network structure
+ * @param {Object} options - Conversion options
+ * @returns {Object|String} - Bayesian network structure
  */
-function toBayesianNetwork(data) {
-  // Implementation for Bayesian Network conversion
-  // This is a placeholder for future implementation
-  return {
-    nodes: Array.from(data.entities.values()).map(e => ({ id: e.id })),
-    edges: Array.from(data.relationships.values()).map(r => ({
-      from: r.source,
-      to: r.target,
-      weight: 1
-    }))
+function toBayesianNetwork(options = {}) {
+  const {
+    format = 'json',
+    includeParameters = true,
+    includeVectors = false
+  } = options;
+  
+  // Extract entities and relationships from the UltraLink instance
+  const entities = Array.from(this.entities.values());
+  const relationships = Array.from(this.relationships.values());
+
+  // Build network structure
+  const network = {
+    nodes: {},
+    edges: []
   };
+
+  // Process entities as nodes
+  for (const entity of entities) {
+    const nodeId = entity.id;
+    
+    // Create node with basic properties
+    network.nodes[nodeId] = {
+      id: nodeId,
+      type: entity.type,
+      name: entity.attributes.name || entity.attributes.title || nodeId,
+      states: ['true', 'false'], // Default binary states
+      cpt: {},
+      attributes: { ...entity.attributes }
+    };
+    
+    // Add vector if requested and available
+    if (includeVectors && entity.vector) {
+      network.nodes[nodeId].vector = Array.from(entity.vector);
+    }
+    
+    // Generate placeholder CPT if parameters requested
+    if (includeParameters) {
+      network.nodes[nodeId].cpt = {
+        'true': 0.5,
+        'false': 0.5
+      };
+    }
+  }
+
+  // Process relationships as edges
+  for (const rel of relationships) {
+    network.edges.push({
+      source: rel.source,
+      target: rel.target,
+      type: rel.type,
+      weight: rel.attributes?.weight || 1.0,
+      attributes: { ...rel.attributes }
+    });
+    
+    // Add relationship attributes for complex testing
+    if (includeParameters && rel.attributes) {
+      const sourceNode = network.nodes[rel.source];
+      const targetNode = network.nodes[rel.target];
+      
+      if (sourceNode && targetNode) {
+        // Update target CPT based on relationship
+        if (rel.attributes.strength) {
+          targetNode.cpt = {
+            'true': rel.attributes.strength,
+            'false': 1 - rel.attributes.strength
+          };
+        }
+      }
+    }
+  }
+
+  // Return in requested format
+  if (format === 'bif') {
+    return convertToBIF(network);
+  }
+  
+  return network;
+}
+
+/**
+ * Convert network to BIF (Bayesian Interchange Format)
+ */
+function convertToBIF(network) {
+  let bif = 'network {\n';
+  bif += '  name = "UltraLink Bayesian Network";\n';
+  bif += '}\n\n';
+  
+  // Convert nodes (variables)
+  for (const [id, node] of Object.entries(network.nodes)) {
+    bif += `variable ${id} {\n`;
+    bif += `  type discrete[${node.states.length}] { ${node.states.join(', ')} };\n`;
+    bif += '}\n\n';
+  }
+  
+  // Convert CPTs
+  for (const [id, node] of Object.entries(network.nodes)) {
+    bif += `probability (${id}) {\n`;
+    
+    // Write CPT values
+    if (node.cpt) {
+      bif += '  table ';
+      bif += node.states.map(state => node.cpt[state] || 0.5).join(' ');
+      bif += ';\n';
+    } else {
+      // Default uniform distribution
+      bif += `  table ${Array(node.states.length).fill(1/node.states.length).join(' ')};\n`;
+    }
+    
+    bif += '}\n\n';
+  }
+  
+  return bif;
 }
 
 // Helper function to generate a deterministic hash code for a string

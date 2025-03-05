@@ -12,6 +12,8 @@
       --link: #4a9eff;
       --accent: #666666;
       --border: #333333;
+      --text-color: #e8eaed;
+      --bg-color: #202124;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -19,6 +21,7 @@
       padding: 0;
       background: var(--background);
       color: var(--text);
+      background: rgba(32, 33, 36, 0.8);
     }
     .container {
       display: grid;
@@ -76,6 +79,53 @@
       background: var(--background);
       color: var(--text);
     }
+    .zoom-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--background);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 5px;
+      z-index: 100;
+    }
+    .zoom-btn {
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .zoom-btn:hover {
+      background: var(--border);
+    }
+    .btn {
+      padding: 8px 12px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 4px;
+      display: block;
+      width: 100%;
+    }
+    .btn:hover {
+      background: var(--border);
+    }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -87,6 +137,7 @@
       
       <div class="search-box">
         <input type="text" id="search-input" placeholder="Search entities..." />
+        <button class="btn" id="clear-filters">Clear Filters</button>
       </div>
       
       <h3>Entities</h3>
@@ -96,6 +147,7 @@
             <a href="camel.html">
               Dromedary Camel
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('camel')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -103,6 +155,7 @@
             <a href="fennec_fox.html">
               Fennec Fox
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('fennec_fox')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -110,6 +163,7 @@
             <a href="desert_monitor.html">
               Desert Monitor
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('desert_monitor')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -117,6 +171,7 @@
             <a href="sidewinder.html">
               Sidewinder Rattlesnake
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('sidewinder')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -124,6 +179,7 @@
             <a href="scorpion.html">
               Deathstalker Scorpion
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('scorpion')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -131,6 +187,7 @@
             <a href="darkling_beetle.html">
               Darkling Beetle
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('darkling_beetle')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -138,6 +195,7 @@
             <a href="roadrunner.html">
               Greater Roadrunner
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('roadrunner')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -145,6 +203,7 @@
             <a href="desert_tortoise.html">
               Desert Tortoise
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('desert_tortoise')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -152,6 +211,7 @@
             <a href="cactus_wren.html">
               Cactus Wren
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('cactus_wren')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -159,6 +219,7 @@
             <a href="kangaroo_rat.html">
               Merriam's Kangaroo Rat
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -166,6 +227,7 @@
             <a href="gila_monster.html">
               Gila Monster
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -173,6 +235,7 @@
             <a href="javelina.html">
               Javelina
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('javelina')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -180,6 +243,7 @@
             <a href="saguaro.html">
               Saguaro Cactus
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('saguaro')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -187,6 +251,7 @@
             <a href="barrel_cactus.html">
               Barrel Cactus
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('barrel_cactus')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -194,6 +259,7 @@
             <a href="mesquite.html">
               Honey Mesquite
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('mesquite')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -201,6 +267,7 @@
             <a href="creosote_bush.html">
               Creosote Bush
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('creosote_bush')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -208,6 +275,7 @@
             <a href="desert_poppy.html">
               Desert Poppy
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('desert_poppy')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -215,6 +283,7 @@
             <a href="ocotillo.html">
               Ocotillo
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('ocotillo')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -222,6 +291,7 @@
             <a href="brittlebush.html">
               Brittlebush
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('brittlebush')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -229,6 +299,7 @@
             <a href="desert_ironwood.html">
               Desert Ironwood
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('desert_ironwood')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -236,6 +307,7 @@
             <a href="agave.html">
               Century Plant
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('agave')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -243,6 +315,7 @@
             <a href="joshua_tree.html">
               Joshua Tree
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('joshua_tree')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -250,6 +323,7 @@
             <a href="prickly_pear.html">
               Prickly Pear Cactus
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('prickly_pear')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -257,6 +331,7 @@
             <a href="cholla_cactus.html">
               Cholla Cactus
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('cholla_cactus')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -264,6 +339,7 @@
             <a href="other_plants.html">
               Various Desert Plants
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('other_plants')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">plant</div>
           </li>
         
@@ -271,6 +347,7 @@
             <a href="heat.html">
               Extreme Heat
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('heat')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -278,6 +355,7 @@
             <a href="temperature_variation.html">
               Temperature Variation
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('temperature_variation')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -285,6 +363,7 @@
             <a href="aridity.html">
               Aridity
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -292,6 +371,7 @@
             <a href="sand_dunes.html">
               Sand Dunes
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('sand_dunes')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -299,6 +379,7 @@
             <a href="rocky_outcrops.html">
               Rocky Outcrops
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('rocky_outcrops')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -306,6 +387,7 @@
             <a href="oasis.html">
               Oasis
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('oasis')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -313,6 +395,7 @@
             <a href="ephemeral_streams.html">
               Ephemeral Streams
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('ephemeral_streams')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -320,6 +403,7 @@
             <a href="sandy_soil.html">
               Sandy Soil
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('sandy_soil')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -327,6 +411,7 @@
             <a href="desert_pavement.html">
               Desert Pavement
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('desert_pavement')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -334,6 +419,7 @@
             <a href="desert_varnish.html">
               Desert Varnish
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('desert_varnish')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -341,6 +427,7 @@
             <a href="playa.html">
               Playa
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('playa')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -348,6 +435,7 @@
             <a href="flash_floods.html">
               Flash Floods
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('flash_floods')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">abiotic_factor</div>
           </li>
         
@@ -355,6 +443,7 @@
             <a href="wash.html">
               Desert Wash
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('wash')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">microhabitat</div>
           </li>
         
@@ -362,6 +451,7 @@
             <a href="dune_field.html">
               Sand Dune Field
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('dune_field')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">microhabitat</div>
           </li>
         
@@ -369,6 +459,7 @@
             <a href="rocky_slope.html">
               Rocky Slope
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('rocky_slope')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">microhabitat</div>
           </li>
         
@@ -376,6 +467,7 @@
             <a href="canyon.html">
               Desert Canyon
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('canyon')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">microhabitat</div>
           </li>
         
@@ -383,6 +475,7 @@
             <a href="pollination_yucca.html">
               Yucca-Moth Pollination
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('pollination_yucca')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">interaction</div>
           </li>
         
@@ -390,6 +483,7 @@
             <a href="nurse_plant.html">
               Nurse Plant Relationship
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('nurse_plant')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">interaction</div>
           </li>
         
@@ -397,6 +491,7 @@
             <a href="seed_dispersal.html">
               Seed Dispersal
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('seed_dispersal')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">interaction</div>
           </li>
         
@@ -404,6 +499,7 @@
             <a href="yucca_moth.html">
               Yucca Moth
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('yucca_moth')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
@@ -411,12 +507,18 @@
             <a href="coyote.html">
               Coyote
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('coyote')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">animal</div>
           </li>
         
       </ul>
     </div>
     <div class="main">
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-in">+</button>
+        <button class="zoom-btn" id="zoom-reset">⟳</button>
+        <button class="zoom-btn" id="zoom-out">−</button>
+      </div>
       <div id="graph"></div>
       <script>
         // Graph visualization code
@@ -948,8 +1050,10 @@
 
         const svg = d3.select('#graph')
           .append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('viewBox', [0, 0, width, height])
+          .attr('preserveAspectRatio', 'xMidYMid meet');
 
         const link = svg.append('g')
           .selectAll('line')
@@ -967,7 +1071,10 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.attributes.name || d.attributes.title || d.id);
+          .text(d => {
+            const name = d.attributes.name || d.attributes.title || d.id;
+            return name;
+          });
 
         simulation.on('tick', () => {
           link
@@ -982,16 +1089,16 @@
         });
 
         // Entity selection functionality
-        window.selectEntityById = function(id) {
+        window.selectEntityById = (id) => {
           // Find the selected node
-          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          const selectedNode = data.nodes.find(n => n.id === id);
           if (!selectedNode) return;
           
           // Reset all nodes
           node.attr('r', 5).attr('stroke', null);
           
           // Highlight the selected node
-          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+          const selectedNodeElement = node.filter(d => d.id === id)
             .attr('r', 8)
             .attr('stroke', 'var(--link)')
             .attr('stroke-width', 2);
@@ -1004,6 +1111,35 @@
           svg.transition().duration(500)
             .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
         };
+
+        // Set up zoom behavior
+        const zoom = d3.zoom()
+          .scaleExtent([0.1, 4])
+          .on('zoom', (event) => {
+            svg.attr('transform', event.transform);
+          });
+
+        svg.call(zoom);
+
+        // Add zoom button event listeners
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+
+        zoomInBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 1.2);
+        });
+
+        zoomOutBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 0.8);
+        });
+
+        zoomResetBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(
+            zoom.transform,
+            d3.zoomIdentity
+          );
+        });
 
         function drag(simulation) {
           function dragstarted(event) {
@@ -1048,6 +1184,15 @@
             } else {
               item.style.display = 'none';
             }
+          });
+        });
+
+        // Clear filters functionality
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        clearFiltersBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          entityItems.forEach(item => {
+            item.style.display = '';
           });
         });
         

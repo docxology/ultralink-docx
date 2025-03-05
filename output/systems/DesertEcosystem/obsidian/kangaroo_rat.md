@@ -1,8 +1,8 @@
 ---
 type: animal
 id: kangaroo_rat
-created: 2025-03-05T00:58:30.630Z
-modified: 2025-03-05T00:58:30.630Z
+created: 2025-03-05T01:16:02.596Z
+modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Merriam's Kangaroo Rat

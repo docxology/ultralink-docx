@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Merriam's Kangaroo Rat - DesertEcosystem Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #f0f8ff;
@@ -12,10 +11,11 @@
       --link: #006699;
       --accent: #4a9eff;
       --border: #b3d9ff;
+      --text-color: #333333;
+      --bg-color: #f0f8ff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,54 +88,63 @@
   <h1>Merriam's Kangaroo Rat</h1>
   <div class="entity-type">animal</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Merriam's Kangaroo Rat</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">scientificName</div>
-        <div class="attribute-value">Dipodomys merriami</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">lifespan</div>
-        <div class="attribute-value">5</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">diet</div>
-        <div class="attribute-value">granivore</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">status</div>
-        <div class="attribute-value">least concern</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Small desert rodent with highly specialized adaptations for water conservation.</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">adaptations</div>
-        <div class="attribute-value">Can survive without drinking water,Extracts water metabolically from dry seeds,Specialized kidneys concentrate urine,Nocturnal to avoid daytime heat,Burrows underground during day to avoid heat</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Merriam's Kangaroo Rat</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">scientificName</td>
+            <td class="attribute-value">Dipodomys merriami</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">lifespan</td>
+            <td class="attribute-value">5</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">diet</td>
+            <td class="attribute-value">granivore</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">status</td>
+            <td class="attribute-value">least concern</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Small desert rodent with highly specialized adaptations for water conservation.</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">adaptations</td>
+            <td class="attribute-value">Can survive without drinking water,Extracts water metabolically from dry seeds,Specialized kidneys concentrate urine,Nocturnal to avoid daytime heat,Burrows underground during day to avoid heat</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Metabolic water production</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <strong>lives_in</strong> → <a href="dune_field.html">Sand Dune Field</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
-        <strong>consumes</strong> → <a href="mesquite.html">Honey Mesquite</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> seed collection</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="coyote.html">Coyote</a> → <strong>preys_on</strong>
-      </li><li class="relationship-item">
-        <a href="sidewinder.html">Sidewinder Rattlesnake</a> → <strong>preys_on</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Metabolic water production</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <strong>lives_in</strong> → <a href="dune_field.html">Sand Dune Field</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('dune_field')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
+        <strong>consumes</strong> → <a href="mesquite.html">Honey Mesquite</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('mesquite')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> seed collection</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="coyote.html">Coyote</a> <strong>preys_on</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('coyote')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> hunting</small> </div></li><li class="relationship-item">
+        <a href="sidewinder.html">Sidewinder Rattlesnake</a> <strong>preys_on</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('sidewinder')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> ambush</small> </div></li></ul>
+  </div>
 </body>
 </html>

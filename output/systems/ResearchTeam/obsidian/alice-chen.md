@@ -1,8 +1,8 @@
 ---
 type: person
 id: alice-chen
-created: 2025-03-05T00:58:30.546Z
-modified: 2025-03-05T00:58:30.546Z
+created: 2025-03-05T01:16:02.516Z
+modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Alice Chen

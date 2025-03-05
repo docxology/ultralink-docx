@@ -12,6 +12,8 @@
       --link: #0066cc;
       --accent: #666666;
       --border: #dddddd;
+      --text-color: #000000;
+      --bg-color: #ffffff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -19,6 +21,7 @@
       padding: 0;
       background: var(--background);
       color: var(--text);
+      
     }
     .container {
       display: grid;
@@ -76,6 +79,53 @@
       background: var(--background);
       color: var(--text);
     }
+    .zoom-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--background);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 5px;
+      z-index: 100;
+    }
+    .zoom-btn {
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .zoom-btn:hover {
+      background: var(--border);
+    }
+    .btn {
+      padding: 8px 12px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 4px;
+      display: block;
+      width: 100%;
+    }
+    .btn:hover {
+      background: var(--border);
+    }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -87,6 +137,7 @@
       
       <div class="search-box">
         <input type="text" id="search-input" placeholder="Search entities..." />
+        <button class="btn" id="clear-filters">Clear Filters</button>
       </div>
       
       <h3>Entities</h3>
@@ -96,6 +147,7 @@
             <a href="machine-learning.html">
               Machine Learning
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('machine-learning')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -103,6 +155,7 @@
             <a href="data-analysis.html">
               Data Analysis
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('data-analysis')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -110,6 +163,7 @@
             <a href="project-management.html">
               Project Management
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('project-management')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -117,6 +171,7 @@
             <a href="project-alpha.html">
               Project Alpha
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('project-alpha')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">project</div>
           </li>
         
@@ -124,6 +179,7 @@
             <a href="project-beta.html">
               Project Beta
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('project-beta')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">project</div>
           </li>
         
@@ -131,6 +187,7 @@
             <a href="alice-smith.html">
               Alice Smith
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('alice-smith')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
@@ -138,12 +195,18 @@
             <a href="bob-johnson.html">
               Bob Johnson
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('bob-johnson')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
       </ul>
     </div>
     <div class="main">
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-in">+</button>
+        <button class="zoom-btn" id="zoom-reset">⟳</button>
+        <button class="zoom-btn" id="zoom-out">−</button>
+      </div>
       <div id="graph"></div>
       <script>
         // Graph visualization code
@@ -241,8 +304,10 @@
 
         const svg = d3.select('#graph')
           .append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('viewBox', [0, 0, width, height])
+          .attr('preserveAspectRatio', 'xMidYMid meet');
 
         const link = svg.append('g')
           .selectAll('line')
@@ -260,7 +325,10 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.attributes.name || d.attributes.title || d.id);
+          .text(d => {
+            const name = d.attributes.name || d.attributes.title || d.id;
+            return name;
+          });
 
         simulation.on('tick', () => {
           link
@@ -275,16 +343,16 @@
         });
 
         // Entity selection functionality
-        window.selectEntityById = function(id) {
+        window.selectEntityById = (id) => {
           // Find the selected node
-          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          const selectedNode = data.nodes.find(n => n.id === id);
           if (!selectedNode) return;
           
           // Reset all nodes
           node.attr('r', 5).attr('stroke', null);
           
           // Highlight the selected node
-          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+          const selectedNodeElement = node.filter(d => d.id === id)
             .attr('r', 8)
             .attr('stroke', 'var(--link)')
             .attr('stroke-width', 2);
@@ -297,6 +365,35 @@
           svg.transition().duration(500)
             .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
         };
+
+        // Set up zoom behavior
+        const zoom = d3.zoom()
+          .scaleExtent([0.1, 4])
+          .on('zoom', (event) => {
+            svg.attr('transform', event.transform);
+          });
+
+        svg.call(zoom);
+
+        // Add zoom button event listeners
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+
+        zoomInBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 1.2);
+        });
+
+        zoomOutBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 0.8);
+        });
+
+        zoomResetBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(
+            zoom.transform,
+            d3.zoomIdentity
+          );
+        });
 
         function drag(simulation) {
           function dragstarted(event) {
@@ -341,6 +438,15 @@
             } else {
               item.style.display = 'none';
             }
+          });
+        });
+
+        // Clear filters functionality
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        clearFiltersBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          entityItems.forEach(item => {
+            item.style.display = '';
           });
         });
         

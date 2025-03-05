@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Beta - Knowledge Base</title>
-  
   <style>
     :root {
       --background: #ffffff;
@@ -12,10 +11,11 @@
       --link: #0066cc;
       --accent: #666666;
       --border: #dddddd;
+      --text-color: #000000;
+      --bg-color: #ffffff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,32 +88,39 @@
   <h1>Project Beta</h1>
   <div class="entity-type">project</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Project Beta</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">status</div>
-        <div class="attribute-value">Planning</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">dueDate</div>
-        <div class="attribute-value">2024-03-15</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Project Beta</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">status</td>
+            <td class="attribute-value">Planning</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">dueDate</td>
+            <td class="attribute-value">2024-03-15</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>uses</strong> → <a href="machine-learning.html">Machine Learning</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="alice-smith.html">Alice Smith</a> → <strong>manages</strong>
-      </li><li class="relationship-item">
-        <a href="bob-johnson.html">Bob Johnson</a> → <strong>works_on</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>uses</strong> → <a href="machine-learning.html">Machine Learning</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('machine-learning')" class="select-link" title="Select in graph">(select)</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="alice-smith.html">Alice Smith</a> <strong>manages</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('alice-smith')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="bob-johnson.html">Bob Johnson</a> <strong>works_on</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('bob-johnson')" class="select-link" title="Select in graph">(select)</a></li></ul>
+  </div>
 </body>
 </html>

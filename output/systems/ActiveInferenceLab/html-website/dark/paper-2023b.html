@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Decision Making Patterns in Ant Colonies: A Field Study - ActiveInferenceLab Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #202124;
@@ -12,10 +11,11 @@
       --link: #4a9eff;
       --accent: #666666;
       --border: #333333;
+      --text-color: #e8eaed;
+      --bg-color: #202124;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,50 +88,58 @@
   <h1>Decision Making Patterns in Ant Colonies: A Field Study</h1>
   <div class="entity-type">publication</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">title</div>
-        <div class="attribute-value">Decision Making Patterns in Ant Colonies: A Field Study</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">authors</div>
-        <div class="attribute-value">bob,emma,frank</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">journal</div>
-        <div class="attribute-value">Behavioral Ecology</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">year</div>
-        <div class="attribute-value">2023</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">doi</div>
-        <div class="attribute-value">10.1093/beheco/2023-0002</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">citations</div>
-        <div class="attribute-value">8</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">title</td>
+            <td class="attribute-value">Decision Making Patterns in Ant Colonies: A Field Study</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">authors</td>
+            <td class="attribute-value">bob,emma,frank</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">journal</td>
+            <td class="attribute-value">Behavioral Ecology</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">year</td>
+            <td class="attribute-value">2023</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">doi</td>
+            <td class="attribute-value">10.1093/beheco/2023-0002</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">citations</td>
+            <td class="attribute-value">8</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>results_from</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a><div class="relationship-attributes"><small><strong>contribution:</strong> Initial field study findings</small> </div></li><li class="relationship-item">
-        <strong>discusses</strong> → <a href="collective-behavior.html">Collective Behavior</a><div class="relationship-attributes"><small><strong>depth:</strong> substantial</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="bob.html">Dr. Bob Smith</a> → <strong>authored</strong>
-      </li><li class="relationship-item">
-        <a href="emma.html">Emma Taylor</a> → <strong>authored</strong>
-      </li><li class="relationship-item">
-        <a href="frank.html">Dr. Frank Martinez</a> → <strong>authored</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>results_from</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('ant-colony-study')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contribution:</strong> Initial field study findings</small> </div></li><li class="relationship-item">
+        <strong>discusses</strong> → <a href="collective-behavior.html">Collective Behavior</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('collective-behavior')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>depth:</strong> substantial</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="bob.html">Dr. Bob Smith</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contributionType:</strong> corresponding author</small> <small><strong>contributionPercentage:</strong> 50</small> </div></li><li class="relationship-item">
+        <a href="emma.html">Emma Taylor</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contributionType:</strong> co-author</small> <small><strong>contributionPercentage:</strong> 30</small> </div></li><li class="relationship-item">
+        <a href="frank.html">Dr. Frank Martinez</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contributionType:</strong> co-author</small> <small><strong>contributionPercentage:</strong> 20</small> </div></li></ul>
+  </div>
 </body>
 </html>

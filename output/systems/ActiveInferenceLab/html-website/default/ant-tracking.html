@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ant Tracking System - ActiveInferenceLab Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #ffffff;
@@ -12,10 +11,11 @@
       --link: #0066cc;
       --accent: #666666;
       --border: #dddddd;
+      --text-color: #000000;
+      --bg-color: #ffffff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,49 +88,55 @@
   <h1>Ant Tracking System</h1>
   <div class="entity-type">equipment</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Ant Tracking System</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">type</div>
-        <div class="attribute-value">Imaging</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">status</div>
-        <div class="attribute-value">Operational</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">location</div>
-        <div class="attribute-value">Main Lab</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">cost</div>
-        <div class="attribute-value">75000</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">purchaseDate</div>
-        <div class="attribute-value">2023-02-15</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">maintenanceSchedule</div>
-        <div class="attribute-value">Monthly</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Ant Tracking System</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">type</td>
+            <td class="attribute-value">Imaging</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">status</td>
+            <td class="attribute-value">Operational</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">location</td>
+            <td class="attribute-value">Main Lab</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">cost</td>
+            <td class="attribute-value">75000</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">purchaseDate</td>
+            <td class="attribute-value">2023-02-15</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">maintenanceSchedule</td>
+            <td class="attribute-value">Monthly</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="ant-colony-study.html">Ant Colony Decision Making Study</a> → <strong>uses</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="ant-colony-study.html">Ant Colony Decision Making Study</a> <strong>uses</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('ant-colony-study')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> Daily</small> <small><strong>priority:</strong> High</small> </div></li></ul>
+  </div>
 </body>
 </html>

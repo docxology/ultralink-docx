@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seed Dispersal - DesertEcosystem Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #f0f8ff;
@@ -12,10 +11,11 @@
       --link: #006699;
       --accent: #4a9eff;
       --border: #b3d9ff;
+      --text-color: #333333;
+      --bg-color: #f0f8ff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,37 +88,43 @@
   <h1>Seed Dispersal</h1>
   <div class="entity-type">interaction</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Seed Dispersal</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Movement of plant seeds by desert animals, aiding plant reproduction and distribution.</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">type</div>
-        <div class="attribute-value">mutualism</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">participants</div>
-        <div class="attribute-value">mesquite,coyote</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">strength</div>
-        <div class="attribute-value">facultative</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Seed Dispersal</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Movement of plant seeds by desert animals, aiding plant reproduction and distribution.</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">type</td>
+            <td class="attribute-value">mutualism</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">participants</td>
+            <td class="attribute-value">mesquite,coyote</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">strength</td>
+            <td class="attribute-value">facultative</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <p>No relationships found.</p>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <p>No relationships found.</p>
+  </div>
 </body>
 </html>

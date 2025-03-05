@@ -1,1 +1,970 @@
-{"entities":[{"id":"alice","type":"researcher","attributes":{"name":"Dr. Alice Chen","role":"Principal Investigator","department":"Cognitive Science","email":"alice.chen@example.edu","publications":42,"expertise":["active inference","computational neuroscience","bayesian modeling"],"yearsExperience":15},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"bob","type":"researcher","attributes":{"name":"Dr. Bob Smith","role":"Senior Researcher","department":"Biology","email":"bob.smith@example.edu","publications":28,"expertise":["ant colony behavior","entomology","swarm intelligence"],"yearsExperience":12},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"carol","type":"researcher","attributes":{"name":"Dr. Carol Jimenez","role":"Postdoctoral Researcher","department":"Cognitive Science","email":"carol.jimenez@example.edu","publications":11,"expertise":["active inference","machine learning","cognitive modeling"],"yearsExperience":3},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"david","type":"researcher","attributes":{"name":"David Wilson","role":"PhD Student","department":"Biology","email":"david.wilson@example.edu","publications":3,"expertise":["ant colony optimization","collective behavior","stigmergy"],"yearsExperience":3},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"emma","type":"researcher","attributes":{"name":"Emma Taylor","role":"PhD Student","department":"Computer Science","email":"emma.taylor@example.edu","publications":4,"expertise":["machine learning","reinforcement learning","neural networks"],"yearsExperience":2},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"frank","type":"researcher","attributes":{"name":"Dr. Frank Martinez","role":"Research Associate","department":"Mathematics","email":"frank.martinez@example.edu","publications":16,"expertise":["dynamical systems","chaos theory","mathematical modeling"],"yearsExperience":8},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"grace","type":"researcher","attributes":{"name":"Grace Kim","role":"Lab Technician","department":"Biology","email":"grace.kim@example.edu","publications":0,"expertise":["ant husbandry","experiment design","data collection"],"yearsExperience":4},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"active-inference-model","type":"project","attributes":{"name":"Active Inference Modeling of Collective Behavior","status":"Active","startDate":"2023-01-15","endDate":"2025-01-14","funding":750000,"fundingSource":"National Science Foundation","description":"Developing computational models of collective behavior using the Active Inference framework"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"ant-colony-study","type":"project","attributes":{"name":"Ant Colony Decision Making Study","status":"Active","startDate":"2023-06-01","endDate":"2024-12-31","funding":250000,"fundingSource":"University Grant","description":"Field study of ant colony decision-making processes in natural environments"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"neural-basis","type":"project","attributes":{"name":"Neural Basis of Active Inference","status":"Planning","startDate":"2024-01-01","endDate":"2026-12-31","funding":1200000,"fundingSource":"NIH","description":"Investigation of neural mechanisms underlying active inference in biological systems"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"active-inference","type":"concept","attributes":{"name":"Active Inference","field":"Computational Neuroscience","description":"Framework for understanding perception and action based on free energy minimization","keyPapers":["10.1038/nn.2635","10.1016/j.tics.2009.04.005"]},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"collective-behavior","type":"concept","attributes":{"name":"Collective Behavior","field":"Biology","description":"Emergent properties and dynamics of group behavior in social organisms","keyPapers":["10.1016/j.tree.2018.01.003"]},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"swarm-intelligence","type":"concept","attributes":{"name":"Swarm Intelligence","field":"Computer Science","description":"Collective problem-solving abilities emerging from local interactions","keyPapers":["10.1007/s11721-007-0004-y"]},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"ant-tracking","type":"equipment","attributes":{"name":"Ant Tracking System","type":"Imaging","status":"Operational","location":"Main Lab","cost":75000,"purchaseDate":"2023-02-15","maintenanceSchedule":"Monthly"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"neural-recording","type":"equipment","attributes":{"name":"Neural Recording Setup","type":"Electrophysiology","status":"Operational","location":"Neuroscience Lab","cost":150000,"purchaseDate":"2023-05-01","maintenanceSchedule":"Weekly"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"computation-cluster","type":"equipment","attributes":{"name":"High Performance Computing Cluster","type":"Computing","status":"Operational","location":"Server Room","cost":200000,"purchaseDate":"2022-11-01","maintenanceSchedule":"Monthly"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"paper-2023a","type":"publication","attributes":{"title":"Active Inference Framework for Collective Behavior Analysis","authors":["alice","carol","david"],"journal":"Nature Computational Science","year":2023,"doi":"10.1038/s41467-023-0001-1","citations":15},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"paper-2023b","type":"publication","attributes":{"title":"Decision Making Patterns in Ant Colonies: A Field Study","authors":["bob","emma","frank"],"journal":"Behavioral Ecology","year":2023,"doi":"10.1093/beheco/2023-0002","citations":8},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"id":"paper-2024","type":"publication","attributes":{"title":"Computational Models of Active Inference in Social Insects","authors":["alice","bob","carol","david"],"journal":"PLOS Computational Biology","year":2024,"doi":"10.1371/journal.pcbi.2024-0001","citations":3},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}}],"relationships":[{"source":"alice","target":"active-inference-model","type":"leads","attributes":{"role":"Principal Investigator","timeCommitment":0.4},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"bob","target":"ant-colony-study","type":"leads","attributes":{"role":"Principal Investigator","timeCommitment":0.5},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"carol","target":"active-inference-model","type":"contributes","attributes":{"role":"Lead Developer","timeCommitment":0.6},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"david","target":"active-inference-model","type":"contributes","attributes":{"role":"Data Analyst","timeCommitment":0.8},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"emma","target":"ant-colony-study","type":"contributes","attributes":{"role":"Field Researcher","timeCommitment":0.7},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"frank","target":"ant-colony-study","type":"contributes","attributes":{"role":"Lab Manager","timeCommitment":0.3},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"bob","target":"active-inference-model","type":"contributes_to","attributes":{"role":"Co-Investigator","startDate":"2022-03-15"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"carol","target":"active-inference-model","type":"contributes_to","attributes":{"role":"Lead Researcher","startDate":"2022-09-01"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"david","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Behavioral Consultant","startDate":"2024-02-10","timeCommitment":"25%"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"grace","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Lab Technician","startDate":"2023-01-10"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"frank","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Mathematical Modeling","startDate":"2022-11-15"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"emma","target":"ant-colony-study","type":"contributes_to","attributes":{"role":"Algorithm Developer","startDate":"2024-01-05"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"alice","target":"david","type":"mentors","attributes":{"type":"PhD Advisor","startDate":"2022-09-01"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"bob","target":"emma","type":"mentors","attributes":{"type":"PhD Advisor","startDate":"2022-09-01"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"alice","target":"carol","type":"mentors","attributes":{"type":"Postdoc Advisor","startDate":"2023-01-15"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"frank","target":"emma","type":"co_advises","attributes":{"startDate":"2022-09-01"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"carol","target":"alice","type":"reports_to","attributes":{"startDate":"2022-01-15"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"david","target":"bob","type":"reports_to","attributes":{"startDate":"2021-09-01"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"emma","target":"alice","type":"reports_to","attributes":{"startDate":"2022-09-01"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"grace","target":"bob","type":"reports_to","attributes":{"startDate":"2020-05-15"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"active-inference-model","target":"active-inference","type":"applies","attributes":{"centrality":"Core","innovation":"Novel application to collective behavior"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"ant-colony-study","target":"collective-behavior","type":"applies","attributes":{"centrality":"Core","innovation":"Field validation of theoretical predictions"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"active-inference","target":"collective-behavior","type":"relates_to","attributes":{"relationship":"Theoretical framework application","strength":"Strong"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"ant-colony-study","target":"ant-tracking","type":"uses","attributes":{"frequency":"Daily","priority":"High"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"active-inference-model","target":"computation-cluster","type":"uses","attributes":{"frequency":"Continuous","priority":"High"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"neural-basis","target":"neural-recording","type":"uses","attributes":{"frequency":"Daily","priority":"High"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"alice","target":"paper-2023a","type":"authored","attributes":{"contributionType":"corresponding author","contributionPercentage":40},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"bob","target":"paper-2023a","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"carol","target":"paper-2023a","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"bob","target":"paper-2023b","type":"authored","attributes":{"contributionType":"corresponding author","contributionPercentage":50},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"emma","target":"paper-2023b","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"frank","target":"paper-2023b","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":20},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"alice","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":25},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"bob","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"carol","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"david","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":30},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"grace","target":"paper-2024","type":"authored","attributes":{"contributionType":"co-author","contributionPercentage":20},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"paper-2023a","target":"active-inference-model","type":"results_from","attributes":{"contribution":"Primary theoretical framework"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"paper-2023b","target":"ant-colony-study","type":"results_from","attributes":{"contribution":"Initial field study findings"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"paper-2024","target":"active-inference-model","type":"results_from","attributes":{"contribution":"Computational modeling results"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"paper-2024","target":"ant-colony-study","type":"results_from","attributes":{"contribution":"Empirical validation"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"paper-2023a","target":"active-inference","type":"discusses","attributes":{"depth":"comprehensive"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"paper-2023b","target":"collective-behavior","type":"discusses","attributes":{"depth":"substantial"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}},{"source":"paper-2024","target":"swarm-intelligence","type":"discusses","attributes":{"depth":"comprehensive"},"metadata":{"created":"2025-03-05T00:58:30.717Z","modified":"2025-03-05T00:58:30.717Z"}}]}
+{
+  "entities": [
+    {
+      "id": "alice",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Alice Chen",
+        "role": "Principal Investigator",
+        "department": "Cognitive Science",
+        "email": "alice.chen@example.edu",
+        "publications": 42,
+        "expertise": [
+          "active inference",
+          "computational neuroscience",
+          "bayesian modeling"
+        ],
+        "yearsExperience": 15
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "bob",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Bob Smith",
+        "role": "Senior Researcher",
+        "department": "Biology",
+        "email": "bob.smith@example.edu",
+        "publications": 28,
+        "expertise": [
+          "ant colony behavior",
+          "entomology",
+          "swarm intelligence"
+        ],
+        "yearsExperience": 12
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "carol",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Carol Jimenez",
+        "role": "Postdoctoral Researcher",
+        "department": "Cognitive Science",
+        "email": "carol.jimenez@example.edu",
+        "publications": 11,
+        "expertise": [
+          "active inference",
+          "machine learning",
+          "cognitive modeling"
+        ],
+        "yearsExperience": 3
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "david",
+      "type": "researcher",
+      "attributes": {
+        "name": "David Wilson",
+        "role": "PhD Student",
+        "department": "Biology",
+        "email": "david.wilson@example.edu",
+        "publications": 3,
+        "expertise": [
+          "ant colony optimization",
+          "collective behavior",
+          "stigmergy"
+        ],
+        "yearsExperience": 3
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "emma",
+      "type": "researcher",
+      "attributes": {
+        "name": "Emma Taylor",
+        "role": "PhD Student",
+        "department": "Computer Science",
+        "email": "emma.taylor@example.edu",
+        "publications": 4,
+        "expertise": [
+          "machine learning",
+          "reinforcement learning",
+          "neural networks"
+        ],
+        "yearsExperience": 2
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "frank",
+      "type": "researcher",
+      "attributes": {
+        "name": "Dr. Frank Martinez",
+        "role": "Research Associate",
+        "department": "Mathematics",
+        "email": "frank.martinez@example.edu",
+        "publications": 16,
+        "expertise": [
+          "dynamical systems",
+          "chaos theory",
+          "mathematical modeling"
+        ],
+        "yearsExperience": 8
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "grace",
+      "type": "researcher",
+      "attributes": {
+        "name": "Grace Kim",
+        "role": "Lab Technician",
+        "department": "Biology",
+        "email": "grace.kim@example.edu",
+        "publications": 0,
+        "expertise": [
+          "ant husbandry",
+          "experiment design",
+          "data collection"
+        ],
+        "yearsExperience": 4
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "active-inference-model",
+      "type": "project",
+      "attributes": {
+        "name": "Active Inference Modeling of Collective Behavior",
+        "status": "Active",
+        "startDate": "2023-01-15",
+        "endDate": "2025-01-14",
+        "funding": 750000,
+        "fundingSource": "National Science Foundation",
+        "description": "Developing computational models of collective behavior using the Active Inference framework"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "ant-colony-study",
+      "type": "project",
+      "attributes": {
+        "name": "Ant Colony Decision Making Study",
+        "status": "Active",
+        "startDate": "2023-06-01",
+        "endDate": "2024-12-31",
+        "funding": 250000,
+        "fundingSource": "University Grant",
+        "description": "Field study of ant colony decision-making processes in natural environments"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "neural-basis",
+      "type": "project",
+      "attributes": {
+        "name": "Neural Basis of Active Inference",
+        "status": "Planning",
+        "startDate": "2024-01-01",
+        "endDate": "2026-12-31",
+        "funding": 1200000,
+        "fundingSource": "NIH",
+        "description": "Investigation of neural mechanisms underlying active inference in biological systems"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "active-inference",
+      "type": "concept",
+      "attributes": {
+        "name": "Active Inference",
+        "field": "Computational Neuroscience",
+        "description": "Framework for understanding perception and action based on free energy minimization",
+        "keyPapers": [
+          "10.1038/nn.2635",
+          "10.1016/j.tics.2009.04.005"
+        ]
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "collective-behavior",
+      "type": "concept",
+      "attributes": {
+        "name": "Collective Behavior",
+        "field": "Biology",
+        "description": "Emergent properties and dynamics of group behavior in social organisms",
+        "keyPapers": [
+          "10.1016/j.tree.2018.01.003"
+        ]
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "swarm-intelligence",
+      "type": "concept",
+      "attributes": {
+        "name": "Swarm Intelligence",
+        "field": "Computer Science",
+        "description": "Collective problem-solving abilities emerging from local interactions",
+        "keyPapers": [
+          "10.1007/s11721-007-0004-y"
+        ]
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "ant-tracking",
+      "type": "equipment",
+      "attributes": {
+        "name": "Ant Tracking System",
+        "type": "Imaging",
+        "status": "Operational",
+        "location": "Main Lab",
+        "cost": 75000,
+        "purchaseDate": "2023-02-15",
+        "maintenanceSchedule": "Monthly"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "neural-recording",
+      "type": "equipment",
+      "attributes": {
+        "name": "Neural Recording Setup",
+        "type": "Electrophysiology",
+        "status": "Operational",
+        "location": "Neuroscience Lab",
+        "cost": 150000,
+        "purchaseDate": "2023-05-01",
+        "maintenanceSchedule": "Weekly"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "computation-cluster",
+      "type": "equipment",
+      "attributes": {
+        "name": "High Performance Computing Cluster",
+        "type": "Computing",
+        "status": "Operational",
+        "location": "Server Room",
+        "cost": 200000,
+        "purchaseDate": "2022-11-01",
+        "maintenanceSchedule": "Monthly"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2023a",
+      "type": "publication",
+      "attributes": {
+        "title": "Active Inference Framework for Collective Behavior Analysis",
+        "authors": [
+          "alice",
+          "carol",
+          "david"
+        ],
+        "journal": "Nature Computational Science",
+        "year": 2023,
+        "doi": "10.1038/s41467-023-0001-1",
+        "citations": 15
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2023b",
+      "type": "publication",
+      "attributes": {
+        "title": "Decision Making Patterns in Ant Colonies: A Field Study",
+        "authors": [
+          "bob",
+          "emma",
+          "frank"
+        ],
+        "journal": "Behavioral Ecology",
+        "year": 2023,
+        "doi": "10.1093/beheco/2023-0002",
+        "citations": 8
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2024",
+      "type": "publication",
+      "attributes": {
+        "title": "Computational Models of Active Inference in Social Insects",
+        "authors": [
+          "alice",
+          "bob",
+          "carol",
+          "david"
+        ],
+        "journal": "PLOS Computational Biology",
+        "year": 2024,
+        "doi": "10.1371/journal.pcbi.2024-0001",
+        "citations": 3
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "alice_leads_active-inference-model_1741137362671",
+      "source": "alice",
+      "target": "active-inference-model",
+      "type": "leads",
+      "attributes": {
+        "role": "Principal Investigator",
+        "timeCommitment": 0.4
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "bob_leads_ant-colony-study_1741137362671",
+      "source": "bob",
+      "target": "ant-colony-study",
+      "type": "leads",
+      "attributes": {
+        "role": "Principal Investigator",
+        "timeCommitment": 0.5
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "carol_contributes_active-inference-model_1741137362671",
+      "source": "carol",
+      "target": "active-inference-model",
+      "type": "contributes",
+      "attributes": {
+        "role": "Lead Developer",
+        "timeCommitment": 0.6
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "david_contributes_active-inference-model_1741137362671",
+      "source": "david",
+      "target": "active-inference-model",
+      "type": "contributes",
+      "attributes": {
+        "role": "Data Analyst",
+        "timeCommitment": 0.8
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "emma_contributes_ant-colony-study_1741137362671",
+      "source": "emma",
+      "target": "ant-colony-study",
+      "type": "contributes",
+      "attributes": {
+        "role": "Field Researcher",
+        "timeCommitment": 0.7
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "frank_contributes_ant-colony-study_1741137362671",
+      "source": "frank",
+      "target": "ant-colony-study",
+      "type": "contributes",
+      "attributes": {
+        "role": "Lab Manager",
+        "timeCommitment": 0.3
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "bob_contributes_to_active-inference-model_1741137362671",
+      "source": "bob",
+      "target": "active-inference-model",
+      "type": "contributes_to",
+      "attributes": {
+        "role": "Co-Investigator",
+        "startDate": "2022-03-15"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "carol_contributes_to_active-inference-model_1741137362671",
+      "source": "carol",
+      "target": "active-inference-model",
+      "type": "contributes_to",
+      "attributes": {
+        "role": "Lead Researcher",
+        "startDate": "2022-09-01"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "david_contributes_to_ant-colony-study_1741137362671",
+      "source": "david",
+      "target": "ant-colony-study",
+      "type": "contributes_to",
+      "attributes": {
+        "role": "Behavioral Consultant",
+        "startDate": "2024-02-10",
+        "timeCommitment": "25%"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "grace_contributes_to_ant-colony-study_1741137362671",
+      "source": "grace",
+      "target": "ant-colony-study",
+      "type": "contributes_to",
+      "attributes": {
+        "role": "Lab Technician",
+        "startDate": "2023-01-10"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "frank_contributes_to_ant-colony-study_1741137362671",
+      "source": "frank",
+      "target": "ant-colony-study",
+      "type": "contributes_to",
+      "attributes": {
+        "role": "Mathematical Modeling",
+        "startDate": "2022-11-15"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "emma_contributes_to_ant-colony-study_1741137362671",
+      "source": "emma",
+      "target": "ant-colony-study",
+      "type": "contributes_to",
+      "attributes": {
+        "role": "Algorithm Developer",
+        "startDate": "2024-01-05"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "alice_mentors_david_1741137362671",
+      "source": "alice",
+      "target": "david",
+      "type": "mentors",
+      "attributes": {
+        "type": "PhD Advisor",
+        "startDate": "2022-09-01"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "bob_mentors_emma_1741137362671",
+      "source": "bob",
+      "target": "emma",
+      "type": "mentors",
+      "attributes": {
+        "type": "PhD Advisor",
+        "startDate": "2022-09-01"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "alice_mentors_carol_1741137362671",
+      "source": "alice",
+      "target": "carol",
+      "type": "mentors",
+      "attributes": {
+        "type": "Postdoc Advisor",
+        "startDate": "2023-01-15"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "frank_co_advises_emma_1741137362671",
+      "source": "frank",
+      "target": "emma",
+      "type": "co_advises",
+      "attributes": {
+        "startDate": "2022-09-01"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "carol_reports_to_alice_1741137362671",
+      "source": "carol",
+      "target": "alice",
+      "type": "reports_to",
+      "attributes": {
+        "startDate": "2022-01-15"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "david_reports_to_bob_1741137362671",
+      "source": "david",
+      "target": "bob",
+      "type": "reports_to",
+      "attributes": {
+        "startDate": "2021-09-01"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "emma_reports_to_alice_1741137362671",
+      "source": "emma",
+      "target": "alice",
+      "type": "reports_to",
+      "attributes": {
+        "startDate": "2022-09-01"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "grace_reports_to_bob_1741137362671",
+      "source": "grace",
+      "target": "bob",
+      "type": "reports_to",
+      "attributes": {
+        "startDate": "2020-05-15"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "active-inference-model_applies_active-inference_1741137362671",
+      "source": "active-inference-model",
+      "target": "active-inference",
+      "type": "applies",
+      "attributes": {
+        "centrality": "Core",
+        "innovation": "Novel application to collective behavior"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "ant-colony-study_applies_collective-behavior_1741137362671",
+      "source": "ant-colony-study",
+      "target": "collective-behavior",
+      "type": "applies",
+      "attributes": {
+        "centrality": "Core",
+        "innovation": "Field validation of theoretical predictions"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "active-inference_relates_to_collective-behavior_1741137362671",
+      "source": "active-inference",
+      "target": "collective-behavior",
+      "type": "relates_to",
+      "attributes": {
+        "relationship": "Theoretical framework application",
+        "strength": "Strong"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "ant-colony-study_uses_ant-tracking_1741137362671",
+      "source": "ant-colony-study",
+      "target": "ant-tracking",
+      "type": "uses",
+      "attributes": {
+        "frequency": "Daily",
+        "priority": "High"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "active-inference-model_uses_computation-cluster_1741137362671",
+      "source": "active-inference-model",
+      "target": "computation-cluster",
+      "type": "uses",
+      "attributes": {
+        "frequency": "Continuous",
+        "priority": "High"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "neural-basis_uses_neural-recording_1741137362671",
+      "source": "neural-basis",
+      "target": "neural-recording",
+      "type": "uses",
+      "attributes": {
+        "frequency": "Daily",
+        "priority": "High"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "alice_authored_paper-2023a_1741137362671",
+      "source": "alice",
+      "target": "paper-2023a",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "corresponding author",
+        "contributionPercentage": 40
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "bob_authored_paper-2023a_1741137362671",
+      "source": "bob",
+      "target": "paper-2023a",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 30
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "carol_authored_paper-2023a_1741137362671",
+      "source": "carol",
+      "target": "paper-2023a",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 30
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "bob_authored_paper-2023b_1741137362671",
+      "source": "bob",
+      "target": "paper-2023b",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "corresponding author",
+        "contributionPercentage": 50
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "emma_authored_paper-2023b_1741137362671",
+      "source": "emma",
+      "target": "paper-2023b",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 30
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "frank_authored_paper-2023b_1741137362671",
+      "source": "frank",
+      "target": "paper-2023b",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 20
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "alice_authored_paper-2024_1741137362671",
+      "source": "alice",
+      "target": "paper-2024",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 25
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "bob_authored_paper-2024_1741137362671",
+      "source": "bob",
+      "target": "paper-2024",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 30
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "carol_authored_paper-2024_1741137362671",
+      "source": "carol",
+      "target": "paper-2024",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 30
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "david_authored_paper-2024_1741137362671",
+      "source": "david",
+      "target": "paper-2024",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 30
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "grace_authored_paper-2024_1741137362671",
+      "source": "grace",
+      "target": "paper-2024",
+      "type": "authored",
+      "attributes": {
+        "contributionType": "co-author",
+        "contributionPercentage": 20
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2023a_results_from_active-inference-model_1741137362671",
+      "source": "paper-2023a",
+      "target": "active-inference-model",
+      "type": "results_from",
+      "attributes": {
+        "contribution": "Primary theoretical framework"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2023b_results_from_ant-colony-study_1741137362671",
+      "source": "paper-2023b",
+      "target": "ant-colony-study",
+      "type": "results_from",
+      "attributes": {
+        "contribution": "Initial field study findings"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2024_results_from_active-inference-model_1741137362671",
+      "source": "paper-2024",
+      "target": "active-inference-model",
+      "type": "results_from",
+      "attributes": {
+        "contribution": "Computational modeling results"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2024_results_from_ant-colony-study_1741137362671",
+      "source": "paper-2024",
+      "target": "ant-colony-study",
+      "type": "results_from",
+      "attributes": {
+        "contribution": "Empirical validation"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2023a_discusses_active-inference_1741137362671",
+      "source": "paper-2023a",
+      "target": "active-inference",
+      "type": "discusses",
+      "attributes": {
+        "depth": "comprehensive"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2023b_discusses_collective-behavior_1741137362671",
+      "source": "paper-2023b",
+      "target": "collective-behavior",
+      "type": "discusses",
+      "attributes": {
+        "depth": "substantial"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    },
+    {
+      "id": "paper-2024_discusses_swarm-intelligence_1741137362671",
+      "source": "paper-2024",
+      "target": "swarm-intelligence",
+      "type": "discusses",
+      "attributes": {
+        "depth": "comprehensive"
+      },
+      "metadata": {
+        "created": "2025-03-05T01:16:02.671Z",
+        "modified": "2025-03-05T01:16:02.671Z"
+      }
+    }
+  ]
+}

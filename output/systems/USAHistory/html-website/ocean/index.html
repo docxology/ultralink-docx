@@ -12,6 +12,8 @@
       --link: #006699;
       --accent: #4a9eff;
       --border: #b3d9ff;
+      --text-color: #333333;
+      --bg-color: #f0f8ff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -19,6 +21,7 @@
       padding: 0;
       background: var(--background);
       color: var(--text);
+      
     }
     .container {
       display: grid;
@@ -76,6 +79,53 @@
       background: var(--background);
       color: var(--text);
     }
+    .zoom-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--background);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 5px;
+      z-index: 100;
+    }
+    .zoom-btn {
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .zoom-btn:hover {
+      background: var(--border);
+    }
+    .btn {
+      padding: 8px 12px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 4px;
+      display: block;
+      width: 100%;
+    }
+    .btn:hover {
+      background: var(--border);
+    }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -87,6 +137,7 @@
       
       <div class="search-box">
         <input type="text" id="search-input" placeholder="Search entities..." />
+        <button class="btn" id="clear-filters">Clear Filters</button>
       </div>
       
       <h3>Entities</h3>
@@ -96,6 +147,7 @@
             <a href="colonial-period.html">
               Colonial Period
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('colonial-period')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -103,6 +155,7 @@
             <a href="revolutionary-war.html">
               American Revolution
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('revolutionary-war')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -110,6 +163,7 @@
             <a href="early-republic.html">
               Early Republic
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('early-republic')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -117,6 +171,7 @@
             <a href="antebellum.html">
               Antebellum Era
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('antebellum')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -124,6 +179,7 @@
             <a href="civil-war.html">
               Civil War
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('civil-war')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -131,6 +187,7 @@
             <a href="reconstruction.html">
               Reconstruction
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('reconstruction')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -138,6 +195,7 @@
             <a href="gilded-age.html">
               Gilded Age
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('gilded-age')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -145,6 +203,7 @@
             <a href="progressive-era.html">
               Progressive Era
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('progressive-era')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -152,6 +211,7 @@
             <a href="roaring-twenties.html">
               Roaring Twenties
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('roaring-twenties')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -159,6 +219,7 @@
             <a href="great-depression.html">
               Great Depression
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('great-depression')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -166,6 +227,7 @@
             <a href="world-war-2.html">
               World War II
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('world-war-2')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -173,6 +235,7 @@
             <a href="cold-war.html">
               Cold War
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('cold-war')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -180,6 +243,7 @@
             <a href="civil-rights.html">
               Civil Rights Movement
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('civil-rights')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -187,6 +251,7 @@
             <a href="modern-era.html">
               Modern Era
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('modern-era')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">time_period</div>
           </li>
         
@@ -194,6 +259,7 @@
             <a href="jamestown-founding.html">
               Founding of Jamestown
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('jamestown-founding')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -201,6 +267,7 @@
             <a href="plymouth-colony.html">
               Plymouth Colony Established
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('plymouth-colony')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -208,6 +275,7 @@
             <a href="declaration-independence.html">
               Declaration of Independence
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('declaration-independence')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -215,6 +283,7 @@
             <a href="constitutional-convention.html">
               Constitutional Convention
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('constitutional-convention')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -222,6 +291,7 @@
             <a href="louisiana-purchase.html">
               Louisiana Purchase
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('louisiana-purchase')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -229,6 +299,7 @@
             <a href="civil-war-start.html">
               Civil War Begins
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('civil-war-start')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -236,6 +307,7 @@
             <a href="emancipation-proclamation.html">
               Emancipation Proclamation
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('emancipation-proclamation')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -243,6 +315,7 @@
             <a href="civil-war-end.html">
               Civil War Ends
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('civil-war-end')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -250,6 +323,7 @@
             <a href="womens-suffrage.html">
               19th Amendment
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('womens-suffrage')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -257,6 +331,7 @@
             <a href="stock-market-crash.html">
               Stock Market Crash
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('stock-market-crash')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -264,6 +339,7 @@
             <a href="pearl-harbor.html">
               Attack on Pearl Harbor
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('pearl-harbor')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -271,6 +347,7 @@
             <a href="mlk-speech.html">
               I Have a Dream Speech
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('mlk-speech')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -278,6 +355,7 @@
             <a href="moon-landing.html">
               Moon Landing
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('moon-landing')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -285,6 +363,7 @@
             <a href="september-11.html">
               September 11 Attacks
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('september-11')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -292,6 +371,7 @@
             <a href="obama-election.html">
               Barack Obama Elected President
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('obama-election')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">event</div>
           </li>
         
@@ -299,6 +379,7 @@
             <a href="washington.html">
               George Washington
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('washington')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
@@ -306,6 +387,7 @@
             <a href="jefferson.html">
               Thomas Jefferson
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('jefferson')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
@@ -313,6 +395,7 @@
             <a href="lincoln.html">
               Abraham Lincoln
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('lincoln')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
@@ -320,6 +403,7 @@
             <a href="douglass.html">
               Frederick Douglass
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('douglass')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
@@ -327,6 +411,7 @@
             <a href="roosevelt-fdr.html">
               Franklin D. Roosevelt
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('roosevelt-fdr')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
@@ -334,6 +419,7 @@
             <a href="mlk.html">
               Martin Luther King Jr.
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('mlk')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">person</div>
           </li>
         
@@ -341,6 +427,7 @@
             <a href="democracy.html">
               Democracy
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -348,6 +435,7 @@
             <a href="slavery.html">
               Slavery
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('slavery')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -355,6 +443,7 @@
             <a href="manifest-destiny.html">
               Manifest Destiny
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('manifest-destiny')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -362,6 +451,7 @@
             <a href="civil-rights-concept.html">
               Civil Rights
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('civil-rights-concept')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -369,6 +459,7 @@
             <a href="american-dream.html">
               American Dream
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('american-dream')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept</div>
           </li>
         
@@ -376,6 +467,7 @@
             <a href="declaration-doc.html">
               Declaration of Independence
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('declaration-doc')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">document</div>
           </li>
         
@@ -383,6 +475,7 @@
             <a href="constitution-doc.html">
               United States Constitution
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('constitution-doc')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">document</div>
           </li>
         
@@ -390,6 +483,7 @@
             <a href="gettysburg-address.html">
               Gettysburg Address
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('gettysburg-address')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">document</div>
           </li>
         
@@ -397,6 +491,7 @@
             <a href="democracy-1776.html">
               democracy-1776
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-1776')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -404,6 +499,7 @@
             <a href="democracy-1800.html">
               democracy-1800
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-1800')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -411,6 +507,7 @@
             <a href="democracy-1850.html">
               democracy-1850
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-1850')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -418,6 +515,7 @@
             <a href="democracy-1900.html">
               democracy-1900
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-1900')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -425,6 +523,7 @@
             <a href="democracy-1950.html">
               democracy-1950
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-1950')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -432,6 +531,7 @@
             <a href="democracy-2000.html">
               democracy-2000
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-2000')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -439,6 +539,7 @@
             <a href="democracy-2020.html">
               democracy-2020
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-2020')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -446,6 +547,7 @@
             <a href="slavery-1700.html">
               slavery-1700
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('slavery-1700')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -453,6 +555,7 @@
             <a href="slavery-1776.html">
               slavery-1776
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('slavery-1776')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -460,6 +563,7 @@
             <a href="slavery-1800.html">
               slavery-1800
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('slavery-1800')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -467,6 +571,7 @@
             <a href="slavery-1850.html">
               slavery-1850
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('slavery-1850')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -474,6 +579,7 @@
             <a href="slavery-1863.html">
               slavery-1863
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('slavery-1863')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -481,6 +587,7 @@
             <a href="slavery-1870.html">
               slavery-1870
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('slavery-1870')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">temporal_snapshot</div>
           </li>
         
@@ -488,6 +595,7 @@
             <a href="founding-era.html">
               founding-era
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('founding-era')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">historical_snapshot</div>
           </li>
         
@@ -495,6 +603,7 @@
             <a href="pre-civil-war.html">
               pre-civil-war
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('pre-civil-war')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">historical_snapshot</div>
           </li>
         
@@ -502,6 +611,7 @@
             <a href="civil-rights-era.html">
               civil-rights-era
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('civil-rights-era')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">historical_snapshot</div>
           </li>
         
@@ -509,6 +619,7 @@
             <a href="post-cold-war.html">
               post-cold-war
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('post-cold-war')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">historical_snapshot</div>
           </li>
         
@@ -516,6 +627,7 @@
             <a href="ideological-space.html">
               Ideological Positions
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('ideological-space')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">vector_space</div>
           </li>
         
@@ -523,6 +635,7 @@
             <a href="social-values-space.html">
               Social Values
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('social-values-space')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">vector_space</div>
           </li>
         
@@ -530,6 +643,7 @@
             <a href="founding-principles-cluster.html">
               Founding Principles
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('founding-principles-cluster')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">semantic_cluster</div>
           </li>
         
@@ -537,6 +651,7 @@
             <a href="civil-rights-cluster.html">
               Civil Rights Movement
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('civil-rights-cluster')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">semantic_cluster</div>
           </li>
         
@@ -544,6 +659,7 @@
             <a href="economic-development-cluster.html">
               Economic Development
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('economic-development-cluster')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">semantic_cluster</div>
           </li>
         
@@ -551,6 +667,7 @@
             <a href="democracy-rights-similarity.html">
               Democracy and Civil Rights Relationship
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-rights-similarity')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">similarity_analysis</div>
           </li>
         
@@ -558,6 +675,7 @@
             <a href="liberty-dream-similarity.html">
               Liberty and American Dream Relationship
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('liberty-dream-similarity')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">similarity_analysis</div>
           </li>
         
@@ -565,6 +683,7 @@
             <a href="democracy-evolution.html">
               Evolution of Democracy
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('democracy-evolution')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept_drift</div>
           </li>
         
@@ -572,12 +691,18 @@
             <a href="equality-evolution.html">
               Evolution of Equality
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('equality-evolution')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">concept_drift</div>
           </li>
         
       </ul>
     </div>
     <div class="main">
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-in">+</button>
+        <button class="zoom-btn" id="zoom-reset">⟳</button>
+        <button class="zoom-btn" id="zoom-out">−</button>
+      </div>
       <div id="graph"></div>
       <script>
         // Graph visualization code
@@ -1342,8 +1467,10 @@
 
         const svg = d3.select('#graph')
           .append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('viewBox', [0, 0, width, height])
+          .attr('preserveAspectRatio', 'xMidYMid meet');
 
         const link = svg.append('g')
           .selectAll('line')
@@ -1361,7 +1488,10 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.attributes.name || d.attributes.title || d.id);
+          .text(d => {
+            const name = d.attributes.name || d.attributes.title || d.id;
+            return name;
+          });
 
         simulation.on('tick', () => {
           link
@@ -1376,16 +1506,16 @@
         });
 
         // Entity selection functionality
-        window.selectEntityById = function(id) {
+        window.selectEntityById = (id) => {
           // Find the selected node
-          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          const selectedNode = data.nodes.find(n => n.id === id);
           if (!selectedNode) return;
           
           // Reset all nodes
           node.attr('r', 5).attr('stroke', null);
           
           // Highlight the selected node
-          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+          const selectedNodeElement = node.filter(d => d.id === id)
             .attr('r', 8)
             .attr('stroke', 'var(--link)')
             .attr('stroke-width', 2);
@@ -1398,6 +1528,35 @@
           svg.transition().duration(500)
             .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
         };
+
+        // Set up zoom behavior
+        const zoom = d3.zoom()
+          .scaleExtent([0.1, 4])
+          .on('zoom', (event) => {
+            svg.attr('transform', event.transform);
+          });
+
+        svg.call(zoom);
+
+        // Add zoom button event listeners
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+
+        zoomInBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 1.2);
+        });
+
+        zoomOutBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 0.8);
+        });
+
+        zoomResetBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(
+            zoom.transform,
+            d3.zoomIdentity
+          );
+        });
 
         function drag(simulation) {
           function dragstarted(event) {
@@ -1442,6 +1601,15 @@
             } else {
               item.style.display = 'none';
             }
+          });
+        });
+
+        // Clear filters functionality
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        clearFiltersBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          entityItems.forEach(item => {
+            item.style.display = '';
           });
         });
         

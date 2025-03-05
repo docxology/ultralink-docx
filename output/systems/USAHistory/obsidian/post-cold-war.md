@@ -1,8 +1,8 @@
 ---
 type: historical_snapshot
 id: post-cold-war
-created: 2025-03-05T00:58:30.761Z
-modified: 2025-03-05T00:58:30.761Z
+created: 2025-03-05T01:16:02.703Z
+modified: 2025-03-05T01:16:02.703Z
 ---
 
 # post-cold-war

@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Desert Tortoise - DesertEcosystem Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #f0f8ff;
@@ -12,10 +11,11 @@
       --link: #006699;
       --accent: #4a9eff;
       --border: #b3d9ff;
+      --text-color: #333333;
+      --bg-color: #f0f8ff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,52 +88,61 @@
   <h1>Desert Tortoise</h1>
   <div class="entity-type">animal</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Desert Tortoise</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">scientificName</div>
-        <div class="attribute-value">Gopherus agassizii</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">lifespan</div>
-        <div class="attribute-value">80</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">diet</div>
-        <div class="attribute-value">herbivore</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">status</div>
-        <div class="attribute-value">vulnerable</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Long-lived reptile of the Mojave and Sonoran deserts with high-domed shell.</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">adaptations</div>
-        <div class="attribute-value">Can store water in bladder for extended periods,Digs burrows to escape extreme temperatures,Metabolic adaptations to survive drought,Specialized digestive system for low-quality plant material,Slow metabolism conserves energy</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Desert Tortoise</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">scientificName</td>
+            <td class="attribute-value">Gopherus agassizii</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">lifespan</td>
+            <td class="attribute-value">80</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">diet</td>
+            <td class="attribute-value">herbivore</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">status</td>
+            <td class="attribute-value">vulnerable</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Long-lived reptile of the Mojave and Sonoran deserts with high-domed shell.</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">adaptations</td>
+            <td class="attribute-value">Can store water in bladder for extended periods,Digs burrows to escape extreme temperatures,Metabolic adaptations to survive drought,Specialized digestive system for low-quality plant material,Slow metabolism conserves energy</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Water storage in bladder</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <strong>lives_in</strong> → <a href="rocky_slope.html">Rocky Slope</a><div class="relationship-attributes"><small><strong>frequency:</strong> seasonal</small> <small><strong>dependency:</strong> medium</small> </div></li><li class="relationship-item">
-        <strong>consumes</strong> → <a href="desert_poppy.html">Desert Poppy</a><div class="relationship-attributes"><small><strong>frequency:</strong> seasonal</small> <small><strong>method:</strong> grazing</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="coyote.html">Coyote</a> → <strong>preys_on</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Water storage in bladder</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <strong>lives_in</strong> → <a href="rocky_slope.html">Rocky Slope</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('rocky_slope')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> seasonal</small> <small><strong>dependency:</strong> medium</small> </div></li><li class="relationship-item">
+        <strong>consumes</strong> → <a href="desert_poppy.html">Desert Poppy</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('desert_poppy')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> seasonal</small> <small><strong>method:</strong> grazing</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="coyote.html">Coyote</a> <strong>preys_on</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('coyote')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> rare</small> <small><strong>method:</strong> opportunistic</small> </div></li></ul>
+  </div>
 </body>
 </html>

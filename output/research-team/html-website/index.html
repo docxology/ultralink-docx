@@ -12,13 +12,16 @@
       --link: #990000;
       --accent: #666666;
       --border: #cccccc;
+      --text-color: #333333;
+      --bg-color: #f5f5f5;
     }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'Palatino Linotype', serif;
       margin: 0;
       padding: 0;
       background: var(--background);
       color: var(--text);
+      
     }
     .container {
       display: grid;
@@ -76,6 +79,16 @@
       background: var(--background);
       color: var(--text);
     }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -96,6 +109,7 @@
             <a href="alice.html">
               Alice Chen
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">researcher</div>
           </li>
         
@@ -103,6 +117,7 @@
             <a href="bob.html">
               Bob Smith
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">researcher</div>
           </li>
         
@@ -110,6 +125,7 @@
             <a href="desert-ecology.html">
               Desert Ecology Study
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('desert-ecology')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">project</div>
           </li>
         
@@ -117,6 +133,7 @@
             <a href="climate-impact.html">
               Climate Impact Assessment
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('climate-impact')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">project</div>
           </li>
         
@@ -187,8 +204,10 @@
 
         const svg = d3.select('#graph')
           .append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('viewBox', [0, 0, width, height])
+          .attr('preserveAspectRatio', 'xMidYMid meet');
 
         const link = svg.append('g')
           .selectAll('line')
@@ -206,7 +225,10 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.attributes.name || d.attributes.title || d.id);
+          .text(d => {
+            const name = d.attributes.name || d.attributes.title || d.id;
+            return name;
+          });
 
         simulation.on('tick', () => {
           link
@@ -221,16 +243,16 @@
         });
 
         // Entity selection functionality
-        window.selectEntityById = function(id) {
+        window.selectEntityById = (id) => {
           // Find the selected node
-          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          const selectedNode = data.nodes.find(n => n.id === id);
           if (!selectedNode) return;
           
           // Reset all nodes
           node.attr('r', 5).attr('stroke', null);
           
           // Highlight the selected node
-          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+          const selectedNodeElement = node.filter(d => d.id === id)
             .attr('r', 8)
             .attr('stroke', 'var(--link)')
             .attr('stroke-width', 2);

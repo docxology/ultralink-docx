@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Honey Mesquite - DesertEcosystem Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #202124;
@@ -12,10 +11,11 @@
       --link: #4a9eff;
       --accent: #666666;
       --border: #333333;
+      --text-color: #e8eaed;
+      --bg-color: #202124;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,47 +88,56 @@
   <h1>Honey Mesquite</h1>
   <div class="entity-type">plant</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Honey Mesquite</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">scientificName</div>
-        <div class="attribute-value">Prosopis glandulosa</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">height</div>
-        <div class="attribute-value">900</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">waterRequirement</div>
-        <div class="attribute-value">low</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Deciduous tree with deep roots that can access groundwater.</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">adaptations</div>
-        <div class="attribute-value">Extremely deep taproots can reach 50m below surface,Small leaves reduce water loss,Drought deciduous - can shed leaves during extreme drought,Nitrogen fixing ability improves soil quality</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Honey Mesquite</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">scientificName</td>
+            <td class="attribute-value">Prosopis glandulosa</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">height</td>
+            <td class="attribute-value">900</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">waterRequirement</td>
+            <td class="attribute-value">low</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Deciduous tree with deep roots that can access groundwater.</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">adaptations</td>
+            <td class="attribute-value">Extremely deep taproots can reach 50m below surface,Small leaves reduce water loss,Drought deciduous - can shed leaves during extreme drought,Nitrogen fixing ability improves soil quality</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Deep root system</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <strong>grows_in</strong> → <a href="wash.html">Desert Wash</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
-        <strong>facilitates</strong> → <a href="desert_poppy.html">Desert Poppy</a><div class="relationship-attributes"><small><strong>relationship:</strong> improves soil conditions</small> <small><strong>strength:</strong> moderate</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a> → <strong>consumes</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Deep root system</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <strong>grows_in</strong> → <a href="wash.html">Desert Wash</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('wash')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
+        <strong>facilitates</strong> → <a href="desert_poppy.html">Desert Poppy</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('desert_poppy')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>relationship:</strong> improves soil conditions</small> <small><strong>strength:</strong> moderate</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a> <strong>consumes</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> seed collection</small> </div></li></ul>
+  </div>
 </body>
 </html>

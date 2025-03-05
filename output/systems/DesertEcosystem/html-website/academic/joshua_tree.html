@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Joshua Tree - DesertEcosystem Knowledge Graph</title>
-  <link rel="stylesheet" href="styles/academic.css">
   <style>
     :root {
       --background: #f5f5f5;
@@ -12,10 +11,11 @@
       --link: #990000;
       --accent: #666666;
       --border: #cccccc;
+      --text-color: #333333;
+      --bg-color: #f5f5f5;
     }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
+      font-family: 'Palatino Linotype', serif;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,46 +88,54 @@
   <h1>Joshua Tree</h1>
   <div class="entity-type">plant</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Joshua Tree</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">scientificName</div>
-        <div class="attribute-value">Yucca brevifolia</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">height</div>
-        <div class="attribute-value">1200</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">waterRequirement</div>
-        <div class="attribute-value">low</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Iconic tree-like yucca of the Mojave Desert with unique appearance.</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">adaptations</div>
-        <div class="attribute-value">Extensive shallow root system,Thick, moisture-retaining trunk,Waxy, spine-tipped leaves reduce water loss,Specialized pollination relationship with yucca moth,Slow growth rate conserves resources</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Joshua Tree</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">scientificName</td>
+            <td class="attribute-value">Yucca brevifolia</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">height</td>
+            <td class="attribute-value">1200</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">waterRequirement</td>
+            <td class="attribute-value">low</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Iconic tree-like yucca of the Mojave Desert with unique appearance.</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">adaptations</td>
+            <td class="attribute-value">Extensive shallow root system,Thick, moisture-retaining trunk,Waxy, spine-tipped leaves reduce water loss,Specialized pollination relationship with yucca moth,Slow growth rate conserves resources</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>grows_in</strong> → <a href="sandy_soil.html">Sandy Soil</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
-        <strong>mutual_dependency</strong> → <a href="yucca_moth.html">Yucca Moth</a><div class="relationship-attributes"><small><strong>relationship:</strong> obligate reproductive site</small> <small><strong>strength:</strong> extreme</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="yucca_moth.html">Yucca Moth</a> → <strong>mutual_dependency</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>grows_in</strong> → <a href="sandy_soil.html">Sandy Soil</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('sandy_soil')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
+        <strong>mutual_dependency</strong> → <a href="yucca_moth.html">Yucca Moth</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('yucca_moth')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>relationship:</strong> obligate reproductive site</small> <small><strong>strength:</strong> extreme</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="yucca_moth.html">Yucca Moth</a> <strong>mutual_dependency</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('yucca_moth')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>relationship:</strong> obligate reproductive site</small> <small><strong>strength:</strong> extreme</small> </div></li></ul>
+  </div>
 </body>
 </html>

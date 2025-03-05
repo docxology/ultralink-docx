@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Evolution of Equality - USAHistory Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #f0f8ff;
@@ -12,10 +11,11 @@
       --link: #006699;
       --accent: #4a9eff;
       --border: #b3d9ff;
+      --text-color: #333333;
+      --bg-color: #f0f8ff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,42 +88,48 @@
   <h1>Evolution of Equality</h1>
   <div class="entity-type">concept_drift</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Evolution of Equality</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">concept</div>
-        <div class="attribute-value">civil-rights-concept</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">startPoint</div>
-        <div class="attribute-value">1776</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">endPoint</div>
-        <div class="attribute-value">2020</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">drift</div>
-        <div class="attribute-value">0.62</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">interpretation</div>
-        <div class="attribute-value">Major transformation in understanding of equality across demographic groups</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Evolution of Equality</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">concept</td>
+            <td class="attribute-value">civil-rights-concept</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">startPoint</td>
+            <td class="attribute-value">1776</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">endPoint</td>
+            <td class="attribute-value">2020</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">drift</td>
+            <td class="attribute-value">0.62</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">interpretation</td>
+            <td class="attribute-value">Major transformation in understanding of equality across demographic groups</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <p>No relationships found.</p>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <p>No relationships found.</p>
+  </div>
 </body>
 </html>

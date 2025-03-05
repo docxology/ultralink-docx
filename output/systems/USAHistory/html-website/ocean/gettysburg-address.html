@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gettysburg Address - USAHistory Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #f0f8ff;
@@ -12,10 +11,11 @@
       --link: #006699;
       --accent: #4a9eff;
       --border: #b3d9ff;
+      --text-color: #333333;
+      --bg-color: #f0f8ff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,49 +88,57 @@
   <h1>Gettysburg Address</h1>
   <div class="entity-type">document</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Gettysburg Address</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">date</div>
-        <div class="attribute-value">1863-11-19</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">authors</div>
-        <div class="attribute-value">Abraham Lincoln</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Speech given by President Lincoln during the Civil War</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">significance</div>
-        <div class="attribute-value">Redefined the purpose of the Civil War and American democracy</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">keywords</div>
-        <div class="attribute-value">civil war,liberty,democracy,equality,Lincoln</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">vector</div>
-        <div class="attribute-value">0.44,0.32,0.36,0.18,0.28,-0.05</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Gettysburg Address</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">date</td>
+            <td class="attribute-value">1863-11-19</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">authors</td>
+            <td class="attribute-value">Abraham Lincoln</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Speech given by President Lincoln during the Civil War</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">significance</td>
+            <td class="attribute-value">Redefined the purpose of the Civil War and American democracy</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">keywords</td>
+            <td class="attribute-value">civil war,liberty,democracy,equality,Lincoln</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">vector</td>
+            <td class="attribute-value">0.44,0.32,0.36,0.18,0.28,-0.05</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>authored_by</strong> → <a href="lincoln.html">Abraham Lincoln</a></li><li class="relationship-item">
-        <strong>produced_during</strong> → <a href="civil-war.html">Civil War</a></li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>authored_by</strong> → <a href="lincoln.html">Abraham Lincoln</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('lincoln')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <strong>produced_during</strong> → <a href="civil-war.html">Civil War</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('civil-war')" class="select-link" title="Select in graph">(select)</a></li></ul>
+  </div>
 </body>
 </html>

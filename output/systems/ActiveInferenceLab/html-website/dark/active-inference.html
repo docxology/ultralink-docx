@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Active Inference - ActiveInferenceLab Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #202124;
@@ -12,10 +11,11 @@
       --link: #4a9eff;
       --accent: #666666;
       --border: #333333;
+      --text-color: #e8eaed;
+      --bg-color: #202124;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,37 +88,44 @@
   <h1>Active Inference</h1>
   <div class="entity-type">concept</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Active Inference</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">field</div>
-        <div class="attribute-value">Computational Neuroscience</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Framework for understanding perception and action based on free energy minimization</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">keyPapers</div>
-        <div class="attribute-value">10.1038/nn.2635,10.1016/j.tics.2009.04.005</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Active Inference</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">field</td>
+            <td class="attribute-value">Computational Neuroscience</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Framework for understanding perception and action based on free energy minimization</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">keyPapers</td>
+            <td class="attribute-value">10.1038/nn.2635,10.1016/j.tics.2009.04.005</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>relates_to</strong> → <a href="collective-behavior.html">Collective Behavior</a><div class="relationship-attributes"><small><strong>relationship:</strong> Theoretical framework application</small> <small><strong>strength:</strong> Strong</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a> → <strong>applies</strong>
-      </li><li class="relationship-item">
-        <a href="paper-2023a.html">Active Inference Framework for Collective Behavior Analysis</a> → <strong>discusses</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>relates_to</strong> → <a href="collective-behavior.html">Collective Behavior</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('collective-behavior')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>relationship:</strong> Theoretical framework application</small> <small><strong>strength:</strong> Strong</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a> <strong>applies</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('active-inference-model')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>centrality:</strong> Core</small> <small><strong>innovation:</strong> Novel application to collective behavior</small> </div></li><li class="relationship-item">
+        <a href="paper-2023a.html">Active Inference Framework for Collective Behavior Analysis</a> <strong>discusses</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('paper-2023a')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>depth:</strong> comprehensive</small> </div></li></ul>
+  </div>
 </body>
 </html>

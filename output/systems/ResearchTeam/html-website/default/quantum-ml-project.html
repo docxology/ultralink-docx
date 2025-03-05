@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quantum Approaches to Machine Learning - ResearchTeam Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #ffffff;
@@ -12,10 +11,11 @@
       --link: #0066cc;
       --accent: #666666;
       --border: #dddddd;
+      --text-color: #000000;
+      --bg-color: #ffffff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,60 +88,71 @@
   <h1>Quantum Approaches to Machine Learning</h1>
   <div class="entity-type">project</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">title</div>
-        <div class="attribute-value">Quantum Approaches to Machine Learning</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Exploring quantum computing advantages for select machine learning problems</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">startDate</div>
-        <div class="attribute-value">2023-01-15</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">endDate</div>
-        <div class="attribute-value">2024-12-31</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">status</div>
-        <div class="attribute-value">active</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">budget</div>
-        <div class="attribute-value">800000</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">objectives</div>
-        <div class="attribute-value">Develop quantum algorithms for ML acceleration,Benchmark against classical approaches,Identify practical quantum advantage use cases</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">title</td>
+            <td class="attribute-value">Quantum Approaches to Machine Learning</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Exploring quantum computing advantages for select machine learning problems</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">startDate</td>
+            <td class="attribute-value">2023-01-15</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">endDate</td>
+            <td class="attribute-value">2024-12-31</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">status</td>
+            <td class="attribute-value">active</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">budget</td>
+            <td class="attribute-value">800000</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">objectives</td>
+            <td class="attribute-value">Develop quantum algorithms for ML acceleration,Benchmark against classical approaches,Identify practical quantum advantage use cases</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>produced</strong> → <a href="quantum-paper-2023.html">Quantum Circuit Learning for Computer Vision Tasks</a></li><li class="relationship-item">
-        <strong>uses</strong> → <a href="quantum-computer.html">Quantum Computing Access</a></li><li class="relationship-item">
-        <strong>uses</strong> → <a href="hpc-cluster.html">University High-Performance Computing Cluster</a></li><li class="relationship-item">
-        <strong>applies</strong> → <a href="quantum-ml.html">Quantum Machine Learning</a></li><li class="relationship-item">
-        <strong>applies</strong> → <a href="machine-learning-theory.html">Machine Learning Theory</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="frank-zhang.html">Frank Zhang</a> → <strong>leads</strong>
-      </li><li class="relationship-item">
-        <a href="david-patel.html">David Patel</a> → <strong>contributes_to</strong>
-      </li><li class="relationship-item">
-        <a href="university-fund.html">University Research Excellence Fund</a> → <strong>funds</strong>
-      </li><li class="relationship-item">
-        <a href="grace-kim.html">Grace Kim</a> → <strong>administers</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>produced</strong> → <a href="quantum-paper-2023.html">Quantum Circuit Learning for Computer Vision Tasks</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('quantum-paper-2023')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <strong>uses</strong> → <a href="quantum-computer.html">Quantum Computing Access</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('quantum-computer')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <strong>uses</strong> → <a href="hpc-cluster.html">University High-Performance Computing Cluster</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('hpc-cluster')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <strong>applies</strong> → <a href="quantum-ml.html">Quantum Machine Learning</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('quantum-ml')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <strong>applies</strong> → <a href="machine-learning-theory.html">Machine Learning Theory</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('machine-learning-theory')" class="select-link" title="Select in graph">(select)</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="frank-zhang.html">Frank Zhang</a> <strong>leads</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('frank-zhang')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="david-patel.html">David Patel</a> <strong>contributes_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('david-patel')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="university-fund.html">University Research Excellence Fund</a> <strong>funds</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('university-fund')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="grace-kim.html">Grace Kim</a> <strong>administers</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('grace-kim')" class="select-link" title="Select in graph">(select)</a></li></ul>
+  </div>
 </body>
 </html>

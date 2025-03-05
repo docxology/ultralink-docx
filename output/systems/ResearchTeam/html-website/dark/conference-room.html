@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Research Team Conference Room - ResearchTeam Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #202124;
@@ -12,10 +11,11 @@
       --link: #4a9eff;
       --accent: #666666;
       --border: #333333;
+      --text-color: #e8eaed;
+      --bg-color: #202124;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,42 +88,48 @@
   <h1>Research Team Conference Room</h1>
   <div class="entity-type">facility</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Research Team Conference Room</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Meeting and presentation space with advanced AV equipment</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">location</div>
-        <div class="attribute-value">Building A, Room 210</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">equipment</div>
-        <div class="attribute-value">projector,video-conferencing,interactive-whiteboard</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">capacity</div>
-        <div class="attribute-value">20</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">status</div>
-        <div class="attribute-value">active</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Research Team Conference Room</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Meeting and presentation space with advanced AV equipment</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">location</td>
+            <td class="attribute-value">Building A, Room 210</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">equipment</td>
+            <td class="attribute-value">projector,video-conferencing,interactive-whiteboard</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">capacity</td>
+            <td class="attribute-value">20</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">status</td>
+            <td class="attribute-value">active</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <p>No relationships found.</p>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <p>No relationships found.</p>
+  </div>
 </body>
 </html>

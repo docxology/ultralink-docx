@@ -1,8 +1,8 @@
 ---
 type: event
 id: september-11
-created: 2025-03-05T00:58:30.761Z
-modified: 2025-03-05T00:58:30.761Z
+created: 2025-03-05T01:16:02.702Z
+modified: 2025-03-05T01:16:02.702Z
 ---
 
 # September 11 Attacks

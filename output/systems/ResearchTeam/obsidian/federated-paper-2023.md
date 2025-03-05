@@ -1,8 +1,8 @@
 ---
 type: publication
 id: federated-paper-2023
-created: 2025-03-05T00:58:30.546Z
-modified: 2025-03-05T00:58:30.546Z
+created: 2025-03-05T01:16:02.517Z
+modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Communication-Efficient Federated Learning with Adaptive Compression

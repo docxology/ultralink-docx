@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emma Taylor - ActiveInferenceLab Knowledge Graph</title>
-  <link rel="stylesheet" href="styles/academic.css">
   <style>
     :root {
       --background: #f5f5f5;
@@ -12,10 +11,11 @@
       --link: #990000;
       --accent: #666666;
       --border: #cccccc;
+      --text-color: #333333;
+      --bg-color: #f5f5f5;
     }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
+      font-family: 'Palatino Linotype', serif;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,55 +88,65 @@
   <h1>Emma Taylor</h1>
   <div class="entity-type">researcher</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Emma Taylor</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">role</div>
-        <div class="attribute-value">PhD Student</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">department</div>
-        <div class="attribute-value">Computer Science</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">email</div>
-        <div class="attribute-value">emma.taylor@example.edu</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">publications</div>
-        <div class="attribute-value">4</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">expertise</div>
-        <div class="attribute-value">machine learning,reinforcement learning,neural networks</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">yearsExperience</div>
-        <div class="attribute-value">2</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Emma Taylor</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">role</td>
+            <td class="attribute-value">PhD Student</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">department</td>
+            <td class="attribute-value">Computer Science</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">email</td>
+            <td class="attribute-value">emma.taylor@example.edu</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">publications</td>
+            <td class="attribute-value">4</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">expertise</td>
+            <td class="attribute-value">machine learning,reinforcement learning,neural networks</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">yearsExperience</td>
+            <td class="attribute-value">2</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>contributes</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a><div class="relationship-attributes"><small><strong>role:</strong> Field Researcher</small> <small><strong>timeCommitment:</strong> 0.7</small> </div></li><li class="relationship-item">
-        <strong>contributes_to</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a><div class="relationship-attributes"><small><strong>role:</strong> Algorithm Developer</small> <small><strong>startDate:</strong> 2024-01-05</small> </div></li><li class="relationship-item">
-        <strong>reports_to</strong> → <a href="alice.html">Dr. Alice Chen</a><div class="relationship-attributes"><small><strong>startDate:</strong> 2022-09-01</small> </div></li><li class="relationship-item">
-        <strong>authored</strong> → <a href="paper-2023b.html">Decision Making Patterns in Ant Colonies: A Field Study</a><div class="relationship-attributes"><small><strong>contributionType:</strong> co-author</small> <small><strong>contributionPercentage:</strong> 30</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="bob.html">Dr. Bob Smith</a> → <strong>mentors</strong>
-      </li><li class="relationship-item">
-        <a href="frank.html">Dr. Frank Martinez</a> → <strong>co_advises</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>contributes</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('ant-colony-study')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Field Researcher</small> <small><strong>timeCommitment:</strong> 0.7</small> </div></li><li class="relationship-item">
+        <strong>contributes_to</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('ant-colony-study')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Algorithm Developer</small> <small><strong>startDate:</strong> 2024-01-05</small> </div></li><li class="relationship-item">
+        <strong>reports_to</strong> → <a href="alice.html">Dr. Alice Chen</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>startDate:</strong> 2022-09-01</small> </div></li><li class="relationship-item">
+        <strong>authored</strong> → <a href="paper-2023b.html">Decision Making Patterns in Ant Colonies: A Field Study</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('paper-2023b')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contributionType:</strong> co-author</small> <small><strong>contributionPercentage:</strong> 30</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="bob.html">Dr. Bob Smith</a> <strong>mentors</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>type:</strong> PhD Advisor</small> <small><strong>startDate:</strong> 2022-09-01</small> </div></li><li class="relationship-item">
+        <a href="frank.html">Dr. Frank Martinez</a> <strong>co_advises</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>startDate:</strong> 2022-09-01</small> </div></li></ul>
+  </div>
 </body>
 </html>

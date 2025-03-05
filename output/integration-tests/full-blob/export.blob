@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2025-03-05T00:58:29.978Z",
+  "timestamp": "2025-03-05T01:16:01.997Z",
   "format": "UltraLink-FullBlob",
   "entities": [
     {
@@ -14,8 +14,8 @@
         "lifespan": "150-200 years"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.978Z",
-        "modified": "2025-03-05T00:58:29.978Z"
+        "created": "2025-03-05T01:16:01.997Z",
+        "modified": "2025-03-05T01:16:01.997Z"
       }
     },
     {
@@ -29,8 +29,8 @@
         "nocturnal": true
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.978Z",
-        "modified": "2025-03-05T00:58:29.978Z"
+        "created": "2025-03-05T01:16:01.997Z",
+        "modified": "2025-03-05T01:16:01.997Z"
       }
     },
     {
@@ -42,13 +42,14 @@
         "annualRainfall": "3-15 inches"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.978Z",
-        "modified": "2025-03-05T00:58:29.978Z"
+        "created": "2025-03-05T01:16:01.997Z",
+        "modified": "2025-03-05T01:16:01.997Z"
       }
     }
   ],
   "relationships": [
     {
+      "id": "saguaro_adapts_to_aridity_1741137361997",
       "source": "saguaro",
       "target": "aridity",
       "type": "adapts_to",
@@ -57,11 +58,12 @@
         "efficiency": 0.95
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.978Z",
-        "modified": "2025-03-05T00:58:29.978Z"
+        "created": "2025-03-05T01:16:01.997Z",
+        "modified": "2025-03-05T01:16:01.997Z"
       }
     },
     {
+      "id": "kangaroo-rat_adapts_to_aridity_1741137361997",
       "source": "kangaroo-rat",
       "target": "aridity",
       "type": "adapts_to",
@@ -70,17 +72,17 @@
         "efficiency": 0.88
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.978Z",
-        "modified": "2025-03-05T00:58:29.978Z"
+        "created": "2025-03-05T01:16:01.997Z",
+        "modified": "2025-03-05T01:16:01.997Z"
       }
     }
   ],
   "exports": {
     "csv": {
-      "entities": "id,type,name,title,scientificName,type,height,lifespan,weight,nocturnal,description,annualRainfall,created,modified\nsaguaro,organism,Saguaro Cactus,,Carnegiea gigantea,plant,15-50 feet,150-200 years,,,,,2025-03-05T00:58:29.978Z,2025-03-05T00:58:29.978Z\nkangaroo-rat,organism,Kangaroo Rat,,Dipodomys,mammal,,,100-150g,true,,,2025-03-05T00:58:29.978Z,2025-03-05T00:58:29.978Z\naridity,environmental_factor,Aridity,,,,,,,,Extremely dry conditions with minimal rainfall,3-15 inches,2025-03-05T00:58:29.978Z,2025-03-05T00:58:29.978Z\n",
-      "relationships": "source,target,type,weight,strength,mechanism,efficiency,created,modified\nsaguaro,aridity,adapts_to,,,Water storage in stem,0.95,2025-03-05T00:58:29.978Z,2025-03-05T00:58:29.978Z\nkangaroo-rat,aridity,adapts_to,,,Metabolic water production,0.88,2025-03-05T00:58:29.978Z,2025-03-05T00:58:29.978Z\n"
+      "entities": "id,type,name,title,scientificName,type,height,lifespan,weight,nocturnal,description,annualRainfall,created,modified\nsaguaro,organism,Saguaro Cactus,,Carnegiea gigantea,plant,15-50 feet,150-200 years,,,,,2025-03-05T01:16:01.997Z,2025-03-05T01:16:01.997Z\nkangaroo-rat,organism,Kangaroo Rat,,Dipodomys,mammal,,,100-150g,true,,,2025-03-05T01:16:01.997Z,2025-03-05T01:16:01.997Z\naridity,environmental_factor,Aridity,,,,,,,,Extremely dry conditions with minimal rainfall,3-15 inches,2025-03-05T01:16:01.997Z,2025-03-05T01:16:01.997Z\n",
+      "relationships": "source,target,type,weight,strength,mechanism,efficiency,created,modified\nsaguaro,aridity,adapts_to,,,Water storage in stem,0.95,2025-03-05T01:16:01.997Z,2025-03-05T01:16:01.997Z\nkangaroo-rat,aridity,adapts_to,,,Metabolic water production,0.88,2025-03-05T01:16:01.997Z,2025-03-05T01:16:01.997Z\n"
     },
     "graphml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\n     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n  <key id=\"name\" for=\"node\" attr.name=\"name\" attr.type=\"string\"/>\n  <key id=\"type\" for=\"node\" attr.name=\"type\" attr.type=\"string\"/>\n  <key id=\"scientificName\" for=\"node\" attr.name=\"scientificName\" attr.type=\"string\"/>\n  <key id=\"height\" for=\"node\" attr.name=\"height\" attr.type=\"string\"/>\n  <key id=\"lifespan\" for=\"node\" attr.name=\"lifespan\" attr.type=\"string\"/>\n  <key id=\"weight\" for=\"node\" attr.name=\"weight\" attr.type=\"string\"/>\n  <key id=\"nocturnal\" for=\"node\" attr.name=\"nocturnal\" attr.type=\"string\"/>\n  <key id=\"description\" for=\"node\" attr.name=\"description\" attr.type=\"string\"/>\n  <key id=\"annualRainfall\" for=\"node\" attr.name=\"annualRainfall\" attr.type=\"string\"/>\n  <key id=\"type\" for=\"edge\" attr.name=\"type\" attr.type=\"string\"/>\n  <key id=\"mechanism\" for=\"edge\" attr.name=\"mechanism\" attr.type=\"string\"/>\n  <key id=\"efficiency\" for=\"edge\" attr.name=\"efficiency\" attr.type=\"string\"/>\n  <graph id=\"G\" edgedefault=\"directed\">\n    <node id=\"saguaro\">\n      <data key=\"type\">organism</data>\n      <data key=\"name\">Saguaro Cactus</data>\n      <data key=\"scientificName\">Carnegiea gigantea</data>\n      <data key=\"type\">plant</data>\n      <data key=\"height\">15-50 feet</data>\n      <data key=\"lifespan\">150-200 years</data>\n    </node>\n    <node id=\"kangaroo-rat\">\n      <data key=\"type\">organism</data>\n      <data key=\"name\">Kangaroo Rat</data>\n      <data key=\"scientificName\">Dipodomys</data>\n      <data key=\"type\">mammal</data>\n      <data key=\"weight\">100-150g</data>\n      <data key=\"nocturnal\">true</data>\n    </node>\n    <node id=\"aridity\">\n      <data key=\"type\">environmental_factor</data>\n      <data key=\"name\">Aridity</data>\n      <data key=\"description\">Extremely dry conditions with minimal rainfall</data>\n      <data key=\"annualRainfall\">3-15 inches</data>\n    </node>\n    <edge source=\"saguaro\" target=\"aridity\">\n      <data key=\"type\">adapts_to</data>\n      <data key=\"mechanism\">Water storage in stem</data>\n      <data key=\"efficiency\">0.95</data>\n    </edge>\n    <edge source=\"kangaroo-rat\" target=\"aridity\">\n      <data key=\"type\">adapts_to</data>\n      <data key=\"mechanism\">Metabolic water production</data>\n      <data key=\"efficiency\">0.88</data>\n    </edge>\n  </graph>\n</graphml>",
-    "kif": ";; UltraLink Knowledge Interchange Format (KIF) Export\n;; Generated: 2025-03-05T00:58:29.979Z\n;; Entities and their attributes\n(instance saguaro Organism)\n(name saguaro \"Saguaro Cactus\")\n(scientificName saguaro \"Carnegiea gigantea\")\n(type saguaro \"plant\")\n(height saguaro \"15-50 feet\")\n(lifespan saguaro \"150-200 years\")\n\n(instance kangaroo-rat Organism)\n(name kangaroo-rat \"Kangaroo Rat\")\n(scientificName kangaroo-rat \"Dipodomys\")\n(type kangaroo-rat \"mammal\")\n(weight kangaroo-rat \"100-150g\")\n(nocturnal kangaroo-rat \"true\")\n\n(instance aridity Environmental_factor)\n(name aridity \"Aridity\")\n(description aridity \"Extremely dry conditions with minimal rainfall\")\n(annualRainfall aridity \"3-15 inches\")\n\n;; Relationships\n(adapts_to saguaro aridity)\n(adapts_to kangaroo-rat aridity)\n\n;; Meta-knowledge\n(= (entityCount UltraLinkExport) 3)\n(= (relationshipCount UltraLinkExport) 2)\n(= (exportDate UltraLinkExport) \"2025-03-05T00:58:29.979Z\")\n(= (exportVersion UltraLinkExport) \"1.0\")\n\n;; Functions\n(deffunction relationshipCount (?kb)\n  :documentation \"Returns the total number of relationships in a knowledge base\"\n  :return-type Integer)\n\n(deffunction entityCount (?kb)\n  :documentation \"Returns the total number of entities in a knowledge base\"\n  :return-type Integer)\n\n;; Rules\n(defrule temporal-ordering\n  :documentation \"Rule for temporal ordering of events\"\n  (and (instance ?e1 Event)\n       (instance ?e2 Event)\n       (date ?e1 ?d1)\n       (date ?e2 ?d2)\n       (evaluate ?before (string< ?d1 ?d2)))\n  (before ?e1 ?e2))\n"
+    "kif": ";; UltraLink Knowledge Interchange Format (KIF) Export\n;; Generated: 2025-03-05T01:16:01.997Z\n;; Entities and their attributes\n(instance saguaro Organism)\n(name saguaro \"Saguaro Cactus\")\n(scientificName saguaro \"Carnegiea gigantea\")\n(type saguaro \"plant\")\n(height saguaro \"15-50 feet\")\n(lifespan saguaro \"150-200 years\")\n(instance kangaroo-rat Organism)\n(name kangaroo-rat \"Kangaroo Rat\")\n(scientificName kangaroo-rat \"Dipodomys\")\n(type kangaroo-rat \"mammal\")\n(weight kangaroo-rat \"100-150g\")\n(nocturnal kangaroo-rat \"true\")\n(instance aridity Environmental_factor)\n(name aridity \"Aridity\")\n(description aridity \"Extremely dry conditions with minimal rainfall\")\n(annualRainfall aridity \"3-15 inches\")\n\n;; Relationships\n(undefined undefined undefined)\n(undefined undefined undefined)\n\n;; Meta-knowledge\n(= (entityCount UltraLinkExport) 3)\n(= (relationshipCount UltraLinkExport) undefined)\n(= (exportTime UltraLinkExport) \"2025-03-05T01:16:01.997Z\")\n(= (creationDate UltraLinkExport) \"2025-03-05T01:16:01.997Z\")\n\n;; Functions\n(deffunction relationshipCount (?graph) \n  (count (relationships ?graph)))\n(deffunction entityCount (?graph)\n  (count (entities ?graph)))\n\n;; Rules\n(defrule connected-entities\n  (if (exists (?rel) \n      (and (relationship ?rel ?source ?target) \n           (entity ?source) \n           (entity ?target))) \n  (then (connected ?source ?target))))\n"
   }
 }

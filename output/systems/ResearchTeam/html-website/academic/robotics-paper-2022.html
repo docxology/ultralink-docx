@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization - ResearchTeam Knowledge Graph</title>
-  <link rel="stylesheet" href="styles/academic.css">
   <style>
     :root {
       --background: #f5f5f5;
@@ -12,10 +11,11 @@
       --link: #990000;
       --accent: #666666;
       --border: #cccccc;
+      --text-color: #333333;
+      --bg-color: #f5f5f5;
     }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
+      font-family: 'Palatino Linotype', serif;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,54 +88,61 @@
   <h1>Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization</h1>
   <div class="entity-type">publication</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">title</div>
-        <div class="attribute-value">Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">authors</div>
-        <div class="attribute-value">carol-jones,alice-chen</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">venue</div>
-        <div class="attribute-value">Robotics: Science and Systems 2022</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">year</div>
-        <div class="attribute-value">2022</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">doi</div>
-        <div class="attribute-value">10.1234/rss2022</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">citations</div>
-        <div class="attribute-value">31</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">abstract</div>
-        <div class="attribute-value">We present a new approach to sim-to-real transfer learning for robotic manipulation tasks that leverages adaptive domain randomization...</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">title</td>
+            <td class="attribute-value">Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">authors</td>
+            <td class="attribute-value">carol-jones,alice-chen</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">venue</td>
+            <td class="attribute-value">Robotics: Science and Systems 2022</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">year</td>
+            <td class="attribute-value">2022</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">doi</td>
+            <td class="attribute-value">10.1234/rss2022</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">citations</td>
+            <td class="attribute-value">31</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">abstract</td>
+            <td class="attribute-value">We present a new approach to sim-to-real transfer learning for robotic manipulation tasks that leverages adaptive domain randomization...</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>cites</strong> → <a href="vision-paper-2022.html">Novel Approaches to Low-Light Computer Vision</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="carol-jones.html">Carol Jones</a> → <strong>authored</strong>
-      </li><li class="relationship-item">
-        <a href="alice-chen.html">Alice Chen</a> → <strong>authored</strong>
-      </li><li class="relationship-item">
-        <a href="adaptive-robotics-project.html">Adaptive Robotics Control</a> → <strong>produced</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>cites</strong> → <a href="vision-paper-2022.html">Novel Approaches to Low-Light Computer Vision</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('vision-paper-2022')" class="select-link" title="Select in graph">(select)</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="carol-jones.html">Carol Jones</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('carol-jones')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="alice-chen.html">Alice Chen</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="adaptive-robotics-project.html">Adaptive Robotics Control</a> <strong>produced</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('adaptive-robotics-project')" class="select-link" title="Select in graph">(select)</a></li></ul>
+  </div>
 </body>
 </html>

@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sidewinder Rattlesnake - DesertEcosystem Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #202124;
@@ -12,10 +11,11 @@
       --link: #4a9eff;
       --accent: #666666;
       --border: #333333;
+      --text-color: #e8eaed;
+      --bg-color: #202124;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,52 +88,61 @@
   <h1>Sidewinder Rattlesnake</h1>
   <div class="entity-type">animal</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Sidewinder Rattlesnake</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">scientificName</div>
-        <div class="attribute-value">Crotalus cerastes</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">lifespan</div>
-        <div class="attribute-value">20</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">diet</div>
-        <div class="attribute-value">carnivore</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">status</div>
-        <div class="attribute-value">least concern</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Venomous pit viper known for its sideways movement across sand.</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">adaptations</div>
-        <div class="attribute-value">Sidewinding locomotion minimizes contact with hot sand,Heat-sensing pits detect prey,Scales provide camouflage in sandy environments,Specialized breathing to prevent sand inhalation</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Sidewinder Rattlesnake</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">scientificName</td>
+            <td class="attribute-value">Crotalus cerastes</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">lifespan</td>
+            <td class="attribute-value">20</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">diet</td>
+            <td class="attribute-value">carnivore</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">status</td>
+            <td class="attribute-value">least concern</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Venomous pit viper known for its sideways movement across sand.</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">adaptations</td>
+            <td class="attribute-value">Sidewinding locomotion minimizes contact with hot sand,Heat-sensing pits detect prey,Scales provide camouflage in sandy environments,Specialized breathing to prevent sand inhalation</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="sand_dunes.html">Sand Dunes</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Specialized locomotion</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <strong>lives_in</strong> → <a href="dune_field.html">Sand Dune Field</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
-        <strong>preys_on</strong> → <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> ambush</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="roadrunner.html">Greater Roadrunner</a> → <strong>preys_on</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>adapted_to</strong> → <a href="sand_dunes.html">Sand Dunes</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('sand_dunes')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Specialized locomotion</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <strong>lives_in</strong> → <a href="dune_field.html">Sand Dune Field</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('dune_field')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
+        <strong>preys_on</strong> → <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> ambush</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="roadrunner.html">Greater Roadrunner</a> <strong>preys_on</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('roadrunner')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> occasional</small> <small><strong>method:</strong> hunting</small> </div></li></ul>
+  </div>
 </body>
 </html>

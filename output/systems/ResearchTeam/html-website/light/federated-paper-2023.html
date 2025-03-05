@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Communication-Efficient Federated Learning with Adaptive Compression - ResearchTeam Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #ffffff;
@@ -12,10 +11,11 @@
       --link: #0066cc;
       --accent: #666666;
       --border: #dddddd;
+      --text-color: #000000;
+      --bg-color: #ffffff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,57 +88,63 @@
   <h1>Communication-Efficient Federated Learning with Adaptive Compression</h1>
   <div class="entity-type">publication</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">title</div>
-        <div class="attribute-value">Communication-Efficient Federated Learning with Adaptive Compression</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">authors</div>
-        <div class="attribute-value">david-patel,alice-chen,frank-zhang</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">venue</div>
-        <div class="attribute-value">International Conference on Machine Learning 2023</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">year</div>
-        <div class="attribute-value">2023</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">doi</div>
-        <div class="attribute-value">10.1234/icml2023</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">citations</div>
-        <div class="attribute-value">8</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">abstract</div>
-        <div class="attribute-value">This paper introduces a novel compression technique for federated learning that adaptively adjusts to network conditions and data heterogeneity...</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">title</td>
+            <td class="attribute-value">Communication-Efficient Federated Learning with Adaptive Compression</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">authors</td>
+            <td class="attribute-value">david-patel,alice-chen,frank-zhang</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">venue</td>
+            <td class="attribute-value">International Conference on Machine Learning 2023</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">year</td>
+            <td class="attribute-value">2023</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">doi</td>
+            <td class="attribute-value">10.1234/icml2023</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">citations</td>
+            <td class="attribute-value">8</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">abstract</td>
+            <td class="attribute-value">This paper introduces a novel compression technique for federated learning that adaptively adjusts to network conditions and data heterogeneity...</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="david-patel.html">David Patel</a> → <strong>authored</strong>
-      </li><li class="relationship-item">
-        <a href="alice-chen.html">Alice Chen</a> → <strong>authored</strong>
-      </li><li class="relationship-item">
-        <a href="frank-zhang.html">Frank Zhang</a> → <strong>authored</strong>
-      </li><li class="relationship-item">
-        <a href="federated-learning-project.html">Privacy-Preserving Federated Learning</a> → <strong>produced</strong>
-      </li><li class="relationship-item">
-        <a href="survey-paper-2023.html">A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</a> → <strong>cites</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="david-patel.html">David Patel</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('david-patel')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="alice-chen.html">Alice Chen</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="frank-zhang.html">Frank Zhang</a> <strong>authored</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('frank-zhang')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="federated-learning-project.html">Privacy-Preserving Federated Learning</a> <strong>produced</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('federated-learning-project')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <a href="survey-paper-2023.html">A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</a> <strong>cites</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('survey-paper-2023')" class="select-link" title="Select in graph">(select)</a></li></ul>
+  </div>
 </body>
 </html>

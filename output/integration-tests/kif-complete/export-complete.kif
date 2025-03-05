@@ -1,5 +1,5 @@
 ;; UltraLink Knowledge Interchange Format (KIF) Export
-;; Generated: 2025-03-05T00:58:29.982Z
+;; Generated: 2025-03-05T01:16:02.011Z
 ;; Entities and their attributes
 (instance saguaro Organism)
 (name saguaro "Saguaro Cactus")
@@ -7,44 +7,37 @@
 (type saguaro "plant")
 (height saguaro "15-50 feet")
 (lifespan saguaro "150-200 years")
-
 (instance kangaroo-rat Organism)
 (name kangaroo-rat "Kangaroo Rat")
 (scientificName kangaroo-rat "Dipodomys")
 (type kangaroo-rat "mammal")
 (weight kangaroo-rat "100-150g")
 (nocturnal kangaroo-rat "true")
-
 (instance aridity Environmental_factor)
 (name aridity "Aridity")
 (description aridity "Extremely dry conditions with minimal rainfall")
 (annualRainfall aridity "3-15 inches")
 
 ;; Relationships
-(adapts_to saguaro aridity)
-(adapts_to kangaroo-rat aridity)
+(undefined undefined undefined)
+(undefined undefined undefined)
 
 ;; Meta-knowledge
 (= (entityCount UltraLinkExport) 3)
-(= (relationshipCount UltraLinkExport) 2)
-(= (exportDate UltraLinkExport) "2025-03-05T00:58:29.982Z")
-(= (exportVersion UltraLinkExport) "1.0")
+(= (relationshipCount UltraLinkExport) undefined)
+(= (exportTime UltraLinkExport) "2025-03-05T01:16:02.011Z")
+(= (creationDate UltraLinkExport) "2025-03-05T01:16:02.011Z")
 
 ;; Functions
-(deffunction relationshipCount (?kb)
-  :documentation "Returns the total number of relationships in a knowledge base"
-  :return-type Integer)
-
-(deffunction entityCount (?kb)
-  :documentation "Returns the total number of entities in a knowledge base"
-  :return-type Integer)
+(deffunction relationshipCount (?graph) 
+  (count (relationships ?graph)))
+(deffunction entityCount (?graph)
+  (count (entities ?graph)))
 
 ;; Rules
-(defrule temporal-ordering
-  :documentation "Rule for temporal ordering of events"
-  (and (instance ?e1 Event)
-       (instance ?e2 Event)
-       (date ?e1 ?d1)
-       (date ?e2 ?d2)
-       (evaluate ?before (string< ?d1 ?d2)))
-  (before ?e1 ?e2))
+(defrule connected-entities
+  (if (exists (?rel) 
+      (and (relationship ?rel ?source ?target) 
+           (entity ?source) 
+           (entity ?target))) 
+  (then (connected ?source ?target))))

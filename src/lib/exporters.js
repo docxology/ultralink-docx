@@ -13,53 +13,63 @@ const zlib = require('zlib');
  * @param {boolean} options.pretty - Whether to format the JSON with indentation
  * @param {boolean} options.includeMetadata - Whether to include metadata fields
  * @param {boolean} options.asString - Whether to return as a string or object
+ * @param {boolean} options.includeVectors - Whether to include vector data
  * @returns {Object|string} JSON object or string
  */
 function toJSON(options = {}) {
   const {
-    pretty = false,
+    pretty = true,
     includeMetadata = true,
-    asString = true
+    asString = true,
+    includeVectors = false
   } = options;
 
-  // Convert entities to array format
-  const entities = Array.from(this.entities.values()).map(entity => {
-    const result = {
-      id: entity.id,
+  // Initialize result object
+  const result = {
+    entities: [],
+    relationships: []
+  };
+
+  // Add entities
+  for (const [id, entity] of this.entities.entries()) {
+    const jsonEntity = {
+      id,
       type: entity.type,
-      attributes: { ...entity.attributes }
+      attributes: entity.attributes instanceof Map ? Object.fromEntries(entity.attributes) : entity.attributes
     };
 
+    // Add metadata if requested
     if (includeMetadata && entity.metadata) {
-      result.metadata = { ...entity.metadata };
+      jsonEntity.metadata = { ...entity.metadata };
     }
 
-    return result;
-  });
-
-  // Convert relationships to array format
-  const relationships = Array.from(this.relationships.values()).map(rel => {
-    const result = {
-      source: rel.source,
-      target: rel.target,
-      type: rel.type,
-      attributes: { ...rel.attributes }
-    };
-
-    if (includeMetadata && rel.metadata) {
-      result.metadata = { ...rel.metadata };
+    // Add vector data if requested and available
+    if (includeVectors && entity.vector) {
+      jsonEntity.vector = Array.from(entity.vector);
     }
 
-    return result;
-  });
-
-  const data = { entities, relationships };
-
-  if (asString) {
-    return pretty ? JSON.stringify(data, null, 2) : JSON.stringify(data);
+    result.entities.push(jsonEntity);
   }
 
-  return data;
+  // Add relationships
+  for (const [id, relationship] of this.relationships.entries()) {
+    const jsonRelationship = {
+      id,
+      source: relationship.source,
+      target: relationship.target,
+      type: relationship.type,
+      attributes: relationship.attributes instanceof Map ? Object.fromEntries(relationship.attributes) : relationship.attributes
+    };
+
+    // Add metadata if requested
+    if (includeMetadata && relationship.metadata) {
+      jsonRelationship.metadata = { ...relationship.metadata };
+    }
+
+    result.relationships.push(jsonRelationship);
+  }
+
+  return asString ? JSON.stringify(result, null, pretty ? 2 : 0) : result;
 }
 
 /**
@@ -510,14 +520,19 @@ function toHTMLWebsite(options = {}) {
       text: '#e8eaed',
       link: '#4a9eff',
       accent: '#666666',
-      border: '#333333'
+      border: '#333333',
+      text_color: '#e8eaed',
+      bg_color: '#202124',
+      background_rgba: 'rgba(32, 33, 36, 0.8)'
     },
     light: {
       background: '#ffffff', 
       text: '#000000',
       link: '#0066cc',
       accent: '#666666',
-      border: '#dddddd'
+      border: '#dddddd',
+      text_color: '#000000',
+      bg_color: '#ffffff'
     },
     academic: {
       background: '#f5f5f5',
@@ -525,22 +540,28 @@ function toHTMLWebsite(options = {}) {
       link: '#990000',
       accent: '#666666',
       border: '#cccccc',
-      backgroundColor: '#7b1fa2',
-      fontFamily: '\'Palatino Linotype\', serif'
+      fontFamily: '\'Palatino Linotype\', serif',
+      'background-color': '#7b1fa2',
+      text_color: '#333333',
+      bg_color: '#f5f5f5'
     },
     ocean: {
       background: '#f0f8ff',
       text: '#333333',
       link: '#006699',
       accent: '#4a9eff',
-      border: '#b3d9ff'
+      border: '#b3d9ff',
+      text_color: '#333333',
+      bg_color: '#f0f8ff'
     },
     default: {
       background: '#ffffff',
       text: '#000000',
       link: '#0066cc',
       accent: '#666666',
-      border: '#dddddd'
+      border: '#dddddd',
+      text_color: '#000000',
+      bg_color: '#ffffff'
     }
   };
 
@@ -562,13 +583,16 @@ function toHTMLWebsite(options = {}) {
       --link: ${themeVars.link};
       --accent: ${themeVars.accent};
       --border: ${themeVars.border};
+      --text-color: ${themeVars.text_color};
+      --bg-color: ${themeVars.bg_color};
     }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: ${themeVars.fontFamily || 'system-ui, -apple-system, sans-serif'};
       margin: 0;
       padding: 0;
       background: var(--background);
       color: var(--text);
+      ${theme === 'dark' ? 'background: rgba(32, 33, 36, 0.8);' : ''}
     }
     .container {
       display: grid;
@@ -626,6 +650,53 @@ function toHTMLWebsite(options = {}) {
       background: var(--background);
       color: var(--text);
     }
+    .zoom-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--background);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 5px;
+      z-index: 100;
+    }
+    .zoom-btn {
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .zoom-btn:hover {
+      background: var(--border);
+    }
+    .btn {
+      padding: 8px 12px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 4px;
+      display: block;
+      width: 100%;
+    }
+    .btn:hover {
+      background: var(--border);
+    }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -637,6 +708,16 @@ function toHTMLWebsite(options = {}) {
       ${includeSearch ? `
       <div class="search-box">
         <input type="text" id="search-input" placeholder="Search entities..." />
+        <button class="btn" id="clear-filters">Clear Filters</button>
+      </div>
+      
+      <div class="type-filters" id="type-filters">
+        <h4>Filter by Type</h4>
+        ${Array.from(new Set(Array.from(this.entities.values()).map(e => e.type))).map(type => `
+          <label>
+            <input type="checkbox" data-type="${type}" checked> ${type}
+          </label>
+        `).join('')}
       </div>
       ` : ''}
       <h3>Entities</h3>
@@ -646,12 +727,18 @@ function toHTMLWebsite(options = {}) {
             <a href="${entity.id}.html">
               ${entity.attributes.name || entity.attributes.title || entity.id}
             </a>
+            <a href="javascript:void(0)" onclick="selectEntityById('${entity.id}')" class="select-link" title="Select in graph">(select)</a>
             <div class="entity-type">${entity.type}</div>
           </li>
         `).join('')}
       </ul>
     </div>
     <div class="main">
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-in">+</button>
+        <button class="zoom-btn" id="zoom-reset">⟳</button>
+        <button class="zoom-btn" id="zoom-out">−</button>
+      </div>
       <div id="graph"></div>
       <script>
         // Graph visualization code
@@ -692,8 +779,10 @@ function toHTMLWebsite(options = {}) {
 
         const svg = d3.select('#graph')
           .append('svg')
-          .attr('width', width)
-          .attr('height', height);
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('viewBox', [0, 0, width, height])
+          .attr('preserveAspectRatio', 'xMidYMid meet');
 
         const link = svg.append('g')
           .selectAll('line')
@@ -711,7 +800,10 @@ function toHTMLWebsite(options = {}) {
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.attributes.name || d.attributes.title || d.id);
+          .text(d => {
+            const name = d.attributes.name || d.attributes.title || d.id;
+            return name;
+          });
 
         simulation.on('tick', () => {
           link
@@ -726,16 +818,16 @@ function toHTMLWebsite(options = {}) {
         });
 
         // Entity selection functionality
-        window.selectEntityById = function(id) {
+        window.selectEntityById = (id) => {
           // Find the selected node
-          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          const selectedNode = data.nodes.find(n => n.id === id);
           if (!selectedNode) return;
           
           // Reset all nodes
           node.attr('r', 5).attr('stroke', null);
           
           // Highlight the selected node
-          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+          const selectedNodeElement = node.filter(d => d.id === id)
             .attr('r', 8)
             .attr('stroke', 'var(--link)')
             .attr('stroke-width', 2);
@@ -748,6 +840,35 @@ function toHTMLWebsite(options = {}) {
           svg.transition().duration(500)
             .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
         };
+
+        // Set up zoom behavior
+        const zoom = d3.zoom()
+          .scaleExtent([0.1, 4])
+          .on('zoom', (event) => {
+            svg.attr('transform', event.transform);
+          });
+
+        svg.call(zoom);
+
+        // Add zoom button event listeners
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+
+        zoomInBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 1.2);
+        });
+
+        zoomOutBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(zoom.scaleBy, 0.8);
+        });
+
+        zoomResetBtn.addEventListener('click', function() {
+          svg.transition().duration(300).call(
+            zoom.transform,
+            d3.zoomIdentity
+          );
+        });
 
         function drag(simulation) {
           function dragstarted(event) {
@@ -794,6 +915,21 @@ function toHTMLWebsite(options = {}) {
             }
           });
         });
+
+        // Clear filters functionality
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        clearFiltersBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          entityItems.forEach(item => {
+            item.style.display = '';
+          });
+          
+          // Reset type filters
+          const typeFilters = document.getElementById('type-filters');
+          Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
+            input.checked = true;
+          });
+        });
         ` : ''}
       </script>
     </div>
@@ -811,7 +947,6 @@ function toHTMLWebsite(options = {}) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${entity.attributes.name || entity.attributes.title || entity.id} - ${title}</title>
-  ${theme === 'academic' ? '<link rel="stylesheet" href="styles/academic.css">' : ''}
   <style>
     :root {
       --background: ${themeVars.background};
@@ -819,10 +954,11 @@ function toHTMLWebsite(options = {}) {
       --link: ${themeVars.link};
       --accent: ${themeVars.accent};
       --border: ${themeVars.border};
+      --text-color: ${themeVars.text_color};
+      --bg-color: ${themeVars.bg_color};
     }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
+      font-family: ${themeVars.fontFamily || 'system-ui, -apple-system, sans-serif'};
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -845,26 +981,33 @@ function toHTMLWebsite(options = {}) {
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -888,244 +1031,23 @@ function toHTMLWebsite(options = {}) {
   <h1>${entity.attributes.name || entity.attributes.title || entity.id}</h1>
   <div class="entity-type">${entity.type}</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    ${Object.entries(entity.attributes).map(([key, value]) => `
-      <div class="attribute-row">
-        <div class="attribute-key">${key}</div>
-        <div class="attribute-value">${String(value)}</div>
-      </div>
-    `).join('')}
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        ${Object.entries(entity.attributes).map(([key, value]) => `
+          <tr class="attribute-row">
+            <td class="attribute-key">${key}</td>
+            <td class="attribute-value">${String(value)}</td>
+          </tr>
+        `).join('')}
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  ${generateRelationshipHTML.call(this, entity.id)}
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    ${generateRelationshipHTML.call(this, entity.id)}
+  </div>
 </body>
-</html>`;
-
-    files[`${entity.id}.html`] = entityHTML;
-  }
-
-  return files;
-}
-
-/**
- * Helper method to generate relationship HTML for an entity
- * @param {string} entityId - Entity ID
- * @returns {string} HTML for relationships
- */
-function generateRelationshipHTML(entityId) {
-  // Get outgoing and incoming relationships
-  const outgoing = this.getRelationships(entityId, { direction: 'outgoing' });
-  const incoming = this.getRelationships(entityId, { direction: 'incoming' });
-
-  let html = '';
-
-  if (outgoing.length > 0) {
-    html += '<h4>Outgoing</h4>';
-    html += '<ul class="relationship-list">';
-
-    for (const rel of outgoing) {
-      const targetEntity = this.entities.get(rel.target);
-      const targetName = targetEntity?.attributes?.name || targetEntity?.attributes?.title || rel.target;
-
-      html += `<li class="relationship-item">
-        <strong>${rel.type}</strong> → <a href="${rel.target}.html">${targetName}</a>`;
-
-      // Add relationship attributes if present
-      if (Object.keys(rel.attributes).length > 0) {
-        html += '<div class="relationship-attributes">';
-        for (const [key, value] of Object.entries(rel.attributes)) {
-          html += `<small><strong>${key}:</strong> ${value}</small> `;
-        }
-        html += '</div>';
-      }
-
-      html += `</li>`;
-    }
-
-    html += '</ul>';
-  }
-
-  if (incoming.length > 0) {
-    html += '<h4>Incoming</h4>';
-    html += '<ul class="relationship-list">';
-
-    for (const rel of incoming) {
-      const sourceEntity = this.entities.get(rel.source);
-      const sourceName = sourceEntity?.attributes?.name || sourceEntity?.attributes?.title || rel.source;
-
-      html += `<li class="relationship-item">
-        <a href="${rel.source}.html">${sourceName}</a> → <strong>${rel.type}</strong>
-      </li>`;
-    }
-
-    html += '</ul>';
-  }
-
-  if (outgoing.length === 0 && incoming.length === 0) {
-    html += '<p>No relationships found.</p>';
-  }
-
-  return html;
-}
-
-/**
- * Export to KIF (Knowledge Interchange Format)
- * @param {Object} options - Export options
- * @param {boolean} options.includeAttributes - Whether to include entity attributes
- * @param {string} options.baseNamespace - Base namespace for entity IDs
- * @returns {string} KIF document as string
- */
-function toKIF(options = {}) {
-  const {
-    includeAttributes = true,
-    baseNamespace = ''
-  } = options;
-
-  // Initialize KIF string with header
-  let kif = `;; UltraLink Knowledge Interchange Format (KIF) Export
-;; Generated: ${new Date().toISOString()}
-;; Entities and their attributes\n`;
-
-  // Add entity definitions
-  for (const entity of this.entities.values()) {
-    kif += `(instance ${entity.id} ${entity.type.charAt(0).toUpperCase() + entity.type.slice(1)})\n`;
-
-    // Add attributes if requested
-    if (includeAttributes && entity.attributes) {
-      // Handle both Map and plain object attributes
-      if (entity.attributes instanceof Map) {
-        for (const [key, value] of entity.attributes.entries()) {
-          if (value !== undefined) {
-            // Check if value is a number and format accordingly
-            if (typeof value === 'number') {
-              kif += `(${key} ${baseNamespace}${entity.id} ${value})\n`;
-            } else {
-              kif += `(${key} ${baseNamespace}${entity.id} "${value}")\n`;
-            }
-          }
-        }
-      } else {
-        for (const [key, value] of Object.entries(entity.attributes)) {
-          if (value !== undefined) {
-            // Check if value is a number and format accordingly
-            if (typeof value === 'number') {
-              kif += `(${key} ${baseNamespace}${entity.id} ${value})\n`;
-            } else {
-              kif += `(${key} ${baseNamespace}${entity.id} "${value}")\n`;
-            }
-          }
-        }
-      }
-    }
-
-    kif += `\n`;
-  }
-
-  // Add relationships section
-  kif += `;; Relationships\n`;
-  for (const rel of this.relationships.values()) {
-    kif += `(${rel.type} ${baseNamespace}${rel.source} ${baseNamespace}${rel.target})\n`;
-  }
-
-  // Add meta-knowledge section
-  kif += `\n;; Meta-knowledge\n`;
-  kif += `(= (entityCount UltraLinkExport) ${this.entities.size})\n`;
-  kif += `(= (relationshipCount UltraLinkExport) ${this.relationships.size})\n`;
-  kif += `(= (exportDate UltraLinkExport) "${new Date().toISOString()}")\n`;
-  kif += `(= (exportVersion UltraLinkExport) "1.0")\n`;
-
-  // Add Functions section
-  kif += `\n;; Functions\n`;
-  kif += `(deffunction relationshipCount (?kb)\n`;
-  kif += `  :documentation "Returns the total number of relationships in a knowledge base"\n`;
-  kif += `  :return-type Integer)\n\n`;
-  kif += `(deffunction entityCount (?kb)\n`;
-  kif += `  :documentation "Returns the total number of entities in a knowledge base"\n`;
-  kif += `  :return-type Integer)\n`;
-
-  // Add Rules section
-  kif += `\n;; Rules\n`;
-  kif += `(defrule temporal-ordering\n`;
-  kif += `  :documentation "Rule for temporal ordering of events"\n`;
-  kif += `  (and (instance ?e1 Event)\n`;
-  kif += `       (instance ?e2 Event)\n`;
-  kif += `       (date ?e1 ?d1)\n`;
-  kif += `       (date ?e2 ?d2)\n`;
-  kif += `       (evaluate ?before (string< ?d1 ?d2)))\n`;
-  kif += `  (before ?e1 ?e2))\n`;
-
-  return kif;
-}
-
-/**
- * Export a complete blob containing all data in multiple formats
- * @param {Object} options - Export options
- * @param {boolean} options.includeMetadata - Whether to include metadata
- * @param {string} options.compression - Compression type ('none' or 'gzip')
- * @returns {Object} Object containing various export formats
- */
-function toFullBlob(options = {}) {
-  const {
-    includeMetadata = true,
-    compression = 'none'
-  } = options;
-
-  // Create basic JSON data
-  const jsonData = this.toJSON({ 
-    pretty: false, 
-    includeMetadata, 
-    asString: false 
-  });
-
-  // Add export metadata
-  const fullData = {
-    version: '1.0.0',
-    timestamp: new Date().toISOString(),
-    format: 'UltraLink-FullBlob',
-    entities: jsonData.entities,
-    relationships: jsonData.relationships,
-    exports: {}
-  };
-
-  // Add various export formats
-  try {
-    fullData.exports.csv = this.toCSV({ includeMetadata });
-  } catch (e) {
-    fullData.exports.csv = { error: e.message };
-  }
-
-  try {
-    fullData.exports.graphml = this.toGraphML({ includeAllAttributes: true });
-  } catch (e) {
-    fullData.exports.graphml = { error: e.message };
-  }
-
-  try {
-    fullData.exports.kif = this.toKIF({ includeAttributes: true });
-  } catch (e) {
-    fullData.exports.kif = { error: e.message };
-  }
-
-  // Apply compression if requested
-  if (compression === 'gzip') {
-    const zlib = require('zlib');
-    const jsonString = JSON.stringify(fullData);
-    return zlib.gzipSync(jsonString);
-  }
-
-  // Return the object directly
-  return fullData;
-}
-
-module.exports = {
-  toJSON,
-  toCSV,
-  toGraphML,
-  toObsidian,
-  toHTMLWebsite,
-  toKIF,
-  toFullBlob,
-  generateRelationshipHTML
-}; 
+</html>`

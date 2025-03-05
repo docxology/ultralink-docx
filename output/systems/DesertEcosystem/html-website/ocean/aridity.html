@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aridity - DesertEcosystem Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #f0f8ff;
@@ -12,10 +11,11 @@
       --link: #006699;
       --accent: #4a9eff;
       --border: #b3d9ff;
+      --text-color: #333333;
+      --bg-color: #f0f8ff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,54 +88,60 @@
   <h1>Aridity</h1>
   <div class="entity-type">abiotic_factor</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Aridity</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">type</div>
-        <div class="attribute-value">climate</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">description</div>
-        <div class="attribute-value">Low precipitation, typically less than 250mm annually, with high evaporation rates.</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">impact</div>
-        <div class="attribute-value">extreme</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Aridity</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">type</td>
+            <td class="attribute-value">climate</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">description</td>
+            <td class="attribute-value">Low precipitation, typically less than 250mm annually, with high evaporation rates.</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">impact</td>
+            <td class="attribute-value">extreme</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="darkling_beetle.html">Darkling Beetle</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="desert_tortoise.html">Desert Tortoise</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="javelina.html">Javelina</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="yucca_moth.html">Yucca Moth</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="coyote.html">Coyote</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="barrel_cactus.html">Barrel Cactus</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="mesquite.html">Honey Mesquite</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="creosote_bush.html">Creosote Bush</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="desert_ironwood.html">Desert Ironwood</a> → <strong>adapted_to</strong>
-      </li><li class="relationship-item">
-        <a href="agave.html">Century Plant</a> → <strong>adapted_to</strong>
-      </li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="darkling_beetle.html">Darkling Beetle</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('darkling_beetle')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Water harvesting from air</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="desert_tortoise.html">Desert Tortoise</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('desert_tortoise')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Water storage in bladder</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Metabolic water production</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="javelina.html">Javelina</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('javelina')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Consumption of water-rich cacti</small> <small><strong>strength:</strong> moderate</small> </div></li><li class="relationship-item">
+        <a href="yucca_moth.html">Yucca Moth</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('yucca_moth')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Short lifecycle synchronized with yucca flowering</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="coyote.html">Coyote</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('coyote')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Obtaining moisture from prey</small> <small><strong>strength:</strong> strong</small> </div></li><li class="relationship-item">
+        <a href="barrel_cactus.html">Barrel Cactus</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('barrel_cactus')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Water storage tissue</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="mesquite.html">Honey Mesquite</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('mesquite')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Deep root system</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="creosote_bush.html">Creosote Bush</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('creosote_bush')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Resinous coating on leaves</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="desert_ironwood.html">Desert Ironwood</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('desert_ironwood')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Dense wood tissue</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
+        <a href="agave.html">Century Plant</a> <strong>adapted_to</strong> → 
+        <a href="javascript:void(0)" onclick="selectEntityById('agave')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> CAM photosynthesis</small> <small><strong>strength:</strong> extreme</small> </div></li></ul>
+  </div>
 </body>
 </html>

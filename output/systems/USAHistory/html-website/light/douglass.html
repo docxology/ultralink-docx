@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Frederick Douglass - USAHistory Knowledge Graph</title>
-  
   <style>
     :root {
       --background: #ffffff;
@@ -12,10 +11,11 @@
       --link: #0066cc;
       --accent: #666666;
       --border: #dddddd;
+      --text-color: #000000;
+      --bg-color: #ffffff;
     }
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
       padding: 20px;
       background: var(--background);
       color: var(--text);
@@ -38,26 +38,33 @@
     }
     .entity-type {
       color: var(--accent);
-      font-size: 0.9em;
       margin-bottom: 20px;
     }
-    .attributes {
+    .entity-section {
+      margin-bottom: 30px;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .attribute-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .attribute-table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.03);
     }
     .attribute-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
+      display: flex;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
     }
-    .attribute-row:last-child {
-      border-bottom: none;
-    }
     .attribute-key {
-      color: var(--accent);
+      font-weight: bold;
+      width: 30%;
+    }
+    .attribute-value {
+      width: 70%;
     }
     .relationship-list {
       list-style: none;
@@ -81,50 +88,59 @@
   <h1>Frederick Douglass</h1>
   <div class="entity-type">person</div>
   
-  <h3>Attributes</h3>
-  <div class="attributes">
-    
-      <div class="attribute-row">
-        <div class="attribute-key">name</div>
-        <div class="attribute-value">Frederick Douglass</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">birth</div>
-        <div class="attribute-value">1818-02-01</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">death</div>
-        <div class="attribute-value">1895-02-20</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">role</div>
-        <div class="attribute-value">Abolitionist, Writer</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">significance</div>
-        <div class="attribute-value">Escaped slave who became leading abolitionist and advocate for equality</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">keywords</div>
-        <div class="attribute-value">abolition,slavery,civil rights,orator,writer</div>
-      </div>
-    
-      <div class="attribute-row">
-        <div class="attribute-key">vector</div>
-        <div class="attribute-value">0.44,0.36,0.34,0.25,0.3,0.12</div>
-      </div>
-    
+  <div class="entity-section">
+    <h3>Attributes</h3>
+    <div class="attributes">
+      <table class="attribute-table">
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">name</td>
+            <td class="attribute-value">Frederick Douglass</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">birth</td>
+            <td class="attribute-value">1818-02-01</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">death</td>
+            <td class="attribute-value">1895-02-20</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">role</td>
+            <td class="attribute-value">Abolitionist, Writer</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">significance</td>
+            <td class="attribute-value">Escaped slave who became leading abolitionist and advocate for equality</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">keywords</td>
+            <td class="attribute-value">abolition,slavery,civil rights,orator,writer</td>
+          </tr>
+        
+          <tr class="attribute-row">
+            <td class="attribute-key">vector</td>
+            <td class="attribute-value">0.44,0.36,0.34,0.25,0.3,0.12</td>
+          </tr>
+        
+      </table>
+    </div>
   </div>
 
-  <h3>Relationships</h3>
-  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>opposed</strong> → <a href="slavery.html">Slavery</a></li><li class="relationship-item">
-        <strong>championed</strong> → <a href="civil-rights-concept.html">Civil Rights</a></li><li class="relationship-item">
-        <strong>belongs_to_cluster</strong> → <a href="civil-rights-cluster.html">Civil Rights Movement</a></li></ul>
+  <div class="entity-section">
+    <h3>Relationships</h3>
+    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>opposed</strong> → <a href="slavery.html">Slavery</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('slavery')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <strong>championed</strong> → <a href="civil-rights-concept.html">Civil Rights</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('civil-rights-concept')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
+        <strong>belongs_to_cluster</strong> → <a href="civil-rights-cluster.html">Civil Rights Movement</a>
+        <a href="javascript:void(0)" onclick="selectEntityById('civil-rights-cluster')" class="select-link" title="Select in graph">(select)</a></li></ul>
+  </div>
 </body>
 </html>

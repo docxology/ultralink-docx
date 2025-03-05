@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2025-03-05T00:58:29.964Z",
+  "timestamp": "2025-03-05T01:10:35.701Z",
   "format": "UltraLink-FullBlob",
   "entities": [
     {
@@ -14,8 +14,8 @@
         "publications": 42
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     },
     {
@@ -29,8 +29,8 @@
         "publications": 18
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     },
     {
@@ -44,8 +44,8 @@
         "status": "Active"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     },
     {
@@ -59,13 +59,14 @@
         "status": "Active"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     }
   ],
   "relationships": [
     {
+      "id": "alice_leads_desert-ecology_1741137035701",
       "source": "alice",
       "target": "desert-ecology",
       "type": "leads",
@@ -74,11 +75,12 @@
         "role": "Principal Investigator"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     },
     {
+      "id": "alice_contributes_to_climate-impact_1741137035701",
       "source": "alice",
       "target": "climate-impact",
       "type": "contributes_to",
@@ -87,11 +89,12 @@
         "role": "Consultant"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     },
     {
+      "id": "bob_works_on_desert-ecology_1741137035701",
       "source": "bob",
       "target": "desert-ecology",
       "type": "works_on",
@@ -100,11 +103,12 @@
         "role": "Data Analyst"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     },
     {
+      "id": "bob_reports_to_alice_1741137035701",
       "source": "bob",
       "target": "alice",
       "type": "reports_to",
@@ -112,17 +116,17 @@
         "startDate": "2023-02-01"
       },
       "metadata": {
-        "created": "2025-03-05T00:58:29.963Z",
-        "modified": "2025-03-05T00:58:29.963Z"
+        "created": "2025-03-05T01:10:35.701Z",
+        "modified": "2025-03-05T01:10:35.701Z"
       }
     }
   ],
   "exports": {
     "csv": {
-      "entities": "id,type,name,title,role,department,email,publications,startDate,budget,status,created,modified\nalice,researcher,Alice Chen,,Principal Investigator,Biology,alice.chen@example.edu,42,,,,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\nbob,researcher,Bob Smith,,Postdoc,Biology,bob.smith@example.edu,18,,,,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\ndesert-ecology,project,Desert Ecology Study,Desert Ecology Study,,,,,2023-01-15,150000,Active,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\nclimate-impact,project,Climate Impact Assessment,Climate Impact Assessment,,,,,2022-08-10,220000,Active,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\n",
-      "relationships": "source,target,type,weight,strength,startDate,role,created,modified\nalice,desert-ecology,leads,,,2023-01-15,Principal Investigator,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\nalice,climate-impact,contributes_to,,,2022-10-01,Consultant,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\nbob,desert-ecology,works_on,,,2023-02-01,Data Analyst,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\nbob,alice,reports_to,,,2023-02-01,,2025-03-05T00:58:29.963Z,2025-03-05T00:58:29.963Z\n"
+      "entities": "id,type,name,title,role,department,email,publications,startDate,budget,status,created,modified\nalice,researcher,Alice Chen,,Principal Investigator,Biology,alice.chen@example.edu,42,,,,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\nbob,researcher,Bob Smith,,Postdoc,Biology,bob.smith@example.edu,18,,,,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\ndesert-ecology,project,Desert Ecology Study,Desert Ecology Study,,,,,2023-01-15,150000,Active,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\nclimate-impact,project,Climate Impact Assessment,Climate Impact Assessment,,,,,2022-08-10,220000,Active,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\n",
+      "relationships": "source,target,type,weight,strength,startDate,role,created,modified\nalice,desert-ecology,leads,,,2023-01-15,Principal Investigator,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\nalice,climate-impact,contributes_to,,,2022-10-01,Consultant,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\nbob,desert-ecology,works_on,,,2023-02-01,Data Analyst,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\nbob,alice,reports_to,,,2023-02-01,,2025-03-05T01:10:35.701Z,2025-03-05T01:10:35.701Z\n"
     },
     "graphml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\n     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n  <key id=\"name\" for=\"node\" attr.name=\"name\" attr.type=\"string\"/>\n  <key id=\"type\" for=\"node\" attr.name=\"type\" attr.type=\"string\"/>\n  <key id=\"role\" for=\"node\" attr.name=\"role\" attr.type=\"string\"/>\n  <key id=\"department\" for=\"node\" attr.name=\"department\" attr.type=\"string\"/>\n  <key id=\"email\" for=\"node\" attr.name=\"email\" attr.type=\"string\"/>\n  <key id=\"publications\" for=\"node\" attr.name=\"publications\" attr.type=\"string\"/>\n  <key id=\"title\" for=\"node\" attr.name=\"title\" attr.type=\"string\"/>\n  <key id=\"startDate\" for=\"node\" attr.name=\"startDate\" attr.type=\"string\"/>\n  <key id=\"budget\" for=\"node\" attr.name=\"budget\" attr.type=\"string\"/>\n  <key id=\"status\" for=\"node\" attr.name=\"status\" attr.type=\"string\"/>\n  <key id=\"type\" for=\"edge\" attr.name=\"type\" attr.type=\"string\"/>\n  <key id=\"startDate\" for=\"edge\" attr.name=\"startDate\" attr.type=\"string\"/>\n  <key id=\"role\" for=\"edge\" attr.name=\"role\" attr.type=\"string\"/>\n  <graph id=\"G\" edgedefault=\"directed\">\n    <node id=\"alice\">\n      <data key=\"type\">researcher</data>\n      <data key=\"name\">Alice Chen</data>\n      <data key=\"role\">Principal Investigator</data>\n      <data key=\"department\">Biology</data>\n      <data key=\"email\">alice.chen@example.edu</data>\n      <data key=\"publications\">42</data>\n    </node>\n    <node id=\"bob\">\n      <data key=\"type\">researcher</data>\n      <data key=\"name\">Bob Smith</data>\n      <data key=\"role\">Postdoc</data>\n      <data key=\"department\">Biology</data>\n      <data key=\"email\">bob.smith@example.edu</data>\n      <data key=\"publications\">18</data>\n    </node>\n    <node id=\"desert-ecology\">\n      <data key=\"type\">project</data>\n      <data key=\"name\">Desert Ecology Study</data>\n      <data key=\"title\">Desert Ecology Study</data>\n      <data key=\"startDate\">2023-01-15</data>\n      <data key=\"budget\">150000</data>\n      <data key=\"status\">Active</data>\n    </node>\n    <node id=\"climate-impact\">\n      <data key=\"type\">project</data>\n      <data key=\"name\">Climate Impact Assessment</data>\n      <data key=\"title\">Climate Impact Assessment</data>\n      <data key=\"startDate\">2022-08-10</data>\n      <data key=\"budget\">220000</data>\n      <data key=\"status\">Active</data>\n    </node>\n    <edge source=\"alice\" target=\"desert-ecology\">\n      <data key=\"type\">leads</data>\n      <data key=\"startDate\">2023-01-15</data>\n      <data key=\"role\">Principal Investigator</data>\n    </edge>\n    <edge source=\"alice\" target=\"climate-impact\">\n      <data key=\"type\">contributes_to</data>\n      <data key=\"startDate\">2022-10-01</data>\n      <data key=\"role\">Consultant</data>\n    </edge>\n    <edge source=\"bob\" target=\"desert-ecology\">\n      <data key=\"type\">works_on</data>\n      <data key=\"startDate\">2023-02-01</data>\n      <data key=\"role\">Data Analyst</data>\n    </edge>\n    <edge source=\"bob\" target=\"alice\">\n      <data key=\"type\">reports_to</data>\n      <data key=\"startDate\">2023-02-01</data>\n    </edge>\n  </graph>\n</graphml>",
-    "kif": ";; UltraLink Knowledge Interchange Format (KIF) Export\n;; Generated: 2025-03-05T00:58:29.964Z\n;; Entities and their attributes\n(instance alice Researcher)\n(name alice \"Alice Chen\")\n(role alice \"Principal Investigator\")\n(department alice \"Biology\")\n(email alice \"alice.chen@example.edu\")\n(publications alice 42)\n\n(instance bob Researcher)\n(name bob \"Bob Smith\")\n(role bob \"Postdoc\")\n(department bob \"Biology\")\n(email bob \"bob.smith@example.edu\")\n(publications bob 18)\n\n(instance desert-ecology Project)\n(name desert-ecology \"Desert Ecology Study\")\n(title desert-ecology \"Desert Ecology Study\")\n(startDate desert-ecology \"2023-01-15\")\n(budget desert-ecology 150000)\n(status desert-ecology \"Active\")\n\n(instance climate-impact Project)\n(name climate-impact \"Climate Impact Assessment\")\n(title climate-impact \"Climate Impact Assessment\")\n(startDate climate-impact \"2022-08-10\")\n(budget climate-impact 220000)\n(status climate-impact \"Active\")\n\n;; Relationships\n(leads alice desert-ecology)\n(contributes_to alice climate-impact)\n(works_on bob desert-ecology)\n(reports_to bob alice)\n\n;; Meta-knowledge\n(= (entityCount UltraLinkExport) 4)\n(= (relationshipCount UltraLinkExport) 4)\n(= (exportDate UltraLinkExport) \"2025-03-05T00:58:29.964Z\")\n(= (exportVersion UltraLinkExport) \"1.0\")\n\n;; Functions\n(deffunction relationshipCount (?kb)\n  :documentation \"Returns the total number of relationships in a knowledge base\"\n  :return-type Integer)\n\n(deffunction entityCount (?kb)\n  :documentation \"Returns the total number of entities in a knowledge base\"\n  :return-type Integer)\n\n;; Rules\n(defrule temporal-ordering\n  :documentation \"Rule for temporal ordering of events\"\n  (and (instance ?e1 Event)\n       (instance ?e2 Event)\n       (date ?e1 ?d1)\n       (date ?e2 ?d2)\n       (evaluate ?before (string< ?d1 ?d2)))\n  (before ?e1 ?e2))\n"
+    "kif": ";; UltraLink Knowledge Interchange Format (KIF) Export\n;; Generated: 2025-03-05T01:10:35.701Z\n;; Entities and their attributes\n(instance alice Researcher)\n(name alice \"Alice Chen\")\n(role alice \"Principal Investigator\")\n(department alice \"Biology\")\n(email alice \"alice.chen@example.edu\")\n(publications alice 42)\n(instance bob Researcher)\n(name bob \"Bob Smith\")\n(role bob \"Postdoc\")\n(department bob \"Biology\")\n(email bob \"bob.smith@example.edu\")\n(publications bob 18)\n(instance desert-ecology Project)\n(name desert-ecology \"Desert Ecology Study\")\n(title desert-ecology \"Desert Ecology Study\")\n(startDate desert-ecology \"2023-01-15\")\n(budget desert-ecology 150000)\n(status desert-ecology \"Active\")\n(instance climate-impact Project)\n(name climate-impact \"Climate Impact Assessment\")\n(title climate-impact \"Climate Impact Assessment\")\n(startDate climate-impact \"2022-08-10\")\n(budget climate-impact 220000)\n(status climate-impact \"Active\")\n\n;; Relationships\n(undefined undefined undefined)\n(undefined undefined undefined)\n(undefined undefined undefined)\n(undefined undefined undefined)\n\n;; Meta-knowledge\n(= (entityCount UltraLinkExport) 4)\n(= (relationshipCount UltraLinkExport) undefined)\n(= (exportTime UltraLinkExport) \"2025-03-05T01:10:35.701Z\")\n\n;; Functions\n(deffunction relationshipCount (?graph) \n  (count (relationships ?graph)))\n(deffunction entityCount (?graph)\n  (count (entities ?graph)))\n\n;; Rules\n(defrule connected-entities\n  (if (exists (?rel) \n      (and (relationship ?rel ?source ?target) \n           (entity ?source) \n           (entity ?target))) \n  (then (connected ?source ?target))))\n"
   }
 }
