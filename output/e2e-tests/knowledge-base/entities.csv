@@ -1,8 +1,8 @@
-id,type,name,description,status,dueDate,role,email
-machine-learning,concept,Machine Learning,A field of AI focused on algorithms that learn from data,,,,
-data-analysis,concept,Data Analysis,The process of inspecting and modeling data,,,,
-project-management,concept,Project Management,The practice of planning and organizing projects,,,,
-project-alpha,project,Project Alpha,,In Progress,2023-12-31,,
-project-beta,project,Project Beta,,Planning,2024-03-15,,
-alice-smith,person,Alice Smith,,,,Project Manager,alice@example.com
-bob-johnson,person,Bob Johnson,,,,Developer,bob@example.com
+id,type,name,title,description,status,dueDate,role,email
+machine-learning,concept,Machine Learning,,A field of AI focused on algorithms that learn from data,,,,
+data-analysis,concept,Data Analysis,,The process of inspecting and modeling data,,,,
+project-management,concept,Project Management,,The practice of planning and organizing projects,,,,
+project-alpha,project,Project Alpha,,,In Progress,2023-12-31,,
+project-beta,project,Project Beta,,,Planning,2024-03-15,,
+alice-smith,person,Alice Smith,,,,,Project Manager,alice@example.com
+bob-johnson,person,Bob Johnson,,,,,Developer,bob@example.com

@@ -1,6 +1,8 @@
 ---
 type: animal
 id: scorpion
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Deathstalker Scorpion
@@ -15,18 +17,13 @@ id: scorpion
 - **diet**: carnivore
 - **status**: least concern
 - **description**: One of the most dangerous scorpion species, with potent venom.
-- **adaptations**: Nocturnal behavior to avoid heat,Exoskeleton prevents water loss,UV fluorescence may help detect light levels,Burrowing behavior for temperature regulation
+- **adaptations**: ["Nocturnal behavior to avoid heat","Exoskeleton prevents water loss","UV fluorescence may help detect light levels","Burrowing behavior for temperature regulation"]
 
 ## Relationships
 
 ### lives_in
 
 - [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: medium)
-
-### preys_on
-
-- [[scorpion|Deathstalker Scorpion]] (frequency: occasional, method: hunting)
-- [[scorpion|Deathstalker Scorpion]] (frequency: common, method: hunting)
 
 ## Backlinks
 

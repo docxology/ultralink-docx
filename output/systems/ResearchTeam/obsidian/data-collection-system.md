@@ -1,6 +1,8 @@
 ---
 type: equipment
 id: data-collection-system
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
 # Field Data Collection System
@@ -12,17 +14,11 @@ id: data-collection-system
 
 - **description**: Mobile sensors and data collection equipment for field research
 - **location**: Equipment Room 105
-- **specifications**: [object Object]
+- **specifications**: {"sensors":["environmental","biometric","geospatial"],"storage":"2TB","battery":"72 hours"}
 - **status**: operational
 - **purchaseDate**: 2022-05-15
 
-## Relationships
-
-### uses
-
-- [[data-collection-system|Field Data Collection System]]
-
 ## Backlinks
 
-- [[adaptive-robotics-project|adaptive-robotics-project]] (uses)
+- [[adaptive-robotics-project|Adaptive Robotics Control]] (uses)
 

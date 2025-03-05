@@ -64,20 +64,16 @@
       border: 1px solid var(--border);
       border-radius: 4px;
     }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
+    .search-box {
+      margin-bottom: 20px;
     }
-    .relationship-item {
+    #search-input {
+      width: 100%;
       padding: 8px;
-      margin: 4px 0;
       border: 1px solid var(--border);
       border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
+      background: var(--background);
+      color: var(--text);
     }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -87,52 +83,57 @@
     <div class="sidebar">
       <h2>Knowledge Base</h2>
       <p>Interactive visualization of knowledge base</p>
+      
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search entities..." />
+      </div>
+      
       <h3>Entities</h3>
-      <ul class="entity-list">
+      <ul class="entity-list" id="entity-list">
         
-          <li class="entity-item">
+          <li class="entity-item" data-id="machine-learning" data-type="concept">
             <a href="machine-learning.html">
               Machine Learning
             </a>
             <div class="entity-type">concept</div>
           </li>
         
-          <li class="entity-item">
+          <li class="entity-item" data-id="data-analysis" data-type="concept">
             <a href="data-analysis.html">
               Data Analysis
             </a>
             <div class="entity-type">concept</div>
           </li>
         
-          <li class="entity-item">
+          <li class="entity-item" data-id="project-management" data-type="concept">
             <a href="project-management.html">
               Project Management
             </a>
             <div class="entity-type">concept</div>
           </li>
         
-          <li class="entity-item">
+          <li class="entity-item" data-id="project-alpha" data-type="project">
             <a href="project-alpha.html">
               Project Alpha
             </a>
             <div class="entity-type">project</div>
           </li>
         
-          <li class="entity-item">
+          <li class="entity-item" data-id="project-beta" data-type="project">
             <a href="project-beta.html">
               Project Beta
             </a>
             <div class="entity-type">project</div>
           </li>
         
-          <li class="entity-item">
+          <li class="entity-item" data-id="alice-smith" data-type="person">
             <a href="alice-smith.html">
               Alice Smith
             </a>
             <div class="entity-type">person</div>
           </li>
         
-          <li class="entity-item">
+          <li class="entity-item" data-id="bob-johnson" data-type="person">
             <a href="bob-johnson.html">
               Bob Johnson
             </a>
@@ -216,6 +217,29 @@
             .on('drag', dragged)
             .on('end', dragended);
         }
+
+        
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const entityList = document.getElementById('entity-list');
+        const entityItems = entityList.querySelectorAll('.entity-item');
+
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          
+          entityItems.forEach(item => {
+            const id = item.getAttribute('data-id').toLowerCase();
+            const type = item.getAttribute('data-type').toLowerCase();
+            const text = item.textContent.toLowerCase();
+            
+            if (id.includes(searchTerm) || type.includes(searchTerm) || text.includes(searchTerm)) {
+              item.style.display = '';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+        
       </script>
     </div>
   </div>

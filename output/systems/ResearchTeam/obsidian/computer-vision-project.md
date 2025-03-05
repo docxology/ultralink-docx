@@ -1,28 +1,29 @@
 ---
 type: project
 id: computer-vision-project
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
-# computer-vision-project
+# Advanced Computer Vision Systems
 
 **Type**: project
 **ID**: computer-vision-project
 
 ## Attributes
 
-- **title**: Advanced Computer Vision Systems
 - **description**: Developing next-generation computer vision systems using deep learning
 - **startDate**: 2021-01-01
 - **endDate**: 2023-12-31
 - **status**: active
 - **budget**: 500000
-- **objectives**: Improve object detection accuracy,Develop real-time processing capabilities,Create robust low-light performance
+- **objectives**: ["Improve object detection accuracy","Develop real-time processing capabilities","Create robust low-light performance"]
 
 ## Relationships
 
 ### produced
 
-- [[vision-paper-2022|vision-paper-2022]]
+- [[vision-paper-2022|Novel Approaches to Low-Light Computer Vision]]
 
 ### uses
 
@@ -32,23 +33,6 @@ id: computer-vision-project
 
 - [[computer-vision|Computer Vision]]
 - [[machine-learning-theory|Machine Learning Theory]]
-
-### leads
-
-- [[computer-vision-project|computer-vision-project]]
-
-### contributes_to
-
-- [[computer-vision-project|computer-vision-project]]
-- [[computer-vision-project|computer-vision-project]]
-
-### administers
-
-- [[computer-vision-project|computer-vision-project]]
-
-### funds
-
-- [[computer-vision-project|computer-vision-project]]
 
 ## Backlinks
 

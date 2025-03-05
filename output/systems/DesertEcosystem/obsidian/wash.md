@@ -1,6 +1,8 @@
 ---
 type: microhabitat
 id: wash
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Desert Wash
@@ -14,17 +16,6 @@ id: wash
 - **type**: seasonal_wetland
 - **area**: variable
 - **soilMoisture**: higher than surroundings
-
-## Relationships
-
-### lives_in
-
-- [[wash|Desert Wash]] (frequency: permanent, dependency: medium)
-
-### grows_in
-
-- [[wash|Desert Wash]] (frequency: permanent, dependency: high)
-- [[wash|Desert Wash]] (frequency: permanent, dependency: medium)
 
 ## Backlinks
 

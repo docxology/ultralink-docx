@@ -1,6 +1,8 @@
 ---
 type: similarity_analysis
 id: democracy-rights-similarity
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Democracy and Civil Rights Relationship
@@ -10,7 +12,7 @@ id: democracy-rights-similarity
 
 ## Attributes
 
-- **entities**: democracy,civil-rights-concept
+- **entities**: ["democracy","civil-rights-concept"]
 - **similarity**: 0.85
 - **interpretation**: Strong conceptual link between democratic governance and civil rights
 

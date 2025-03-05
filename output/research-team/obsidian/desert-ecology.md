@@ -1,6 +1,8 @@
 ---
 type: project
 id: desert-ecology
+created: 2025-03-05T00:12:43.695Z
+modified: 2025-03-05T00:12:43.695Z
 ---
 
 # Desert Ecology Study
@@ -10,20 +12,9 @@ id: desert-ecology
 
 ## Attributes
 
-- **title**: Desert Ecology Study
 - **startDate**: 2023-01-15
 - **budget**: 150000
 - **status**: Active
-
-## Relationships
-
-### leads
-
-- [[desert-ecology|Desert Ecology Study]] (startDate: 2023-01-15, role: Principal Investigator)
-
-### works_on
-
-- [[desert-ecology|Desert Ecology Study]] (startDate: 2023-02-01, role: Data Analyst)
 
 ## Backlinks
 

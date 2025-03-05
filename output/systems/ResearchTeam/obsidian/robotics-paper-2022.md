@@ -1,17 +1,18 @@
 ---
 type: publication
 id: robotics-paper-2022
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
-# robotics-paper-2022
+# Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization
 
 **Type**: publication
 **ID**: robotics-paper-2022
 
 ## Attributes
 
-- **title**: Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization
-- **authors**: carol-jones,alice-chen
+- **authors**: ["carol-jones","alice-chen"]
 - **venue**: Robotics: Science and Systems 2022
 - **year**: 2022
 - **doi**: 10.1234/rss2022
@@ -22,20 +23,11 @@ id: robotics-paper-2022
 
 ### cites
 
-- [[vision-paper-2022|vision-paper-2022]]
-
-### authored
-
-- [[robotics-paper-2022|robotics-paper-2022]]
-- [[robotics-paper-2022|robotics-paper-2022]]
-
-### produced
-
-- [[robotics-paper-2022|robotics-paper-2022]]
+- [[vision-paper-2022|Novel Approaches to Low-Light Computer Vision]]
 
 ## Backlinks
 
 - [[carol-jones|Carol Jones]] (authored)
 - [[alice-chen|Alice Chen]] (authored)
-- [[adaptive-robotics-project|adaptive-robotics-project]] (produced)
+- [[adaptive-robotics-project|Adaptive Robotics Control]] (produced)
 

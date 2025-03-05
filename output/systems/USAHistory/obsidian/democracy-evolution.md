@@ -1,6 +1,8 @@
 ---
 type: concept_drift
 id: democracy-evolution
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Evolution of Democracy

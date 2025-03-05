@@ -1,6 +1,8 @@
 ---
 type: person
 id: roosevelt-fdr
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Franklin D. Roosevelt
@@ -14,8 +16,8 @@ id: roosevelt-fdr
 - **death**: 1945-04-12
 - **role**: 32nd President
 - **significance**: Led US through Great Depression and most of World War II, established New Deal programs
-- **keywords**: New Deal,depression,World War II,polio,four terms
-- **vector**: 0.4,0.34,0.3,0.25,0.35,0.2
+- **keywords**: ["New Deal","depression","World War II","polio","four terms"]
+- **vector**: [0.4,0.34,0.3,0.25,0.35,0.2]
 
 ## Relationships
 

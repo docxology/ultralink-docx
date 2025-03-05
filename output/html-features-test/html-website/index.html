@@ -1,518 +1,219 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Features Test</title>
-    <meta name="description" content="Testing HTML website features">
-    <link rel="stylesheet" href="styles/default.css">
-    <style>
-    /* Default Theme CSS */
-:root {
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --link-color: #0066cc;
-  --accent-color: #4a9eff;
-  --border-color: #dddddd;
-  --node-hover: #ff6600;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  margin: 0;
-  padding: 0;
-}
-
-/* Layout */
-header {
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-main {
-  display: flex;
-  height: calc(100vh - 180px);
-}
-
-#graph {
-  flex: 1;
-  background: rgba(249, 250, 251, 0.8);
-  border-right: 1px solid var(--border-color);
-}
-
-.details-panel {
-  width: 300px;
-  padding: 1rem;
-  overflow-y: auto;
-}
-
-/* Entity styles */
-.entity-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.entity-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-}
-
-.attribute-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.attribute-table th, .attribute-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.attribute-table tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.relationship-item {
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-}
-
-.relationship-attributes {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px dashed var(--border-color);
-  font-size: 0.9rem;
-}
-
-/* Controls */
-.controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.filters {
-  display: flex;
-  gap: 1rem;
-}
-
-.legend-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.zoom-controls {
-  position: absolute;
-  right: 1rem;
-  top: 5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.zoom-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background: white;
-  cursor: pointer;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  main {
-    flex-direction: column;
-    height: auto;
-  }
-  
-  #graph {
-    height: 50vh;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .details-panel {
-    width: 100%;
-  }
-  
-  .zoom-controls {
-    bottom: 50vh;
-  }
-  
-  .controls {
-    flex-direction: column;
-  }
-  
-  .filters {
-    flex-direction: column;
-    width: 100%;
-  }
-}
-    </style>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!-- const name = entity.attributes.name || entity.attributes.title || entity.id; -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Features Test</title>
+  <style>
+    :root {
+      --background: #ffffff;
+      --text: #000000;
+      --link: #0066cc;
+      --accent: #666666;
+      --border: #dddddd;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--text);
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      height: 100vh;
+    }
+    .sidebar {
+      padding: 20px;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+    }
+    .main {
+      padding: 20px;
+      overflow-y: auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+      margin-top: 0;
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .entity-list {
+      list-style: none;
+      padding: 0;
+    }
+    .entity-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+    }
+    #graph {
+      width: 100%;
+      height: 600px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .search-box {
+      margin-bottom: 20px;
+    }
+    #search-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--background);
+      color: var(--text);
+    }
+  </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
-<body class="theme-default">
-    <header>
-        <h1>HTML Features Test</h1>
-        <p>Testing HTML website features</p>
-        <div class="controls">
-            <div class="legend"></div>
-            <div class="filters">
-                <label>Filter by type:
-                    <select id="typeFilter">
-                        <option value="all">All</option>
-                    </select>
-                </label>
-                <label>Search:
-                    <input type="text" id="searchInput" placeholder="Search nodes...">
-                </label>
-                <button class="btn" id="clear-filters">Clear Filters</button>
-            </div>
-        </div>
-        <div class="zoom-controls">
-            <button class="zoom-btn" id="zoom-in">+</button>
-            <button class="zoom-btn" id="zoom-reset">⟳</button>
-            <button class="zoom-btn" id="zoom-out">−</button>
-        </div>
-    </header>
-    <main>
-        <div id="graph"></div>
-        <div id="details" class="details-panel">
-            <h2>Details</h2>
-            <div id="nodeDetails">
-                <p>Click a node to see details</p>
-            </div>
-        </div>
-    </main>
-    <script>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>HTML Features Test</h2>
+      <p>Testing HTML website features</p>
+      
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search entities..." />
+      </div>
+      
+      <h3>Entities</h3>
+      <ul class="entity-list" id="entity-list">
+        
+          <li class="entity-item" data-id="entity1" data-type="person">
+            <a href="entity1.html">
+              John Doe
+            </a>
+            <div class="entity-type">person</div>
+          </li>
+        
+          <li class="entity-item" data-id="entity2" data-type="project">
+            <a href="entity2.html">
+              Project Alpha
+            </a>
+            <div class="entity-type">project</div>
+          </li>
+        
+          <li class="entity-item" data-id="entity3" data-type="resource">
+            <a href="entity3.html">
+              entity3
+            </a>
+            <div class="entity-type">resource</div>
+          </li>
+        
+      </ul>
+    </div>
+    <div class="main">
+      <div id="graph"></div>
+      <script>
+        // Graph visualization code
         const data = {
-            entities: [{"id":"entity1","type":"person","attributes":{"name":"John Doe","age":30,"email":"john@example.com"}},{"id":"entity2","type":"project","attributes":{"title":"Project Alpha","status":"Active","priority":"High"}},{"id":"entity3","type":"resource","attributes":{"type":"Document","url":"https://example.com/doc"}}],
-            relationships: [{"source":"entity1","target":"entity2","type":"manages","attributes":{"role":"Project Manager","since":"2023-01-15"}},{"source":"entity1","target":"entity3","type":"created","attributes":{"date":"2023-02-10"}},{"source":"entity2","target":"entity3","type":"contains","attributes":{"section":"Documentation"}}]
+          nodes: [{"id":"entity1","name":"John Doe","type":"person"},{"id":"entity2","name":"Project Alpha","type":"project"},{"id":"entity3","name":"entity3","type":"resource"}],
+          links: [{"source":"entity1","target":"entity2","type":"manages"},{"source":"entity1","target":"entity3","type":"created"},{"source":"entity2","target":"entity3","type":"contains"}]
         };
-        
-        // Color scale for different node types
-        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-        
-        // Set up the SVG
-        const margin = { top: 20, right: 20, bottom: 20, left: 20 };
-        const width = 800 - margin.left - margin.right;
-        const height = 600 - margin.top - margin.bottom;
-        
+
+        const width = document.getElementById('graph').clientWidth;
+        const height = 600;
+
+        const simulation = d3.forceSimulation(data.nodes)
+          .force('link', d3.forceLink(data.links).id(d => d.id))
+          .force('charge', d3.forceManyBody().strength(-100))
+          .force('center', d3.forceCenter(width / 2, height / 2));
+
         const svg = d3.select('#graph')
-            .append('svg')
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('viewBox', [0, 0, width, height])
-            .attr('preserveAspectRatio', 'xMidYMid meet')
-            .append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-            
-        // Add zoom behavior
-        const zoom = d3.zoom()
-            .scaleExtent([0.1, 4])
-            .on('zoom', (event) => {
-                container.attr('transform', event.transform);
-            });
-            
-        svg.call(zoom);
-        
-        // Create container for the graph
-        const container = svg.append('g');
-        
-        // Create arrow marker for directed edges
-        svg.append('defs').append('marker')
-            .attr('id', 'arrowhead')
-            .attr('viewBox', '-5 -5 10 10')
-            .attr('refX', 15)
-            .attr('refY', 0)
-            .attr('markerWidth', 6)
-            .attr('markerHeight', 6)
-            .attr('orient', 'auto')
-            .append('path')
-            .attr('d', 'M -5,-5 L 5,0 L -5,5')
-            .attr('fill', '#999');
-            
-        // Create the links
-        const links = container.append('g')
-            .selectAll('line')
-            .data(data.relationships)
-            .enter()
-            .append('line')
-            .attr('stroke', '#999')
-            .attr('stroke-width', 1)
-            .attr('marker-end', 'url(#arrowhead)')
-            .attr('stroke-opacity', 0.6);
-            
-        // Create the nodes
-        const nodes = container.append('g')
-            .selectAll('g')
-            .data(data.entities)
-            .enter()
-            .append('g')
-            .attr('class', 'node')
-            .call(d3.drag()
-                .on('start', dragstarted)
-                .on('drag', dragged)
-                .on('end', dragended));
-                
-        // Add circles for nodes
-        nodes.append('circle')
-            .attr('r', 8)
-            .attr('fill', d => colorScale(d.type))
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 2);
-            
-        // Add labels to nodes
-        nodes.append('text')
-            .attr('dx', 12)
-            .attr('dy', '.35em')
-            .text(d => d.attributes.name || d.attributes.title || d.id)
-            .attr('font-size', '12px')
-            .attr('fill', '#333');
-            
-        // Set up the simulation
-        const simulation = d3.forceSimulation()
-            .force('link', d3.forceLink().id(d => d.id).distance(100))
-            .force('charge', d3.forceManyBody().strength(-200))
-            .force('center', d3.forceCenter(width / 2, height / 2))
-            .force('collision', d3.forceCollide().radius(30));
-            
-        // Update the simulation
-        simulation
-            .nodes(data.entities)
-            .on('tick', ticked);
-            
-        simulation.force('link')
-            .links(data.relationships);
-            
-        // Create the legend
-        const types = [...new Set(data.entities.map(d => d.type))];
-        const legend = d3.select('.legend')
-            .append('div')
-            .attr('class', 'legend-items');
-            
-        legend.selectAll('.legend-item')
-            .data(types)
-            .enter()
-            .append('div')
-            .attr('class', 'legend-item')
-            .html(d => '<span class="legend-color" style="background-color: ' + colorScale(d) + '"></span><span class="legend-label">' + d + '</span>');
-            
-        // Populate type filter
-        const typeFilter = document.getElementById('typeFilter');
-        types.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type;
-            typeFilter.appendChild(option);
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height);
+
+        const link = svg.append('g')
+          .selectAll('line')
+          .data(data.links)
+          .join('line')
+          .attr('stroke', 'var(--border)')
+          .attr('stroke-width', 1);
+
+        const node = svg.append('g')
+          .selectAll('circle')
+          .data(data.nodes)
+          .join('circle')
+          .attr('r', 5)
+          .attr('fill', 'var(--link)')
+          .call(drag(simulation));
+
+        node.append('title')
+          .text(d => d.name);
+
+        simulation.on('tick', () => {
+          link
+            .attr('x1', d => d.source.x)
+            .attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x)
+            .attr('y2', d => d.target.y);
+
+          node
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y);
         });
-        
-        // Add event listeners
-        typeFilter.addEventListener('change', filterNodes);
-        document.getElementById('searchInput').addEventListener('input', filterNodes);
-        const clearFiltersBtn = document.getElementById('clear-filters');
-        clearFiltersBtn.addEventListener('click', clearFilters);
-        
-        // Get all type filter checkboxes
-        const typeFilters = document.querySelector('.filters');
-        Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
-            input.checked = true;
-        });
-        
-        // Zoom controls
-        const zoomInBtn = document.getElementById('zoom-in');
-        const zoomOutBtn = document.getElementById('zoom-out');
-        const zoomResetBtn = document.getElementById('zoom-reset');
-        
-        zoomInBtn.addEventListener('click', () => {
-            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
-        });
-        
-        zoomOutBtn.addEventListener('click', () => {
-            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
-        });
-        
-        zoomResetBtn.addEventListener('click', () => {
-            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
-        });
-        
-        // Interactive entity selection
-        window.selectEntityById = (id) => {
-            const selectedNode = data.entities.find(d => d.id === id);
-            if (selectedNode) {
-                // Highlight the node
-                highlightNode(selectedNode);
-                
-                // Center the view on the node
-                const scale = 1.5;
-                const x = width / 2 - scale * selectedNode.x;
-                const y = height / 2 - scale * selectedNode.y;
-                svg.transition().duration(500)
-                   .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
-                
-                // Show node details
-                showNodeDetails(selectedNode);
-            }
-        };
-        
-        // Node click handler
-        nodes.on('click', (event, d) => {
-            showNodeDetails(d);
-            // Navigate to entity page
-            window.location.href = d.id + '.html';
-        });
-        
-        // Example of interactive relationship navigation
-        // href="javascript:void(0)" onclick="selectEntityById
-        
-        // Hover effects
-        nodes
-            .on('mouseover', highlightConnections)
-            .on('mouseout', resetHighlight);
-            
-        // Functions
-        function ticked() {
-            links
-                .attr('x1', d => d.source.x)
-                .attr('y1', d => d.source.y)
-                .attr('x2', d => d.target.x)
-                .attr('y2', d => d.target.y);
-                
-            nodes.attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
-        }
-        
-        function dragstarted(event) {
+
+        function drag(simulation) {
+          function dragstarted(event) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
             event.subject.fx = event.subject.x;
             event.subject.fy = event.subject.y;
-        }
-        
-        function dragged(event) {
+          }
+          
+          function dragged(event) {
             event.subject.fx = event.x;
             event.subject.fy = event.y;
-        }
-        
-        function dragended(event) {
+          }
+          
+          function dragended(event) {
             if (!event.active) simulation.alphaTarget(0);
             event.subject.fx = null;
             event.subject.fy = null;
+          }
+          
+          return d3.drag()
+            .on('start', dragstarted)
+            .on('drag', dragged)
+            .on('end', dragended);
         }
+
         
-        function showNodeDetails(node) {
-            const details = document.getElementById('nodeDetails');
-            let html = '<h3>' + (node.attributes.name || node.attributes.title || node.id) + '</h3>' +
-                      '<p><strong>Type:</strong> ' + node.type + '</p>';
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const entityList = document.getElementById('entity-list');
+        const entityItems = entityList.querySelectorAll('.entity-item');
+
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          
+          entityItems.forEach(item => {
+            const id = item.getAttribute('data-id').toLowerCase();
+            const type = item.getAttribute('data-type').toLowerCase();
+            const text = item.textContent.toLowerCase();
             
-            for (const [key, value] of Object.entries(node.attributes)) {
-                if (key !== 'name' && key !== 'title' && typeof value !== 'object') {
-                    html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
-                }
+            if (id.includes(searchTerm) || type.includes(searchTerm) || text.includes(searchTerm)) {
+              item.style.display = '';
+            } else {
+              item.style.display = 'none';
             }
-            
-            details.innerHTML = html;
-        }
+          });
+        });
         
-        function highlightConnections(event, d) {
-            // Reduce opacity of all elements
-            nodes.style('opacity', 0.2);
-            links.style('opacity', 0.1);
-            
-            // Highlight connected nodes and links
-            const connectedNodes = new Set();
-            links.each(l => {
-                if (l.source === d || l.target === d) {
-                    connectedNodes.add(l.source.id);
-                    connectedNodes.add(l.target.id);
-                }
-            });
-            
-            nodes.filter(n => connectedNodes.has(n.id))
-                .style('opacity', 1);
-                
-            links.filter(l => l.source === d || l.target === d)
-                .style('opacity', 1)
-                .style('stroke-width', 2);
-                
-            // Show the current node
-            d3.select(event.currentTarget).style('opacity', 1);
-        }
-        
-        function highlightNode(node) {
-            // Reset all nodes and links
-            resetHighlight();
-            
-            // Find the DOM element for this node
-            const nodeElement = nodes.filter(d => d.id === node.id);
-            
-            // Highlight it
-            nodeElement.select('circle')
-                .attr('r', 12)
-                .attr('stroke', '#ff6600')
-                .attr('stroke-width', 3);
-        }
-        
-        function resetHighlight() {
-            nodes.style('opacity', 1);
-            links.style('opacity', 0.6)
-                .style('stroke-width', 1);
-                
-            nodes.select('circle')
-                .attr('r', 8)
-                .attr('stroke', '#fff')
-                .attr('stroke-width', 2);
-        }
-        
-        function filterNodes() {
-            const selectedType = typeFilter.value;
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            
-            nodes.style('display', d => {
-                const matchesType = selectedType === 'all' || d.type === selectedType;
-                const matchesSearch = !searchText || 
-                    d.id.toLowerCase().includes(searchText) || 
-                    (d.attributes.name && d.attributes.name.toLowerCase().includes(searchText)) ||
-                    (d.attributes.title && d.attributes.title.toLowerCase().includes(searchText));
-                return matchesType && matchesSearch ? null : 'none';
-            });
-            
-            links.style('display', d => {
-                const sourceVisible = selectedType === 'all' || d.source.type === selectedType;
-                const targetVisible = selectedType === 'all' || d.target.type === selectedType;
-                return sourceVisible && targetVisible ? null : 'none';
-            });
-        }
-        
-        function clearFilters() {
-            typeFilter.value = 'all';
-            document.getElementById('searchInput').value = '';
-            filterNodes();
-        }
-    </script>
+      </script>
+    </div>
+  </div>
 </body>
 </html>

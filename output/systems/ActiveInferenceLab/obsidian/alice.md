@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: alice
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Dr. Alice Chen
@@ -14,7 +16,7 @@ id: alice
 - **department**: Cognitive Science
 - **email**: alice.chen@example.edu
 - **publications**: 42
-- **expertise**: active inference,computational neuroscience,bayesian modeling
+- **expertise**: ["active inference","computational neuroscience","bayesian modeling"]
 - **yearsExperience**: 15
 
 ## Relationships
@@ -30,13 +32,8 @@ id: alice
 
 ### authored
 
-- [[paper-2023a|paper-2023a]] (contributionType: corresponding author, contributionPercentage: 40)
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 25)
-
-### reports_to
-
-- [[alice|Dr. Alice Chen]] (startDate: 2022-01-15)
-- [[alice|Dr. Alice Chen]] (startDate: 2022-09-01)
+- [[paper-2023a|Active Inference Framework for Collective Behavior Analysis]] (contributionType: corresponding author, contributionPercentage: 40)
+- [[paper-2024|Computational Models of Active Inference in Social Insects]] (contributionType: co-author, contributionPercentage: 25)
 
 ## Backlinks
 

@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: colonial-period
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Colonial Period
@@ -13,13 +15,6 @@ id: colonial-period
 - **startYear**: 1607
 - **endYear**: 1776
 - **description**: Period of American colonization by European powers, primarily Great Britain
-
-## Relationships
-
-### occurred_during
-
-- [[colonial-period|Colonial Period]]
-- [[colonial-period|Colonial Period]]
 
 ## Backlinks
 

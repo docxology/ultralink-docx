@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: progressive-era
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Progressive Era
@@ -13,12 +15,6 @@ id: progressive-era
 - **startYear**: 1900
 - **endYear**: 1920
 - **description**: Period of social activism and political reform
-
-## Relationships
-
-### occurred_during
-
-- [[progressive-era|Progressive Era]]
 
 ## Backlinks
 

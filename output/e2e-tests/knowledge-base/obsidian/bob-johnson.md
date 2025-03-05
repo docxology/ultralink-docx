@@ -1,6 +1,8 @@
 ---
 type: person
 id: bob-johnson
+created: 2025-03-05T00:12:45.471Z
+modified: 2025-03-05T00:12:45.471Z
 ---
 
 # Bob Johnson
@@ -19,8 +21,4 @@ id: bob-johnson
 
 - [[project-alpha|Project Alpha]]
 - [[project-beta|Project Beta]]
-
-## Backlinks
-
-- [[bob-johnson|Bob Johnson]] (works_on, works_on)
 

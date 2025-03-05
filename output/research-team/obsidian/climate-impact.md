@@ -1,6 +1,8 @@
 ---
 type: project
 id: climate-impact
+created: 2025-03-05T00:12:43.695Z
+modified: 2025-03-05T00:12:43.695Z
 ---
 
 # Climate Impact Assessment
@@ -10,16 +12,9 @@ id: climate-impact
 
 ## Attributes
 
-- **title**: Climate Impact Assessment
 - **startDate**: 2022-08-10
 - **budget**: 220000
 - **status**: Active
-
-## Relationships
-
-### contributes_to
-
-- [[climate-impact|Climate Impact Assessment]] (startDate: 2022-10-01, role: Consultant)
 
 ## Backlinks
 

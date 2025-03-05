@@ -1,6 +1,8 @@
 ---
 type: person
 id: grace-kim
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
 # Grace Kim
@@ -10,8 +12,7 @@ id: grace-kim
 
 ## Attributes
 
-- **title**: Lab Manager
-- **expertise**: Research Administration,Grant Writing
+- **expertise**: ["Research Administration","Grant Writing"]
 - **email**: grace.kim@research.org
 - **joinDate**: 2019-07-15
 - **status**: active
@@ -20,9 +21,9 @@ id: grace-kim
 
 ### administers
 
-- [[computer-vision-project|computer-vision-project]]
-- [[nlp-project|nlp-project]]
-- [[federated-learning-project|federated-learning-project]]
-- [[quantum-ml-project|quantum-ml-project]]
-- [[adaptive-robotics-project|adaptive-robotics-project]]
+- [[computer-vision-project|Advanced Computer Vision Systems]]
+- [[nlp-project|Natural Language Understanding]]
+- [[federated-learning-project|Privacy-Preserving Federated Learning]]
+- [[quantum-ml-project|Quantum Approaches to Machine Learning]]
+- [[adaptive-robotics-project|Adaptive Robotics Control]]
 

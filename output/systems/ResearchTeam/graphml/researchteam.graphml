@@ -14,29 +14,29 @@
   <key id="endDate" for="node" attr.name="endDate" attr.type="string"/>
   <key id="description" for="node" attr.name="description" attr.type="string"/>
   <key id="startDate" for="node" attr.name="startDate" attr.type="string"/>
-  <key id="budget" for="node" attr.name="budget" attr.type="int"/>
+  <key id="budget" for="node" attr.name="budget" attr.type="string"/>
   <key id="objectives" for="node" attr.name="objectives" attr.type="string"/>
   <key id="authors" for="node" attr.name="authors" attr.type="string"/>
   <key id="venue" for="node" attr.name="venue" attr.type="string"/>
-  <key id="year" for="node" attr.name="year" attr.type="int"/>
+  <key id="year" for="node" attr.name="year" attr.type="string"/>
   <key id="doi" for="node" attr.name="doi" attr.type="string"/>
-  <key id="citations" for="node" attr.name="citations" attr.type="int"/>
+  <key id="citations" for="node" attr.name="citations" attr.type="string"/>
   <key id="abstract" for="node" attr.name="abstract" attr.type="string"/>
   <key id="location" for="node" attr.name="location" attr.type="string"/>
   <key id="specifications" for="node" attr.name="specifications" attr.type="string"/>
   <key id="purchaseDate" for="node" attr.name="purchaseDate" attr.type="string"/>
   <key id="maintenanceSchedule" for="node" attr.name="maintenanceSchedule" attr.type="string"/>
   <key id="equipment" for="node" attr.name="equipment" attr.type="string"/>
-  <key id="capacity" for="node" attr.name="capacity" attr.type="int"/>
+  <key id="capacity" for="node" attr.name="capacity" attr.type="string"/>
   <key id="acquisitionDate" for="node" attr.name="acquisitionDate" attr.type="string"/>
   <key id="contractRenewal" for="node" attr.name="contractRenewal" attr.type="string"/>
   <key id="accessLevel" for="node" attr.name="accessLevel" attr.type="string"/>
   <key id="topics" for="node" attr.name="topics" attr.type="string"/>
-  <key id="amount" for="node" attr.name="amount" attr.type="int"/>
+  <key id="amount" for="node" attr.name="amount" attr.type="string"/>
   <key id="grantNumber" for="node" attr.name="grantNumber" attr.type="string"/>
   <key id="contractNumber" for="node" attr.name="contractNumber" attr.type="string"/>
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
-  <graph id="G" edgedefault="directed">
+  <graph id="UltraLink_Graph" edgedefault="directed">
     <node id="alice-chen">
       <data key="type">person</data>
       <data key="name">Alice Chen</data>

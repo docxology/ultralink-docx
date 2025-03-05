@@ -1,6 +1,8 @@
 ---
 type: concept
 id: manifest-destiny
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Manifest Destiny
@@ -11,14 +13,8 @@ id: manifest-destiny
 ## Attributes
 
 - **description**: Belief that American settlers were destined to expand across North America
-- **keywords**: expansion,westward,territory,settlement,imperialism
-- **vector**: 0.1,0.38,-0.05,0.42,0.25,0.3
-
-## Relationships
-
-### exemplifies
-
-- [[manifest-destiny|Manifest Destiny]]
+- **keywords**: ["expansion","westward","territory","settlement","imperialism"]
+- **vector**: [0.1,0.38,-0.05,0.42,0.25,0.3]
 
 ## Backlinks
 

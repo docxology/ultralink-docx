@@ -1,6 +1,8 @@
 ---
 type: person
 id: alice-chen
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
 # Alice Chen
@@ -10,8 +12,7 @@ id: alice-chen
 
 ## Attributes
 
-- **title**: Principal Investigator
-- **expertise**: Machine Learning,Computer Vision,Neural Networks
+- **expertise**: ["Machine Learning","Computer Vision","Neural Networks"]
 - **email**: alice.chen@research.org
 - **joinDate**: 2018-01-15
 - **status**: active
@@ -20,12 +21,12 @@ id: alice-chen
 
 ### leads
 
-- [[computer-vision-project|computer-vision-project]]
+- [[computer-vision-project|Advanced Computer Vision Systems]]
 
 ### contributes_to
 
-- [[nlp-project|nlp-project]]
-- [[federated-learning-project|federated-learning-project]]
+- [[nlp-project|Natural Language Understanding]]
+- [[federated-learning-project|Privacy-Preserving Federated Learning]]
 
 ### mentors
 
@@ -34,11 +35,11 @@ id: alice-chen
 
 ### authored
 
-- [[vision-paper-2022|vision-paper-2022]]
-- [[nlp-paper-2023|nlp-paper-2023]]
-- [[federated-paper-2023|federated-paper-2023]]
-- [[robotics-paper-2022|robotics-paper-2022]]
-- [[survey-paper-2023|survey-paper-2023]]
+- [[vision-paper-2022|Novel Approaches to Low-Light Computer Vision]]
+- [[nlp-paper-2023|Context-Aware Language Understanding in Multi-Domain Settings]]
+- [[federated-paper-2023|Communication-Efficient Federated Learning with Adaptive Compression]]
+- [[robotics-paper-2022|Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization]]
+- [[survey-paper-2023|A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques]]
 
 ### expertise_in
 

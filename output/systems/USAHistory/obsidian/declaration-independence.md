@@ -1,6 +1,8 @@
 ---
 type: event
 id: declaration-independence
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Declaration of Independence
@@ -14,8 +16,8 @@ id: declaration-independence
 - **location**: Philadelphia, Pennsylvania
 - **description**: Formal declaration of independence from Great Britain
 - **significance**: Foundational document establishing American independence
-- **keywords**: independence,liberty,revolution,rights
-- **vector**: 0.45,0.28,0.34,0.12,0.22,-0.15
+- **keywords**: ["independence","liberty","revolution","rights"]
+- **vector**: [0.45,0.28,0.34,0.12,0.22,-0.15]
 
 ## Relationships
 
@@ -26,18 +28,6 @@ id: declaration-independence
 ### exemplifies
 
 - [[democracy|Democracy]]
-
-### participated_in
-
-- [[declaration-independence|Declaration of Independence]]
-
-### created
-
-- [[declaration-independence|Declaration of Independence]]
-
-### produced_during
-
-- [[declaration-independence|Declaration of Independence]]
 
 ## Backlinks
 

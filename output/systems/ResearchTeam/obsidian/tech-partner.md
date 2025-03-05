@@ -1,6 +1,8 @@
 ---
 type: funding
 id: tech-partner
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
 # Tech Industry Partnership
@@ -21,6 +23,6 @@ id: tech-partner
 
 ### funds
 
-- [[federated-learning-project|federated-learning-project]]
-- [[nlp-project|nlp-project]]
+- [[federated-learning-project|Privacy-Preserving Federated Learning]]
+- [[nlp-project|Natural Language Understanding]]
 

@@ -1,6 +1,8 @@
 ---
 type: concept
 id: democracy
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Democracy
@@ -11,8 +13,8 @@ id: democracy
 ## Attributes
 
 - **description**: System of government by the people, typically through elected representatives
-- **keywords**: voting,representation,elections,governance,people
-- **vector**: 0.35,0.3,0.4,0.25,0.32,0.22
+- **keywords**: ["voting","representation","elections","governance","people"]
+- **vector**: [0.35,0.3,0.4,0.25,0.32,0.22]
 
 ## Relationships
 
@@ -29,15 +31,6 @@ id: democracy
 ### belongs_to_cluster
 
 - [[founding-principles-cluster|Founding Principles]]
-
-### exemplifies
-
-- [[democracy|Democracy]]
-
-### championed
-
-- [[democracy|Democracy]]
-- [[democracy|Democracy]]
 
 ## Backlinks
 

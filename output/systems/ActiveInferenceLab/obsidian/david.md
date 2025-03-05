@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: david
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # David Wilson
@@ -14,7 +16,7 @@ id: david
 - **department**: Biology
 - **email**: david.wilson@example.edu
 - **publications**: 3
-- **expertise**: ant colony optimization,collective behavior,stigmergy
+- **expertise**: ["ant colony optimization","collective behavior","stigmergy"]
 - **yearsExperience**: 3
 
 ## Relationships
@@ -25,6 +27,7 @@ id: david
 
 ### contributes_to
 
+- [[ant-colony-study|Ant Colony Decision Making Study]] (role: PhD Researcher, startDate: 2023-01-10)
 - [[ant-colony-study|Ant Colony Decision Making Study]] (role: Behavioral Consultant, startDate: 2024-02-10, timeCommitment: 25%)
 
 ### reports_to
@@ -33,11 +36,7 @@ id: david
 
 ### authored
 
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 30)
-
-### mentors
-
-- [[david|David Wilson]] (type: PhD Advisor, startDate: 2022-09-01)
+- [[paper-2024|Computational Models of Active Inference in Social Insects]] (contributionType: co-author, contributionPercentage: 30)
 
 ## Backlinks
 

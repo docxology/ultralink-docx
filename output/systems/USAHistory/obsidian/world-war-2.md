@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: world-war-2
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # World War II
@@ -13,12 +15,6 @@ id: world-war-2
 - **startYear**: 1941
 - **endYear**: 1945
 - **description**: American involvement in the global conflict
-
-## Relationships
-
-### occurred_during
-
-- [[world-war-2|World War II]]
 
 ## Backlinks
 

@@ -1,6 +1,8 @@
 ---
 type: temporal_snapshot
 id: slavery-1700
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # slavery-1700
@@ -15,12 +17,6 @@ id: slavery-1700
 - **acceptance**: 0.8
 - **economic_importance**: 0.7
 - **description**: Slavery in colonial America
-
-## Relationships
-
-### has_state_at
-
-- [[slavery-1700|slavery-1700]]
 
 ## Backlinks
 

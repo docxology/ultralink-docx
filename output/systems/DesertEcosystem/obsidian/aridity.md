@@ -1,6 +1,8 @@
 ---
 type: abiotic_factor
 id: aridity
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Aridity
@@ -13,22 +15,6 @@ id: aridity
 - **type**: climate
 - **description**: Low precipitation, typically less than 250mm annually, with high evaporation rates.
 - **impact**: extreme
-
-## Relationships
-
-### adapted_to
-
-- [[aridity|Aridity]] (adaptationMechanism: Water harvesting from air, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Water storage in bladder, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Metabolic water production, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Consumption of water-rich cacti, strength: moderate)
-- [[aridity|Aridity]] (adaptationMechanism: Water storage tissue, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Deep root system, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Resinous coating on leaves, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Dense wood tissue, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: CAM photosynthesis, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Short lifecycle synchronized with yucca flowering, strength: extreme)
-- [[aridity|Aridity]] (adaptationMechanism: Obtaining moisture from prey, strength: strong)
 
 ## Backlinks
 

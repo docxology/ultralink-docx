@@ -1,6 +1,8 @@
 ---
 type: microhabitat
 id: rocky_slope
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Rocky Slope
@@ -14,19 +16,6 @@ id: rocky_slope
 - **type**: lithic
 - **area**: medium
 - **soilMoisture**: very low
-
-## Relationships
-
-### lives_in
-
-- [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: medium)
-- [[rocky_slope|Rocky Slope]] (frequency: seasonal, dependency: medium)
-- [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: high)
-
-### grows_in
-
-- [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: medium)
-- [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: medium)
 
 ## Backlinks
 

@@ -1,6 +1,8 @@
 ---
 type: person
 id: elena-rodriguez
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
 # Elena Rodriguez
@@ -10,8 +12,7 @@ id: elena-rodriguez
 
 ## Attributes
 
-- **title**: Research Assistant
-- **expertise**: Data Visualization,Statistical Analysis
+- **expertise**: ["Data Visualization","Statistical Analysis"]
 - **email**: elena.rodriguez@research.org
 - **joinDate**: 2022-06-01
 - **status**: active
@@ -20,8 +21,8 @@ id: elena-rodriguez
 
 ### contributes_to
 
-- [[adaptive-robotics-project|adaptive-robotics-project]]
-- [[computer-vision-project|computer-vision-project]]
+- [[adaptive-robotics-project|Adaptive Robotics Control]]
+- [[computer-vision-project|Advanced Computer Vision Systems]]
 
 ### uses
 
@@ -30,12 +31,6 @@ id: elena-rodriguez
 ### expertise_in
 
 - [[computer-vision|Computer Vision]]
-
-### mentors
-
-- [[elena-rodriguez|Elena Rodriguez]]
-- [[elena-rodriguez|Elena Rodriguez]]
-- [[elena-rodriguez|Elena Rodriguez]]
 
 ## Backlinks
 

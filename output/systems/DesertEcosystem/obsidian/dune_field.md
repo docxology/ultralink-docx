@@ -1,6 +1,8 @@
 ---
 type: microhabitat
 id: dune_field
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Sand Dune Field
@@ -14,13 +16,6 @@ id: dune_field
 - **type**: aeolian
 - **area**: large
 - **soilMoisture**: extremely low
-
-## Relationships
-
-### lives_in
-
-- [[dune_field|Sand Dune Field]] (frequency: permanent, dependency: high)
-- [[dune_field|Sand Dune Field]] (frequency: permanent, dependency: high)
 
 ## Backlinks
 

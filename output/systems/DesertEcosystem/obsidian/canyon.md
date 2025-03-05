@@ -1,6 +1,8 @@
 ---
 type: microhabitat
 id: canyon
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Desert Canyon
@@ -14,13 +16,6 @@ id: canyon
 - **type**: erosional
 - **area**: variable
 - **soilMoisture**: variable
-
-## Relationships
-
-### lives_in
-
-- [[canyon|Desert Canyon]] (frequency: permanent, dependency: medium)
-- [[canyon|Desert Canyon]] (frequency: permanent, dependency: low)
 
 ## Backlinks
 

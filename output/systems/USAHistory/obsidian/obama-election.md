@@ -1,6 +1,8 @@
 ---
 type: event
 id: obama-election
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Barack Obama Elected President
@@ -14,8 +16,8 @@ id: obama-election
 - **location**: United States
 - **description**: Barack Obama elected as first African American president of the United States
 - **significance**: Historic milestone in American race relations and politics
-- **keywords**: election,Obama,presidency,African American,milestone
-- **vector**: 0.42,0.3,0.35,0.2,0.28,0.15
+- **keywords**: ["election","Obama","presidency","African American","milestone"]
+- **vector**: [0.42,0.3,0.35,0.2,0.28,0.15]
 
 ## Relationships
 

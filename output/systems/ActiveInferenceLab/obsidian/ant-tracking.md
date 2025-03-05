@@ -1,6 +1,8 @@
 ---
 type: equipment
 id: ant-tracking
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Ant Tracking System
@@ -16,12 +18,6 @@ id: ant-tracking
 - **cost**: 75000
 - **purchaseDate**: 2023-02-15
 - **maintenanceSchedule**: Monthly
-
-## Relationships
-
-### uses
-
-- [[ant-tracking|Ant Tracking System]] (frequency: Daily, priority: High)
 
 ## Backlinks
 

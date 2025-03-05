@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: carol
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Dr. Carol Jimenez
@@ -14,7 +16,7 @@ id: carol
 - **department**: Cognitive Science
 - **email**: carol.jimenez@example.edu
 - **publications**: 11
-- **expertise**: active inference,machine learning,cognitive modeling
+- **expertise**: ["active inference","machine learning","cognitive modeling"]
 - **yearsExperience**: 3
 
 ## Relationships
@@ -33,12 +35,8 @@ id: carol
 
 ### authored
 
-- [[paper-2023a|paper-2023a]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 30)
-
-### mentors
-
-- [[carol|Dr. Carol Jimenez]] (type: Postdoc Advisor, startDate: 2023-01-15)
+- [[paper-2023a|Active Inference Framework for Collective Behavior Analysis]] (contributionType: co-author, contributionPercentage: 30)
+- [[paper-2024|Computational Models of Active Inference in Social Insects]] (contributionType: co-author, contributionPercentage: 30)
 
 ## Backlinks
 

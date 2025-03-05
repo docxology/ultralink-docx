@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: civil-rights
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Civil Rights Movement
@@ -13,12 +15,6 @@ id: civil-rights
 - **startYear**: 1954
 - **endYear**: 1968
 - **description**: Movement for racial equality and ending discrimination
-
-## Relationships
-
-### occurred_during
-
-- [[civil-rights|Civil Rights Movement]]
 
 ## Backlinks
 

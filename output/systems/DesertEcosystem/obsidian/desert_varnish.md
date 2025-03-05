@@ -1,6 +1,8 @@
 ---
 type: abiotic_factor
 id: desert_varnish
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Desert Varnish

@@ -1,6 +1,8 @@
 ---
 type: equipment
 id: gpu-cluster
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
 # High-Performance GPU Cluster
@@ -12,22 +14,14 @@ id: gpu-cluster
 
 - **description**: NVIDIA DGX A100 cluster for deep learning research
 - **location**: Server Room A
-- **specifications**: [object Object]
+- **specifications**: {"gpus":8,"memory":"320GB","storage":"10TB"}
 - **status**: operational
 - **purchaseDate**: 2021-01-15
 - **maintenanceSchedule**: quarterly
 
-## Relationships
-
-### uses
-
-- [[gpu-cluster|High-Performance GPU Cluster]]
-- [[gpu-cluster|High-Performance GPU Cluster]]
-- [[gpu-cluster|High-Performance GPU Cluster]]
-
 ## Backlinks
 
-- [[computer-vision-project|computer-vision-project]] (uses)
-- [[nlp-project|nlp-project]] (uses)
-- [[federated-learning-project|federated-learning-project]] (uses)
+- [[computer-vision-project|Advanced Computer Vision Systems]] (uses)
+- [[nlp-project|Natural Language Understanding]] (uses)
+- [[federated-learning-project|Privacy-Preserving Federated Learning]] (uses)
 

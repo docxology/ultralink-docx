@@ -1,6 +1,8 @@
 ---
 type: event
 id: pearl-harbor
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Attack on Pearl Harbor
@@ -14,18 +16,14 @@ id: pearl-harbor
 - **location**: Pearl Harbor, Hawaii
 - **description**: Japanese forces attack the US Naval base at Pearl Harbor
 - **significance**: Brought the United States into World War II
-- **keywords**: war,Japan,attack,World War II,Roosevelt
-- **vector**: -0.38,-0.28,-0.42,-0.2,-0.32,-0.3
+- **keywords**: ["war","Japan","attack","World War II","Roosevelt"]
+- **vector**: [-0.38,-0.28,-0.42,-0.2,-0.32,-0.3]
 
 ## Relationships
 
 ### occurred_during
 
 - [[world-war-2|World War II]]
-
-### led_during
-
-- [[pearl-harbor|Attack on Pearl Harbor]]
 
 ## Backlinks
 

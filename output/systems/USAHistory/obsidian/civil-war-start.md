@@ -1,6 +1,8 @@
 ---
 type: event
 id: civil-war-start
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Civil War Begins
@@ -14,18 +16,14 @@ id: civil-war-start
 - **location**: Fort Sumter, South Carolina
 - **description**: Confederate forces attack Fort Sumter, beginning the Civil War
 - **significance**: Started the bloodiest conflict in American history
-- **keywords**: war,slavery,secession,conflict
-- **vector**: -0.35,-0.22,-0.42,-0.18,-0.3,-0.25
+- **keywords**: ["war","slavery","secession","conflict"]
+- **vector**: [-0.35,-0.22,-0.42,-0.18,-0.3,-0.25]
 
 ## Relationships
 
 ### occurred_during
 
 - [[civil-war|Civil War]]
-
-### led_during
-
-- [[civil-war-start|Civil War Begins]]
 
 ## Backlinks
 

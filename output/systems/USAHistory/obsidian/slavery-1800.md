@@ -1,6 +1,8 @@
 ---
 type: temporal_snapshot
 id: slavery-1800
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # slavery-1800
@@ -15,12 +17,6 @@ id: slavery-1800
 - **acceptance**: 0.65
 - **economic_importance**: 0.85
 - **description**: Slavery during early republic
-
-## Relationships
-
-### has_state_at
-
-- [[slavery-1800|slavery-1800]]
 
 ## Backlinks
 

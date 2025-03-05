@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: emma
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Emma Taylor
@@ -14,7 +16,7 @@ id: emma
 - **department**: Computer Science
 - **email**: emma.taylor@example.edu
 - **publications**: 4
-- **expertise**: machine learning,reinforcement learning,neural networks
+- **expertise**: ["machine learning","reinforcement learning","neural networks"]
 - **yearsExperience**: 2
 
 ## Relationships
@@ -33,15 +35,7 @@ id: emma
 
 ### authored
 
-- [[paper-2023b|paper-2023b]] (contributionType: co-author, contributionPercentage: 30)
-
-### mentors
-
-- [[emma|Emma Taylor]] (type: PhD Advisor, startDate: 2022-09-01)
-
-### co_advises
-
-- [[emma|Emma Taylor]] (startDate: 2022-09-01)
+- [[paper-2023b|Decision Making Patterns in Ant Colonies: A Field Study]] (contributionType: co-author, contributionPercentage: 30)
 
 ## Backlinks
 

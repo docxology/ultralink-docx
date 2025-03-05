@@ -1,518 +1,520 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DesertEcosystem Knowledge Graph</title>
-    <meta name="description" content="Interactive visualization of DesertEcosystem relationships">
-    <link rel="stylesheet" href="styles/ocean.css">
-    <style>
-    /* Default Theme CSS */
-:root {
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --link-color: #0066cc;
-  --accent-color: #4a9eff;
-  --border-color: #dddddd;
-  --node-hover: #ff6600;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  margin: 0;
-  padding: 0;
-}
-
-/* Layout */
-header {
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-main {
-  display: flex;
-  height: calc(100vh - 180px);
-}
-
-#graph {
-  flex: 1;
-  background: rgba(249, 250, 251, 0.8);
-  border-right: 1px solid var(--border-color);
-}
-
-.details-panel {
-  width: 300px;
-  padding: 1rem;
-  overflow-y: auto;
-}
-
-/* Entity styles */
-.entity-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.entity-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-}
-
-.attribute-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.attribute-table th, .attribute-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.attribute-table tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.relationship-item {
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-}
-
-.relationship-attributes {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px dashed var(--border-color);
-  font-size: 0.9rem;
-}
-
-/* Controls */
-.controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.filters {
-  display: flex;
-  gap: 1rem;
-}
-
-.legend-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.zoom-controls {
-  position: absolute;
-  right: 1rem;
-  top: 5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.zoom-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background: white;
-  cursor: pointer;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  main {
-    flex-direction: column;
-    height: auto;
-  }
-  
-  #graph {
-    height: 50vh;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .details-panel {
-    width: 100%;
-  }
-  
-  .zoom-controls {
-    bottom: 50vh;
-  }
-  
-  .controls {
-    flex-direction: column;
-  }
-  
-  .filters {
-    flex-direction: column;
-    width: 100%;
-  }
-}
-    </style>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!-- const name = entity.attributes.name || entity.attributes.title || entity.id; -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DesertEcosystem Knowledge Graph</title>
+  <style>
+    :root {
+      --background: #f0f8ff;
+      --text: #333333;
+      --link: #006699;
+      --accent: #4a9eff;
+      --border: #b3d9ff;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--text);
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      height: 100vh;
+    }
+    .sidebar {
+      padding: 20px;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+    }
+    .main {
+      padding: 20px;
+      overflow-y: auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+      margin-top: 0;
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .entity-list {
+      list-style: none;
+      padding: 0;
+    }
+    .entity-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+    }
+    #graph {
+      width: 100%;
+      height: 600px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .search-box {
+      margin-bottom: 20px;
+    }
+    #search-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--background);
+      color: var(--text);
+    }
+  </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
-<body class="theme-ocean">
-    <header>
-        <h1>DesertEcosystem Knowledge Graph</h1>
-        <p>Interactive visualization of DesertEcosystem relationships</p>
-        <div class="controls">
-            <div class="legend"></div>
-            <div class="filters">
-                <label>Filter by type:
-                    <select id="typeFilter">
-                        <option value="all">All</option>
-                    </select>
-                </label>
-                <label>Search:
-                    <input type="text" id="searchInput" placeholder="Search nodes...">
-                </label>
-                <button class="btn" id="clear-filters">Clear Filters</button>
-            </div>
-        </div>
-        <div class="zoom-controls">
-            <button class="zoom-btn" id="zoom-in">+</button>
-            <button class="zoom-btn" id="zoom-reset">⟳</button>
-            <button class="zoom-btn" id="zoom-out">−</button>
-        </div>
-    </header>
-    <main>
-        <div id="graph"></div>
-        <div id="details" class="details-panel">
-            <h2>Details</h2>
-            <div id="nodeDetails">
-                <p>Click a node to see details</p>
-            </div>
-        </div>
-    </main>
-    <script>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>DesertEcosystem Knowledge Graph</h2>
+      <p>Interactive visualization of DesertEcosystem relationships</p>
+      
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search entities..." />
+      </div>
+      
+      <h3>Entities</h3>
+      <ul class="entity-list" id="entity-list">
+        
+          <li class="entity-item" data-id="camel" data-type="animal">
+            <a href="camel.html">
+              Dromedary Camel
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="fennec_fox" data-type="animal">
+            <a href="fennec_fox.html">
+              Fennec Fox
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="desert_monitor" data-type="animal">
+            <a href="desert_monitor.html">
+              Desert Monitor
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="sidewinder" data-type="animal">
+            <a href="sidewinder.html">
+              Sidewinder Rattlesnake
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="scorpion" data-type="animal">
+            <a href="scorpion.html">
+              Deathstalker Scorpion
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="darkling_beetle" data-type="animal">
+            <a href="darkling_beetle.html">
+              Darkling Beetle
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="roadrunner" data-type="animal">
+            <a href="roadrunner.html">
+              Greater Roadrunner
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="desert_tortoise" data-type="animal">
+            <a href="desert_tortoise.html">
+              Desert Tortoise
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="cactus_wren" data-type="animal">
+            <a href="cactus_wren.html">
+              Cactus Wren
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="kangaroo_rat" data-type="animal">
+            <a href="kangaroo_rat.html">
+              Merriam's Kangaroo Rat
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="gila_monster" data-type="animal">
+            <a href="gila_monster.html">
+              Gila Monster
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="javelina" data-type="animal">
+            <a href="javelina.html">
+              Javelina
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="saguaro" data-type="plant">
+            <a href="saguaro.html">
+              Saguaro Cactus
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="barrel_cactus" data-type="plant">
+            <a href="barrel_cactus.html">
+              Barrel Cactus
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="mesquite" data-type="plant">
+            <a href="mesquite.html">
+              Honey Mesquite
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="creosote_bush" data-type="plant">
+            <a href="creosote_bush.html">
+              Creosote Bush
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="desert_poppy" data-type="plant">
+            <a href="desert_poppy.html">
+              Desert Poppy
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="ocotillo" data-type="plant">
+            <a href="ocotillo.html">
+              Ocotillo
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="brittlebush" data-type="plant">
+            <a href="brittlebush.html">
+              Brittlebush
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="desert_ironwood" data-type="plant">
+            <a href="desert_ironwood.html">
+              Desert Ironwood
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="agave" data-type="plant">
+            <a href="agave.html">
+              Century Plant
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="joshua_tree" data-type="plant">
+            <a href="joshua_tree.html">
+              Joshua Tree
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="prickly_pear" data-type="plant">
+            <a href="prickly_pear.html">
+              Prickly Pear Cactus
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="cholla_cactus" data-type="plant">
+            <a href="cholla_cactus.html">
+              Cholla Cactus
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="other_plants" data-type="plant">
+            <a href="other_plants.html">
+              Various Desert Plants
+            </a>
+            <div class="entity-type">plant</div>
+          </li>
+        
+          <li class="entity-item" data-id="heat" data-type="abiotic_factor">
+            <a href="heat.html">
+              Extreme Heat
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="temperature_variation" data-type="abiotic_factor">
+            <a href="temperature_variation.html">
+              Temperature Variation
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="aridity" data-type="abiotic_factor">
+            <a href="aridity.html">
+              Aridity
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="sand_dunes" data-type="abiotic_factor">
+            <a href="sand_dunes.html">
+              Sand Dunes
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="rocky_outcrops" data-type="abiotic_factor">
+            <a href="rocky_outcrops.html">
+              Rocky Outcrops
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="oasis" data-type="abiotic_factor">
+            <a href="oasis.html">
+              Oasis
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="ephemeral_streams" data-type="abiotic_factor">
+            <a href="ephemeral_streams.html">
+              Ephemeral Streams
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="sandy_soil" data-type="abiotic_factor">
+            <a href="sandy_soil.html">
+              Sandy Soil
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="desert_pavement" data-type="abiotic_factor">
+            <a href="desert_pavement.html">
+              Desert Pavement
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="desert_varnish" data-type="abiotic_factor">
+            <a href="desert_varnish.html">
+              Desert Varnish
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="playa" data-type="abiotic_factor">
+            <a href="playa.html">
+              Playa
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="flash_floods" data-type="abiotic_factor">
+            <a href="flash_floods.html">
+              Flash Floods
+            </a>
+            <div class="entity-type">abiotic_factor</div>
+          </li>
+        
+          <li class="entity-item" data-id="wash" data-type="microhabitat">
+            <a href="wash.html">
+              Desert Wash
+            </a>
+            <div class="entity-type">microhabitat</div>
+          </li>
+        
+          <li class="entity-item" data-id="dune_field" data-type="microhabitat">
+            <a href="dune_field.html">
+              Sand Dune Field
+            </a>
+            <div class="entity-type">microhabitat</div>
+          </li>
+        
+          <li class="entity-item" data-id="rocky_slope" data-type="microhabitat">
+            <a href="rocky_slope.html">
+              Rocky Slope
+            </a>
+            <div class="entity-type">microhabitat</div>
+          </li>
+        
+          <li class="entity-item" data-id="canyon" data-type="microhabitat">
+            <a href="canyon.html">
+              Desert Canyon
+            </a>
+            <div class="entity-type">microhabitat</div>
+          </li>
+        
+          <li class="entity-item" data-id="pollination_yucca" data-type="interaction">
+            <a href="pollination_yucca.html">
+              Yucca-Moth Pollination
+            </a>
+            <div class="entity-type">interaction</div>
+          </li>
+        
+          <li class="entity-item" data-id="nurse_plant" data-type="interaction">
+            <a href="nurse_plant.html">
+              Nurse Plant Relationship
+            </a>
+            <div class="entity-type">interaction</div>
+          </li>
+        
+          <li class="entity-item" data-id="seed_dispersal" data-type="interaction">
+            <a href="seed_dispersal.html">
+              Seed Dispersal
+            </a>
+            <div class="entity-type">interaction</div>
+          </li>
+        
+          <li class="entity-item" data-id="yucca_moth" data-type="animal">
+            <a href="yucca_moth.html">
+              Yucca Moth
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+          <li class="entity-item" data-id="coyote" data-type="animal">
+            <a href="coyote.html">
+              Coyote
+            </a>
+            <div class="entity-type">animal</div>
+          </li>
+        
+      </ul>
+    </div>
+    <div class="main">
+      <div id="graph"></div>
+      <script>
+        // Graph visualization code
         const data = {
-            entities: [{"id":"camel","type":"animal","attributes":{"name":"Dromedary Camel","scientificName":"Camelus dromedarius","lifespan":40,"diet":"herbivore","status":"least concern","description":"The dromedary camel is a large, single-humped ungulate adapted for desert conditions.","adaptations":["Can go for long periods without water","Humps store fat for energy","Thick fur insulates against heat","Specialized eyelids and nostrils for sand protection","Can tolerate extreme temperatures"]}},{"id":"fennec_fox","type":"animal","attributes":{"name":"Fennec Fox","scientificName":"Vulpes zerda","lifespan":12,"diet":"omnivore","status":"least concern","description":"The smallest canid species, known for its unusually large ears.","adaptations":["Large ears dissipate heat and detect prey underground","Thick fur insulates against cold nights","Kidney adaptations to conserve water","Pale coat reflects sunlight","Nocturnal behavior to avoid daytime heat"]}},{"id":"desert_monitor","type":"animal","attributes":{"name":"Desert Monitor","scientificName":"Varanus griseus","lifespan":15,"diet":"carnivore","status":"least concern","description":"A large lizard found across North Africa and parts of Asia.","adaptations":["Heat-resistant scales","Efficient water conservation","Can remain inactive for long periods","Burrows to escape extreme temperatures"]}},{"id":"sidewinder","type":"animal","attributes":{"name":"Sidewinder Rattlesnake","scientificName":"Crotalus cerastes","lifespan":20,"diet":"carnivore","status":"least concern","description":"Venomous pit viper known for its sideways movement across sand.","adaptations":["Sidewinding locomotion minimizes contact with hot sand","Heat-sensing pits detect prey","Scales provide camouflage in sandy environments","Specialized breathing to prevent sand inhalation"]}},{"id":"scorpion","type":"animal","attributes":{"name":"Deathstalker Scorpion","scientificName":"Leiurus quinquestriatus","lifespan":5,"diet":"carnivore","status":"least concern","description":"One of the most dangerous scorpion species, with potent venom.","adaptations":["Nocturnal behavior to avoid heat","Exoskeleton prevents water loss","UV fluorescence may help detect light levels","Burrowing behavior for temperature regulation"]}},{"id":"darkling_beetle","type":"animal","attributes":{"name":"Darkling Beetle","scientificName":"Tenebrionidae family","lifespan":2,"diet":"omnivore","status":"least concern","description":"Desert beetles with numerous adaptations for arid environments.","adaptations":["Waxy cuticle reduces water loss","Can collect water from fog on body","Stands with head down and abdomen raised to collect moisture","Nocturnal to avoid daytime heat"]}},{"id":"roadrunner","type":"animal","attributes":{"name":"Greater Roadrunner","scientificName":"Geococcyx californianus","lifespan":8,"diet":"carnivore","status":"least concern","description":"Fast-running ground cuckoo that rarely flies.","adaptations":["Can extract water from prey","Salt glands to excrete excess salt","Ground-dwelling to avoid flying in thin, hot air","Special feathers for insulation"]}},{"id":"desert_tortoise","type":"animal","attributes":{"name":"Desert Tortoise","scientificName":"Gopherus agassizii","lifespan":80,"diet":"herbivore","status":"vulnerable","description":"Long-lived reptile of the Mojave and Sonoran deserts with high-domed shell.","adaptations":["Can store water in bladder for extended periods","Digs burrows to escape extreme temperatures","Metabolic adaptations to survive drought","Specialized digestive system for low-quality plant material","Slow metabolism conserves energy"]}},{"id":"cactus_wren","type":"animal","attributes":{"name":"Cactus Wren","scientificName":"Campylorhynchus brunneicapillus","lifespan":7,"diet":"insectivore","status":"least concern","description":"Desert bird that builds nests in cholla and other cacti for protection.","adaptations":["Obtains most water from food rather than drinking","Specialized nest-building in protective cacti","Heat-resistant metabolism","Efficient kidney function to conserve water"]}},{"id":"kangaroo_rat","type":"animal","attributes":{"name":"Merriam's Kangaroo Rat","scientificName":"Dipodomys merriami","lifespan":5,"diet":"granivore","status":"least concern","description":"Small desert rodent with highly specialized adaptations for water conservation.","adaptations":["Can survive without drinking water","Extracts water metabolically from dry seeds","Specialized kidneys concentrate urine","Nocturnal to avoid daytime heat","Burrows underground during day to avoid heat"]}},{"id":"gila_monster","type":"animal","attributes":{"name":"Gila Monster","scientificName":"Heloderma suspectum","lifespan":20,"diet":"carnivore","status":"near threatened","description":"Venomous lizard of the southwestern US and northwestern Mexico.","adaptations":["Stores fat in tail for long periods without food","Venomous bite for efficient predation","Thick skin reduces water loss","Slow metabolism allows for infrequent feeding","Can survive on as few as 3-4 meals per year"]}},{"id":"javelina","type":"animal","attributes":{"name":"Javelina","scientificName":"Pecari tajacu","lifespan":10,"diet":"omnivore","status":"least concern","description":"Also known as collared peccary, a pig-like mammal adapted to desert environments.","adaptations":["Can consume water-rich cacti including prickly pear","Active in early morning and evening to avoid heat","Social behavior reduces predation risk","Specialized digestive system for desert plants"]}},{"id":"saguaro","type":"plant","attributes":{"name":"Saguaro Cactus","scientificName":"Carnegiea gigantea","height":1200,"waterRequirement":"very low","description":"Iconic columnar cactus with arm-like branches.","adaptations":["Accordion-like pleats expand when absorbing water","Extensive shallow root system","Thick waxy coating to reduce water loss","Slow growth to conserve energy","CAM photosynthesis for water conservation"]}},{"id":"barrel_cactus","type":"plant","attributes":{"name":"Barrel Cactus","scientificName":"Ferocactus wislizeni","height":150,"waterRequirement":"very low","description":"Cylindrical-shaped cactus known for tilting toward the sun.","adaptations":["Ribbed structure allows expansion during water absorption","Thick waxy coating to reduce evaporation","Spines create microclimate of shade","Can survive extremely high temperatures"]}},{"id":"mesquite","type":"plant","attributes":{"name":"Honey Mesquite","scientificName":"Prosopis glandulosa","height":900,"waterRequirement":"low","description":"Deciduous tree with deep roots that can access groundwater.","adaptations":["Extremely deep taproots can reach 50m below surface","Small leaves reduce water loss","Drought deciduous - can shed leaves during extreme drought","Nitrogen fixing ability improves soil quality"]}},{"id":"creosote_bush","type":"plant","attributes":{"name":"Creosote Bush","scientificName":"Larrea tridentata","height":300,"waterRequirement":"very low","description":"One of the most drought-tolerant plants, can live over 10,000 years.","adaptations":["Resinous coating on leaves prevents water loss","Toxins in soil prevent other plants from growing nearby (allelopathy)","Small leaves reduce surface area for evaporation","Can survive with just 75mm of annual rainfall"]}},{"id":"desert_poppy","type":"plant","attributes":{"name":"Desert Poppy","scientificName":"Eschscholzia glyptosperma","height":30,"waterRequirement":"low","description":"Annual wildflower that blooms spectacularly after rains.","adaptations":["Seeds can remain dormant for years until rainfall","Quick lifecycle to complete before drought returns","Deep taproots to access underground moisture","Waxy leaf coating to reduce evaporation"]}},{"id":"ocotillo","type":"plant","attributes":{"name":"Ocotillo","scientificName":"Fouquieria splendens","height":500,"waterRequirement":"low","description":"Spindly desert plant with bright red flowers.","adaptations":["Drought deciduous - drops leaves during dry periods","Grows leaves quickly after rain","Deep tap root","Waxy coating on stems","Thorns for protection"]}},{"id":"brittlebush","type":"plant","attributes":{"name":"Brittlebush","scientificName":"Encelia farinosa","height":150,"waterRequirement":"very low","description":"Common desert shrub with silvery leaves and yellow flowers.","adaptations":["Resinous sap seals wounds to prevent water loss","Light-colored leaves reflect sunlight","Dense leaf hairs (trichomes) reduce water loss","Seasonal leaf drop during extreme drought","Quick response to rainfall with new growth"]}},{"id":"desert_ironwood","type":"plant","attributes":{"name":"Desert Ironwood","scientificName":"Olneya tesota","height":1000,"waterRequirement":"low","description":"Long-lived desert tree with extremely dense wood, can live 800+ years.","adaptations":["Nitrogen fixing capability improves soil","Extremely deep root system","Small, drought-deciduous leaves","Dense wood stores water","Provides \"nurse plant\" habitat for other species"]}},{"id":"agave","type":"plant","attributes":{"name":"Century Plant","scientificName":"Agave americana","height":200,"waterRequirement":"very low","description":"Large succulent that flowers once at the end of its life.","adaptations":["CAM photosynthesis to conserve water","Thick, waxy leaves reduce water loss","Rosette form channels water to central root","Fibrous leaf structure for structural support","Monocarpic lifecycle (flowers once then dies)"]}},{"id":"joshua_tree","type":"plant","attributes":{"name":"Joshua Tree","scientificName":"Yucca brevifolia","height":1200,"waterRequirement":"low","description":"Iconic tree-like yucca of the Mojave Desert with unique appearance.","adaptations":["Extensive shallow root system","Thick, moisture-retaining trunk","Waxy, spine-tipped leaves reduce water loss","Specialized pollination relationship with yucca moth","Slow growth rate conserves resources"]}},{"id":"prickly_pear","type":"plant","attributes":{"name":"Prickly Pear Cactus","scientificName":"Opuntia spp.","height":200,"waterRequirement":"very low","description":"Flat-padded cacti with colorful fruits and sharp spines.","adaptations":["Flat pads maximize photosynthesis while minimizing surface area","Waxy coating reduces water loss","Shallow, extensive root system","Spines protect from herbivores and provide shade"]}},{"id":"cholla_cactus","type":"plant","attributes":{"name":"Cholla Cactus","scientificName":"Cylindropuntia spp.","height":300,"waterRequirement":"very low","description":"Known for detachable barbed spines that easily attach to passersby.","adaptations":["Segmented structure allows for vegetative reproduction","Dense, barbed spines deter predation","Water storage in stem segments","Shallow but extensive root system"]}},{"id":"other_plants","type":"plant","attributes":{"name":"Various Desert Plants","description":"Collection of various smaller desert plants and grasses","waterRequirement":"low to moderate","adaptations":["Various drought adaptations","Seasonal growth patterns","Seed dormancy during dry periods"]}},{"id":"heat","type":"abiotic_factor","attributes":{"name":"Extreme Heat","type":"climate","description":"Daytime temperatures regularly exceeding 40°C (104°F) in summer.","impact":"extreme"}},{"id":"temperature_variation","type":"abiotic_factor","attributes":{"name":"Temperature Variation","type":"climate","description":"Large daily temperature fluctuations, often exceeding 20°C between day and night.","impact":"high"}},{"id":"aridity","type":"abiotic_factor","attributes":{"name":"Aridity","type":"climate","description":"Low precipitation, typically less than 250mm annually, with high evaporation rates.","impact":"extreme"}},{"id":"sand_dunes","type":"abiotic_factor","attributes":{"name":"Sand Dunes","type":"geological","description":"Mounds of windblown sand that can move and shift over time.","impact":"high"}},{"id":"rocky_outcrops","type":"abiotic_factor","attributes":{"name":"Rocky Outcrops","type":"geological","description":"Exposed rock formations that provide shade and shelter.","impact":"medium"}},{"id":"oasis","type":"abiotic_factor","attributes":{"name":"Oasis","type":"water","description":"Isolated water source surrounded by desert, often fed by underground springs.","impact":"high"}},{"id":"ephemeral_streams","type":"abiotic_factor","attributes":{"name":"Ephemeral Streams","type":"water","description":"Temporary waterways that flow only after rainfall events.","impact":"medium"}},{"id":"sandy_soil","type":"abiotic_factor","attributes":{"name":"Sandy Soil","type":"soil","description":"Coarse-grained soil with poor water retention but good drainage.","impact":"high"}},{"id":"desert_pavement","type":"abiotic_factor","attributes":{"name":"Desert Pavement","type":"geological","description":"Dense layer of pebbles and rocks at the surface, formed by wind removing fine particles.","impact":"high"}},{"id":"desert_varnish","type":"abiotic_factor","attributes":{"name":"Desert Varnish","type":"geological","description":"Dark coating on exposed rock surfaces, composed of clay minerals with iron and manganese oxides.","impact":"low"}},{"id":"playa","type":"abiotic_factor","attributes":{"name":"Playa","type":"geological","description":"Flat, dry lake bed that occasionally floods after heavy rain.","impact":"medium"}},{"id":"flash_floods","type":"abiotic_factor","attributes":{"name":"Flash Floods","type":"water","description":"Sudden, intense flooding events often occurring in desert washes after heavy rainfall.","impact":"extreme"}},{"id":"wash","type":"microhabitat","attributes":{"name":"Desert Wash","description":"Dry streambed that carries water only after rainfall, often with distinct vegetation.","type":"seasonal_wetland","area":"variable","soilMoisture":"higher than surroundings"}},{"id":"dune_field","type":"microhabitat","attributes":{"name":"Sand Dune Field","description":"Area of wind-deposited sand formations with specialized plant and animal communities.","type":"aeolian","area":"large","soilMoisture":"extremely low"}},{"id":"rocky_slope","type":"microhabitat","attributes":{"name":"Rocky Slope","description":"Elevated area with exposed bedrock and boulders, providing shade and shelter.","type":"lithic","area":"medium","soilMoisture":"very low"}},{"id":"canyon","type":"microhabitat","attributes":{"name":"Desert Canyon","description":"Deep, narrow channel with steep walls, often with increased moisture and biodiversity.","type":"erosional","area":"variable","soilMoisture":"variable"}},{"id":"pollination_yucca","type":"interaction","attributes":{"name":"Yucca-Moth Pollination","description":"Specialized mutualistic relationship between yucca plants and yucca moths.","type":"mutualism","participants":["joshua_tree","yucca_moth"],"strength":"obligate"}},{"id":"nurse_plant","type":"interaction","attributes":{"name":"Nurse Plant Relationship","description":"Protection of seedlings by established desert plants providing shade and improved soil.","type":"commensalism","participants":["desert_ironwood","saguaro"],"strength":"facultative"}},{"id":"seed_dispersal","type":"interaction","attributes":{"name":"Seed Dispersal","description":"Movement of plant seeds by desert animals, aiding plant reproduction and distribution.","type":"mutualism","participants":["mesquite","coyote"],"strength":"facultative"}},{"id":"yucca_moth","type":"animal","attributes":{"name":"Yucca Moth","scientificName":"Tegeticula yuccasella","lifespan":0.5,"diet":"herbivore","status":"least concern","description":"Small moth with specialized relationship with Joshua trees and other yuccas.","adaptations":["Specialized mouthparts for collecting pollen","Ovipositor for laying eggs in yucca flowers","Lifecycle synchronized with yucca flowering","Larvae feed only on some yucca seeds, preserving others"]}},{"id":"coyote","type":"animal","attributes":{"name":"Coyote","scientificName":"Canis latrans","lifespan":14,"diet":"omnivore","status":"least concern","description":"Adaptable canid found throughout North American deserts and beyond.","adaptations":["Can survive on minimal water obtained from prey","Opportunistic feeding habits","Highly adaptable to different habitats","Active during cooler parts of day","Efficient predator of small desert mammals"]}}],
-            relationships: [{"source":"camel","target":"heat","type":"adapted_to","attributes":{"adaptationMechanism":"Physiological temperature regulation","strength":"extreme"}},{"source":"fennec_fox","target":"heat","type":"adapted_to","attributes":{"adaptationMechanism":"Large ears for heat dissipation","strength":"strong"}},{"source":"desert_monitor","target":"scorpion","type":"preys_on","attributes":{"frequency":"occasional","method":"hunting"}},{"source":"sidewinder","target":"sand_dunes","type":"adapted_to","attributes":{"adaptationMechanism":"Specialized locomotion","strength":"extreme"}},{"source":"sidewinder","target":"dune_field","type":"lives_in","attributes":{"frequency":"permanent","dependency":"high"}},{"source":"sidewinder","target":"kangaroo_rat","type":"preys_on","attributes":{"frequency":"common","method":"ambush"}},{"source":"scorpion","target":"rocky_slope","type":"lives_in","attributes":{"frequency":"permanent","dependency":"medium"}},{"source":"darkling_beetle","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Water harvesting from air","strength":"extreme"}},{"source":"roadrunner","target":"scorpion","type":"preys_on","attributes":{"frequency":"common","method":"hunting"}},{"source":"roadrunner","target":"sidewinder","type":"preys_on","attributes":{"frequency":"occasional","method":"hunting"}},{"source":"desert_tortoise","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Water storage in bladder","strength":"extreme"}},{"source":"desert_tortoise","target":"rocky_slope","type":"lives_in","attributes":{"frequency":"seasonal","dependency":"medium"}},{"source":"desert_tortoise","target":"desert_poppy","type":"consumes","attributes":{"frequency":"seasonal","method":"grazing"}},{"source":"cactus_wren","target":"heat","type":"adapted_to","attributes":{"adaptationMechanism":"Behavioral thermoregulation","strength":"strong"}},{"source":"cactus_wren","target":"wash","type":"lives_in","attributes":{"frequency":"permanent","dependency":"medium"}},{"source":"kangaroo_rat","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Metabolic water production","strength":"extreme"}},{"source":"kangaroo_rat","target":"dune_field","type":"lives_in","attributes":{"frequency":"permanent","dependency":"high"}},{"source":"kangaroo_rat","target":"mesquite","type":"consumes","attributes":{"frequency":"common","method":"seed collection"}},{"source":"gila_monster","target":"heat","type":"adapted_to","attributes":{"adaptationMechanism":"Fat storage and seasonal activity","strength":"strong"}},{"source":"gila_monster","target":"rocky_slope","type":"lives_in","attributes":{"frequency":"permanent","dependency":"high"}},{"source":"gila_monster","target":"cactus_wren","type":"preys_on","attributes":{"frequency":"occasional","method":"raiding nests"}},{"source":"javelina","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Consumption of water-rich cacti","strength":"moderate"}},{"source":"javelina","target":"canyon","type":"lives_in","attributes":{"frequency":"permanent","dependency":"medium"}},{"source":"javelina","target":"prickly_pear","type":"consumes","attributes":{"frequency":"common","method":"grazing"}},{"source":"saguaro","target":"heat","type":"adapted_to","attributes":{"adaptationMechanism":"Pleated structure for expansion","strength":"extreme"}},{"source":"saguaro","target":"rocky_slope","type":"grows_in","attributes":{"frequency":"permanent","dependency":"medium"}},{"source":"barrel_cactus","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Water storage tissue","strength":"extreme"}},{"source":"mesquite","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Deep root system","strength":"extreme"}},{"source":"mesquite","target":"wash","type":"grows_in","attributes":{"frequency":"permanent","dependency":"high"}},{"source":"mesquite","target":"desert_poppy","type":"facilitates","attributes":{"relationship":"improves soil conditions","strength":"moderate"}},{"source":"creosote_bush","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Resinous coating on leaves","strength":"extreme"}},{"source":"creosote_bush","target":"other_plants","type":"inhibits","attributes":{"relationship":"allelopathy","strength":"strong","description":"Creosote bushes release toxins that inhibit growth of other plants nearby"}},{"source":"ocotillo","target":"temperature_variation","type":"adapted_to","attributes":{"adaptationMechanism":"Rapid leaf production after rain","strength":"extreme"}},{"source":"brittlebush","target":"heat","type":"adapted_to","attributes":{"adaptationMechanism":"Reflective leaf surfaces","strength":"strong"}},{"source":"brittlebush","target":"rocky_slope","type":"grows_in","attributes":{"frequency":"permanent","dependency":"medium"}},{"source":"desert_ironwood","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Dense wood tissue","strength":"extreme"}},{"source":"desert_ironwood","target":"wash","type":"grows_in","attributes":{"frequency":"permanent","dependency":"medium"}},{"source":"desert_ironwood","target":"saguaro","type":"nurses","attributes":{"relationship":"provides shade and protection","strength":"strong"}},{"source":"agave","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"CAM photosynthesis","strength":"extreme"}},{"source":"joshua_tree","target":"sandy_soil","type":"grows_in","attributes":{"frequency":"permanent","dependency":"high"}},{"source":"joshua_tree","target":"yucca_moth","type":"mutual_dependency","attributes":{"relationship":"obligate reproductive site","strength":"extreme"}},{"source":"yucca_moth","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Short lifecycle synchronized with yucca flowering","strength":"extreme"}},{"source":"yucca_moth","target":"joshua_tree","type":"mutual_dependency","attributes":{"relationship":"obligate reproductive site","strength":"extreme"}},{"source":"coyote","target":"aridity","type":"adapted_to","attributes":{"adaptationMechanism":"Obtaining moisture from prey","strength":"strong"}},{"source":"coyote","target":"canyon","type":"lives_in","attributes":{"frequency":"permanent","dependency":"low"}},{"source":"coyote","target":"kangaroo_rat","type":"preys_on","attributes":{"frequency":"common","method":"hunting"}},{"source":"coyote","target":"desert_tortoise","type":"preys_on","attributes":{"frequency":"rare","method":"opportunistic"}}]
+          nodes: [{"id":"camel","name":"Dromedary Camel","type":"animal"},{"id":"fennec_fox","name":"Fennec Fox","type":"animal"},{"id":"desert_monitor","name":"Desert Monitor","type":"animal"},{"id":"sidewinder","name":"Sidewinder Rattlesnake","type":"animal"},{"id":"scorpion","name":"Deathstalker Scorpion","type":"animal"},{"id":"darkling_beetle","name":"Darkling Beetle","type":"animal"},{"id":"roadrunner","name":"Greater Roadrunner","type":"animal"},{"id":"desert_tortoise","name":"Desert Tortoise","type":"animal"},{"id":"cactus_wren","name":"Cactus Wren","type":"animal"},{"id":"kangaroo_rat","name":"Merriam's Kangaroo Rat","type":"animal"},{"id":"gila_monster","name":"Gila Monster","type":"animal"},{"id":"javelina","name":"Javelina","type":"animal"},{"id":"saguaro","name":"Saguaro Cactus","type":"plant"},{"id":"barrel_cactus","name":"Barrel Cactus","type":"plant"},{"id":"mesquite","name":"Honey Mesquite","type":"plant"},{"id":"creosote_bush","name":"Creosote Bush","type":"plant"},{"id":"desert_poppy","name":"Desert Poppy","type":"plant"},{"id":"ocotillo","name":"Ocotillo","type":"plant"},{"id":"brittlebush","name":"Brittlebush","type":"plant"},{"id":"desert_ironwood","name":"Desert Ironwood","type":"plant"},{"id":"agave","name":"Century Plant","type":"plant"},{"id":"joshua_tree","name":"Joshua Tree","type":"plant"},{"id":"prickly_pear","name":"Prickly Pear Cactus","type":"plant"},{"id":"cholla_cactus","name":"Cholla Cactus","type":"plant"},{"id":"other_plants","name":"Various Desert Plants","type":"plant"},{"id":"heat","name":"Extreme Heat","type":"abiotic_factor"},{"id":"temperature_variation","name":"Temperature Variation","type":"abiotic_factor"},{"id":"aridity","name":"Aridity","type":"abiotic_factor"},{"id":"sand_dunes","name":"Sand Dunes","type":"abiotic_factor"},{"id":"rocky_outcrops","name":"Rocky Outcrops","type":"abiotic_factor"},{"id":"oasis","name":"Oasis","type":"abiotic_factor"},{"id":"ephemeral_streams","name":"Ephemeral Streams","type":"abiotic_factor"},{"id":"sandy_soil","name":"Sandy Soil","type":"abiotic_factor"},{"id":"desert_pavement","name":"Desert Pavement","type":"abiotic_factor"},{"id":"desert_varnish","name":"Desert Varnish","type":"abiotic_factor"},{"id":"playa","name":"Playa","type":"abiotic_factor"},{"id":"flash_floods","name":"Flash Floods","type":"abiotic_factor"},{"id":"wash","name":"Desert Wash","type":"microhabitat"},{"id":"dune_field","name":"Sand Dune Field","type":"microhabitat"},{"id":"rocky_slope","name":"Rocky Slope","type":"microhabitat"},{"id":"canyon","name":"Desert Canyon","type":"microhabitat"},{"id":"pollination_yucca","name":"Yucca-Moth Pollination","type":"interaction"},{"id":"nurse_plant","name":"Nurse Plant Relationship","type":"interaction"},{"id":"seed_dispersal","name":"Seed Dispersal","type":"interaction"},{"id":"yucca_moth","name":"Yucca Moth","type":"animal"},{"id":"coyote","name":"Coyote","type":"animal"}],
+          links: [{"source":"camel","target":"heat","type":"adapted_to"},{"source":"fennec_fox","target":"heat","type":"adapted_to"},{"source":"darkling_beetle","target":"aridity","type":"adapted_to"},{"source":"sidewinder","target":"sand_dunes","type":"adapted_to"},{"source":"desert_tortoise","target":"aridity","type":"adapted_to"},{"source":"kangaroo_rat","target":"aridity","type":"adapted_to"},{"source":"gila_monster","target":"heat","type":"adapted_to"},{"source":"cactus_wren","target":"heat","type":"adapted_to"},{"source":"javelina","target":"aridity","type":"adapted_to"},{"source":"yucca_moth","target":"aridity","type":"adapted_to"},{"source":"coyote","target":"aridity","type":"adapted_to"},{"source":"saguaro","target":"heat","type":"adapted_to"},{"source":"barrel_cactus","target":"aridity","type":"adapted_to"},{"source":"mesquite","target":"aridity","type":"adapted_to"},{"source":"creosote_bush","target":"aridity","type":"adapted_to"},{"source":"ocotillo","target":"temperature_variation","type":"adapted_to"},{"source":"brittlebush","target":"heat","type":"adapted_to"},{"source":"desert_ironwood","target":"aridity","type":"adapted_to"},{"source":"agave","target":"aridity","type":"adapted_to"},{"source":"joshua_tree","target":"sandy_soil","type":"grows_in"},{"source":"sidewinder","target":"dune_field","type":"lives_in"},{"source":"desert_tortoise","target":"rocky_slope","type":"lives_in"},{"source":"cactus_wren","target":"wash","type":"lives_in"},{"source":"gila_monster","target":"rocky_slope","type":"lives_in"},{"source":"javelina","target":"canyon","type":"lives_in"},{"source":"kangaroo_rat","target":"dune_field","type":"lives_in"},{"source":"scorpion","target":"rocky_slope","type":"lives_in"},{"source":"coyote","target":"canyon","type":"lives_in"},{"source":"saguaro","target":"rocky_slope","type":"grows_in"},{"source":"mesquite","target":"wash","type":"grows_in"},{"source":"desert_ironwood","target":"wash","type":"grows_in"},{"source":"brittlebush","target":"rocky_slope","type":"grows_in"},{"source":"coyote","target":"kangaroo_rat","type":"preys_on"},{"source":"coyote","target":"desert_tortoise","type":"preys_on"},{"source":"sidewinder","target":"kangaroo_rat","type":"preys_on"},{"source":"desert_monitor","target":"scorpion","type":"preys_on"},{"source":"gila_monster","target":"cactus_wren","type":"preys_on"},{"source":"roadrunner","target":"scorpion","type":"preys_on"},{"source":"roadrunner","target":"sidewinder","type":"preys_on"},{"source":"javelina","target":"prickly_pear","type":"consumes"},{"source":"desert_tortoise","target":"desert_poppy","type":"consumes"},{"source":"kangaroo_rat","target":"mesquite","type":"consumes"},{"source":"desert_ironwood","target":"saguaro","type":"nurses"},{"source":"mesquite","target":"desert_poppy","type":"facilitates"},{"source":"creosote_bush","target":"other_plants","type":"inhibits"},{"source":"joshua_tree","target":"yucca_moth","type":"mutual_dependency"},{"source":"yucca_moth","target":"joshua_tree","type":"mutual_dependency"}]
         };
-        
-        // Color scale for different node types
-        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-        
-        // Set up the SVG
-        const margin = { top: 20, right: 20, bottom: 20, left: 20 };
-        const width = 800 - margin.left - margin.right;
-        const height = 600 - margin.top - margin.bottom;
-        
+
+        const width = document.getElementById('graph').clientWidth;
+        const height = 600;
+
+        const simulation = d3.forceSimulation(data.nodes)
+          .force('link', d3.forceLink(data.links).id(d => d.id))
+          .force('charge', d3.forceManyBody().strength(-100))
+          .force('center', d3.forceCenter(width / 2, height / 2));
+
         const svg = d3.select('#graph')
-            .append('svg')
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('viewBox', [0, 0, width, height])
-            .attr('preserveAspectRatio', 'xMidYMid meet')
-            .append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-            
-        // Add zoom behavior
-        const zoom = d3.zoom()
-            .scaleExtent([0.1, 4])
-            .on('zoom', (event) => {
-                container.attr('transform', event.transform);
-            });
-            
-        svg.call(zoom);
-        
-        // Create container for the graph
-        const container = svg.append('g');
-        
-        // Create arrow marker for directed edges
-        svg.append('defs').append('marker')
-            .attr('id', 'arrowhead')
-            .attr('viewBox', '-5 -5 10 10')
-            .attr('refX', 15)
-            .attr('refY', 0)
-            .attr('markerWidth', 6)
-            .attr('markerHeight', 6)
-            .attr('orient', 'auto')
-            .append('path')
-            .attr('d', 'M -5,-5 L 5,0 L -5,5')
-            .attr('fill', '#999');
-            
-        // Create the links
-        const links = container.append('g')
-            .selectAll('line')
-            .data(data.relationships)
-            .enter()
-            .append('line')
-            .attr('stroke', '#999')
-            .attr('stroke-width', 1)
-            .attr('marker-end', 'url(#arrowhead)')
-            .attr('stroke-opacity', 0.6);
-            
-        // Create the nodes
-        const nodes = container.append('g')
-            .selectAll('g')
-            .data(data.entities)
-            .enter()
-            .append('g')
-            .attr('class', 'node')
-            .call(d3.drag()
-                .on('start', dragstarted)
-                .on('drag', dragged)
-                .on('end', dragended));
-                
-        // Add circles for nodes
-        nodes.append('circle')
-            .attr('r', 8)
-            .attr('fill', d => colorScale(d.type))
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 2);
-            
-        // Add labels to nodes
-        nodes.append('text')
-            .attr('dx', 12)
-            .attr('dy', '.35em')
-            .text(d => d.attributes.name || d.attributes.title || d.id)
-            .attr('font-size', '12px')
-            .attr('fill', '#333');
-            
-        // Set up the simulation
-        const simulation = d3.forceSimulation()
-            .force('link', d3.forceLink().id(d => d.id).distance(100))
-            .force('charge', d3.forceManyBody().strength(-200))
-            .force('center', d3.forceCenter(width / 2, height / 2))
-            .force('collision', d3.forceCollide().radius(30));
-            
-        // Update the simulation
-        simulation
-            .nodes(data.entities)
-            .on('tick', ticked);
-            
-        simulation.force('link')
-            .links(data.relationships);
-            
-        // Create the legend
-        const types = [...new Set(data.entities.map(d => d.type))];
-        const legend = d3.select('.legend')
-            .append('div')
-            .attr('class', 'legend-items');
-            
-        legend.selectAll('.legend-item')
-            .data(types)
-            .enter()
-            .append('div')
-            .attr('class', 'legend-item')
-            .html(d => '<span class="legend-color" style="background-color: ' + colorScale(d) + '"></span><span class="legend-label">' + d + '</span>');
-            
-        // Populate type filter
-        const typeFilter = document.getElementById('typeFilter');
-        types.forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type;
-            typeFilter.appendChild(option);
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height);
+
+        const link = svg.append('g')
+          .selectAll('line')
+          .data(data.links)
+          .join('line')
+          .attr('stroke', 'var(--border)')
+          .attr('stroke-width', 1);
+
+        const node = svg.append('g')
+          .selectAll('circle')
+          .data(data.nodes)
+          .join('circle')
+          .attr('r', 5)
+          .attr('fill', 'var(--link)')
+          .call(drag(simulation));
+
+        node.append('title')
+          .text(d => d.name);
+
+        simulation.on('tick', () => {
+          link
+            .attr('x1', d => d.source.x)
+            .attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x)
+            .attr('y2', d => d.target.y);
+
+          node
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y);
         });
-        
-        // Add event listeners
-        typeFilter.addEventListener('change', filterNodes);
-        document.getElementById('searchInput').addEventListener('input', filterNodes);
-        const clearFiltersBtn = document.getElementById('clear-filters');
-        clearFiltersBtn.addEventListener('click', clearFilters);
-        
-        // Get all type filter checkboxes
-        const typeFilters = document.querySelector('.filters');
-        Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
-            input.checked = true;
-        });
-        
-        // Zoom controls
-        const zoomInBtn = document.getElementById('zoom-in');
-        const zoomOutBtn = document.getElementById('zoom-out');
-        const zoomResetBtn = document.getElementById('zoom-reset');
-        
-        zoomInBtn.addEventListener('click', () => {
-            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
-        });
-        
-        zoomOutBtn.addEventListener('click', () => {
-            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
-        });
-        
-        zoomResetBtn.addEventListener('click', () => {
-            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
-        });
-        
-        // Interactive entity selection
-        window.selectEntityById = (id) => {
-            const selectedNode = data.entities.find(d => d.id === id);
-            if (selectedNode) {
-                // Highlight the node
-                highlightNode(selectedNode);
-                
-                // Center the view on the node
-                const scale = 1.5;
-                const x = width / 2 - scale * selectedNode.x;
-                const y = height / 2 - scale * selectedNode.y;
-                svg.transition().duration(500)
-                   .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
-                
-                // Show node details
-                showNodeDetails(selectedNode);
-            }
-        };
-        
-        // Node click handler
-        nodes.on('click', (event, d) => {
-            showNodeDetails(d);
-            // Navigate to entity page
-            window.location.href = d.id + '.html';
-        });
-        
-        // Example of interactive relationship navigation
-        // href="javascript:void(0)" onclick="selectEntityById
-        
-        // Hover effects
-        nodes
-            .on('mouseover', highlightConnections)
-            .on('mouseout', resetHighlight);
-            
-        // Functions
-        function ticked() {
-            links
-                .attr('x1', d => d.source.x)
-                .attr('y1', d => d.source.y)
-                .attr('x2', d => d.target.x)
-                .attr('y2', d => d.target.y);
-                
-            nodes.attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
-        }
-        
-        function dragstarted(event) {
+
+        function drag(simulation) {
+          function dragstarted(event) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
             event.subject.fx = event.subject.x;
             event.subject.fy = event.subject.y;
-        }
-        
-        function dragged(event) {
+          }
+          
+          function dragged(event) {
             event.subject.fx = event.x;
             event.subject.fy = event.y;
-        }
-        
-        function dragended(event) {
+          }
+          
+          function dragended(event) {
             if (!event.active) simulation.alphaTarget(0);
             event.subject.fx = null;
             event.subject.fy = null;
+          }
+          
+          return d3.drag()
+            .on('start', dragstarted)
+            .on('drag', dragged)
+            .on('end', dragended);
         }
+
         
-        function showNodeDetails(node) {
-            const details = document.getElementById('nodeDetails');
-            let html = '<h3>' + (node.attributes.name || node.attributes.title || node.id) + '</h3>' +
-                      '<p><strong>Type:</strong> ' + node.type + '</p>';
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const entityList = document.getElementById('entity-list');
+        const entityItems = entityList.querySelectorAll('.entity-item');
+
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          
+          entityItems.forEach(item => {
+            const id = item.getAttribute('data-id').toLowerCase();
+            const type = item.getAttribute('data-type').toLowerCase();
+            const text = item.textContent.toLowerCase();
             
-            for (const [key, value] of Object.entries(node.attributes)) {
-                if (key !== 'name' && key !== 'title' && typeof value !== 'object') {
-                    html += '<p><strong>' + key + ':</strong> ' + value + '</p>';
-                }
+            if (id.includes(searchTerm) || type.includes(searchTerm) || text.includes(searchTerm)) {
+              item.style.display = '';
+            } else {
+              item.style.display = 'none';
             }
-            
-            details.innerHTML = html;
-        }
+          });
+        });
         
-        function highlightConnections(event, d) {
-            // Reduce opacity of all elements
-            nodes.style('opacity', 0.2);
-            links.style('opacity', 0.1);
-            
-            // Highlight connected nodes and links
-            const connectedNodes = new Set();
-            links.each(l => {
-                if (l.source === d || l.target === d) {
-                    connectedNodes.add(l.source.id);
-                    connectedNodes.add(l.target.id);
-                }
-            });
-            
-            nodes.filter(n => connectedNodes.has(n.id))
-                .style('opacity', 1);
-                
-            links.filter(l => l.source === d || l.target === d)
-                .style('opacity', 1)
-                .style('stroke-width', 2);
-                
-            // Show the current node
-            d3.select(event.currentTarget).style('opacity', 1);
-        }
-        
-        function highlightNode(node) {
-            // Reset all nodes and links
-            resetHighlight();
-            
-            // Find the DOM element for this node
-            const nodeElement = nodes.filter(d => d.id === node.id);
-            
-            // Highlight it
-            nodeElement.select('circle')
-                .attr('r', 12)
-                .attr('stroke', '#ff6600')
-                .attr('stroke-width', 3);
-        }
-        
-        function resetHighlight() {
-            nodes.style('opacity', 1);
-            links.style('opacity', 0.6)
-                .style('stroke-width', 1);
-                
-            nodes.select('circle')
-                .attr('r', 8)
-                .attr('stroke', '#fff')
-                .attr('stroke-width', 2);
-        }
-        
-        function filterNodes() {
-            const selectedType = typeFilter.value;
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            
-            nodes.style('display', d => {
-                const matchesType = selectedType === 'all' || d.type === selectedType;
-                const matchesSearch = !searchText || 
-                    d.id.toLowerCase().includes(searchText) || 
-                    (d.attributes.name && d.attributes.name.toLowerCase().includes(searchText)) ||
-                    (d.attributes.title && d.attributes.title.toLowerCase().includes(searchText));
-                return matchesType && matchesSearch ? null : 'none';
-            });
-            
-            links.style('display', d => {
-                const sourceVisible = selectedType === 'all' || d.source.type === selectedType;
-                const targetVisible = selectedType === 'all' || d.target.type === selectedType;
-                return sourceVisible && targetVisible ? null : 'none';
-            });
-        }
-        
-        function clearFilters() {
-            typeFilter.value = 'all';
-            document.getElementById('searchInput').value = '';
-            filterNodes();
-        }
-    </script>
+      </script>
+    </div>
+  </div>
 </body>
 </html>

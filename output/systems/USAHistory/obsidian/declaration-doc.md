@@ -1,6 +1,8 @@
 ---
 type: document
 id: declaration-doc
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Declaration of Independence
@@ -11,11 +13,11 @@ id: declaration-doc
 ## Attributes
 
 - **date**: 1776-07-04
-- **authors**: Thomas Jefferson,Continental Congress
+- **authors**: ["Thomas Jefferson","Continental Congress"]
 - **description**: Document declaring the thirteen American colonies as independent sovereign states
 - **significance**: Foundational document of the United States
-- **keywords**: independence,liberty,rights,revolution,Jefferson
-- **vector**: 0.45,0.3,0.35,0.15,0.25,-0.1
+- **keywords**: ["independence","liberty","rights","revolution","Jefferson"]
+- **vector**: [0.45,0.3,0.35,0.15,0.25,-0.1]
 
 ## Relationships
 

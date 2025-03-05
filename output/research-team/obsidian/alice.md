@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: alice
+created: 2025-03-05T00:12:43.695Z
+modified: 2025-03-05T00:12:43.695Z
 ---
 
 # Alice Chen
@@ -24,10 +26,6 @@ id: alice
 ### contributes_to
 
 - [[climate-impact|Climate Impact Assessment]] (startDate: 2022-10-01, role: Consultant)
-
-### reports_to
-
-- [[alice|Alice Chen]] (startDate: 2023-02-01)
 
 ## Backlinks
 

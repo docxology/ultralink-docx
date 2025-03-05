@@ -1,6 +1,8 @@
 ---
 type: person
 id: bob-smith
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
 # Bob Smith
@@ -10,8 +12,7 @@ id: bob-smith
 
 ## Attributes
 
-- **title**: Senior Researcher
-- **expertise**: Natural Language Processing,Deep Learning
+- **expertise**: ["Natural Language Processing","Deep Learning"]
 - **email**: bob.smith@research.org
 - **joinDate**: 2019-03-01
 - **status**: active
@@ -20,11 +21,11 @@ id: bob-smith
 
 ### leads
 
-- [[nlp-project|nlp-project]]
+- [[nlp-project|Natural Language Understanding]]
 
 ### contributes_to
 
-- [[federated-learning-project|federated-learning-project]]
+- [[federated-learning-project|Privacy-Preserving Federated Learning]]
 
 ### mentors
 
@@ -32,8 +33,8 @@ id: bob-smith
 
 ### authored
 
-- [[nlp-paper-2023|nlp-paper-2023]]
-- [[survey-paper-2023|survey-paper-2023]]
+- [[nlp-paper-2023|Context-Aware Language Understanding in Multi-Domain Settings]]
+- [[survey-paper-2023|A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques]]
 
 ### expertise_in
 

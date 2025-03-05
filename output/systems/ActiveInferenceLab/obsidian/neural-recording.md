@@ -1,6 +1,8 @@
 ---
 type: equipment
 id: neural-recording
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Neural Recording Setup
@@ -16,12 +18,6 @@ id: neural-recording
 - **cost**: 150000
 - **purchaseDate**: 2023-05-01
 - **maintenanceSchedule**: Weekly
-
-## Relationships
-
-### uses
-
-- [[neural-recording|Neural Recording Setup]] (frequency: Daily, priority: High)
 
 ## Backlinks
 

@@ -1,6 +1,8 @@
 ---
 type: knowledge-area
 id: machine-learning-theory
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
 # Machine Learning Theory
@@ -11,7 +13,7 @@ id: machine-learning-theory
 ## Attributes
 
 - **description**: Fundamental theoretical concepts in machine learning
-- **topics**: Statistical Learning,Optimization,Information Theory
+- **topics**: ["Statistical Learning","Optimization","Information Theory"]
 
 ## Relationships
 
@@ -23,24 +25,12 @@ id: machine-learning-theory
 - [[quantum-ml|Quantum Machine Learning]]
 - [[reinforcement-learning|Reinforcement Learning]]
 
-### expertise_in
-
-- [[machine-learning-theory|Machine Learning Theory]]
-- [[machine-learning-theory|Machine Learning Theory]]
-
-### applies
-
-- [[machine-learning-theory|Machine Learning Theory]]
-- [[machine-learning-theory|Machine Learning Theory]]
-- [[machine-learning-theory|Machine Learning Theory]]
-- [[machine-learning-theory|Machine Learning Theory]]
-
 ## Backlinks
 
 - [[carol-jones|Carol Jones]] (expertise_in)
 - [[david-patel|David Patel]] (expertise_in)
-- [[computer-vision-project|computer-vision-project]] (applies)
-- [[nlp-project|nlp-project]] (applies)
-- [[federated-learning-project|federated-learning-project]] (applies)
-- [[quantum-ml-project|quantum-ml-project]] (applies)
+- [[computer-vision-project|Advanced Computer Vision Systems]] (applies)
+- [[nlp-project|Natural Language Understanding]] (applies)
+- [[federated-learning-project|Privacy-Preserving Federated Learning]] (applies)
+- [[quantum-ml-project|Quantum Approaches to Machine Learning]] (applies)
 

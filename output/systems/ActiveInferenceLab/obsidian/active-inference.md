@@ -1,6 +1,8 @@
 ---
 type: concept
 id: active-inference
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Active Inference
@@ -12,7 +14,7 @@ id: active-inference
 
 - **field**: Computational Neuroscience
 - **description**: Framework for understanding perception and action based on free energy minimization
-- **keyPapers**: 10.1038/nn.2635,10.1016/j.tics.2009.04.005
+- **keyPapers**: ["10.1038/nn.2635","10.1016/j.tics.2009.04.005"]
 
 ## Relationships
 
@@ -20,16 +22,8 @@ id: active-inference
 
 - [[collective-behavior|Collective Behavior]] (relationship: Theoretical framework application, strength: Strong)
 
-### applies
-
-- [[active-inference|Active Inference]] (centrality: Core, innovation: Novel application to collective behavior)
-
-### discusses
-
-- [[active-inference|Active Inference]] (depth: comprehensive)
-
 ## Backlinks
 
 - [[active-inference-model|Active Inference Modeling of Collective Behavior]] (applies)
-- [[paper-2023a|paper-2023a]] (discusses)
+- [[paper-2023a|Active Inference Framework for Collective Behavior Analysis]] (discusses)
 

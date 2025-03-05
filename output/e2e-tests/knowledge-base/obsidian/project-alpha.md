@@ -1,6 +1,8 @@
 ---
 type: project
 id: project-alpha
+created: 2025-03-05T00:12:45.471Z
+modified: 2025-03-05T00:12:45.471Z
 ---
 
 # Project Alpha
@@ -22,5 +24,6 @@ id: project-alpha
 
 ## Backlinks
 
-- [[project-alpha|Project Alpha]] (uses, uses)
+- [[alice-smith|Alice Smith]] (manages)
+- [[bob-johnson|Bob Johnson]] (works_on)
 

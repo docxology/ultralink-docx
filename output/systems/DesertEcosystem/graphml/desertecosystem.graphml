@@ -6,12 +6,12 @@
   <key id="name" for="node" attr.name="name" attr.type="string"/>
   <key id="type" for="node" attr.name="type" attr.type="string"/>
   <key id="scientificName" for="node" attr.name="scientificName" attr.type="string"/>
-  <key id="lifespan" for="node" attr.name="lifespan" attr.type="int"/>
+  <key id="lifespan" for="node" attr.name="lifespan" attr.type="string"/>
   <key id="diet" for="node" attr.name="diet" attr.type="string"/>
   <key id="status" for="node" attr.name="status" attr.type="string"/>
   <key id="description" for="node" attr.name="description" attr.type="string"/>
   <key id="adaptations" for="node" attr.name="adaptations" attr.type="string"/>
-  <key id="height" for="node" attr.name="height" attr.type="int"/>
+  <key id="height" for="node" attr.name="height" attr.type="string"/>
   <key id="waterRequirement" for="node" attr.name="waterRequirement" attr.type="string"/>
   <key id="impact" for="node" attr.name="impact" attr.type="string"/>
   <key id="area" for="node" attr.name="area" attr.type="string"/>
@@ -26,7 +26,7 @@
   <key id="method" for="edge" attr.name="method" attr.type="string"/>
   <key id="relationship" for="edge" attr.name="relationship" attr.type="string"/>
   <key id="description" for="edge" attr.name="description" attr.type="string"/>
-  <graph id="G" edgedefault="directed">
+  <graph id="UltraLink_Graph" edgedefault="directed">
     <node id="camel">
       <data key="type">animal</data>
       <data key="name">Dromedary Camel</data>

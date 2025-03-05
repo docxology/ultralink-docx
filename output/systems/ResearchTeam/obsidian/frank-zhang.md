@@ -1,6 +1,8 @@
 ---
 type: person
 id: frank-zhang
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
 # Frank Zhang
@@ -10,8 +12,7 @@ id: frank-zhang
 
 ## Attributes
 
-- **title**: Visiting Researcher
-- **expertise**: Quantum Computing,Algorithm Design
+- **expertise**: ["Quantum Computing","Algorithm Design"]
 - **email**: frank.zhang@partner-university.edu
 - **joinDate**: 2023-01-10
 - **status**: active
@@ -21,12 +22,12 @@ id: frank-zhang
 
 ### leads
 
-- [[quantum-ml-project|quantum-ml-project]]
+- [[quantum-ml-project|Quantum Approaches to Machine Learning]]
 
 ### authored
 
-- [[federated-paper-2023|federated-paper-2023]]
-- [[quantum-paper-2023|quantum-paper-2023]]
+- [[federated-paper-2023|Communication-Efficient Federated Learning with Adaptive Compression]]
+- [[quantum-paper-2023|Quantum Circuit Learning for Computer Vision Tasks]]
 
 ### uses
 

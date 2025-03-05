@@ -1,6 +1,8 @@
 ---
 type: event
 id: moon-landing
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Moon Landing
@@ -14,8 +16,8 @@ id: moon-landing
 - **location**: Moon
 - **description**: NASA's Apollo 11 mission lands humans on the Moon
 - **significance**: Major achievement in space exploration and technology
-- **keywords**: space,NASA,Apollo,Armstrong,technology
-- **vector**: 0.25,0.45,0.05,0.38,0.15,0.42
+- **keywords**: ["space","NASA","Apollo","Armstrong","technology"]
+- **vector**: [0.25,0.45,0.05,0.38,0.15,0.42]
 
 ## Relationships
 

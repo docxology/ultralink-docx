@@ -1,6 +1,8 @@
 ---
 type: event
 id: womens-suffrage
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # 19th Amendment
@@ -14,8 +16,8 @@ id: womens-suffrage
 - **location**: United States
 - **description**: Constitutional amendment giving women the right to vote
 - **significance**: Major achievement for women's rights and democracy
-- **keywords**: women,voting,rights,suffrage,equality
-- **vector**: 0.46,0.32,0.33,0.14,0.26,-0.12
+- **keywords**: ["women","voting","rights","suffrage","equality"]
+- **vector**: [0.46,0.32,0.33,0.14,0.26,-0.12]
 
 ## Relationships
 

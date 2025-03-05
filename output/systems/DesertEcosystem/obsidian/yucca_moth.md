@@ -1,6 +1,8 @@
 ---
 type: animal
 id: yucca_moth
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Yucca Moth
@@ -15,7 +17,7 @@ id: yucca_moth
 - **diet**: herbivore
 - **status**: least concern
 - **description**: Small moth with specialized relationship with Joshua trees and other yuccas.
-- **adaptations**: Specialized mouthparts for collecting pollen,Ovipositor for laying eggs in yucca flowers,Lifecycle synchronized with yucca flowering,Larvae feed only on some yucca seeds, preserving others
+- **adaptations**: ["Specialized mouthparts for collecting pollen","Ovipositor for laying eggs in yucca flowers","Lifecycle synchronized with yucca flowering","Larvae feed only on some yucca seeds, preserving others"]
 
 ## Relationships
 
@@ -26,7 +28,6 @@ id: yucca_moth
 ### mutual_dependency
 
 - [[joshua_tree|Joshua Tree]] (relationship: obligate reproductive site, strength: extreme)
-- [[yucca_moth|Yucca Moth]] (relationship: obligate reproductive site, strength: extreme)
 
 ## Backlinks
 

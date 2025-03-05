@@ -1,6 +1,8 @@
 ---
 type: semantic_cluster
 id: economic-development-cluster
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Economic Development
@@ -10,17 +12,9 @@ id: economic-development-cluster
 
 ## Attributes
 
-- **centerVector**: 0.3,0.25,0.35,0.25,0.3,0.25
+- **centerVector**: [0.3,0.25,0.35,0.25,0.3,0.25]
 - **vectorSpace**: ideological-space
 - **description**: Cluster representing economic development principles
-
-## Relationships
-
-### belongs_to_cluster
-
-- [[economic-development-cluster|Economic Development]]
-- [[economic-development-cluster|Economic Development]]
-- [[economic-development-cluster|Economic Development]]
 
 ## Backlinks
 

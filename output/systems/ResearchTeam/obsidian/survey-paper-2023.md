@@ -1,17 +1,18 @@
 ---
 type: publication
 id: survey-paper-2023
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
-# survey-paper-2023
+# A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques
 
 **Type**: publication
 **ID**: survey-paper-2023
 
 ## Attributes
 
-- **title**: A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques
-- **authors**: david-patel,bob-smith,alice-chen
+- **authors**: ["david-patel","bob-smith","alice-chen"]
 - **venue**: ACM Computing Surveys
 - **year**: 2023
 - **doi**: 10.1234/surveys2023
@@ -22,26 +23,15 @@ id: survey-paper-2023
 
 ### cites
 
-- [[federated-paper-2023|federated-paper-2023]]
-- [[vision-paper-2022|vision-paper-2022]]
-- [[nlp-paper-2023|nlp-paper-2023]]
-- [[survey-paper-2023|survey-paper-2023]]
-
-### authored
-
-- [[survey-paper-2023|survey-paper-2023]]
-- [[survey-paper-2023|survey-paper-2023]]
-- [[survey-paper-2023|survey-paper-2023]]
-
-### produced
-
-- [[survey-paper-2023|survey-paper-2023]]
+- [[federated-paper-2023|Communication-Efficient Federated Learning with Adaptive Compression]]
+- [[vision-paper-2022|Novel Approaches to Low-Light Computer Vision]]
+- [[nlp-paper-2023|Context-Aware Language Understanding in Multi-Domain Settings]]
 
 ## Backlinks
 
 - [[david-patel|David Patel]] (authored)
 - [[bob-smith|Bob Smith]] (authored)
 - [[alice-chen|Alice Chen]] (authored)
-- [[federated-learning-project|federated-learning-project]] (produced)
-- [[quantum-paper-2023|quantum-paper-2023]] (cites)
+- [[federated-learning-project|Privacy-Preserving Federated Learning]] (produced)
+- [[quantum-paper-2023|Quantum Circuit Learning for Computer Vision Tasks]] (cites)
 

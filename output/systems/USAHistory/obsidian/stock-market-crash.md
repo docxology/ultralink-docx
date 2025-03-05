@@ -1,6 +1,8 @@
 ---
 type: event
 id: stock-market-crash
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Stock Market Crash
@@ -14,8 +16,8 @@ id: stock-market-crash
 - **location**: New York, New York
 - **description**: Stock market crashes, triggering the Great Depression
 - **significance**: Led to the worst economic crisis in American history
-- **keywords**: depression,economy,crash,financial,poverty
-- **vector**: -0.32,-0.18,-0.38,-0.25,-0.28,-0.2
+- **keywords**: ["depression","economy","crash","financial","poverty"]
+- **vector**: [-0.32,-0.18,-0.38,-0.25,-0.28,-0.2]
 
 ## Relationships
 

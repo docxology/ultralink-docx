@@ -1,6 +1,8 @@
 ---
 type: funding
 id: university-fund
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
 # University Research Excellence Fund
@@ -21,5 +23,5 @@ id: university-fund
 
 ### funds
 
-- [[quantum-ml-project|quantum-ml-project]]
+- [[quantum-ml-project|Quantum Approaches to Machine Learning]]
 

@@ -1,6 +1,8 @@
 ---
 type: plant
 id: desert_poppy
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Desert Poppy
@@ -14,17 +16,7 @@ id: desert_poppy
 - **height**: 30
 - **waterRequirement**: low
 - **description**: Annual wildflower that blooms spectacularly after rains.
-- **adaptations**: Seeds can remain dormant for years until rainfall,Quick lifecycle to complete before drought returns,Deep taproots to access underground moisture,Waxy leaf coating to reduce evaporation
-
-## Relationships
-
-### consumes
-
-- [[desert_poppy|Desert Poppy]] (frequency: seasonal, method: grazing)
-
-### facilitates
-
-- [[desert_poppy|Desert Poppy]] (relationship: improves soil conditions, strength: moderate)
+- **adaptations**: ["Seeds can remain dormant for years until rainfall","Quick lifecycle to complete before drought returns","Deep taproots to access underground moisture","Waxy leaf coating to reduce evaporation"]
 
 ## Backlinks
 

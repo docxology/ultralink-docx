@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: modern-era
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Modern Era
@@ -13,13 +15,6 @@ id: modern-era
 - **startYear**: 1991
 - **endYear**: 2023
 - **description**: Post-Cold War period to present day
-
-## Relationships
-
-### occurred_during
-
-- [[modern-era|Modern Era]]
-- [[modern-era|Modern Era]]
 
 ## Backlinks
 

@@ -1,6 +1,8 @@
 ---
 type: animal
 id: cactus_wren
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Cactus Wren
@@ -15,7 +17,7 @@ id: cactus_wren
 - **diet**: insectivore
 - **status**: least concern
 - **description**: Desert bird that builds nests in cholla and other cacti for protection.
-- **adaptations**: Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water
+- **adaptations**: ["Obtains most water from food rather than drinking","Specialized nest-building in protective cacti","Heat-resistant metabolism","Efficient kidney function to conserve water"]
 
 ## Relationships
 
@@ -26,10 +28,6 @@ id: cactus_wren
 ### lives_in
 
 - [[wash|Desert Wash]] (frequency: permanent, dependency: medium)
-
-### preys_on
-
-- [[cactus_wren|Cactus Wren]] (frequency: occasional, method: raiding nests)
 
 ## Backlinks
 

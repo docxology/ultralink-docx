@@ -1,6 +1,8 @@
 ---
 type: equipment
 id: computation-cluster
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # High Performance Computing Cluster
@@ -16,12 +18,6 @@ id: computation-cluster
 - **cost**: 200000
 - **purchaseDate**: 2022-11-01
 - **maintenanceSchedule**: Monthly
-
-## Relationships
-
-### uses
-
-- [[computation-cluster|High Performance Computing Cluster]] (frequency: Continuous, priority: High)
 
 ## Backlinks
 

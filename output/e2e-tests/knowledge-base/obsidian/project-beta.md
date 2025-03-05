@@ -1,6 +1,8 @@
 ---
 type: project
 id: project-beta
+created: 2025-03-05T00:12:45.471Z
+modified: 2025-03-05T00:12:45.471Z
 ---
 
 # Project Beta
@@ -21,5 +23,6 @@ id: project-beta
 
 ## Backlinks
 
-- [[project-beta|Project Beta]] (uses)
+- [[alice-smith|Alice Smith]] (manages)
+- [[bob-johnson|Bob Johnson]] (works_on)
 

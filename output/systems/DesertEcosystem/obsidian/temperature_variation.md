@@ -1,6 +1,8 @@
 ---
 type: abiotic_factor
 id: temperature_variation
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Temperature Variation
@@ -13,12 +15,6 @@ id: temperature_variation
 - **type**: climate
 - **description**: Large daily temperature fluctuations, often exceeding 20°C between day and night.
 - **impact**: high
-
-## Relationships
-
-### adapted_to
-
-- [[temperature_variation|Temperature Variation]] (adaptationMechanism: Rapid leaf production after rain, strength: extreme)
 
 ## Backlinks
 

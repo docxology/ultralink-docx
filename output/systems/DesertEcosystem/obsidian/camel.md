@@ -1,6 +1,8 @@
 ---
 type: animal
 id: camel
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Dromedary Camel
@@ -15,7 +17,7 @@ id: camel
 - **diet**: herbivore
 - **status**: least concern
 - **description**: The dromedary camel is a large, single-humped ungulate adapted for desert conditions.
-- **adaptations**: Can go for long periods without water,Humps store fat for energy,Thick fur insulates against heat,Specialized eyelids and nostrils for sand protection,Can tolerate extreme temperatures
+- **adaptations**: ["Can go for long periods without water","Humps store fat for energy","Thick fur insulates against heat","Specialized eyelids and nostrils for sand protection","Can tolerate extreme temperatures"]
 
 ## Relationships
 

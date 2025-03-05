@@ -1,6 +1,8 @@
 ---
 type: historical_snapshot
 id: founding-era
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # founding-era

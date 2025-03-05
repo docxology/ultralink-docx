@@ -1,6 +1,8 @@
 ---
 type: animal
 id: kangaroo_rat
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Merriam's Kangaroo Rat
@@ -15,7 +17,7 @@ id: kangaroo_rat
 - **diet**: granivore
 - **status**: least concern
 - **description**: Small desert rodent with highly specialized adaptations for water conservation.
-- **adaptations**: Can survive without drinking water,Extracts water metabolically from dry seeds,Specialized kidneys concentrate urine,Nocturnal to avoid daytime heat,Burrows underground during day to avoid heat
+- **adaptations**: ["Can survive without drinking water","Extracts water metabolically from dry seeds","Specialized kidneys concentrate urine","Nocturnal to avoid daytime heat","Burrows underground during day to avoid heat"]
 
 ## Relationships
 
@@ -30,11 +32,6 @@ id: kangaroo_rat
 ### consumes
 
 - [[mesquite|Honey Mesquite]] (frequency: common, method: seed collection)
-
-### preys_on
-
-- [[kangaroo_rat|Merriam's Kangaroo Rat]] (frequency: common, method: ambush)
-- [[kangaroo_rat|Merriam's Kangaroo Rat]] (frequency: common, method: hunting)
 
 ## Backlinks
 

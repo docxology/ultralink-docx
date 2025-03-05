@@ -1,6 +1,8 @@
 ---
 type: semantic_cluster
 id: civil-rights-cluster
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Civil Rights Movement
@@ -10,18 +12,9 @@ id: civil-rights-cluster
 
 ## Attributes
 
-- **centerVector**: 0.45,0.4,0.3,0.2,0.35,0.15
+- **centerVector**: [0.45,0.4,0.3,0.2,0.35,0.15]
 - **vectorSpace**: ideological-space
 - **description**: Cluster representing civil rights movement principles
-
-## Relationships
-
-### belongs_to_cluster
-
-- [[civil-rights-cluster|Civil Rights Movement]]
-- [[civil-rights-cluster|Civil Rights Movement]]
-- [[civil-rights-cluster|Civil Rights Movement]]
-- [[civil-rights-cluster|Civil Rights Movement]]
 
 ## Backlinks
 

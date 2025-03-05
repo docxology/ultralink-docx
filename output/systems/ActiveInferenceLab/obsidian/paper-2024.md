@@ -1,17 +1,18 @@
 ---
 type: publication
 id: paper-2024
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
-# paper-2024
+# Computational Models of Active Inference in Social Insects
 
 **Type**: publication
 **ID**: paper-2024
 
 ## Attributes
 
-- **title**: Computational Models of Active Inference in Social Insects
-- **authors**: alice,bob,carol,david
+- **authors**: ["alice","bob","carol","david"]
 - **journal**: PLOS Computational Biology
 - **year**: 2024
 - **doi**: 10.1371/journal.pcbi.2024-0001
@@ -27,14 +28,6 @@ id: paper-2024
 ### discusses
 
 - [[swarm-intelligence|Swarm Intelligence]] (depth: comprehensive)
-
-### authored
-
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 25)
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 20)
 
 ## Backlinks
 

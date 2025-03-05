@@ -1,20 +1,20 @@
-id,type,name,role,department,email,publications,expertise,yearsExperience,status,startDate,endDate,funding,fundingSource,description,field,keyPapers,location,cost,purchaseDate,maintenanceSchedule,title,authors,journal,year,doi,citations
-alice,researcher,Dr. Alice Chen,Principal Investigator,Cognitive Science,alice.chen@example.edu,42,"active inference,computational neuroscience,bayesian modeling",15,,,,,,,,,,,,,,,,,,
-bob,researcher,Dr. Bob Smith,Senior Researcher,Biology,bob.smith@example.edu,28,"ant colony behavior,entomology,swarm intelligence",12,,,,,,,,,,,,,,,,,,
-carol,researcher,Dr. Carol Jimenez,Postdoctoral Researcher,Cognitive Science,carol.jimenez@example.edu,11,"active inference,machine learning,cognitive modeling",3,,,,,,,,,,,,,,,,,,
-david,researcher,David Wilson,PhD Student,Biology,david.wilson@example.edu,3,"ant colony optimization,collective behavior,stigmergy",3,,,,,,,,,,,,,,,,,,
-emma,researcher,Emma Taylor,PhD Student,Computer Science,emma.taylor@example.edu,4,"machine learning,reinforcement learning,neural networks",2,,,,,,,,,,,,,,,,,,
-frank,researcher,Dr. Frank Martinez,Research Associate,Mathematics,frank.martinez@example.edu,16,"dynamical systems,chaos theory,mathematical modeling",8,,,,,,,,,,,,,,,,,,
-grace,researcher,Grace Kim,Lab Technician,Biology,grace.kim@example.edu,0,"ant husbandry,experiment design,data collection",4,,,,,,,,,,,,,,,,,,
-active-inference-model,project,Active Inference Modeling of Collective Behavior,,,,,,,Active,2023-01-15,2025-01-14,750000,National Science Foundation,Developing computational models of collective behavior using the Active Inference framework,,,,,,,,,,,,
-ant-colony-study,project,Ant Colony Decision Making Study,,,,,,,Active,2023-06-01,2024-12-31,250000,University Grant,Field study of ant colony decision-making processes in natural environments,,,,,,,,,,,,
-neural-basis,project,Neural Basis of Active Inference,,,,,,,Planning,2024-01-01,2026-12-31,1200000,NIH,Investigation of neural mechanisms underlying active inference in biological systems,,,,,,,,,,,,
-active-inference,concept,Active Inference,,,,,,,,,,,,Framework for understanding perception and action based on free energy minimization,Computational Neuroscience,"10.1038/nn.2635,10.1016/j.tics.2009.04.005",,,,,,,,,,
-collective-behavior,concept,Collective Behavior,,,,,,,,,,,,Emergent properties and dynamics of group behavior in social organisms,Biology,10.1016/j.tree.2018.01.003,,,,,,,,,,
-swarm-intelligence,concept,Swarm Intelligence,,,,,,,,,,,,Collective problem-solving abilities emerging from local interactions,Computer Science,10.1007/s11721-007-0004-y,,,,,,,,,,
-ant-tracking,equipment,Ant Tracking System,,,,,,,Operational,,,,,,,,Main Lab,75000,2023-02-15,Monthly,,,,,,
-neural-recording,equipment,Neural Recording Setup,,,,,,,Operational,,,,,,,,Neuroscience Lab,150000,2023-05-01,Weekly,,,,,,
-computation-cluster,equipment,High Performance Computing Cluster,,,,,,,Operational,,,,,,,,Server Room,200000,2022-11-01,Monthly,,,,,,
-paper-2023a,publication,,,,,,,,,,,,,,,,,,,,Active Inference Framework for Collective Behavior Analysis,"alice,carol,david",Nature Computational Science,2023,10.1038/s41467-023-0001-1,15
-paper-2023b,publication,,,,,,,,,,,,,,,,,,,,Decision Making Patterns in Ant Colonies: A Field Study,"bob,emma,frank",Behavioral Ecology,2023,10.1093/beheco/2023-0002,8
-paper-2024,publication,,,,,,,,,,,,,,,,,,,,Computational Models of Active Inference in Social Insects,"alice,bob,carol,david",PLOS Computational Biology,2024,10.1371/journal.pcbi.2024-0001,3
+id,type,name,title,role,department,email,publications,expertise,yearsExperience,status,startDate,endDate,funding,fundingSource,description,field,keyPapers,type,location,cost,purchaseDate,maintenanceSchedule,authors,journal,year,doi,citations
+alice,researcher,Dr. Alice Chen,,Principal Investigator,Cognitive Science,alice.chen@example.edu,42,"active inference,computational neuroscience,bayesian modeling",15,,,,,,,,,,,,,,,,,,
+bob,researcher,Dr. Bob Smith,,Senior Researcher,Biology,bob.smith@example.edu,28,"ant colony behavior,entomology,swarm intelligence",12,,,,,,,,,,,,,,,,,,
+carol,researcher,Dr. Carol Jimenez,,Postdoctoral Researcher,Cognitive Science,carol.jimenez@example.edu,11,"active inference,machine learning,cognitive modeling",3,,,,,,,,,,,,,,,,,,
+david,researcher,David Wilson,,PhD Student,Biology,david.wilson@example.edu,3,"ant colony optimization,collective behavior,stigmergy",3,,,,,,,,,,,,,,,,,,
+emma,researcher,Emma Taylor,,PhD Student,Computer Science,emma.taylor@example.edu,4,"machine learning,reinforcement learning,neural networks",2,,,,,,,,,,,,,,,,,,
+frank,researcher,Dr. Frank Martinez,,Research Associate,Mathematics,frank.martinez@example.edu,16,"dynamical systems,chaos theory,mathematical modeling",8,,,,,,,,,,,,,,,,,,
+grace,researcher,Grace Kim,,Lab Technician,Biology,grace.kim@example.edu,,"ant husbandry,experiment design,data collection",4,,,,,,,,,,,,,,,,,,
+active-inference-model,project,Active Inference Modeling of Collective Behavior,,,,,,,,Active,2023-01-15,2025-01-14,750000,National Science Foundation,Developing computational models of collective behavior using the Active Inference framework,,,,,,,,,,,,
+ant-colony-study,project,Ant Colony Decision Making Study,,,,,,,,Active,2023-06-01,2024-12-31,250000,University Grant,Field study of ant colony decision-making processes in natural environments,,,,,,,,,,,,
+neural-basis,project,Neural Basis of Active Inference,,,,,,,,Planning,2024-01-01,2026-12-31,1200000,NIH,Investigation of neural mechanisms underlying active inference in biological systems,,,,,,,,,,,,
+active-inference,concept,Active Inference,,,,,,,,,,,,,Framework for understanding perception and action based on free energy minimization,Computational Neuroscience,"10.1038/nn.2635,10.1016/j.tics.2009.04.005",,,,,,,,,,
+collective-behavior,concept,Collective Behavior,,,,,,,,,,,,,Emergent properties and dynamics of group behavior in social organisms,Biology,10.1016/j.tree.2018.01.003,,,,,,,,,,
+swarm-intelligence,concept,Swarm Intelligence,,,,,,,,,,,,,Collective problem-solving abilities emerging from local interactions,Computer Science,10.1007/s11721-007-0004-y,,,,,,,,,,
+ant-tracking,equipment,Ant Tracking System,,,,,,,,Operational,,,,,,,,Imaging,Main Lab,75000,2023-02-15,Monthly,,,,,
+neural-recording,equipment,Neural Recording Setup,,,,,,,,Operational,,,,,,,,Electrophysiology,Neuroscience Lab,150000,2023-05-01,Weekly,,,,,
+computation-cluster,equipment,High Performance Computing Cluster,,,,,,,,Operational,,,,,,,,Computing,Server Room,200000,2022-11-01,Monthly,,,,,
+paper-2023a,publication,,Active Inference Framework for Collective Behavior Analysis,,,,,,,,,,,,,,,,,,,,"alice,carol,david",Nature Computational Science,2023,10.1038/s41467-023-0001-1,15
+paper-2023b,publication,,Decision Making Patterns in Ant Colonies: A Field Study,,,,,,,,,,,,,,,,,,,,"bob,emma,frank",Behavioral Ecology,2023,10.1093/beheco/2023-0002,8
+paper-2024,publication,,Computational Models of Active Inference in Social Insects,,,,,,,,,,,,,,,,,,,,"alice,bob,carol,david",PLOS Computational Biology,2024,10.1371/journal.pcbi.2024-0001,3

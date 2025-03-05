@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: early-republic
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Early Republic
@@ -13,13 +15,6 @@ id: early-republic
 - **startYear**: 1783
 - **endYear**: 1815
 - **description**: Formation and early development of the United States government
-
-## Relationships
-
-### occurred_during
-
-- [[early-republic|Early Republic]]
-- [[early-republic|Early Republic]]
 
 ## Backlinks
 

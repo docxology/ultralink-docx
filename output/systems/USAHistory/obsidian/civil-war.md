@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: civil-war
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Civil War
@@ -13,18 +15,6 @@ id: civil-war
 - **startYear**: 1861
 - **endYear**: 1865
 - **description**: War between the Union and Confederate states
-
-## Relationships
-
-### occurred_during
-
-- [[civil-war|Civil War]]
-- [[civil-war|Civil War]]
-- [[civil-war|Civil War]]
-
-### produced_during
-
-- [[civil-war|Civil War]]
 
 ## Backlinks
 

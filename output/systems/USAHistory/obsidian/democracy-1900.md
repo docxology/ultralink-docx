@@ -1,6 +1,8 @@
 ---
 type: temporal_snapshot
 id: democracy-1900
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # democracy-1900
@@ -15,12 +17,6 @@ id: democracy-1900
 - **popularity**: 0.7
 - **global_influence**: 0.5
 - **description**: Democracy during Progressive Era
-
-## Relationships
-
-### has_state_at
-
-- [[democracy-1900|democracy-1900]]
 
 ## Backlinks
 

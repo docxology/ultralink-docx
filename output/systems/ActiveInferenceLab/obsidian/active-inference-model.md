@@ -1,6 +1,8 @@
 ---
 type: project
 id: active-inference-model
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Active Inference Modeling of Collective Behavior
@@ -27,32 +29,12 @@ id: active-inference-model
 
 - [[computation-cluster|High Performance Computing Cluster]] (frequency: Continuous, priority: High)
 
-### leads
-
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Principal Investigator, timeCommitment: 0.4)
-
-### contributes_to
-
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Co-Investigator, startDate: 2022-03-15)
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Lead Researcher, startDate: 2022-09-01)
-
-### contributes
-
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Lead Developer, timeCommitment: 0.6)
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Data Analyst, timeCommitment: 0.8)
-
-### results_from
-
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (contribution: Primary theoretical framework)
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (contribution: Computational modeling results)
-
 ## Backlinks
 
 - [[alice|Dr. Alice Chen]] (leads)
-- [[carol|Dr. Carol Jimenez]] (contributes)
+- [[carol|Dr. Carol Jimenez]] (contributes, contributes_to)
 - [[david|David Wilson]] (contributes)
 - [[bob|Dr. Bob Smith]] (contributes_to)
-- [[carol|Dr. Carol Jimenez]] (contributes_to)
-- [[paper-2023a|paper-2023a]] (results_from)
-- [[paper-2024|paper-2024]] (results_from)
+- [[paper-2023a|Active Inference Framework for Collective Behavior Analysis]] (results_from)
+- [[paper-2024|Computational Models of Active Inference in Social Insects]] (results_from)
 

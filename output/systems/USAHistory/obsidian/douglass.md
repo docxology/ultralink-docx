@@ -1,6 +1,8 @@
 ---
 type: person
 id: douglass
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Frederick Douglass
@@ -14,8 +16,8 @@ id: douglass
 - **death**: 1895-02-20
 - **role**: Abolitionist, Writer
 - **significance**: Escaped slave who became leading abolitionist and advocate for equality
-- **keywords**: abolition,slavery,civil rights,orator,writer
-- **vector**: 0.44,0.36,0.34,0.25,0.3,0.12
+- **keywords**: ["abolition","slavery","civil rights","orator","writer"]
+- **vector**: [0.44,0.36,0.34,0.25,0.3,0.12]
 
 ## Relationships
 

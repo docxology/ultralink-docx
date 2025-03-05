@@ -1,29 +1,30 @@
 ---
 type: project
 id: federated-learning-project
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
-# federated-learning-project
+# Privacy-Preserving Federated Learning
 
 **Type**: project
 **ID**: federated-learning-project
 
 ## Attributes
 
-- **title**: Privacy-Preserving Federated Learning
 - **description**: Developing techniques for training models across distributed data sources while preserving privacy
 - **startDate**: 2022-03-01
 - **endDate**: 2025-02-28
 - **status**: active
 - **budget**: 650000
-- **objectives**: Reduce communication overhead in federated systems,Enhance privacy guarantees beyond differential privacy,Deploy to real-world healthcare applications
+- **objectives**: ["Reduce communication overhead in federated systems","Enhance privacy guarantees beyond differential privacy","Deploy to real-world healthcare applications"]
 
 ## Relationships
 
 ### produced
 
-- [[federated-paper-2023|federated-paper-2023]]
-- [[survey-paper-2023|survey-paper-2023]]
+- [[federated-paper-2023|Communication-Efficient Federated Learning with Adaptive Compression]]
+- [[survey-paper-2023|A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques]]
 
 ### uses
 
@@ -34,23 +35,6 @@ id: federated-learning-project
 
 - [[privacy-ml|Privacy-Preserving Machine Learning]]
 - [[machine-learning-theory|Machine Learning Theory]]
-
-### contributes_to
-
-- [[federated-learning-project|federated-learning-project]]
-- [[federated-learning-project|federated-learning-project]]
-
-### leads
-
-- [[federated-learning-project|federated-learning-project]]
-
-### administers
-
-- [[federated-learning-project|federated-learning-project]]
-
-### funds
-
-- [[federated-learning-project|federated-learning-project]]
 
 ## Backlinks
 

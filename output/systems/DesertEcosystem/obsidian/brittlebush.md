@@ -1,6 +1,8 @@
 ---
 type: plant
 id: brittlebush
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Brittlebush
@@ -14,7 +16,7 @@ id: brittlebush
 - **height**: 150
 - **waterRequirement**: very low
 - **description**: Common desert shrub with silvery leaves and yellow flowers.
-- **adaptations**: Resinous sap seals wounds to prevent water loss,Light-colored leaves reflect sunlight,Dense leaf hairs (trichomes) reduce water loss,Seasonal leaf drop during extreme drought,Quick response to rainfall with new growth
+- **adaptations**: ["Resinous sap seals wounds to prevent water loss","Light-colored leaves reflect sunlight","Dense leaf hairs (trichomes) reduce water loss","Seasonal leaf drop during extreme drought","Quick response to rainfall with new growth"]
 
 ## Relationships
 

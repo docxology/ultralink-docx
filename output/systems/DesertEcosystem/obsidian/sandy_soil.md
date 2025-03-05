@@ -1,6 +1,8 @@
 ---
 type: abiotic_factor
 id: sandy_soil
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Sandy Soil
@@ -13,12 +15,6 @@ id: sandy_soil
 - **type**: soil
 - **description**: Coarse-grained soil with poor water retention but good drainage.
 - **impact**: high
-
-## Relationships
-
-### grows_in
-
-- [[sandy_soil|Sandy Soil]] (frequency: permanent, dependency: high)
 
 ## Backlinks
 

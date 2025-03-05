@@ -1,5 +1,5 @@
-source,target,type,startDate,role
-alice,desert-ecology,leads,2023-01-15,Principal Investigator
-alice,climate-impact,contributes_to,2022-10-01,Consultant
-bob,desert-ecology,works_on,2023-02-01,Data Analyst
-bob,alice,reports_to,2023-02-01,
+source,target,type,weight,strength,startDate,role,created,modified
+alice,desert-ecology,leads,,,2023-01-15,Principal Investigator,2025-03-05T00:12:43.696Z,2025-03-05T00:12:43.696Z
+alice,climate-impact,contributes_to,,,2022-10-01,Consultant,2025-03-05T00:12:43.696Z,2025-03-05T00:12:43.696Z
+bob,desert-ecology,works_on,,,2023-02-01,Data Analyst,2025-03-05T00:12:43.696Z,2025-03-05T00:12:43.696Z
+bob,alice,reports_to,,,2023-02-01,,2025-03-05T00:12:43.696Z,2025-03-05T00:12:43.696Z

@@ -1,6 +1,8 @@
 ---
 type: abiotic_factor
 id: heat
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Extreme Heat
@@ -13,17 +15,6 @@ id: heat
 - **type**: climate
 - **description**: Daytime temperatures regularly exceeding 40°C (104°F) in summer.
 - **impact**: extreme
-
-## Relationships
-
-### adapted_to
-
-- [[heat|Extreme Heat]] (adaptationMechanism: Physiological temperature regulation, strength: extreme)
-- [[heat|Extreme Heat]] (adaptationMechanism: Large ears for heat dissipation, strength: strong)
-- [[heat|Extreme Heat]] (adaptationMechanism: Behavioral thermoregulation, strength: strong)
-- [[heat|Extreme Heat]] (adaptationMechanism: Fat storage and seasonal activity, strength: strong)
-- [[heat|Extreme Heat]] (adaptationMechanism: Pleated structure for expansion, strength: extreme)
-- [[heat|Extreme Heat]] (adaptationMechanism: Reflective leaf surfaces, strength: strong)
 
 ## Backlinks
 

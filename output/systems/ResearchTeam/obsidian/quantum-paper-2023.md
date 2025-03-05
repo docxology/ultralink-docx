@@ -1,17 +1,18 @@
 ---
 type: publication
 id: quantum-paper-2023
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
-# quantum-paper-2023
+# Quantum Circuit Learning for Computer Vision Tasks
 
 **Type**: publication
 **ID**: quantum-paper-2023
 
 ## Attributes
 
-- **title**: Quantum Circuit Learning for Computer Vision Tasks
-- **authors**: frank-zhang,david-patel
+- **authors**: ["frank-zhang","david-patel"]
 - **venue**: Quantum Machine Intelligence Journal
 - **year**: 2023
 - **doi**: 10.1234/qmi2023
@@ -22,20 +23,11 @@ id: quantum-paper-2023
 
 ### cites
 
-- [[survey-paper-2023|survey-paper-2023]]
-
-### authored
-
-- [[quantum-paper-2023|quantum-paper-2023]]
-- [[quantum-paper-2023|quantum-paper-2023]]
-
-### produced
-
-- [[quantum-paper-2023|quantum-paper-2023]]
+- [[survey-paper-2023|A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques]]
 
 ## Backlinks
 
 - [[frank-zhang|Frank Zhang]] (authored)
 - [[david-patel|David Patel]] (authored)
-- [[quantum-ml-project|quantum-ml-project]] (produced)
+- [[quantum-ml-project|Quantum Approaches to Machine Learning]] (produced)
 

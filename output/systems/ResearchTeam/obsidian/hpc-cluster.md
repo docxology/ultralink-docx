@@ -1,6 +1,8 @@
 ---
 type: equipment
 id: hpc-cluster
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
 # University High-Performance Computing Cluster
@@ -12,21 +14,13 @@ id: hpc-cluster
 
 - **description**: Shared computing facility for computation-intensive research
 - **location**: Data Center Building C
-- **specifications**: [object Object]
+- **specifications**: {"cores":4096,"memory":"16TB","storage":"1PB","interconnect":"InfiniBand"}
 - **status**: operational
 - **accessLevel**: shared
 
-## Relationships
-
-### uses
-
-- [[hpc-cluster|University High-Performance Computing Cluster]]
-- [[hpc-cluster|University High-Performance Computing Cluster]]
-- [[hpc-cluster|University High-Performance Computing Cluster]]
-
 ## Backlinks
 
-- [[federated-learning-project|federated-learning-project]] (uses)
-- [[quantum-ml-project|quantum-ml-project]] (uses)
+- [[federated-learning-project|Privacy-Preserving Federated Learning]] (uses)
+- [[quantum-ml-project|Quantum Approaches to Machine Learning]] (uses)
 - [[david-patel|David Patel]] (uses)
 

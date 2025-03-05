@@ -1,6 +1,8 @@
 ---
 type: abiotic_factor
 id: ephemeral_streams
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Ephemeral Streams

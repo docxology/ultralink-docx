@@ -1,6 +1,8 @@
 ---
 type: person
 id: jefferson
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Thomas Jefferson
@@ -14,8 +16,8 @@ id: jefferson
 - **death**: 1826-07-04
 - **role**: Statesman, 3rd President
 - **significance**: Authored Declaration of Independence, expanded US territory, founded University of Virginia
-- **keywords**: declaration,president,founding father,Monticello,Louisiana Purchase
-- **vector**: 0.38,0.35,0.32,0.3,0.25,0.18
+- **keywords**: ["declaration","president","founding father","Monticello","Louisiana Purchase"]
+- **vector**: [0.38,0.35,0.32,0.3,0.25,0.18]
 
 ## Relationships
 
@@ -34,10 +36,6 @@ id: jefferson
 ### belongs_to_cluster
 
 - [[founding-principles-cluster|Founding Principles]]
-
-### authored_by
-
-- [[jefferson|Thomas Jefferson]]
 
 ## Backlinks
 

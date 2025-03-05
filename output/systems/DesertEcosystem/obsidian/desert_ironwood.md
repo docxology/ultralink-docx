@@ -1,6 +1,8 @@
 ---
 type: plant
 id: desert_ironwood
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Desert Ironwood
@@ -14,7 +16,7 @@ id: desert_ironwood
 - **height**: 1000
 - **waterRequirement**: low
 - **description**: Long-lived desert tree with extremely dense wood, can live 800+ years.
-- **adaptations**: Nitrogen fixing capability improves soil,Extremely deep root system,Small, drought-deciduous leaves,Dense wood stores water,Provides "nurse plant" habitat for other species
+- **adaptations**: ["Nitrogen fixing capability improves soil","Extremely deep root system","Small, drought-deciduous leaves","Dense wood stores water","Provides \"nurse plant\" habitat for other species"]
 
 ## Relationships
 

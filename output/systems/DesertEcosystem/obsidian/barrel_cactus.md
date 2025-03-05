@@ -1,6 +1,8 @@
 ---
 type: plant
 id: barrel_cactus
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Barrel Cactus
@@ -14,7 +16,7 @@ id: barrel_cactus
 - **height**: 150
 - **waterRequirement**: very low
 - **description**: Cylindrical-shaped cactus known for tilting toward the sun.
-- **adaptations**: Ribbed structure allows expansion during water absorption,Thick waxy coating to reduce evaporation,Spines create microclimate of shade,Can survive extremely high temperatures
+- **adaptations**: ["Ribbed structure allows expansion during water absorption","Thick waxy coating to reduce evaporation","Spines create microclimate of shade","Can survive extremely high temperatures"]
 
 ## Relationships
 

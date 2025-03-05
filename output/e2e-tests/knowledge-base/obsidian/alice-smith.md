@@ -1,6 +1,8 @@
 ---
 type: person
 id: alice-smith
+created: 2025-03-05T00:12:45.471Z
+modified: 2025-03-05T00:12:45.471Z
 ---
 
 # Alice Smith
@@ -19,8 +21,4 @@ id: alice-smith
 
 - [[project-alpha|Project Alpha]]
 - [[project-beta|Project Beta]]
-
-## Backlinks
-
-- [[alice-smith|Alice Smith]] (manages, manages)
 

@@ -1,6 +1,8 @@
 ---
 type: plant
 id: saguaro
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Saguaro Cactus
@@ -14,7 +16,7 @@ id: saguaro
 - **height**: 1200
 - **waterRequirement**: very low
 - **description**: Iconic columnar cactus with arm-like branches.
-- **adaptations**: Accordion-like pleats expand when absorbing water,Extensive shallow root system,Thick waxy coating to reduce water loss,Slow growth to conserve energy,CAM photosynthesis for water conservation
+- **adaptations**: ["Accordion-like pleats expand when absorbing water","Extensive shallow root system","Thick waxy coating to reduce water loss","Slow growth to conserve energy","CAM photosynthesis for water conservation"]
 
 ## Relationships
 
@@ -25,10 +27,6 @@ id: saguaro
 ### grows_in
 
 - [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: medium)
-
-### nurses
-
-- [[saguaro|Saguaro Cactus]] (relationship: provides shade and protection, strength: strong)
 
 ## Backlinks
 

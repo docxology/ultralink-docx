@@ -1,17 +1,18 @@
 ---
 type: publication
 id: paper-2023a
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
-# paper-2023a
+# Active Inference Framework for Collective Behavior Analysis
 
 **Type**: publication
 **ID**: paper-2023a
 
 ## Attributes
 
-- **title**: Active Inference Framework for Collective Behavior Analysis
-- **authors**: alice,carol,david
+- **authors**: ["alice","carol","david"]
 - **journal**: Nature Computational Science
 - **year**: 2023
 - **doi**: 10.1038/s41467-023-0001-1
@@ -26,12 +27,6 @@ id: paper-2023a
 ### discusses
 
 - [[active-inference|Active Inference]] (depth: comprehensive)
-
-### authored
-
-- [[paper-2023a|paper-2023a]] (contributionType: corresponding author, contributionPercentage: 40)
-- [[paper-2023a|paper-2023a]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2023a|paper-2023a]] (contributionType: co-author, contributionPercentage: 30)
 
 ## Backlinks
 

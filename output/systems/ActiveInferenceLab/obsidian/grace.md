@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: grace
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Grace Kim
@@ -14,7 +16,7 @@ id: grace
 - **department**: Biology
 - **email**: grace.kim@example.edu
 - **publications**: 0
-- **expertise**: ant husbandry,experiment design,data collection
+- **expertise**: ["ant husbandry","experiment design","data collection"]
 - **yearsExperience**: 4
 
 ## Relationships
@@ -29,5 +31,5 @@ id: grace
 
 ### authored
 
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 20)
+- [[paper-2024|Computational Models of Active Inference in Social Insects]] (contributionType: co-author, contributionPercentage: 20)
 

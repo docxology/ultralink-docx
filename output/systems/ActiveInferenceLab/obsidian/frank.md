@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: frank
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Dr. Frank Martinez
@@ -14,7 +16,7 @@ id: frank
 - **department**: Mathematics
 - **email**: frank.martinez@example.edu
 - **publications**: 16
-- **expertise**: dynamical systems,chaos theory,mathematical modeling
+- **expertise**: ["dynamical systems","chaos theory","mathematical modeling"]
 - **yearsExperience**: 8
 
 ## Relationships
@@ -33,5 +35,5 @@ id: frank
 
 ### authored
 
-- [[paper-2023b|paper-2023b]] (contributionType: co-author, contributionPercentage: 20)
+- [[paper-2023b|Decision Making Patterns in Ant Colonies: A Field Study]] (contributionType: co-author, contributionPercentage: 20)
 

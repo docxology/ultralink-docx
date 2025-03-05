@@ -246,4 +246,4 @@ We have the following improvements planned for our documentation:
 2. Interactive examples embedded in the documentation
 3. Translation to additional languages
 4. Improved searchability and cross-referencing
-5. User-contributed cookbook recipes 
+5. User-contributed cookbook recipes ]

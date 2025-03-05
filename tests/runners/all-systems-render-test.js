@@ -237,7 +237,7 @@ async function renderSystem(systemName, system, logger) {
           
           // Generate visualizations
           const vizOutput = await system.toVisualization({
-            formats: ['png', 'svg', 'd3'],
+            formats: ['png', 'svg', 'd3', 'cytoscape'],
             options: {
               layout: 'force',
               width: 1200,
@@ -252,6 +252,9 @@ async function renderSystem(systemName, system, logger) {
             if (format === 'd3') {
               // Write D3 visualization as HTML
               await fs.writeFile(path.join(vizDir, `${systemName}-d3.html`), content);
+            } else if (format === 'cytoscape') {
+              // Write Cytoscape visualization as HTML
+              await fs.writeFile(path.join(vizDir, `${systemName}-cytoscape.html`), content);
             } else {
               // Write image files
               await fs.writeFile(path.join(vizDir, `${systemName}.${format}`), content);

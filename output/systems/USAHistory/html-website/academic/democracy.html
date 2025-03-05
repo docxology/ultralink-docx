@@ -1,230 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Democracy - USAHistory Knowledge Graph</title>
-    <meta name="description" content="Details about Democracy">
-    <link rel="stylesheet" href="styles/academic.css">
-    <style>
-    /* Academic Theme CSS */
-:root {
-  --bg-color: #f5f5f5;
-  --text-color: #333333;
-  --link-color: #990000;
-  --accent-color: #7b1fa2;
-  --border-color: #cccccc;
-  --node-hover: #ff6600;
-}
-
-body {
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  margin: 0;
-  padding: 0;
-}
-
-/* Layout */
-header {
-  padding: 1.5rem;
-  background-color: #7b1fa2;
-  color: white;
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-main {
-  display: flex;
-  height: calc(100vh - 180px);
-}
-
-#graph {
-  flex: 1;
-  background: rgba(249, 250, 251, 0.8);
-  border-right: 1px solid var(--border-color);
-}
-
-.details-panel {
-  width: 300px;
-  padding: 1rem;
-  overflow-y: auto;
-}
-
-/* Entity styles */
-.entity-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.entity-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-}
-
-.attribute-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.attribute-table th, .attribute-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.attribute-table tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.relationship-item {
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-}
-
-.relationship-attributes {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px dashed var(--border-color);
-  font-size: 0.9rem;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  main {
-    flex-direction: column;
-    height: auto;
-  }
-  
-  #graph {
-    height: 50vh;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .details-panel {
-    width: 100%;
-  }
-}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Democracy - USAHistory Knowledge Graph</title>
+  <style>
+    :root {
+      --background: #f5f5f5;
+      --text: #333333;
+      --link: #990000;
+      --accent: #666666;
+      --border: #cccccc;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--background);
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .attributes {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .attribute-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .attribute-row:last-child {
+      border-bottom: none;
+    }
+    .attribute-key {
+      color: var(--accent);
+    }
+    .relationship-list {
+      list-style: none;
+      padding: 0;
+    }
+    .relationship-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-attributes {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+  </style>
 </head>
-<body class="theme-academic">
-    <header>
-        <h1>Democracy</h1>
-        <p><a href="index.html">Back to Graph</a></p>
-    </header>
-    <main class="entity-page">
-        <div class="entity-details">
-            <h2>Details</h2>
-            <div class="entity-section">
-                <p><strong>ID:</strong> democracy</p>
-                <p><strong>Type:</strong> concept</p>
-            </div>
-            
-            <h3>Attributes</h3>
-            <div class="entity-section">
-                <table class="attribute-table">
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>name</td>
-                            <td>Democracy</td>
-                          </tr>
-<tr>
-                            <td>description</td>
-                            <td>System of government by the people, typically through elected representatives</td>
-                          </tr>
-<tr>
-                            <td>keywords</td>
-                            <td>["voting","representation","elections","governance","people"]</td>
-                          </tr>
-<tr>
-                            <td>vector</td>
-                            <td>[0.35,0.3,0.4,0.25,0.32,0.22]</td>
-                          </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <h3>Relationships</h3>
-            <div class="entity-section">
-                <ul class="relationships-list">
-                    <li class="relationship-item">
-                        <strong>has_state_at</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('democracy-1776')">democracy-1776</a>
-                        
-                      </li>
-<li class="relationship-item">
-                        <strong>has_state_at</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('democracy-1800')">democracy-1800</a>
-                        
-                      </li>
-<li class="relationship-item">
-                        <strong>has_state_at</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('democracy-1850')">democracy-1850</a>
-                        
-                      </li>
-<li class="relationship-item">
-                        <strong>has_state_at</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('democracy-1900')">democracy-1900</a>
-                        
-                      </li>
-<li class="relationship-item">
-                        <strong>has_state_at</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('democracy-1950')">democracy-1950</a>
-                        
-                      </li>
-<li class="relationship-item">
-                        <strong>has_state_at</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('democracy-2000')">democracy-2000</a>
-                        
-                      </li>
-<li class="relationship-item">
-                        <strong>has_state_at</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('democracy-2020')">democracy-2020</a>
-                        
-                      </li>
-<li class="relationship-item">
-                        <strong>belongs_to_cluster</strong> →
-                        <a href="javascript:void(0)" onclick="selectEntityById('founding-principles-cluster')">Founding Principles</a>
-                        
-                      </li>
-                    <li class="relationship-item">
-                        <a href="javascript:void(0)" onclick="selectEntityById('declaration-independence')">Declaration of Independence</a>
-                        → <strong>exemplifies</strong>
-                        
-                      </li>
-<li class="relationship-item">
-                        <a href="javascript:void(0)" onclick="selectEntityById('washington')">George Washington</a>
-                        → <strong>championed</strong>
-                        
-                      </li>
-<li class="relationship-item">
-                        <a href="javascript:void(0)" onclick="selectEntityById('jefferson')">Thomas Jefferson</a>
-                        → <strong>championed</strong>
-                        
-                      </li>
-                </ul>
-            </div>
-        </div>
-    </main>
-    <script>
-        // Function to navigate to entity page
-        window.selectEntityById = (id) => {
-            window.location.href = id + '.html';
-        };
-    </script>
+<body>
+  <a href="index.html" class="back-link">← Back to Graph</a>
+  <h1>Democracy</h1>
+  <div class="entity-type">concept</div>
+  
+  <h3>Attributes</h3>
+  <div class="attributes">
+    
+      <div class="attribute-row">
+        <div class="attribute-key">name</div>
+        <div class="attribute-value">Democracy</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">description</div>
+        <div class="attribute-value">System of government by the people, typically through elected representatives</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">keywords</div>
+        <div class="attribute-value">voting,representation,elections,governance,people</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">vector</div>
+        <div class="attribute-value">0.35,0.3,0.4,0.25,0.32,0.22</div>
+      </div>
+    
+  </div>
+
+  <h3>Relationships</h3>
+  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>has_state_at</strong> → <a href="democracy-1776.html">democracy-1776</a></li><li class="relationship-item">
+        <strong>has_state_at</strong> → <a href="democracy-1800.html">democracy-1800</a></li><li class="relationship-item">
+        <strong>has_state_at</strong> → <a href="democracy-1850.html">democracy-1850</a></li><li class="relationship-item">
+        <strong>has_state_at</strong> → <a href="democracy-1900.html">democracy-1900</a></li><li class="relationship-item">
+        <strong>has_state_at</strong> → <a href="democracy-1950.html">democracy-1950</a></li><li class="relationship-item">
+        <strong>has_state_at</strong> → <a href="democracy-2000.html">democracy-2000</a></li><li class="relationship-item">
+        <strong>has_state_at</strong> → <a href="democracy-2020.html">democracy-2020</a></li><li class="relationship-item">
+        <strong>belongs_to_cluster</strong> → <a href="founding-principles-cluster.html">Founding Principles</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="washington.html">George Washington</a> → <strong>championed</strong>
+      </li><li class="relationship-item">
+        <a href="jefferson.html">Thomas Jefferson</a> → <strong>championed</strong>
+      </li><li class="relationship-item">
+        <a href="declaration-independence.html">Declaration of Independence</a> → <strong>exemplifies</strong>
+      </li></ul>
 </body>
 </html>

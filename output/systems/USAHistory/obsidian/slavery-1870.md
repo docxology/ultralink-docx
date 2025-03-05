@@ -1,6 +1,8 @@
 ---
 type: temporal_snapshot
 id: slavery-1870
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # slavery-1870
@@ -15,12 +17,6 @@ id: slavery-1870
 - **acceptance**: 0.1
 - **economic_importance**: 0.1
 - **description**: Slavery after emancipation
-
-## Relationships
-
-### has_state_at
-
-- [[slavery-1870|slavery-1870]]
 
 ## Backlinks
 

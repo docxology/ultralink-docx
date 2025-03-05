@@ -1,6 +1,8 @@
 ---
 type: researcher
 id: bob
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
 # Dr. Bob Smith
@@ -14,7 +16,7 @@ id: bob
 - **department**: Biology
 - **email**: bob.smith@example.edu
 - **publications**: 28
-- **expertise**: ant colony behavior,entomology,swarm intelligence
+- **expertise**: ["ant colony behavior","entomology","swarm intelligence"]
 - **yearsExperience**: 12
 
 ## Relationships
@@ -33,14 +35,9 @@ id: bob
 
 ### authored
 
-- [[paper-2023a|paper-2023a]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2023b|paper-2023b]] (contributionType: corresponding author, contributionPercentage: 50)
-- [[paper-2024|paper-2024]] (contributionType: co-author, contributionPercentage: 30)
-
-### reports_to
-
-- [[bob|Dr. Bob Smith]] (startDate: 2021-09-01)
-- [[bob|Dr. Bob Smith]] (startDate: 2020-05-15)
+- [[paper-2023a|Active Inference Framework for Collective Behavior Analysis]] (contributionType: co-author, contributionPercentage: 30)
+- [[paper-2023b|Decision Making Patterns in Ant Colonies: A Field Study]] (contributionType: corresponding author, contributionPercentage: 50)
+- [[paper-2024|Computational Models of Active Inference in Social Insects]] (contributionType: co-author, contributionPercentage: 30)
 
 ## Backlinks
 

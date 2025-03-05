@@ -1,6 +1,8 @@
 ---
 type: person
 id: carol-jones
+created: 2025-03-05T00:12:44.685Z
+modified: 2025-03-05T00:12:44.685Z
 ---
 
 # Carol Jones
@@ -10,8 +12,7 @@ id: carol-jones
 
 ## Attributes
 
-- **title**: PhD Student
-- **expertise**: Reinforcement Learning,Robotics
+- **expertise**: ["Reinforcement Learning","Robotics"]
 - **email**: carol.jones@research.org
 - **joinDate**: 2020-09-01
 - **status**: active
@@ -21,21 +22,20 @@ id: carol-jones
 
 ### contributes_to
 
-- [[computer-vision-project|computer-vision-project]]
+- [[computer-vision-project|Advanced Computer Vision Systems]]
 
 ### leads
 
-- [[adaptive-robotics-project|adaptive-robotics-project]]
+- [[adaptive-robotics-project|Adaptive Robotics Control]]
 
 ### mentors
 
 - [[elena-rodriguez|Elena Rodriguez]]
-- [[carol-jones|Carol Jones]]
 
 ### authored
 
-- [[vision-paper-2022|vision-paper-2022]]
-- [[robotics-paper-2022|robotics-paper-2022]]
+- [[vision-paper-2022|Novel Approaches to Low-Light Computer Vision]]
+- [[robotics-paper-2022|Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization]]
 
 ### uses
 

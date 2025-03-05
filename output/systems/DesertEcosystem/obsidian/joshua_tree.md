@@ -1,6 +1,8 @@
 ---
 type: plant
 id: joshua_tree
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Joshua Tree
@@ -14,7 +16,7 @@ id: joshua_tree
 - **height**: 1200
 - **waterRequirement**: low
 - **description**: Iconic tree-like yucca of the Mojave Desert with unique appearance.
-- **adaptations**: Extensive shallow root system,Thick, moisture-retaining trunk,Waxy, spine-tipped leaves reduce water loss,Specialized pollination relationship with yucca moth,Slow growth rate conserves resources
+- **adaptations**: ["Extensive shallow root system","Thick, moisture-retaining trunk","Waxy, spine-tipped leaves reduce water loss","Specialized pollination relationship with yucca moth","Slow growth rate conserves resources"]
 
 ## Relationships
 
@@ -25,7 +27,6 @@ id: joshua_tree
 ### mutual_dependency
 
 - [[yucca_moth|Yucca Moth]] (relationship: obligate reproductive site, strength: extreme)
-- [[joshua_tree|Joshua Tree]] (relationship: obligate reproductive site, strength: extreme)
 
 ## Backlinks
 

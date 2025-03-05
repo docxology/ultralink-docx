@@ -1,6 +1,8 @@
 ---
 type: animal
 id: desert_tortoise
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Desert Tortoise
@@ -15,7 +17,7 @@ id: desert_tortoise
 - **diet**: herbivore
 - **status**: vulnerable
 - **description**: Long-lived reptile of the Mojave and Sonoran deserts with high-domed shell.
-- **adaptations**: Can store water in bladder for extended periods,Digs burrows to escape extreme temperatures,Metabolic adaptations to survive drought,Specialized digestive system for low-quality plant material,Slow metabolism conserves energy
+- **adaptations**: ["Can store water in bladder for extended periods","Digs burrows to escape extreme temperatures","Metabolic adaptations to survive drought","Specialized digestive system for low-quality plant material","Slow metabolism conserves energy"]
 
 ## Relationships
 
@@ -30,10 +32,6 @@ id: desert_tortoise
 ### consumes
 
 - [[desert_poppy|Desert Poppy]] (frequency: seasonal, method: grazing)
-
-### preys_on
-
-- [[desert_tortoise|Desert Tortoise]] (frequency: rare, method: opportunistic)
 
 ## Backlinks
 

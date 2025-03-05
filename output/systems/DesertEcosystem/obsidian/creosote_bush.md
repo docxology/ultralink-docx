@@ -1,6 +1,8 @@
 ---
 type: plant
 id: creosote_bush
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Creosote Bush
@@ -14,7 +16,7 @@ id: creosote_bush
 - **height**: 300
 - **waterRequirement**: very low
 - **description**: One of the most drought-tolerant plants, can live over 10,000 years.
-- **adaptations**: Resinous coating on leaves prevents water loss,Toxins in soil prevent other plants from growing nearby (allelopathy),Small leaves reduce surface area for evaporation,Can survive with just 75mm of annual rainfall
+- **adaptations**: ["Resinous coating on leaves prevents water loss","Toxins in soil prevent other plants from growing nearby (allelopathy)","Small leaves reduce surface area for evaporation","Can survive with just 75mm of annual rainfall"]
 
 ## Relationships
 

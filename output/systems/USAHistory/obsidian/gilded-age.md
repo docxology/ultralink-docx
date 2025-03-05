@@ -1,6 +1,8 @@
 ---
 type: time_period
 id: gilded-age
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Gilded Age

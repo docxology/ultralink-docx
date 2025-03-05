@@ -1,6 +1,8 @@
 ---
 type: temporal_snapshot
 id: slavery-1776
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # slavery-1776
@@ -15,12 +17,6 @@ id: slavery-1776
 - **acceptance**: 0.7
 - **economic_importance**: 0.8
 - **description**: Slavery at founding of United States
-
-## Relationships
-
-### has_state_at
-
-- [[slavery-1776|slavery-1776]]
 
 ## Backlinks
 

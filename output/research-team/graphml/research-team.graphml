@@ -8,15 +8,15 @@
   <key id="role" for="node" attr.name="role" attr.type="string"/>
   <key id="department" for="node" attr.name="department" attr.type="string"/>
   <key id="email" for="node" attr.name="email" attr.type="string"/>
-  <key id="publications" for="node" attr.name="publications" attr.type="int"/>
+  <key id="publications" for="node" attr.name="publications" attr.type="string"/>
   <key id="title" for="node" attr.name="title" attr.type="string"/>
   <key id="startDate" for="node" attr.name="startDate" attr.type="string"/>
-  <key id="budget" for="node" attr.name="budget" attr.type="int"/>
+  <key id="budget" for="node" attr.name="budget" attr.type="string"/>
   <key id="status" for="node" attr.name="status" attr.type="string"/>
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
   <key id="startDate" for="edge" attr.name="startDate" attr.type="string"/>
   <key id="role" for="edge" attr.name="role" attr.type="string"/>
-  <graph id="G" edgedefault="directed">
+  <graph id="UltraLink_Graph" edgedefault="directed">
     <node id="alice">
       <data key="type">researcher</data>
       <data key="name">Alice Chen</data>

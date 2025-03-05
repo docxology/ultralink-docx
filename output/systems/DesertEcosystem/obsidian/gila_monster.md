@@ -1,6 +1,8 @@
 ---
 type: animal
 id: gila_monster
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Gila Monster
@@ -15,7 +17,7 @@ id: gila_monster
 - **diet**: carnivore
 - **status**: near threatened
 - **description**: Venomous lizard of the southwestern US and northwestern Mexico.
-- **adaptations**: Stores fat in tail for long periods without food,Venomous bite for efficient predation,Thick skin reduces water loss,Slow metabolism allows for infrequent feeding,Can survive on as few as 3-4 meals per year
+- **adaptations**: ["Stores fat in tail for long periods without food","Venomous bite for efficient predation","Thick skin reduces water loss","Slow metabolism allows for infrequent feeding","Can survive on as few as 3-4 meals per year"]
 
 ## Relationships
 

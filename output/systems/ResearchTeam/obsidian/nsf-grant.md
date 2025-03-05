@@ -1,6 +1,8 @@
 ---
 type: funding
 id: nsf-grant
+created: 2025-03-05T00:12:44.686Z
+modified: 2025-03-05T00:12:44.686Z
 ---
 
 # NSF Research Grant
@@ -21,6 +23,6 @@ id: nsf-grant
 
 ### funds
 
-- [[computer-vision-project|computer-vision-project]]
-- [[adaptive-robotics-project|adaptive-robotics-project]]
+- [[computer-vision-project|Advanced Computer Vision Systems]]
+- [[adaptive-robotics-project|Adaptive Robotics Control]]
 

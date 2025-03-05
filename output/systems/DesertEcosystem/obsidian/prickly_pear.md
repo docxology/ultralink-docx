@@ -1,6 +1,8 @@
 ---
 type: plant
 id: prickly_pear
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Prickly Pear Cactus
@@ -14,13 +16,7 @@ id: prickly_pear
 - **height**: 200
 - **waterRequirement**: very low
 - **description**: Flat-padded cacti with colorful fruits and sharp spines.
-- **adaptations**: Flat pads maximize photosynthesis while minimizing surface area,Waxy coating reduces water loss,Shallow, extensive root system,Spines protect from herbivores and provide shade
-
-## Relationships
-
-### consumes
-
-- [[prickly_pear|Prickly Pear Cactus]] (frequency: common, method: grazing)
+- **adaptations**: ["Flat pads maximize photosynthesis while minimizing surface area","Waxy coating reduces water loss","Shallow, extensive root system","Spines protect from herbivores and provide shade"]
 
 ## Backlinks
 

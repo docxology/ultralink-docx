@@ -1,6 +1,8 @@
 ---
 type: document
 id: gettysburg-address
+created: 2025-03-05T00:12:44.793Z
+modified: 2025-03-05T00:12:44.793Z
 ---
 
 # Gettysburg Address
@@ -11,11 +13,11 @@ id: gettysburg-address
 ## Attributes
 
 - **date**: 1863-11-19
-- **authors**: Abraham Lincoln
+- **authors**: ["Abraham Lincoln"]
 - **description**: Speech given by President Lincoln during the Civil War
 - **significance**: Redefined the purpose of the Civil War and American democracy
-- **keywords**: civil war,liberty,democracy,equality,Lincoln
-- **vector**: 0.44,0.32,0.36,0.18,0.28,-0.05
+- **keywords**: ["civil war","liberty","democracy","equality","Lincoln"]
+- **vector**: [0.44,0.32,0.36,0.18,0.28,-0.05]
 
 ## Relationships
 

@@ -1,6 +1,8 @@
 ---
 type: animal
 id: darkling_beetle
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Darkling Beetle
@@ -15,7 +17,7 @@ id: darkling_beetle
 - **diet**: omnivore
 - **status**: least concern
 - **description**: Desert beetles with numerous adaptations for arid environments.
-- **adaptations**: Waxy cuticle reduces water loss,Can collect water from fog on body,Stands with head down and abdomen raised to collect moisture,Nocturnal to avoid daytime heat
+- **adaptations**: ["Waxy cuticle reduces water loss","Can collect water from fog on body","Stands with head down and abdomen raised to collect moisture","Nocturnal to avoid daytime heat"]
 
 ## Relationships
 

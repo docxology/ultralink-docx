@@ -1,17 +1,18 @@
 ---
 type: publication
 id: paper-2023b
+created: 2025-03-05T00:12:44.772Z
+modified: 2025-03-05T00:12:44.772Z
 ---
 
-# paper-2023b
+# Decision Making Patterns in Ant Colonies: A Field Study
 
 **Type**: publication
 **ID**: paper-2023b
 
 ## Attributes
 
-- **title**: Decision Making Patterns in Ant Colonies: A Field Study
-- **authors**: bob,emma,frank
+- **authors**: ["bob","emma","frank"]
 - **journal**: Behavioral Ecology
 - **year**: 2023
 - **doi**: 10.1093/beheco/2023-0002
@@ -26,12 +27,6 @@ id: paper-2023b
 ### discusses
 
 - [[collective-behavior|Collective Behavior]] (depth: substantial)
-
-### authored
-
-- [[paper-2023b|paper-2023b]] (contributionType: corresponding author, contributionPercentage: 50)
-- [[paper-2023b|paper-2023b]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2023b|paper-2023b]] (contributionType: co-author, contributionPercentage: 20)
 
 ## Backlinks
 

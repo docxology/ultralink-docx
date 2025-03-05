@@ -1,6 +1,8 @@
 ---
 type: interaction
 id: pollination_yucca
+created: 2025-03-05T00:12:44.729Z
+modified: 2025-03-05T00:12:44.729Z
 ---
 
 # Yucca-Moth Pollination
@@ -12,6 +14,6 @@ id: pollination_yucca
 
 - **description**: Specialized mutualistic relationship between yucca plants and yucca moths.
 - **type**: mutualism
-- **participants**: joshua_tree,yucca_moth
+- **participants**: ["joshua_tree","yucca_moth"]
 - **strength**: obligate
 
