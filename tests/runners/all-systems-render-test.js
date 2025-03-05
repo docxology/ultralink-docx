@@ -235,33 +235,54 @@ async function renderSystem(systemName, system, logger) {
           const vizDir = path.join(systemOutputDir, 'visualization');
           await fs.mkdir(vizDir, { recursive: true });
           
-          // Generate visualizations
-          const vizOutput = await system.toVisualization({
-            formats: ['png', 'svg', 'd3', 'cytoscape'],
-            options: {
-              layout: 'force',
-              width: 1200,
-              height: 900,
-              nodeSize: 'degree',
-              colorScheme: 'category10'
-            }
-          });
-          
-          // Write visualization files
-          for (const [format, content] of Object.entries(vizOutput)) {
-            if (format === 'd3') {
-              // Write D3 visualization as HTML
-              await fs.writeFile(path.join(vizDir, `${systemName}-d3.html`), content);
-            } else if (format === 'cytoscape') {
-              // Write Cytoscape visualization as HTML
-              await fs.writeFile(path.join(vizDir, `${systemName}-cytoscape.html`), content);
-            } else {
-              // Write image files
-              await fs.writeFile(path.join(vizDir, `${systemName}.${format}`), content);
-            }
+          // Create format-specific subdirectories first
+          const vizFormats = ['png', 'svg', 'd3', 'cytoscape'];
+          for (const format of vizFormats) {
+            const formatDir = path.join(vizDir, format);
+            await fs.mkdir(formatDir, { recursive: true });
           }
           
+          // Set outputPath before generating visualizations
           outputPath = vizDir;
+          
+          // Generate visualizations
+          const vizOutput = await system.toVisualization({
+            formats: vizFormats,
+            layout: 'force',
+            width: 1200,
+            height: 900,
+            nodeSize: 'degree',
+            colorScheme: 'category10'
+          });
+          
+          // Debug output to see what's being returned
+          console.log(`Visualization output formats: ${Object.keys(vizOutput).join(', ')}`);
+          
+          // Write visualization files to format-specific subdirectories
+          for (const [format, content] of Object.entries(vizOutput)) {
+            // Get the format-specific subdirectory
+            const formatDir = path.join(vizDir, format);
+            
+            // Debug output
+            console.log(`Writing ${format} visualization to ${formatDir}`);
+            
+            if (format === 'd3') {
+              // Write D3 visualization as HTML
+              await fs.writeFile(path.join(formatDir, `${systemName}-d3.html`), content);
+            } else if (format === 'cytoscape') {
+              // Write Cytoscape visualization as HTML
+              await fs.writeFile(path.join(formatDir, `${systemName}-cytoscape.html`), content);
+            } else {
+              // Write image files
+              await fs.writeFile(path.join(formatDir, `${systemName}.${format}`), content);
+            }
+            
+            // Verify file was written
+            const files = await fs.readdir(formatDir);
+            console.log(`Files in ${formatDir}: ${files.join(', ')}`);
+          }
+          
+          // outputPath is already set to vizDir
           break;
       }
       

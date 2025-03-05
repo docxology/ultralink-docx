@@ -35,7 +35,7 @@
   <key id="endPoint" for="node" attr.name="endPoint" attr.type="string"/>
   <key id="drift" for="node" attr.name="drift" attr.type="string"/>
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
-  <graph id="UltraLink_Graph" edgedefault="directed">
+  <graph id="G" edgedefault="directed">
     <node id="colonial-period">
       <data key="type">time_period</data>
       <data key="name">Colonial Period</data>

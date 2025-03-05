@@ -1,8 +1,8 @@
 ---
 type: researcher
 id: alice
-created: 2025-03-05T00:12:43.695Z
-modified: 2025-03-05T00:12:43.695Z
+created: 2025-03-05T00:58:29.958Z
+modified: 2025-03-05T00:58:29.958Z
 ---
 
 # Alice Chen

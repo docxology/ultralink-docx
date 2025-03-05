@@ -6,7 +6,7 @@
   <key id="name" for="node" attr.name="name" attr.type="string"/>
   <key id="type" for="node" attr.name="type" attr.type="string"/>
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
-  <graph id="UltraLink_Graph" edgedefault="directed">
+  <graph id="G" edgedefault="directed">
     <node id="saguaro">
       <data key="type">organism</data>
       <data key="name">Saguaro Cactus</data>

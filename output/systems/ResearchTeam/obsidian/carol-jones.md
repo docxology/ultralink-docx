@@ -1,8 +1,8 @@
 ---
 type: person
 id: carol-jones
-created: 2025-03-05T00:12:44.685Z
-modified: 2025-03-05T00:12:44.685Z
+created: 2025-03-05T00:58:30.546Z
+modified: 2025-03-05T00:58:30.546Z
 ---
 
 # Carol Jones

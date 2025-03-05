@@ -16,7 +16,7 @@
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
   <key id="startDate" for="edge" attr.name="startDate" attr.type="string"/>
   <key id="role" for="edge" attr.name="role" attr.type="string"/>
-  <graph id="UltraLink_Graph" edgedefault="directed">
+  <graph id="G" edgedefault="directed">
     <node id="alice">
       <data key="type">researcher</data>
       <data key="name">Alice Chen</data>

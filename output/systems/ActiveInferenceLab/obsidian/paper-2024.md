@@ -1,8 +1,8 @@
 ---
 type: publication
 id: paper-2024
-created: 2025-03-05T00:12:44.772Z
-modified: 2025-03-05T00:12:44.772Z
+created: 2025-03-05T00:58:30.717Z
+modified: 2025-03-05T00:58:30.717Z
 ---
 
 # Computational Models of Active Inference in Social Insects

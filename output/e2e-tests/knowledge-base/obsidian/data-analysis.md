@@ -1,8 +1,8 @@
 ---
 type: concept
 id: data-analysis
-created: 2025-03-05T00:12:45.471Z
-modified: 2025-03-05T00:12:45.471Z
+created: 2025-03-05T00:58:31.452Z
+modified: 2025-03-05T00:58:31.452Z
 ---
 
 # Data Analysis

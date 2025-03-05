@@ -1,0 +1,45 @@
+;; UltraLink Knowledge Interchange Format (KIF) Export
+;; Generated: 2025-03-05T00:15:40.398Z
+;; Entities and their attributes
+(instance concept1 Concept)
+(name concept1 "Democracy")
+(definition concept1 "Government by the people")
+
+(instance concept2 Concept)
+(name concept2 "Freedom")
+(definition concept2 "The power of self-determination")
+
+(instance document Historical_document)
+(name document "Declaration of Independence")
+(date document "1776-07-04")
+(author document "Thomas Jefferson")
+
+;; Relationships
+(mentions document concept1)
+(mentions document concept2)
+(related_to concept1 concept2)
+
+;; Meta-knowledge
+(= (entityCount UltraLinkExport) 3)
+(= (relationshipCount UltraLinkExport) 3)
+(= (exportDate UltraLinkExport) "2025-03-05T00:15:40.398Z")
+(= (exportVersion UltraLinkExport) "1.0")
+
+;; Functions
+(deffunction relationshipCount (?kb)
+  :documentation "Returns the total number of relationships in a knowledge base"
+  :return-type Integer)
+
+(deffunction entityCount (?kb)
+  :documentation "Returns the total number of entities in a knowledge base"
+  :return-type Integer)
+
+;; Rules
+(defrule temporal-ordering
+  :documentation "Rule for temporal ordering of events"
+  (and (instance ?e1 Event)
+       (instance ?e2 Event)
+       (date ?e1 ?d1)
+       (date ?e2 ?d2)
+       (evaluate ?before (string< ?d1 ?d2)))
+  (before ?e1 ?e2))

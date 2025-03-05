@@ -43,7 +43,7 @@
   <key id="contributionPercentage" for="edge" attr.name="contributionPercentage" attr.type="string"/>
   <key id="contribution" for="edge" attr.name="contribution" attr.type="string"/>
   <key id="depth" for="edge" attr.name="depth" attr.type="string"/>
-  <graph id="UltraLink_Graph" edgedefault="directed">
+  <graph id="G" edgedefault="directed">
     <node id="alice">
       <data key="type">researcher</data>
       <data key="name">Dr. Alice Chen</data>
@@ -264,8 +264,9 @@
     </edge>
     <edge source="david" target="ant-colony-study">
       <data key="type">contributes_to</data>
-      <data key="role">PhD Researcher</data>
-      <data key="startDate">2023-01-10</data>
+      <data key="role">Behavioral Consultant</data>
+      <data key="startDate">2024-02-10</data>
+      <data key="timeCommitment">25%</data>
     </edge>
     <edge source="grace" target="ant-colony-study">
       <data key="type">contributes_to</data>
@@ -281,12 +282,6 @@
       <data key="type">contributes_to</data>
       <data key="role">Algorithm Developer</data>
       <data key="startDate">2024-01-05</data>
-    </edge>
-    <edge source="david" target="ant-colony-study">
-      <data key="type">contributes_to</data>
-      <data key="role">Behavioral Consultant</data>
-      <data key="startDate">2024-02-10</data>
-      <data key="timeCommitment">25%</data>
     </edge>
     <edge source="alice" target="david">
       <data key="type">mentors</data>

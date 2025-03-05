@@ -26,7 +26,7 @@
   <key id="method" for="edge" attr.name="method" attr.type="string"/>
   <key id="relationship" for="edge" attr.name="relationship" attr.type="string"/>
   <key id="description" for="edge" attr.name="description" attr.type="string"/>
-  <graph id="UltraLink_Graph" edgedefault="directed">
+  <graph id="G" edgedefault="directed">
     <node id="camel">
       <data key="type">animal</data>
       <data key="name">Dromedary Camel</data>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UltraLink D3 Visualization</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #graph { width: 100%; height: 600px; border: 1px solid #ccc; }
+    .node { cursor: pointer; }
+    .links line { stroke: #999; stroke-opacity: 0.6; }
+    .nodes circle { stroke: #fff; stroke-width: 1.5px; }
+  </style>
+</head>
+<body>
+  <h1>UltraLink Graph Visualization</h1>
+  <div id="graph"></div>
+  <script>
+    // Graph data
+    const data = {
+      nodes: [{"id":"alice-chen","name":"Alice Chen","type":"person"},{"id":"bob-smith","name":"Bob Smith","type":"person"},{"id":"carol-jones","name":"Carol Jones","type":"person"},{"id":"david-patel","name":"David Patel","type":"person"},{"id":"elena-rodriguez","name":"Elena Rodriguez","type":"person"},{"id":"frank-zhang","name":"Frank Zhang","type":"person"},{"id":"grace-kim","name":"Grace Kim","type":"person"},{"id":"computer-vision-project","name":"computer-vision-project","type":"project"},{"id":"nlp-project","name":"nlp-project","type":"project"},{"id":"federated-learning-project","name":"federated-learning-project","type":"project"},{"id":"quantum-ml-project","name":"quantum-ml-project","type":"project"},{"id":"adaptive-robotics-project","name":"adaptive-robotics-project","type":"project"},{"id":"vision-paper-2022","name":"vision-paper-2022","type":"publication"},{"id":"nlp-paper-2023","name":"nlp-paper-2023","type":"publication"},{"id":"federated-paper-2023","name":"federated-paper-2023","type":"publication"},{"id":"robotics-paper-2022","name":"robotics-paper-2022","type":"publication"},{"id":"quantum-paper-2023","name":"quantum-paper-2023","type":"publication"},{"id":"survey-paper-2023","name":"survey-paper-2023","type":"publication"},{"id":"gpu-cluster","name":"High-Performance GPU Cluster","type":"equipment"},{"id":"robotics-lab","name":"Robotics Laboratory","type":"facility"},{"id":"quantum-computer","name":"Quantum Computing Access","type":"equipment"},{"id":"hpc-cluster","name":"University High-Performance Computing Cluster","type":"equipment"},{"id":"data-collection-system","name":"Field Data Collection System","type":"equipment"},{"id":"conference-room","name":"Research Team Conference Room","type":"facility"},{"id":"visualization-lab","name":"Data Visualization Laboratory","type":"facility"},{"id":"machine-learning-theory","name":"Machine Learning Theory","type":"knowledge-area"},{"id":"computer-vision","name":"Computer Vision","type":"knowledge-area"},{"id":"nlp","name":"Natural Language Processing","type":"knowledge-area"},{"id":"privacy-ml","name":"Privacy-Preserving Machine Learning","type":"knowledge-area"},{"id":"quantum-ml","name":"Quantum Machine Learning","type":"knowledge-area"},{"id":"robotics","name":"Robotics","type":"knowledge-area"},{"id":"reinforcement-learning","name":"Reinforcement Learning","type":"knowledge-area"},{"id":"nsf-grant","name":"NSF Research Grant","type":"funding"},{"id":"tech-partner","name":"Tech Industry Partnership","type":"funding"},{"id":"university-fund","name":"University Research Excellence Fund","type":"funding"}],
+      links: [{"source":"alice-chen","target":"computer-vision-project","type":"leads"},{"source":"alice-chen","target":"nlp-project","type":"contributes_to"},{"source":"bob-smith","target":"nlp-project","type":"leads"},{"source":"carol-jones","target":"computer-vision-project","type":"contributes_to"},{"source":"david-patel","target":"federated-learning-project","type":"leads"},{"source":"alice-chen","target":"federated-learning-project","type":"contributes_to"},{"source":"frank-zhang","target":"quantum-ml-project","type":"leads"},{"source":"david-patel","target":"quantum-ml-project","type":"contributes_to"},{"source":"carol-jones","target":"adaptive-robotics-project","type":"leads"},{"source":"elena-rodriguez","target":"adaptive-robotics-project","type":"contributes_to"},{"source":"elena-rodriguez","target":"computer-vision-project","type":"contributes_to"},{"source":"david-patel","target":"nlp-project","type":"contributes_to"},{"source":"bob-smith","target":"federated-learning-project","type":"contributes_to"},{"source":"alice-chen","target":"carol-jones","type":"mentors"},{"source":"alice-chen","target":"david-patel","type":"mentors"},{"source":"bob-smith","target":"elena-rodriguez","type":"mentors"},{"source":"david-patel","target":"elena-rodriguez","type":"mentors"},{"source":"carol-jones","target":"elena-rodriguez","type":"mentors"},{"source":"alice-chen","target":"vision-paper-2022","type":"authored"},{"source":"carol-jones","target":"vision-paper-2022","type":"authored"},{"source":"bob-smith","target":"nlp-paper-2023","type":"authored"},{"source":"alice-chen","target":"nlp-paper-2023","type":"authored"},{"source":"david-patel","target":"federated-paper-2023","type":"authored"},{"source":"alice-chen","target":"federated-paper-2023","type":"authored"},{"source":"frank-zhang","target":"federated-paper-2023","type":"authored"},{"source":"carol-jones","target":"robotics-paper-2022","type":"authored"},{"source":"alice-chen","target":"robotics-paper-2022","type":"authored"},{"source":"frank-zhang","target":"quantum-paper-2023","type":"authored"},{"source":"david-patel","target":"quantum-paper-2023","type":"authored"},{"source":"david-patel","target":"survey-paper-2023","type":"authored"},{"source":"bob-smith","target":"survey-paper-2023","type":"authored"},{"source":"alice-chen","target":"survey-paper-2023","type":"authored"},{"source":"computer-vision-project","target":"vision-paper-2022","type":"produced"},{"source":"nlp-project","target":"nlp-paper-2023","type":"produced"},{"source":"federated-learning-project","target":"federated-paper-2023","type":"produced"},{"source":"federated-learning-project","target":"survey-paper-2023","type":"produced"},{"source":"adaptive-robotics-project","target":"robotics-paper-2022","type":"produced"},{"source":"quantum-ml-project","target":"quantum-paper-2023","type":"produced"},{"source":"computer-vision-project","target":"gpu-cluster","type":"uses"},{"source":"nlp-project","target":"gpu-cluster","type":"uses"},{"source":"carol-jones","target":"robotics-lab","type":"uses"},{"source":"federated-learning-project","target":"gpu-cluster","type":"uses"},{"source":"federated-learning-project","target":"hpc-cluster","type":"uses"},{"source":"quantum-ml-project","target":"quantum-computer","type":"uses"},{"source":"quantum-ml-project","target":"hpc-cluster","type":"uses"},{"source":"adaptive-robotics-project","target":"robotics-lab","type":"uses"},{"source":"adaptive-robotics-project","target":"data-collection-system","type":"uses"},{"source":"elena-rodriguez","target":"visualization-lab","type":"uses"},{"source":"david-patel","target":"hpc-cluster","type":"uses"},{"source":"frank-zhang","target":"quantum-computer","type":"uses"},{"source":"machine-learning-theory","target":"computer-vision","type":"foundational_for"},{"source":"machine-learning-theory","target":"nlp","type":"foundational_for"},{"source":"alice-chen","target":"computer-vision","type":"expertise_in"},{"source":"bob-smith","target":"nlp","type":"expertise_in"},{"source":"carol-jones","target":"machine-learning-theory","type":"expertise_in"},{"source":"machine-learning-theory","target":"privacy-ml","type":"foundational_for"},{"source":"machine-learning-theory","target":"quantum-ml","type":"foundational_for"},{"source":"machine-learning-theory","target":"reinforcement-learning","type":"foundational_for"},{"source":"reinforcement-learning","target":"robotics","type":"foundational_for"},{"source":"david-patel","target":"privacy-ml","type":"expertise_in"},{"source":"david-patel","target":"machine-learning-theory","type":"expertise_in"},{"source":"frank-zhang","target":"quantum-ml","type":"expertise_in"},{"source":"carol-jones","target":"reinforcement-learning","type":"expertise_in"},{"source":"carol-jones","target":"robotics","type":"expertise_in"},{"source":"alice-chen","target":"privacy-ml","type":"expertise_in"},{"source":"bob-smith","target":"privacy-ml","type":"expertise_in"},{"source":"elena-rodriguez","target":"computer-vision","type":"expertise_in"},{"source":"computer-vision-project","target":"computer-vision","type":"applies"},{"source":"computer-vision-project","target":"machine-learning-theory","type":"applies"},{"source":"nlp-project","target":"nlp","type":"applies"},{"source":"nlp-project","target":"machine-learning-theory","type":"applies"},{"source":"federated-learning-project","target":"privacy-ml","type":"applies"},{"source":"federated-learning-project","target":"machine-learning-theory","type":"applies"},{"source":"quantum-ml-project","target":"quantum-ml","type":"applies"},{"source":"quantum-ml-project","target":"machine-learning-theory","type":"applies"},{"source":"adaptive-robotics-project","target":"robotics","type":"applies"},{"source":"adaptive-robotics-project","target":"reinforcement-learning","type":"applies"},{"source":"nsf-grant","target":"computer-vision-project","type":"funds"},{"source":"nsf-grant","target":"adaptive-robotics-project","type":"funds"},{"source":"tech-partner","target":"federated-learning-project","type":"funds"},{"source":"tech-partner","target":"nlp-project","type":"funds"},{"source":"university-fund","target":"quantum-ml-project","type":"funds"},{"source":"grace-kim","target":"computer-vision-project","type":"administers"},{"source":"grace-kim","target":"nlp-project","type":"administers"},{"source":"grace-kim","target":"federated-learning-project","type":"administers"},{"source":"grace-kim","target":"quantum-ml-project","type":"administers"},{"source":"grace-kim","target":"adaptive-robotics-project","type":"administers"},{"source":"survey-paper-2023","target":"federated-paper-2023","type":"cites"},{"source":"survey-paper-2023","target":"vision-paper-2022","type":"cites"},{"source":"survey-paper-2023","target":"nlp-paper-2023","type":"cites"},{"source":"robotics-paper-2022","target":"vision-paper-2022","type":"cites"},{"source":"quantum-paper-2023","target":"survey-paper-2023","type":"cites"}]
+    };
+    
+    // Create force simulation
+    const width = document.getElementById('graph').clientWidth;
+    const height = 600;
+    
+    const simulation = d3.forceSimulation(data.nodes)
+      .force('link', d3.forceLink(data.links).id(d => d.id))
+      .force('charge', d3.forceManyBody().strength(-100))
+      .force('center', d3.forceCenter(width / 2, height / 2));
+    
+    // Create SVG
+    const svg = d3.select('#graph')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+    
+    // Add links
+    const link = svg.append('g')
+      .attr('class', 'links')
+      .selectAll('line')
+      .data(data.links)
+      .join('line')
+      .attr('stroke', '#999')
+      .attr('stroke-width', 1);
+    
+    // Add nodes
+    const node = svg.append('g')
+      .attr('class', 'nodes')
+      .selectAll('circle')
+      .data(data.nodes)
+      .join('circle')
+      .attr('r', 5)
+      .attr('fill', d => getColor(d.type))
+      .call(drag(simulation));
+    
+    // Add labels
+    const text = svg.append('g')
+      .selectAll('text')
+      .data(data.nodes)
+      .join('text')
+      .text(d => d.name)
+      .attr('font-size', 10)
+      .attr('dx', 8)
+      .attr('dy', 3);
+    
+    // Update positions on simulation tick
+    simulation.on('tick', () => {
+      link
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+      
+      node
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y);
+      
+      text
+        .attr('x', d => d.x)
+        .attr('y', d => d.y);
+    });
+    
+    // Drag functionality
+    function drag(simulation) {
+      function dragstarted(event) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      }
+      
+      function dragged(event) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      }
+      
+      function dragended(event) {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      }
+      
+      return d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended);
+    }
+    
+    // Color function
+    function getColor(type) {
+      const colors = {
+        person: '#4285F4',
+        project: '#EA4335',
+        organization: '#FBBC05',
+        location: '#34A853',
+        event: '#8F00FF',
+        default: '#999999'
+      };
+      return colors[type] || colors.default;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Alpha - HTML Features Test</title>
+  <style>
+    :root {
+      --background: #ffffff;
+      --text: #000000;
+      --link: #0066cc;
+      --accent: #666666;
+      --border: #dddddd;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--background);
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .attributes {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .attribute-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .attribute-row:last-child {
+      border-bottom: none;
+    }
+    .attribute-key {
+      color: var(--accent);
+    }
+    .relationship-list {
+      list-style: none;
+      padding: 0;
+    }
+    .relationship-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-attributes {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">← Back to Graph</a>
+  <h1>Project Alpha</h1>
+  <div class="entity-type">project</div>
+  
+  <h3>Attributes</h3>
+  <div class="attributes">
+    
+      <div class="attribute-row">
+        <div class="attribute-key">title</div>
+        <div class="attribute-value">Project Alpha</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">status</div>
+        <div class="attribute-value">Active</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">priority</div>
+        <div class="attribute-value">High</div>
+      </div>
+    
+  </div>
+
+  <h3>Relationships</h3>
+  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>contains</strong> → <a href="entity3.html">entity3</a><div class="relationship-attributes"><small><strong>section:</strong> Documentation</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
+        <a href="entity1.html">John Doe</a> → <strong>manages</strong>
+      </li></ul>
+</body>
+</html>

@@ -1,8 +1,8 @@
 ---
 type: equipment
 id: data-collection-system
-created: 2025-03-05T00:12:44.686Z
-modified: 2025-03-05T00:12:44.686Z
+created: 2025-03-05T00:58:30.546Z
+modified: 2025-03-05T00:58:30.546Z
 ---
 
 # Field Data Collection System

@@ -242,7 +242,7 @@ class UltraLink {
    * @returns {string|Buffer} Visualization in requested format
    */
   toVisualization(options = {}) {
-    return Visualizers.toVisualization.call(this, options);
+    return Visualizers.toVisualization(this, options);
   }
 
   /**
@@ -361,6 +361,141 @@ class UltraLink {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&apos;');
+  }
+
+  /**
+   * Create a subset of the data based on a specific aspect
+   * @param {string} aspect - The aspect to create a subset for (e.g., 'people', 'projects', 'publications')
+   * @returns {Object} An object containing entities and links Maps for the subset
+   */
+  createSubset(aspect) {
+    const result = { entities: new Map(), links: new Map() };
+    
+    if (aspect === 'people') {
+      // Get all people
+      const people = this.findEntities({ type: 'person' });
+      people.forEach(person => result.entities.set(person.id, person));
+    } else if (aspect === 'projects') {
+      // Get all projects and people
+      const projects = this.findEntities({ type: 'project' });
+      const people = this.findEntities({ type: 'person' });
+      
+      projects.forEach(project => result.entities.set(project.id, project));
+      people.forEach(person => result.entities.set(person.id, person));
+      
+      // Get all project-related links
+      projects.forEach(project => {
+        const links = this.getRelationships(project.id);
+        links.forEach(link => result.links.set(`${link.source}-${link.target}-${link.type}`, link));
+      });
+    } else if (aspect === 'publications') {
+      // Get all publications and people
+      const publications = this.findEntities({ type: 'publication' });
+      const people = this.findEntities({ type: 'person' });
+      
+      publications.forEach(pub => result.entities.set(pub.id, pub));
+      people.forEach(person => result.entities.set(person.id, person));
+      
+      // Get all publication-related links
+      publications.forEach(pub => {
+        const links = this.getRelationships(pub.id);
+        links.forEach(link => result.links.set(`${link.source}-${link.target}-${link.type}`, link));
+      });
+    } else {
+      throw new Error(`Unknown aspect: ${aspect}`);
+    }
+    
+    return result;
+  }
+
+  /**
+   * Import data from a full blob
+   * @param {Object|string} blob - The blob data to import
+   * @param {Object} options - Import options
+   * @param {boolean} [options.compressed=false] - Whether the blob is compressed
+   * @returns {UltraLink} The UltraLink instance
+   */
+  async fromFullBlob(blob, options = {}) {
+    const { compressed = false } = options;
+    const zlib = require('zlib');
+    
+    let data;
+    
+    if (compressed) {
+      // Decompress the data
+      const buffer = Buffer.from(blob, 'base64');
+      const decompressed = zlib.gunzipSync(buffer).toString();
+      data = JSON.parse(decompressed);
+    } else if (typeof blob === 'string') {
+      // Parse JSON string
+      data = JSON.parse(blob);
+    } else {
+      // Use object directly
+      data = blob;
+    }
+    
+    // Clear existing data
+    this.clear();
+    
+    // Add entities
+    if (data.entities) {
+      // Handle case where entities is a Map or object
+      if (typeof data.entities[Symbol.iterator] !== 'function') {
+        // Convert to array if it's an object with entries
+        if (typeof data.entities === 'object') {
+          const entitiesArray = Object.values(data.entities);
+          for (const entity of entitiesArray) {
+            this.addEntity(entity.id, entity.type, entity.attributes);
+          }
+        }
+      } else {
+        // It's already iterable (array)
+        for (const entity of data.entities) {
+          this.addEntity(entity.id, entity.type, entity.attributes);
+        }
+      }
+    }
+    
+    // Add relationships
+    if (data.relationships) {
+      // Handle case where relationships is a Map or object
+      if (typeof data.relationships[Symbol.iterator] !== 'function') {
+        // Convert to array if it's an object with entries
+        if (typeof data.relationships === 'object') {
+          const relationshipsArray = Object.values(data.relationships);
+          for (const rel of relationshipsArray) {
+            this.addRelationship(rel.source, rel.target, rel.type, rel.attributes);
+          }
+        }
+      } else {
+        // It's already iterable (array)
+        for (const rel of data.relationships) {
+          this.addRelationship(rel.source, rel.target, rel.type, rel.attributes);
+        }
+      }
+    }
+    
+    return this;
+  }
+
+  /**
+   * Delete a relationship between entities
+   * @param {string} sourceId - Source entity ID
+   * @param {string} targetId - Target entity ID
+   * @param {string} type - Relationship type
+   * @returns {boolean} True if the relationship was deleted, false if it didn't exist
+   */
+  deleteLink(sourceId, targetId, type) {
+    // Delete from relationships map
+    const key = `${sourceId}-${targetId}-${type}`;
+    const deleted = this.relationships.delete(key);
+    
+    // Delete from links map
+    if (this.links.has(sourceId)) {
+      this.links.get(sourceId).delete(`${targetId}-${type}`);
+    }
+    
+    return deleted;
   }
 }
 

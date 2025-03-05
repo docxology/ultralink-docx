@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ResearchTeam Knowledge Graph</title>
+  
   <style>
     :root {
       --background: #f0f8ff;
@@ -343,8 +344,680 @@
       <script>
         // Graph visualization code
         const data = {
-          nodes: [{"id":"alice-chen","name":"Alice Chen","type":"person"},{"id":"bob-smith","name":"Bob Smith","type":"person"},{"id":"carol-jones","name":"Carol Jones","type":"person"},{"id":"david-patel","name":"David Patel","type":"person"},{"id":"elena-rodriguez","name":"Elena Rodriguez","type":"person"},{"id":"frank-zhang","name":"Frank Zhang","type":"person"},{"id":"grace-kim","name":"Grace Kim","type":"person"},{"id":"computer-vision-project","name":"Advanced Computer Vision Systems","type":"project"},{"id":"nlp-project","name":"Natural Language Understanding","type":"project"},{"id":"federated-learning-project","name":"Privacy-Preserving Federated Learning","type":"project"},{"id":"quantum-ml-project","name":"Quantum Approaches to Machine Learning","type":"project"},{"id":"adaptive-robotics-project","name":"Adaptive Robotics Control","type":"project"},{"id":"vision-paper-2022","name":"Novel Approaches to Low-Light Computer Vision","type":"publication"},{"id":"nlp-paper-2023","name":"Context-Aware Language Understanding in Multi-Domain Settings","type":"publication"},{"id":"federated-paper-2023","name":"Communication-Efficient Federated Learning with Adaptive Compression","type":"publication"},{"id":"robotics-paper-2022","name":"Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization","type":"publication"},{"id":"quantum-paper-2023","name":"Quantum Circuit Learning for Computer Vision Tasks","type":"publication"},{"id":"survey-paper-2023","name":"A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques","type":"publication"},{"id":"gpu-cluster","name":"High-Performance GPU Cluster","type":"equipment"},{"id":"robotics-lab","name":"Robotics Laboratory","type":"facility"},{"id":"quantum-computer","name":"Quantum Computing Access","type":"equipment"},{"id":"hpc-cluster","name":"University High-Performance Computing Cluster","type":"equipment"},{"id":"data-collection-system","name":"Field Data Collection System","type":"equipment"},{"id":"conference-room","name":"Research Team Conference Room","type":"facility"},{"id":"visualization-lab","name":"Data Visualization Laboratory","type":"facility"},{"id":"machine-learning-theory","name":"Machine Learning Theory","type":"knowledge-area"},{"id":"computer-vision","name":"Computer Vision","type":"knowledge-area"},{"id":"nlp","name":"Natural Language Processing","type":"knowledge-area"},{"id":"privacy-ml","name":"Privacy-Preserving Machine Learning","type":"knowledge-area"},{"id":"quantum-ml","name":"Quantum Machine Learning","type":"knowledge-area"},{"id":"robotics","name":"Robotics","type":"knowledge-area"},{"id":"reinforcement-learning","name":"Reinforcement Learning","type":"knowledge-area"},{"id":"nsf-grant","name":"NSF Research Grant","type":"funding"},{"id":"tech-partner","name":"Tech Industry Partnership","type":"funding"},{"id":"university-fund","name":"University Research Excellence Fund","type":"funding"}],
-          links: [{"source":"alice-chen","target":"computer-vision-project","type":"leads"},{"source":"alice-chen","target":"nlp-project","type":"contributes_to"},{"source":"bob-smith","target":"nlp-project","type":"leads"},{"source":"carol-jones","target":"computer-vision-project","type":"contributes_to"},{"source":"david-patel","target":"federated-learning-project","type":"leads"},{"source":"alice-chen","target":"federated-learning-project","type":"contributes_to"},{"source":"frank-zhang","target":"quantum-ml-project","type":"leads"},{"source":"david-patel","target":"quantum-ml-project","type":"contributes_to"},{"source":"carol-jones","target":"adaptive-robotics-project","type":"leads"},{"source":"elena-rodriguez","target":"adaptive-robotics-project","type":"contributes_to"},{"source":"elena-rodriguez","target":"computer-vision-project","type":"contributes_to"},{"source":"david-patel","target":"nlp-project","type":"contributes_to"},{"source":"bob-smith","target":"federated-learning-project","type":"contributes_to"},{"source":"alice-chen","target":"carol-jones","type":"mentors"},{"source":"alice-chen","target":"david-patel","type":"mentors"},{"source":"bob-smith","target":"elena-rodriguez","type":"mentors"},{"source":"david-patel","target":"elena-rodriguez","type":"mentors"},{"source":"carol-jones","target":"elena-rodriguez","type":"mentors"},{"source":"alice-chen","target":"vision-paper-2022","type":"authored"},{"source":"carol-jones","target":"vision-paper-2022","type":"authored"},{"source":"bob-smith","target":"nlp-paper-2023","type":"authored"},{"source":"alice-chen","target":"nlp-paper-2023","type":"authored"},{"source":"david-patel","target":"federated-paper-2023","type":"authored"},{"source":"alice-chen","target":"federated-paper-2023","type":"authored"},{"source":"frank-zhang","target":"federated-paper-2023","type":"authored"},{"source":"carol-jones","target":"robotics-paper-2022","type":"authored"},{"source":"alice-chen","target":"robotics-paper-2022","type":"authored"},{"source":"frank-zhang","target":"quantum-paper-2023","type":"authored"},{"source":"david-patel","target":"quantum-paper-2023","type":"authored"},{"source":"david-patel","target":"survey-paper-2023","type":"authored"},{"source":"bob-smith","target":"survey-paper-2023","type":"authored"},{"source":"alice-chen","target":"survey-paper-2023","type":"authored"},{"source":"computer-vision-project","target":"vision-paper-2022","type":"produced"},{"source":"nlp-project","target":"nlp-paper-2023","type":"produced"},{"source":"federated-learning-project","target":"federated-paper-2023","type":"produced"},{"source":"federated-learning-project","target":"survey-paper-2023","type":"produced"},{"source":"adaptive-robotics-project","target":"robotics-paper-2022","type":"produced"},{"source":"quantum-ml-project","target":"quantum-paper-2023","type":"produced"},{"source":"computer-vision-project","target":"gpu-cluster","type":"uses"},{"source":"nlp-project","target":"gpu-cluster","type":"uses"},{"source":"carol-jones","target":"robotics-lab","type":"uses"},{"source":"federated-learning-project","target":"gpu-cluster","type":"uses"},{"source":"federated-learning-project","target":"hpc-cluster","type":"uses"},{"source":"quantum-ml-project","target":"quantum-computer","type":"uses"},{"source":"quantum-ml-project","target":"hpc-cluster","type":"uses"},{"source":"adaptive-robotics-project","target":"robotics-lab","type":"uses"},{"source":"adaptive-robotics-project","target":"data-collection-system","type":"uses"},{"source":"elena-rodriguez","target":"visualization-lab","type":"uses"},{"source":"david-patel","target":"hpc-cluster","type":"uses"},{"source":"frank-zhang","target":"quantum-computer","type":"uses"},{"source":"machine-learning-theory","target":"computer-vision","type":"foundational_for"},{"source":"machine-learning-theory","target":"nlp","type":"foundational_for"},{"source":"alice-chen","target":"computer-vision","type":"expertise_in"},{"source":"bob-smith","target":"nlp","type":"expertise_in"},{"source":"carol-jones","target":"machine-learning-theory","type":"expertise_in"},{"source":"machine-learning-theory","target":"privacy-ml","type":"foundational_for"},{"source":"machine-learning-theory","target":"quantum-ml","type":"foundational_for"},{"source":"machine-learning-theory","target":"reinforcement-learning","type":"foundational_for"},{"source":"reinforcement-learning","target":"robotics","type":"foundational_for"},{"source":"david-patel","target":"privacy-ml","type":"expertise_in"},{"source":"david-patel","target":"machine-learning-theory","type":"expertise_in"},{"source":"frank-zhang","target":"quantum-ml","type":"expertise_in"},{"source":"carol-jones","target":"reinforcement-learning","type":"expertise_in"},{"source":"carol-jones","target":"robotics","type":"expertise_in"},{"source":"alice-chen","target":"privacy-ml","type":"expertise_in"},{"source":"bob-smith","target":"privacy-ml","type":"expertise_in"},{"source":"elena-rodriguez","target":"computer-vision","type":"expertise_in"},{"source":"computer-vision-project","target":"computer-vision","type":"applies"},{"source":"computer-vision-project","target":"machine-learning-theory","type":"applies"},{"source":"nlp-project","target":"nlp","type":"applies"},{"source":"nlp-project","target":"machine-learning-theory","type":"applies"},{"source":"federated-learning-project","target":"privacy-ml","type":"applies"},{"source":"federated-learning-project","target":"machine-learning-theory","type":"applies"},{"source":"quantum-ml-project","target":"quantum-ml","type":"applies"},{"source":"quantum-ml-project","target":"machine-learning-theory","type":"applies"},{"source":"adaptive-robotics-project","target":"robotics","type":"applies"},{"source":"adaptive-robotics-project","target":"reinforcement-learning","type":"applies"},{"source":"nsf-grant","target":"computer-vision-project","type":"funds"},{"source":"nsf-grant","target":"adaptive-robotics-project","type":"funds"},{"source":"tech-partner","target":"federated-learning-project","type":"funds"},{"source":"tech-partner","target":"nlp-project","type":"funds"},{"source":"university-fund","target":"quantum-ml-project","type":"funds"},{"source":"grace-kim","target":"computer-vision-project","type":"administers"},{"source":"grace-kim","target":"nlp-project","type":"administers"},{"source":"grace-kim","target":"federated-learning-project","type":"administers"},{"source":"grace-kim","target":"quantum-ml-project","type":"administers"},{"source":"grace-kim","target":"adaptive-robotics-project","type":"administers"},{"source":"survey-paper-2023","target":"federated-paper-2023","type":"cites"},{"source":"survey-paper-2023","target":"vision-paper-2022","type":"cites"},{"source":"survey-paper-2023","target":"nlp-paper-2023","type":"cites"},{"source":"robotics-paper-2022","target":"vision-paper-2022","type":"cites"},{"source":"quantum-paper-2023","target":"survey-paper-2023","type":"cites"}]
+          nodes: [
+            {
+                "id": "alice-chen",
+                "name": "Alice Chen",
+                "type": "person",
+                "attributes": {"name":"Alice Chen","title":"Principal Investigator","expertise":["Machine Learning","Computer Vision","Neural Networks"],"email":"alice.chen@research.org","joinDate":"2018-01-15","status":"active"}
+              },
+            {
+                "id": "bob-smith",
+                "name": "Bob Smith",
+                "type": "person",
+                "attributes": {"name":"Bob Smith","title":"Senior Researcher","expertise":["Natural Language Processing","Deep Learning"],"email":"bob.smith@research.org","joinDate":"2019-03-01","status":"active"}
+              },
+            {
+                "id": "carol-jones",
+                "name": "Carol Jones",
+                "type": "person",
+                "attributes": {"name":"Carol Jones","title":"PhD Student","expertise":["Reinforcement Learning","Robotics"],"email":"carol.jones@research.org","joinDate":"2020-09-01","status":"active","advisor":"alice-chen"}
+              },
+            {
+                "id": "david-patel",
+                "name": "David Patel",
+                "type": "person",
+                "attributes": {"name":"David Patel","title":"Postdoctoral Researcher","expertise":["Federated Learning","Privacy-Preserving AI","Distributed Systems"],"email":"david.patel@research.org","joinDate":"2021-02-15","status":"active"}
+              },
+            {
+                "id": "elena-rodriguez",
+                "name": "Elena Rodriguez",
+                "type": "person",
+                "attributes": {"name":"Elena Rodriguez","title":"Research Assistant","expertise":["Data Visualization","Statistical Analysis"],"email":"elena.rodriguez@research.org","joinDate":"2022-06-01","status":"active"}
+              },
+            {
+                "id": "frank-zhang",
+                "name": "Frank Zhang",
+                "type": "person",
+                "attributes": {"name":"Frank Zhang","title":"Visiting Researcher","expertise":["Quantum Computing","Algorithm Design"],"email":"frank.zhang@partner-university.edu","joinDate":"2023-01-10","status":"active","endDate":"2023-12-31"}
+              },
+            {
+                "id": "grace-kim",
+                "name": "Grace Kim",
+                "type": "person",
+                "attributes": {"name":"Grace Kim","title":"Lab Manager","expertise":["Research Administration","Grant Writing"],"email":"grace.kim@research.org","joinDate":"2019-07-15","status":"active"}
+              },
+            {
+                "id": "computer-vision-project",
+                "name": "Advanced Computer Vision Systems",
+                "type": "project",
+                "attributes": {"title":"Advanced Computer Vision Systems","description":"Developing next-generation computer vision systems using deep learning","startDate":"2021-01-01","endDate":"2023-12-31","status":"active","budget":500000,"objectives":["Improve object detection accuracy","Develop real-time processing capabilities","Create robust low-light performance"]}
+              },
+            {
+                "id": "nlp-project",
+                "name": "Natural Language Understanding",
+                "type": "project",
+                "attributes": {"title":"Natural Language Understanding","description":"Advanced NLP techniques for context-aware language understanding","startDate":"2021-06-01","endDate":"2024-05-31","status":"active","budget":400000,"objectives":["Enhance contextual understanding","Improve multilingual capabilities","Develop efficient training methods"]}
+              },
+            {
+                "id": "federated-learning-project",
+                "name": "Privacy-Preserving Federated Learning",
+                "type": "project",
+                "attributes": {"title":"Privacy-Preserving Federated Learning","description":"Developing techniques for training models across distributed data sources while preserving privacy","startDate":"2022-03-01","endDate":"2025-02-28","status":"active","budget":650000,"objectives":["Reduce communication overhead in federated systems","Enhance privacy guarantees beyond differential privacy","Deploy to real-world healthcare applications"]}
+              },
+            {
+                "id": "quantum-ml-project",
+                "name": "Quantum Approaches to Machine Learning",
+                "type": "project",
+                "attributes": {"title":"Quantum Approaches to Machine Learning","description":"Exploring quantum computing advantages for select machine learning problems","startDate":"2023-01-15","endDate":"2024-12-31","status":"active","budget":800000,"objectives":["Develop quantum algorithms for ML acceleration","Benchmark against classical approaches","Identify practical quantum advantage use cases"]}
+              },
+            {
+                "id": "adaptive-robotics-project",
+                "name": "Adaptive Robotics Control",
+                "type": "project",
+                "attributes": {"title":"Adaptive Robotics Control","description":"Developing reinforcement learning approaches for adaptive robot control in unstructured environments","startDate":"2021-09-01","endDate":"2024-08-31","status":"active","budget":550000,"objectives":["Create sample-efficient RL algorithms for robotics","Implement transfer learning between simulation and real-world","Demonstrate robust performance in dynamic environments"]}
+              },
+            {
+                "id": "vision-paper-2022",
+                "name": "Novel Approaches to Low-Light Computer Vision",
+                "type": "publication",
+                "attributes": {"title":"Novel Approaches to Low-Light Computer Vision","authors":["alice-chen","carol-jones"],"venue":"International Conference on Computer Vision 2022","year":2022,"doi":"10.1234/vision2022","citations":45,"abstract":"This paper presents innovative techniques for computer vision in low-light conditions..."}
+              },
+            {
+                "id": "nlp-paper-2023",
+                "name": "Context-Aware Language Understanding in Multi-Domain Settings",
+                "type": "publication",
+                "attributes": {"title":"Context-Aware Language Understanding in Multi-Domain Settings","authors":["bob-smith","alice-chen"],"venue":"ACL 2023","year":2023,"doi":"10.1234/acl2023","citations":12,"abstract":"We propose a novel approach to context-aware language understanding..."}
+              },
+            {
+                "id": "federated-paper-2023",
+                "name": "Communication-Efficient Federated Learning with Adaptive Compression",
+                "type": "publication",
+                "attributes": {"title":"Communication-Efficient Federated Learning with Adaptive Compression","authors":["david-patel","alice-chen","frank-zhang"],"venue":"International Conference on Machine Learning 2023","year":2023,"doi":"10.1234/icml2023","citations":8,"abstract":"This paper introduces a novel compression technique for federated learning that adaptively adjusts to network conditions and data heterogeneity..."}
+              },
+            {
+                "id": "robotics-paper-2022",
+                "name": "Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization",
+                "type": "publication",
+                "attributes": {"title":"Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization","authors":["carol-jones","alice-chen"],"venue":"Robotics: Science and Systems 2022","year":2022,"doi":"10.1234/rss2022","citations":31,"abstract":"We present a new approach to sim-to-real transfer learning for robotic manipulation tasks that leverages adaptive domain randomization..."}
+              },
+            {
+                "id": "quantum-paper-2023",
+                "name": "Quantum Circuit Learning for Computer Vision Tasks",
+                "type": "publication",
+                "attributes": {"title":"Quantum Circuit Learning for Computer Vision Tasks","authors":["frank-zhang","david-patel"],"venue":"Quantum Machine Intelligence Journal","year":2023,"doi":"10.1234/qmi2023","citations":5,"abstract":"This study explores the application of parameterized quantum circuits for image classification tasks, demonstrating advantages in specific constrained scenarios..."}
+              },
+            {
+                "id": "survey-paper-2023",
+                "name": "A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques",
+                "type": "publication",
+                "attributes": {"title":"A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques","authors":["david-patel","bob-smith","alice-chen"],"venue":"ACM Computing Surveys","year":2023,"doi":"10.1234/surveys2023","citations":78,"abstract":"This survey provides a comprehensive overview of privacy-preserving machine learning techniques, including differential privacy, federated learning, secure multi-party computation, and homomorphic encryption..."}
+              },
+            {
+                "id": "gpu-cluster",
+                "name": "High-Performance GPU Cluster",
+                "type": "equipment",
+                "attributes": {"name":"High-Performance GPU Cluster","description":"NVIDIA DGX A100 cluster for deep learning research","location":"Server Room A","specifications":{"gpus":8,"memory":"320GB","storage":"10TB"},"status":"operational","purchaseDate":"2021-01-15","maintenanceSchedule":"quarterly"}
+              },
+            {
+                "id": "robotics-lab",
+                "name": "Robotics Laboratory",
+                "type": "facility",
+                "attributes": {"name":"Robotics Laboratory","description":"Advanced robotics testing and development facility","location":"Building B, Room 305","equipment":["robot-arm-1","motion-capture-system"],"capacity":10,"status":"active"}
+              },
+            {
+                "id": "quantum-computer",
+                "name": "Quantum Computing Access",
+                "type": "equipment",
+                "attributes": {"name":"Quantum Computing Access","description":"Cloud access to IBM Quantum systems","location":"Remote/Cloud","specifications":{"qubits":127,"access":"Priority research queue","quota":"20 hours/month"},"status":"operational","acquisitionDate":"2022-11-01","contractRenewal":"2024-10-31"}
+              },
+            {
+                "id": "hpc-cluster",
+                "name": "University High-Performance Computing Cluster",
+                "type": "equipment",
+                "attributes": {"name":"University High-Performance Computing Cluster","description":"Shared computing facility for computation-intensive research","location":"Data Center Building C","specifications":{"cores":4096,"memory":"16TB","storage":"1PB","interconnect":"InfiniBand"},"status":"operational","accessLevel":"shared"}
+              },
+            {
+                "id": "data-collection-system",
+                "name": "Field Data Collection System",
+                "type": "equipment",
+                "attributes": {"name":"Field Data Collection System","description":"Mobile sensors and data collection equipment for field research","location":"Equipment Room 105","specifications":{"sensors":["environmental","biometric","geospatial"],"storage":"2TB","battery":"72 hours"},"status":"operational","purchaseDate":"2022-05-15"}
+              },
+            {
+                "id": "conference-room",
+                "name": "Research Team Conference Room",
+                "type": "facility",
+                "attributes": {"name":"Research Team Conference Room","description":"Meeting and presentation space with advanced AV equipment","location":"Building A, Room 210","equipment":["projector","video-conferencing","interactive-whiteboard"],"capacity":20,"status":"active"}
+              },
+            {
+                "id": "visualization-lab",
+                "name": "Data Visualization Laboratory",
+                "type": "facility",
+                "attributes": {"name":"Data Visualization Laboratory","description":"Specialized facility for immersive data visualization","location":"Building B, Room 410","equipment":["vr-headsets","large-format-displays","3d-projection"],"capacity":8,"status":"active"}
+              },
+            {
+                "id": "machine-learning-theory",
+                "name": "Machine Learning Theory",
+                "type": "knowledge-area",
+                "attributes": {"name":"Machine Learning Theory","description":"Fundamental theoretical concepts in machine learning","topics":["Statistical Learning","Optimization","Information Theory"]}
+              },
+            {
+                "id": "computer-vision",
+                "name": "Computer Vision",
+                "type": "knowledge-area",
+                "attributes": {"name":"Computer Vision","description":"Visual information processing and understanding","topics":["Object Detection","Image Segmentation","Visual Recognition"]}
+              },
+            {
+                "id": "nlp",
+                "name": "Natural Language Processing",
+                "type": "knowledge-area",
+                "attributes": {"name":"Natural Language Processing","description":"Processing and understanding of human language","topics":["Text Understanding","Machine Translation","Language Generation"]}
+              },
+            {
+                "id": "privacy-ml",
+                "name": "Privacy-Preserving Machine Learning",
+                "type": "knowledge-area",
+                "attributes": {"name":"Privacy-Preserving Machine Learning","description":"Techniques for ensuring privacy in machine learning systems","topics":["Differential Privacy","Federated Learning","Secure Multi-Party Computation","Homomorphic Encryption"]}
+              },
+            {
+                "id": "quantum-ml",
+                "name": "Quantum Machine Learning",
+                "type": "knowledge-area",
+                "attributes": {"name":"Quantum Machine Learning","description":"Intersection of quantum computing and machine learning","topics":["Quantum Neural Networks","Quantum Kernels","Quantum Circuit Learning","Quantum Advantage in ML"]}
+              },
+            {
+                "id": "robotics",
+                "name": "Robotics",
+                "type": "knowledge-area",
+                "attributes": {"name":"Robotics","description":"Design, construction, and operation of robots","topics":["Robot Control","Perception","Path Planning","Human-Robot Interaction"]}
+              },
+            {
+                "id": "reinforcement-learning",
+                "name": "Reinforcement Learning",
+                "type": "knowledge-area",
+                "attributes": {"name":"Reinforcement Learning","description":"Learning through interaction with an environment","topics":["Value-Based Methods","Policy Gradient Methods","Model-Based RL","Multi-Agent RL"]}
+              },
+            {
+                "id": "nsf-grant",
+                "name": "NSF Research Grant",
+                "type": "funding",
+                "attributes": {"name":"NSF Research Grant","description":"National Science Foundation grant for foundational research","amount":1200000,"startDate":"2021-01-01","endDate":"2024-12-31","grantNumber":"NSF-2021-1234","type":"federal"}
+              },
+            {
+                "id": "tech-partner",
+                "name": "Tech Industry Partnership",
+                "type": "funding",
+                "attributes": {"name":"Tech Industry Partnership","description":"Research partnership with major technology company","amount":500000,"startDate":"2022-07-01","endDate":"2024-06-30","contractNumber":"IND-2022-789","type":"industry"}
+              },
+            {
+                "id": "university-fund",
+                "name": "University Research Excellence Fund",
+                "type": "funding",
+                "attributes": {"name":"University Research Excellence Fund","description":"Internal university funding for promising research directions","amount":250000,"startDate":"2023-01-01","endDate":"2024-12-31","grantNumber":"UNI-2023-456","type":"internal"}
+              }
+          ],
+          links: [
+            {
+                "source": "alice-chen",
+                "target": "computer-vision-project",
+                "type": "leads"
+              },
+            {
+                "source": "alice-chen",
+                "target": "nlp-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "bob-smith",
+                "target": "nlp-project",
+                "type": "leads"
+              },
+            {
+                "source": "carol-jones",
+                "target": "computer-vision-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "david-patel",
+                "target": "federated-learning-project",
+                "type": "leads"
+              },
+            {
+                "source": "alice-chen",
+                "target": "federated-learning-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "frank-zhang",
+                "target": "quantum-ml-project",
+                "type": "leads"
+              },
+            {
+                "source": "david-patel",
+                "target": "quantum-ml-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "carol-jones",
+                "target": "adaptive-robotics-project",
+                "type": "leads"
+              },
+            {
+                "source": "elena-rodriguez",
+                "target": "adaptive-robotics-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "elena-rodriguez",
+                "target": "computer-vision-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "david-patel",
+                "target": "nlp-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "bob-smith",
+                "target": "federated-learning-project",
+                "type": "contributes_to"
+              },
+            {
+                "source": "alice-chen",
+                "target": "carol-jones",
+                "type": "mentors"
+              },
+            {
+                "source": "alice-chen",
+                "target": "david-patel",
+                "type": "mentors"
+              },
+            {
+                "source": "bob-smith",
+                "target": "elena-rodriguez",
+                "type": "mentors"
+              },
+            {
+                "source": "david-patel",
+                "target": "elena-rodriguez",
+                "type": "mentors"
+              },
+            {
+                "source": "carol-jones",
+                "target": "elena-rodriguez",
+                "type": "mentors"
+              },
+            {
+                "source": "alice-chen",
+                "target": "vision-paper-2022",
+                "type": "authored"
+              },
+            {
+                "source": "carol-jones",
+                "target": "vision-paper-2022",
+                "type": "authored"
+              },
+            {
+                "source": "bob-smith",
+                "target": "nlp-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "alice-chen",
+                "target": "nlp-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "david-patel",
+                "target": "federated-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "alice-chen",
+                "target": "federated-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "frank-zhang",
+                "target": "federated-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "carol-jones",
+                "target": "robotics-paper-2022",
+                "type": "authored"
+              },
+            {
+                "source": "alice-chen",
+                "target": "robotics-paper-2022",
+                "type": "authored"
+              },
+            {
+                "source": "frank-zhang",
+                "target": "quantum-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "david-patel",
+                "target": "quantum-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "david-patel",
+                "target": "survey-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "bob-smith",
+                "target": "survey-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "alice-chen",
+                "target": "survey-paper-2023",
+                "type": "authored"
+              },
+            {
+                "source": "computer-vision-project",
+                "target": "vision-paper-2022",
+                "type": "produced"
+              },
+            {
+                "source": "nlp-project",
+                "target": "nlp-paper-2023",
+                "type": "produced"
+              },
+            {
+                "source": "federated-learning-project",
+                "target": "federated-paper-2023",
+                "type": "produced"
+              },
+            {
+                "source": "federated-learning-project",
+                "target": "survey-paper-2023",
+                "type": "produced"
+              },
+            {
+                "source": "adaptive-robotics-project",
+                "target": "robotics-paper-2022",
+                "type": "produced"
+              },
+            {
+                "source": "quantum-ml-project",
+                "target": "quantum-paper-2023",
+                "type": "produced"
+              },
+            {
+                "source": "computer-vision-project",
+                "target": "gpu-cluster",
+                "type": "uses"
+              },
+            {
+                "source": "nlp-project",
+                "target": "gpu-cluster",
+                "type": "uses"
+              },
+            {
+                "source": "carol-jones",
+                "target": "robotics-lab",
+                "type": "uses"
+              },
+            {
+                "source": "federated-learning-project",
+                "target": "gpu-cluster",
+                "type": "uses"
+              },
+            {
+                "source": "federated-learning-project",
+                "target": "hpc-cluster",
+                "type": "uses"
+              },
+            {
+                "source": "quantum-ml-project",
+                "target": "quantum-computer",
+                "type": "uses"
+              },
+            {
+                "source": "quantum-ml-project",
+                "target": "hpc-cluster",
+                "type": "uses"
+              },
+            {
+                "source": "adaptive-robotics-project",
+                "target": "robotics-lab",
+                "type": "uses"
+              },
+            {
+                "source": "adaptive-robotics-project",
+                "target": "data-collection-system",
+                "type": "uses"
+              },
+            {
+                "source": "elena-rodriguez",
+                "target": "visualization-lab",
+                "type": "uses"
+              },
+            {
+                "source": "david-patel",
+                "target": "hpc-cluster",
+                "type": "uses"
+              },
+            {
+                "source": "frank-zhang",
+                "target": "quantum-computer",
+                "type": "uses"
+              },
+            {
+                "source": "machine-learning-theory",
+                "target": "computer-vision",
+                "type": "foundational_for"
+              },
+            {
+                "source": "machine-learning-theory",
+                "target": "nlp",
+                "type": "foundational_for"
+              },
+            {
+                "source": "alice-chen",
+                "target": "computer-vision",
+                "type": "expertise_in"
+              },
+            {
+                "source": "bob-smith",
+                "target": "nlp",
+                "type": "expertise_in"
+              },
+            {
+                "source": "carol-jones",
+                "target": "machine-learning-theory",
+                "type": "expertise_in"
+              },
+            {
+                "source": "machine-learning-theory",
+                "target": "privacy-ml",
+                "type": "foundational_for"
+              },
+            {
+                "source": "machine-learning-theory",
+                "target": "quantum-ml",
+                "type": "foundational_for"
+              },
+            {
+                "source": "machine-learning-theory",
+                "target": "reinforcement-learning",
+                "type": "foundational_for"
+              },
+            {
+                "source": "reinforcement-learning",
+                "target": "robotics",
+                "type": "foundational_for"
+              },
+            {
+                "source": "david-patel",
+                "target": "privacy-ml",
+                "type": "expertise_in"
+              },
+            {
+                "source": "david-patel",
+                "target": "machine-learning-theory",
+                "type": "expertise_in"
+              },
+            {
+                "source": "frank-zhang",
+                "target": "quantum-ml",
+                "type": "expertise_in"
+              },
+            {
+                "source": "carol-jones",
+                "target": "reinforcement-learning",
+                "type": "expertise_in"
+              },
+            {
+                "source": "carol-jones",
+                "target": "robotics",
+                "type": "expertise_in"
+              },
+            {
+                "source": "alice-chen",
+                "target": "privacy-ml",
+                "type": "expertise_in"
+              },
+            {
+                "source": "bob-smith",
+                "target": "privacy-ml",
+                "type": "expertise_in"
+              },
+            {
+                "source": "elena-rodriguez",
+                "target": "computer-vision",
+                "type": "expertise_in"
+              },
+            {
+                "source": "computer-vision-project",
+                "target": "computer-vision",
+                "type": "applies"
+              },
+            {
+                "source": "computer-vision-project",
+                "target": "machine-learning-theory",
+                "type": "applies"
+              },
+            {
+                "source": "nlp-project",
+                "target": "nlp",
+                "type": "applies"
+              },
+            {
+                "source": "nlp-project",
+                "target": "machine-learning-theory",
+                "type": "applies"
+              },
+            {
+                "source": "federated-learning-project",
+                "target": "privacy-ml",
+                "type": "applies"
+              },
+            {
+                "source": "federated-learning-project",
+                "target": "machine-learning-theory",
+                "type": "applies"
+              },
+            {
+                "source": "quantum-ml-project",
+                "target": "quantum-ml",
+                "type": "applies"
+              },
+            {
+                "source": "quantum-ml-project",
+                "target": "machine-learning-theory",
+                "type": "applies"
+              },
+            {
+                "source": "adaptive-robotics-project",
+                "target": "robotics",
+                "type": "applies"
+              },
+            {
+                "source": "adaptive-robotics-project",
+                "target": "reinforcement-learning",
+                "type": "applies"
+              },
+            {
+                "source": "nsf-grant",
+                "target": "computer-vision-project",
+                "type": "funds"
+              },
+            {
+                "source": "nsf-grant",
+                "target": "adaptive-robotics-project",
+                "type": "funds"
+              },
+            {
+                "source": "tech-partner",
+                "target": "federated-learning-project",
+                "type": "funds"
+              },
+            {
+                "source": "tech-partner",
+                "target": "nlp-project",
+                "type": "funds"
+              },
+            {
+                "source": "university-fund",
+                "target": "quantum-ml-project",
+                "type": "funds"
+              },
+            {
+                "source": "grace-kim",
+                "target": "computer-vision-project",
+                "type": "administers"
+              },
+            {
+                "source": "grace-kim",
+                "target": "nlp-project",
+                "type": "administers"
+              },
+            {
+                "source": "grace-kim",
+                "target": "federated-learning-project",
+                "type": "administers"
+              },
+            {
+                "source": "grace-kim",
+                "target": "quantum-ml-project",
+                "type": "administers"
+              },
+            {
+                "source": "grace-kim",
+                "target": "adaptive-robotics-project",
+                "type": "administers"
+              },
+            {
+                "source": "survey-paper-2023",
+                "target": "federated-paper-2023",
+                "type": "cites"
+              },
+            {
+                "source": "survey-paper-2023",
+                "target": "vision-paper-2022",
+                "type": "cites"
+              },
+            {
+                "source": "survey-paper-2023",
+                "target": "nlp-paper-2023",
+                "type": "cites"
+              },
+            {
+                "source": "robotics-paper-2022",
+                "target": "vision-paper-2022",
+                "type": "cites"
+              },
+            {
+                "source": "quantum-paper-2023",
+                "target": "survey-paper-2023",
+                "type": "cites"
+              }
+          ]
         };
 
         const width = document.getElementById('graph').clientWidth;
@@ -376,7 +1049,7 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.name);
+          .text(d => d.attributes.name || d.attributes.title || d.id);
 
         simulation.on('tick', () => {
           link
@@ -389,6 +1062,30 @@
             .attr('cx', d => d.x)
             .attr('cy', d => d.y);
         });
+
+        // Entity selection functionality
+        window.selectEntityById = function(id) {
+          // Find the selected node
+          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          if (!selectedNode) return;
+          
+          // Reset all nodes
+          node.attr('r', 5).attr('stroke', null);
+          
+          // Highlight the selected node
+          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+            .attr('r', 8)
+            .attr('stroke', 'var(--link)')
+            .attr('stroke-width', 2);
+          
+          // Center and zoom on the selected node
+          const scale = 2;
+          const x = width / 2 - scale * selectedNode.x;
+          const y = height / 2 - scale * selectedNode.y;
+          
+          svg.transition().duration(500)
+            .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
+        };
 
         function drag(simulation) {
           function dragstarted(event) {

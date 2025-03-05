@@ -11,7 +11,7 @@
   <key id="role" for="node" attr.name="role" attr.type="string"/>
   <key id="email" for="node" attr.name="email" attr.type="string"/>
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
-  <graph id="UltraLink_Graph" edgedefault="directed">
+  <graph id="G" edgedefault="directed">
     <node id="machine-learning">
       <data key="type">concept</data>
       <data key="name">Machine Learning</data>

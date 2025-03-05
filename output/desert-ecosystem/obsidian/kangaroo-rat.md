@@ -1,8 +1,8 @@
 ---
 type: organism
 id: kangaroo-rat
-created: 2025-03-05T00:12:43.624Z
-modified: 2025-03-05T00:12:43.624Z
+created: 2025-03-05T00:58:29.975Z
+modified: 2025-03-05T00:58:29.975Z
 ---
 
 # Kangaroo Rat

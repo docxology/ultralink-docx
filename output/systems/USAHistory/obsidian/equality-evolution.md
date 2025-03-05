@@ -1,8 +1,8 @@
 ---
 type: concept_drift
 id: equality-evolution
-created: 2025-03-05T00:12:44.793Z
-modified: 2025-03-05T00:12:44.794Z
+created: 2025-03-05T00:58:30.761Z
+modified: 2025-03-05T00:58:30.761Z
 ---
 
 # Evolution of Equality

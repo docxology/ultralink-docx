@@ -182,15 +182,30 @@ function findRelationships(criteria = {}) {
  * @returns {Array} Relationships involving the entity
  */
 function getEntityRelationships(entityId, options = {}) {
-  const { direction = 'both', types = [] } = options;
+  const { direction = 'both', type = null } = options;
   const results = [];
+  
+  // If entityId is null, return all relationships that match the type
+  if (entityId === null) {
+    // Return all relationships, filtered by type if specified
+    for (const relationship of this.relationships.values()) {
+      if ((type && relationship.type === type) || 
+          (options.type && relationship.type === options.type) || 
+          (!type && !options.type)) {
+        results.push(relationship);
+      }
+    }
+    return results;
+  }
   
   // Get outgoing relationships (where entity is source)
   if (direction === 'outgoing' || direction === 'both') {
     if (this.relationshipsBySource.has(entityId)) {
       for (const id of this.relationshipsBySource.get(entityId)) {
         const relationship = this.relationships.get(id);
-        if (types.length === 0 || types.includes(relationship.type)) {
+        if ((type && relationship.type === type) || 
+            (options.type && relationship.type === options.type) || 
+            (!type && !options.type)) {
           results.push(relationship);
         }
       }
@@ -202,7 +217,9 @@ function getEntityRelationships(entityId, options = {}) {
     if (this.relationshipsByTarget.has(entityId)) {
       for (const id of this.relationshipsByTarget.get(entityId)) {
         const relationship = this.relationships.get(id);
-        if (types.length === 0 || types.includes(relationship.type)) {
+        if ((type && relationship.type === type) || 
+            (options.type && relationship.type === options.type) || 
+            (!type && !options.type)) {
           results.push(relationship);
         }
       }

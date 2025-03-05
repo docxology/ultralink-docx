@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Knowledge Base</title>
+  
   <style>
     :root {
       --background: #ffffff;
@@ -147,8 +148,87 @@
       <script>
         // Graph visualization code
         const data = {
-          nodes: [{"id":"machine-learning","name":"Machine Learning","type":"concept"},{"id":"data-analysis","name":"Data Analysis","type":"concept"},{"id":"project-management","name":"Project Management","type":"concept"},{"id":"project-alpha","name":"Project Alpha","type":"project"},{"id":"project-beta","name":"Project Beta","type":"project"},{"id":"alice-smith","name":"Alice Smith","type":"person"},{"id":"bob-johnson","name":"Bob Johnson","type":"person"}],
-          links: [{"source":"project-alpha","target":"machine-learning","type":"uses"},{"source":"project-alpha","target":"data-analysis","type":"uses"},{"source":"project-beta","target":"machine-learning","type":"uses"},{"source":"alice-smith","target":"project-alpha","type":"manages"},{"source":"alice-smith","target":"project-beta","type":"manages"},{"source":"bob-johnson","target":"project-alpha","type":"works_on"},{"source":"bob-johnson","target":"project-beta","type":"works_on"}]
+          nodes: [
+            {
+                "id": "machine-learning",
+                "name": "Machine Learning",
+                "type": "concept",
+                "attributes": {"name":"Machine Learning","description":"A field of AI focused on algorithms that learn from data"}
+              },
+            {
+                "id": "data-analysis",
+                "name": "Data Analysis",
+                "type": "concept",
+                "attributes": {"name":"Data Analysis","description":"The process of inspecting and modeling data"}
+              },
+            {
+                "id": "project-management",
+                "name": "Project Management",
+                "type": "concept",
+                "attributes": {"name":"Project Management","description":"The practice of planning and organizing projects"}
+              },
+            {
+                "id": "project-alpha",
+                "name": "Project Alpha",
+                "type": "project",
+                "attributes": {"name":"Project Alpha","status":"In Progress","dueDate":"2023-12-31"}
+              },
+            {
+                "id": "project-beta",
+                "name": "Project Beta",
+                "type": "project",
+                "attributes": {"name":"Project Beta","status":"Planning","dueDate":"2024-03-15"}
+              },
+            {
+                "id": "alice-smith",
+                "name": "Alice Smith",
+                "type": "person",
+                "attributes": {"name":"Alice Smith","role":"Project Manager","email":"alice@example.com"}
+              },
+            {
+                "id": "bob-johnson",
+                "name": "Bob Johnson",
+                "type": "person",
+                "attributes": {"name":"Bob Johnson","role":"Developer","email":"bob@example.com"}
+              }
+          ],
+          links: [
+            {
+                "source": "project-alpha",
+                "target": "machine-learning",
+                "type": "uses"
+              },
+            {
+                "source": "project-alpha",
+                "target": "data-analysis",
+                "type": "uses"
+              },
+            {
+                "source": "project-beta",
+                "target": "machine-learning",
+                "type": "uses"
+              },
+            {
+                "source": "alice-smith",
+                "target": "project-alpha",
+                "type": "manages"
+              },
+            {
+                "source": "alice-smith",
+                "target": "project-beta",
+                "type": "manages"
+              },
+            {
+                "source": "bob-johnson",
+                "target": "project-alpha",
+                "type": "works_on"
+              },
+            {
+                "source": "bob-johnson",
+                "target": "project-beta",
+                "type": "works_on"
+              }
+          ]
         };
 
         const width = document.getElementById('graph').clientWidth;
@@ -180,7 +260,7 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.name);
+          .text(d => d.attributes.name || d.attributes.title || d.id);
 
         simulation.on('tick', () => {
           link
@@ -193,6 +273,30 @@
             .attr('cx', d => d.x)
             .attr('cy', d => d.y);
         });
+
+        // Entity selection functionality
+        window.selectEntityById = function(id) {
+          // Find the selected node
+          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          if (!selectedNode) return;
+          
+          // Reset all nodes
+          node.attr('r', 5).attr('stroke', null);
+          
+          // Highlight the selected node
+          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+            .attr('r', 8)
+            .attr('stroke', 'var(--link)')
+            .attr('stroke-width', 2);
+          
+          // Center and zoom on the selected node
+          const scale = 2;
+          const x = width / 2 - scale * selectedNode.x;
+          const y = height / 2 - scale * selectedNode.y;
+          
+          svg.transition().duration(500)
+            .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
+        };
 
         function drag(simulation) {
           function dragstarted(event) {

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Research Team Portal</title>
+  <link rel="stylesheet" href="styles/academic.css">
   <style>
     :root {
       --background: #f5f5f5;
@@ -126,8 +127,54 @@
       <script>
         // Graph visualization code
         const data = {
-          nodes: [{"id":"alice","name":"Alice Chen","type":"researcher"},{"id":"bob","name":"Bob Smith","type":"researcher"},{"id":"desert-ecology","name":"Desert Ecology Study","type":"project"},{"id":"climate-impact","name":"Climate Impact Assessment","type":"project"}],
-          links: [{"source":"alice","target":"desert-ecology","type":"leads"},{"source":"alice","target":"climate-impact","type":"contributes_to"},{"source":"bob","target":"desert-ecology","type":"works_on"},{"source":"bob","target":"alice","type":"reports_to"}]
+          nodes: [
+            {
+                "id": "alice",
+                "name": "Alice Chen",
+                "type": "researcher",
+                "attributes": {"name":"Alice Chen","role":"Principal Investigator","department":"Biology","email":"alice.chen@example.edu","publications":42}
+              },
+            {
+                "id": "bob",
+                "name": "Bob Smith",
+                "type": "researcher",
+                "attributes": {"name":"Bob Smith","role":"Postdoc","department":"Biology","email":"bob.smith@example.edu","publications":18}
+              },
+            {
+                "id": "desert-ecology",
+                "name": "Desert Ecology Study",
+                "type": "project",
+                "attributes": {"name":"Desert Ecology Study","title":"Desert Ecology Study","startDate":"2023-01-15","budget":150000,"status":"Active"}
+              },
+            {
+                "id": "climate-impact",
+                "name": "Climate Impact Assessment",
+                "type": "project",
+                "attributes": {"name":"Climate Impact Assessment","title":"Climate Impact Assessment","startDate":"2022-08-10","budget":220000,"status":"Active"}
+              }
+          ],
+          links: [
+            {
+                "source": "alice",
+                "target": "desert-ecology",
+                "type": "leads"
+              },
+            {
+                "source": "alice",
+                "target": "climate-impact",
+                "type": "contributes_to"
+              },
+            {
+                "source": "bob",
+                "target": "desert-ecology",
+                "type": "works_on"
+              },
+            {
+                "source": "bob",
+                "target": "alice",
+                "type": "reports_to"
+              }
+          ]
         };
 
         const width = document.getElementById('graph').clientWidth;
@@ -159,7 +206,7 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.name);
+          .text(d => d.attributes.name || d.attributes.title || d.id);
 
         simulation.on('tick', () => {
           link
@@ -172,6 +219,30 @@
             .attr('cx', d => d.x)
             .attr('cy', d => d.y);
         });
+
+        // Entity selection functionality
+        window.selectEntityById = function(id) {
+          // Find the selected node
+          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          if (!selectedNode) return;
+          
+          // Reset all nodes
+          node.attr('r', 5).attr('stroke', null);
+          
+          // Highlight the selected node
+          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+            .attr('r', 8)
+            .attr('stroke', 'var(--link)')
+            .attr('stroke-width', 2);
+          
+          // Center and zoom on the selected node
+          const scale = 2;
+          const x = width / 2 - scale * selectedNode.x;
+          const y = height / 2 - scale * selectedNode.y;
+          
+          svg.transition().duration(500)
+            .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
+        };
 
         function drag(simulation) {
           function dragstarted(event) {

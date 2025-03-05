@@ -36,7 +36,7 @@
   <key id="grantNumber" for="node" attr.name="grantNumber" attr.type="string"/>
   <key id="contractNumber" for="node" attr.name="contractNumber" attr.type="string"/>
   <key id="type" for="edge" attr.name="type" attr.type="string"/>
-  <graph id="UltraLink_Graph" edgedefault="directed">
+  <graph id="G" edgedefault="directed">
     <node id="alice-chen">
       <data key="type">person</data>
       <data key="name">Alice Chen</data>

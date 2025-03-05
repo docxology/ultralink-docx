@@ -1,8 +1,8 @@
 ---
 type: animal
 id: yucca_moth
-created: 2025-03-05T00:12:44.729Z
-modified: 2025-03-05T00:12:44.729Z
+created: 2025-03-05T00:58:30.630Z
+modified: 2025-03-05T00:58:30.630Z
 ---
 
 # Yucca Moth

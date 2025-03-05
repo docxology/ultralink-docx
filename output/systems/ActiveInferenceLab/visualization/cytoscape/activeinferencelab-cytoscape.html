@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UltraLink Cytoscape Visualization</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>UltraLink Graph Visualization</h1>
+  <div id="cy"></div>
+  <script>
+    // Initialize Cytoscape
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: {
+        nodes: [{"data":{"id":"alice","label":"Dr. Alice Chen","type":"researcher"}},{"data":{"id":"bob","label":"Dr. Bob Smith","type":"researcher"}},{"data":{"id":"carol","label":"Dr. Carol Jimenez","type":"researcher"}},{"data":{"id":"david","label":"David Wilson","type":"researcher"}},{"data":{"id":"emma","label":"Emma Taylor","type":"researcher"}},{"data":{"id":"frank","label":"Dr. Frank Martinez","type":"researcher"}},{"data":{"id":"grace","label":"Grace Kim","type":"researcher"}},{"data":{"id":"active-inference-model","label":"Active Inference Modeling of Collective Behavior","type":"project"}},{"data":{"id":"ant-colony-study","label":"Ant Colony Decision Making Study","type":"project"}},{"data":{"id":"neural-basis","label":"Neural Basis of Active Inference","type":"project"}},{"data":{"id":"active-inference","label":"Active Inference","type":"concept"}},{"data":{"id":"collective-behavior","label":"Collective Behavior","type":"concept"}},{"data":{"id":"swarm-intelligence","label":"Swarm Intelligence","type":"concept"}},{"data":{"id":"ant-tracking","label":"Ant Tracking System","type":"equipment"}},{"data":{"id":"neural-recording","label":"Neural Recording Setup","type":"equipment"}},{"data":{"id":"computation-cluster","label":"High Performance Computing Cluster","type":"equipment"}},{"data":{"id":"paper-2023a","label":"paper-2023a","type":"publication"}},{"data":{"id":"paper-2023b","label":"paper-2023b","type":"publication"}},{"data":{"id":"paper-2024","label":"paper-2024","type":"publication"}}],
+        edges: [{"data":{"id":"e0","source":"alice","target":"active-inference-model","label":"leads"}},{"data":{"id":"e1","source":"bob","target":"ant-colony-study","label":"leads"}},{"data":{"id":"e2","source":"carol","target":"active-inference-model","label":"contributes"}},{"data":{"id":"e3","source":"david","target":"active-inference-model","label":"contributes"}},{"data":{"id":"e4","source":"emma","target":"ant-colony-study","label":"contributes"}},{"data":{"id":"e5","source":"frank","target":"ant-colony-study","label":"contributes"}},{"data":{"id":"e6","source":"bob","target":"active-inference-model","label":"contributes_to"}},{"data":{"id":"e7","source":"carol","target":"active-inference-model","label":"contributes_to"}},{"data":{"id":"e8","source":"david","target":"ant-colony-study","label":"contributes_to"}},{"data":{"id":"e9","source":"grace","target":"ant-colony-study","label":"contributes_to"}},{"data":{"id":"e10","source":"frank","target":"ant-colony-study","label":"contributes_to"}},{"data":{"id":"e11","source":"emma","target":"ant-colony-study","label":"contributes_to"}},{"data":{"id":"e12","source":"alice","target":"david","label":"mentors"}},{"data":{"id":"e13","source":"bob","target":"emma","label":"mentors"}},{"data":{"id":"e14","source":"alice","target":"carol","label":"mentors"}},{"data":{"id":"e15","source":"frank","target":"emma","label":"co_advises"}},{"data":{"id":"e16","source":"carol","target":"alice","label":"reports_to"}},{"data":{"id":"e17","source":"david","target":"bob","label":"reports_to"}},{"data":{"id":"e18","source":"emma","target":"alice","label":"reports_to"}},{"data":{"id":"e19","source":"grace","target":"bob","label":"reports_to"}},{"data":{"id":"e20","source":"active-inference-model","target":"active-inference","label":"applies"}},{"data":{"id":"e21","source":"ant-colony-study","target":"collective-behavior","label":"applies"}},{"data":{"id":"e22","source":"active-inference","target":"collective-behavior","label":"relates_to"}},{"data":{"id":"e23","source":"ant-colony-study","target":"ant-tracking","label":"uses"}},{"data":{"id":"e24","source":"active-inference-model","target":"computation-cluster","label":"uses"}},{"data":{"id":"e25","source":"neural-basis","target":"neural-recording","label":"uses"}},{"data":{"id":"e26","source":"alice","target":"paper-2023a","label":"authored"}},{"data":{"id":"e27","source":"bob","target":"paper-2023a","label":"authored"}},{"data":{"id":"e28","source":"carol","target":"paper-2023a","label":"authored"}},{"data":{"id":"e29","source":"bob","target":"paper-2023b","label":"authored"}},{"data":{"id":"e30","source":"emma","target":"paper-2023b","label":"authored"}},{"data":{"id":"e31","source":"frank","target":"paper-2023b","label":"authored"}},{"data":{"id":"e32","source":"alice","target":"paper-2024","label":"authored"}},{"data":{"id":"e33","source":"bob","target":"paper-2024","label":"authored"}},{"data":{"id":"e34","source":"carol","target":"paper-2024","label":"authored"}},{"data":{"id":"e35","source":"david","target":"paper-2024","label":"authored"}},{"data":{"id":"e36","source":"grace","target":"paper-2024","label":"authored"}},{"data":{"id":"e37","source":"paper-2023a","target":"active-inference-model","label":"results_from"}},{"data":{"id":"e38","source":"paper-2023b","target":"ant-colony-study","label":"results_from"}},{"data":{"id":"e39","source":"paper-2024","target":"active-inference-model","label":"results_from"}},{"data":{"id":"e40","source":"paper-2024","target":"ant-colony-study","label":"results_from"}},{"data":{"id":"e41","source":"paper-2023a","target":"active-inference","label":"discusses"}},{"data":{"id":"e42","source":"paper-2023b","target":"collective-behavior","label":"discusses"}},{"data":{"id":"e43","source":"paper-2024","target":"swarm-intelligence","label":"discusses"}}]
+      },
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': 'data(color)',
+            'label': 'data(label)',
+            'color': '#000',
+            'text-valign': 'bottom',
+            'text-halign': 'center',
+            'font-size': '12px'
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 1,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier',
+            'label': 'data(label)',
+            'font-size': '10px'
+          }
+        }
+      ],
+      layout: {
+        name: 'cose',
+        idealEdgeLength: 100,
+        nodeOverlap: 20,
+        refresh: 20,
+        fit: true,
+        padding: 30,
+        randomize: false,
+        componentSpacing: 100,
+        nodeRepulsion: 400000,
+        edgeElasticity: 100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0
+      }
+    });
+    
+    // Apply colors based on node type
+    cy.nodes().forEach(node => {
+      const type = node.data('type');
+      const colors = {
+        person: '#4285F4',
+        project: '#EA4335',
+        organization: '#FBBC05',
+        location: '#34A853',
+        event: '#8F00FF',
+        default: '#999999'
+      };
+      node.data('color', colors[type] || colors.default);
+    });
+  </script>
+</body>
+</html>

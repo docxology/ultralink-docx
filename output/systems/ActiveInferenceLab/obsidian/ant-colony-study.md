@@ -1,8 +1,8 @@
 ---
 type: project
 id: ant-colony-study
-created: 2025-03-05T00:12:44.772Z
-modified: 2025-03-05T00:12:44.772Z
+created: 2025-03-05T00:58:30.717Z
+modified: 2025-03-05T00:58:30.717Z
 ---
 
 # Ant Colony Decision Making Study
@@ -34,7 +34,7 @@ modified: 2025-03-05T00:12:44.772Z
 - [[bob|Dr. Bob Smith]] (leads)
 - [[emma|Emma Taylor]] (contributes, contributes_to)
 - [[frank|Dr. Frank Martinez]] (contributes, contributes_to)
-- [[david|David Wilson]] (contributes_to, contributes_to)
+- [[david|David Wilson]] (contributes_to)
 - [[grace|Grace Kim]] (contributes_to)
 - [[paper-2023b|Decision Making Patterns in Ant Colonies: A Field Study]] (results_from)
 - [[paper-2024|Computational Models of Active Inference in Social Insects]] (results_from)

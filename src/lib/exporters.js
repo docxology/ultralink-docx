@@ -199,7 +199,7 @@ function toGraphML(options = {}) {
   const {
     includeAllAttributes = false,
     prettyPrint = true,
-    graphName = 'UltraLink_Graph'
+    graphName = 'G'
   } = options;
 
   // Collect all possible entity and relationship attributes
@@ -506,8 +506,8 @@ function toHTMLWebsite(options = {}) {
   // Define theme variables
   const themes = {
     dark: {
-      background: '#1a1a1a',
-      text: '#ffffff',
+      background: '#202124',
+      text: '#e8eaed',
       link: '#4a9eff',
       accent: '#666666',
       border: '#333333'
@@ -524,7 +524,9 @@ function toHTMLWebsite(options = {}) {
       text: '#333333', 
       link: '#990000',
       accent: '#666666',
-      border: '#cccccc'
+      border: '#cccccc',
+      backgroundColor: '#7b1fa2',
+      fontFamily: '\'Palatino Linotype\', serif'
     },
     ocean: {
       background: '#f0f8ff',
@@ -552,6 +554,7 @@ function toHTMLWebsite(options = {}) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
+  ${theme === 'academic' ? '<link rel="stylesheet" href="styles/academic.css">' : ''}
   <style>
     :root {
       --background: ${themeVars.background};
@@ -653,16 +656,30 @@ function toHTMLWebsite(options = {}) {
       <script>
         // Graph visualization code
         const data = {
-          nodes: ${JSON.stringify(Array.from(this.entities.values()).map(entity => ({
-            id: entity.id,
-            name: entity.attributes.name || entity.attributes.title || entity.id,
-            type: entity.type
-          })))},
-          links: ${JSON.stringify(Array.from(this.relationships.values()).map(rel => ({
-            source: rel.source,
-            target: rel.target,
-            type: rel.type
-          })))}
+          nodes: [
+            ${Array.from(this.entities.values()).map(entity => {
+              const name = entity.attributes.name || entity.attributes.title || entity.id;
+              const attrs = entity.attributes instanceof Map ? 
+                Object.fromEntries(entity.attributes.entries()) : 
+                { ...entity.attributes } || {};
+              
+              return `{
+                "id": "${entity.id}",
+                "name": "${name.replace(/"/g, '\\"')}",
+                "type": "${entity.type}",
+                "attributes": ${JSON.stringify(attrs)}
+              }`;
+            }).join(',\n            ')}
+          ],
+          links: [
+            ${Array.from(this.relationships.values()).map(rel => 
+              `{
+                "source": "${rel.source}",
+                "target": "${rel.target}",
+                "type": "${rel.type}"
+              }`
+            ).join(',\n            ')}
+          ]
         };
 
         const width = document.getElementById('graph').clientWidth;
@@ -694,7 +711,7 @@ function toHTMLWebsite(options = {}) {
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.name);
+          .text(d => d.attributes.name || d.attributes.title || d.id);
 
         simulation.on('tick', () => {
           link
@@ -707,6 +724,30 @@ function toHTMLWebsite(options = {}) {
             .attr('cx', d => d.x)
             .attr('cy', d => d.y);
         });
+
+        // Entity selection functionality
+        window.selectEntityById = function(id) {
+          // Find the selected node
+          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          if (!selectedNode) return;
+          
+          // Reset all nodes
+          node.attr('r', 5).attr('stroke', null);
+          
+          // Highlight the selected node
+          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+            .attr('r', 8)
+            .attr('stroke', 'var(--link)')
+            .attr('stroke-width', 2);
+          
+          // Center and zoom on the selected node
+          const scale = 2;
+          const x = width / 2 - scale * selectedNode.x;
+          const y = height / 2 - scale * selectedNode.y;
+          
+          svg.transition().duration(500)
+            .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
+        };
 
         function drag(simulation) {
           function dragstarted(event) {
@@ -770,6 +811,7 @@ function toHTMLWebsite(options = {}) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${entity.attributes.name || entity.attributes.title || entity.id} - ${title}</title>
+  ${theme === 'academic' ? '<link rel="stylesheet" href="styles/academic.css">' : ''}
   <style>
     :root {
       --background: ${themeVars.background};
@@ -956,13 +998,23 @@ function toKIF(options = {}) {
       if (entity.attributes instanceof Map) {
         for (const [key, value] of entity.attributes.entries()) {
           if (value !== undefined) {
-            kif += `(${key} ${baseNamespace}${entity.id} "${value}")\n`;
+            // Check if value is a number and format accordingly
+            if (typeof value === 'number') {
+              kif += `(${key} ${baseNamespace}${entity.id} ${value})\n`;
+            } else {
+              kif += `(${key} ${baseNamespace}${entity.id} "${value}")\n`;
+            }
           }
         }
       } else {
         for (const [key, value] of Object.entries(entity.attributes)) {
           if (value !== undefined) {
-            kif += `(${key} ${baseNamespace}${entity.id} "${value}")\n`;
+            // Check if value is a number and format accordingly
+            if (typeof value === 'number') {
+              kif += `(${key} ${baseNamespace}${entity.id} ${value})\n`;
+            } else {
+              kif += `(${key} ${baseNamespace}${entity.id} "${value}")\n`;
+            }
           }
         }
       }
@@ -1032,7 +1084,8 @@ function toFullBlob(options = {}) {
     version: '1.0.0',
     timestamp: new Date().toISOString(),
     format: 'UltraLink-FullBlob',
-    data: jsonData,
+    entities: jsonData.entities,
+    relationships: jsonData.relationships,
     exports: {}
   };
 
@@ -1055,16 +1108,15 @@ function toFullBlob(options = {}) {
     fullData.exports.kif = { error: e.message };
   }
 
-  // Convert to string
-  const jsonString = JSON.stringify(fullData);
-
   // Apply compression if requested
   if (compression === 'gzip') {
+    const zlib = require('zlib');
+    const jsonString = JSON.stringify(fullData);
     return zlib.gzipSync(jsonString);
   }
 
-  // Return as buffer for consistency with gzip option
-  return Buffer.from(jsonString);
+  // Return the object directly
+  return fullData;
 }
 
 module.exports = {

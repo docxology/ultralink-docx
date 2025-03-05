@@ -1,8 +1,8 @@
 ---
 type: environmental_factor
 id: aridity
-created: 2025-03-05T00:12:43.625Z
-modified: 2025-03-05T00:12:43.625Z
+created: 2025-03-05T00:58:29.977Z
+modified: 2025-03-05T00:58:29.977Z
 ---
 
 # Aridity

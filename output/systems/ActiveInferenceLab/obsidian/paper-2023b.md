@@ -1,8 +1,8 @@
 ---
 type: publication
 id: paper-2023b
-created: 2025-03-05T00:12:44.772Z
-modified: 2025-03-05T00:12:44.772Z
+created: 2025-03-05T00:58:30.717Z
+modified: 2025-03-05T00:58:30.717Z
 ---
 
 # Decision Making Patterns in Ant Colonies: A Field Study

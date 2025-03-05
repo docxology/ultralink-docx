@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UltraLink Cytoscape Visualization</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>UltraLink Graph Visualization</h1>
+  <div id="cy"></div>
+  <script>
+    // Initialize Cytoscape
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: {
+        nodes: [{"data":{"id":"camel","label":"Dromedary Camel","type":"animal"}},{"data":{"id":"fennec_fox","label":"Fennec Fox","type":"animal"}},{"data":{"id":"desert_monitor","label":"Desert Monitor","type":"animal"}},{"data":{"id":"sidewinder","label":"Sidewinder Rattlesnake","type":"animal"}},{"data":{"id":"scorpion","label":"Deathstalker Scorpion","type":"animal"}},{"data":{"id":"darkling_beetle","label":"Darkling Beetle","type":"animal"}},{"data":{"id":"roadrunner","label":"Greater Roadrunner","type":"animal"}},{"data":{"id":"desert_tortoise","label":"Desert Tortoise","type":"animal"}},{"data":{"id":"cactus_wren","label":"Cactus Wren","type":"animal"}},{"data":{"id":"kangaroo_rat","label":"Merriam's Kangaroo Rat","type":"animal"}},{"data":{"id":"gila_monster","label":"Gila Monster","type":"animal"}},{"data":{"id":"javelina","label":"Javelina","type":"animal"}},{"data":{"id":"saguaro","label":"Saguaro Cactus","type":"plant"}},{"data":{"id":"barrel_cactus","label":"Barrel Cactus","type":"plant"}},{"data":{"id":"mesquite","label":"Honey Mesquite","type":"plant"}},{"data":{"id":"creosote_bush","label":"Creosote Bush","type":"plant"}},{"data":{"id":"desert_poppy","label":"Desert Poppy","type":"plant"}},{"data":{"id":"ocotillo","label":"Ocotillo","type":"plant"}},{"data":{"id":"brittlebush","label":"Brittlebush","type":"plant"}},{"data":{"id":"desert_ironwood","label":"Desert Ironwood","type":"plant"}},{"data":{"id":"agave","label":"Century Plant","type":"plant"}},{"data":{"id":"joshua_tree","label":"Joshua Tree","type":"plant"}},{"data":{"id":"prickly_pear","label":"Prickly Pear Cactus","type":"plant"}},{"data":{"id":"cholla_cactus","label":"Cholla Cactus","type":"plant"}},{"data":{"id":"other_plants","label":"Various Desert Plants","type":"plant"}},{"data":{"id":"heat","label":"Extreme Heat","type":"abiotic_factor"}},{"data":{"id":"temperature_variation","label":"Temperature Variation","type":"abiotic_factor"}},{"data":{"id":"aridity","label":"Aridity","type":"abiotic_factor"}},{"data":{"id":"sand_dunes","label":"Sand Dunes","type":"abiotic_factor"}},{"data":{"id":"rocky_outcrops","label":"Rocky Outcrops","type":"abiotic_factor"}},{"data":{"id":"oasis","label":"Oasis","type":"abiotic_factor"}},{"data":{"id":"ephemeral_streams","label":"Ephemeral Streams","type":"abiotic_factor"}},{"data":{"id":"sandy_soil","label":"Sandy Soil","type":"abiotic_factor"}},{"data":{"id":"desert_pavement","label":"Desert Pavement","type":"abiotic_factor"}},{"data":{"id":"desert_varnish","label":"Desert Varnish","type":"abiotic_factor"}},{"data":{"id":"playa","label":"Playa","type":"abiotic_factor"}},{"data":{"id":"flash_floods","label":"Flash Floods","type":"abiotic_factor"}},{"data":{"id":"wash","label":"Desert Wash","type":"microhabitat"}},{"data":{"id":"dune_field","label":"Sand Dune Field","type":"microhabitat"}},{"data":{"id":"rocky_slope","label":"Rocky Slope","type":"microhabitat"}},{"data":{"id":"canyon","label":"Desert Canyon","type":"microhabitat"}},{"data":{"id":"pollination_yucca","label":"Yucca-Moth Pollination","type":"interaction"}},{"data":{"id":"nurse_plant","label":"Nurse Plant Relationship","type":"interaction"}},{"data":{"id":"seed_dispersal","label":"Seed Dispersal","type":"interaction"}},{"data":{"id":"yucca_moth","label":"Yucca Moth","type":"animal"}},{"data":{"id":"coyote","label":"Coyote","type":"animal"}}],
+        edges: [{"data":{"id":"e0","source":"camel","target":"heat","label":"adapted_to"}},{"data":{"id":"e1","source":"fennec_fox","target":"heat","label":"adapted_to"}},{"data":{"id":"e2","source":"darkling_beetle","target":"aridity","label":"adapted_to"}},{"data":{"id":"e3","source":"sidewinder","target":"sand_dunes","label":"adapted_to"}},{"data":{"id":"e4","source":"desert_tortoise","target":"aridity","label":"adapted_to"}},{"data":{"id":"e5","source":"kangaroo_rat","target":"aridity","label":"adapted_to"}},{"data":{"id":"e6","source":"gila_monster","target":"heat","label":"adapted_to"}},{"data":{"id":"e7","source":"cactus_wren","target":"heat","label":"adapted_to"}},{"data":{"id":"e8","source":"javelina","target":"aridity","label":"adapted_to"}},{"data":{"id":"e9","source":"yucca_moth","target":"aridity","label":"adapted_to"}},{"data":{"id":"e10","source":"coyote","target":"aridity","label":"adapted_to"}},{"data":{"id":"e11","source":"saguaro","target":"heat","label":"adapted_to"}},{"data":{"id":"e12","source":"barrel_cactus","target":"aridity","label":"adapted_to"}},{"data":{"id":"e13","source":"mesquite","target":"aridity","label":"adapted_to"}},{"data":{"id":"e14","source":"creosote_bush","target":"aridity","label":"adapted_to"}},{"data":{"id":"e15","source":"ocotillo","target":"temperature_variation","label":"adapted_to"}},{"data":{"id":"e16","source":"brittlebush","target":"heat","label":"adapted_to"}},{"data":{"id":"e17","source":"desert_ironwood","target":"aridity","label":"adapted_to"}},{"data":{"id":"e18","source":"agave","target":"aridity","label":"adapted_to"}},{"data":{"id":"e19","source":"joshua_tree","target":"sandy_soil","label":"grows_in"}},{"data":{"id":"e20","source":"sidewinder","target":"dune_field","label":"lives_in"}},{"data":{"id":"e21","source":"desert_tortoise","target":"rocky_slope","label":"lives_in"}},{"data":{"id":"e22","source":"cactus_wren","target":"wash","label":"lives_in"}},{"data":{"id":"e23","source":"gila_monster","target":"rocky_slope","label":"lives_in"}},{"data":{"id":"e24","source":"javelina","target":"canyon","label":"lives_in"}},{"data":{"id":"e25","source":"kangaroo_rat","target":"dune_field","label":"lives_in"}},{"data":{"id":"e26","source":"scorpion","target":"rocky_slope","label":"lives_in"}},{"data":{"id":"e27","source":"coyote","target":"canyon","label":"lives_in"}},{"data":{"id":"e28","source":"saguaro","target":"rocky_slope","label":"grows_in"}},{"data":{"id":"e29","source":"mesquite","target":"wash","label":"grows_in"}},{"data":{"id":"e30","source":"desert_ironwood","target":"wash","label":"grows_in"}},{"data":{"id":"e31","source":"brittlebush","target":"rocky_slope","label":"grows_in"}},{"data":{"id":"e32","source":"coyote","target":"kangaroo_rat","label":"preys_on"}},{"data":{"id":"e33","source":"coyote","target":"desert_tortoise","label":"preys_on"}},{"data":{"id":"e34","source":"sidewinder","target":"kangaroo_rat","label":"preys_on"}},{"data":{"id":"e35","source":"desert_monitor","target":"scorpion","label":"preys_on"}},{"data":{"id":"e36","source":"gila_monster","target":"cactus_wren","label":"preys_on"}},{"data":{"id":"e37","source":"roadrunner","target":"scorpion","label":"preys_on"}},{"data":{"id":"e38","source":"roadrunner","target":"sidewinder","label":"preys_on"}},{"data":{"id":"e39","source":"javelina","target":"prickly_pear","label":"consumes"}},{"data":{"id":"e40","source":"desert_tortoise","target":"desert_poppy","label":"consumes"}},{"data":{"id":"e41","source":"kangaroo_rat","target":"mesquite","label":"consumes"}},{"data":{"id":"e42","source":"desert_ironwood","target":"saguaro","label":"nurses"}},{"data":{"id":"e43","source":"mesquite","target":"desert_poppy","label":"facilitates"}},{"data":{"id":"e44","source":"creosote_bush","target":"other_plants","label":"inhibits"}},{"data":{"id":"e45","source":"joshua_tree","target":"yucca_moth","label":"mutual_dependency"}},{"data":{"id":"e46","source":"yucca_moth","target":"joshua_tree","label":"mutual_dependency"}}]
+      },
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': 'data(color)',
+            'label': 'data(label)',
+            'color': '#000',
+            'text-valign': 'bottom',
+            'text-halign': 'center',
+            'font-size': '12px'
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 1,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier',
+            'label': 'data(label)',
+            'font-size': '10px'
+          }
+        }
+      ],
+      layout: {
+        name: 'cose',
+        idealEdgeLength: 100,
+        nodeOverlap: 20,
+        refresh: 20,
+        fit: true,
+        padding: 30,
+        randomize: false,
+        componentSpacing: 100,
+        nodeRepulsion: 400000,
+        edgeElasticity: 100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0
+      }
+    });
+    
+    // Apply colors based on node type
+    cy.nodes().forEach(node => {
+      const type = node.data('type');
+      const colors = {
+        person: '#4285F4',
+        project: '#EA4335',
+        organization: '#FBBC05',
+        location: '#34A853',
+        event: '#8F00FF',
+        default: '#999999'
+      };
+      node.data('color', colors[type] || colors.default);
+    });
+  </script>
+</body>
+</html>

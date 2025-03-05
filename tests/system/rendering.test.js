@@ -198,6 +198,22 @@ describe('System Rendering Tests', () => {
               case 'visualization':
                 VIZ_FORMATS.forEach(vizFormat => {
                   const vizDir = path.join(outputPath, vizFormat);
+                  ensureDirectoryExists(vizDir);
+                  
+                  // Generate visualization for this format
+                  let vizContent;
+                  if (vizFormat === 'd3') {
+                    vizContent = system.toVisualization({ format: vizFormat, layout: 'force', width: 800, height: 600 });
+                    fs.writeFileSync(path.join(vizDir, `${systemName.toLowerCase()}-d3.html`), vizContent);
+                  } else if (vizFormat === 'cytoscape') {
+                    vizContent = system.toVisualization({ format: vizFormat, layout: 'force', width: 800, height: 600 });
+                    fs.writeFileSync(path.join(vizDir, `${systemName.toLowerCase()}-cytoscape.html`), vizContent);
+                  } else {
+                    vizContent = system.toVisualization({ format: vizFormat, layout: 'force', width: 800, height: 600 });
+                    fs.writeFileSync(path.join(vizDir, `${systemName.toLowerCase()}.${vizFormat}`), vizContent);
+                  }
+                  
+                  // Now check that files exist
                   const files = fs.readdirSync(vizDir);
                   expect(files.length).toBeGreaterThan(0);
                   

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>UltraLink Cytoscape Visualization</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>UltraLink Graph Visualization</h1>
+  <div id="cy"></div>
+  <script>
+    // Initialize Cytoscape
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: {
+        nodes: [{"data":{"id":"colonial-period","label":"Colonial Period","type":"time_period"}},{"data":{"id":"revolutionary-war","label":"American Revolution","type":"time_period"}},{"data":{"id":"early-republic","label":"Early Republic","type":"time_period"}},{"data":{"id":"antebellum","label":"Antebellum Era","type":"time_period"}},{"data":{"id":"civil-war","label":"Civil War","type":"time_period"}},{"data":{"id":"reconstruction","label":"Reconstruction","type":"time_period"}},{"data":{"id":"gilded-age","label":"Gilded Age","type":"time_period"}},{"data":{"id":"progressive-era","label":"Progressive Era","type":"time_period"}},{"data":{"id":"roaring-twenties","label":"Roaring Twenties","type":"time_period"}},{"data":{"id":"great-depression","label":"Great Depression","type":"time_period"}},{"data":{"id":"world-war-2","label":"World War II","type":"time_period"}},{"data":{"id":"cold-war","label":"Cold War","type":"time_period"}},{"data":{"id":"civil-rights","label":"Civil Rights Movement","type":"time_period"}},{"data":{"id":"modern-era","label":"Modern Era","type":"time_period"}},{"data":{"id":"jamestown-founding","label":"Founding of Jamestown","type":"event"}},{"data":{"id":"plymouth-colony","label":"Plymouth Colony Established","type":"event"}},{"data":{"id":"declaration-independence","label":"Declaration of Independence","type":"event"}},{"data":{"id":"constitutional-convention","label":"Constitutional Convention","type":"event"}},{"data":{"id":"louisiana-purchase","label":"Louisiana Purchase","type":"event"}},{"data":{"id":"civil-war-start","label":"Civil War Begins","type":"event"}},{"data":{"id":"emancipation-proclamation","label":"Emancipation Proclamation","type":"event"}},{"data":{"id":"civil-war-end","label":"Civil War Ends","type":"event"}},{"data":{"id":"womens-suffrage","label":"19th Amendment","type":"event"}},{"data":{"id":"stock-market-crash","label":"Stock Market Crash","type":"event"}},{"data":{"id":"pearl-harbor","label":"Attack on Pearl Harbor","type":"event"}},{"data":{"id":"mlk-speech","label":"I Have a Dream Speech","type":"event"}},{"data":{"id":"moon-landing","label":"Moon Landing","type":"event"}},{"data":{"id":"september-11","label":"September 11 Attacks","type":"event"}},{"data":{"id":"obama-election","label":"Barack Obama Elected President","type":"event"}},{"data":{"id":"washington","label":"George Washington","type":"person"}},{"data":{"id":"jefferson","label":"Thomas Jefferson","type":"person"}},{"data":{"id":"lincoln","label":"Abraham Lincoln","type":"person"}},{"data":{"id":"douglass","label":"Frederick Douglass","type":"person"}},{"data":{"id":"roosevelt-fdr","label":"Franklin D. Roosevelt","type":"person"}},{"data":{"id":"mlk","label":"Martin Luther King Jr.","type":"person"}},{"data":{"id":"democracy","label":"Democracy","type":"concept"}},{"data":{"id":"slavery","label":"Slavery","type":"concept"}},{"data":{"id":"manifest-destiny","label":"Manifest Destiny","type":"concept"}},{"data":{"id":"civil-rights-concept","label":"Civil Rights","type":"concept"}},{"data":{"id":"american-dream","label":"American Dream","type":"concept"}},{"data":{"id":"declaration-doc","label":"Declaration of Independence","type":"document"}},{"data":{"id":"constitution-doc","label":"United States Constitution","type":"document"}},{"data":{"id":"gettysburg-address","label":"Gettysburg Address","type":"document"}},{"data":{"id":"democracy-1776","label":"democracy-1776","type":"temporal_snapshot"}},{"data":{"id":"democracy-1800","label":"democracy-1800","type":"temporal_snapshot"}},{"data":{"id":"democracy-1850","label":"democracy-1850","type":"temporal_snapshot"}},{"data":{"id":"democracy-1900","label":"democracy-1900","type":"temporal_snapshot"}},{"data":{"id":"democracy-1950","label":"democracy-1950","type":"temporal_snapshot"}},{"data":{"id":"democracy-2000","label":"democracy-2000","type":"temporal_snapshot"}},{"data":{"id":"democracy-2020","label":"democracy-2020","type":"temporal_snapshot"}},{"data":{"id":"slavery-1700","label":"slavery-1700","type":"temporal_snapshot"}},{"data":{"id":"slavery-1776","label":"slavery-1776","type":"temporal_snapshot"}},{"data":{"id":"slavery-1800","label":"slavery-1800","type":"temporal_snapshot"}},{"data":{"id":"slavery-1850","label":"slavery-1850","type":"temporal_snapshot"}},{"data":{"id":"slavery-1863","label":"slavery-1863","type":"temporal_snapshot"}},{"data":{"id":"slavery-1870","label":"slavery-1870","type":"temporal_snapshot"}},{"data":{"id":"founding-era","label":"founding-era","type":"historical_snapshot"}},{"data":{"id":"pre-civil-war","label":"pre-civil-war","type":"historical_snapshot"}},{"data":{"id":"civil-rights-era","label":"civil-rights-era","type":"historical_snapshot"}},{"data":{"id":"post-cold-war","label":"post-cold-war","type":"historical_snapshot"}},{"data":{"id":"ideological-space","label":"Ideological Positions","type":"vector_space"}},{"data":{"id":"social-values-space","label":"Social Values","type":"vector_space"}},{"data":{"id":"founding-principles-cluster","label":"Founding Principles","type":"semantic_cluster"}},{"data":{"id":"civil-rights-cluster","label":"Civil Rights Movement","type":"semantic_cluster"}},{"data":{"id":"economic-development-cluster","label":"Economic Development","type":"semantic_cluster"}},{"data":{"id":"democracy-rights-similarity","label":"Democracy and Civil Rights Relationship","type":"similarity_analysis"}},{"data":{"id":"liberty-dream-similarity","label":"Liberty and American Dream Relationship","type":"similarity_analysis"}},{"data":{"id":"democracy-evolution","label":"Evolution of Democracy","type":"concept_drift"}},{"data":{"id":"equality-evolution","label":"Evolution of Equality","type":"concept_drift"}}],
+        edges: [{"data":{"id":"e0","source":"jamestown-founding","target":"colonial-period","label":"occurred_during"}},{"data":{"id":"e1","source":"plymouth-colony","target":"colonial-period","label":"occurred_during"}},{"data":{"id":"e2","source":"declaration-independence","target":"revolutionary-war","label":"occurred_during"}},{"data":{"id":"e3","source":"constitutional-convention","target":"early-republic","label":"occurred_during"}},{"data":{"id":"e4","source":"louisiana-purchase","target":"early-republic","label":"occurred_during"}},{"data":{"id":"e5","source":"civil-war-start","target":"civil-war","label":"occurred_during"}},{"data":{"id":"e6","source":"emancipation-proclamation","target":"civil-war","label":"occurred_during"}},{"data":{"id":"e7","source":"civil-war-end","target":"civil-war","label":"occurred_during"}},{"data":{"id":"e8","source":"womens-suffrage","target":"progressive-era","label":"occurred_during"}},{"data":{"id":"e9","source":"stock-market-crash","target":"great-depression","label":"occurred_during"}},{"data":{"id":"e10","source":"pearl-harbor","target":"world-war-2","label":"occurred_during"}},{"data":{"id":"e11","source":"mlk-speech","target":"civil-rights","label":"occurred_during"}},{"data":{"id":"e12","source":"mlk-speech","target":"cold-war","label":"occurred_during"}},{"data":{"id":"e13","source":"moon-landing","target":"cold-war","label":"occurred_during"}},{"data":{"id":"e14","source":"september-11","target":"modern-era","label":"occurred_during"}},{"data":{"id":"e15","source":"obama-election","target":"modern-era","label":"occurred_during"}},{"data":{"id":"e16","source":"washington","target":"declaration-independence","label":"participated_in"}},{"data":{"id":"e17","source":"jefferson","target":"declaration-independence","label":"created"}},{"data":{"id":"e18","source":"jefferson","target":"louisiana-purchase","label":"initiated"}},{"data":{"id":"e19","source":"lincoln","target":"civil-war-start","label":"led_during"}},{"data":{"id":"e20","source":"lincoln","target":"emancipation-proclamation","label":"issued"}},{"data":{"id":"e21","source":"lincoln","target":"civil-war-end","label":"led_during"}},{"data":{"id":"e22","source":"roosevelt-fdr","target":"pearl-harbor","label":"led_during"}},{"data":{"id":"e23","source":"mlk","target":"mlk-speech","label":"delivered"}},{"data":{"id":"e24","source":"washington","target":"democracy","label":"championed"}},{"data":{"id":"e25","source":"jefferson","target":"democracy","label":"championed"}},{"data":{"id":"e26","source":"douglass","target":"slavery","label":"opposed"}},{"data":{"id":"e27","source":"douglass","target":"civil-rights-concept","label":"championed"}},{"data":{"id":"e28","source":"lincoln","target":"slavery","label":"opposed"}},{"data":{"id":"e29","source":"mlk","target":"civil-rights-concept","label":"championed"}},{"data":{"id":"e30","source":"declaration-independence","target":"democracy","label":"exemplifies"}},{"data":{"id":"e31","source":"emancipation-proclamation","target":"slavery","label":"opposed"}},{"data":{"id":"e32","source":"louisiana-purchase","target":"manifest-destiny","label":"exemplifies"}},{"data":{"id":"e33","source":"mlk-speech","target":"civil-rights-concept","label":"exemplifies"}},{"data":{"id":"e34","source":"obama-election","target":"american-dream","label":"exemplifies"}},{"data":{"id":"e35","source":"declaration-doc","target":"jefferson","label":"authored_by"}},{"data":{"id":"e36","source":"constitution-doc","target":"washington","label":"supported_by"}},{"data":{"id":"e37","source":"gettysburg-address","target":"lincoln","label":"authored_by"}},{"data":{"id":"e38","source":"declaration-doc","target":"declaration-independence","label":"produced_during"}},{"data":{"id":"e39","source":"constitution-doc","target":"constitutional-convention","label":"produced_during"}},{"data":{"id":"e40","source":"gettysburg-address","target":"civil-war","label":"produced_during"}},{"data":{"id":"e41","source":"democracy","target":"democracy-1776","label":"has_state_at"}},{"data":{"id":"e42","source":"democracy","target":"democracy-1800","label":"has_state_at"}},{"data":{"id":"e43","source":"democracy","target":"democracy-1850","label":"has_state_at"}},{"data":{"id":"e44","source":"democracy","target":"democracy-1900","label":"has_state_at"}},{"data":{"id":"e45","source":"democracy","target":"democracy-1950","label":"has_state_at"}},{"data":{"id":"e46","source":"democracy","target":"democracy-2000","label":"has_state_at"}},{"data":{"id":"e47","source":"democracy","target":"democracy-2020","label":"has_state_at"}},{"data":{"id":"e48","source":"slavery","target":"slavery-1700","label":"has_state_at"}},{"data":{"id":"e49","source":"slavery","target":"slavery-1776","label":"has_state_at"}},{"data":{"id":"e50","source":"slavery","target":"slavery-1800","label":"has_state_at"}},{"data":{"id":"e51","source":"slavery","target":"slavery-1850","label":"has_state_at"}},{"data":{"id":"e52","source":"slavery","target":"slavery-1863","label":"has_state_at"}},{"data":{"id":"e53","source":"slavery","target":"slavery-1870","label":"has_state_at"}},{"data":{"id":"e54","source":"democracy","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e55","source":"declaration-doc","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e56","source":"constitution-doc","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e57","source":"washington","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e58","source":"jefferson","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e59","source":"civil-rights-concept","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e60","source":"mlk","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e61","source":"mlk-speech","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e62","source":"douglass","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e63","source":"american-dream","target":"economic-development-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e64","source":"roosevelt-fdr","target":"economic-development-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e65","source":"stock-market-crash","target":"economic-development-cluster","label":"belongs_to_cluster"}}]
+      },
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': 'data(color)',
+            'label': 'data(label)',
+            'color': '#000',
+            'text-valign': 'bottom',
+            'text-halign': 'center',
+            'font-size': '12px'
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 1,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier',
+            'label': 'data(label)',
+            'font-size': '10px'
+          }
+        }
+      ],
+      layout: {
+        name: 'cose',
+        idealEdgeLength: 100,
+        nodeOverlap: 20,
+        refresh: 20,
+        fit: true,
+        padding: 30,
+        randomize: false,
+        componentSpacing: 100,
+        nodeRepulsion: 400000,
+        edgeElasticity: 100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0
+      }
+    });
+    
+    // Apply colors based on node type
+    cy.nodes().forEach(node => {
+      const type = node.data('type');
+      const colors = {
+        person: '#4285F4',
+        project: '#EA4335',
+        organization: '#FBBC05',
+        location: '#34A853',
+        event: '#8F00FF',
+        default: '#999999'
+      };
+      node.data('color', colors[type] || colors.default);
+    });
+  </script>
+</body>
+</html>

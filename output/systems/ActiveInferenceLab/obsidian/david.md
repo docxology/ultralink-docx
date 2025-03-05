@@ -1,8 +1,8 @@
 ---
 type: researcher
 id: david
-created: 2025-03-05T00:12:44.772Z
-modified: 2025-03-05T00:12:44.772Z
+created: 2025-03-05T00:58:30.717Z
+modified: 2025-03-05T00:58:30.717Z
 ---
 
 # David Wilson
@@ -27,7 +27,6 @@ modified: 2025-03-05T00:12:44.772Z
 
 ### contributes_to
 
-- [[ant-colony-study|Ant Colony Decision Making Study]] (role: PhD Researcher, startDate: 2023-01-10)
 - [[ant-colony-study|Ant Colony Decision Making Study]] (role: Behavioral Consultant, startDate: 2024-02-10, timeCommitment: 25%)
 
 ### reports_to

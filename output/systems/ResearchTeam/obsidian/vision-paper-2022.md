@@ -1,8 +1,8 @@
 ---
 type: publication
 id: vision-paper-2022
-created: 2025-03-05T00:12:44.686Z
-modified: 2025-03-05T00:12:44.686Z
+created: 2025-03-05T00:58:30.546Z
+modified: 2025-03-05T00:58:30.546Z
 ---
 
 # Novel Approaches to Low-Light Computer Vision

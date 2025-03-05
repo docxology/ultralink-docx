@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML Features Test</title>
+  
   <style>
     :root {
       --background: #ffffff;
@@ -119,8 +120,43 @@
       <script>
         // Graph visualization code
         const data = {
-          nodes: [{"id":"entity1","name":"John Doe","type":"person"},{"id":"entity2","name":"Project Alpha","type":"project"},{"id":"entity3","name":"entity3","type":"resource"}],
-          links: [{"source":"entity1","target":"entity2","type":"manages"},{"source":"entity1","target":"entity3","type":"created"},{"source":"entity2","target":"entity3","type":"contains"}]
+          nodes: [
+            {
+                "id": "entity1",
+                "name": "John Doe",
+                "type": "person",
+                "attributes": {"name":"John Doe","age":30,"email":"john@example.com"}
+              },
+            {
+                "id": "entity2",
+                "name": "Project Alpha",
+                "type": "project",
+                "attributes": {"title":"Project Alpha","status":"Active","priority":"High"}
+              },
+            {
+                "id": "entity3",
+                "name": "entity3",
+                "type": "resource",
+                "attributes": {"type":"Document","url":"https://example.com/doc"}
+              }
+          ],
+          links: [
+            {
+                "source": "entity1",
+                "target": "entity2",
+                "type": "manages"
+              },
+            {
+                "source": "entity1",
+                "target": "entity3",
+                "type": "created"
+              },
+            {
+                "source": "entity2",
+                "target": "entity3",
+                "type": "contains"
+              }
+          ]
         };
 
         const width = document.getElementById('graph').clientWidth;
@@ -152,7 +188,7 @@
           .call(drag(simulation));
 
         node.append('title')
-          .text(d => d.name);
+          .text(d => d.attributes.name || d.attributes.title || d.id);
 
         simulation.on('tick', () => {
           link
@@ -165,6 +201,30 @@
             .attr('cx', d => d.x)
             .attr('cy', d => d.y);
         });
+
+        // Entity selection functionality
+        window.selectEntityById = function(id) {
+          // Find the selected node
+          const selectedNode = data.nodes.find(function(n) { return n.id === id; });
+          if (!selectedNode) return;
+          
+          // Reset all nodes
+          node.attr('r', 5).attr('stroke', null);
+          
+          // Highlight the selected node
+          const selectedNodeElement = node.filter(function(d) { return d.id === id; })
+            .attr('r', 8)
+            .attr('stroke', 'var(--link)')
+            .attr('stroke-width', 2);
+          
+          // Center and zoom on the selected node
+          const scale = 2;
+          const x = width / 2 - scale * selectedNode.x;
+          const y = height / 2 - scale * selectedNode.y;
+          
+          svg.transition().duration(500)
+            .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
+        };
 
         function drag(simulation) {
           function dragstarted(event) {

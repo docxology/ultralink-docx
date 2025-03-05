@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>John Doe - HTML Features Test</title>
+  <style>
+    :root {
+      --background: #ffffff;
+      --text: #000000;
+      --link: #0066cc;
+      --accent: #666666;
+      --border: #dddddd;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--background);
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--text);
+    }
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .entity-type {
+      color: var(--accent);
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .attributes {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .attribute-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .attribute-row:last-child {
+      border-bottom: none;
+    }
+    .attribute-key {
+      color: var(--accent);
+    }
+    .relationship-list {
+      list-style: none;
+      padding: 0;
+    }
+    .relationship-item {
+      padding: 8px;
+      margin: 4px 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .relationship-attributes {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-link">← Back to Graph</a>
+  <h1>John Doe</h1>
+  <div class="entity-type">person</div>
+  
+  <h3>Attributes</h3>
+  <div class="attributes">
+    
+      <div class="attribute-row">
+        <div class="attribute-key">name</div>
+        <div class="attribute-value">John Doe</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">age</div>
+        <div class="attribute-value">30</div>
+      </div>
+    
+      <div class="attribute-row">
+        <div class="attribute-key">email</div>
+        <div class="attribute-value">john@example.com</div>
+      </div>
+    
+  </div>
+
+  <h3>Relationships</h3>
+  <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
+        <strong>manages</strong> → <a href="entity2.html">Project Alpha</a><div class="relationship-attributes"><small><strong>role:</strong> Project Manager</small> <small><strong>since:</strong> 2023-01-15</small> </div></li><li class="relationship-item">
+        <strong>created</strong> → <a href="entity3.html">entity3</a><div class="relationship-attributes"><small><strong>date:</strong> 2023-02-10</small> </div></li></ul>
+</body>
+</html>
