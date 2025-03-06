@@ -622,12 +622,12 @@ UltraLink's multi-format export capabilities provide tremendous flexibility for 
 
 For format-specific details, refer to the individual format documentation:
 
-- [JSON Format](../formats/JSON_FORMAT.md)
-- [GraphML Format](../formats/GRAPHML_FORMAT.md)
-- [CSV Format](../formats/CSV_FORMAT.md)
-- [Obsidian Format](../formats/OBSIDIAN_FORMAT.md)
-- [HTML Website Format](../formats/HTML_WEBSITE_FORMAT.md)
-- [Bayesian Network Format](../formats/BAYESIAN_NETWORK_FORMAT.md)
-- [Knowledge Interchange Format (KIF)](../formats/KIF_FORMAT.md)
-- [Full Blob Format](../formats/FULL_BLOB_FORMAT.md)
-- [Visualization Format](../formats/VISUALIZATION_FORMAT.md) 
+- [JSON Format](../formats/json_format.md)
+- [GraphML Format](../formats/graphml_format.md)
+- [CSV Format](../formats/csv_format.md)
+- [Obsidian Format](../formats/obsidian_format.md)
+- [HTML Website Format](../formats/html_website_format.md)
+- [Bayesian Network Format](../formats/bayesian_network_format.md)
+- [Knowledge Interchange Format (KIF)](../formats/kif_format.md)
+- [Full Blob Format](../formats/full_blob_format.md)
+- [Visualization Format](../formats/visualization_format.md) 

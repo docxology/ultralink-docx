@@ -51,13 +51,13 @@ Specific guidance for resolving issues with HTML website exports:
 
 If you're experiencing issues with specific formats, refer to the format documentation:
 
-- [JSON Format](../formats/JSON_FORMAT.md#troubleshooting)
-- [GraphML Format](../formats/GRAPHML_FORMAT.md#troubleshooting)
-- [CSV Format](../formats/CSV_FORMAT.md#troubleshooting)
-- [Obsidian Format](../formats/OBSIDIAN_FORMAT.md#troubleshooting)
-- [HTML Website Format](../formats/HTML_WEBSITE_FORMAT.md#troubleshooting)
-- [Bayesian Network Format](../formats/BAYESIAN_NETWORK_FORMAT.md#troubleshooting)
-- [KIF Format](../formats/KIF_FORMAT.md#troubleshooting)
+- [JSON Format](../formats/json_format.md#troubleshooting)
+- [GraphML Format](../formats/graphml_format.md#troubleshooting)
+- [CSV Format](../formats/csv_format.md#troubleshooting)
+- [Obsidian Format](../formats/obsidian_format.md#troubleshooting)
+- [HTML Website Format](../formats/html_website_format.md#troubleshooting)
+- [Bayesian Network Format](../formats/bayesian_network_format.md#troubleshooting)
+- [KIF Format](../formats/kif_format.md#troubleshooting)
 
 ## Get Help from the Community
 

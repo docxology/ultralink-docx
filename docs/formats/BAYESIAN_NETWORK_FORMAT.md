@@ -2,11 +2,11 @@
 
 This document details the Bayesian Network rendering target for UltraLink, its structure, usage, and connection to the UltraLink data model.
 
-> **Related Documents**: 
-> - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/bayesian-network.js](../src/lib/exporters/bayesian-network.js)
-> - [JSON Format](./JSON_FORMAT.md)
-> - [KIF Format](./KIF_FORMAT.md)
+> **Related Documentation**:
+> - [Overview of Rendering Targets](./rendering_targets.md)
+> - [Format Selection Guide](../guides/choosing-format.md)
+> - [JSON Format](./json_format.md)
+> - [KIF Format](./kif_format.md)
 
 ## Overview
 
@@ -508,11 +508,9 @@ function relationshipToCPT(relationship, sourceStates, targetStates) {
 
 ## Related Formats
 
-The Bayesian Network format is related to these other UltraLink export formats:
-
-- **[KIF Format](./KIF_FORMAT.md)**: Formal logic representation with support for probabilistic statements
-- **[JSON Format](./JSON_FORMAT.md)**: Basic data structure that can be transformed into Bayesian networks
-- **[Visualization Format](./VISUALIZATION_FORMAT.md)**: Can visualize the structure of Bayesian networks
+- **[KIF Format](./kif_format.md)**: Formal logic representation with support for probabilistic statements
+- **[JSON Format](./json_format.md)**: Basic data structure that can be transformed into Bayesian networks
+- **[Visualization Format](./visualization_format.md)**: Can visualize the structure of Bayesian networks
 
 ## Limitations
 

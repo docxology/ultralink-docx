@@ -84,7 +84,7 @@ graph TD
 - [📄 Export Formats](#-export-formats)
 - [🧪 Testing & Rendering](#-testing--rendering)
 - [📝 Changelog](CHANGELOG.md)
-- [🔒 Security](SECURITY.md)
+- [🔒 Security](docs/security/security.md)
 - [⚙️ Installation](INSTALLATION.md)
 - [🤔 FAQ](#-faq)
 - [📄 License](#-license)
@@ -501,3 +501,11 @@ UltraLink is licensed under the [MIT License](LICENSE).
   - [D3.js](https://d3js.org/) for visualization
   - [TensorFlow.js](https://www.tensorflow.org/js) for vector operations
   - [GraphLib](https://github.com/dagrejs/graphlib) for graph algorithms
+
+## Resources and Documentation
+
+- [📝 Documentation](docs/README.md)
+- [📖 API Reference](docs/api/README.md)
+- [📊 Examples](docs/examples/README.md)
+- [🚀 Getting Started](docs/getting-started/README.md)
+- [🔒 Security](docs/security/security.md)

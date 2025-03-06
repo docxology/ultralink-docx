@@ -45,31 +45,31 @@ flowchart TD
 
 UltraLink supports the following export formats:
 
-1. [**JSON Format**](./JSON_FORMAT.md) - Universal data exchange format
-2. [**GraphML Format**](./GRAPHML_FORMAT.md) - XML-based graph format for visualization tools
-3. [**CSV Format**](./CSV_FORMAT.md) - Tabular format for spreadsheet analysis
-4. [**Obsidian Format**](./OBSIDIAN_FORMAT.md) - Markdown files with wiki-links for knowledge management
-5. [**HTML Website Format**](./HTML_WEBSITE_FORMAT.md) - Self-contained interactive website for sharing and exploration
-6. [**Visualization Format**](./VISUALIZATION_FORMAT.md) - Direct visual representations in SVG, PNG, D3.js, and Cytoscape.js
-7. [**Bayesian Network Format**](./BAYESIAN_NETWORK_FORMAT.md) - Probabilistic graphical models in BIF format
-8. [**Knowledge Interchange Format (KIF)**](./KIF_FORMAT.md) - Formal logical representation for AI systems
-9. [**Full Blob Format**](./FULL_BLOB_FORMAT.md) - Complete serialization for backup and transfer
+1. [**JSON Format**](./json_format.md) - Universal data exchange format
+2. [**GraphML Format**](./graphml_format.md) - XML-based graph format for visualization tools
+3. [**CSV Format**](./csv_format.md) - Tabular format for spreadsheet analysis
+4. [**Obsidian Format**](./obsidian_format.md) - Markdown files with wiki-links for knowledge management
+5. [**HTML Website Format**](./html_website_format.md) - Self-contained interactive website for sharing and exploration
+6. [**Visualization Format**](./visualization_format.md) - Direct visual representations in SVG, PNG, D3.js, and Cytoscape.js
+7. [**Bayesian Network Format**](./bayesian_network_format.md) - Probabilistic graphical models in BIF format
+8. [**Knowledge Interchange Format (KIF)**](./kif_format.md) - Formal logical representation for AI systems
+9. [**Full Blob Format**](./full_blob_format.md) - Complete serialization for backup and transfer
 
-For a comprehensive comparison of these formats and guidance on which to use for different use cases, see the [Rendering Targets Overview](./RENDERING_TARGETS.md).
+For a complete overview of all formats and guidance on when to use each, see the [Rendering Targets Overview](./rendering_targets.md).
 
 ## Format Comparison
 
-| Format | Primary Focus | Best For | Knowledge Dimensions |
-|--------|--------------|----------|---------------------|
-| [JSON](./JSON_FORMAT.md) | Complete data serialization | API integration, programmatic access | Semantic, Vector, Temporal |
-| [GraphML](./GRAPHML_FORMAT.md) | Graph structure | Network analysis tools, visualization | Semantic, Structural |
-| [CSV](./CSV_FORMAT.md) | Tabular data | Spreadsheet analysis, data import/export | Semantic |
-| [Obsidian](./OBSIDIAN_FORMAT.md) | Human-readable documents | Knowledge management, note-taking | Semantic, Linked |
-| [HTML Website](./HTML_WEBSITE_FORMAT.md) | Interactive exploration | Sharing, presentation, exploration | Semantic, Visual, Interactive |
-| [Visualization](./VISUALIZATION_FORMAT.md) | Visual representation | Presentations, diagrams, embedding in other media | Visual, Structural |
-| [Bayesian Network](./BAYESIAN_NETWORK_FORMAT.md) | Probabilistic relationships | Causal inference, probability analysis | Semantic, Probabilistic |
-| [KIF](./KIF_FORMAT.md) | Formal logic | Automated reasoning, AI systems | Semantic, Logical |
-| [Full Blob](./FULL_BLOB_FORMAT.md) | Complete system state | Backup, system transfer | All dimensions |
+| Format | Core Purpose | Ideal Use Cases | Data Aspects Preserved |
+|--------|--------------|-----------------|------------------------|
+| [JSON](./json_format.md) | Complete data serialization | API integration, programmatic access | Semantic, Vector, Temporal |
+| [GraphML](./graphml_format.md) | Graph structure | Network analysis tools, visualization | Semantic, Structural |
+| [CSV](./csv_format.md) | Tabular data | Spreadsheet analysis, data import/export | Semantic |
+| [Obsidian](./obsidian_format.md) | Human-readable documents | Knowledge management, note-taking | Semantic, Linked |
+| [HTML Website](./html_website_format.md) | Interactive exploration | Sharing, presentation, exploration | Semantic, Visual, Interactive |
+| [Visualization](./visualization_format.md) | Visual representation | Presentations, diagrams, embedding in other media | Visual, Structural |
+| [Bayesian Network](./bayesian_network_format.md) | Probabilistic relationships | Causal inference, probability analysis | Semantic, Probabilistic |
+| [KIF](./kif_format.md) | Formal logic | Automated reasoning, AI systems | Semantic, Logical |
+| [Full Blob](./full_blob_format.md) | Complete system state | Backup, system transfer | All dimensions |
 
 ## Output Organization
 
@@ -111,4 +111,4 @@ output/
 
 Each format is implemented in the UltraLink codebase in the [src/lib/exporters/](../src/lib/exporters/) directory. These exporters transform the UltraLink data model into the target format while preserving the semantics of the knowledge graph.
 
-For more details on the UltraLink rendering system and how it preserves semantics across formats, see the [Rendering Targets Overview](./RENDERING_TARGETS.md). 
+For more details on the UltraLink rendering system and how it preserves semantics across formats, see the [Rendering Targets Overview](./rendering_targets.md). 
