@@ -1,14 +1,14 @@
 ---
 type: animal
 id: cactus_wren
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Cactus Wren
 
-**Type**: animal
-**ID**: cactus_wren
+## Metadata
+
+- **Type**: animal
+- **ID**: cactus_wren
 
 ## Attributes
 
@@ -17,19 +17,16 @@ modified: 2025-03-05T01:16:02.596Z
 - **diet**: insectivore
 - **status**: least concern
 - **description**: Desert bird that builds nests in cholla and other cacti for protection.
-- **adaptations**: ["Obtains most water from food rather than drinking","Specialized nest-building in protective cacti","Heat-resistant metabolism","Efficient kidney function to conserve water"]
+- **adaptations**: Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water
 
 ## Relationships
 
-### adapted_to
+### Outgoing
 
-- [[heat|Extreme Heat]] (adaptationMechanism: Behavioral thermoregulation, strength: strong)
+- **adapted_to** → [[heat]] (Extreme Heat)
+- **lives_in** → [[wash]] (Desert Wash)
 
-### lives_in
+### Incoming
 
-- [[wash|Desert Wash]] (frequency: permanent, dependency: medium)
-
-## Backlinks
-
-- [[gila_monster|Gila Monster]] (preys_on)
+- **preys_on** ← [[gila_monster]] (Gila Monster)
 

@@ -1,14 +1,14 @@
 ---
 type: abiotic_factor
 id: sandy_soil
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Sandy Soil
 
-**Type**: abiotic_factor
-**ID**: sandy_soil
+## Metadata
+
+- **Type**: abiotic_factor
+- **ID**: sandy_soil
 
 ## Attributes
 
@@ -16,7 +16,9 @@ modified: 2025-03-05T01:16:02.596Z
 - **description**: Coarse-grained soil with poor water retention but good drainage.
 - **impact**: high
 
-## Backlinks
+## Relationships
 
-- [[joshua_tree|Joshua Tree]] (grows_in)
+### Incoming
+
+- **grows_in** ← [[joshua_tree]] (Joshua Tree)
 

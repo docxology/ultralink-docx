@@ -1,140 +1,115 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rocky Slope - DesertEcosystem Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f5f5f5;
-      --text: #333333;
-      --link: #990000;
-      --accent: #666666;
-      --border: #cccccc;
-      --text-color: #333333;
-      --bg-color: #f5f5f5;
-    }
-    body {
-      font-family: 'Palatino Linotype', serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Rocky Slope</h1>
-  <div class="entity-type">microhabitat</div>
+  <header>
+    <h1>Rocky Slope</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Rocky Slope</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>rocky_slope</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Elevated area with exposed bedrock and boulders, providing shade and shelter.</td>
+          <tr>
+            <th>Type</th>
+            <td>microhabitat</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">type</td>
-            <td class="attribute-value">lithic</td>
+          <tr>
+            <th>description</th>
+            <td>Elevated area with exposed bedrock and boulders, providing shade and shelter.</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">area</td>
-            <td class="attribute-value">medium</td>
+          <tr>
+            <th>type</th>
+            <td>lithic</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">soilMoisture</td>
-            <td class="attribute-value">very low</td>
+          <tr>
+            <th>area</th>
+            <td>medium</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="desert_tortoise.html">Desert Tortoise</a> <strong>lives_in</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('desert_tortoise')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> seasonal</small> <small><strong>dependency:</strong> medium</small> </div></li><li class="relationship-item">
-        <a href="gila_monster.html">Gila Monster</a> <strong>lives_in</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> high</small> </div></li><li class="relationship-item">
-        <a href="scorpion.html">Deathstalker Scorpion</a> <strong>lives_in</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('scorpion')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> medium</small> </div></li><li class="relationship-item">
-        <a href="saguaro.html">Saguaro Cactus</a> <strong>grows_in</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('saguaro')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> medium</small> </div></li><li class="relationship-item">
-        <a href="brittlebush.html">Brittlebush</a> <strong>grows_in</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('brittlebush')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> medium</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>soilMoisture</th>
+            <td>very low</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="desert_tortoise.html">Desert Tortoise</a> → 
+          <strong>lives_in</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('desert_tortoise')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> seasonal</span>
+            <span><strong>dependency:</strong> medium</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="gila_monster.html">Gila Monster</a> → 
+          <strong>lives_in</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> permanent</span>
+            <span><strong>dependency:</strong> high</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="scorpion.html">Deathstalker Scorpion</a> → 
+          <strong>lives_in</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('scorpion')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> permanent</span>
+            <span><strong>dependency:</strong> medium</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="saguaro.html">Saguaro Cactus</a> → 
+          <strong>grows_in</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('saguaro')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> permanent</span>
+            <span><strong>dependency:</strong> medium</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="brittlebush.html">Brittlebush</a> → 
+          <strong>grows_in</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('brittlebush')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> permanent</span>
+            <span><strong>dependency:</strong> medium</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

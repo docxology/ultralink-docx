@@ -1,135 +1,71 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Evolution of Equality - USAHistory Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f0f8ff;
-      --text: #333333;
-      --link: #006699;
-      --accent: #4a9eff;
-      --border: #b3d9ff;
-      --text-color: #333333;
-      --bg-color: #f0f8ff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Evolution of Equality</h1>
-  <div class="entity-type">concept_drift</div>
+  <header>
+    <h1>Evolution of Equality</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Evolution of Equality</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>equality-evolution</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">concept</td>
-            <td class="attribute-value">civil-rights-concept</td>
+          <tr>
+            <th>Type</th>
+            <td>concept_drift</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">startPoint</td>
-            <td class="attribute-value">1776</td>
+          <tr>
+            <th>concept</th>
+            <td>civil-rights-concept</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">endPoint</td>
-            <td class="attribute-value">2020</td>
+          <tr>
+            <th>startPoint</th>
+            <td>1776</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">drift</td>
-            <td class="attribute-value">0.62</td>
+          <tr>
+            <th>endPoint</th>
+            <td>2020</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">interpretation</td>
-            <td class="attribute-value">Major transformation in understanding of equality across demographic groups</td>
+          <tr>
+            <th>drift</th>
+            <td>0.62</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <p>No relationships found.</p>
-  </div>
+          <tr>
+            <th>interpretation</th>
+            <td>Major transformation in understanding of equality across demographic groups</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

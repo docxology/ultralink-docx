@@ -1,29 +1,29 @@
 ---
 type: knowledge-area
 id: reinforcement-learning
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Reinforcement Learning
 
-**Type**: knowledge-area
-**ID**: reinforcement-learning
+## Metadata
+
+- **Type**: knowledge-area
+- **ID**: reinforcement-learning
 
 ## Attributes
 
 - **description**: Learning through interaction with an environment
-- **topics**: ["Value-Based Methods","Policy Gradient Methods","Model-Based RL","Multi-Agent RL"]
+- **topics**: Value-Based Methods,Policy Gradient Methods,Model-Based RL,Multi-Agent RL
 
 ## Relationships
 
-### foundational_for
+### Outgoing
 
-- [[robotics|Robotics]]
+- **foundational_for** → [[robotics]] (Robotics)
 
-## Backlinks
+### Incoming
 
-- [[machine-learning-theory|Machine Learning Theory]] (foundational_for)
-- [[carol-jones|Carol Jones]] (expertise_in)
-- [[adaptive-robotics-project|Adaptive Robotics Control]] (applies)
+- **foundational_for** ← [[machine-learning-theory]] (Machine Learning Theory)
+- **expertise_in** ← [[carol-jones]] (Carol Jones)
+- **applies** ← [[adaptive-robotics-project]] (Adaptive Robotics Control)
 

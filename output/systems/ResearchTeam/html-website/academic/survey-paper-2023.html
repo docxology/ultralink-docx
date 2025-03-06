@@ -1,156 +1,121 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques - ResearchTeam Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f5f5f5;
-      --text: #333333;
-      --link: #990000;
-      --accent: #666666;
-      --border: #cccccc;
-      --text-color: #333333;
-      --bg-color: #f5f5f5;
-    }
-    body {
-      font-family: 'Palatino Linotype', serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</h1>
-  <div class="entity-type">publication</div>
+  <header>
+    <h1>A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">title</td>
-            <td class="attribute-value">A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>survey-paper-2023</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">authors</td>
-            <td class="attribute-value">david-patel,bob-smith,alice-chen</td>
+          <tr>
+            <th>Type</th>
+            <td>publication</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">venue</td>
-            <td class="attribute-value">ACM Computing Surveys</td>
+          <tr>
+            <th>authors</th>
+            <td>david-patel,bob-smith,alice-chen</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">year</td>
-            <td class="attribute-value">2023</td>
+          <tr>
+            <th>venue</th>
+            <td>ACM Computing Surveys</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">doi</td>
-            <td class="attribute-value">10.1234/surveys2023</td>
+          <tr>
+            <th>year</th>
+            <td>2023</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">citations</td>
-            <td class="attribute-value">78</td>
+          <tr>
+            <th>doi</th>
+            <td>10.1234/surveys2023</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">abstract</td>
-            <td class="attribute-value">This survey provides a comprehensive overview of privacy-preserving machine learning techniques, including differential privacy, federated learning, secure multi-party computation, and homomorphic encryption...</td>
+          <tr>
+            <th>citations</th>
+            <td>78</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>cites</strong> → <a href="federated-paper-2023.html">Communication-Efficient Federated Learning with Adaptive Compression</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('federated-paper-2023')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <strong>cites</strong> → <a href="vision-paper-2022.html">Novel Approaches to Low-Light Computer Vision</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('vision-paper-2022')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <strong>cites</strong> → <a href="nlp-paper-2023.html">Context-Aware Language Understanding in Multi-Domain Settings</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('nlp-paper-2023')" class="select-link" title="Select in graph">(select)</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="david-patel.html">David Patel</a> <strong>authored</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('david-patel')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="bob-smith.html">Bob Smith</a> <strong>authored</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('bob-smith')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="alice-chen.html">Alice Chen</a> <strong>authored</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="federated-learning-project.html">Privacy-Preserving Federated Learning</a> <strong>produced</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('federated-learning-project')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="quantum-paper-2023.html">Quantum Circuit Learning for Computer Vision Tasks</a> <strong>cites</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('quantum-paper-2023')" class="select-link" title="Select in graph">(select)</a></li></ul>
-  </div>
+          <tr>
+            <th>abstract</th>
+            <td>This survey provides a comprehensive overview of privacy-preserving machine learning techniques, including differential privacy, federated learning, secure multi-party computation, and homomorphic encryption...</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>cites</strong> → 
+          <a href="federated-paper-2023.html">Communication-Efficient Federated Learning with Adaptive Compression</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('federated-paper-2023')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <strong>cites</strong> → 
+          <a href="vision-paper-2022.html">Novel Approaches to Low-Light Computer Vision</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('vision-paper-2022')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <strong>cites</strong> → 
+          <a href="nlp-paper-2023.html">Context-Aware Language Understanding in Multi-Domain Settings</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('nlp-paper-2023')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="david-patel.html">David Patel</a> → 
+          <strong>authored</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('david-patel')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="bob-smith.html">Bob Smith</a> → 
+          <strong>authored</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('bob-smith')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="alice-chen.html">Alice Chen</a> → 
+          <strong>authored</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="federated-learning-project.html">Privacy-Preserving Federated Learning</a> → 
+          <strong>produced</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('federated-learning-project')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="quantum-paper-2023.html">Quantum Circuit Learning for Computer Vision Tasks</a> → 
+          <strong>cites</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('quantum-paper-2023')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

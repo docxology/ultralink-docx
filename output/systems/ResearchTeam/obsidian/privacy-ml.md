@@ -1,25 +1,27 @@
 ---
 type: knowledge-area
 id: privacy-ml
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Privacy-Preserving Machine Learning
 
-**Type**: knowledge-area
-**ID**: privacy-ml
+## Metadata
+
+- **Type**: knowledge-area
+- **ID**: privacy-ml
 
 ## Attributes
 
 - **description**: Techniques for ensuring privacy in machine learning systems
-- **topics**: ["Differential Privacy","Federated Learning","Secure Multi-Party Computation","Homomorphic Encryption"]
+- **topics**: Differential Privacy,Federated Learning,Secure Multi-Party Computation,Homomorphic Encryption
 
-## Backlinks
+## Relationships
 
-- [[machine-learning-theory|Machine Learning Theory]] (foundational_for)
-- [[david-patel|David Patel]] (expertise_in)
-- [[alice-chen|Alice Chen]] (expertise_in)
-- [[bob-smith|Bob Smith]] (expertise_in)
-- [[federated-learning-project|Privacy-Preserving Federated Learning]] (applies)
+### Incoming
+
+- **foundational_for** ← [[machine-learning-theory]] (Machine Learning Theory)
+- **expertise_in** ← [[david-patel]] (David Patel)
+- **expertise_in** ← [[alice-chen]] (Alice Chen)
+- **expertise_in** ← [[bob-smith]] (Bob Smith)
+- **applies** ← [[federated-learning-project]] (Privacy-Preserving Federated Learning)
 

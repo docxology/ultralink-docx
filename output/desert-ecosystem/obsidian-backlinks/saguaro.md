@@ -1,14 +1,14 @@
 ---
 type: organism
 id: saguaro
-created: 2025-03-05T01:16:01.995Z
-modified: 2025-03-05T01:16:01.995Z
 ---
 
 # Saguaro Cactus
 
-**Type**: organism
-**ID**: saguaro
+## Metadata
+
+- **Type**: organism
+- **ID**: saguaro
 
 ## Attributes
 
@@ -19,7 +19,7 @@ modified: 2025-03-05T01:16:01.995Z
 
 ## Relationships
 
-### adapts_to
+### Outgoing
 
-- [[aridity|Aridity]] (mechanism: Water storage in stem, efficiency: 0.95)
+- **adapts_to** → [[aridity]] (Aridity)
 

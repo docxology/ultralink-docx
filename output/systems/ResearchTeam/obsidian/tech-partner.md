@@ -1,14 +1,14 @@
 ---
 type: funding
 id: tech-partner
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Tech Industry Partnership
 
-**Type**: funding
-**ID**: tech-partner
+## Metadata
+
+- **Type**: funding
+- **ID**: tech-partner
 
 ## Attributes
 
@@ -21,8 +21,8 @@ modified: 2025-03-05T01:16:02.517Z
 
 ## Relationships
 
-### funds
+### Outgoing
 
-- [[federated-learning-project|Privacy-Preserving Federated Learning]]
-- [[nlp-project|Natural Language Understanding]]
+- **funds** → [[federated-learning-project]] (Privacy-Preserving Federated Learning)
+- **funds** → [[nlp-project]] (Natural Language Understanding)
 

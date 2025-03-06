@@ -1,132 +1,79 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>slavery-1870 - USAHistory Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #202124;
-      --text: #e8eaed;
-      --link: #4a9eff;
-      --accent: #666666;
-      --border: #333333;
-      --text-color: #e8eaed;
-      --bg-color: #202124;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>slavery-1870</h1>
-  <div class="entity-type">temporal_snapshot</div>
+  <header>
+    <h1>slavery-1870</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">entityId</td>
-            <td class="attribute-value">slavery</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>slavery-1870</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">timestamp</td>
-            <td class="attribute-value">1870</td>
+          <tr>
+            <th>Type</th>
+            <td>temporal_snapshot</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">acceptance</td>
-            <td class="attribute-value">0.1</td>
+          <tr>
+            <th>entityId</th>
+            <td>slavery</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">economic_importance</td>
-            <td class="attribute-value">0.1</td>
+          <tr>
+            <th>timestamp</th>
+            <td>1870</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Slavery after emancipation</td>
+          <tr>
+            <th>acceptance</th>
+            <td>0.1</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="slavery.html">Slavery</a> <strong>has_state_at</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('slavery')" class="select-link" title="Select in graph">(select)</a></li></ul>
-  </div>
+          <tr>
+            <th>economic_importance</th>
+            <td>0.1</td>
+          </tr>
+          <tr>
+            <th>description</th>
+            <td>Slavery after emancipation</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="slavery.html">Slavery</a> → 
+          <strong>has_state_at</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('slavery')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

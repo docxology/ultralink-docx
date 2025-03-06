@@ -1,14 +1,14 @@
 ---
 type: funding
 id: university-fund
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # University Research Excellence Fund
 
-**Type**: funding
-**ID**: university-fund
+## Metadata
+
+- **Type**: funding
+- **ID**: university-fund
 
 ## Attributes
 
@@ -21,7 +21,7 @@ modified: 2025-03-05T01:16:02.517Z
 
 ## Relationships
 
-### funds
+### Outgoing
 
-- [[quantum-ml-project|Quantum Approaches to Machine Learning]]
+- **funds** → [[quantum-ml-project]] (Quantum Approaches to Machine Learning)
 

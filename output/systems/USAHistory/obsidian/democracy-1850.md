@@ -1,14 +1,14 @@
 ---
 type: temporal_snapshot
 id: democracy-1850
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # democracy-1850
 
-**Type**: temporal_snapshot
-**ID**: democracy-1850
+## Metadata
+
+- **Type**: temporal_snapshot
+- **ID**: democracy-1850
 
 ## Attributes
 
@@ -18,7 +18,9 @@ modified: 2025-03-05T01:16:02.702Z
 - **global_influence**: 0.4
 - **description**: Democracy in pre-Civil War America
 
-## Backlinks
+## Relationships
 
-- [[democracy|Democracy]] (has_state_at)
+### Incoming
+
+- **has_state_at** ← [[democracy]] (Democracy)
 

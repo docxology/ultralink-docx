@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
-     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
-  <key id="name" for="node" attr.name="name" attr.type="string"/>
-  <key id="type" for="node" attr.name="type" attr.type="string"/>
-  <key id="startYear" for="node" attr.name="startYear" attr.type="string"/>
-  <key id="endYear" for="node" attr.name="endYear" attr.type="string"/>
-  <key id="description" for="node" attr.name="description" attr.type="string"/>
-  <key id="date" for="node" attr.name="date" attr.type="string"/>
-  <key id="location" for="node" attr.name="location" attr.type="string"/>
-  <key id="significance" for="node" attr.name="significance" attr.type="string"/>
-  <key id="vector" for="node" attr.name="vector" attr.type="string"/>
-  <key id="keywords" for="node" attr.name="keywords" attr.type="string"/>
-  <key id="endDate" for="node" attr.name="endDate" attr.type="string"/>
-  <key id="birth" for="node" attr.name="birth" attr.type="string"/>
-  <key id="death" for="node" attr.name="death" attr.type="string"/>
-  <key id="role" for="node" attr.name="role" attr.type="string"/>
-  <key id="authors" for="node" attr.name="authors" attr.type="string"/>
-  <key id="entityId" for="node" attr.name="entityId" attr.type="string"/>
-  <key id="timestamp" for="node" attr.name="timestamp" attr.type="string"/>
-  <key id="popularity" for="node" attr.name="popularity" attr.type="string"/>
-  <key id="global_influence" for="node" attr.name="global_influence" attr.type="string"/>
-  <key id="acceptance" for="node" attr.name="acceptance" attr.type="string"/>
-  <key id="economic_importance" for="node" attr.name="economic_importance" attr.type="string"/>
-  <key id="dimensions" for="node" attr.name="dimensions" attr.type="string"/>
-  <key id="centerVector" for="node" attr.name="centerVector" attr.type="string"/>
-  <key id="vectorSpace" for="node" attr.name="vectorSpace" attr.type="string"/>
-  <key id="entities" for="node" attr.name="entities" attr.type="string"/>
-  <key id="similarity" for="node" attr.name="similarity" attr.type="string"/>
-  <key id="interpretation" for="node" attr.name="interpretation" attr.type="string"/>
-  <key id="concept" for="node" attr.name="concept" attr.type="string"/>
-  <key id="startPoint" for="node" attr.name="startPoint" attr.type="string"/>
-  <key id="endPoint" for="node" attr.name="endPoint" attr.type="string"/>
-  <key id="drift" for="node" attr.name="drift" attr.type="string"/>
-  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
   <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="startYear" for="node" attr.name="startYear" attr.type="string"/>
+    <key id="endYear" for="node" attr.name="endYear" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="date" for="node" attr.name="date" attr.type="string"/>
+    <key id="location" for="node" attr.name="location" attr.type="string"/>
+    <key id="significance" for="node" attr.name="significance" attr.type="string"/>
+    <key id="vector" for="node" attr.name="vector" attr.type="string"/>
+    <key id="keywords" for="node" attr.name="keywords" attr.type="string"/>
+    <key id="endDate" for="node" attr.name="endDate" attr.type="string"/>
+    <key id="birth" for="node" attr.name="birth" attr.type="string"/>
+    <key id="death" for="node" attr.name="death" attr.type="string"/>
+    <key id="role" for="node" attr.name="role" attr.type="string"/>
+    <key id="authors" for="node" attr.name="authors" attr.type="string"/>
+    <key id="entityId" for="node" attr.name="entityId" attr.type="string"/>
+    <key id="timestamp" for="node" attr.name="timestamp" attr.type="string"/>
+    <key id="popularity" for="node" attr.name="popularity" attr.type="string"/>
+    <key id="global_influence" for="node" attr.name="global_influence" attr.type="string"/>
+    <key id="acceptance" for="node" attr.name="acceptance" attr.type="string"/>
+    <key id="economic_importance" for="node" attr.name="economic_importance" attr.type="string"/>
+    <key id="dimensions" for="node" attr.name="dimensions" attr.type="string"/>
+    <key id="centerVector" for="node" attr.name="centerVector" attr.type="string"/>
+    <key id="vectorSpace" for="node" attr.name="vectorSpace" attr.type="string"/>
+    <key id="entities" for="node" attr.name="entities" attr.type="string"/>
+    <key id="similarity" for="node" attr.name="similarity" attr.type="string"/>
+    <key id="interpretation" for="node" attr.name="interpretation" attr.type="string"/>
+    <key id="concept" for="node" attr.name="concept" attr.type="string"/>
+    <key id="startPoint" for="node" attr.name="startPoint" attr.type="string"/>
+    <key id="endPoint" for="node" attr.name="endPoint" attr.type="string"/>
+    <key id="drift" for="node" attr.name="drift" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
     <node id="colonial-period">
       <data key="type">time_period</data>
       <data key="name">Colonial Period</data>
@@ -602,202 +604,202 @@
       <data key="interpretation">Major transformation in understanding of equality across demographic groups</data>
     </node>
     <edge source="jamestown-founding" target="colonial-period">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="plymouth-colony" target="colonial-period">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="declaration-independence" target="revolutionary-war">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="constitutional-convention" target="early-republic">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="louisiana-purchase" target="early-republic">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="civil-war-start" target="civil-war">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="emancipation-proclamation" target="civil-war">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="civil-war-end" target="civil-war">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="womens-suffrage" target="progressive-era">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="stock-market-crash" target="great-depression">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="pearl-harbor" target="world-war-2">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="mlk-speech" target="civil-rights">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="mlk-speech" target="cold-war">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="moon-landing" target="cold-war">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="september-11" target="modern-era">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="obama-election" target="modern-era">
-      <data key="type">occurred_during</data>
+      <data key="relationship_type">occurred_during</data>
     </edge>
     <edge source="washington" target="declaration-independence">
-      <data key="type">participated_in</data>
+      <data key="relationship_type">participated_in</data>
     </edge>
     <edge source="jefferson" target="declaration-independence">
-      <data key="type">created</data>
+      <data key="relationship_type">created</data>
     </edge>
     <edge source="jefferson" target="louisiana-purchase">
-      <data key="type">initiated</data>
+      <data key="relationship_type">initiated</data>
     </edge>
     <edge source="lincoln" target="civil-war-start">
-      <data key="type">led_during</data>
+      <data key="relationship_type">led_during</data>
     </edge>
     <edge source="lincoln" target="emancipation-proclamation">
-      <data key="type">issued</data>
+      <data key="relationship_type">issued</data>
     </edge>
     <edge source="lincoln" target="civil-war-end">
-      <data key="type">led_during</data>
+      <data key="relationship_type">led_during</data>
     </edge>
     <edge source="roosevelt-fdr" target="pearl-harbor">
-      <data key="type">led_during</data>
+      <data key="relationship_type">led_during</data>
     </edge>
     <edge source="mlk" target="mlk-speech">
-      <data key="type">delivered</data>
+      <data key="relationship_type">delivered</data>
     </edge>
     <edge source="washington" target="democracy">
-      <data key="type">championed</data>
+      <data key="relationship_type">championed</data>
     </edge>
     <edge source="jefferson" target="democracy">
-      <data key="type">championed</data>
+      <data key="relationship_type">championed</data>
     </edge>
     <edge source="douglass" target="slavery">
-      <data key="type">opposed</data>
+      <data key="relationship_type">opposed</data>
     </edge>
     <edge source="douglass" target="civil-rights-concept">
-      <data key="type">championed</data>
+      <data key="relationship_type">championed</data>
     </edge>
     <edge source="lincoln" target="slavery">
-      <data key="type">opposed</data>
+      <data key="relationship_type">opposed</data>
     </edge>
     <edge source="mlk" target="civil-rights-concept">
-      <data key="type">championed</data>
+      <data key="relationship_type">championed</data>
     </edge>
     <edge source="declaration-independence" target="democracy">
-      <data key="type">exemplifies</data>
+      <data key="relationship_type">exemplifies</data>
     </edge>
     <edge source="emancipation-proclamation" target="slavery">
-      <data key="type">opposed</data>
+      <data key="relationship_type">opposed</data>
     </edge>
     <edge source="louisiana-purchase" target="manifest-destiny">
-      <data key="type">exemplifies</data>
+      <data key="relationship_type">exemplifies</data>
     </edge>
     <edge source="mlk-speech" target="civil-rights-concept">
-      <data key="type">exemplifies</data>
+      <data key="relationship_type">exemplifies</data>
     </edge>
     <edge source="obama-election" target="american-dream">
-      <data key="type">exemplifies</data>
+      <data key="relationship_type">exemplifies</data>
     </edge>
     <edge source="declaration-doc" target="jefferson">
-      <data key="type">authored_by</data>
+      <data key="relationship_type">authored_by</data>
     </edge>
     <edge source="constitution-doc" target="washington">
-      <data key="type">supported_by</data>
+      <data key="relationship_type">supported_by</data>
     </edge>
     <edge source="gettysburg-address" target="lincoln">
-      <data key="type">authored_by</data>
+      <data key="relationship_type">authored_by</data>
     </edge>
     <edge source="declaration-doc" target="declaration-independence">
-      <data key="type">produced_during</data>
+      <data key="relationship_type">produced_during</data>
     </edge>
     <edge source="constitution-doc" target="constitutional-convention">
-      <data key="type">produced_during</data>
+      <data key="relationship_type">produced_during</data>
     </edge>
     <edge source="gettysburg-address" target="civil-war">
-      <data key="type">produced_during</data>
+      <data key="relationship_type">produced_during</data>
     </edge>
     <edge source="democracy" target="democracy-1776">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="democracy" target="democracy-1800">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="democracy" target="democracy-1850">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="democracy" target="democracy-1900">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="democracy" target="democracy-1950">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="democracy" target="democracy-2000">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="democracy" target="democracy-2020">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="slavery" target="slavery-1700">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="slavery" target="slavery-1776">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="slavery" target="slavery-1800">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="slavery" target="slavery-1850">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="slavery" target="slavery-1863">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="slavery" target="slavery-1870">
-      <data key="type">has_state_at</data>
+      <data key="relationship_type">has_state_at</data>
     </edge>
     <edge source="democracy" target="founding-principles-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="declaration-doc" target="founding-principles-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="constitution-doc" target="founding-principles-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="washington" target="founding-principles-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="jefferson" target="founding-principles-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="civil-rights-concept" target="civil-rights-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="mlk" target="civil-rights-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="mlk-speech" target="civil-rights-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="douglass" target="civil-rights-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="american-dream" target="economic-development-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="roosevelt-fdr" target="economic-development-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
     <edge source="stock-market-crash" target="economic-development-cluster">
-      <data key="type">belongs_to_cluster</data>
+      <data key="relationship_type">belongs_to_cluster</data>
     </edge>
   </graph>
 </graphml>

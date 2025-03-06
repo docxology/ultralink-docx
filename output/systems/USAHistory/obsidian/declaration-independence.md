@@ -1,14 +1,14 @@
 ---
 type: event
 id: declaration-independence
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # Declaration of Independence
 
-**Type**: event
-**ID**: declaration-independence
+## Metadata
+
+- **Type**: event
+- **ID**: declaration-independence
 
 ## Attributes
 
@@ -16,22 +16,19 @@ modified: 2025-03-05T01:16:02.702Z
 - **location**: Philadelphia, Pennsylvania
 - **description**: Formal declaration of independence from Great Britain
 - **significance**: Foundational document establishing American independence
-- **keywords**: ["independence","liberty","revolution","rights"]
-- **vector**: [0.45,0.28,0.34,0.12,0.22,-0.15]
+- **keywords**: independence,liberty,revolution,rights
+- **vector**: 0.45,0.28,0.34,0.12,0.22,-0.15
 
 ## Relationships
 
-### occurred_during
+### Outgoing
 
-- [[revolutionary-war|American Revolution]]
+- **occurred_during** → [[revolutionary-war]] (American Revolution)
+- **exemplifies** → [[democracy]] (Democracy)
 
-### exemplifies
+### Incoming
 
-- [[democracy|Democracy]]
-
-## Backlinks
-
-- [[washington|George Washington]] (participated_in)
-- [[jefferson|Thomas Jefferson]] (created)
-- [[declaration-doc|Declaration of Independence]] (produced_during)
+- **participated_in** ← [[washington]] (George Washington)
+- **created** ← [[jefferson]] (Thomas Jefferson)
+- **produced_during** ← [[declaration-doc]] (Declaration of Independence)
 

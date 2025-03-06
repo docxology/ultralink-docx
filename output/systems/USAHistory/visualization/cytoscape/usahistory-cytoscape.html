@@ -1,50 +1,1870 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>UltraLink Cytoscape Visualization</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UltraLink Cytoscape.js Visualization</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-    #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #cy {
+      width: 100%;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   </style>
 </head>
 <body>
-  <h1>UltraLink Graph Visualization</h1>
   <div id="cy"></div>
+  
   <script>
     // Initialize Cytoscape
     const cy = cytoscape({
       container: document.getElementById('cy'),
+      
       elements: {
-        nodes: [{"data":{"id":"colonial-period","label":"Colonial Period","type":"time_period"}},{"data":{"id":"revolutionary-war","label":"American Revolution","type":"time_period"}},{"data":{"id":"early-republic","label":"Early Republic","type":"time_period"}},{"data":{"id":"antebellum","label":"Antebellum Era","type":"time_period"}},{"data":{"id":"civil-war","label":"Civil War","type":"time_period"}},{"data":{"id":"reconstruction","label":"Reconstruction","type":"time_period"}},{"data":{"id":"gilded-age","label":"Gilded Age","type":"time_period"}},{"data":{"id":"progressive-era","label":"Progressive Era","type":"time_period"}},{"data":{"id":"roaring-twenties","label":"Roaring Twenties","type":"time_period"}},{"data":{"id":"great-depression","label":"Great Depression","type":"time_period"}},{"data":{"id":"world-war-2","label":"World War II","type":"time_period"}},{"data":{"id":"cold-war","label":"Cold War","type":"time_period"}},{"data":{"id":"civil-rights","label":"Civil Rights Movement","type":"time_period"}},{"data":{"id":"modern-era","label":"Modern Era","type":"time_period"}},{"data":{"id":"jamestown-founding","label":"Founding of Jamestown","type":"event"}},{"data":{"id":"plymouth-colony","label":"Plymouth Colony Established","type":"event"}},{"data":{"id":"declaration-independence","label":"Declaration of Independence","type":"event"}},{"data":{"id":"constitutional-convention","label":"Constitutional Convention","type":"event"}},{"data":{"id":"louisiana-purchase","label":"Louisiana Purchase","type":"event"}},{"data":{"id":"civil-war-start","label":"Civil War Begins","type":"event"}},{"data":{"id":"emancipation-proclamation","label":"Emancipation Proclamation","type":"event"}},{"data":{"id":"civil-war-end","label":"Civil War Ends","type":"event"}},{"data":{"id":"womens-suffrage","label":"19th Amendment","type":"event"}},{"data":{"id":"stock-market-crash","label":"Stock Market Crash","type":"event"}},{"data":{"id":"pearl-harbor","label":"Attack on Pearl Harbor","type":"event"}},{"data":{"id":"mlk-speech","label":"I Have a Dream Speech","type":"event"}},{"data":{"id":"moon-landing","label":"Moon Landing","type":"event"}},{"data":{"id":"september-11","label":"September 11 Attacks","type":"event"}},{"data":{"id":"obama-election","label":"Barack Obama Elected President","type":"event"}},{"data":{"id":"washington","label":"George Washington","type":"person"}},{"data":{"id":"jefferson","label":"Thomas Jefferson","type":"person"}},{"data":{"id":"lincoln","label":"Abraham Lincoln","type":"person"}},{"data":{"id":"douglass","label":"Frederick Douglass","type":"person"}},{"data":{"id":"roosevelt-fdr","label":"Franklin D. Roosevelt","type":"person"}},{"data":{"id":"mlk","label":"Martin Luther King Jr.","type":"person"}},{"data":{"id":"democracy","label":"Democracy","type":"concept"}},{"data":{"id":"slavery","label":"Slavery","type":"concept"}},{"data":{"id":"manifest-destiny","label":"Manifest Destiny","type":"concept"}},{"data":{"id":"civil-rights-concept","label":"Civil Rights","type":"concept"}},{"data":{"id":"american-dream","label":"American Dream","type":"concept"}},{"data":{"id":"declaration-doc","label":"Declaration of Independence","type":"document"}},{"data":{"id":"constitution-doc","label":"United States Constitution","type":"document"}},{"data":{"id":"gettysburg-address","label":"Gettysburg Address","type":"document"}},{"data":{"id":"democracy-1776","label":"democracy-1776","type":"temporal_snapshot"}},{"data":{"id":"democracy-1800","label":"democracy-1800","type":"temporal_snapshot"}},{"data":{"id":"democracy-1850","label":"democracy-1850","type":"temporal_snapshot"}},{"data":{"id":"democracy-1900","label":"democracy-1900","type":"temporal_snapshot"}},{"data":{"id":"democracy-1950","label":"democracy-1950","type":"temporal_snapshot"}},{"data":{"id":"democracy-2000","label":"democracy-2000","type":"temporal_snapshot"}},{"data":{"id":"democracy-2020","label":"democracy-2020","type":"temporal_snapshot"}},{"data":{"id":"slavery-1700","label":"slavery-1700","type":"temporal_snapshot"}},{"data":{"id":"slavery-1776","label":"slavery-1776","type":"temporal_snapshot"}},{"data":{"id":"slavery-1800","label":"slavery-1800","type":"temporal_snapshot"}},{"data":{"id":"slavery-1850","label":"slavery-1850","type":"temporal_snapshot"}},{"data":{"id":"slavery-1863","label":"slavery-1863","type":"temporal_snapshot"}},{"data":{"id":"slavery-1870","label":"slavery-1870","type":"temporal_snapshot"}},{"data":{"id":"founding-era","label":"founding-era","type":"historical_snapshot"}},{"data":{"id":"pre-civil-war","label":"pre-civil-war","type":"historical_snapshot"}},{"data":{"id":"civil-rights-era","label":"civil-rights-era","type":"historical_snapshot"}},{"data":{"id":"post-cold-war","label":"post-cold-war","type":"historical_snapshot"}},{"data":{"id":"ideological-space","label":"Ideological Positions","type":"vector_space"}},{"data":{"id":"social-values-space","label":"Social Values","type":"vector_space"}},{"data":{"id":"founding-principles-cluster","label":"Founding Principles","type":"semantic_cluster"}},{"data":{"id":"civil-rights-cluster","label":"Civil Rights Movement","type":"semantic_cluster"}},{"data":{"id":"economic-development-cluster","label":"Economic Development","type":"semantic_cluster"}},{"data":{"id":"democracy-rights-similarity","label":"Democracy and Civil Rights Relationship","type":"similarity_analysis"}},{"data":{"id":"liberty-dream-similarity","label":"Liberty and American Dream Relationship","type":"similarity_analysis"}},{"data":{"id":"democracy-evolution","label":"Evolution of Democracy","type":"concept_drift"}},{"data":{"id":"equality-evolution","label":"Evolution of Equality","type":"concept_drift"}}],
-        edges: [{"data":{"id":"e0","source":"jamestown-founding","target":"colonial-period","label":"occurred_during"}},{"data":{"id":"e1","source":"plymouth-colony","target":"colonial-period","label":"occurred_during"}},{"data":{"id":"e2","source":"declaration-independence","target":"revolutionary-war","label":"occurred_during"}},{"data":{"id":"e3","source":"constitutional-convention","target":"early-republic","label":"occurred_during"}},{"data":{"id":"e4","source":"louisiana-purchase","target":"early-republic","label":"occurred_during"}},{"data":{"id":"e5","source":"civil-war-start","target":"civil-war","label":"occurred_during"}},{"data":{"id":"e6","source":"emancipation-proclamation","target":"civil-war","label":"occurred_during"}},{"data":{"id":"e7","source":"civil-war-end","target":"civil-war","label":"occurred_during"}},{"data":{"id":"e8","source":"womens-suffrage","target":"progressive-era","label":"occurred_during"}},{"data":{"id":"e9","source":"stock-market-crash","target":"great-depression","label":"occurred_during"}},{"data":{"id":"e10","source":"pearl-harbor","target":"world-war-2","label":"occurred_during"}},{"data":{"id":"e11","source":"mlk-speech","target":"civil-rights","label":"occurred_during"}},{"data":{"id":"e12","source":"mlk-speech","target":"cold-war","label":"occurred_during"}},{"data":{"id":"e13","source":"moon-landing","target":"cold-war","label":"occurred_during"}},{"data":{"id":"e14","source":"september-11","target":"modern-era","label":"occurred_during"}},{"data":{"id":"e15","source":"obama-election","target":"modern-era","label":"occurred_during"}},{"data":{"id":"e16","source":"washington","target":"declaration-independence","label":"participated_in"}},{"data":{"id":"e17","source":"jefferson","target":"declaration-independence","label":"created"}},{"data":{"id":"e18","source":"jefferson","target":"louisiana-purchase","label":"initiated"}},{"data":{"id":"e19","source":"lincoln","target":"civil-war-start","label":"led_during"}},{"data":{"id":"e20","source":"lincoln","target":"emancipation-proclamation","label":"issued"}},{"data":{"id":"e21","source":"lincoln","target":"civil-war-end","label":"led_during"}},{"data":{"id":"e22","source":"roosevelt-fdr","target":"pearl-harbor","label":"led_during"}},{"data":{"id":"e23","source":"mlk","target":"mlk-speech","label":"delivered"}},{"data":{"id":"e24","source":"washington","target":"democracy","label":"championed"}},{"data":{"id":"e25","source":"jefferson","target":"democracy","label":"championed"}},{"data":{"id":"e26","source":"douglass","target":"slavery","label":"opposed"}},{"data":{"id":"e27","source":"douglass","target":"civil-rights-concept","label":"championed"}},{"data":{"id":"e28","source":"lincoln","target":"slavery","label":"opposed"}},{"data":{"id":"e29","source":"mlk","target":"civil-rights-concept","label":"championed"}},{"data":{"id":"e30","source":"declaration-independence","target":"democracy","label":"exemplifies"}},{"data":{"id":"e31","source":"emancipation-proclamation","target":"slavery","label":"opposed"}},{"data":{"id":"e32","source":"louisiana-purchase","target":"manifest-destiny","label":"exemplifies"}},{"data":{"id":"e33","source":"mlk-speech","target":"civil-rights-concept","label":"exemplifies"}},{"data":{"id":"e34","source":"obama-election","target":"american-dream","label":"exemplifies"}},{"data":{"id":"e35","source":"declaration-doc","target":"jefferson","label":"authored_by"}},{"data":{"id":"e36","source":"constitution-doc","target":"washington","label":"supported_by"}},{"data":{"id":"e37","source":"gettysburg-address","target":"lincoln","label":"authored_by"}},{"data":{"id":"e38","source":"declaration-doc","target":"declaration-independence","label":"produced_during"}},{"data":{"id":"e39","source":"constitution-doc","target":"constitutional-convention","label":"produced_during"}},{"data":{"id":"e40","source":"gettysburg-address","target":"civil-war","label":"produced_during"}},{"data":{"id":"e41","source":"democracy","target":"democracy-1776","label":"has_state_at"}},{"data":{"id":"e42","source":"democracy","target":"democracy-1800","label":"has_state_at"}},{"data":{"id":"e43","source":"democracy","target":"democracy-1850","label":"has_state_at"}},{"data":{"id":"e44","source":"democracy","target":"democracy-1900","label":"has_state_at"}},{"data":{"id":"e45","source":"democracy","target":"democracy-1950","label":"has_state_at"}},{"data":{"id":"e46","source":"democracy","target":"democracy-2000","label":"has_state_at"}},{"data":{"id":"e47","source":"democracy","target":"democracy-2020","label":"has_state_at"}},{"data":{"id":"e48","source":"slavery","target":"slavery-1700","label":"has_state_at"}},{"data":{"id":"e49","source":"slavery","target":"slavery-1776","label":"has_state_at"}},{"data":{"id":"e50","source":"slavery","target":"slavery-1800","label":"has_state_at"}},{"data":{"id":"e51","source":"slavery","target":"slavery-1850","label":"has_state_at"}},{"data":{"id":"e52","source":"slavery","target":"slavery-1863","label":"has_state_at"}},{"data":{"id":"e53","source":"slavery","target":"slavery-1870","label":"has_state_at"}},{"data":{"id":"e54","source":"democracy","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e55","source":"declaration-doc","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e56","source":"constitution-doc","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e57","source":"washington","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e58","source":"jefferson","target":"founding-principles-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e59","source":"civil-rights-concept","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e60","source":"mlk","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e61","source":"mlk-speech","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e62","source":"douglass","target":"civil-rights-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e63","source":"american-dream","target":"economic-development-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e64","source":"roosevelt-fdr","target":"economic-development-cluster","label":"belongs_to_cluster"}},{"data":{"id":"e65","source":"stock-market-crash","target":"economic-development-cluster","label":"belongs_to_cluster"}}]
+        nodes: [
+  {
+    "data": {
+      "id": "colonial-period",
+      "label": "Colonial Period",
+      "type": "time_period",
+      "name": "Colonial Period",
+      "startYear": 1607,
+      "endYear": 1776,
+      "description": "Period of American colonization by European powers, primarily Great Britain"
+    }
+  },
+  {
+    "data": {
+      "id": "revolutionary-war",
+      "label": "American Revolution",
+      "type": "time_period",
+      "name": "American Revolution",
+      "startYear": 1775,
+      "endYear": 1783,
+      "description": "War for independence from Great Britain"
+    }
+  },
+  {
+    "data": {
+      "id": "early-republic",
+      "label": "Early Republic",
+      "type": "time_period",
+      "name": "Early Republic",
+      "startYear": 1783,
+      "endYear": 1815,
+      "description": "Formation and early development of the United States government"
+    }
+  },
+  {
+    "data": {
+      "id": "antebellum",
+      "label": "Antebellum Era",
+      "type": "time_period",
+      "name": "Antebellum Era",
+      "startYear": 1815,
+      "endYear": 1861,
+      "description": "Period of growth and division leading to the Civil War"
+    }
+  },
+  {
+    "data": {
+      "id": "civil-war",
+      "label": "Civil War",
+      "type": "time_period",
+      "name": "Civil War",
+      "startYear": 1861,
+      "endYear": 1865,
+      "description": "War between the Union and Confederate states"
+    }
+  },
+  {
+    "data": {
+      "id": "reconstruction",
+      "label": "Reconstruction",
+      "type": "time_period",
+      "name": "Reconstruction",
+      "startYear": 1865,
+      "endYear": 1877,
+      "description": "Post-Civil War rebuilding and integration of Southern states"
+    }
+  },
+  {
+    "data": {
+      "id": "gilded-age",
+      "label": "Gilded Age",
+      "type": "time_period",
+      "name": "Gilded Age",
+      "startYear": 1877,
+      "endYear": 1900,
+      "description": "Era of rapid economic growth, industrialization, and wealth inequality"
+    }
+  },
+  {
+    "data": {
+      "id": "progressive-era",
+      "label": "Progressive Era",
+      "type": "time_period",
+      "name": "Progressive Era",
+      "startYear": 1900,
+      "endYear": 1920,
+      "description": "Period of social activism and political reform"
+    }
+  },
+  {
+    "data": {
+      "id": "roaring-twenties",
+      "label": "Roaring Twenties",
+      "type": "time_period",
+      "name": "Roaring Twenties",
+      "startYear": 1920,
+      "endYear": 1929,
+      "description": "Period of economic prosperity and cultural dynamism"
+    }
+  },
+  {
+    "data": {
+      "id": "great-depression",
+      "label": "Great Depression",
+      "type": "time_period",
+      "name": "Great Depression",
+      "startYear": 1929,
+      "endYear": 1941,
+      "description": "Severe economic downturn causing high unemployment and economic hardship"
+    }
+  },
+  {
+    "data": {
+      "id": "world-war-2",
+      "label": "World War II",
+      "type": "time_period",
+      "name": "World War II",
+      "startYear": 1941,
+      "endYear": 1945,
+      "description": "American involvement in the global conflict"
+    }
+  },
+  {
+    "data": {
+      "id": "cold-war",
+      "label": "Cold War",
+      "type": "time_period",
+      "name": "Cold War",
+      "startYear": 1945,
+      "endYear": 1991,
+      "description": "Geopolitical tension between the United States and Soviet Union"
+    }
+  },
+  {
+    "data": {
+      "id": "civil-rights",
+      "label": "Civil Rights Movement",
+      "type": "time_period",
+      "name": "Civil Rights Movement",
+      "startYear": 1954,
+      "endYear": 1968,
+      "description": "Movement for racial equality and ending discrimination"
+    }
+  },
+  {
+    "data": {
+      "id": "modern-era",
+      "label": "Modern Era",
+      "type": "time_period",
+      "name": "Modern Era",
+      "startYear": 1991,
+      "endYear": 2023,
+      "description": "Post-Cold War period to present day"
+    }
+  },
+  {
+    "data": {
+      "id": "jamestown-founding",
+      "label": "Founding of Jamestown",
+      "type": "event",
+      "name": "Founding of Jamestown",
+      "date": "1607-05-14",
+      "location": "Virginia",
+      "description": "First permanent English settlement in North America",
+      "significance": "Established English presence in North America",
+      "vector": [
+        -0.12,
+        0.35,
+        0.02,
+        0.41,
+        -0.18,
+        0.22
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "plymouth-colony",
+      "label": "Plymouth Colony Established",
+      "type": "event",
+      "name": "Plymouth Colony Established",
+      "date": "1620-12-21",
+      "location": "Massachusetts",
+      "description": "Pilgrims establish Plymouth Colony after arriving on the Mayflower",
+      "significance": "Early religious settlement that shaped New England culture",
+      "vector": [
+        -0.1,
+        0.32,
+        0.05,
+        0.4,
+        -0.15,
+        0.25
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "declaration-independence",
+      "label": "Declaration of Independence",
+      "type": "event",
+      "name": "Declaration of Independence",
+      "date": "1776-07-04",
+      "location": "Philadelphia, Pennsylvania",
+      "description": "Formal declaration of independence from Great Britain",
+      "significance": "Foundational document establishing American independence",
+      "keywords": [
+        "independence",
+        "liberty",
+        "revolution",
+        "rights"
+      ],
+      "vector": [
+        0.45,
+        0.28,
+        0.34,
+        0.12,
+        0.22,
+        -0.15
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "constitutional-convention",
+      "label": "Constitutional Convention",
+      "type": "event",
+      "name": "Constitutional Convention",
+      "date": "1787-05-25",
+      "endDate": "1787-09-17",
+      "location": "Philadelphia, Pennsylvania",
+      "description": "Convention to create a new constitution for the United States",
+      "significance": "Created the United States Constitution",
+      "keywords": [
+        "constitution",
+        "government",
+        "federalism",
+        "compromise"
+      ],
+      "vector": [
+        0.42,
+        0.25,
+        0.38,
+        0.1,
+        0.24,
+        -0.12
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "louisiana-purchase",
+      "label": "Louisiana Purchase",
+      "type": "event",
+      "name": "Louisiana Purchase",
+      "date": "1803-04-30",
+      "location": "Paris, France",
+      "description": "Purchase of the Louisiana Territory from France",
+      "significance": "Doubled the size of the United States",
+      "keywords": [
+        "expansion",
+        "territory",
+        "Jefferson",
+        "Napoleon"
+      ],
+      "vector": [
+        0.05,
+        0.42,
+        -0.15,
+        0.28,
+        0.33,
+        0.22
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "civil-war-start",
+      "label": "Civil War Begins",
+      "type": "event",
+      "name": "Civil War Begins",
+      "date": "1861-04-12",
+      "location": "Fort Sumter, South Carolina",
+      "description": "Confederate forces attack Fort Sumter, beginning the Civil War",
+      "significance": "Started the bloodiest conflict in American history",
+      "keywords": [
+        "war",
+        "slavery",
+        "secession",
+        "conflict"
+      ],
+      "vector": [
+        -0.35,
+        -0.22,
+        -0.42,
+        -0.18,
+        -0.3,
+        -0.25
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "emancipation-proclamation",
+      "label": "Emancipation Proclamation",
+      "type": "event",
+      "name": "Emancipation Proclamation",
+      "date": "1863-01-01",
+      "location": "Washington, D.C.",
+      "description": "Lincoln declares slaves in Confederate states to be free",
+      "significance": "Changed the character of the Civil War and began the process of ending slavery",
+      "keywords": [
+        "slavery",
+        "freedom",
+        "Lincoln",
+        "abolition"
+      ],
+      "vector": [
+        0.48,
+        0.3,
+        0.38,
+        0.15,
+        0.25,
+        -0.1
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "civil-war-end",
+      "label": "Civil War Ends",
+      "type": "event",
+      "name": "Civil War Ends",
+      "date": "1865-04-09",
+      "location": "Appomattox Court House, Virginia",
+      "description": "General Lee surrenders to General Grant, effectively ending the Civil War",
+      "significance": "Ended the Civil War and preserved the Union",
+      "keywords": [
+        "surrender",
+        "war end",
+        "Lee",
+        "Grant",
+        "reconciliation"
+      ],
+      "vector": [
+        0.1,
+        0.15,
+        0.2,
+        0.3,
+        0.25,
+        0.22
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "womens-suffrage",
+      "label": "19th Amendment",
+      "type": "event",
+      "name": "19th Amendment",
+      "date": "1920-08-18",
+      "location": "United States",
+      "description": "Constitutional amendment giving women the right to vote",
+      "significance": "Major achievement for women's rights and democracy",
+      "keywords": [
+        "women",
+        "voting",
+        "rights",
+        "suffrage",
+        "equality"
+      ],
+      "vector": [
+        0.46,
+        0.32,
+        0.33,
+        0.14,
+        0.26,
+        -0.12
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "stock-market-crash",
+      "label": "Stock Market Crash",
+      "type": "event",
+      "name": "Stock Market Crash",
+      "date": "1929-10-29",
+      "location": "New York, New York",
+      "description": "Stock market crashes, triggering the Great Depression",
+      "significance": "Led to the worst economic crisis in American history",
+      "keywords": [
+        "depression",
+        "economy",
+        "crash",
+        "financial",
+        "poverty"
+      ],
+      "vector": [
+        -0.32,
+        -0.18,
+        -0.38,
+        -0.25,
+        -0.28,
+        -0.2
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "pearl-harbor",
+      "label": "Attack on Pearl Harbor",
+      "type": "event",
+      "name": "Attack on Pearl Harbor",
+      "date": "1941-12-07",
+      "location": "Pearl Harbor, Hawaii",
+      "description": "Japanese forces attack the US Naval base at Pearl Harbor",
+      "significance": "Brought the United States into World War II",
+      "keywords": [
+        "war",
+        "Japan",
+        "attack",
+        "World War II",
+        "Roosevelt"
+      ],
+      "vector": [
+        -0.38,
+        -0.28,
+        -0.42,
+        -0.2,
+        -0.32,
+        -0.3
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "mlk-speech",
+      "label": "I Have a Dream Speech",
+      "type": "event",
+      "name": "I Have a Dream Speech",
+      "date": "1963-08-28",
+      "location": "Washington, D.C.",
+      "description": "Martin Luther King Jr. delivers his famous speech during the March on Washington",
+      "significance": "Defining moment in the Civil Rights Movement",
+      "keywords": [
+        "civil rights",
+        "equality",
+        "King",
+        "dream",
+        "racial justice"
+      ],
+      "vector": [
+        0.5,
+        0.35,
+        0.4,
+        0.18,
+        0.28,
+        -0.08
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "moon-landing",
+      "label": "Moon Landing",
+      "type": "event",
+      "name": "Moon Landing",
+      "date": "1969-07-20",
+      "location": "Moon",
+      "description": "NASA's Apollo 11 mission lands humans on the Moon",
+      "significance": "Major achievement in space exploration and technology",
+      "keywords": [
+        "space",
+        "NASA",
+        "Apollo",
+        "Armstrong",
+        "technology"
+      ],
+      "vector": [
+        0.25,
+        0.45,
+        0.05,
+        0.38,
+        0.15,
+        0.42
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "september-11",
+      "label": "September 11 Attacks",
+      "type": "event",
+      "name": "September 11 Attacks",
+      "date": "2001-09-11",
+      "location": "New York, Washington D.C., Pennsylvania",
+      "description": "Terrorist attacks using hijacked airplanes",
+      "significance": "Deadliest terrorist attack in history, led to major changes in US foreign policy",
+      "keywords": [
+        "terrorism",
+        "attack",
+        "security",
+        "war on terror",
+        "tragedy"
+      ],
+      "vector": [
+        -0.42,
+        -0.35,
+        -0.48,
+        -0.25,
+        -0.38,
+        -0.32
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "obama-election",
+      "label": "Barack Obama Elected President",
+      "type": "event",
+      "name": "Barack Obama Elected President",
+      "date": "2008-11-04",
+      "location": "United States",
+      "description": "Barack Obama elected as first African American president of the United States",
+      "significance": "Historic milestone in American race relations and politics",
+      "keywords": [
+        "election",
+        "Obama",
+        "presidency",
+        "African American",
+        "milestone"
+      ],
+      "vector": [
+        0.42,
+        0.3,
+        0.35,
+        0.2,
+        0.28,
+        0.15
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "washington",
+      "label": "George Washington",
+      "type": "person",
+      "name": "George Washington",
+      "birth": "1732-02-22",
+      "death": "1799-12-14",
+      "role": "Military leader, 1st President",
+      "significance": "Led Continental Army, first US President, established presidential precedents",
+      "keywords": [
+        "president",
+        "revolutionary war",
+        "founding father",
+        "Mount Vernon"
+      ],
+      "vector": [
+        0.4,
+        0.32,
+        0.28,
+        0.25,
+        0.38,
+        0.22
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "jefferson",
+      "label": "Thomas Jefferson",
+      "type": "person",
+      "name": "Thomas Jefferson",
+      "birth": "1743-04-13",
+      "death": "1826-07-04",
+      "role": "Statesman, 3rd President",
+      "significance": "Authored Declaration of Independence, expanded US territory, founded University of Virginia",
+      "keywords": [
+        "declaration",
+        "president",
+        "founding father",
+        "Monticello",
+        "Louisiana Purchase"
+      ],
+      "vector": [
+        0.38,
+        0.35,
+        0.32,
+        0.3,
+        0.25,
+        0.18
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "lincoln",
+      "label": "Abraham Lincoln",
+      "type": "person",
+      "name": "Abraham Lincoln",
+      "birth": "1809-02-12",
+      "death": "1865-04-15",
+      "role": "16th President",
+      "significance": "Preserved the Union during Civil War, emancipated slaves, modernized economy",
+      "keywords": [
+        "civil war",
+        "emancipation",
+        "Gettysburg",
+        "assassination",
+        "union"
+      ],
+      "vector": [
+        0.42,
+        0.36,
+        0.3,
+        0.28,
+        0.32,
+        0.15
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "douglass",
+      "label": "Frederick Douglass",
+      "type": "person",
+      "name": "Frederick Douglass",
+      "birth": "1818-02-01",
+      "death": "1895-02-20",
+      "role": "Abolitionist, Writer",
+      "significance": "Escaped slave who became leading abolitionist and advocate for equality",
+      "keywords": [
+        "abolition",
+        "slavery",
+        "civil rights",
+        "orator",
+        "writer"
+      ],
+      "vector": [
+        0.44,
+        0.36,
+        0.34,
+        0.25,
+        0.3,
+        0.12
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "roosevelt-fdr",
+      "label": "Franklin D. Roosevelt",
+      "type": "person",
+      "name": "Franklin D. Roosevelt",
+      "birth": "1882-01-30",
+      "death": "1945-04-12",
+      "role": "32nd President",
+      "significance": "Led US through Great Depression and most of World War II, established New Deal programs",
+      "keywords": [
+        "New Deal",
+        "depression",
+        "World War II",
+        "polio",
+        "four terms"
+      ],
+      "vector": [
+        0.4,
+        0.34,
+        0.3,
+        0.25,
+        0.35,
+        0.2
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "mlk",
+      "label": "Martin Luther King Jr.",
+      "type": "person",
+      "name": "Martin Luther King Jr.",
+      "birth": "1929-01-15",
+      "death": "1968-04-04",
+      "role": "Civil Rights Leader",
+      "significance": "Led nonviolent civil rights movement, advocated for racial equality",
+      "keywords": [
+        "civil rights",
+        "nonviolence",
+        "dream speech",
+        "equality",
+        "Nobel Peace Prize"
+      ],
+      "vector": [
+        0.48,
+        0.38,
+        0.42,
+        0.3,
+        0.35,
+        0.15
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "democracy",
+      "label": "Democracy",
+      "type": "concept",
+      "name": "Democracy",
+      "description": "System of government by the people, typically through elected representatives",
+      "keywords": [
+        "voting",
+        "representation",
+        "elections",
+        "governance",
+        "people"
+      ],
+      "vector": [
+        0.35,
+        0.3,
+        0.4,
+        0.25,
+        0.32,
+        0.22
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "slavery",
+      "label": "Slavery",
+      "type": "concept",
+      "name": "Slavery",
+      "description": "System of forced labor where people are owned as property",
+      "keywords": [
+        "bondage",
+        "plantation",
+        "abolition",
+        "slaves",
+        "human property"
+      ],
+      "vector": [
+        -0.4,
+        -0.32,
+        -0.45,
+        -0.38,
+        -0.42,
+        -0.3
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "manifest-destiny",
+      "label": "Manifest Destiny",
+      "type": "concept",
+      "name": "Manifest Destiny",
+      "description": "Belief that American settlers were destined to expand across North America",
+      "keywords": [
+        "expansion",
+        "westward",
+        "territory",
+        "settlement",
+        "imperialism"
+      ],
+      "vector": [
+        0.1,
+        0.38,
+        -0.05,
+        0.42,
+        0.25,
+        0.3
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "civil-rights-concept",
+      "label": "Civil Rights",
+      "type": "concept",
+      "name": "Civil Rights",
+      "description": "Rights to personal liberty and equality under the law",
+      "keywords": [
+        "equality",
+        "rights",
+        "discrimination",
+        "freedom",
+        "justice"
+      ],
+      "vector": [
+        0.46,
+        0.35,
+        0.42,
+        0.28,
+        0.32,
+        0.15
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "american-dream",
+      "label": "American Dream",
+      "type": "concept",
+      "name": "American Dream",
+      "description": "Belief that anyone can achieve success and prosperity through hard work",
+      "keywords": [
+        "opportunity",
+        "success",
+        "prosperity",
+        "upward mobility",
+        "work ethic"
+      ],
+      "vector": [
+        0.35,
+        0.42,
+        0.3,
+        0.25,
+        0.28,
+        0.38
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "declaration-doc",
+      "label": "Declaration of Independence",
+      "type": "document",
+      "name": "Declaration of Independence",
+      "date": "1776-07-04",
+      "authors": [
+        "Thomas Jefferson",
+        "Continental Congress"
+      ],
+      "description": "Document declaring the thirteen American colonies as independent sovereign states",
+      "significance": "Foundational document of the United States",
+      "keywords": [
+        "independence",
+        "liberty",
+        "rights",
+        "revolution",
+        "Jefferson"
+      ],
+      "vector": [
+        0.45,
+        0.3,
+        0.35,
+        0.15,
+        0.25,
+        -0.1
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "constitution-doc",
+      "label": "United States Constitution",
+      "type": "document",
+      "name": "United States Constitution",
+      "date": "1787-09-17",
+      "authors": [
+        "Constitutional Convention Delegates"
+      ],
+      "description": "Supreme law of the United States establishing the structure of the federal government",
+      "significance": "Foundational legal document of the United States",
+      "keywords": [
+        "government",
+        "law",
+        "rights",
+        "federalism",
+        "branches"
+      ],
+      "vector": [
+        0.42,
+        0.28,
+        0.38,
+        0.12,
+        0.22,
+        -0.08
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "gettysburg-address",
+      "label": "Gettysburg Address",
+      "type": "document",
+      "name": "Gettysburg Address",
+      "date": "1863-11-19",
+      "authors": [
+        "Abraham Lincoln"
+      ],
+      "description": "Speech given by President Lincoln during the Civil War",
+      "significance": "Redefined the purpose of the Civil War and American democracy",
+      "keywords": [
+        "civil war",
+        "liberty",
+        "democracy",
+        "equality",
+        "Lincoln"
+      ],
+      "vector": [
+        0.44,
+        0.32,
+        0.36,
+        0.18,
+        0.28,
+        -0.05
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-1776",
+      "label": "democracy-1776",
+      "type": "temporal_snapshot",
+      "entityId": "democracy",
+      "timestamp": "1776",
+      "popularity": 0.4,
+      "global_influence": 0.2,
+      "description": "Democracy at founding of United States"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-1800",
+      "label": "democracy-1800",
+      "type": "temporal_snapshot",
+      "entityId": "democracy",
+      "timestamp": "1800",
+      "popularity": 0.5,
+      "global_influence": 0.3,
+      "description": "Democracy in early republic era"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-1850",
+      "label": "democracy-1850",
+      "type": "temporal_snapshot",
+      "entityId": "democracy",
+      "timestamp": "1850",
+      "popularity": 0.6,
+      "global_influence": 0.4,
+      "description": "Democracy in pre-Civil War America"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-1900",
+      "label": "democracy-1900",
+      "type": "temporal_snapshot",
+      "entityId": "democracy",
+      "timestamp": "1900",
+      "popularity": 0.7,
+      "global_influence": 0.5,
+      "description": "Democracy during Progressive Era"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-1950",
+      "label": "democracy-1950",
+      "type": "temporal_snapshot",
+      "entityId": "democracy",
+      "timestamp": "1950",
+      "popularity": 0.8,
+      "global_influence": 0.7,
+      "description": "Democracy during Cold War"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-2000",
+      "label": "democracy-2000",
+      "type": "temporal_snapshot",
+      "entityId": "democracy",
+      "timestamp": "2000",
+      "popularity": 0.9,
+      "global_influence": 0.8,
+      "description": "Democracy in modern era"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-2020",
+      "label": "democracy-2020",
+      "type": "temporal_snapshot",
+      "entityId": "democracy",
+      "timestamp": "2020",
+      "popularity": 0.85,
+      "global_influence": 0.75,
+      "description": "Democracy in contemporary America"
+    }
+  },
+  {
+    "data": {
+      "id": "slavery-1700",
+      "label": "slavery-1700",
+      "type": "temporal_snapshot",
+      "entityId": "slavery",
+      "timestamp": "1700",
+      "acceptance": 0.8,
+      "economic_importance": 0.7,
+      "description": "Slavery in colonial America"
+    }
+  },
+  {
+    "data": {
+      "id": "slavery-1776",
+      "label": "slavery-1776",
+      "type": "temporal_snapshot",
+      "entityId": "slavery",
+      "timestamp": "1776",
+      "acceptance": 0.7,
+      "economic_importance": 0.8,
+      "description": "Slavery at founding of United States"
+    }
+  },
+  {
+    "data": {
+      "id": "slavery-1800",
+      "label": "slavery-1800",
+      "type": "temporal_snapshot",
+      "entityId": "slavery",
+      "timestamp": "1800",
+      "acceptance": 0.65,
+      "economic_importance": 0.85,
+      "description": "Slavery during early republic"
+    }
+  },
+  {
+    "data": {
+      "id": "slavery-1850",
+      "label": "slavery-1850",
+      "type": "temporal_snapshot",
+      "entityId": "slavery",
+      "timestamp": "1850",
+      "acceptance": 0.5,
+      "economic_importance": 0.8,
+      "description": "Slavery during antebellum period"
+    }
+  },
+  {
+    "data": {
+      "id": "slavery-1863",
+      "label": "slavery-1863",
+      "type": "temporal_snapshot",
+      "entityId": "slavery",
+      "timestamp": "1863",
+      "acceptance": 0.3,
+      "economic_importance": 0.6,
+      "description": "Slavery during Civil War"
+    }
+  },
+  {
+    "data": {
+      "id": "slavery-1870",
+      "label": "slavery-1870",
+      "type": "temporal_snapshot",
+      "entityId": "slavery",
+      "timestamp": "1870",
+      "acceptance": 0.1,
+      "economic_importance": 0.1,
+      "description": "Slavery after emancipation"
+    }
+  },
+  {
+    "data": {
+      "id": "founding-era",
+      "label": "founding-era",
+      "type": "historical_snapshot",
+      "date": "1789-04-30",
+      "description": "Beginning of George Washington's presidency",
+      "significance": "Start of the Constitutional government of the United States"
+    }
+  },
+  {
+    "data": {
+      "id": "pre-civil-war",
+      "label": "pre-civil-war",
+      "type": "historical_snapshot",
+      "date": "1860-11-06",
+      "description": "Election of Abraham Lincoln",
+      "significance": "Event that triggered secession of Southern states"
+    }
+  },
+  {
+    "data": {
+      "id": "civil-rights-era",
+      "label": "civil-rights-era",
+      "type": "historical_snapshot",
+      "date": "1964-07-02",
+      "description": "Civil Rights Act of 1964",
+      "significance": "Landmark civil rights legislation"
+    }
+  },
+  {
+    "data": {
+      "id": "post-cold-war",
+      "label": "post-cold-war",
+      "type": "historical_snapshot",
+      "date": "1991-12-26",
+      "description": "Dissolution of the Soviet Union",
+      "significance": "End of the Cold War and beginning of a new geopolitical era"
+    }
+  },
+  {
+    "data": {
+      "id": "ideological-space",
+      "label": "Ideological Positions",
+      "type": "vector_space",
+      "name": "Ideological Positions",
+      "description": "Ideological positions and political philosophies",
+      "dimensions": [
+        "individual_liberty",
+        "equality",
+        "government_role",
+        "tradition",
+        "progress",
+        "isolationism"
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "social-values-space",
+      "label": "Social Values",
+      "type": "vector_space",
+      "name": "Social Values",
+      "description": "Social and cultural values across time",
+      "dimensions": [
+        "individualism",
+        "community",
+        "diversity",
+        "spirituality",
+        "materialism",
+        "civic_duty"
+      ]
+    }
+  },
+  {
+    "data": {
+      "id": "founding-principles-cluster",
+      "label": "Founding Principles",
+      "type": "semantic_cluster",
+      "name": "Founding Principles",
+      "centerVector": [
+        0.4,
+        0.35,
+        0.25,
+        0.3,
+        0.25,
+        0.1
+      ],
+      "vectorSpace": "ideological-space",
+      "description": "Cluster representing founding principles of American democracy"
+    }
+  },
+  {
+    "data": {
+      "id": "civil-rights-cluster",
+      "label": "Civil Rights Movement",
+      "type": "semantic_cluster",
+      "name": "Civil Rights Movement",
+      "centerVector": [
+        0.45,
+        0.4,
+        0.3,
+        0.2,
+        0.35,
+        0.15
+      ],
+      "vectorSpace": "ideological-space",
+      "description": "Cluster representing civil rights movement principles"
+    }
+  },
+  {
+    "data": {
+      "id": "economic-development-cluster",
+      "label": "Economic Development",
+      "type": "semantic_cluster",
+      "name": "Economic Development",
+      "centerVector": [
+        0.3,
+        0.25,
+        0.35,
+        0.25,
+        0.3,
+        0.25
+      ],
+      "vectorSpace": "ideological-space",
+      "description": "Cluster representing economic development principles"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-rights-similarity",
+      "label": "Democracy and Civil Rights Relationship",
+      "type": "similarity_analysis",
+      "name": "Democracy and Civil Rights Relationship",
+      "entities": [
+        "democracy",
+        "civil-rights-concept"
+      ],
+      "similarity": 0.85,
+      "interpretation": "Strong conceptual link between democratic governance and civil rights"
+    }
+  },
+  {
+    "data": {
+      "id": "liberty-dream-similarity",
+      "label": "Liberty and American Dream Relationship",
+      "type": "similarity_analysis",
+      "name": "Liberty and American Dream Relationship",
+      "entities": [
+        "declaration-independence",
+        "american-dream"
+      ],
+      "similarity": 0.78,
+      "interpretation": "American founding principles closely aligned with aspirational values"
+    }
+  },
+  {
+    "data": {
+      "id": "democracy-evolution",
+      "label": "Evolution of Democracy",
+      "type": "concept_drift",
+      "name": "Evolution of Democracy",
+      "concept": "democracy",
+      "startPoint": "1776",
+      "endPoint": "2020",
+      "drift": 0.35,
+      "interpretation": "Significant expansion of democratic concepts to include broader participation"
+    }
+  },
+  {
+    "data": {
+      "id": "equality-evolution",
+      "label": "Evolution of Equality",
+      "type": "concept_drift",
+      "name": "Evolution of Equality",
+      "concept": "civil-rights-concept",
+      "startPoint": "1776",
+      "endPoint": "2020",
+      "drift": 0.62,
+      "interpretation": "Major transformation in understanding of equality across demographic groups"
+    }
+  }
+],
+        edges: [
+  {
+    "data": {
+      "id": "e0",
+      "source": "jamestown-founding",
+      "target": "colonial-period",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e1",
+      "source": "plymouth-colony",
+      "target": "colonial-period",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e2",
+      "source": "declaration-independence",
+      "target": "revolutionary-war",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e3",
+      "source": "constitutional-convention",
+      "target": "early-republic",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e4",
+      "source": "louisiana-purchase",
+      "target": "early-republic",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e5",
+      "source": "civil-war-start",
+      "target": "civil-war",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e6",
+      "source": "emancipation-proclamation",
+      "target": "civil-war",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e7",
+      "source": "civil-war-end",
+      "target": "civil-war",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e8",
+      "source": "womens-suffrage",
+      "target": "progressive-era",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e9",
+      "source": "stock-market-crash",
+      "target": "great-depression",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e10",
+      "source": "pearl-harbor",
+      "target": "world-war-2",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e11",
+      "source": "mlk-speech",
+      "target": "civil-rights",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e12",
+      "source": "mlk-speech",
+      "target": "cold-war",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e13",
+      "source": "moon-landing",
+      "target": "cold-war",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e14",
+      "source": "september-11",
+      "target": "modern-era",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e15",
+      "source": "obama-election",
+      "target": "modern-era",
+      "type": "occurred_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e16",
+      "source": "washington",
+      "target": "declaration-independence",
+      "type": "participated_in"
+    }
+  },
+  {
+    "data": {
+      "id": "e17",
+      "source": "jefferson",
+      "target": "declaration-independence",
+      "type": "created"
+    }
+  },
+  {
+    "data": {
+      "id": "e18",
+      "source": "jefferson",
+      "target": "louisiana-purchase",
+      "type": "initiated"
+    }
+  },
+  {
+    "data": {
+      "id": "e19",
+      "source": "lincoln",
+      "target": "civil-war-start",
+      "type": "led_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e20",
+      "source": "lincoln",
+      "target": "emancipation-proclamation",
+      "type": "issued"
+    }
+  },
+  {
+    "data": {
+      "id": "e21",
+      "source": "lincoln",
+      "target": "civil-war-end",
+      "type": "led_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e22",
+      "source": "roosevelt-fdr",
+      "target": "pearl-harbor",
+      "type": "led_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e23",
+      "source": "mlk",
+      "target": "mlk-speech",
+      "type": "delivered"
+    }
+  },
+  {
+    "data": {
+      "id": "e24",
+      "source": "washington",
+      "target": "democracy",
+      "type": "championed"
+    }
+  },
+  {
+    "data": {
+      "id": "e25",
+      "source": "jefferson",
+      "target": "democracy",
+      "type": "championed"
+    }
+  },
+  {
+    "data": {
+      "id": "e26",
+      "source": "douglass",
+      "target": "slavery",
+      "type": "opposed"
+    }
+  },
+  {
+    "data": {
+      "id": "e27",
+      "source": "douglass",
+      "target": "civil-rights-concept",
+      "type": "championed"
+    }
+  },
+  {
+    "data": {
+      "id": "e28",
+      "source": "lincoln",
+      "target": "slavery",
+      "type": "opposed"
+    }
+  },
+  {
+    "data": {
+      "id": "e29",
+      "source": "mlk",
+      "target": "civil-rights-concept",
+      "type": "championed"
+    }
+  },
+  {
+    "data": {
+      "id": "e30",
+      "source": "declaration-independence",
+      "target": "democracy",
+      "type": "exemplifies"
+    }
+  },
+  {
+    "data": {
+      "id": "e31",
+      "source": "emancipation-proclamation",
+      "target": "slavery",
+      "type": "opposed"
+    }
+  },
+  {
+    "data": {
+      "id": "e32",
+      "source": "louisiana-purchase",
+      "target": "manifest-destiny",
+      "type": "exemplifies"
+    }
+  },
+  {
+    "data": {
+      "id": "e33",
+      "source": "mlk-speech",
+      "target": "civil-rights-concept",
+      "type": "exemplifies"
+    }
+  },
+  {
+    "data": {
+      "id": "e34",
+      "source": "obama-election",
+      "target": "american-dream",
+      "type": "exemplifies"
+    }
+  },
+  {
+    "data": {
+      "id": "e35",
+      "source": "declaration-doc",
+      "target": "jefferson",
+      "type": "authored_by"
+    }
+  },
+  {
+    "data": {
+      "id": "e36",
+      "source": "constitution-doc",
+      "target": "washington",
+      "type": "supported_by"
+    }
+  },
+  {
+    "data": {
+      "id": "e37",
+      "source": "gettysburg-address",
+      "target": "lincoln",
+      "type": "authored_by"
+    }
+  },
+  {
+    "data": {
+      "id": "e38",
+      "source": "declaration-doc",
+      "target": "declaration-independence",
+      "type": "produced_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e39",
+      "source": "constitution-doc",
+      "target": "constitutional-convention",
+      "type": "produced_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e40",
+      "source": "gettysburg-address",
+      "target": "civil-war",
+      "type": "produced_during"
+    }
+  },
+  {
+    "data": {
+      "id": "e41",
+      "source": "democracy",
+      "target": "democracy-1776",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e42",
+      "source": "democracy",
+      "target": "democracy-1800",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e43",
+      "source": "democracy",
+      "target": "democracy-1850",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e44",
+      "source": "democracy",
+      "target": "democracy-1900",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e45",
+      "source": "democracy",
+      "target": "democracy-1950",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e46",
+      "source": "democracy",
+      "target": "democracy-2000",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e47",
+      "source": "democracy",
+      "target": "democracy-2020",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e48",
+      "source": "slavery",
+      "target": "slavery-1700",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e49",
+      "source": "slavery",
+      "target": "slavery-1776",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e50",
+      "source": "slavery",
+      "target": "slavery-1800",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e51",
+      "source": "slavery",
+      "target": "slavery-1850",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e52",
+      "source": "slavery",
+      "target": "slavery-1863",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e53",
+      "source": "slavery",
+      "target": "slavery-1870",
+      "type": "has_state_at"
+    }
+  },
+  {
+    "data": {
+      "id": "e54",
+      "source": "democracy",
+      "target": "founding-principles-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e55",
+      "source": "declaration-doc",
+      "target": "founding-principles-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e56",
+      "source": "constitution-doc",
+      "target": "founding-principles-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e57",
+      "source": "washington",
+      "target": "founding-principles-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e58",
+      "source": "jefferson",
+      "target": "founding-principles-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e59",
+      "source": "civil-rights-concept",
+      "target": "civil-rights-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e60",
+      "source": "mlk",
+      "target": "civil-rights-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e61",
+      "source": "mlk-speech",
+      "target": "civil-rights-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e62",
+      "source": "douglass",
+      "target": "civil-rights-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e63",
+      "source": "american-dream",
+      "target": "economic-development-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e64",
+      "source": "roosevelt-fdr",
+      "target": "economic-development-cluster",
+      "type": "belongs_to_cluster"
+    }
+  },
+  {
+    "data": {
+      "id": "e65",
+      "source": "stock-market-crash",
+      "target": "economic-development-cluster",
+      "type": "belongs_to_cluster"
+    }
+  }
+]
       },
+      
       style: [
         {
           selector: 'node',
           style: {
-            'background-color': 'data(color)',
+            'background-color': '#69b3a2',
             'label': 'data(label)',
-            'color': '#000',
-            'text-valign': 'bottom',
+            'color': '#333',
+            'text-valign': 'center',
             'text-halign': 'center',
-            'font-size': '12px'
+            'text-outline-width': 2,
+            'text-outline-color': '#fff',
+            'text-margin-y': 10
+          }
+        },
+        {
+          selector: 'node[type="person"]',
+          style: {
+            'background-color': '#4e79a7'
+          }
+        },
+        {
+          selector: 'node[type="project"]',
+          style: {
+            'background-color': '#f28e2c'
+          }
+        },
+        {
+          selector: 'node[type="resource"]',
+          style: {
+            'background-color': '#e15759'
+          }
+        },
+        {
+          selector: 'node[type="concept"]',
+          style: {
+            'background-color': '#76b7b2'
           }
         },
         {
           selector: 'edge',
           style: {
             'width': 1,
-            'line-color': '#ccc',
-            'target-arrow-color': '#ccc',
+            'line-color': '#999',
+            'target-arrow-color': '#999',
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier',
-            'label': 'data(label)',
-            'font-size': '10px'
+            'label': 'data(type)',
+            'font-size': '10px',
+            'text-rotation': 'autorotate',
+            'text-margin-y': -10
           }
         }
       ],
+      
       layout: {
         name: 'cose',
         idealEdgeLength: 100,
@@ -65,18 +1885,11 @@
       }
     });
     
-    // Apply colors based on node type
-    cy.nodes().forEach(node => {
-      const type = node.data('type');
-      const colors = {
-        person: '#4285F4',
-        project: '#EA4335',
-        organization: '#FBBC05',
-        location: '#34A853',
-        event: '#8F00FF',
-        default: '#999999'
-      };
-      node.data('color', colors[type] || colors.default);
+    // Add double-click event to fit the graph
+    cy.on('dblclick', function(evt) {
+      if (evt.target === cy) {
+        cy.fit();
+      }
     });
   </script>
 </body>

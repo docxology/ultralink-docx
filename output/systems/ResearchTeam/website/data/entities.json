@@ -1,0 +1,47 @@
+[
+  {
+    "id": "alice-chen",
+    "type": "researcher",
+    "attributes": {
+      "name": "Alice Chen",
+      "title": "Principal Investigator",
+      "expertise": [
+        "machine learning",
+        "computer vision"
+      ],
+      "publications": 45
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.850Z",
+      "modified": "2025-03-06T04:37:23.850Z"
+    }
+  },
+  {
+    "id": "nlp-project",
+    "type": "project",
+    "attributes": {
+      "name": "Advanced NLP Models",
+      "status": "active",
+      "startDate": "2023-01-15",
+      "budget": 500000
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.850Z",
+      "modified": "2025-03-06T04:37:23.850Z"
+    }
+  },
+  {
+    "id": "ml-paper",
+    "type": "publication",
+    "attributes": {
+      "title": "Novel Approaches in Machine Learning",
+      "status": "published",
+      "date": "2023-06-01",
+      "citations": 12
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.850Z",
+      "modified": "2025-03-06T04:37:23.850Z"
+    }
+  }
+]

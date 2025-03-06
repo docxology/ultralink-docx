@@ -1,810 +1,787 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ActiveInferenceLab Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles/academic.css">
   
   <style>
     :root {
-      --background: #202124;
-      --text: #e8eaed;
-      --link: #4a9eff;
-      --accent: #666666;
-      --border: #333333;
       --text-color: #e8eaed;
       --bg-color: #202124;
+      --header-bg: #303134;
+      --card-bg: #303134;
+      --border-color: #5f6368;
+      --link-color: #8ab4f8;
+      --hover-color: #c58af9;
     }
+    
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: var(--background);
-      color: var(--text);
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+    
+    header, footer {
       background: rgba(32, 33, 36, 0.8);
     }
-    .container {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      height: 100vh;
+  </style>
+  
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root {
+      
+      --text-color: #e8eaed;
+      --bg-color: #202124;
+      --header-bg: #303134;
+      --card-bg: #303134;
+      --border-color: #5f6368;
+      --link-color: #8ab4f8;
+      --hover-color: #c58af9;
+      
+      
     }
-    .sidebar {
-      padding: 20px;
-      border-right: 1px solid var(--border);
-      overflow-y: auto;
+    
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      
     }
-    .main {
-      padding: 20px;
-      overflow-y: auto;
+    
+    header, footer {
+      background: rgba(32, 33, 36, 0.8);
+      
     }
-    h1, h2, h3, h4 {
-      color: var(--text);
-      margin-top: 0;
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .entity-list {
-      list-style: none;
-      padding: 0;
-    }
-    .entity-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .entity-type {
-      color: var(--accent);
-      font-size: 0.9em;
-    }
-    #graph {
-      width: 100%;
-      height: 600px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .search-box {
-      margin-bottom: 20px;
-    }
-    #search-input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      background: var(--background);
-      color: var(--text);
-    }
-    .zoom-controls {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: var(--background);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 5px;
-      z-index: 100;
-    }
-    .zoom-btn {
-      width: 30px;
-      height: 30px;
-      margin: 2px;
-      border: 1px solid var(--border);
-      background: var(--background);
-      color: var(--text);
-      cursor: pointer;
-      border-radius: 3px;
-    }
-    .zoom-btn:hover {
-      background: var(--border);
-    }
-    .btn {
-      padding: 8px 12px;
-      margin-top: 8px;
-      border: 1px solid var(--border);
-      background: var(--background);
-      color: var(--text);
-      cursor: pointer;
-      border-radius: 4px;
-      display: block;
-      width: 100%;
-    }
-    .btn:hover {
-      background: var(--border);
-    }
+
     @media (max-width: 768px) {
-      .container {
-        grid-template-columns: 1fr;
+      nav {
         flex-direction: column;
       }
-      .sidebar {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
+      .visualization-controls {
+        flex-direction: column;
+      }
+      .entity-types ul {
+        padding-left: 1rem;
       }
     }
   </style>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="sidebar">
-      <h2>ActiveInferenceLab Knowledge Graph</h2>
-      <p>Interactive visualization of ActiveInferenceLab relationships</p>
-      
-      <div class="search-box">
-        <input type="text" id="search-input" placeholder="Search entities..." />
+  <header>
+    <h1>ActiveInferenceLab Knowledge Graph</h1>
+    <p>Interactive visualization of ActiveInferenceLab relationships</p>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="summary">
+      <h2>Knowledge Base Summary</h2>
+      <p>System: ActiveInferenceLab Knowledge Graph</p>
+      <p>Total Entities: 19</p>
+      <p>Total Relationships: 44</p>
+      <p>Interactive visualization of research team relationships</p>
+    </section>
+    
+    <section class="visualization-controls">
+      <div class="filters">
+        <div id="type-filters">
+          <h3>Filter by Type</h3>
+          <!-- Type filters will be generated by JavaScript -->
+        </div>
         <button class="btn" id="clear-filters">Clear Filters</button>
       </div>
-      
-      <h3>Entities</h3>
-      <ul class="entity-list" id="entity-list">
-        
-          <li class="entity-item" data-id="alice" data-type="researcher">
-            <a href="alice.html">
-              Dr. Alice Chen
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">researcher</div>
-          </li>
-        
-          <li class="entity-item" data-id="bob" data-type="researcher">
-            <a href="bob.html">
-              Dr. Bob Smith
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">researcher</div>
-          </li>
-        
-          <li class="entity-item" data-id="carol" data-type="researcher">
-            <a href="carol.html">
-              Dr. Carol Jimenez
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('carol')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">researcher</div>
-          </li>
-        
-          <li class="entity-item" data-id="david" data-type="researcher">
-            <a href="david.html">
-              David Wilson
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('david')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">researcher</div>
-          </li>
-        
-          <li class="entity-item" data-id="emma" data-type="researcher">
-            <a href="emma.html">
-              Emma Taylor
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">researcher</div>
-          </li>
-        
-          <li class="entity-item" data-id="frank" data-type="researcher">
-            <a href="frank.html">
-              Dr. Frank Martinez
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">researcher</div>
-          </li>
-        
-          <li class="entity-item" data-id="grace" data-type="researcher">
-            <a href="grace.html">
-              Grace Kim
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('grace')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">researcher</div>
-          </li>
-        
-          <li class="entity-item" data-id="active-inference-model" data-type="project">
-            <a href="active-inference-model.html">
-              Active Inference Modeling of Collective Behavior
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('active-inference-model')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">project</div>
-          </li>
-        
-          <li class="entity-item" data-id="ant-colony-study" data-type="project">
-            <a href="ant-colony-study.html">
-              Ant Colony Decision Making Study
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('ant-colony-study')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">project</div>
-          </li>
-        
-          <li class="entity-item" data-id="neural-basis" data-type="project">
-            <a href="neural-basis.html">
-              Neural Basis of Active Inference
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('neural-basis')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">project</div>
-          </li>
-        
-          <li class="entity-item" data-id="active-inference" data-type="concept">
-            <a href="active-inference.html">
-              Active Inference
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('active-inference')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">concept</div>
-          </li>
-        
-          <li class="entity-item" data-id="collective-behavior" data-type="concept">
-            <a href="collective-behavior.html">
-              Collective Behavior
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('collective-behavior')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">concept</div>
-          </li>
-        
-          <li class="entity-item" data-id="swarm-intelligence" data-type="concept">
-            <a href="swarm-intelligence.html">
-              Swarm Intelligence
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('swarm-intelligence')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">concept</div>
-          </li>
-        
-          <li class="entity-item" data-id="ant-tracking" data-type="equipment">
-            <a href="ant-tracking.html">
-              Ant Tracking System
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('ant-tracking')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">equipment</div>
-          </li>
-        
-          <li class="entity-item" data-id="neural-recording" data-type="equipment">
-            <a href="neural-recording.html">
-              Neural Recording Setup
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('neural-recording')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">equipment</div>
-          </li>
-        
-          <li class="entity-item" data-id="computation-cluster" data-type="equipment">
-            <a href="computation-cluster.html">
-              High Performance Computing Cluster
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('computation-cluster')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">equipment</div>
-          </li>
-        
-          <li class="entity-item" data-id="paper-2023a" data-type="publication">
-            <a href="paper-2023a.html">
-              Active Inference Framework for Collective Behavior Analysis
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('paper-2023a')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">publication</div>
-          </li>
-        
-          <li class="entity-item" data-id="paper-2023b" data-type="publication">
-            <a href="paper-2023b.html">
-              Decision Making Patterns in Ant Colonies: A Field Study
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('paper-2023b')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">publication</div>
-          </li>
-        
-          <li class="entity-item" data-id="paper-2024" data-type="publication">
-            <a href="paper-2024.html">
-              Computational Models of Active Inference in Social Insects
-            </a>
-            <a href="javascript:void(0)" onclick="selectEntityById('paper-2024')" class="select-link" title="Select in graph">(select)</a>
-            <div class="entity-type">publication</div>
-          </li>
-        
-      </ul>
-    </div>
-    <div class="main">
       <div class="zoom-controls">
         <button class="zoom-btn" id="zoom-in">+</button>
         <button class="zoom-btn" id="zoom-reset">⟳</button>
         <button class="zoom-btn" id="zoom-out">−</button>
       </div>
+    </section>
+    
+    <section class="visualization">
       <div id="graph"></div>
-      <script>
-        // Graph visualization code
-        const data = {
-          nodes: [
-            {
-                "id": "alice",
-                "name": "Dr. Alice Chen",
-                "type": "researcher",
-                "attributes": {"name":"Dr. Alice Chen","role":"Principal Investigator","department":"Cognitive Science","email":"alice.chen@example.edu","publications":42,"expertise":["active inference","computational neuroscience","bayesian modeling"],"yearsExperience":15}
-              },
-            {
-                "id": "bob",
-                "name": "Dr. Bob Smith",
-                "type": "researcher",
-                "attributes": {"name":"Dr. Bob Smith","role":"Senior Researcher","department":"Biology","email":"bob.smith@example.edu","publications":28,"expertise":["ant colony behavior","entomology","swarm intelligence"],"yearsExperience":12}
-              },
-            {
-                "id": "carol",
-                "name": "Dr. Carol Jimenez",
-                "type": "researcher",
-                "attributes": {"name":"Dr. Carol Jimenez","role":"Postdoctoral Researcher","department":"Cognitive Science","email":"carol.jimenez@example.edu","publications":11,"expertise":["active inference","machine learning","cognitive modeling"],"yearsExperience":3}
-              },
-            {
-                "id": "david",
-                "name": "David Wilson",
-                "type": "researcher",
-                "attributes": {"name":"David Wilson","role":"PhD Student","department":"Biology","email":"david.wilson@example.edu","publications":3,"expertise":["ant colony optimization","collective behavior","stigmergy"],"yearsExperience":3}
-              },
-            {
-                "id": "emma",
-                "name": "Emma Taylor",
-                "type": "researcher",
-                "attributes": {"name":"Emma Taylor","role":"PhD Student","department":"Computer Science","email":"emma.taylor@example.edu","publications":4,"expertise":["machine learning","reinforcement learning","neural networks"],"yearsExperience":2}
-              },
-            {
-                "id": "frank",
-                "name": "Dr. Frank Martinez",
-                "type": "researcher",
-                "attributes": {"name":"Dr. Frank Martinez","role":"Research Associate","department":"Mathematics","email":"frank.martinez@example.edu","publications":16,"expertise":["dynamical systems","chaos theory","mathematical modeling"],"yearsExperience":8}
-              },
-            {
-                "id": "grace",
-                "name": "Grace Kim",
-                "type": "researcher",
-                "attributes": {"name":"Grace Kim","role":"Lab Technician","department":"Biology","email":"grace.kim@example.edu","publications":0,"expertise":["ant husbandry","experiment design","data collection"],"yearsExperience":4}
-              },
-            {
-                "id": "active-inference-model",
-                "name": "Active Inference Modeling of Collective Behavior",
-                "type": "project",
-                "attributes": {"name":"Active Inference Modeling of Collective Behavior","status":"Active","startDate":"2023-01-15","endDate":"2025-01-14","funding":750000,"fundingSource":"National Science Foundation","description":"Developing computational models of collective behavior using the Active Inference framework"}
-              },
-            {
-                "id": "ant-colony-study",
-                "name": "Ant Colony Decision Making Study",
-                "type": "project",
-                "attributes": {"name":"Ant Colony Decision Making Study","status":"Active","startDate":"2023-06-01","endDate":"2024-12-31","funding":250000,"fundingSource":"University Grant","description":"Field study of ant colony decision-making processes in natural environments"}
-              },
-            {
-                "id": "neural-basis",
-                "name": "Neural Basis of Active Inference",
-                "type": "project",
-                "attributes": {"name":"Neural Basis of Active Inference","status":"Planning","startDate":"2024-01-01","endDate":"2026-12-31","funding":1200000,"fundingSource":"NIH","description":"Investigation of neural mechanisms underlying active inference in biological systems"}
-              },
-            {
-                "id": "active-inference",
-                "name": "Active Inference",
-                "type": "concept",
-                "attributes": {"name":"Active Inference","field":"Computational Neuroscience","description":"Framework for understanding perception and action based on free energy minimization","keyPapers":["10.1038/nn.2635","10.1016/j.tics.2009.04.005"]}
-              },
-            {
-                "id": "collective-behavior",
-                "name": "Collective Behavior",
-                "type": "concept",
-                "attributes": {"name":"Collective Behavior","field":"Biology","description":"Emergent properties and dynamics of group behavior in social organisms","keyPapers":["10.1016/j.tree.2018.01.003"]}
-              },
-            {
-                "id": "swarm-intelligence",
-                "name": "Swarm Intelligence",
-                "type": "concept",
-                "attributes": {"name":"Swarm Intelligence","field":"Computer Science","description":"Collective problem-solving abilities emerging from local interactions","keyPapers":["10.1007/s11721-007-0004-y"]}
-              },
-            {
-                "id": "ant-tracking",
-                "name": "Ant Tracking System",
-                "type": "equipment",
-                "attributes": {"name":"Ant Tracking System","type":"Imaging","status":"Operational","location":"Main Lab","cost":75000,"purchaseDate":"2023-02-15","maintenanceSchedule":"Monthly"}
-              },
-            {
-                "id": "neural-recording",
-                "name": "Neural Recording Setup",
-                "type": "equipment",
-                "attributes": {"name":"Neural Recording Setup","type":"Electrophysiology","status":"Operational","location":"Neuroscience Lab","cost":150000,"purchaseDate":"2023-05-01","maintenanceSchedule":"Weekly"}
-              },
-            {
-                "id": "computation-cluster",
-                "name": "High Performance Computing Cluster",
-                "type": "equipment",
-                "attributes": {"name":"High Performance Computing Cluster","type":"Computing","status":"Operational","location":"Server Room","cost":200000,"purchaseDate":"2022-11-01","maintenanceSchedule":"Monthly"}
-              },
-            {
-                "id": "paper-2023a",
-                "name": "Active Inference Framework for Collective Behavior Analysis",
-                "type": "publication",
-                "attributes": {"title":"Active Inference Framework for Collective Behavior Analysis","authors":["alice","carol","david"],"journal":"Nature Computational Science","year":2023,"doi":"10.1038/s41467-023-0001-1","citations":15}
-              },
-            {
-                "id": "paper-2023b",
-                "name": "Decision Making Patterns in Ant Colonies: A Field Study",
-                "type": "publication",
-                "attributes": {"title":"Decision Making Patterns in Ant Colonies: A Field Study","authors":["bob","emma","frank"],"journal":"Behavioral Ecology","year":2023,"doi":"10.1093/beheco/2023-0002","citations":8}
-              },
-            {
-                "id": "paper-2024",
-                "name": "Computational Models of Active Inference in Social Insects",
-                "type": "publication",
-                "attributes": {"title":"Computational Models of Active Inference in Social Insects","authors":["alice","bob","carol","david"],"journal":"PLOS Computational Biology","year":2024,"doi":"10.1371/journal.pcbi.2024-0001","citations":3}
-              }
-          ],
-          links: [
-            {
-                "source": "alice",
-                "target": "active-inference-model",
-                "type": "leads"
-              },
-            {
-                "source": "bob",
-                "target": "ant-colony-study",
-                "type": "leads"
-              },
-            {
-                "source": "carol",
-                "target": "active-inference-model",
-                "type": "contributes"
-              },
-            {
-                "source": "david",
-                "target": "active-inference-model",
-                "type": "contributes"
-              },
-            {
-                "source": "emma",
-                "target": "ant-colony-study",
-                "type": "contributes"
-              },
-            {
-                "source": "frank",
-                "target": "ant-colony-study",
-                "type": "contributes"
-              },
-            {
-                "source": "bob",
-                "target": "active-inference-model",
-                "type": "contributes_to"
-              },
-            {
-                "source": "carol",
-                "target": "active-inference-model",
-                "type": "contributes_to"
-              },
-            {
-                "source": "david",
-                "target": "ant-colony-study",
-                "type": "contributes_to"
-              },
-            {
-                "source": "grace",
-                "target": "ant-colony-study",
-                "type": "contributes_to"
-              },
-            {
-                "source": "frank",
-                "target": "ant-colony-study",
-                "type": "contributes_to"
-              },
-            {
-                "source": "emma",
-                "target": "ant-colony-study",
-                "type": "contributes_to"
-              },
-            {
-                "source": "alice",
-                "target": "david",
-                "type": "mentors"
-              },
-            {
-                "source": "bob",
-                "target": "emma",
-                "type": "mentors"
-              },
-            {
-                "source": "alice",
-                "target": "carol",
-                "type": "mentors"
-              },
-            {
-                "source": "frank",
-                "target": "emma",
-                "type": "co_advises"
-              },
-            {
-                "source": "carol",
-                "target": "alice",
-                "type": "reports_to"
-              },
-            {
-                "source": "david",
-                "target": "bob",
-                "type": "reports_to"
-              },
-            {
-                "source": "emma",
-                "target": "alice",
-                "type": "reports_to"
-              },
-            {
-                "source": "grace",
-                "target": "bob",
-                "type": "reports_to"
-              },
-            {
-                "source": "active-inference-model",
-                "target": "active-inference",
-                "type": "applies"
-              },
-            {
-                "source": "ant-colony-study",
-                "target": "collective-behavior",
-                "type": "applies"
-              },
-            {
-                "source": "active-inference",
-                "target": "collective-behavior",
-                "type": "relates_to"
-              },
-            {
-                "source": "ant-colony-study",
-                "target": "ant-tracking",
-                "type": "uses"
-              },
-            {
-                "source": "active-inference-model",
-                "target": "computation-cluster",
-                "type": "uses"
-              },
-            {
-                "source": "neural-basis",
-                "target": "neural-recording",
-                "type": "uses"
-              },
-            {
-                "source": "alice",
-                "target": "paper-2023a",
-                "type": "authored"
-              },
-            {
-                "source": "bob",
-                "target": "paper-2023a",
-                "type": "authored"
-              },
-            {
-                "source": "carol",
-                "target": "paper-2023a",
-                "type": "authored"
-              },
-            {
-                "source": "bob",
-                "target": "paper-2023b",
-                "type": "authored"
-              },
-            {
-                "source": "emma",
-                "target": "paper-2023b",
-                "type": "authored"
-              },
-            {
-                "source": "frank",
-                "target": "paper-2023b",
-                "type": "authored"
-              },
-            {
-                "source": "alice",
-                "target": "paper-2024",
-                "type": "authored"
-              },
-            {
-                "source": "bob",
-                "target": "paper-2024",
-                "type": "authored"
-              },
-            {
-                "source": "carol",
-                "target": "paper-2024",
-                "type": "authored"
-              },
-            {
-                "source": "david",
-                "target": "paper-2024",
-                "type": "authored"
-              },
-            {
-                "source": "grace",
-                "target": "paper-2024",
-                "type": "authored"
-              },
-            {
-                "source": "paper-2023a",
-                "target": "active-inference-model",
-                "type": "results_from"
-              },
-            {
-                "source": "paper-2023b",
-                "target": "ant-colony-study",
-                "type": "results_from"
-              },
-            {
-                "source": "paper-2024",
-                "target": "active-inference-model",
-                "type": "results_from"
-              },
-            {
-                "source": "paper-2024",
-                "target": "ant-colony-study",
-                "type": "results_from"
-              },
-            {
-                "source": "paper-2023a",
-                "target": "active-inference",
-                "type": "discusses"
-              },
-            {
-                "source": "paper-2023b",
-                "target": "collective-behavior",
-                "type": "discusses"
-              },
-            {
-                "source": "paper-2024",
-                "target": "swarm-intelligence",
-                "type": "discusses"
-              }
-          ]
-        };
+    </section>
+    
+    <section class="entity-types">
+      <h2>Entity Types</h2>
+      <ul>
+            <li>
+              <strong>researcher</strong>: 7 entities
+              <ul>
+                <li>
+                  <a href="alice.html">Dr. Alice Chen</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="bob.html">Dr. Bob Smith</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="carol.html">Dr. Carol Jimenez</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('carol')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="david.html">David Wilson</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('david')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="emma.html">Emma Taylor</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="frank.html">Dr. Frank Martinez</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="grace.html">Grace Kim</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('grace')" class="visualize-link">(visualize)</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>project</strong>: 3 entities
+              <ul>
+                <li>
+                  <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('active-inference-model')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('ant-colony-study')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="neural-basis.html">Neural Basis of Active Inference</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('neural-basis')" class="visualize-link">(visualize)</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>concept</strong>: 3 entities
+              <ul>
+                <li>
+                  <a href="active-inference.html">Active Inference</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('active-inference')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="collective-behavior.html">Collective Behavior</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('collective-behavior')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="swarm-intelligence.html">Swarm Intelligence</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('swarm-intelligence')" class="visualize-link">(visualize)</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>equipment</strong>: 3 entities
+              <ul>
+                <li>
+                  <a href="ant-tracking.html">Ant Tracking System</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('ant-tracking')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="neural-recording.html">Neural Recording Setup</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('neural-recording')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="computation-cluster.html">High Performance Computing Cluster</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('computation-cluster')" class="visualize-link">(visualize)</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>publication</strong>: 3 entities
+              <ul>
+                <li>
+                  <a href="paper-2023a.html">Active Inference Framework for Collective Behavior Analysis</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('paper-2023a')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="paper-2023b.html">Decision Making Patterns in Ant Colonies: A Field Study</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('paper-2023b')" class="visualize-link">(visualize)</a>
+                </li>
+                <li>
+                  <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a>
+                  <a href="javascript:void(0)" onclick="selectEntityById('paper-2024')" class="visualize-link">(visualize)</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 
-        const width = document.getElementById('graph').clientWidth;
-        const height = 600;
-
-        const simulation = d3.forceSimulation(data.nodes)
-          .force('link', d3.forceLink(data.links).id(d => d.id))
-          .force('charge', d3.forceManyBody().strength(-100))
-          .force('center', d3.forceCenter(width / 2, height / 2));
-
-        const svg = d3.select('#graph')
-          .append('svg')
-          .attr('width', '100%')
-          .attr('height', '100%')
-          .attr('viewBox', [0, 0, width, height])
-          .attr('preserveAspectRatio', 'xMidYMid meet');
-
-        const link = svg.append('g')
-          .selectAll('line')
-          .data(data.links)
-          .join('line')
-          .attr('stroke', 'var(--border)')
-          .attr('stroke-width', 1);
-
-        const node = svg.append('g')
-          .selectAll('circle')
-          .data(data.nodes)
-          .join('circle')
-          .attr('r', 5)
-          .attr('fill', 'var(--link)')
-          .call(drag(simulation));
-
-        node.append('title')
-          .text(d => {
-            const name = d.attributes.name || d.attributes.title || d.id;
-            return name;
-          });
-
-        simulation.on('tick', () => {
-          link
-            .attr('x1', d => d.source.x)
-            .attr('y1', d => d.source.y)
-            .attr('x2', d => d.target.x)
-            .attr('y2', d => d.target.y);
-
-          node
-            .attr('cx', d => d.x)
-            .attr('cy', d => d.y);
-        });
-
-        // Entity selection functionality
-        window.selectEntityById = (id) => {
-          // Find the selected node
-          const selectedNode = data.nodes.find(n => n.id === id);
-          if (!selectedNode) return;
-          
-          // Reset all nodes
-          node.attr('r', 5).attr('stroke', null);
-          
-          // Highlight the selected node
-          const selectedNodeElement = node.filter(d => d.id === id)
-            .attr('r', 8)
-            .attr('stroke', 'var(--link)')
-            .attr('stroke-width', 2);
-          
-          // Center and zoom on the selected node
-          const scale = 2;
-          const x = width / 2 - scale * selectedNode.x;
-          const y = height / 2 - scale * selectedNode.y;
-          
-          svg.transition().duration(500)
-            .attr('transform', 'translate(' + x + ',' + y + ') scale(' + scale + ')');
-        };
-
-        // Set up zoom behavior
-        const zoom = d3.zoom()
-          .scaleExtent([0.1, 4])
-          .on('zoom', (event) => {
-            svg.attr('transform', event.transform);
-          });
-
-        svg.call(zoom);
-
-        // Add zoom button event listeners
-        const zoomInBtn = document.getElementById('zoom-in');
-        const zoomOutBtn = document.getElementById('zoom-out');
-        const zoomResetBtn = document.getElementById('zoom-reset');
-
-        zoomInBtn.addEventListener('click', function() {
-          svg.transition().duration(300).call(zoom.scaleBy, 1.2);
-        });
-
-        zoomOutBtn.addEventListener('click', function() {
-          svg.transition().duration(300).call(zoom.scaleBy, 0.8);
-        });
-
-        zoomResetBtn.addEventListener('click', function() {
-          svg.transition().duration(300).call(
-            zoom.transform,
-            d3.zoomIdentity
-          );
-        });
-
-        function drag(simulation) {
-          function dragstarted(event) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            event.subject.fx = event.subject.x;
-            event.subject.fy = event.subject.y;
-          }
-          
-          function dragged(event) {
-            event.subject.fx = event.x;
-            event.subject.fy = event.y;
-          }
-          
-          function dragended(event) {
-            if (!event.active) simulation.alphaTarget(0);
-            event.subject.fx = null;
-            event.subject.fy = null;
-          }
-          
-          return d3.drag()
-            .on('start', dragstarted)
-            .on('drag', dragged)
-            .on('end', dragended);
+  <script>
+    // Graph visualization
+    const width = 800;
+    const height = 600;
+    const svg = d3.select('#graph')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', '100%')
+      .attr('viewBox', [0, 0, width, height])
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+    
+    // Create graph data
+    const nodes = [
+      
+        {
+          id: "alice",
+          type: "researcher",
+          attributes: {"name":"Dr. Alice Chen","role":"Principal Investigator","department":"Cognitive Science","email":"alice.chen@example.edu","publications":42,"expertise":["active inference","computational neuroscience","bayesian modeling"],"yearsExperience":15}
+        },
+        {
+          id: "bob",
+          type: "researcher",
+          attributes: {"name":"Dr. Bob Smith","role":"Senior Researcher","department":"Biology","email":"bob.smith@example.edu","publications":28,"expertise":["ant colony behavior","entomology","swarm intelligence"],"yearsExperience":12}
+        },
+        {
+          id: "carol",
+          type: "researcher",
+          attributes: {"name":"Dr. Carol Jimenez","role":"Postdoctoral Researcher","department":"Cognitive Science","email":"carol.jimenez@example.edu","publications":11,"expertise":["active inference","machine learning","cognitive modeling"],"yearsExperience":3}
+        },
+        {
+          id: "david",
+          type: "researcher",
+          attributes: {"name":"David Wilson","role":"PhD Student","department":"Biology","email":"david.wilson@example.edu","publications":3,"expertise":["ant colony optimization","collective behavior","stigmergy"],"yearsExperience":3}
+        },
+        {
+          id: "emma",
+          type: "researcher",
+          attributes: {"name":"Emma Taylor","role":"PhD Student","department":"Computer Science","email":"emma.taylor@example.edu","publications":4,"expertise":["machine learning","reinforcement learning","neural networks"],"yearsExperience":2}
+        },
+        {
+          id: "frank",
+          type: "researcher",
+          attributes: {"name":"Dr. Frank Martinez","role":"Research Associate","department":"Mathematics","email":"frank.martinez@example.edu","publications":16,"expertise":["dynamical systems","chaos theory","mathematical modeling"],"yearsExperience":8}
+        },
+        {
+          id: "grace",
+          type: "researcher",
+          attributes: {"name":"Grace Kim","role":"Lab Technician","department":"Biology","email":"grace.kim@example.edu","publications":0,"expertise":["ant husbandry","experiment design","data collection"],"yearsExperience":4}
+        },
+        {
+          id: "active-inference-model",
+          type: "project",
+          attributes: {"name":"Active Inference Modeling of Collective Behavior","status":"Active","startDate":"2023-01-15","endDate":"2025-01-14","funding":750000,"fundingSource":"National Science Foundation","description":"Developing computational models of collective behavior using the Active Inference framework"}
+        },
+        {
+          id: "ant-colony-study",
+          type: "project",
+          attributes: {"name":"Ant Colony Decision Making Study","status":"Active","startDate":"2023-06-01","endDate":"2024-12-31","funding":250000,"fundingSource":"University Grant","description":"Field study of ant colony decision-making processes in natural environments"}
+        },
+        {
+          id: "neural-basis",
+          type: "project",
+          attributes: {"name":"Neural Basis of Active Inference","status":"Planning","startDate":"2024-01-01","endDate":"2026-12-31","funding":1200000,"fundingSource":"NIH","description":"Investigation of neural mechanisms underlying active inference in biological systems"}
+        },
+        {
+          id: "active-inference",
+          type: "concept",
+          attributes: {"name":"Active Inference","field":"Computational Neuroscience","description":"Framework for understanding perception and action based on free energy minimization","keyPapers":["10.1038/nn.2635","10.1016/j.tics.2009.04.005"]}
+        },
+        {
+          id: "collective-behavior",
+          type: "concept",
+          attributes: {"name":"Collective Behavior","field":"Biology","description":"Emergent properties and dynamics of group behavior in social organisms","keyPapers":["10.1016/j.tree.2018.01.003"]}
+        },
+        {
+          id: "swarm-intelligence",
+          type: "concept",
+          attributes: {"name":"Swarm Intelligence","field":"Computer Science","description":"Collective problem-solving abilities emerging from local interactions","keyPapers":["10.1007/s11721-007-0004-y"]}
+        },
+        {
+          id: "ant-tracking",
+          type: "equipment",
+          attributes: {"name":"Ant Tracking System","type":"Imaging","status":"Operational","location":"Main Lab","cost":75000,"purchaseDate":"2023-02-15","maintenanceSchedule":"Monthly"}
+        },
+        {
+          id: "neural-recording",
+          type: "equipment",
+          attributes: {"name":"Neural Recording Setup","type":"Electrophysiology","status":"Operational","location":"Neuroscience Lab","cost":150000,"purchaseDate":"2023-05-01","maintenanceSchedule":"Weekly"}
+        },
+        {
+          id: "computation-cluster",
+          type: "equipment",
+          attributes: {"name":"High Performance Computing Cluster","type":"Computing","status":"Operational","location":"Server Room","cost":200000,"purchaseDate":"2022-11-01","maintenanceSchedule":"Monthly"}
+        },
+        {
+          id: "paper-2023a",
+          type: "publication",
+          attributes: {"title":"Active Inference Framework for Collective Behavior Analysis","authors":["alice","carol","david"],"journal":"Nature Computational Science","year":2023,"doi":"10.1038/s41467-023-0001-1","citations":15}
+        },
+        {
+          id: "paper-2023b",
+          type: "publication",
+          attributes: {"title":"Decision Making Patterns in Ant Colonies: A Field Study","authors":["bob","emma","frank"],"journal":"Behavioral Ecology","year":2023,"doi":"10.1093/beheco/2023-0002","citations":8}
+        },
+        {
+          id: "paper-2024",
+          type: "publication",
+          attributes: {"title":"Computational Models of Active Inference in Social Insects","authors":["alice","bob","carol","david"],"journal":"PLOS Computational Biology","year":2024,"doi":"10.1371/journal.pcbi.2024-0001","citations":3}
         }
-
-        
-        // Search functionality
-        const searchInput = document.getElementById('search-input');
-        const entityList = document.getElementById('entity-list');
-        const entityItems = entityList.querySelectorAll('.entity-item');
-
-        searchInput.addEventListener('input', function() {
-          const searchTerm = this.value.toLowerCase();
-          
-          entityItems.forEach(item => {
-            const id = item.getAttribute('data-id').toLowerCase();
-            const type = item.getAttribute('data-type').toLowerCase();
-            const text = item.textContent.toLowerCase();
-            
-            if (id.includes(searchTerm) || type.includes(searchTerm) || text.includes(searchTerm)) {
-              item.style.display = '';
-            } else {
-              item.style.display = 'none';
-            }
-          });
-        });
-
-        // Clear filters functionality
-        const clearFiltersBtn = document.getElementById('clear-filters');
-        clearFiltersBtn.addEventListener('click', function() {
-          searchInput.value = '';
-          entityItems.forEach(item => {
-            item.style.display = '';
-          });
-        });
-        
-      </script>
-    </div>
-  </div>
+    ];
+    
+    const links = [
+      
+        {
+          source: "alice",
+          target: "active-inference-model",
+          type: "leads",
+          attributes: {"role":"Principal Investigator","timeCommitment":0.4}
+        },
+        {
+          source: "bob",
+          target: "ant-colony-study",
+          type: "leads",
+          attributes: {"role":"Principal Investigator","timeCommitment":0.5}
+        },
+        {
+          source: "carol",
+          target: "active-inference-model",
+          type: "contributes",
+          attributes: {"role":"Lead Developer","timeCommitment":0.6}
+        },
+        {
+          source: "david",
+          target: "active-inference-model",
+          type: "contributes",
+          attributes: {"role":"Data Analyst","timeCommitment":0.8}
+        },
+        {
+          source: "emma",
+          target: "ant-colony-study",
+          type: "contributes",
+          attributes: {"role":"Field Researcher","timeCommitment":0.7}
+        },
+        {
+          source: "frank",
+          target: "ant-colony-study",
+          type: "contributes",
+          attributes: {"role":"Lab Manager","timeCommitment":0.3}
+        },
+        {
+          source: "bob",
+          target: "active-inference-model",
+          type: "contributes_to",
+          attributes: {"role":"Co-Investigator","startDate":"2022-03-15"}
+        },
+        {
+          source: "carol",
+          target: "active-inference-model",
+          type: "contributes_to",
+          attributes: {"role":"Lead Researcher","startDate":"2022-09-01"}
+        },
+        {
+          source: "david",
+          target: "ant-colony-study",
+          type: "contributes_to",
+          attributes: {"role":"Behavioral Consultant","startDate":"2024-02-10","timeCommitment":"25%"}
+        },
+        {
+          source: "grace",
+          target: "ant-colony-study",
+          type: "contributes_to",
+          attributes: {"role":"Lab Technician","startDate":"2023-01-10"}
+        },
+        {
+          source: "frank",
+          target: "ant-colony-study",
+          type: "contributes_to",
+          attributes: {"role":"Mathematical Modeling","startDate":"2022-11-15"}
+        },
+        {
+          source: "emma",
+          target: "ant-colony-study",
+          type: "contributes_to",
+          attributes: {"role":"Algorithm Developer","startDate":"2024-01-05"}
+        },
+        {
+          source: "alice",
+          target: "david",
+          type: "mentors",
+          attributes: {"type":"PhD Advisor","startDate":"2022-09-01"}
+        },
+        {
+          source: "bob",
+          target: "emma",
+          type: "mentors",
+          attributes: {"type":"PhD Advisor","startDate":"2022-09-01"}
+        },
+        {
+          source: "alice",
+          target: "carol",
+          type: "mentors",
+          attributes: {"type":"Postdoc Advisor","startDate":"2023-01-15"}
+        },
+        {
+          source: "frank",
+          target: "emma",
+          type: "co_advises",
+          attributes: {"startDate":"2022-09-01"}
+        },
+        {
+          source: "carol",
+          target: "alice",
+          type: "reports_to",
+          attributes: {"startDate":"2022-01-15"}
+        },
+        {
+          source: "david",
+          target: "bob",
+          type: "reports_to",
+          attributes: {"startDate":"2021-09-01"}
+        },
+        {
+          source: "emma",
+          target: "alice",
+          type: "reports_to",
+          attributes: {"startDate":"2022-09-01"}
+        },
+        {
+          source: "grace",
+          target: "bob",
+          type: "reports_to",
+          attributes: {"startDate":"2020-05-15"}
+        },
+        {
+          source: "active-inference-model",
+          target: "active-inference",
+          type: "applies",
+          attributes: {"centrality":"Core","innovation":"Novel application to collective behavior"}
+        },
+        {
+          source: "ant-colony-study",
+          target: "collective-behavior",
+          type: "applies",
+          attributes: {"centrality":"Core","innovation":"Field validation of theoretical predictions"}
+        },
+        {
+          source: "active-inference",
+          target: "collective-behavior",
+          type: "relates_to",
+          attributes: {"relationship":"Theoretical framework application","strength":"Strong"}
+        },
+        {
+          source: "ant-colony-study",
+          target: "ant-tracking",
+          type: "uses",
+          attributes: {"frequency":"Daily","priority":"High"}
+        },
+        {
+          source: "active-inference-model",
+          target: "computation-cluster",
+          type: "uses",
+          attributes: {"frequency":"Continuous","priority":"High"}
+        },
+        {
+          source: "neural-basis",
+          target: "neural-recording",
+          type: "uses",
+          attributes: {"frequency":"Daily","priority":"High"}
+        },
+        {
+          source: "alice",
+          target: "paper-2023a",
+          type: "authored",
+          attributes: {"contributionType":"corresponding author","contributionPercentage":40}
+        },
+        {
+          source: "bob",
+          target: "paper-2023a",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":30}
+        },
+        {
+          source: "carol",
+          target: "paper-2023a",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":30}
+        },
+        {
+          source: "bob",
+          target: "paper-2023b",
+          type: "authored",
+          attributes: {"contributionType":"corresponding author","contributionPercentage":50}
+        },
+        {
+          source: "emma",
+          target: "paper-2023b",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":30}
+        },
+        {
+          source: "frank",
+          target: "paper-2023b",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":20}
+        },
+        {
+          source: "alice",
+          target: "paper-2024",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":25}
+        },
+        {
+          source: "bob",
+          target: "paper-2024",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":30}
+        },
+        {
+          source: "carol",
+          target: "paper-2024",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":30}
+        },
+        {
+          source: "david",
+          target: "paper-2024",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":30}
+        },
+        {
+          source: "grace",
+          target: "paper-2024",
+          type: "authored",
+          attributes: {"contributionType":"co-author","contributionPercentage":20}
+        },
+        {
+          source: "paper-2023a",
+          target: "active-inference-model",
+          type: "results_from",
+          attributes: {"contribution":"Primary theoretical framework"}
+        },
+        {
+          source: "paper-2023b",
+          target: "ant-colony-study",
+          type: "results_from",
+          attributes: {"contribution":"Initial field study findings"}
+        },
+        {
+          source: "paper-2024",
+          target: "active-inference-model",
+          type: "results_from",
+          attributes: {"contribution":"Computational modeling results"}
+        },
+        {
+          source: "paper-2024",
+          target: "ant-colony-study",
+          type: "results_from",
+          attributes: {"contribution":"Empirical validation"}
+        },
+        {
+          source: "paper-2023a",
+          target: "active-inference",
+          type: "discusses",
+          attributes: {"depth":"comprehensive"}
+        },
+        {
+          source: "paper-2023b",
+          target: "collective-behavior",
+          type: "discusses",
+          attributes: {"depth":"substantial"}
+        },
+        {
+          source: "paper-2024",
+          target: "swarm-intelligence",
+          type: "discusses",
+          attributes: {"depth":"comprehensive"}
+        }
+    ];
+    
+    // Create force simulation
+    const simulation = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(d => d.id))
+      .force('charge', d3.forceManyBody().strength(-100))
+      .force('center', d3.forceCenter(width / 2, height / 2));
+    
+    // Create links
+    const link = svg.append('g')
+      .selectAll('line')
+      .data(links)
+      .join('line')
+      .attr('stroke', '#999')
+      .attr('stroke-opacity', 0.6)
+      .attr('stroke-width', 1.5);
+    
+    // Create nodes
+    const node = svg.append('g')
+      .selectAll('circle')
+      .data(nodes)
+      .join('circle')
+      .attr('r', 5)
+      .attr('fill', d => getColorByType(d.type))
+      .call(drag(simulation));
+    
+    // Add labels
+    const label = svg.append('g')
+      .selectAll('text')
+      .data(nodes)
+      .join('text')
+      .text(d => d.attributes.name || d.attributes.title || d.id)
+      .attr('font-size', 10)
+      .attr('dx', 8)
+      .attr('dy', 3);
+    
+    // Update positions on simulation tick
+    simulation.on('tick', () => {
+      link
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+      
+      node
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y);
+      
+      label
+        .attr('x', d => d.x)
+        .attr('y', d => d.y);
+    });
+    
+    // Implement zoom functionality
+    const zoom = d3.zoom()
+      .scaleExtent([0.1, 4])
+      .on('zoom', (event) => {
+        svg.selectAll('g').attr('transform', event.transform);
+      });
+    
+    svg.call(zoom);
+    
+    // Zoom controls
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const zoomResetBtn = document.getElementById('zoom-reset');
+    
+    zoomInBtn.addEventListener('click', () => {
+      svg.transition().duration(300).call(zoom.scaleBy, 1.5);
+    });
+    
+    zoomOutBtn.addEventListener('click', () => {
+      svg.transition().duration(300).call(zoom.scaleBy, 0.75);
+    });
+    
+    zoomResetBtn.addEventListener('click', () => {
+      svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
+    });
+    
+    // Implement drag functionality
+    function drag(simulation) {
+      function dragstarted(event) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      }
+      
+      function dragged(event) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      }
+      
+      function dragended(event) {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      }
+      
+      return d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended);
+    }
+    
+    // Get color by entity type
+    function getColorByType(type) {
+      const colors = {
+        person: '#4285F4',
+        organization: '#EA4335',
+        project: '#FBBC05',
+        publication: '#34A853',
+        event: '#8F44AD',
+        location: '#16A085',
+        concept: '#E67E22',
+        resource: '#1ABC9C'
+      };
+      
+      return colors[type] || '#999';
+    }
+    
+    // Generate type filters
+    const typeFilters = document.getElementById('type-filters');
+    const types = [...new Set(nodes.map(node => node.type))];
+    
+    types.forEach(type => {
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.value = type;
+      input.checked = true;
+      input.dataset.type = type;
+      
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(type));
+      typeFilters.appendChild(label);
+      
+      input.addEventListener('change', updateFilters);
+    });
+    
+    // Clear filters button
+    const clearFiltersBtn = document.getElementById('clear-filters');
+    clearFiltersBtn.addEventListener('click', () => {
+      Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
+        input.checked = true;
+      });
+      updateFilters();
+    });
+    
+    // Update filters
+    function updateFilters() {
+      const selectedTypes = Array.from(typeFilters.querySelectorAll('input:checked'))
+        .map(input => input.value);
+      
+      node.attr('visibility', d => selectedTypes.includes(d.type) ? 'visible' : 'hidden');
+      label.attr('visibility', d => selectedTypes.includes(d.type) ? 'visible' : 'hidden');
+      
+      link.attr('visibility', d => {
+        const sourceNode = nodes.find(node => node.id === d.source.id);
+        const targetNode = nodes.find(node => node.id === d.target.id);
+        return selectedTypes.includes(sourceNode.type) && selectedTypes.includes(targetNode.type) ? 'visible' : 'hidden';
+      });
+    }
+    
+    // Function to select entity by ID
+    window.selectEntityById = (id) => {
+      const selectedNode = nodes.find(node => node.id === id);
+      if (!selectedNode) return;
+      
+      // Highlight the selected node
+      node.attr('stroke', d => d.id === id ? '#000' : null)
+          .attr('stroke-width', d => d.id === id ? 2 : null);
+      
+      // Center and zoom to the selected node
+      const scale = 2;
+      const x = width / 2 - scale * selectedNode.x;
+      const y = height / 2 - scale * selectedNode.y;
+      
+      svg.transition().duration(500)
+        .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+    };
+    
+    // Helper function to get entity name
+    function getEntityName(entity) {
+      const name = entity.attributes.name || entity.attributes.title || entity.id;
+      return name;
+    }
+  </script>
 </body>
 </html>

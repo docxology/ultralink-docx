@@ -1,144 +1,91 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Civil War Begins - USAHistory Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #ffffff;
-      --text: #000000;
-      --link: #0066cc;
-      --accent: #666666;
-      --border: #dddddd;
-      --text-color: #000000;
-      --bg-color: #ffffff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Civil War Begins</h1>
-  <div class="entity-type">event</div>
+  <header>
+    <h1>Civil War Begins</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Civil War Begins</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>civil-war-start</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">date</td>
-            <td class="attribute-value">1861-04-12</td>
+          <tr>
+            <th>Type</th>
+            <td>event</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">location</td>
-            <td class="attribute-value">Fort Sumter, South Carolina</td>
+          <tr>
+            <th>date</th>
+            <td>1861-04-12</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Confederate forces attack Fort Sumter, beginning the Civil War</td>
+          <tr>
+            <th>location</th>
+            <td>Fort Sumter, South Carolina</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">significance</td>
-            <td class="attribute-value">Started the bloodiest conflict in American history</td>
+          <tr>
+            <th>description</th>
+            <td>Confederate forces attack Fort Sumter, beginning the Civil War</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">keywords</td>
-            <td class="attribute-value">war,slavery,secession,conflict</td>
+          <tr>
+            <th>significance</th>
+            <td>Started the bloodiest conflict in American history</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">vector</td>
-            <td class="attribute-value">-0.35,-0.22,-0.42,-0.18,-0.3,-0.25</td>
+          <tr>
+            <th>keywords</th>
+            <td>war,slavery,secession,conflict</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>occurred_during</strong> → <a href="civil-war.html">Civil War</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('civil-war')" class="select-link" title="Select in graph">(select)</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="lincoln.html">Abraham Lincoln</a> <strong>led_during</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('lincoln')" class="select-link" title="Select in graph">(select)</a></li></ul>
-  </div>
+          <tr>
+            <th>vector</th>
+            <td>-0.35,-0.22,-0.42,-0.18,-0.3,-0.25</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>occurred_during</strong> → 
+          <a href="civil-war.html">Civil War</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('civil-war')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="lincoln.html">Abraham Lincoln</a> → 
+          <strong>led_during</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('lincoln')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

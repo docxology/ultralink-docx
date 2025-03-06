@@ -1,141 +1,104 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saguaro Cactus - DesertEcosystem Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f0f8ff;
-      --text: #333333;
-      --link: #006699;
-      --accent: #4a9eff;
-      --border: #b3d9ff;
-      --text-color: #333333;
-      --bg-color: #f0f8ff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Saguaro Cactus</h1>
-  <div class="entity-type">plant</div>
+  <header>
+    <h1>Saguaro Cactus</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Saguaro Cactus</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>saguaro</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">scientificName</td>
-            <td class="attribute-value">Carnegiea gigantea</td>
+          <tr>
+            <th>Type</th>
+            <td>plant</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">height</td>
-            <td class="attribute-value">1200</td>
+          <tr>
+            <th>scientificName</th>
+            <td>Carnegiea gigantea</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">waterRequirement</td>
-            <td class="attribute-value">very low</td>
+          <tr>
+            <th>height</th>
+            <td>1200</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Iconic columnar cactus with arm-like branches.</td>
+          <tr>
+            <th>waterRequirement</th>
+            <td>very low</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">adaptations</td>
-            <td class="attribute-value">Accordion-like pleats expand when absorbing water,Extensive shallow root system,Thick waxy coating to reduce water loss,Slow growth to conserve energy,CAM photosynthesis for water conservation</td>
+          <tr>
+            <th>description</th>
+            <td>Iconic columnar cactus with arm-like branches.</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="heat.html">Extreme Heat</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('heat')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Pleated structure for expansion</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <strong>grows_in</strong> → <a href="rocky_slope.html">Rocky Slope</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('rocky_slope')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> medium</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="desert_ironwood.html">Desert Ironwood</a> <strong>nurses</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('desert_ironwood')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>relationship:</strong> provides shade and protection</small> <small><strong>strength:</strong> strong</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>adaptations</th>
+            <td>Accordion-like pleats expand when absorbing water,Extensive shallow root system,Thick waxy coating to reduce water loss,Slow growth to conserve energy,CAM photosynthesis for water conservation</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>adapted_to</strong> → 
+          <a href="heat.html">Extreme Heat</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('heat')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Pleated structure for expansion</span>
+            <span><strong>strength:</strong> extreme</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>grows_in</strong> → 
+          <a href="rocky_slope.html">Rocky Slope</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('rocky_slope')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> permanent</span>
+            <span><strong>dependency:</strong> medium</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="desert_ironwood.html">Desert Ironwood</a> → 
+          <strong>nurses</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('desert_ironwood')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>relationship:</strong> provides shade and protection</span>
+            <span><strong>strength:</strong> strong</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

@@ -1,0 +1,107 @@
+{
+  "timestamp": "2025-03-06T04:51:01.456Z",
+  "environment": {
+    "node": "v23.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpus": 8
+  },
+  "tests": {
+    "create_small": {
+      "durationMs": 0.718625,
+      "memoryDelta": {
+        "rss": 0.015625,
+        "heapTotal": 0,
+        "heapUsed": 0.20021820068359375
+      }
+    },
+    "create_medium": {
+      "durationMs": 5.744,
+      "memoryDelta": {
+        "rss": 2.71875,
+        "heapTotal": 3.25,
+        "heapUsed": -8.07086181640625
+      }
+    },
+    "create_large": {
+      "durationMs": 16.133625,
+      "memoryDelta": {
+        "rss": 0.03125,
+        "heapTotal": 0,
+        "heapUsed": 6.34381103515625
+      }
+    },
+    "find_by_type_small": {
+      "durationMs": 0.154084,
+      "memoryDelta": {
+        "rss": 0.015625,
+        "heapTotal": 0,
+        "heapUsed": 0.0183563232421875
+      }
+    },
+    "find_by_attribute_small": {
+      "durationMs": 0.047084,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.02459716796875
+      }
+    },
+    "get_relationships_small": {
+      "durationMs": 0.07225,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.004425048828125
+      }
+    },
+    "find_by_type_medium": {
+      "durationMs": 0.079959,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.04708099365234375
+      }
+    },
+    "find_by_attribute_medium": {
+      "durationMs": 0.176,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.21720123291015625
+      }
+    },
+    "get_relationships_medium": {
+      "durationMs": 0.011875,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.0018157958984375
+      }
+    },
+    "find_by_type_large": {
+      "durationMs": 0.21825,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.20360565185546875
+      }
+    },
+    "find_by_attribute_large": {
+      "durationMs": 0.426584,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.8261566162109375
+      }
+    },
+    "get_relationships_large": {
+      "durationMs": 0.011208,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.00189208984375
+      }
+    }
+  }
+}

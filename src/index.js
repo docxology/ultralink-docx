@@ -7,8 +7,12 @@
 
 const UltraLink = require('./ultralink');
 const lib = require('./lib');
+const { UltraLinkParser } = require('./core/parser');
+const { EntityStore } = require('./core/types');
 
 module.exports = {
   UltraLink,
+  UltraLinkParser,
+  EntityStore,
   ...lib
 }; 

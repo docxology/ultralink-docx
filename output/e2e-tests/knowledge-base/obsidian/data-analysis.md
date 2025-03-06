@@ -1,20 +1,22 @@
 ---
 type: concept
 id: data-analysis
-created: 2025-03-05T01:16:03.432Z
-modified: 2025-03-05T01:16:03.432Z
 ---
 
 # Data Analysis
 
-**Type**: concept
-**ID**: data-analysis
+## Metadata
+
+- **Type**: concept
+- **ID**: data-analysis
 
 ## Attributes
 
 - **description**: The process of inspecting and modeling data
 
-## Backlinks
+## Relationships
 
-- [[project-alpha|Project Alpha]] (uses)
+### Incoming
+
+- **uses** ← [[project-alpha]] (Project Alpha)
 

@@ -1,14 +1,14 @@
 ---
 type: animal
 id: javelina
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Javelina
 
-**Type**: animal
-**ID**: javelina
+## Metadata
+
+- **Type**: animal
+- **ID**: javelina
 
 ## Attributes
 
@@ -17,19 +17,13 @@ modified: 2025-03-05T01:16:02.596Z
 - **diet**: omnivore
 - **status**: least concern
 - **description**: Also known as collared peccary, a pig-like mammal adapted to desert environments.
-- **adaptations**: ["Can consume water-rich cacti including prickly pear","Active in early morning and evening to avoid heat","Social behavior reduces predation risk","Specialized digestive system for desert plants"]
+- **adaptations**: Can consume water-rich cacti including prickly pear,Active in early morning and evening to avoid heat,Social behavior reduces predation risk,Specialized digestive system for desert plants
 
 ## Relationships
 
-### adapted_to
+### Outgoing
 
-- [[aridity|Aridity]] (adaptationMechanism: Consumption of water-rich cacti, strength: moderate)
-
-### lives_in
-
-- [[canyon|Desert Canyon]] (frequency: permanent, dependency: medium)
-
-### consumes
-
-- [[prickly_pear|Prickly Pear Cactus]] (frequency: common, method: grazing)
+- **adapted_to** → [[aridity]] (Aridity)
+- **lives_in** → [[canyon]] (Desert Canyon)
+- **consumes** → [[prickly_pear]] (Prickly Pear Cactus)
 

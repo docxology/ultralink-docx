@@ -1,14 +1,14 @@
 ---
 type: researcher
 id: emma
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Emma Taylor
 
-**Type**: researcher
-**ID**: emma
+## Metadata
+
+- **Type**: researcher
+- **ID**: emma
 
 ## Attributes
 
@@ -16,29 +16,20 @@ modified: 2025-03-05T01:16:02.671Z
 - **department**: Computer Science
 - **email**: emma.taylor@example.edu
 - **publications**: 4
-- **expertise**: ["machine learning","reinforcement learning","neural networks"]
+- **expertise**: machine learning,reinforcement learning,neural networks
 - **yearsExperience**: 2
 
 ## Relationships
 
-### contributes
+### Outgoing
 
-- [[ant-colony-study|Ant Colony Decision Making Study]] (role: Field Researcher, timeCommitment: 0.7)
+- **contributes** → [[ant-colony-study]] (Ant Colony Decision Making Study)
+- **contributes_to** → [[ant-colony-study]] (Ant Colony Decision Making Study)
+- **reports_to** → [[alice]] (Dr. Alice Chen)
+- **authored** → [[paper-2023b]] (Decision Making Patterns in Ant Colonies: A Field Study)
 
-### contributes_to
+### Incoming
 
-- [[ant-colony-study|Ant Colony Decision Making Study]] (role: Algorithm Developer, startDate: 2024-01-05)
-
-### reports_to
-
-- [[alice|Dr. Alice Chen]] (startDate: 2022-09-01)
-
-### authored
-
-- [[paper-2023b|Decision Making Patterns in Ant Colonies: A Field Study]] (contributionType: co-author, contributionPercentage: 30)
-
-## Backlinks
-
-- [[bob|Dr. Bob Smith]] (mentors)
-- [[frank|Dr. Frank Martinez]] (co_advises)
+- **mentors** ← [[bob]] (Dr. Bob Smith)
+- **co_advises** ← [[frank]] (Dr. Frank Martinez)
 

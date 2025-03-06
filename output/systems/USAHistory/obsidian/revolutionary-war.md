@@ -1,14 +1,14 @@
 ---
 type: time_period
 id: revolutionary-war
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # American Revolution
 
-**Type**: time_period
-**ID**: revolutionary-war
+## Metadata
+
+- **Type**: time_period
+- **ID**: revolutionary-war
 
 ## Attributes
 
@@ -16,7 +16,9 @@ modified: 2025-03-05T01:16:02.702Z
 - **endYear**: 1783
 - **description**: War for independence from Great Britain
 
-## Backlinks
+## Relationships
 
-- [[declaration-independence|Declaration of Independence]] (occurred_during)
+### Incoming
+
+- **occurred_during** ← [[declaration-independence]] (Declaration of Independence)
 

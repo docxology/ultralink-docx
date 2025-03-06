@@ -1,18 +1,18 @@
 ---
 type: person
 id: carol-jones
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Carol Jones
 
-**Type**: person
-**ID**: carol-jones
+## Metadata
+
+- **Type**: person
+- **ID**: carol-jones
 
 ## Attributes
 
-- **expertise**: ["Reinforcement Learning","Robotics"]
+- **expertise**: Reinforcement Learning,Robotics
 - **email**: carol.jones@research.org
 - **joinDate**: 2020-09-01
 - **status**: active
@@ -20,34 +20,19 @@ modified: 2025-03-05T01:16:02.517Z
 
 ## Relationships
 
-### contributes_to
+### Outgoing
 
-- [[computer-vision-project|Advanced Computer Vision Systems]]
+- **contributes_to** → [[computer-vision-project]] (Advanced Computer Vision Systems)
+- **leads** → [[adaptive-robotics-project]] (Adaptive Robotics Control)
+- **mentors** → [[elena-rodriguez]] (Elena Rodriguez)
+- **authored** → [[vision-paper-2022]] (Novel Approaches to Low-Light Computer Vision)
+- **authored** → [[robotics-paper-2022]] (Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization)
+- **uses** → [[robotics-lab]] (Robotics Laboratory)
+- **expertise_in** → [[machine-learning-theory]] (Machine Learning Theory)
+- **expertise_in** → [[reinforcement-learning]] (Reinforcement Learning)
+- **expertise_in** → [[robotics]] (Robotics)
 
-### leads
+### Incoming
 
-- [[adaptive-robotics-project|Adaptive Robotics Control]]
-
-### mentors
-
-- [[elena-rodriguez|Elena Rodriguez]]
-
-### authored
-
-- [[vision-paper-2022|Novel Approaches to Low-Light Computer Vision]]
-- [[robotics-paper-2022|Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization]]
-
-### uses
-
-- [[robotics-lab|Robotics Laboratory]]
-
-### expertise_in
-
-- [[machine-learning-theory|Machine Learning Theory]]
-- [[reinforcement-learning|Reinforcement Learning]]
-- [[robotics|Robotics]]
-
-## Backlinks
-
-- [[alice-chen|Alice Chen]] (mentors)
+- **mentors** ← [[alice-chen]] (Alice Chen)
 

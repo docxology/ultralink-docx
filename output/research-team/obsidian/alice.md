@@ -1,14 +1,14 @@
 ---
 type: researcher
 id: alice
-created: 2025-03-05T01:10:35.700Z
-modified: 2025-03-05T01:10:35.700Z
 ---
 
 # Alice Chen
 
-**Type**: researcher
-**ID**: alice
+## Metadata
+
+- **Type**: researcher
+- **ID**: alice
 
 ## Attributes
 
@@ -19,15 +19,12 @@ modified: 2025-03-05T01:10:35.700Z
 
 ## Relationships
 
-### leads
+### Outgoing
 
-- [[desert-ecology|Desert Ecology Study]] (startDate: 2023-01-15, role: Principal Investigator)
+- **leads** → [[desert-ecology]] (Desert Ecology Study)
+- **contributes_to** → [[climate-impact]] (Climate Impact Assessment)
 
-### contributes_to
+### Incoming
 
-- [[climate-impact|Climate Impact Assessment]] (startDate: 2022-10-01, role: Consultant)
-
-## Backlinks
-
-- [[bob|Bob Smith]] (reports_to)
+- **reports_to** ← [[bob]] (Bob Smith)
 

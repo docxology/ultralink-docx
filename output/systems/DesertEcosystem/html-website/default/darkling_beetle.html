@@ -1,142 +1,87 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Darkling Beetle - DesertEcosystem Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #ffffff;
-      --text: #000000;
-      --link: #0066cc;
-      --accent: #666666;
-      --border: #dddddd;
-      --text-color: #000000;
-      --bg-color: #ffffff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Darkling Beetle</h1>
-  <div class="entity-type">animal</div>
+  <header>
+    <h1>Darkling Beetle</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Darkling Beetle</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>darkling_beetle</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">scientificName</td>
-            <td class="attribute-value">Tenebrionidae family</td>
+          <tr>
+            <th>Type</th>
+            <td>animal</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">lifespan</td>
-            <td class="attribute-value">2</td>
+          <tr>
+            <th>scientificName</th>
+            <td>Tenebrionidae family</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">diet</td>
-            <td class="attribute-value">omnivore</td>
+          <tr>
+            <th>lifespan</th>
+            <td>2</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">status</td>
-            <td class="attribute-value">least concern</td>
+          <tr>
+            <th>diet</th>
+            <td>omnivore</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Desert beetles with numerous adaptations for arid environments.</td>
+          <tr>
+            <th>status</th>
+            <td>least concern</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">adaptations</td>
-            <td class="attribute-value">Waxy cuticle reduces water loss,Can collect water from fog on body,Stands with head down and abdomen raised to collect moisture,Nocturnal to avoid daytime heat</td>
+          <tr>
+            <th>description</th>
+            <td>Desert beetles with numerous adaptations for arid environments.</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Water harvesting from air</small> <small><strong>strength:</strong> extreme</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>adaptations</th>
+            <td>Waxy cuticle reduces water loss,Can collect water from fog on body,Stands with head down and abdomen raised to collect moisture,Nocturnal to avoid daytime heat</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>adapted_to</strong> → 
+          <a href="aridity.html">Aridity</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Water harvesting from air</span>
+            <span><strong>strength:</strong> extreme</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

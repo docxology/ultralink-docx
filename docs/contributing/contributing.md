@@ -21,7 +21,7 @@ Thank you for your interest in contributing to UltraLink! This document provides
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [UltraLink Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [maintainers@ultralink.org](mailto:maintainers@ultralink.org).
+This project and everyone participating in it is governed by the [UltraLink Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [DanielAriFriedman@gmail.com](mailto:DanielAriFriedman@gmail.com).
 
 ## Getting Started
 

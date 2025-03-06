@@ -1,14 +1,14 @@
 ---
 type: time_period
 id: modern-era
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # Modern Era
 
-**Type**: time_period
-**ID**: modern-era
+## Metadata
+
+- **Type**: time_period
+- **ID**: modern-era
 
 ## Attributes
 
@@ -16,8 +16,10 @@ modified: 2025-03-05T01:16:02.702Z
 - **endYear**: 2023
 - **description**: Post-Cold War period to present day
 
-## Backlinks
+## Relationships
 
-- [[september-11|September 11 Attacks]] (occurred_during)
-- [[obama-election|Barack Obama Elected President]] (occurred_during)
+### Incoming
+
+- **occurred_during** ← [[september-11]] (September 11 Attacks)
+- **occurred_during** ← [[obama-election]] (Barack Obama Elected President)
 

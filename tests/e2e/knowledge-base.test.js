@@ -151,7 +151,13 @@ describe('E2E: Knowledge Base Workflow', () => {
     }
     
     Object.entries(htmlWebsite).forEach(([filename, content]) => {
-      fs.writeFileSync(path.join(websiteDir, filename), content);
+      // Create directory if it doesn't exist
+      const filePath = path.join(websiteDir, filename);
+      const dirPath = path.dirname(filePath);
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+      }
+      fs.writeFileSync(filePath, content);
     });
     
     // Verify exports

@@ -1,14 +1,14 @@
 ---
 type: animal
 id: scorpion
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Deathstalker Scorpion
 
-**Type**: animal
-**ID**: scorpion
+## Metadata
+
+- **Type**: animal
+- **ID**: scorpion
 
 ## Attributes
 
@@ -17,16 +17,16 @@ modified: 2025-03-05T01:16:02.596Z
 - **diet**: carnivore
 - **status**: least concern
 - **description**: One of the most dangerous scorpion species, with potent venom.
-- **adaptations**: ["Nocturnal behavior to avoid heat","Exoskeleton prevents water loss","UV fluorescence may help detect light levels","Burrowing behavior for temperature regulation"]
+- **adaptations**: Nocturnal behavior to avoid heat,Exoskeleton prevents water loss,UV fluorescence may help detect light levels,Burrowing behavior for temperature regulation
 
 ## Relationships
 
-### lives_in
+### Outgoing
 
-- [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: medium)
+- **lives_in** → [[rocky_slope]] (Rocky Slope)
 
-## Backlinks
+### Incoming
 
-- [[desert_monitor|Desert Monitor]] (preys_on)
-- [[roadrunner|Greater Roadrunner]] (preys_on)
+- **preys_on** ← [[desert_monitor]] (Desert Monitor)
+- **preys_on** ← [[roadrunner]] (Greater Roadrunner)
 

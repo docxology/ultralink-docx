@@ -1,14 +1,14 @@
 ---
 type: event
 id: emancipation-proclamation
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # Emancipation Proclamation
 
-**Type**: event
-**ID**: emancipation-proclamation
+## Metadata
+
+- **Type**: event
+- **ID**: emancipation-proclamation
 
 ## Attributes
 
@@ -16,20 +16,17 @@ modified: 2025-03-05T01:16:02.702Z
 - **location**: Washington, D.C.
 - **description**: Lincoln declares slaves in Confederate states to be free
 - **significance**: Changed the character of the Civil War and began the process of ending slavery
-- **keywords**: ["slavery","freedom","Lincoln","abolition"]
-- **vector**: [0.48,0.3,0.38,0.15,0.25,-0.1]
+- **keywords**: slavery,freedom,Lincoln,abolition
+- **vector**: 0.48,0.3,0.38,0.15,0.25,-0.1
 
 ## Relationships
 
-### occurred_during
+### Outgoing
 
-- [[civil-war|Civil War]]
+- **occurred_during** → [[civil-war]] (Civil War)
+- **opposed** → [[slavery]] (Slavery)
 
-### opposed
+### Incoming
 
-- [[slavery|Slavery]]
-
-## Backlinks
-
-- [[lincoln|Abraham Lincoln]] (issued)
+- **issued** ← [[lincoln]] (Abraham Lincoln)
 

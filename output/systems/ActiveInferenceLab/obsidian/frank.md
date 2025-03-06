@@ -1,14 +1,14 @@
 ---
 type: researcher
 id: frank
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Dr. Frank Martinez
 
-**Type**: researcher
-**ID**: frank
+## Metadata
+
+- **Type**: researcher
+- **ID**: frank
 
 ## Attributes
 
@@ -16,24 +16,15 @@ modified: 2025-03-05T01:16:02.671Z
 - **department**: Mathematics
 - **email**: frank.martinez@example.edu
 - **publications**: 16
-- **expertise**: ["dynamical systems","chaos theory","mathematical modeling"]
+- **expertise**: dynamical systems,chaos theory,mathematical modeling
 - **yearsExperience**: 8
 
 ## Relationships
 
-### contributes
+### Outgoing
 
-- [[ant-colony-study|Ant Colony Decision Making Study]] (role: Lab Manager, timeCommitment: 0.3)
-
-### contributes_to
-
-- [[ant-colony-study|Ant Colony Decision Making Study]] (role: Mathematical Modeling, startDate: 2022-11-15)
-
-### co_advises
-
-- [[emma|Emma Taylor]] (startDate: 2022-09-01)
-
-### authored
-
-- [[paper-2023b|Decision Making Patterns in Ant Colonies: A Field Study]] (contributionType: co-author, contributionPercentage: 20)
+- **contributes** → [[ant-colony-study]] (Ant Colony Decision Making Study)
+- **contributes_to** → [[ant-colony-study]] (Ant Colony Decision Making Study)
+- **co_advises** → [[emma]] (Emma Taylor)
+- **authored** → [[paper-2023b]] (Decision Making Patterns in Ant Colonies: A Field Study)
 

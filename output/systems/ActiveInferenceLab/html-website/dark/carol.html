@@ -1,152 +1,134 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dr. Carol Jimenez - ActiveInferenceLab Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #202124;
-      --text: #e8eaed;
-      --link: #4a9eff;
-      --accent: #666666;
-      --border: #333333;
-      --text-color: #e8eaed;
-      --bg-color: #202124;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Dr. Carol Jimenez</h1>
-  <div class="entity-type">researcher</div>
+  <header>
+    <h1>Dr. Carol Jimenez</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Dr. Carol Jimenez</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>carol</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">role</td>
-            <td class="attribute-value">Postdoctoral Researcher</td>
+          <tr>
+            <th>Type</th>
+            <td>researcher</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">department</td>
-            <td class="attribute-value">Cognitive Science</td>
+          <tr>
+            <th>role</th>
+            <td>Postdoctoral Researcher</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">email</td>
-            <td class="attribute-value">carol.jimenez@example.edu</td>
+          <tr>
+            <th>department</th>
+            <td>Cognitive Science</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">publications</td>
-            <td class="attribute-value">11</td>
+          <tr>
+            <th>email</th>
+            <td>carol.jimenez@example.edu</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">expertise</td>
-            <td class="attribute-value">active inference,machine learning,cognitive modeling</td>
+          <tr>
+            <th>publications</th>
+            <td>11</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">yearsExperience</td>
-            <td class="attribute-value">3</td>
+          <tr>
+            <th>expertise</th>
+            <td>active inference,machine learning,cognitive modeling</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>contributes</strong> → <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('active-inference-model')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Lead Developer</small> <small><strong>timeCommitment:</strong> 0.6</small> </div></li><li class="relationship-item">
-        <strong>contributes_to</strong> → <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('active-inference-model')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Lead Researcher</small> <small><strong>startDate:</strong> 2022-09-01</small> </div></li><li class="relationship-item">
-        <strong>reports_to</strong> → <a href="alice.html">Dr. Alice Chen</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>startDate:</strong> 2022-01-15</small> </div></li><li class="relationship-item">
-        <strong>authored</strong> → <a href="paper-2023a.html">Active Inference Framework for Collective Behavior Analysis</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('paper-2023a')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contributionType:</strong> co-author</small> <small><strong>contributionPercentage:</strong> 30</small> </div></li><li class="relationship-item">
-        <strong>authored</strong> → <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('paper-2024')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contributionType:</strong> co-author</small> <small><strong>contributionPercentage:</strong> 30</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="alice.html">Dr. Alice Chen</a> <strong>mentors</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>type:</strong> Postdoc Advisor</small> <small><strong>startDate:</strong> 2023-01-15</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>yearsExperience</th>
+            <td>3</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>contributes</strong> → 
+          <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('active-inference-model')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Lead Developer</span>
+            <span><strong>timeCommitment:</strong> 0.6</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>contributes_to</strong> → 
+          <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('active-inference-model')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Lead Researcher</span>
+            <span><strong>startDate:</strong> 2022-09-01</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>reports_to</strong> → 
+          <a href="alice.html">Dr. Alice Chen</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>startDate:</strong> 2022-01-15</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>authored</strong> → 
+          <a href="paper-2023a.html">Active Inference Framework for Collective Behavior Analysis</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('paper-2023a')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>contributionType:</strong> co-author</span>
+            <span><strong>contributionPercentage:</strong> 30</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>authored</strong> → 
+          <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('paper-2024')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>contributionType:</strong> co-author</span>
+            <span><strong>contributionPercentage:</strong> 30</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="alice.html">Dr. Alice Chen</a> → 
+          <strong>mentors</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('alice')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>type:</strong> Postdoc Advisor</span>
+            <span><strong>startDate:</strong> 2023-01-15</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

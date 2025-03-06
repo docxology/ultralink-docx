@@ -1,24 +1,26 @@
 ---
 type: knowledge-area
 id: computer-vision
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Computer Vision
 
-**Type**: knowledge-area
-**ID**: computer-vision
+## Metadata
+
+- **Type**: knowledge-area
+- **ID**: computer-vision
 
 ## Attributes
 
 - **description**: Visual information processing and understanding
-- **topics**: ["Object Detection","Image Segmentation","Visual Recognition"]
+- **topics**: Object Detection,Image Segmentation,Visual Recognition
 
-## Backlinks
+## Relationships
 
-- [[machine-learning-theory|Machine Learning Theory]] (foundational_for)
-- [[alice-chen|Alice Chen]] (expertise_in)
-- [[elena-rodriguez|Elena Rodriguez]] (expertise_in)
-- [[computer-vision-project|Advanced Computer Vision Systems]] (applies)
+### Incoming
+
+- **foundational_for** ← [[machine-learning-theory]] (Machine Learning Theory)
+- **expertise_in** ← [[alice-chen]] (Alice Chen)
+- **expertise_in** ← [[elena-rodriguez]] (Elena Rodriguez)
+- **applies** ← [[computer-vision-project]] (Advanced Computer Vision Systems)
 

@@ -386,11 +386,12 @@ Selecting the right format depends on your specific use case, target audience, a
 
 For more details on each format, refer to the individual format documentation:
 
-- [JSON Format](../formats/json-format.md)
-- [GraphML Format](../formats/graphml-format.md)
-- [CSV Format](../formats/csv-format.md)
-- [Obsidian Format](../formats/obsidian-format.md)
-- [HTML Website Format](../formats/html-website-format.md)
-- [Bayesian Network Format](../formats/bayesian-graph.md)
-- [Knowledge Interchange Format (KIF)](../formats/knowledge-interchange-format.md)
-- [Full Blob Format](../formats/full-blob-format.md) 
+- [JSON Format](../formats/JSON_FORMAT.md)
+- [GraphML Format](../formats/GRAPHML_FORMAT.md)
+- [CSV Format](../formats/CSV_FORMAT.md)
+- [Obsidian Format](../formats/OBSIDIAN_FORMAT.md)
+- [HTML Website Format](../formats/HTML_WEBSITE_FORMAT.md)
+- [Bayesian Network Format](../formats/BAYESIAN_NETWORK_FORMAT.md)
+- [Knowledge Interchange Format (KIF)](../formats/KIF_FORMAT.md)
+- [Full Blob Format](../formats/FULL_BLOB_FORMAT.md)
+- [Visualization Format](../formats/VISUALIZATION_FORMAT.md) 

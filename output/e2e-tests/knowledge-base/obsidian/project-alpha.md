@@ -1,14 +1,14 @@
 ---
 type: project
 id: project-alpha
-created: 2025-03-05T01:16:03.432Z
-modified: 2025-03-05T01:16:03.432Z
 ---
 
 # Project Alpha
 
-**Type**: project
-**ID**: project-alpha
+## Metadata
+
+- **Type**: project
+- **ID**: project-alpha
 
 ## Attributes
 
@@ -17,13 +17,13 @@ modified: 2025-03-05T01:16:03.432Z
 
 ## Relationships
 
-### uses
+### Outgoing
 
-- [[machine-learning|Machine Learning]]
-- [[data-analysis|Data Analysis]]
+- **uses** → [[machine-learning]] (Machine Learning)
+- **uses** → [[data-analysis]] (Data Analysis)
 
-## Backlinks
+### Incoming
 
-- [[alice-smith|Alice Smith]] (manages)
-- [[bob-johnson|Bob Johnson]] (works_on)
+- **manages** ← [[alice-smith]] (Alice Smith)
+- **works_on** ← [[bob-johnson]] (Bob Johnson)
 

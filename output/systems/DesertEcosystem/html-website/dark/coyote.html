@@ -1,148 +1,114 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coyote - DesertEcosystem Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #202124;
-      --text: #e8eaed;
-      --link: #4a9eff;
-      --accent: #666666;
-      --border: #333333;
-      --text-color: #e8eaed;
-      --bg-color: #202124;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Coyote</h1>
-  <div class="entity-type">animal</div>
+  <header>
+    <h1>Coyote</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Coyote</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>coyote</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">scientificName</td>
-            <td class="attribute-value">Canis latrans</td>
+          <tr>
+            <th>Type</th>
+            <td>animal</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">lifespan</td>
-            <td class="attribute-value">14</td>
+          <tr>
+            <th>scientificName</th>
+            <td>Canis latrans</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">diet</td>
-            <td class="attribute-value">omnivore</td>
+          <tr>
+            <th>lifespan</th>
+            <td>14</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">status</td>
-            <td class="attribute-value">least concern</td>
+          <tr>
+            <th>diet</th>
+            <td>omnivore</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Adaptable canid found throughout North American deserts and beyond.</td>
+          <tr>
+            <th>status</th>
+            <td>least concern</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">adaptations</td>
-            <td class="attribute-value">Can survive on minimal water obtained from prey,Opportunistic feeding habits,Highly adaptable to different habitats,Active during cooler parts of day,Efficient predator of small desert mammals</td>
+          <tr>
+            <th>description</th>
+            <td>Adaptable canid found throughout North American deserts and beyond.</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Obtaining moisture from prey</small> <small><strong>strength:</strong> strong</small> </div></li><li class="relationship-item">
-        <strong>lives_in</strong> → <a href="canyon.html">Desert Canyon</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('canyon')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> low</small> </div></li><li class="relationship-item">
-        <strong>preys_on</strong> → <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> common</small> <small><strong>method:</strong> hunting</small> </div></li><li class="relationship-item">
-        <strong>preys_on</strong> → <a href="desert_tortoise.html">Desert Tortoise</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('desert_tortoise')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> rare</small> <small><strong>method:</strong> opportunistic</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>adaptations</th>
+            <td>Can survive on minimal water obtained from prey,Opportunistic feeding habits,Highly adaptable to different habitats,Active during cooler parts of day,Efficient predator of small desert mammals</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>adapted_to</strong> → 
+          <a href="aridity.html">Aridity</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Obtaining moisture from prey</span>
+            <span><strong>strength:</strong> strong</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>lives_in</strong> → 
+          <a href="canyon.html">Desert Canyon</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('canyon')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> permanent</span>
+            <span><strong>dependency:</strong> low</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>preys_on</strong> → 
+          <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> common</span>
+            <span><strong>method:</strong> hunting</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>preys_on</strong> → 
+          <a href="desert_tortoise.html">Desert Tortoise</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('desert_tortoise')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> rare</span>
+            <span><strong>method:</strong> opportunistic</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

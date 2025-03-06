@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-03-06T04:37:23.851Z",
+  "outputDirectory": "/Users/tetra/Documents/GitHub/ultralink/output/systems",
+  "results": [
+    {
+      "system": "DesertEcosystem",
+      "success": true
+    },
+    {
+      "system": "ResearchTeam",
+      "success": true
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "successful": 2,
+    "failed": 0
+  }
+}

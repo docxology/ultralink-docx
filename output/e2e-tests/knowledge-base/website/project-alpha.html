@@ -1,128 +1,85 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Alpha - Knowledge Base</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #ffffff;
-      --text: #000000;
-      --link: #0066cc;
-      --accent: #666666;
-      --border: #dddddd;
-      --text-color: #000000;
-      --bg-color: #ffffff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Project Alpha</h1>
-  <div class="entity-type">project</div>
+  <header>
+    <h1>Project Alpha</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Project Alpha</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>project-alpha</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">status</td>
-            <td class="attribute-value">In Progress</td>
+          <tr>
+            <th>Type</th>
+            <td>project</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">dueDate</td>
-            <td class="attribute-value">2023-12-31</td>
+          <tr>
+            <th>status</th>
+            <td>In Progress</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>uses</strong> → <a href="machine-learning.html">Machine Learning</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('machine-learning')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <strong>uses</strong> → <a href="data-analysis.html">Data Analysis</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('data-analysis')" class="select-link" title="Select in graph">(select)</a></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="alice-smith.html">Alice Smith</a> <strong>manages</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('alice-smith')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="bob-johnson.html">Bob Johnson</a> <strong>works_on</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('bob-johnson')" class="select-link" title="Select in graph">(select)</a></li></ul>
-  </div>
+          <tr>
+            <th>dueDate</th>
+            <td>2023-12-31</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>uses</strong> → 
+          <a href="machine-learning.html">Machine Learning</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('machine-learning')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <strong>uses</strong> → 
+          <a href="data-analysis.html">Data Analysis</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('data-analysis')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="alice-smith.html">Alice Smith</a> → 
+          <strong>manages</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('alice-smith')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="bob-johnson.html">Bob Johnson</a> → 
+          <strong>works_on</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('bob-johnson')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

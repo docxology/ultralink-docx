@@ -1,14 +1,14 @@
 ---
 type: event
 id: mlk-speech
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # I Have a Dream Speech
 
-**Type**: event
-**ID**: mlk-speech
+## Metadata
+
+- **Type**: event
+- **ID**: mlk-speech
 
 ## Attributes
 
@@ -16,25 +16,19 @@ modified: 2025-03-05T01:16:02.702Z
 - **location**: Washington, D.C.
 - **description**: Martin Luther King Jr. delivers his famous speech during the March on Washington
 - **significance**: Defining moment in the Civil Rights Movement
-- **keywords**: ["civil rights","equality","King","dream","racial justice"]
-- **vector**: [0.5,0.35,0.4,0.18,0.28,-0.08]
+- **keywords**: civil rights,equality,King,dream,racial justice
+- **vector**: 0.5,0.35,0.4,0.18,0.28,-0.08
 
 ## Relationships
 
-### occurred_during
+### Outgoing
 
-- [[civil-rights|Civil Rights Movement]]
-- [[cold-war|Cold War]]
+- **occurred_during** → [[civil-rights]] (Civil Rights Movement)
+- **occurred_during** → [[cold-war]] (Cold War)
+- **exemplifies** → [[civil-rights-concept]] (Civil Rights)
+- **belongs_to_cluster** → [[civil-rights-cluster]] (Civil Rights Movement)
 
-### exemplifies
+### Incoming
 
-- [[civil-rights-concept|Civil Rights]]
-
-### belongs_to_cluster
-
-- [[civil-rights-cluster|Civil Rights Movement]]
-
-## Backlinks
-
-- [[mlk|Martin Luther King Jr.]] (delivered)
+- **delivered** ← [[mlk]] (Martin Luther King Jr.)
 

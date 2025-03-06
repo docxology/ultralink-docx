@@ -11,10 +11,14 @@
             "id": "e313675ca592a4c3",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "docs/diagrams/README.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "README"
             }
           }
         ]
@@ -161,16 +165,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e313675ca592a4c3",
+  "active": "faa517efcbdc6c33",
   "lastOpenFiles": [
-    "CHANGELOG.md",
-    "CONTRIBUTING.md",
-    "EXAMPLES.md",
-    "SECURITY.md",
-    "ROADMAP.md",
-    "RENDERING_TARGETS.md",
-    "README.md",
-    "node_modules/eslint-plugin-jest/README.md",
-    "output/systems/ActiveInferenceLab/obsidian/active-inference-model.md"
+    "docs/guides/README.md",
+    "docs/for-agents/README.md",
+    "docs/architecture/README.md",
+    "docs/troubleshooting/README.md",
+    "docs/getting-started/README.md",
+    "docs/core-features/README.md",
+    "docs/formats-combined/README.md",
+    "docs/formats-combined/FORMATS_OVERVIEW.md",
+    "docs/formats-combined",
+    "docs/core-features/ultralink-paradigm.md",
+    "docs/troubleshooting/troubleshooting.md",
+    "docs/examples/practical-examples.md",
+    "docs/contributing/community-support.md",
+    "docs/api/api-reference.md",
+    "docs/formats/VISUALIZATION_FORMAT.md",
+    "docs/formats/RENDERING_TARGETS.md",
+    "docs/formats/README.md",
+    "docs/formats/OBSIDIAN_FORMAT.md",
+    "docs/formats/KIF_FORMAT.md",
+    "docs/formats/JSON_FORMAT.md",
+    "docs/formats/HTML_WEBSITE_FORMAT.md",
+    "docs/formats/GRAPHML_FORMAT.md",
+    "docs/formats/FULL_BLOB_FORMAT.md",
+    "docs/formats/FORMATS_OVERVIEW.md",
+    "docs/formats/CSV_FORMAT.md",
+    "docs/formats/BAYESIAN_NETWORK_FORMAT.md",
+    "docs/formats",
+    "docs/formats-combined/VISUALIZATION_FORMAT.md",
+    "docs/targets"
   ]
 }

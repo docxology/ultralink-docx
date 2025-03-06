@@ -1,14 +1,14 @@
 ---
 type: person
 id: jefferson
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # Thomas Jefferson
 
-**Type**: person
-**ID**: jefferson
+## Metadata
+
+- **Type**: person
+- **ID**: jefferson
 
 ## Attributes
 
@@ -16,28 +16,19 @@ modified: 2025-03-05T01:16:02.702Z
 - **death**: 1826-07-04
 - **role**: Statesman, 3rd President
 - **significance**: Authored Declaration of Independence, expanded US territory, founded University of Virginia
-- **keywords**: ["declaration","president","founding father","Monticello","Louisiana Purchase"]
-- **vector**: [0.38,0.35,0.32,0.3,0.25,0.18]
+- **keywords**: declaration,president,founding father,Monticello,Louisiana Purchase
+- **vector**: 0.38,0.35,0.32,0.3,0.25,0.18
 
 ## Relationships
 
-### created
+### Outgoing
 
-- [[declaration-independence|Declaration of Independence]]
+- **created** → [[declaration-independence]] (Declaration of Independence)
+- **initiated** → [[louisiana-purchase]] (Louisiana Purchase)
+- **championed** → [[democracy]] (Democracy)
+- **belongs_to_cluster** → [[founding-principles-cluster]] (Founding Principles)
 
-### initiated
+### Incoming
 
-- [[louisiana-purchase|Louisiana Purchase]]
-
-### championed
-
-- [[democracy|Democracy]]
-
-### belongs_to_cluster
-
-- [[founding-principles-cluster|Founding Principles]]
-
-## Backlinks
-
-- [[declaration-doc|Declaration of Independence]] (authored_by)
+- **authored_by** ← [[declaration-doc]] (Declaration of Independence)
 

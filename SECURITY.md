@@ -13,7 +13,7 @@ UltraLink is currently in early development. We provide security updates for the
 We take the security of UltraLink seriously. If you believe you've found a security vulnerability, please follow these steps:
 
 1. **Do not disclose the vulnerability publicly**
-2. **Email us directly at security@ultralink.dev** with:
+2. **Email us directly at DanielAriFriedman@gmail.com** with:
    - A description of the vulnerability
    - Steps to reproduce
    - Potential impact

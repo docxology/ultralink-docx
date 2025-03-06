@@ -1,23 +1,25 @@
 ---
 type: knowledge-area
 id: quantum-ml
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Quantum Machine Learning
 
-**Type**: knowledge-area
-**ID**: quantum-ml
+## Metadata
+
+- **Type**: knowledge-area
+- **ID**: quantum-ml
 
 ## Attributes
 
 - **description**: Intersection of quantum computing and machine learning
-- **topics**: ["Quantum Neural Networks","Quantum Kernels","Quantum Circuit Learning","Quantum Advantage in ML"]
+- **topics**: Quantum Neural Networks,Quantum Kernels,Quantum Circuit Learning,Quantum Advantage in ML
 
-## Backlinks
+## Relationships
 
-- [[machine-learning-theory|Machine Learning Theory]] (foundational_for)
-- [[frank-zhang|Frank Zhang]] (expertise_in)
-- [[quantum-ml-project|Quantum Approaches to Machine Learning]] (applies)
+### Incoming
+
+- **foundational_for** ← [[machine-learning-theory]] (Machine Learning Theory)
+- **expertise_in** ← [[frank-zhang]] (Frank Zhang)
+- **applies** ← [[quantum-ml-project]] (Quantum Approaches to Machine Learning)
 

@@ -1,14 +1,14 @@
 ---
 type: project
 id: desert-ecology
-created: 2025-03-05T01:10:35.700Z
-modified: 2025-03-05T01:10:35.700Z
 ---
 
 # Desert Ecology Study
 
-**Type**: project
-**ID**: desert-ecology
+## Metadata
+
+- **Type**: project
+- **ID**: desert-ecology
 
 ## Attributes
 
@@ -16,8 +16,10 @@ modified: 2025-03-05T01:10:35.700Z
 - **budget**: 150000
 - **status**: Active
 
-## Backlinks
+## Relationships
 
-- [[alice|Alice Chen]] (leads)
-- [[bob|Bob Smith]] (works_on)
+### Incoming
+
+- **leads** ← [[alice]] (Alice Chen)
+- **works_on** ← [[bob]] (Bob Smith)
 

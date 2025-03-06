@@ -1,14 +1,14 @@
 ---
 type: microhabitat
 id: canyon
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Desert Canyon
 
-**Type**: microhabitat
-**ID**: canyon
+## Metadata
+
+- **Type**: microhabitat
+- **ID**: canyon
 
 ## Attributes
 
@@ -17,8 +17,10 @@ modified: 2025-03-05T01:16:02.596Z
 - **area**: variable
 - **soilMoisture**: variable
 
-## Backlinks
+## Relationships
 
-- [[javelina|Javelina]] (lives_in)
-- [[coyote|Coyote]] (lives_in)
+### Incoming
+
+- **lives_in** ← [[javelina]] (Javelina)
+- **lives_in** ← [[coyote]] (Coyote)
 

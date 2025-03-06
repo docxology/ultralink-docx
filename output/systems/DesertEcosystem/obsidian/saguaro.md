@@ -1,14 +1,14 @@
 ---
 type: plant
 id: saguaro
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Saguaro Cactus
 
-**Type**: plant
-**ID**: saguaro
+## Metadata
+
+- **Type**: plant
+- **ID**: saguaro
 
 ## Attributes
 
@@ -16,19 +16,16 @@ modified: 2025-03-05T01:16:02.596Z
 - **height**: 1200
 - **waterRequirement**: very low
 - **description**: Iconic columnar cactus with arm-like branches.
-- **adaptations**: ["Accordion-like pleats expand when absorbing water","Extensive shallow root system","Thick waxy coating to reduce water loss","Slow growth to conserve energy","CAM photosynthesis for water conservation"]
+- **adaptations**: Accordion-like pleats expand when absorbing water,Extensive shallow root system,Thick waxy coating to reduce water loss,Slow growth to conserve energy,CAM photosynthesis for water conservation
 
 ## Relationships
 
-### adapted_to
+### Outgoing
 
-- [[heat|Extreme Heat]] (adaptationMechanism: Pleated structure for expansion, strength: extreme)
+- **adapted_to** → [[heat]] (Extreme Heat)
+- **grows_in** → [[rocky_slope]] (Rocky Slope)
 
-### grows_in
+### Incoming
 
-- [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: medium)
-
-## Backlinks
-
-- [[desert_ironwood|Desert Ironwood]] (nurses)
+- **nurses** ← [[desert_ironwood]] (Desert Ironwood)
 

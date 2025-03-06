@@ -1,5 +1,247 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><style>
-    .links line { stroke: #999; stroke-opacity: 0.6; }
-    .nodes circle { stroke: #fff; stroke-width: 1.5px; }
-    text { font-family: Arial, sans-serif; font-size: 12px; }
-  </style><g class="links"><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /></g><g class="nodes"><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Dromedary Camel</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Fennec Fox</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Desert Monitor</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Sidewinder Rattlesnake</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Deathstalker Scorpion</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Darkling Beetle</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Greater Roadrunner</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Desert Tortoise</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Cactus Wren</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Merriam's Kangaroo Rat</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Gila Monster</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Javelina</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Saguaro Cactus</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Barrel Cactus</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Honey Mesquite</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Creosote Bush</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Desert Poppy</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Ocotillo</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Brittlebush</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Desert Ironwood</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Century Plant</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Joshua Tree</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Prickly Pear Cactus</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Cholla Cactus</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Various Desert Plants</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Extreme Heat</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Temperature Variation</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Aridity</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Sand Dunes</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Rocky Outcrops</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Oasis</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Ephemeral Streams</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Sandy Soil</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Desert Pavement</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Desert Varnish</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Playa</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Flash Floods</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Desert Wash</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Sand Dune Field</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Rocky Slope</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Desert Canyon</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Yucca-Moth Pollination</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Nurse Plant Relationship</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Seed Dispersal</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Yucca Moth</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Coyote</text></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <style>
+    .node { fill: #69b3a2; stroke: #fff; stroke-width: 1.5px; }
+    .node-person { fill: #4e79a7; }
+    .node-project { fill: #f28e2c; }
+    .node-resource { fill: #e15759; }
+    .node-concept { fill: #76b7b2; }
+    .link { stroke: #999; stroke-opacity: 0.6; stroke-width: 1px; }
+    text { font-family: sans-serif; font-size: 10px; fill: #333; }
+  </style>
+  <g class="links">
+    <line class="link" x1="100" y1="100" x2="100" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="250" y1="100" x2="100" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="100" y1="250" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="550" y1="100" x2="550" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="400" y1="250" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="700" y1="250" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="100" y1="400" x2="100" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="550" y1="250" x2="100" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="250" y1="400" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="700" y1="1300" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="100" y1="1450" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="400" y1="400" x2="100" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="550" y1="400" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="700" y1="400" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="100" y1="550" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="400" y1="550" x2="250" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="550" y1="550" x2="100" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="700" y1="550" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="100" y1="700" x2="400" y2="850" data-type="adapted_to"/>
+    <line class="link" x1="250" y1="700" x2="400" y2="1000" data-type="grows_in"/>
+    <line class="link" x1="550" y1="100" x2="550" y2="1150" data-type="lives_in"/>
+    <line class="link" x1="400" y1="250" x2="700" y2="1150" data-type="lives_in"/>
+    <line class="link" x1="550" y1="250" x2="400" y2="1150" data-type="lives_in"/>
+    <line class="link" x1="100" y1="400" x2="700" y2="1150" data-type="lives_in"/>
+    <line class="link" x1="250" y1="400" x2="100" y2="1300" data-type="lives_in"/>
+    <line class="link" x1="700" y1="250" x2="550" y2="1150" data-type="lives_in"/>
+    <line class="link" x1="700" y1="100" x2="700" y2="1150" data-type="lives_in"/>
+    <line class="link" x1="100" y1="1450" x2="100" y2="1300" data-type="lives_in"/>
+    <line class="link" x1="400" y1="400" x2="700" y2="1150" data-type="grows_in"/>
+    <line class="link" x1="700" y1="400" x2="400" y2="1150" data-type="grows_in"/>
+    <line class="link" x1="700" y1="550" x2="400" y2="1150" data-type="grows_in"/>
+    <line class="link" x1="550" y1="550" x2="700" y2="1150" data-type="grows_in"/>
+    <line class="link" x1="100" y1="1450" x2="700" y2="250" data-type="preys_on"/>
+    <line class="link" x1="100" y1="1450" x2="400" y2="250" data-type="preys_on"/>
+    <line class="link" x1="550" y1="100" x2="700" y2="250" data-type="preys_on"/>
+    <line class="link" x1="400" y1="100" x2="700" y2="100" data-type="preys_on"/>
+    <line class="link" x1="100" y1="400" x2="550" y2="250" data-type="preys_on"/>
+    <line class="link" x1="250" y1="250" x2="700" y2="100" data-type="preys_on"/>
+    <line class="link" x1="250" y1="250" x2="550" y2="100" data-type="preys_on"/>
+    <line class="link" x1="250" y1="400" x2="400" y2="700" data-type="consumes"/>
+    <line class="link" x1="400" y1="250" x2="250" y2="550" data-type="consumes"/>
+    <line class="link" x1="700" y1="250" x2="700" y2="400" data-type="consumes"/>
+    <line class="link" x1="700" y1="550" x2="400" y2="400" data-type="nurses"/>
+    <line class="link" x1="700" y1="400" x2="250" y2="550" data-type="facilitates"/>
+    <line class="link" x1="100" y1="550" x2="700" y2="700" data-type="inhibits"/>
+    <line class="link" x1="250" y1="700" x2="700" y2="1300" data-type="mutual_dependency"/>
+    <line class="link" x1="700" y1="1300" x2="250" y2="700" data-type="mutual_dependency"/>
+  </g>
+  <g class="nodes">
+    <circle class="node node-animal" cx="100" cy="100" r="10">
+      <title>Dromedary Camel</title>
+    </circle>
+    <text x="115" y="105">Dromedary Camel</text>
+    <circle class="node node-animal" cx="250" cy="100" r="10">
+      <title>Fennec Fox</title>
+    </circle>
+    <text x="265" y="105">Fennec Fox</text>
+    <circle class="node node-animal" cx="400" cy="100" r="10">
+      <title>Desert Monitor</title>
+    </circle>
+    <text x="415" y="105">Desert Monitor</text>
+    <circle class="node node-animal" cx="550" cy="100" r="10">
+      <title>Sidewinder Rattlesnake</title>
+    </circle>
+    <text x="565" y="105">Sidewinder Rattlesnake</text>
+    <circle class="node node-animal" cx="700" cy="100" r="10">
+      <title>Deathstalker Scorpion</title>
+    </circle>
+    <text x="715" y="105">Deathstalker Scorpion</text>
+    <circle class="node node-animal" cx="100" cy="250" r="10">
+      <title>Darkling Beetle</title>
+    </circle>
+    <text x="115" y="255">Darkling Beetle</text>
+    <circle class="node node-animal" cx="250" cy="250" r="10">
+      <title>Greater Roadrunner</title>
+    </circle>
+    <text x="265" y="255">Greater Roadrunner</text>
+    <circle class="node node-animal" cx="400" cy="250" r="10">
+      <title>Desert Tortoise</title>
+    </circle>
+    <text x="415" y="255">Desert Tortoise</text>
+    <circle class="node node-animal" cx="550" cy="250" r="10">
+      <title>Cactus Wren</title>
+    </circle>
+    <text x="565" y="255">Cactus Wren</text>
+    <circle class="node node-animal" cx="700" cy="250" r="10">
+      <title>Merriam&apos;s Kangaroo Rat</title>
+    </circle>
+    <text x="715" y="255">Merriam&apos;s Kangaroo Rat</text>
+    <circle class="node node-animal" cx="100" cy="400" r="10">
+      <title>Gila Monster</title>
+    </circle>
+    <text x="115" y="405">Gila Monster</text>
+    <circle class="node node-animal" cx="250" cy="400" r="10">
+      <title>Javelina</title>
+    </circle>
+    <text x="265" y="405">Javelina</text>
+    <circle class="node node-plant" cx="400" cy="400" r="10">
+      <title>Saguaro Cactus</title>
+    </circle>
+    <text x="415" y="405">Saguaro Cactus</text>
+    <circle class="node node-plant" cx="550" cy="400" r="10">
+      <title>Barrel Cactus</title>
+    </circle>
+    <text x="565" y="405">Barrel Cactus</text>
+    <circle class="node node-plant" cx="700" cy="400" r="10">
+      <title>Honey Mesquite</title>
+    </circle>
+    <text x="715" y="405">Honey Mesquite</text>
+    <circle class="node node-plant" cx="100" cy="550" r="10">
+      <title>Creosote Bush</title>
+    </circle>
+    <text x="115" y="555">Creosote Bush</text>
+    <circle class="node node-plant" cx="250" cy="550" r="10">
+      <title>Desert Poppy</title>
+    </circle>
+    <text x="265" y="555">Desert Poppy</text>
+    <circle class="node node-plant" cx="400" cy="550" r="10">
+      <title>Ocotillo</title>
+    </circle>
+    <text x="415" y="555">Ocotillo</text>
+    <circle class="node node-plant" cx="550" cy="550" r="10">
+      <title>Brittlebush</title>
+    </circle>
+    <text x="565" y="555">Brittlebush</text>
+    <circle class="node node-plant" cx="700" cy="550" r="10">
+      <title>Desert Ironwood</title>
+    </circle>
+    <text x="715" y="555">Desert Ironwood</text>
+    <circle class="node node-plant" cx="100" cy="700" r="10">
+      <title>Century Plant</title>
+    </circle>
+    <text x="115" y="705">Century Plant</text>
+    <circle class="node node-plant" cx="250" cy="700" r="10">
+      <title>Joshua Tree</title>
+    </circle>
+    <text x="265" y="705">Joshua Tree</text>
+    <circle class="node node-plant" cx="400" cy="700" r="10">
+      <title>Prickly Pear Cactus</title>
+    </circle>
+    <text x="415" y="705">Prickly Pear Cactus</text>
+    <circle class="node node-plant" cx="550" cy="700" r="10">
+      <title>Cholla Cactus</title>
+    </circle>
+    <text x="565" y="705">Cholla Cactus</text>
+    <circle class="node node-plant" cx="700" cy="700" r="10">
+      <title>Various Desert Plants</title>
+    </circle>
+    <text x="715" y="705">Various Desert Plants</text>
+    <circle class="node node-abiotic_factor" cx="100" cy="850" r="10">
+      <title>Extreme Heat</title>
+    </circle>
+    <text x="115" y="855">Extreme Heat</text>
+    <circle class="node node-abiotic_factor" cx="250" cy="850" r="10">
+      <title>Temperature Variation</title>
+    </circle>
+    <text x="265" y="855">Temperature Variation</text>
+    <circle class="node node-abiotic_factor" cx="400" cy="850" r="10">
+      <title>Aridity</title>
+    </circle>
+    <text x="415" y="855">Aridity</text>
+    <circle class="node node-abiotic_factor" cx="550" cy="850" r="10">
+      <title>Sand Dunes</title>
+    </circle>
+    <text x="565" y="855">Sand Dunes</text>
+    <circle class="node node-abiotic_factor" cx="700" cy="850" r="10">
+      <title>Rocky Outcrops</title>
+    </circle>
+    <text x="715" y="855">Rocky Outcrops</text>
+    <circle class="node node-abiotic_factor" cx="100" cy="1000" r="10">
+      <title>Oasis</title>
+    </circle>
+    <text x="115" y="1005">Oasis</text>
+    <circle class="node node-abiotic_factor" cx="250" cy="1000" r="10">
+      <title>Ephemeral Streams</title>
+    </circle>
+    <text x="265" y="1005">Ephemeral Streams</text>
+    <circle class="node node-abiotic_factor" cx="400" cy="1000" r="10">
+      <title>Sandy Soil</title>
+    </circle>
+    <text x="415" y="1005">Sandy Soil</text>
+    <circle class="node node-abiotic_factor" cx="550" cy="1000" r="10">
+      <title>Desert Pavement</title>
+    </circle>
+    <text x="565" y="1005">Desert Pavement</text>
+    <circle class="node node-abiotic_factor" cx="700" cy="1000" r="10">
+      <title>Desert Varnish</title>
+    </circle>
+    <text x="715" y="1005">Desert Varnish</text>
+    <circle class="node node-abiotic_factor" cx="100" cy="1150" r="10">
+      <title>Playa</title>
+    </circle>
+    <text x="115" y="1155">Playa</text>
+    <circle class="node node-abiotic_factor" cx="250" cy="1150" r="10">
+      <title>Flash Floods</title>
+    </circle>
+    <text x="265" y="1155">Flash Floods</text>
+    <circle class="node node-microhabitat" cx="400" cy="1150" r="10">
+      <title>Desert Wash</title>
+    </circle>
+    <text x="415" y="1155">Desert Wash</text>
+    <circle class="node node-microhabitat" cx="550" cy="1150" r="10">
+      <title>Sand Dune Field</title>
+    </circle>
+    <text x="565" y="1155">Sand Dune Field</text>
+    <circle class="node node-microhabitat" cx="700" cy="1150" r="10">
+      <title>Rocky Slope</title>
+    </circle>
+    <text x="715" y="1155">Rocky Slope</text>
+    <circle class="node node-microhabitat" cx="100" cy="1300" r="10">
+      <title>Desert Canyon</title>
+    </circle>
+    <text x="115" y="1305">Desert Canyon</text>
+    <circle class="node node-interaction" cx="250" cy="1300" r="10">
+      <title>Yucca-Moth Pollination</title>
+    </circle>
+    <text x="265" y="1305">Yucca-Moth Pollination</text>
+    <circle class="node node-interaction" cx="400" cy="1300" r="10">
+      <title>Nurse Plant Relationship</title>
+    </circle>
+    <text x="415" y="1305">Nurse Plant Relationship</text>
+    <circle class="node node-interaction" cx="550" cy="1300" r="10">
+      <title>Seed Dispersal</title>
+    </circle>
+    <text x="565" y="1305">Seed Dispersal</text>
+    <circle class="node node-animal" cx="700" cy="1300" r="10">
+      <title>Yucca Moth</title>
+    </circle>
+    <text x="715" y="1305">Yucca Moth</text>
+    <circle class="node node-animal" cx="100" cy="1450" r="10">
+      <title>Coyote</title>
+    </circle>
+    <text x="115" y="1455">Coyote</text>
+  </g>
+</svg>

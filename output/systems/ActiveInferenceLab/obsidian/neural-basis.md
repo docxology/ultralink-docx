@@ -1,14 +1,14 @@
 ---
 type: project
 id: neural-basis
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Neural Basis of Active Inference
 
-**Type**: project
-**ID**: neural-basis
+## Metadata
+
+- **Type**: project
+- **ID**: neural-basis
 
 ## Attributes
 
@@ -21,7 +21,7 @@ modified: 2025-03-05T01:16:02.671Z
 
 ## Relationships
 
-### uses
+### Outgoing
 
-- [[neural-recording|Neural Recording Setup]] (frequency: Daily, priority: High)
+- **uses** → [[neural-recording]] (Neural Recording Setup)
 

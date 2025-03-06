@@ -1,14 +1,14 @@
 ---
 type: temporal_snapshot
 id: slavery-1700
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # slavery-1700
 
-**Type**: temporal_snapshot
-**ID**: slavery-1700
+## Metadata
+
+- **Type**: temporal_snapshot
+- **ID**: slavery-1700
 
 ## Attributes
 
@@ -18,7 +18,9 @@ modified: 2025-03-05T01:16:02.702Z
 - **economic_importance**: 0.7
 - **description**: Slavery in colonial America
 
-## Backlinks
+## Relationships
 
-- [[slavery|Slavery]] (has_state_at)
+### Incoming
+
+- **has_state_at** ← [[slavery]] (Slavery)
 

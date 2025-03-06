@@ -1,5 +1,248 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><style>
-    .links line { stroke: #999; stroke-opacity: 0.6; }
-    .nodes circle { stroke: #fff; stroke-width: 1.5px; }
-    text { font-family: Arial, sans-serif; font-size: 12px; }
-  </style><g class="links"><line x1="800" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="411.208537622837" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="411.208537622837" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="411.208537622837" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /></g><g class="nodes"><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Alice Chen</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Bob Smith</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Carol Jones</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">David Patel</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Elena Rodriguez</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Frank Zhang</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Grace Kim</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">computer-vision-project</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">nlp-project</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">federated-learning-project</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">quantum-ml-project</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">adaptive-robotics-project</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">vision-paper-2022</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">nlp-paper-2023</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">federated-paper-2023</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">robotics-paper-2022</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">quantum-paper-2023</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">survey-paper-2023</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">High-Performance GPU Cluster</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Robotics Laboratory</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Quantum Computing Access</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">University High-Performance Computing Cluster</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Field Data Collection System</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Research Team Conference Room</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Data Visualization Laboratory</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Machine Learning Theory</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Computer Vision</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Natural Language Processing</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Privacy-Preserving Machine Learning</text><circle cx="411.208537622837" cy="0" r="5" fill="#4285F4" /><text x="411.208537622837" y="20" text-anchor="middle" font-size="12">Quantum Machine Learning</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Robotics</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Reinforcement Learning</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">NSF Research Grant</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Tech Industry Partnership</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">University Research Excellence Fund</text></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <style>
+    .node { fill: #69b3a2; stroke: #fff; stroke-width: 1.5px; }
+    .node-person { fill: #4e79a7; }
+    .node-project { fill: #f28e2c; }
+    .node-resource { fill: #e15759; }
+    .node-concept { fill: #76b7b2; }
+    .link { stroke: #999; stroke-opacity: 0.6; stroke-width: 1px; }
+    text { font-family: sans-serif; font-size: 10px; fill: #333; }
+  </style>
+  <g class="links">
+    <line class="link" x1="100" y1="100" x2="400" y2="250" data-type="leads"/>
+    <line class="link" x1="100" y1="100" x2="550" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="250" y1="100" x2="550" y2="250" data-type="leads"/>
+    <line class="link" x1="400" y1="100" x2="400" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="550" y1="100" x2="700" y2="250" data-type="leads"/>
+    <line class="link" x1="100" y1="100" x2="700" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="100" y1="250" x2="100" y2="400" data-type="leads"/>
+    <line class="link" x1="550" y1="100" x2="100" y2="400" data-type="contributes_to"/>
+    <line class="link" x1="400" y1="100" x2="250" y2="400" data-type="leads"/>
+    <line class="link" x1="700" y1="100" x2="250" y2="400" data-type="contributes_to"/>
+    <line class="link" x1="700" y1="100" x2="400" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="550" y1="100" x2="550" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="250" y1="100" x2="700" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="100" y1="100" x2="400" y2="100" data-type="mentors"/>
+    <line class="link" x1="100" y1="100" x2="550" y2="100" data-type="mentors"/>
+    <line class="link" x1="250" y1="100" x2="700" y2="100" data-type="mentors"/>
+    <line class="link" x1="550" y1="100" x2="700" y2="100" data-type="mentors"/>
+    <line class="link" x1="400" y1="100" x2="700" y2="100" data-type="mentors"/>
+    <line class="link" x1="100" y1="100" x2="400" y2="400" data-type="authored"/>
+    <line class="link" x1="400" y1="100" x2="400" y2="400" data-type="authored"/>
+    <line class="link" x1="250" y1="100" x2="550" y2="400" data-type="authored"/>
+    <line class="link" x1="100" y1="100" x2="550" y2="400" data-type="authored"/>
+    <line class="link" x1="550" y1="100" x2="700" y2="400" data-type="authored"/>
+    <line class="link" x1="100" y1="100" x2="700" y2="400" data-type="authored"/>
+    <line class="link" x1="100" y1="250" x2="700" y2="400" data-type="authored"/>
+    <line class="link" x1="400" y1="100" x2="100" y2="550" data-type="authored"/>
+    <line class="link" x1="100" y1="100" x2="100" y2="550" data-type="authored"/>
+    <line class="link" x1="100" y1="250" x2="250" y2="550" data-type="authored"/>
+    <line class="link" x1="550" y1="100" x2="250" y2="550" data-type="authored"/>
+    <line class="link" x1="550" y1="100" x2="400" y2="550" data-type="authored"/>
+    <line class="link" x1="250" y1="100" x2="400" y2="550" data-type="authored"/>
+    <line class="link" x1="100" y1="100" x2="400" y2="550" data-type="authored"/>
+    <line class="link" x1="400" y1="250" x2="400" y2="400" data-type="produced"/>
+    <line class="link" x1="550" y1="250" x2="550" y2="400" data-type="produced"/>
+    <line class="link" x1="700" y1="250" x2="700" y2="400" data-type="produced"/>
+    <line class="link" x1="700" y1="250" x2="400" y2="550" data-type="produced"/>
+    <line class="link" x1="250" y1="400" x2="100" y2="550" data-type="produced"/>
+    <line class="link" x1="100" y1="400" x2="250" y2="550" data-type="produced"/>
+    <line class="link" x1="400" y1="250" x2="550" y2="550" data-type="uses"/>
+    <line class="link" x1="550" y1="250" x2="550" y2="550" data-type="uses"/>
+    <line class="link" x1="400" y1="100" x2="700" y2="550" data-type="uses"/>
+    <line class="link" x1="700" y1="250" x2="550" y2="550" data-type="uses"/>
+    <line class="link" x1="700" y1="250" x2="250" y2="700" data-type="uses"/>
+    <line class="link" x1="100" y1="400" x2="100" y2="700" data-type="uses"/>
+    <line class="link" x1="100" y1="400" x2="250" y2="700" data-type="uses"/>
+    <line class="link" x1="250" y1="400" x2="700" y2="550" data-type="uses"/>
+    <line class="link" x1="250" y1="400" x2="400" y2="700" data-type="uses"/>
+    <line class="link" x1="700" y1="100" x2="700" y2="700" data-type="uses"/>
+    <line class="link" x1="550" y1="100" x2="250" y2="700" data-type="uses"/>
+    <line class="link" x1="100" y1="250" x2="100" y2="700" data-type="uses"/>
+    <line class="link" x1="100" y1="850" x2="250" y2="850" data-type="foundational_for"/>
+    <line class="link" x1="100" y1="850" x2="400" y2="850" data-type="foundational_for"/>
+    <line class="link" x1="100" y1="100" x2="250" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="250" y1="100" x2="400" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="400" y1="100" x2="100" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="100" y1="850" x2="550" y2="850" data-type="foundational_for"/>
+    <line class="link" x1="100" y1="850" x2="700" y2="850" data-type="foundational_for"/>
+    <line class="link" x1="100" y1="850" x2="250" y2="1000" data-type="foundational_for"/>
+    <line class="link" x1="250" y1="1000" x2="100" y2="1000" data-type="foundational_for"/>
+    <line class="link" x1="550" y1="100" x2="550" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="550" y1="100" x2="100" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="100" y1="250" x2="700" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="400" y1="100" x2="250" y2="1000" data-type="expertise_in"/>
+    <line class="link" x1="400" y1="100" x2="100" y2="1000" data-type="expertise_in"/>
+    <line class="link" x1="100" y1="100" x2="550" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="250" y1="100" x2="550" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="700" y1="100" x2="250" y2="850" data-type="expertise_in"/>
+    <line class="link" x1="400" y1="250" x2="250" y2="850" data-type="applies"/>
+    <line class="link" x1="400" y1="250" x2="100" y2="850" data-type="applies"/>
+    <line class="link" x1="550" y1="250" x2="400" y2="850" data-type="applies"/>
+    <line class="link" x1="550" y1="250" x2="100" y2="850" data-type="applies"/>
+    <line class="link" x1="700" y1="250" x2="550" y2="850" data-type="applies"/>
+    <line class="link" x1="700" y1="250" x2="100" y2="850" data-type="applies"/>
+    <line class="link" x1="100" y1="400" x2="700" y2="850" data-type="applies"/>
+    <line class="link" x1="100" y1="400" x2="100" y2="850" data-type="applies"/>
+    <line class="link" x1="250" y1="400" x2="100" y2="1000" data-type="applies"/>
+    <line class="link" x1="250" y1="400" x2="250" y2="1000" data-type="applies"/>
+    <line class="link" x1="400" y1="1000" x2="400" y2="250" data-type="funds"/>
+    <line class="link" x1="400" y1="1000" x2="250" y2="400" data-type="funds"/>
+    <line class="link" x1="550" y1="1000" x2="700" y2="250" data-type="funds"/>
+    <line class="link" x1="550" y1="1000" x2="550" y2="250" data-type="funds"/>
+    <line class="link" x1="700" y1="1000" x2="100" y2="400" data-type="funds"/>
+    <line class="link" x1="250" y1="250" x2="400" y2="250" data-type="administers"/>
+    <line class="link" x1="250" y1="250" x2="550" y2="250" data-type="administers"/>
+    <line class="link" x1="250" y1="250" x2="700" y2="250" data-type="administers"/>
+    <line class="link" x1="250" y1="250" x2="100" y2="400" data-type="administers"/>
+    <line class="link" x1="250" y1="250" x2="250" y2="400" data-type="administers"/>
+    <line class="link" x1="400" y1="550" x2="700" y2="400" data-type="cites"/>
+    <line class="link" x1="400" y1="550" x2="400" y2="400" data-type="cites"/>
+    <line class="link" x1="400" y1="550" x2="550" y2="400" data-type="cites"/>
+    <line class="link" x1="100" y1="550" x2="400" y2="400" data-type="cites"/>
+    <line class="link" x1="250" y1="550" x2="400" y2="550" data-type="cites"/>
+  </g>
+  <g class="nodes">
+    <circle class="node node-person" cx="100" cy="100" r="10">
+      <title>Alice Chen</title>
+    </circle>
+    <text x="115" y="105">Alice Chen</text>
+    <circle class="node node-person" cx="250" cy="100" r="10">
+      <title>Bob Smith</title>
+    </circle>
+    <text x="265" y="105">Bob Smith</text>
+    <circle class="node node-person" cx="400" cy="100" r="10">
+      <title>Carol Jones</title>
+    </circle>
+    <text x="415" y="105">Carol Jones</text>
+    <circle class="node node-person" cx="550" cy="100" r="10">
+      <title>David Patel</title>
+    </circle>
+    <text x="565" y="105">David Patel</text>
+    <circle class="node node-person" cx="700" cy="100" r="10">
+      <title>Elena Rodriguez</title>
+    </circle>
+    <text x="715" y="105">Elena Rodriguez</text>
+    <circle class="node node-person" cx="100" cy="250" r="10">
+      <title>Frank Zhang</title>
+    </circle>
+    <text x="115" y="255">Frank Zhang</text>
+    <circle class="node node-person" cx="250" cy="250" r="10">
+      <title>Grace Kim</title>
+    </circle>
+    <text x="265" y="255">Grace Kim</text>
+    <circle class="node node-project" cx="400" cy="250" r="10">
+      <title>computer-vision-project</title>
+    </circle>
+    <text x="415" y="255">computer-vision-project</text>
+    <circle class="node node-project" cx="550" cy="250" r="10">
+      <title>nlp-project</title>
+    </circle>
+    <text x="565" y="255">nlp-project</text>
+    <circle class="node node-project" cx="700" cy="250" r="10">
+      <title>federated-learning-project</title>
+    </circle>
+    <text x="715" y="255">federated-learning-project</text>
+    <circle class="node node-project" cx="100" cy="400" r="10">
+      <title>quantum-ml-project</title>
+    </circle>
+    <text x="115" y="405">quantum-ml-project</text>
+    <circle class="node node-project" cx="250" cy="400" r="10">
+      <title>adaptive-robotics-project</title>
+    </circle>
+    <text x="265" y="405">adaptive-robotics-project</text>
+    <circle class="node node-publication" cx="400" cy="400" r="10">
+      <title>vision-paper-2022</title>
+    </circle>
+    <text x="415" y="405">vision-paper-2022</text>
+    <circle class="node node-publication" cx="550" cy="400" r="10">
+      <title>nlp-paper-2023</title>
+    </circle>
+    <text x="565" y="405">nlp-paper-2023</text>
+    <circle class="node node-publication" cx="700" cy="400" r="10">
+      <title>federated-paper-2023</title>
+    </circle>
+    <text x="715" y="405">federated-paper-2023</text>
+    <circle class="node node-publication" cx="100" cy="550" r="10">
+      <title>robotics-paper-2022</title>
+    </circle>
+    <text x="115" y="555">robotics-paper-2022</text>
+    <circle class="node node-publication" cx="250" cy="550" r="10">
+      <title>quantum-paper-2023</title>
+    </circle>
+    <text x="265" y="555">quantum-paper-2023</text>
+    <circle class="node node-publication" cx="400" cy="550" r="10">
+      <title>survey-paper-2023</title>
+    </circle>
+    <text x="415" y="555">survey-paper-2023</text>
+    <circle class="node node-equipment" cx="550" cy="550" r="10">
+      <title>High-Performance GPU Cluster</title>
+    </circle>
+    <text x="565" y="555">High-Performance GPU Cluster</text>
+    <circle class="node node-facility" cx="700" cy="550" r="10">
+      <title>Robotics Laboratory</title>
+    </circle>
+    <text x="715" y="555">Robotics Laboratory</text>
+    <circle class="node node-equipment" cx="100" cy="700" r="10">
+      <title>Quantum Computing Access</title>
+    </circle>
+    <text x="115" y="705">Quantum Computing Access</text>
+    <circle class="node node-equipment" cx="250" cy="700" r="10">
+      <title>University High-Performance Computing Cluster</title>
+    </circle>
+    <text x="265" y="705">University High-Performance Computing Cluster</text>
+    <circle class="node node-equipment" cx="400" cy="700" r="10">
+      <title>Field Data Collection System</title>
+    </circle>
+    <text x="415" y="705">Field Data Collection System</text>
+    <circle class="node node-facility" cx="550" cy="700" r="10">
+      <title>Research Team Conference Room</title>
+    </circle>
+    <text x="565" y="705">Research Team Conference Room</text>
+    <circle class="node node-facility" cx="700" cy="700" r="10">
+      <title>Data Visualization Laboratory</title>
+    </circle>
+    <text x="715" y="705">Data Visualization Laboratory</text>
+    <circle class="node node-knowledge-area" cx="100" cy="850" r="10">
+      <title>Machine Learning Theory</title>
+    </circle>
+    <text x="115" y="855">Machine Learning Theory</text>
+    <circle class="node node-knowledge-area" cx="250" cy="850" r="10">
+      <title>Computer Vision</title>
+    </circle>
+    <text x="265" y="855">Computer Vision</text>
+    <circle class="node node-knowledge-area" cx="400" cy="850" r="10">
+      <title>Natural Language Processing</title>
+    </circle>
+    <text x="415" y="855">Natural Language Processing</text>
+    <circle class="node node-knowledge-area" cx="550" cy="850" r="10">
+      <title>Privacy-Preserving Machine Learning</title>
+    </circle>
+    <text x="565" y="855">Privacy-Preserving Machine Learning</text>
+    <circle class="node node-knowledge-area" cx="700" cy="850" r="10">
+      <title>Quantum Machine Learning</title>
+    </circle>
+    <text x="715" y="855">Quantum Machine Learning</text>
+    <circle class="node node-knowledge-area" cx="100" cy="1000" r="10">
+      <title>Robotics</title>
+    </circle>
+    <text x="115" y="1005">Robotics</text>
+    <circle class="node node-knowledge-area" cx="250" cy="1000" r="10">
+      <title>Reinforcement Learning</title>
+    </circle>
+    <text x="265" y="1005">Reinforcement Learning</text>
+    <circle class="node node-funding" cx="400" cy="1000" r="10">
+      <title>NSF Research Grant</title>
+    </circle>
+    <text x="415" y="1005">NSF Research Grant</text>
+    <circle class="node node-funding" cx="550" cy="1000" r="10">
+      <title>Tech Industry Partnership</title>
+    </circle>
+    <text x="565" y="1005">Tech Industry Partnership</text>
+    <circle class="node node-funding" cx="700" cy="1000" r="10">
+      <title>University Research Excellence Fund</title>
+    </circle>
+    <text x="715" y="1005">University Research Excellence Fund</text>
+  </g>
+</svg>

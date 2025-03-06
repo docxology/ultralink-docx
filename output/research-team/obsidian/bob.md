@@ -1,14 +1,14 @@
 ---
 type: researcher
 id: bob
-created: 2025-03-05T01:10:35.700Z
-modified: 2025-03-05T01:10:35.700Z
 ---
 
 # Bob Smith
 
-**Type**: researcher
-**ID**: bob
+## Metadata
+
+- **Type**: researcher
+- **ID**: bob
 
 ## Attributes
 
@@ -19,11 +19,8 @@ modified: 2025-03-05T01:10:35.700Z
 
 ## Relationships
 
-### works_on
+### Outgoing
 
-- [[desert-ecology|Desert Ecology Study]] (startDate: 2023-02-01, role: Data Analyst)
-
-### reports_to
-
-- [[alice|Alice Chen]] (startDate: 2023-02-01)
+- **works_on** → [[desert-ecology]] (Desert Ecology Study)
+- **reports_to** → [[alice]] (Alice Chen)
 

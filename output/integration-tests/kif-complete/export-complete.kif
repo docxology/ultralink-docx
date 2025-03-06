@@ -1,43 +1,50 @@
 ;; UltraLink Knowledge Interchange Format (KIF) Export
-;; Generated: 2025-03-05T01:16:02.011Z
+;; Generated: 2025-03-06T05:45:32.409Z
+
+;; Meta-knowledge
+(= (creationDate UltraLinkExport) "2025-03-06T05:45:32.409Z")
+(= (entityCount UltraLinkExport) 3)
+(= (relationshipCount UltraLinkExport) 2)
+
+;; Functions
+(deffunction relationshipCount (?x) (length ?kb.relationships))
+
+;; Rules
+(defrule entity-attributes-rule
+    "A rule to infer additional attributes for entities based on their type"
+    (instance ?entity ?type)
+    =>
+    (if (eq ?type Person)
+        then (assert (isAgent ?entity true))))
+
+(forall (?x ?y)
+    (=> (and (adapts_to ?x ?y) (> (efficiency-adapts_to ?x ?y) 0.8))
+        (well-adapted ?x ?y)))
+
 ;; Entities and their attributes
 (instance saguaro Organism)
 (name saguaro "Saguaro Cactus")
 (scientificName saguaro "Carnegiea gigantea")
-(type saguaro "plant")
 (height saguaro "15-50 feet")
 (lifespan saguaro "150-200 years")
+
 (instance kangaroo-rat Organism)
 (name kangaroo-rat "Kangaroo Rat")
 (scientificName kangaroo-rat "Dipodomys")
-(type kangaroo-rat "mammal")
 (weight kangaroo-rat "100-150g")
-(nocturnal kangaroo-rat "true")
+(nocturnal kangaroo-rat true)
+
 (instance aridity Environmental_factor)
 (name aridity "Aridity")
 (description aridity "Extremely dry conditions with minimal rainfall")
 (annualRainfall aridity "3-15 inches")
 
 ;; Relationships
-(undefined undefined undefined)
-(undefined undefined undefined)
+(adapts_to saguaro aridity)
+(mechanism-adapts_to saguaro aridity "Water storage in stem")
+(efficiency-adapts_to saguaro aridity 0.95)
 
-;; Meta-knowledge
-(= (entityCount UltraLinkExport) 3)
-(= (relationshipCount UltraLinkExport) undefined)
-(= (exportTime UltraLinkExport) "2025-03-05T01:16:02.011Z")
-(= (creationDate UltraLinkExport) "2025-03-05T01:16:02.011Z")
+(adapts_to kangaroo-rat aridity)
+(mechanism-adapts_to kangaroo-rat aridity "Metabolic water production")
+(efficiency-adapts_to kangaroo-rat aridity 0.88)
 
-;; Functions
-(deffunction relationshipCount (?graph) 
-  (count (relationships ?graph)))
-(deffunction entityCount (?graph)
-  (count (entities ?graph)))
-
-;; Rules
-(defrule connected-entities
-  (if (exists (?rel) 
-      (and (relationship ?rel ?source ?target) 
-           (entity ?source) 
-           (entity ?target))) 
-  (then (connected ?source ?target))))

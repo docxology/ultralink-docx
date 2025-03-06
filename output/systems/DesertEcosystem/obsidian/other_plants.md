@@ -1,22 +1,24 @@
 ---
 type: plant
 id: other_plants
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Various Desert Plants
 
-**Type**: plant
-**ID**: other_plants
+## Metadata
+
+- **Type**: plant
+- **ID**: other_plants
 
 ## Attributes
 
 - **description**: Collection of various smaller desert plants and grasses
 - **waterRequirement**: low to moderate
-- **adaptations**: ["Various drought adaptations","Seasonal growth patterns","Seed dormancy during dry periods"]
+- **adaptations**: Various drought adaptations,Seasonal growth patterns,Seed dormancy during dry periods
 
-## Backlinks
+## Relationships
 
-- [[creosote_bush|Creosote Bush]] (inhibits)
+### Incoming
+
+- **inhibits** ← [[creosote_bush]] (Creosote Bush)
 

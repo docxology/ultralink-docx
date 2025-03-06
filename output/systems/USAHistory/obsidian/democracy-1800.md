@@ -1,14 +1,14 @@
 ---
 type: temporal_snapshot
 id: democracy-1800
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # democracy-1800
 
-**Type**: temporal_snapshot
-**ID**: democracy-1800
+## Metadata
+
+- **Type**: temporal_snapshot
+- **ID**: democracy-1800
 
 ## Attributes
 
@@ -18,7 +18,9 @@ modified: 2025-03-05T01:16:02.702Z
 - **global_influence**: 0.3
 - **description**: Democracy in early republic era
 
-## Backlinks
+## Relationships
 
-- [[democracy|Democracy]] (has_state_at)
+### Incoming
+
+- **has_state_at** ← [[democracy]] (Democracy)
 

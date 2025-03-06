@@ -1,14 +1,14 @@
 ---
 type: project
 id: adaptive-robotics-project
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Adaptive Robotics Control
 
-**Type**: project
-**ID**: adaptive-robotics-project
+## Metadata
+
+- **Type**: project
+- **ID**: adaptive-robotics-project
 
 ## Attributes
 
@@ -17,28 +17,22 @@ modified: 2025-03-05T01:16:02.517Z
 - **endDate**: 2024-08-31
 - **status**: active
 - **budget**: 550000
-- **objectives**: ["Create sample-efficient RL algorithms for robotics","Implement transfer learning between simulation and real-world","Demonstrate robust performance in dynamic environments"]
+- **objectives**: Create sample-efficient RL algorithms for robotics,Implement transfer learning between simulation and real-world,Demonstrate robust performance in dynamic environments
 
 ## Relationships
 
-### produced
+### Outgoing
 
-- [[robotics-paper-2022|Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization]]
+- **produced** → [[robotics-paper-2022]] (Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization)
+- **uses** → [[robotics-lab]] (Robotics Laboratory)
+- **uses** → [[data-collection-system]] (Field Data Collection System)
+- **applies** → [[robotics]] (Robotics)
+- **applies** → [[reinforcement-learning]] (Reinforcement Learning)
 
-### uses
+### Incoming
 
-- [[robotics-lab|Robotics Laboratory]]
-- [[data-collection-system|Field Data Collection System]]
-
-### applies
-
-- [[robotics|Robotics]]
-- [[reinforcement-learning|Reinforcement Learning]]
-
-## Backlinks
-
-- [[carol-jones|Carol Jones]] (leads)
-- [[elena-rodriguez|Elena Rodriguez]] (contributes_to)
-- [[nsf-grant|NSF Research Grant]] (funds)
-- [[grace-kim|Grace Kim]] (administers)
+- **leads** ← [[carol-jones]] (Carol Jones)
+- **contributes_to** ← [[elena-rodriguez]] (Elena Rodriguez)
+- **funds** ← [[nsf-grant]] (NSF Research Grant)
+- **administers** ← [[grace-kim]] (Grace Kim)
 

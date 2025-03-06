@@ -1,14 +1,14 @@
 ---
 type: project
 id: nlp-project
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Natural Language Understanding
 
-**Type**: project
-**ID**: nlp-project
+## Metadata
+
+- **Type**: project
+- **ID**: nlp-project
 
 ## Attributes
 
@@ -17,28 +17,22 @@ modified: 2025-03-05T01:16:02.517Z
 - **endDate**: 2024-05-31
 - **status**: active
 - **budget**: 400000
-- **objectives**: ["Enhance contextual understanding","Improve multilingual capabilities","Develop efficient training methods"]
+- **objectives**: Enhance contextual understanding,Improve multilingual capabilities,Develop efficient training methods
 
 ## Relationships
 
-### produced
+### Outgoing
 
-- [[nlp-paper-2023|Context-Aware Language Understanding in Multi-Domain Settings]]
+- **produced** → [[nlp-paper-2023]] (Context-Aware Language Understanding in Multi-Domain Settings)
+- **uses** → [[gpu-cluster]] (High-Performance GPU Cluster)
+- **applies** → [[nlp]] (Natural Language Processing)
+- **applies** → [[machine-learning-theory]] (Machine Learning Theory)
 
-### uses
+### Incoming
 
-- [[gpu-cluster|High-Performance GPU Cluster]]
-
-### applies
-
-- [[nlp|Natural Language Processing]]
-- [[machine-learning-theory|Machine Learning Theory]]
-
-## Backlinks
-
-- [[alice-chen|Alice Chen]] (contributes_to)
-- [[bob-smith|Bob Smith]] (leads)
-- [[david-patel|David Patel]] (contributes_to)
-- [[tech-partner|Tech Industry Partnership]] (funds)
-- [[grace-kim|Grace Kim]] (administers)
+- **contributes_to** ← [[alice-chen]] (Alice Chen)
+- **leads** ← [[bob-smith]] (Bob Smith)
+- **contributes_to** ← [[david-patel]] (David Patel)
+- **funds** ← [[tech-partner]] (Tech Industry Partnership)
+- **administers** ← [[grace-kim]] (Grace Kim)
 

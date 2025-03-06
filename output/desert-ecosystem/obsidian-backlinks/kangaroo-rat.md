@@ -1,14 +1,14 @@
 ---
 type: organism
 id: kangaroo-rat
-created: 2025-03-05T01:16:01.995Z
-modified: 2025-03-05T01:16:01.995Z
 ---
 
 # Kangaroo Rat
 
-**Type**: organism
-**ID**: kangaroo-rat
+## Metadata
+
+- **Type**: organism
+- **ID**: kangaroo-rat
 
 ## Attributes
 
@@ -19,7 +19,7 @@ modified: 2025-03-05T01:16:01.995Z
 
 ## Relationships
 
-### adapts_to
+### Outgoing
 
-- [[aridity|Aridity]] (mechanism: Metabolic water production, efficiency: 0.88)
+- **adapts_to** → [[aridity]] (Aridity)
 

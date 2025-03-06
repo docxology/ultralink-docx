@@ -1,14 +1,14 @@
 ---
 type: time_period
 id: great-depression
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # Great Depression
 
-**Type**: time_period
-**ID**: great-depression
+## Metadata
+
+- **Type**: time_period
+- **ID**: great-depression
 
 ## Attributes
 
@@ -16,7 +16,9 @@ modified: 2025-03-05T01:16:02.702Z
 - **endYear**: 1941
 - **description**: Severe economic downturn causing high unemployment and economic hardship
 
-## Backlinks
+## Relationships
 
-- [[stock-market-crash|Stock Market Crash]] (occurred_during)
+### Incoming
+
+- **occurred_during** ← [[stock-market-crash]] (Stock Market Crash)
 

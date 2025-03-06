@@ -1,14 +1,14 @@
 ---
 type: researcher
 id: carol
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Dr. Carol Jimenez
 
-**Type**: researcher
-**ID**: carol
+## Metadata
+
+- **Type**: researcher
+- **ID**: carol
 
 ## Attributes
 
@@ -16,29 +16,20 @@ modified: 2025-03-05T01:16:02.671Z
 - **department**: Cognitive Science
 - **email**: carol.jimenez@example.edu
 - **publications**: 11
-- **expertise**: ["active inference","machine learning","cognitive modeling"]
+- **expertise**: active inference,machine learning,cognitive modeling
 - **yearsExperience**: 3
 
 ## Relationships
 
-### contributes
+### Outgoing
 
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Lead Developer, timeCommitment: 0.6)
+- **contributes** → [[active-inference-model]] (Active Inference Modeling of Collective Behavior)
+- **contributes_to** → [[active-inference-model]] (Active Inference Modeling of Collective Behavior)
+- **reports_to** → [[alice]] (Dr. Alice Chen)
+- **authored** → [[paper-2023a]] (Active Inference Framework for Collective Behavior Analysis)
+- **authored** → [[paper-2024]] (Computational Models of Active Inference in Social Insects)
 
-### contributes_to
+### Incoming
 
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Lead Researcher, startDate: 2022-09-01)
-
-### reports_to
-
-- [[alice|Dr. Alice Chen]] (startDate: 2022-01-15)
-
-### authored
-
-- [[paper-2023a|Active Inference Framework for Collective Behavior Analysis]] (contributionType: co-author, contributionPercentage: 30)
-- [[paper-2024|Computational Models of Active Inference in Social Insects]] (contributionType: co-author, contributionPercentage: 30)
-
-## Backlinks
-
-- [[alice|Dr. Alice Chen]] (mentors)
+- **mentors** ← [[alice]] (Dr. Alice Chen)
 

@@ -1,14 +1,14 @@
 ---
 type: event
 id: womens-suffrage
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # 19th Amendment
 
-**Type**: event
-**ID**: womens-suffrage
+## Metadata
+
+- **Type**: event
+- **ID**: womens-suffrage
 
 ## Attributes
 
@@ -16,12 +16,12 @@ modified: 2025-03-05T01:16:02.702Z
 - **location**: United States
 - **description**: Constitutional amendment giving women the right to vote
 - **significance**: Major achievement for women's rights and democracy
-- **keywords**: ["women","voting","rights","suffrage","equality"]
-- **vector**: [0.46,0.32,0.33,0.14,0.26,-0.12]
+- **keywords**: women,voting,rights,suffrage,equality
+- **vector**: 0.46,0.32,0.33,0.14,0.26,-0.12
 
 ## Relationships
 
-### occurred_during
+### Outgoing
 
-- [[progressive-era|Progressive Era]]
+- **occurred_during** → [[progressive-era]] (Progressive Era)
 

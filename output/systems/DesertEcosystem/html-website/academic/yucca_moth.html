@@ -1,146 +1,108 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yucca Moth - DesertEcosystem Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f5f5f5;
-      --text: #333333;
-      --link: #990000;
-      --accent: #666666;
-      --border: #cccccc;
-      --text-color: #333333;
-      --bg-color: #f5f5f5;
-    }
-    body {
-      font-family: 'Palatino Linotype', serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Yucca Moth</h1>
-  <div class="entity-type">animal</div>
+  <header>
+    <h1>Yucca Moth</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Yucca Moth</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>yucca_moth</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">scientificName</td>
-            <td class="attribute-value">Tegeticula yuccasella</td>
+          <tr>
+            <th>Type</th>
+            <td>animal</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">lifespan</td>
-            <td class="attribute-value">0.5</td>
+          <tr>
+            <th>scientificName</th>
+            <td>Tegeticula yuccasella</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">diet</td>
-            <td class="attribute-value">herbivore</td>
+          <tr>
+            <th>lifespan</th>
+            <td>0.5</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">status</td>
-            <td class="attribute-value">least concern</td>
+          <tr>
+            <th>diet</th>
+            <td>herbivore</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Small moth with specialized relationship with Joshua trees and other yuccas.</td>
+          <tr>
+            <th>status</th>
+            <td>least concern</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">adaptations</td>
-            <td class="attribute-value">Specialized mouthparts for collecting pollen,Ovipositor for laying eggs in yucca flowers,Lifecycle synchronized with yucca flowering,Larvae feed only on some yucca seeds, preserving others</td>
+          <tr>
+            <th>description</th>
+            <td>Small moth with specialized relationship with Joshua trees and other yuccas.</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Short lifecycle synchronized with yucca flowering</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <strong>mutual_dependency</strong> → <a href="joshua_tree.html">Joshua Tree</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('joshua_tree')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>relationship:</strong> obligate reproductive site</small> <small><strong>strength:</strong> extreme</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="joshua_tree.html">Joshua Tree</a> <strong>mutual_dependency</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('joshua_tree')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>relationship:</strong> obligate reproductive site</small> <small><strong>strength:</strong> extreme</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>adaptations</th>
+            <td>Specialized mouthparts for collecting pollen,Ovipositor for laying eggs in yucca flowers,Lifecycle synchronized with yucca flowering,Larvae feed only on some yucca seeds, preserving others</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>adapted_to</strong> → 
+          <a href="aridity.html">Aridity</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Short lifecycle synchronized with yucca flowering</span>
+            <span><strong>strength:</strong> extreme</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>mutual_dependency</strong> → 
+          <a href="joshua_tree.html">Joshua Tree</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('joshua_tree')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>relationship:</strong> obligate reproductive site</span>
+            <span><strong>strength:</strong> extreme</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="joshua_tree.html">Joshua Tree</a> → 
+          <strong>mutual_dependency</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('joshua_tree')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>relationship:</strong> obligate reproductive site</span>
+            <span><strong>strength:</strong> extreme</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

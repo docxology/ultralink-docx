@@ -1,14 +1,14 @@
 ---
 type: animal
 id: sidewinder
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Sidewinder Rattlesnake
 
-**Type**: animal
-**ID**: sidewinder
+## Metadata
+
+- **Type**: animal
+- **ID**: sidewinder
 
 ## Attributes
 
@@ -17,23 +17,17 @@ modified: 2025-03-05T01:16:02.596Z
 - **diet**: carnivore
 - **status**: least concern
 - **description**: Venomous pit viper known for its sideways movement across sand.
-- **adaptations**: ["Sidewinding locomotion minimizes contact with hot sand","Heat-sensing pits detect prey","Scales provide camouflage in sandy environments","Specialized breathing to prevent sand inhalation"]
+- **adaptations**: Sidewinding locomotion minimizes contact with hot sand,Heat-sensing pits detect prey,Scales provide camouflage in sandy environments,Specialized breathing to prevent sand inhalation
 
 ## Relationships
 
-### adapted_to
+### Outgoing
 
-- [[sand_dunes|Sand Dunes]] (adaptationMechanism: Specialized locomotion, strength: extreme)
+- **adapted_to** → [[sand_dunes]] (Sand Dunes)
+- **lives_in** → [[dune_field]] (Sand Dune Field)
+- **preys_on** → [[kangaroo_rat]] (Merriam's Kangaroo Rat)
 
-### lives_in
+### Incoming
 
-- [[dune_field|Sand Dune Field]] (frequency: permanent, dependency: high)
-
-### preys_on
-
-- [[kangaroo_rat|Merriam's Kangaroo Rat]] (frequency: common, method: ambush)
-
-## Backlinks
-
-- [[roadrunner|Greater Roadrunner]] (preys_on)
+- **preys_on** ← [[roadrunner]] (Greater Roadrunner)
 

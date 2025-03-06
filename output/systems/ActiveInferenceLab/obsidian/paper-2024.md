@@ -1,18 +1,18 @@
 ---
 type: publication
 id: paper-2024
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Computational Models of Active Inference in Social Insects
 
-**Type**: publication
-**ID**: paper-2024
+## Metadata
+
+- **Type**: publication
+- **ID**: paper-2024
 
 ## Attributes
 
-- **authors**: ["alice","bob","carol","david"]
+- **authors**: alice,bob,carol,david
 - **journal**: PLOS Computational Biology
 - **year**: 2024
 - **doi**: 10.1371/journal.pcbi.2024-0001
@@ -20,20 +20,17 @@ modified: 2025-03-05T01:16:02.671Z
 
 ## Relationships
 
-### results_from
+### Outgoing
 
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (contribution: Computational modeling results)
-- [[ant-colony-study|Ant Colony Decision Making Study]] (contribution: Empirical validation)
+- **results_from** → [[active-inference-model]] (Active Inference Modeling of Collective Behavior)
+- **results_from** → [[ant-colony-study]] (Ant Colony Decision Making Study)
+- **discusses** → [[swarm-intelligence]] (Swarm Intelligence)
 
-### discusses
+### Incoming
 
-- [[swarm-intelligence|Swarm Intelligence]] (depth: comprehensive)
-
-## Backlinks
-
-- [[alice|Dr. Alice Chen]] (authored)
-- [[bob|Dr. Bob Smith]] (authored)
-- [[carol|Dr. Carol Jimenez]] (authored)
-- [[david|David Wilson]] (authored)
-- [[grace|Grace Kim]] (authored)
+- **authored** ← [[alice]] (Dr. Alice Chen)
+- **authored** ← [[bob]] (Dr. Bob Smith)
+- **authored** ← [[carol]] (Dr. Carol Jimenez)
+- **authored** ← [[david]] (David Wilson)
+- **authored** ← [[grace]] (Grace Kim)
 

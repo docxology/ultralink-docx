@@ -1,18 +1,18 @@
 ---
 type: publication
 id: paper-2023b
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Decision Making Patterns in Ant Colonies: A Field Study
 
-**Type**: publication
-**ID**: paper-2023b
+## Metadata
+
+- **Type**: publication
+- **ID**: paper-2023b
 
 ## Attributes
 
-- **authors**: ["bob","emma","frank"]
+- **authors**: bob,emma,frank
 - **journal**: Behavioral Ecology
 - **year**: 2023
 - **doi**: 10.1093/beheco/2023-0002
@@ -20,17 +20,14 @@ modified: 2025-03-05T01:16:02.671Z
 
 ## Relationships
 
-### results_from
+### Outgoing
 
-- [[ant-colony-study|Ant Colony Decision Making Study]] (contribution: Initial field study findings)
+- **results_from** → [[ant-colony-study]] (Ant Colony Decision Making Study)
+- **discusses** → [[collective-behavior]] (Collective Behavior)
 
-### discusses
+### Incoming
 
-- [[collective-behavior|Collective Behavior]] (depth: substantial)
-
-## Backlinks
-
-- [[bob|Dr. Bob Smith]] (authored)
-- [[emma|Emma Taylor]] (authored)
-- [[frank|Dr. Frank Martinez]] (authored)
+- **authored** ← [[bob]] (Dr. Bob Smith)
+- **authored** ← [[emma]] (Emma Taylor)
+- **authored** ← [[frank]] (Dr. Frank Martinez)
 

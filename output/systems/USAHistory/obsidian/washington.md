@@ -1,14 +1,14 @@
 ---
 type: person
 id: washington
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # George Washington
 
-**Type**: person
-**ID**: washington
+## Metadata
+
+- **Type**: person
+- **ID**: washington
 
 ## Attributes
 
@@ -16,24 +16,18 @@ modified: 2025-03-05T01:16:02.702Z
 - **death**: 1799-12-14
 - **role**: Military leader, 1st President
 - **significance**: Led Continental Army, first US President, established presidential precedents
-- **keywords**: ["president","revolutionary war","founding father","Mount Vernon"]
-- **vector**: [0.4,0.32,0.28,0.25,0.38,0.22]
+- **keywords**: president,revolutionary war,founding father,Mount Vernon
+- **vector**: 0.4,0.32,0.28,0.25,0.38,0.22
 
 ## Relationships
 
-### participated_in
+### Outgoing
 
-- [[declaration-independence|Declaration of Independence]]
+- **participated_in** → [[declaration-independence]] (Declaration of Independence)
+- **championed** → [[democracy]] (Democracy)
+- **belongs_to_cluster** → [[founding-principles-cluster]] (Founding Principles)
 
-### championed
+### Incoming
 
-- [[democracy|Democracy]]
-
-### belongs_to_cluster
-
-- [[founding-principles-cluster|Founding Principles]]
-
-## Backlinks
-
-- [[constitution-doc|United States Constitution]] (supported_by)
+- **supported_by** ← [[constitution-doc]] (United States Constitution)
 

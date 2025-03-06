@@ -1,57 +1,85 @@
 ;; UltraLink Knowledge Interchange Format (KIF) Export
-;; Generated: 2025-03-05T01:16:02.595Z
+;; Generated: 2025-03-06T05:45:33.033Z
+
+;; Meta-knowledge
+(= (creationDate UltraLinkExport) "2025-03-06T05:45:33.033Z")
+(= (entityCount UltraLinkExport) 35)
+(= (relationshipCount UltraLinkExport) 92)
+
+;; Functions
+(deffunction relationshipCount (?x) (length ?kb.relationships))
+
+;; Rules
+(defrule entity-attributes-rule
+    "A rule to infer additional attributes for entities based on their type"
+    (instance ?entity ?type)
+    =>
+    (if (eq ?type Person)
+        then (assert (isAgent ?entity true))))
+
+(forall (?x ?y)
+    (=> (and (adapts_to ?x ?y) (> (efficiency-adapts_to ?x ?y) 0.8))
+        (well-adapted ?x ?y)))
+
 ;; Entities and their attributes
 (instance alice-chen Person)
 (name alice-chen "Alice Chen")
 (title alice-chen "Principal Investigator")
-(expertise alice-chen "Machine Learning,Computer Vision,Neural Networks")
+(expertise alice-chen "[\"Machine Learning\",\"Computer Vision\",\"Neural Networks\"]")
 (email alice-chen "alice.chen@research.org")
 (joinDate alice-chen "2018-01-15")
 (status alice-chen "active")
+
 (instance bob-smith Person)
 (name bob-smith "Bob Smith")
 (title bob-smith "Senior Researcher")
-(expertise bob-smith "Natural Language Processing,Deep Learning")
+(expertise bob-smith "[\"Natural Language Processing\",\"Deep Learning\"]")
 (email bob-smith "bob.smith@research.org")
 (joinDate bob-smith "2019-03-01")
 (status bob-smith "active")
+
 (instance carol-jones Person)
 (name carol-jones "Carol Jones")
 (title carol-jones "PhD Student")
-(expertise carol-jones "Reinforcement Learning,Robotics")
+(expertise carol-jones "[\"Reinforcement Learning\",\"Robotics\"]")
 (email carol-jones "carol.jones@research.org")
 (joinDate carol-jones "2020-09-01")
 (status carol-jones "active")
 (advisor carol-jones "alice-chen")
+
 (instance david-patel Person)
 (name david-patel "David Patel")
 (title david-patel "Postdoctoral Researcher")
-(expertise david-patel "Federated Learning,Privacy-Preserving AI,Distributed Systems")
+(expertise david-patel "[\"Federated Learning\",\"Privacy-Preserving AI\",\"Distributed Systems\"]")
 (email david-patel "david.patel@research.org")
 (joinDate david-patel "2021-02-15")
 (status david-patel "active")
+
 (instance elena-rodriguez Person)
 (name elena-rodriguez "Elena Rodriguez")
 (title elena-rodriguez "Research Assistant")
-(expertise elena-rodriguez "Data Visualization,Statistical Analysis")
+(expertise elena-rodriguez "[\"Data Visualization\",\"Statistical Analysis\"]")
 (email elena-rodriguez "elena.rodriguez@research.org")
 (joinDate elena-rodriguez "2022-06-01")
 (status elena-rodriguez "active")
+
 (instance frank-zhang Person)
 (name frank-zhang "Frank Zhang")
 (title frank-zhang "Visiting Researcher")
-(expertise frank-zhang "Quantum Computing,Algorithm Design")
+(expertise frank-zhang "[\"Quantum Computing\",\"Algorithm Design\"]")
 (email frank-zhang "frank.zhang@partner-university.edu")
 (joinDate frank-zhang "2023-01-10")
 (status frank-zhang "active")
 (endDate frank-zhang "2023-12-31")
+
 (instance grace-kim Person)
 (name grace-kim "Grace Kim")
 (title grace-kim "Lab Manager")
-(expertise grace-kim "Research Administration,Grant Writing")
+(expertise grace-kim "[\"Research Administration\",\"Grant Writing\"]")
 (email grace-kim "grace.kim@research.org")
 (joinDate grace-kim "2019-07-15")
 (status grace-kim "active")
+
 (instance computer-vision-project Project)
 (title computer-vision-project "Advanced Computer Vision Systems")
 (description computer-vision-project "Developing next-generation computer vision systems using deep learning")
@@ -59,7 +87,8 @@
 (endDate computer-vision-project "2023-12-31")
 (status computer-vision-project "active")
 (budget computer-vision-project 500000)
-(objectives computer-vision-project "Improve object detection accuracy,Develop real-time processing capabilities,Create robust low-light performance")
+(objectives computer-vision-project "[\"Improve object detection accuracy\",\"Develop real-time processing capabilities\",\"Create robust low-light performance\"]")
+
 (instance nlp-project Project)
 (title nlp-project "Natural Language Understanding")
 (description nlp-project "Advanced NLP techniques for context-aware language understanding")
@@ -67,7 +96,8 @@
 (endDate nlp-project "2024-05-31")
 (status nlp-project "active")
 (budget nlp-project 400000)
-(objectives nlp-project "Enhance contextual understanding,Improve multilingual capabilities,Develop efficient training methods")
+(objectives nlp-project "[\"Enhance contextual understanding\",\"Improve multilingual capabilities\",\"Develop efficient training methods\"]")
+
 (instance federated-learning-project Project)
 (title federated-learning-project "Privacy-Preserving Federated Learning")
 (description federated-learning-project "Developing techniques for training models across distributed data sources while preserving privacy")
@@ -75,7 +105,8 @@
 (endDate federated-learning-project "2025-02-28")
 (status federated-learning-project "active")
 (budget federated-learning-project 650000)
-(objectives federated-learning-project "Reduce communication overhead in federated systems,Enhance privacy guarantees beyond differential privacy,Deploy to real-world healthcare applications")
+(objectives federated-learning-project "[\"Reduce communication overhead in federated systems\",\"Enhance privacy guarantees beyond differential privacy\",\"Deploy to real-world healthcare applications\"]")
+
 (instance quantum-ml-project Project)
 (title quantum-ml-project "Quantum Approaches to Machine Learning")
 (description quantum-ml-project "Exploring quantum computing advantages for select machine learning problems")
@@ -83,7 +114,8 @@
 (endDate quantum-ml-project "2024-12-31")
 (status quantum-ml-project "active")
 (budget quantum-ml-project 800000)
-(objectives quantum-ml-project "Develop quantum algorithms for ML acceleration,Benchmark against classical approaches,Identify practical quantum advantage use cases")
+(objectives quantum-ml-project "[\"Develop quantum algorithms for ML acceleration\",\"Benchmark against classical approaches\",\"Identify practical quantum advantage use cases\"]")
+
 (instance adaptive-robotics-project Project)
 (title adaptive-robotics-project "Adaptive Robotics Control")
 (description adaptive-robotics-project "Developing reinforcement learning approaches for adaptive robot control in unstructured environments")
@@ -91,134 +123,155 @@
 (endDate adaptive-robotics-project "2024-08-31")
 (status adaptive-robotics-project "active")
 (budget adaptive-robotics-project 550000)
-(objectives adaptive-robotics-project "Create sample-efficient RL algorithms for robotics,Implement transfer learning between simulation and real-world,Demonstrate robust performance in dynamic environments")
+(objectives adaptive-robotics-project "[\"Create sample-efficient RL algorithms for robotics\",\"Implement transfer learning between simulation and real-world\",\"Demonstrate robust performance in dynamic environments\"]")
+
 (instance vision-paper-2022 Publication)
 (title vision-paper-2022 "Novel Approaches to Low-Light Computer Vision")
-(authors vision-paper-2022 "alice-chen,carol-jones")
+(authors vision-paper-2022 "[\"alice-chen\",\"carol-jones\"]")
 (venue vision-paper-2022 "International Conference on Computer Vision 2022")
 (year vision-paper-2022 2022)
 (doi vision-paper-2022 "10.1234/vision2022")
 (citations vision-paper-2022 45)
 (abstract vision-paper-2022 "This paper presents innovative techniques for computer vision in low-light conditions...")
+
 (instance nlp-paper-2023 Publication)
 (title nlp-paper-2023 "Context-Aware Language Understanding in Multi-Domain Settings")
-(authors nlp-paper-2023 "bob-smith,alice-chen")
+(authors nlp-paper-2023 "[\"bob-smith\",\"alice-chen\"]")
 (venue nlp-paper-2023 "ACL 2023")
 (year nlp-paper-2023 2023)
 (doi nlp-paper-2023 "10.1234/acl2023")
 (citations nlp-paper-2023 12)
 (abstract nlp-paper-2023 "We propose a novel approach to context-aware language understanding...")
+
 (instance federated-paper-2023 Publication)
 (title federated-paper-2023 "Communication-Efficient Federated Learning with Adaptive Compression")
-(authors federated-paper-2023 "david-patel,alice-chen,frank-zhang")
+(authors federated-paper-2023 "[\"david-patel\",\"alice-chen\",\"frank-zhang\"]")
 (venue federated-paper-2023 "International Conference on Machine Learning 2023")
 (year federated-paper-2023 2023)
 (doi federated-paper-2023 "10.1234/icml2023")
 (citations federated-paper-2023 8)
 (abstract federated-paper-2023 "This paper introduces a novel compression technique for federated learning that adaptively adjusts to network conditions and data heterogeneity...")
+
 (instance robotics-paper-2022 Publication)
 (title robotics-paper-2022 "Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization")
-(authors robotics-paper-2022 "carol-jones,alice-chen")
+(authors robotics-paper-2022 "[\"carol-jones\",\"alice-chen\"]")
 (venue robotics-paper-2022 "Robotics: Science and Systems 2022")
 (year robotics-paper-2022 2022)
 (doi robotics-paper-2022 "10.1234/rss2022")
 (citations robotics-paper-2022 31)
 (abstract robotics-paper-2022 "We present a new approach to sim-to-real transfer learning for robotic manipulation tasks that leverages adaptive domain randomization...")
+
 (instance quantum-paper-2023 Publication)
 (title quantum-paper-2023 "Quantum Circuit Learning for Computer Vision Tasks")
-(authors quantum-paper-2023 "frank-zhang,david-patel")
+(authors quantum-paper-2023 "[\"frank-zhang\",\"david-patel\"]")
 (venue quantum-paper-2023 "Quantum Machine Intelligence Journal")
 (year quantum-paper-2023 2023)
 (doi quantum-paper-2023 "10.1234/qmi2023")
 (citations quantum-paper-2023 5)
 (abstract quantum-paper-2023 "This study explores the application of parameterized quantum circuits for image classification tasks, demonstrating advantages in specific constrained scenarios...")
+
 (instance survey-paper-2023 Publication)
 (title survey-paper-2023 "A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques")
-(authors survey-paper-2023 "david-patel,bob-smith,alice-chen")
+(authors survey-paper-2023 "[\"david-patel\",\"bob-smith\",\"alice-chen\"]")
 (venue survey-paper-2023 "ACM Computing Surveys")
 (year survey-paper-2023 2023)
 (doi survey-paper-2023 "10.1234/surveys2023")
 (citations survey-paper-2023 78)
 (abstract survey-paper-2023 "This survey provides a comprehensive overview of privacy-preserving machine learning techniques, including differential privacy, federated learning, secure multi-party computation, and homomorphic encryption...")
+
 (instance gpu-cluster Equipment)
 (name gpu-cluster "High-Performance GPU Cluster")
 (description gpu-cluster "NVIDIA DGX A100 cluster for deep learning research")
 (location gpu-cluster "Server Room A")
-(specifications gpu-cluster "[object Object]")
+(specifications gpu-cluster "{\"gpus\":8,\"memory\":\"320GB\",\"storage\":\"10TB\"}")
 (status gpu-cluster "operational")
 (purchaseDate gpu-cluster "2021-01-15")
 (maintenanceSchedule gpu-cluster "quarterly")
+
 (instance robotics-lab Facility)
 (name robotics-lab "Robotics Laboratory")
 (description robotics-lab "Advanced robotics testing and development facility")
 (location robotics-lab "Building B, Room 305")
-(equipment robotics-lab "robot-arm-1,motion-capture-system")
+(equipment robotics-lab "[\"robot-arm-1\",\"motion-capture-system\"]")
 (capacity robotics-lab 10)
 (status robotics-lab "active")
+
 (instance quantum-computer Equipment)
 (name quantum-computer "Quantum Computing Access")
 (description quantum-computer "Cloud access to IBM Quantum systems")
 (location quantum-computer "Remote/Cloud")
-(specifications quantum-computer "[object Object]")
+(specifications quantum-computer "{\"qubits\":127,\"access\":\"Priority research queue\",\"quota\":\"20 hours/month\"}")
 (status quantum-computer "operational")
 (acquisitionDate quantum-computer "2022-11-01")
 (contractRenewal quantum-computer "2024-10-31")
+
 (instance hpc-cluster Equipment)
 (name hpc-cluster "University High-Performance Computing Cluster")
 (description hpc-cluster "Shared computing facility for computation-intensive research")
 (location hpc-cluster "Data Center Building C")
-(specifications hpc-cluster "[object Object]")
+(specifications hpc-cluster "{\"cores\":4096,\"memory\":\"16TB\",\"storage\":\"1PB\",\"interconnect\":\"InfiniBand\"}")
 (status hpc-cluster "operational")
 (accessLevel hpc-cluster "shared")
+
 (instance data-collection-system Equipment)
 (name data-collection-system "Field Data Collection System")
 (description data-collection-system "Mobile sensors and data collection equipment for field research")
 (location data-collection-system "Equipment Room 105")
-(specifications data-collection-system "[object Object]")
+(specifications data-collection-system "{\"sensors\":[\"environmental\",\"biometric\",\"geospatial\"],\"storage\":\"2TB\",\"battery\":\"72 hours\"}")
 (status data-collection-system "operational")
 (purchaseDate data-collection-system "2022-05-15")
+
 (instance conference-room Facility)
 (name conference-room "Research Team Conference Room")
 (description conference-room "Meeting and presentation space with advanced AV equipment")
 (location conference-room "Building A, Room 210")
-(equipment conference-room "projector,video-conferencing,interactive-whiteboard")
+(equipment conference-room "[\"projector\",\"video-conferencing\",\"interactive-whiteboard\"]")
 (capacity conference-room 20)
 (status conference-room "active")
+
 (instance visualization-lab Facility)
 (name visualization-lab "Data Visualization Laboratory")
 (description visualization-lab "Specialized facility for immersive data visualization")
 (location visualization-lab "Building B, Room 410")
-(equipment visualization-lab "vr-headsets,large-format-displays,3d-projection")
+(equipment visualization-lab "[\"vr-headsets\",\"large-format-displays\",\"3d-projection\"]")
 (capacity visualization-lab 8)
 (status visualization-lab "active")
+
 (instance machine-learning-theory Knowledge-area)
 (name machine-learning-theory "Machine Learning Theory")
 (description machine-learning-theory "Fundamental theoretical concepts in machine learning")
-(topics machine-learning-theory "Statistical Learning,Optimization,Information Theory")
+(topics machine-learning-theory "[\"Statistical Learning\",\"Optimization\",\"Information Theory\"]")
+
 (instance computer-vision Knowledge-area)
 (name computer-vision "Computer Vision")
 (description computer-vision "Visual information processing and understanding")
-(topics computer-vision "Object Detection,Image Segmentation,Visual Recognition")
+(topics computer-vision "[\"Object Detection\",\"Image Segmentation\",\"Visual Recognition\"]")
+
 (instance nlp Knowledge-area)
 (name nlp "Natural Language Processing")
 (description nlp "Processing and understanding of human language")
-(topics nlp "Text Understanding,Machine Translation,Language Generation")
+(topics nlp "[\"Text Understanding\",\"Machine Translation\",\"Language Generation\"]")
+
 (instance privacy-ml Knowledge-area)
 (name privacy-ml "Privacy-Preserving Machine Learning")
 (description privacy-ml "Techniques for ensuring privacy in machine learning systems")
-(topics privacy-ml "Differential Privacy,Federated Learning,Secure Multi-Party Computation,Homomorphic Encryption")
+(topics privacy-ml "[\"Differential Privacy\",\"Federated Learning\",\"Secure Multi-Party Computation\",\"Homomorphic Encryption\"]")
+
 (instance quantum-ml Knowledge-area)
 (name quantum-ml "Quantum Machine Learning")
 (description quantum-ml "Intersection of quantum computing and machine learning")
-(topics quantum-ml "Quantum Neural Networks,Quantum Kernels,Quantum Circuit Learning,Quantum Advantage in ML")
+(topics quantum-ml "[\"Quantum Neural Networks\",\"Quantum Kernels\",\"Quantum Circuit Learning\",\"Quantum Advantage in ML\"]")
+
 (instance robotics Knowledge-area)
 (name robotics "Robotics")
 (description robotics "Design, construction, and operation of robots")
-(topics robotics "Robot Control,Perception,Path Planning,Human-Robot Interaction")
+(topics robotics "[\"Robot Control\",\"Perception\",\"Path Planning\",\"Human-Robot Interaction\"]")
+
 (instance reinforcement-learning Knowledge-area)
 (name reinforcement-learning "Reinforcement Learning")
 (description reinforcement-learning "Learning through interaction with an environment")
-(topics reinforcement-learning "Value-Based Methods,Policy Gradient Methods,Model-Based RL,Multi-Agent RL")
+(topics reinforcement-learning "[\"Value-Based Methods\",\"Policy Gradient Methods\",\"Model-Based RL\",\"Multi-Agent RL\"]")
+
 (instance nsf-grant Funding)
 (name nsf-grant "NSF Research Grant")
 (description nsf-grant "National Science Foundation grant for foundational research")
@@ -226,7 +279,7 @@
 (startDate nsf-grant "2021-01-01")
 (endDate nsf-grant "2024-12-31")
 (grantNumber nsf-grant "NSF-2021-1234")
-(type nsf-grant "federal")
+
 (instance tech-partner Funding)
 (name tech-partner "Tech Industry Partnership")
 (description tech-partner "Research partnership with major technology company")
@@ -234,7 +287,7 @@
 (startDate tech-partner "2022-07-01")
 (endDate tech-partner "2024-06-30")
 (contractNumber tech-partner "IND-2022-789")
-(type tech-partner "industry")
+
 (instance university-fund Funding)
 (name university-fund "University Research Excellence Fund")
 (description university-fund "Internal university funding for promising research directions")
@@ -242,118 +295,189 @@
 (startDate university-fund "2023-01-01")
 (endDate university-fund "2024-12-31")
 (grantNumber university-fund "UNI-2023-456")
-(type university-fund "internal")
 
 ;; Relationships
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
-(undefined undefined undefined)
+(leads alice-chen computer-vision-project)
 
-;; Meta-knowledge
-(= (entityCount UltraLinkExport) 35)
-(= (relationshipCount UltraLinkExport) undefined)
-(= (exportTime UltraLinkExport) "2025-03-05T01:16:02.595Z")
-(= (creationDate UltraLinkExport) "2025-03-05T01:16:02.595Z")
+(contributes_to alice-chen nlp-project)
 
-;; Functions
-(deffunction relationshipCount (?graph) 
-  (count (relationships ?graph)))
-(deffunction entityCount (?graph)
-  (count (entities ?graph)))
+(leads bob-smith nlp-project)
 
-;; Rules
-(defrule connected-entities
-  (if (exists (?rel) 
-      (and (relationship ?rel ?source ?target) 
-           (entity ?source) 
-           (entity ?target))) 
-  (then (connected ?source ?target))))
+(contributes_to carol-jones computer-vision-project)
+
+(leads david-patel federated-learning-project)
+
+(contributes_to alice-chen federated-learning-project)
+
+(leads frank-zhang quantum-ml-project)
+
+(contributes_to david-patel quantum-ml-project)
+
+(leads carol-jones adaptive-robotics-project)
+
+(contributes_to elena-rodriguez adaptive-robotics-project)
+
+(contributes_to elena-rodriguez computer-vision-project)
+
+(contributes_to david-patel nlp-project)
+
+(contributes_to bob-smith federated-learning-project)
+
+(mentors alice-chen carol-jones)
+
+(mentors alice-chen david-patel)
+
+(mentors bob-smith elena-rodriguez)
+
+(mentors david-patel elena-rodriguez)
+
+(mentors carol-jones elena-rodriguez)
+
+(authored alice-chen vision-paper-2022)
+
+(authored carol-jones vision-paper-2022)
+
+(authored bob-smith nlp-paper-2023)
+
+(authored alice-chen nlp-paper-2023)
+
+(authored david-patel federated-paper-2023)
+
+(authored alice-chen federated-paper-2023)
+
+(authored frank-zhang federated-paper-2023)
+
+(authored carol-jones robotics-paper-2022)
+
+(authored alice-chen robotics-paper-2022)
+
+(authored frank-zhang quantum-paper-2023)
+
+(authored david-patel quantum-paper-2023)
+
+(authored david-patel survey-paper-2023)
+
+(authored bob-smith survey-paper-2023)
+
+(authored alice-chen survey-paper-2023)
+
+(produced computer-vision-project vision-paper-2022)
+
+(produced nlp-project nlp-paper-2023)
+
+(produced federated-learning-project federated-paper-2023)
+
+(produced federated-learning-project survey-paper-2023)
+
+(produced adaptive-robotics-project robotics-paper-2022)
+
+(produced quantum-ml-project quantum-paper-2023)
+
+(uses computer-vision-project gpu-cluster)
+
+(uses nlp-project gpu-cluster)
+
+(uses carol-jones robotics-lab)
+
+(uses federated-learning-project gpu-cluster)
+
+(uses federated-learning-project hpc-cluster)
+
+(uses quantum-ml-project quantum-computer)
+
+(uses quantum-ml-project hpc-cluster)
+
+(uses adaptive-robotics-project robotics-lab)
+
+(uses adaptive-robotics-project data-collection-system)
+
+(uses elena-rodriguez visualization-lab)
+
+(uses david-patel hpc-cluster)
+
+(uses frank-zhang quantum-computer)
+
+(foundational_for machine-learning-theory computer-vision)
+
+(foundational_for machine-learning-theory nlp)
+
+(expertise_in alice-chen computer-vision)
+
+(expertise_in bob-smith nlp)
+
+(expertise_in carol-jones machine-learning-theory)
+
+(foundational_for machine-learning-theory privacy-ml)
+
+(foundational_for machine-learning-theory quantum-ml)
+
+(foundational_for machine-learning-theory reinforcement-learning)
+
+(foundational_for reinforcement-learning robotics)
+
+(expertise_in david-patel privacy-ml)
+
+(expertise_in david-patel machine-learning-theory)
+
+(expertise_in frank-zhang quantum-ml)
+
+(expertise_in carol-jones reinforcement-learning)
+
+(expertise_in carol-jones robotics)
+
+(expertise_in alice-chen privacy-ml)
+
+(expertise_in bob-smith privacy-ml)
+
+(expertise_in elena-rodriguez computer-vision)
+
+(applies computer-vision-project computer-vision)
+
+(applies computer-vision-project machine-learning-theory)
+
+(applies nlp-project nlp)
+
+(applies nlp-project machine-learning-theory)
+
+(applies federated-learning-project privacy-ml)
+
+(applies federated-learning-project machine-learning-theory)
+
+(applies quantum-ml-project quantum-ml)
+
+(applies quantum-ml-project machine-learning-theory)
+
+(applies adaptive-robotics-project robotics)
+
+(applies adaptive-robotics-project reinforcement-learning)
+
+(funds nsf-grant computer-vision-project)
+
+(funds nsf-grant adaptive-robotics-project)
+
+(funds tech-partner federated-learning-project)
+
+(funds tech-partner nlp-project)
+
+(funds university-fund quantum-ml-project)
+
+(administers grace-kim computer-vision-project)
+
+(administers grace-kim nlp-project)
+
+(administers grace-kim federated-learning-project)
+
+(administers grace-kim quantum-ml-project)
+
+(administers grace-kim adaptive-robotics-project)
+
+(cites survey-paper-2023 federated-paper-2023)
+
+(cites survey-paper-2023 vision-paper-2022)
+
+(cites survey-paper-2023 nlp-paper-2023)
+
+(cites robotics-paper-2022 vision-paper-2022)
+
+(cites quantum-paper-2023 survey-paper-2023)
+

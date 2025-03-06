@@ -1,14 +1,14 @@
 ---
 type: temporal_snapshot
 id: democracy-2000
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # democracy-2000
 
-**Type**: temporal_snapshot
-**ID**: democracy-2000
+## Metadata
+
+- **Type**: temporal_snapshot
+- **ID**: democracy-2000
 
 ## Attributes
 
@@ -18,7 +18,9 @@ modified: 2025-03-05T01:16:02.702Z
 - **global_influence**: 0.8
 - **description**: Democracy in modern era
 
-## Backlinks
+## Relationships
 
-- [[democracy|Democracy]] (has_state_at)
+### Incoming
+
+- **has_state_at** ← [[democracy]] (Democracy)
 

@@ -1,0 +1,131 @@
+{
+  "timestamp": "2025-03-06T04:42:23.958Z",
+  "environment": {
+    "node": "v23.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpus": 8
+  },
+  "tests": {
+    "create_small": {
+      "durationMs": 0.778333,
+      "memoryDelta": {
+        "rss": 0.03125,
+        "heapTotal": 0,
+        "heapUsed": 0.2017974853515625
+      }
+    },
+    "create_medium": {
+      "durationMs": 4.098625,
+      "memoryDelta": {
+        "rss": 0.015625,
+        "heapTotal": 0,
+        "heapUsed": 1.711761474609375
+      }
+    },
+    "create_large": {
+      "durationMs": 17.732333,
+      "memoryDelta": {
+        "rss": 2.703125,
+        "heapTotal": 3,
+        "heapUsed": -2.7558135986328125
+      }
+    },
+    "find_by_type_small": {
+      "durationMs": 0.169416,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.0183563232421875
+      }
+    },
+    "find_by_attribute_small": {
+      "durationMs": 0.047042,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.02459716796875
+      }
+    },
+    "get_relationships_small": {
+      "durationMs": 0.083541,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.00431060791015625
+      }
+    },
+    "find_by_type_medium": {
+      "durationMs": 0.078916,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.04708099365234375
+      }
+    },
+    "find_by_attribute_medium": {
+      "durationMs": 0.1775,
+      "memoryDelta": {
+        "rss": 0.015625,
+        "heapTotal": 0,
+        "heapUsed": 0.21715545654296875
+      }
+    },
+    "get_relationships_medium": {
+      "durationMs": 0.012084,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.00200653076171875
+      }
+    },
+    "find_by_type_large": {
+      "durationMs": 0.217542,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.20362091064453125
+      }
+    },
+    "find_by_attribute_large": {
+      "durationMs": 0.43825,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.8261337280273438
+      }
+    },
+    "get_relationships_large": {
+      "durationMs": 0.013625,
+      "memoryDelta": {
+        "rss": 0,
+        "heapTotal": 0,
+        "heapUsed": 0.00193023681640625
+      }
+    },
+    "graphml_export_small": {
+      "durationMs": 0.476667,
+      "memoryDelta": {
+        "rss": 0.03125,
+        "heapTotal": 0,
+        "heapUsed": 0.34146881103515625
+      }
+    },
+    "graphml_export_medium": {
+      "durationMs": 1.859167,
+      "memoryDelta": {
+        "rss": 0.078125,
+        "heapTotal": 0,
+        "heapUsed": 3.1799087524414062
+      }
+    },
+    "graphml_export_large": {
+      "durationMs": 8.322292,
+      "memoryDelta": {
+        "rss": 4.8125,
+        "heapTotal": 3.5,
+        "heapUsed": 2.7403945922851562
+      }
+    }
+  }
+}

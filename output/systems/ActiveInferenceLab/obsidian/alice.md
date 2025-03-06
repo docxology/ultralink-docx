@@ -1,14 +1,14 @@
 ---
 type: researcher
 id: alice
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Dr. Alice Chen
 
-**Type**: researcher
-**ID**: alice
+## Metadata
+
+- **Type**: researcher
+- **ID**: alice
 
 ## Attributes
 
@@ -16,27 +16,21 @@ modified: 2025-03-05T01:16:02.671Z
 - **department**: Cognitive Science
 - **email**: alice.chen@example.edu
 - **publications**: 42
-- **expertise**: ["active inference","computational neuroscience","bayesian modeling"]
+- **expertise**: active inference,computational neuroscience,bayesian modeling
 - **yearsExperience**: 15
 
 ## Relationships
 
-### leads
+### Outgoing
 
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (role: Principal Investigator, timeCommitment: 0.4)
+- **leads** → [[active-inference-model]] (Active Inference Modeling of Collective Behavior)
+- **mentors** → [[david]] (David Wilson)
+- **mentors** → [[carol]] (Dr. Carol Jimenez)
+- **authored** → [[paper-2023a]] (Active Inference Framework for Collective Behavior Analysis)
+- **authored** → [[paper-2024]] (Computational Models of Active Inference in Social Insects)
 
-### mentors
+### Incoming
 
-- [[david|David Wilson]] (type: PhD Advisor, startDate: 2022-09-01)
-- [[carol|Dr. Carol Jimenez]] (type: Postdoc Advisor, startDate: 2023-01-15)
-
-### authored
-
-- [[paper-2023a|Active Inference Framework for Collective Behavior Analysis]] (contributionType: corresponding author, contributionPercentage: 40)
-- [[paper-2024|Computational Models of Active Inference in Social Insects]] (contributionType: co-author, contributionPercentage: 25)
-
-## Backlinks
-
-- [[carol|Dr. Carol Jimenez]] (reports_to)
-- [[emma|Emma Taylor]] (reports_to)
+- **reports_to** ← [[carol]] (Dr. Carol Jimenez)
+- **reports_to** ← [[emma]] (Emma Taylor)
 

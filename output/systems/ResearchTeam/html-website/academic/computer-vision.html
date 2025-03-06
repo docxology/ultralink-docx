@@ -1,128 +1,82 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Computer Vision - ResearchTeam Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f5f5f5;
-      --text: #333333;
-      --link: #990000;
-      --accent: #666666;
-      --border: #cccccc;
-      --text-color: #333333;
-      --bg-color: #f5f5f5;
-    }
-    body {
-      font-family: 'Palatino Linotype', serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Computer Vision</h1>
-  <div class="entity-type">knowledge-area</div>
+  <header>
+    <h1>Computer Vision</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Computer Vision</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>computer-vision</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Visual information processing and understanding</td>
+          <tr>
+            <th>Type</th>
+            <td>knowledge-area</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">topics</td>
-            <td class="attribute-value">Object Detection,Image Segmentation,Visual Recognition</td>
+          <tr>
+            <th>description</th>
+            <td>Visual information processing and understanding</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="machine-learning-theory.html">Machine Learning Theory</a> <strong>foundational_for</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('machine-learning-theory')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="alice-chen.html">Alice Chen</a> <strong>expertise_in</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="elena-rodriguez.html">Elena Rodriguez</a> <strong>expertise_in</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('elena-rodriguez')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="computer-vision-project.html">Advanced Computer Vision Systems</a> <strong>applies</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('computer-vision-project')" class="select-link" title="Select in graph">(select)</a></li></ul>
-  </div>
+          <tr>
+            <th>topics</th>
+            <td>Object Detection,Image Segmentation,Visual Recognition</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="machine-learning-theory.html">Machine Learning Theory</a> → 
+          <strong>foundational_for</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('machine-learning-theory')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="alice-chen.html">Alice Chen</a> → 
+          <strong>expertise_in</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="elena-rodriguez.html">Elena Rodriguez</a> → 
+          <strong>expertise_in</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('elena-rodriguez')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="computer-vision-project.html">Advanced Computer Vision Systems</a> → 
+          <strong>applies</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('computer-vision-project')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

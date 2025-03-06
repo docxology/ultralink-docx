@@ -1,14 +1,14 @@
 ---
 type: event
 id: louisiana-purchase
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # Louisiana Purchase
 
-**Type**: event
-**ID**: louisiana-purchase
+## Metadata
+
+- **Type**: event
+- **ID**: louisiana-purchase
 
 ## Attributes
 
@@ -16,20 +16,17 @@ modified: 2025-03-05T01:16:02.702Z
 - **location**: Paris, France
 - **description**: Purchase of the Louisiana Territory from France
 - **significance**: Doubled the size of the United States
-- **keywords**: ["expansion","territory","Jefferson","Napoleon"]
-- **vector**: [0.05,0.42,-0.15,0.28,0.33,0.22]
+- **keywords**: expansion,territory,Jefferson,Napoleon
+- **vector**: 0.05,0.42,-0.15,0.28,0.33,0.22
 
 ## Relationships
 
-### occurred_during
+### Outgoing
 
-- [[early-republic|Early Republic]]
+- **occurred_during** → [[early-republic]] (Early Republic)
+- **exemplifies** → [[manifest-destiny]] (Manifest Destiny)
 
-### exemplifies
+### Incoming
 
-- [[manifest-destiny|Manifest Destiny]]
-
-## Backlinks
-
-- [[jefferson|Thomas Jefferson]] (initiated)
+- **initiated** ← [[jefferson]] (Thomas Jefferson)
 

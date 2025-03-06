@@ -1,14 +1,14 @@
 ---
 type: equipment
 id: neural-recording
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Neural Recording Setup
 
-**Type**: equipment
-**ID**: neural-recording
+## Metadata
+
+- **Type**: equipment
+- **ID**: neural-recording
 
 ## Attributes
 
@@ -19,7 +19,9 @@ modified: 2025-03-05T01:16:02.671Z
 - **purchaseDate**: 2023-05-01
 - **maintenanceSchedule**: Weekly
 
-## Backlinks
+## Relationships
 
-- [[neural-basis|Neural Basis of Active Inference]] (uses)
+### Incoming
+
+- **uses** ← [[neural-basis]] (Neural Basis of Active Inference)
 

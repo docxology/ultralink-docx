@@ -1,150 +1,103 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Novel Approaches to Low-Light Computer Vision - ResearchTeam Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f0f8ff;
-      --text: #333333;
-      --link: #006699;
-      --accent: #4a9eff;
-      --border: #b3d9ff;
-      --text-color: #333333;
-      --bg-color: #f0f8ff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Novel Approaches to Low-Light Computer Vision</h1>
-  <div class="entity-type">publication</div>
+  <header>
+    <h1>Novel Approaches to Low-Light Computer Vision</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">title</td>
-            <td class="attribute-value">Novel Approaches to Low-Light Computer Vision</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>vision-paper-2022</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">authors</td>
-            <td class="attribute-value">alice-chen,carol-jones</td>
+          <tr>
+            <th>Type</th>
+            <td>publication</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">venue</td>
-            <td class="attribute-value">International Conference on Computer Vision 2022</td>
+          <tr>
+            <th>authors</th>
+            <td>alice-chen,carol-jones</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">year</td>
-            <td class="attribute-value">2022</td>
+          <tr>
+            <th>venue</th>
+            <td>International Conference on Computer Vision 2022</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">doi</td>
-            <td class="attribute-value">10.1234/vision2022</td>
+          <tr>
+            <th>year</th>
+            <td>2022</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">citations</td>
-            <td class="attribute-value">45</td>
+          <tr>
+            <th>doi</th>
+            <td>10.1234/vision2022</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">abstract</td>
-            <td class="attribute-value">This paper presents innovative techniques for computer vision in low-light conditions...</td>
+          <tr>
+            <th>citations</th>
+            <td>45</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="alice-chen.html">Alice Chen</a> <strong>authored</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="carol-jones.html">Carol Jones</a> <strong>authored</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('carol-jones')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="computer-vision-project.html">Advanced Computer Vision Systems</a> <strong>produced</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('computer-vision-project')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="survey-paper-2023.html">A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</a> <strong>cites</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('survey-paper-2023')" class="select-link" title="Select in graph">(select)</a></li><li class="relationship-item">
-        <a href="robotics-paper-2022.html">Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization</a> <strong>cites</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('robotics-paper-2022')" class="select-link" title="Select in graph">(select)</a></li></ul>
-  </div>
+          <tr>
+            <th>abstract</th>
+            <td>This paper presents innovative techniques for computer vision in low-light conditions...</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="alice-chen.html">Alice Chen</a> → 
+          <strong>authored</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="carol-jones.html">Carol Jones</a> → 
+          <strong>authored</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('carol-jones')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="computer-vision-project.html">Advanced Computer Vision Systems</a> → 
+          <strong>produced</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('computer-vision-project')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="survey-paper-2023.html">A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques</a> → 
+          <strong>cites</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('survey-paper-2023')" class="visualize-link">(visualize)</a>
+        </li>
+        <li class="relationship-item">
+          <a href="robotics-paper-2022.html">Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization</a> → 
+          <strong>cites</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('robotics-paper-2022')" class="visualize-link">(visualize)</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

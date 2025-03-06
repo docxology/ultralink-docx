@@ -1,14 +1,14 @@
 ---
 type: time_period
 id: civil-rights
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # Civil Rights Movement
 
-**Type**: time_period
-**ID**: civil-rights
+## Metadata
+
+- **Type**: time_period
+- **ID**: civil-rights
 
 ## Attributes
 
@@ -16,7 +16,9 @@ modified: 2025-03-05T01:16:02.702Z
 - **endYear**: 1968
 - **description**: Movement for racial equality and ending discrimination
 
-## Backlinks
+## Relationships
 
-- [[mlk-speech|I Have a Dream Speech]] (occurred_during)
+### Incoming
+
+- **occurred_during** ← [[mlk-speech]] (I Have a Dream Speech)
 

@@ -1,36 +1,36 @@
 ---
 type: knowledge-area
 id: machine-learning-theory
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Machine Learning Theory
 
-**Type**: knowledge-area
-**ID**: machine-learning-theory
+## Metadata
+
+- **Type**: knowledge-area
+- **ID**: machine-learning-theory
 
 ## Attributes
 
 - **description**: Fundamental theoretical concepts in machine learning
-- **topics**: ["Statistical Learning","Optimization","Information Theory"]
+- **topics**: Statistical Learning,Optimization,Information Theory
 
 ## Relationships
 
-### foundational_for
+### Outgoing
 
-- [[computer-vision|Computer Vision]]
-- [[nlp|Natural Language Processing]]
-- [[privacy-ml|Privacy-Preserving Machine Learning]]
-- [[quantum-ml|Quantum Machine Learning]]
-- [[reinforcement-learning|Reinforcement Learning]]
+- **foundational_for** → [[computer-vision]] (Computer Vision)
+- **foundational_for** → [[nlp]] (Natural Language Processing)
+- **foundational_for** → [[privacy-ml]] (Privacy-Preserving Machine Learning)
+- **foundational_for** → [[quantum-ml]] (Quantum Machine Learning)
+- **foundational_for** → [[reinforcement-learning]] (Reinforcement Learning)
 
-## Backlinks
+### Incoming
 
-- [[carol-jones|Carol Jones]] (expertise_in)
-- [[david-patel|David Patel]] (expertise_in)
-- [[computer-vision-project|Advanced Computer Vision Systems]] (applies)
-- [[nlp-project|Natural Language Understanding]] (applies)
-- [[federated-learning-project|Privacy-Preserving Federated Learning]] (applies)
-- [[quantum-ml-project|Quantum Approaches to Machine Learning]] (applies)
+- **expertise_in** ← [[carol-jones]] (Carol Jones)
+- **expertise_in** ← [[david-patel]] (David Patel)
+- **applies** ← [[computer-vision-project]] (Advanced Computer Vision Systems)
+- **applies** ← [[nlp-project]] (Natural Language Understanding)
+- **applies** ← [[federated-learning-project]] (Privacy-Preserving Federated Learning)
+- **applies** ← [[quantum-ml-project]] (Quantum Approaches to Machine Learning)
 

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "saguaro_adapts_to_aridity_1741235843847",
+    "source": "saguaro",
+    "target": "aridity",
+    "type": "adapts_to",
+    "attributes": {
+      "mechanism": "Water storage in stem",
+      "efficiency": 0.95
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.847Z",
+      "modified": "2025-03-06T04:37:23.847Z"
+    }
+  },
+  {
+    "id": "kangaroo-rat_adapts_to_aridity_1741235843847",
+    "source": "kangaroo-rat",
+    "target": "aridity",
+    "type": "adapts_to",
+    "attributes": {
+      "mechanism": "Metabolic water production",
+      "efficiency": 0.88
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.847Z",
+      "modified": "2025-03-06T04:37:23.847Z"
+    }
+  }
+]

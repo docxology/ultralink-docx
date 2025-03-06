@@ -1,14 +1,14 @@
 ---
 type: project
 id: federated-learning-project
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Privacy-Preserving Federated Learning
 
-**Type**: project
-**ID**: federated-learning-project
+## Metadata
+
+- **Type**: project
+- **ID**: federated-learning-project
 
 ## Attributes
 
@@ -17,30 +17,24 @@ modified: 2025-03-05T01:16:02.517Z
 - **endDate**: 2025-02-28
 - **status**: active
 - **budget**: 650000
-- **objectives**: ["Reduce communication overhead in federated systems","Enhance privacy guarantees beyond differential privacy","Deploy to real-world healthcare applications"]
+- **objectives**: Reduce communication overhead in federated systems,Enhance privacy guarantees beyond differential privacy,Deploy to real-world healthcare applications
 
 ## Relationships
 
-### produced
+### Outgoing
 
-- [[federated-paper-2023|Communication-Efficient Federated Learning with Adaptive Compression]]
-- [[survey-paper-2023|A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques]]
+- **produced** → [[federated-paper-2023]] (Communication-Efficient Federated Learning with Adaptive Compression)
+- **produced** → [[survey-paper-2023]] (A Comprehensive Survey of Privacy-Preserving Machine Learning Techniques)
+- **uses** → [[gpu-cluster]] (High-Performance GPU Cluster)
+- **uses** → [[hpc-cluster]] (University High-Performance Computing Cluster)
+- **applies** → [[privacy-ml]] (Privacy-Preserving Machine Learning)
+- **applies** → [[machine-learning-theory]] (Machine Learning Theory)
 
-### uses
+### Incoming
 
-- [[gpu-cluster|High-Performance GPU Cluster]]
-- [[hpc-cluster|University High-Performance Computing Cluster]]
-
-### applies
-
-- [[privacy-ml|Privacy-Preserving Machine Learning]]
-- [[machine-learning-theory|Machine Learning Theory]]
-
-## Backlinks
-
-- [[david-patel|David Patel]] (leads)
-- [[alice-chen|Alice Chen]] (contributes_to)
-- [[bob-smith|Bob Smith]] (contributes_to)
-- [[tech-partner|Tech Industry Partnership]] (funds)
-- [[grace-kim|Grace Kim]] (administers)
+- **leads** ← [[david-patel]] (David Patel)
+- **contributes_to** ← [[alice-chen]] (Alice Chen)
+- **contributes_to** ← [[bob-smith]] (Bob Smith)
+- **funds** ← [[tech-partner]] (Tech Industry Partnership)
+- **administers** ← [[grace-kim]] (Grace Kim)
 

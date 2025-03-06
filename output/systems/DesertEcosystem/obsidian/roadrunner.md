@@ -1,14 +1,14 @@
 ---
 type: animal
 id: roadrunner
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Greater Roadrunner
 
-**Type**: animal
-**ID**: roadrunner
+## Metadata
+
+- **Type**: animal
+- **ID**: roadrunner
 
 ## Attributes
 
@@ -17,12 +17,12 @@ modified: 2025-03-05T01:16:02.596Z
 - **diet**: carnivore
 - **status**: least concern
 - **description**: Fast-running ground cuckoo that rarely flies.
-- **adaptations**: ["Can extract water from prey","Salt glands to excrete excess salt","Ground-dwelling to avoid flying in thin, hot air","Special feathers for insulation"]
+- **adaptations**: Can extract water from prey,Salt glands to excrete excess salt,Ground-dwelling to avoid flying in thin, hot air,Special feathers for insulation
 
 ## Relationships
 
-### preys_on
+### Outgoing
 
-- [[scorpion|Deathstalker Scorpion]] (frequency: common, method: hunting)
-- [[sidewinder|Sidewinder Rattlesnake]] (frequency: occasional, method: hunting)
+- **preys_on** → [[scorpion]] (Deathstalker Scorpion)
+- **preys_on** → [[sidewinder]] (Sidewinder Rattlesnake)
 

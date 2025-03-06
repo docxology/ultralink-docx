@@ -1,14 +1,14 @@
 ---
 type: microhabitat
 id: dune_field
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Sand Dune Field
 
-**Type**: microhabitat
-**ID**: dune_field
+## Metadata
+
+- **Type**: microhabitat
+- **ID**: dune_field
 
 ## Attributes
 
@@ -17,8 +17,10 @@ modified: 2025-03-05T01:16:02.596Z
 - **area**: large
 - **soilMoisture**: extremely low
 
-## Backlinks
+## Relationships
 
-- [[sidewinder|Sidewinder Rattlesnake]] (lives_in)
-- [[kangaroo_rat|Merriam's Kangaroo Rat]] (lives_in)
+### Incoming
+
+- **lives_in** ← [[sidewinder]] (Sidewinder Rattlesnake)
+- **lives_in** ← [[kangaroo_rat]] (Merriam's Kangaroo Rat)
 

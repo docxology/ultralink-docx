@@ -67,7 +67,13 @@ describe('HTML Website Features', () => {
     // Save files for manual inspection if needed
     const outputDir = getSystemOutputPath(testSystem, 'html-website');
     Object.entries(htmlFiles).forEach(([filename, content]) => {
-      fs.writeFileSync(path.join(outputDir, filename), content);
+      // Create directory if it doesn't exist
+      const filePath = path.join(outputDir, filename);
+      const dirPath = path.dirname(filePath);
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+      }
+      fs.writeFileSync(filePath, content);
     });
   });
   

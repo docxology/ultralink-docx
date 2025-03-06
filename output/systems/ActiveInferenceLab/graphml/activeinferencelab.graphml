@@ -1,49 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
-     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
-  <key id="name" for="node" attr.name="name" attr.type="string"/>
-  <key id="type" for="node" attr.name="type" attr.type="string"/>
-  <key id="role" for="node" attr.name="role" attr.type="string"/>
-  <key id="department" for="node" attr.name="department" attr.type="string"/>
-  <key id="email" for="node" attr.name="email" attr.type="string"/>
-  <key id="publications" for="node" attr.name="publications" attr.type="string"/>
-  <key id="expertise" for="node" attr.name="expertise" attr.type="string"/>
-  <key id="yearsExperience" for="node" attr.name="yearsExperience" attr.type="string"/>
-  <key id="status" for="node" attr.name="status" attr.type="string"/>
-  <key id="startDate" for="node" attr.name="startDate" attr.type="string"/>
-  <key id="endDate" for="node" attr.name="endDate" attr.type="string"/>
-  <key id="funding" for="node" attr.name="funding" attr.type="string"/>
-  <key id="fundingSource" for="node" attr.name="fundingSource" attr.type="string"/>
-  <key id="description" for="node" attr.name="description" attr.type="string"/>
-  <key id="field" for="node" attr.name="field" attr.type="string"/>
-  <key id="keyPapers" for="node" attr.name="keyPapers" attr.type="string"/>
-  <key id="location" for="node" attr.name="location" attr.type="string"/>
-  <key id="cost" for="node" attr.name="cost" attr.type="string"/>
-  <key id="purchaseDate" for="node" attr.name="purchaseDate" attr.type="string"/>
-  <key id="maintenanceSchedule" for="node" attr.name="maintenanceSchedule" attr.type="string"/>
-  <key id="title" for="node" attr.name="title" attr.type="string"/>
-  <key id="authors" for="node" attr.name="authors" attr.type="string"/>
-  <key id="journal" for="node" attr.name="journal" attr.type="string"/>
-  <key id="year" for="node" attr.name="year" attr.type="string"/>
-  <key id="doi" for="node" attr.name="doi" attr.type="string"/>
-  <key id="citations" for="node" attr.name="citations" attr.type="string"/>
-  <key id="type" for="edge" attr.name="type" attr.type="string"/>
-  <key id="role" for="edge" attr.name="role" attr.type="string"/>
-  <key id="timeCommitment" for="edge" attr.name="timeCommitment" attr.type="string"/>
-  <key id="startDate" for="edge" attr.name="startDate" attr.type="string"/>
-  <key id="centrality" for="edge" attr.name="centrality" attr.type="string"/>
-  <key id="innovation" for="edge" attr.name="innovation" attr.type="string"/>
-  <key id="relationship" for="edge" attr.name="relationship" attr.type="string"/>
-  <key id="strength" for="edge" attr.name="strength" attr.type="string"/>
-  <key id="frequency" for="edge" attr.name="frequency" attr.type="string"/>
-  <key id="priority" for="edge" attr.name="priority" attr.type="string"/>
-  <key id="contributionType" for="edge" attr.name="contributionType" attr.type="string"/>
-  <key id="contributionPercentage" for="edge" attr.name="contributionPercentage" attr.type="string"/>
-  <key id="contribution" for="edge" attr.name="contribution" attr.type="string"/>
-  <key id="depth" for="edge" attr.name="depth" attr.type="string"/>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
   <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="role" for="node" attr.name="role" attr.type="string"/>
+    <key id="department" for="node" attr.name="department" attr.type="string"/>
+    <key id="email" for="node" attr.name="email" attr.type="string"/>
+    <key id="publications" for="node" attr.name="publications" attr.type="string"/>
+    <key id="expertise" for="node" attr.name="expertise" attr.type="string"/>
+    <key id="yearsExperience" for="node" attr.name="yearsExperience" attr.type="string"/>
+    <key id="status" for="node" attr.name="status" attr.type="string"/>
+    <key id="startDate" for="node" attr.name="startDate" attr.type="string"/>
+    <key id="endDate" for="node" attr.name="endDate" attr.type="string"/>
+    <key id="funding" for="node" attr.name="funding" attr.type="string"/>
+    <key id="fundingSource" for="node" attr.name="fundingSource" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="field" for="node" attr.name="field" attr.type="string"/>
+    <key id="keyPapers" for="node" attr.name="keyPapers" attr.type="string"/>
+    <key id="location" for="node" attr.name="location" attr.type="string"/>
+    <key id="cost" for="node" attr.name="cost" attr.type="string"/>
+    <key id="purchaseDate" for="node" attr.name="purchaseDate" attr.type="string"/>
+    <key id="maintenanceSchedule" for="node" attr.name="maintenanceSchedule" attr.type="string"/>
+    <key id="title" for="node" attr.name="title" attr.type="string"/>
+    <key id="authors" for="node" attr.name="authors" attr.type="string"/>
+    <key id="journal" for="node" attr.name="journal" attr.type="string"/>
+    <key id="year" for="node" attr.name="year" attr.type="string"/>
+    <key id="doi" for="node" attr.name="doi" attr.type="string"/>
+    <key id="citations" for="node" attr.name="citations" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
     <node id="alice">
       <data key="type">researcher</data>
       <data key="name">Dr. Alice Chen</data>
@@ -168,7 +157,6 @@
     <node id="ant-tracking">
       <data key="type">equipment</data>
       <data key="name">Ant Tracking System</data>
-      <data key="type">Imaging</data>
       <data key="status">Operational</data>
       <data key="location">Main Lab</data>
       <data key="cost">75000</data>
@@ -178,7 +166,6 @@
     <node id="neural-recording">
       <data key="type">equipment</data>
       <data key="name">Neural Recording Setup</data>
-      <data key="type">Electrophysiology</data>
       <data key="status">Operational</data>
       <data key="location">Neuroscience Lab</data>
       <data key="cost">150000</data>
@@ -188,7 +175,6 @@
     <node id="computation-cluster">
       <data key="type">equipment</data>
       <data key="name">High Performance Computing Cluster</data>
-      <data key="type">Computing</data>
       <data key="status">Operational</data>
       <data key="location">Server Room</data>
       <data key="cost">200000</data>
@@ -223,213 +209,136 @@
       <data key="citations">3</data>
     </node>
     <edge source="alice" target="active-inference-model">
-      <data key="type">leads</data>
-      <data key="role">Principal Investigator</data>
-      <data key="timeCommitment">0.4</data>
+      <data key="relationship_type">leads</data>
     </edge>
     <edge source="bob" target="ant-colony-study">
-      <data key="type">leads</data>
-      <data key="role">Principal Investigator</data>
-      <data key="timeCommitment">0.5</data>
+      <data key="relationship_type">leads</data>
     </edge>
     <edge source="carol" target="active-inference-model">
-      <data key="type">contributes</data>
-      <data key="role">Lead Developer</data>
-      <data key="timeCommitment">0.6</data>
+      <data key="relationship_type">contributes</data>
     </edge>
     <edge source="david" target="active-inference-model">
-      <data key="type">contributes</data>
-      <data key="role">Data Analyst</data>
-      <data key="timeCommitment">0.8</data>
+      <data key="relationship_type">contributes</data>
     </edge>
     <edge source="emma" target="ant-colony-study">
-      <data key="type">contributes</data>
-      <data key="role">Field Researcher</data>
-      <data key="timeCommitment">0.7</data>
+      <data key="relationship_type">contributes</data>
     </edge>
     <edge source="frank" target="ant-colony-study">
-      <data key="type">contributes</data>
-      <data key="role">Lab Manager</data>
-      <data key="timeCommitment">0.3</data>
+      <data key="relationship_type">contributes</data>
     </edge>
     <edge source="bob" target="active-inference-model">
-      <data key="type">contributes_to</data>
-      <data key="role">Co-Investigator</data>
-      <data key="startDate">2022-03-15</data>
+      <data key="relationship_type">contributes_to</data>
     </edge>
     <edge source="carol" target="active-inference-model">
-      <data key="type">contributes_to</data>
-      <data key="role">Lead Researcher</data>
-      <data key="startDate">2022-09-01</data>
+      <data key="relationship_type">contributes_to</data>
     </edge>
     <edge source="david" target="ant-colony-study">
-      <data key="type">contributes_to</data>
-      <data key="role">Behavioral Consultant</data>
-      <data key="startDate">2024-02-10</data>
-      <data key="timeCommitment">25%</data>
+      <data key="relationship_type">contributes_to</data>
     </edge>
     <edge source="grace" target="ant-colony-study">
-      <data key="type">contributes_to</data>
-      <data key="role">Lab Technician</data>
-      <data key="startDate">2023-01-10</data>
+      <data key="relationship_type">contributes_to</data>
     </edge>
     <edge source="frank" target="ant-colony-study">
-      <data key="type">contributes_to</data>
-      <data key="role">Mathematical Modeling</data>
-      <data key="startDate">2022-11-15</data>
+      <data key="relationship_type">contributes_to</data>
     </edge>
     <edge source="emma" target="ant-colony-study">
-      <data key="type">contributes_to</data>
-      <data key="role">Algorithm Developer</data>
-      <data key="startDate">2024-01-05</data>
+      <data key="relationship_type">contributes_to</data>
     </edge>
     <edge source="alice" target="david">
-      <data key="type">mentors</data>
-      <data key="type">PhD Advisor</data>
-      <data key="startDate">2022-09-01</data>
+      <data key="relationship_type">mentors</data>
     </edge>
     <edge source="bob" target="emma">
-      <data key="type">mentors</data>
-      <data key="type">PhD Advisor</data>
-      <data key="startDate">2022-09-01</data>
+      <data key="relationship_type">mentors</data>
     </edge>
     <edge source="alice" target="carol">
-      <data key="type">mentors</data>
-      <data key="type">Postdoc Advisor</data>
-      <data key="startDate">2023-01-15</data>
+      <data key="relationship_type">mentors</data>
     </edge>
     <edge source="frank" target="emma">
-      <data key="type">co_advises</data>
-      <data key="startDate">2022-09-01</data>
+      <data key="relationship_type">co_advises</data>
     </edge>
     <edge source="carol" target="alice">
-      <data key="type">reports_to</data>
-      <data key="startDate">2022-01-15</data>
+      <data key="relationship_type">reports_to</data>
     </edge>
     <edge source="david" target="bob">
-      <data key="type">reports_to</data>
-      <data key="startDate">2021-09-01</data>
+      <data key="relationship_type">reports_to</data>
     </edge>
     <edge source="emma" target="alice">
-      <data key="type">reports_to</data>
-      <data key="startDate">2022-09-01</data>
+      <data key="relationship_type">reports_to</data>
     </edge>
     <edge source="grace" target="bob">
-      <data key="type">reports_to</data>
-      <data key="startDate">2020-05-15</data>
+      <data key="relationship_type">reports_to</data>
     </edge>
     <edge source="active-inference-model" target="active-inference">
-      <data key="type">applies</data>
-      <data key="centrality">Core</data>
-      <data key="innovation">Novel application to collective behavior</data>
+      <data key="relationship_type">applies</data>
     </edge>
     <edge source="ant-colony-study" target="collective-behavior">
-      <data key="type">applies</data>
-      <data key="centrality">Core</data>
-      <data key="innovation">Field validation of theoretical predictions</data>
+      <data key="relationship_type">applies</data>
     </edge>
     <edge source="active-inference" target="collective-behavior">
-      <data key="type">relates_to</data>
-      <data key="relationship">Theoretical framework application</data>
-      <data key="strength">Strong</data>
+      <data key="relationship_type">relates_to</data>
     </edge>
     <edge source="ant-colony-study" target="ant-tracking">
-      <data key="type">uses</data>
-      <data key="frequency">Daily</data>
-      <data key="priority">High</data>
+      <data key="relationship_type">uses</data>
     </edge>
     <edge source="active-inference-model" target="computation-cluster">
-      <data key="type">uses</data>
-      <data key="frequency">Continuous</data>
-      <data key="priority">High</data>
+      <data key="relationship_type">uses</data>
     </edge>
     <edge source="neural-basis" target="neural-recording">
-      <data key="type">uses</data>
-      <data key="frequency">Daily</data>
-      <data key="priority">High</data>
+      <data key="relationship_type">uses</data>
     </edge>
     <edge source="alice" target="paper-2023a">
-      <data key="type">authored</data>
-      <data key="contributionType">corresponding author</data>
-      <data key="contributionPercentage">40</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="bob" target="paper-2023a">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">30</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="carol" target="paper-2023a">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">30</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="bob" target="paper-2023b">
-      <data key="type">authored</data>
-      <data key="contributionType">corresponding author</data>
-      <data key="contributionPercentage">50</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="emma" target="paper-2023b">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">30</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="frank" target="paper-2023b">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">20</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="alice" target="paper-2024">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">25</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="bob" target="paper-2024">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">30</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="carol" target="paper-2024">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">30</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="david" target="paper-2024">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">30</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="grace" target="paper-2024">
-      <data key="type">authored</data>
-      <data key="contributionType">co-author</data>
-      <data key="contributionPercentage">20</data>
+      <data key="relationship_type">authored</data>
     </edge>
     <edge source="paper-2023a" target="active-inference-model">
-      <data key="type">results_from</data>
-      <data key="contribution">Primary theoretical framework</data>
+      <data key="relationship_type">results_from</data>
     </edge>
     <edge source="paper-2023b" target="ant-colony-study">
-      <data key="type">results_from</data>
-      <data key="contribution">Initial field study findings</data>
+      <data key="relationship_type">results_from</data>
     </edge>
     <edge source="paper-2024" target="active-inference-model">
-      <data key="type">results_from</data>
-      <data key="contribution">Computational modeling results</data>
+      <data key="relationship_type">results_from</data>
     </edge>
     <edge source="paper-2024" target="ant-colony-study">
-      <data key="type">results_from</data>
-      <data key="contribution">Empirical validation</data>
+      <data key="relationship_type">results_from</data>
     </edge>
     <edge source="paper-2023a" target="active-inference">
-      <data key="type">discusses</data>
-      <data key="depth">comprehensive</data>
+      <data key="relationship_type">discusses</data>
     </edge>
     <edge source="paper-2023b" target="collective-behavior">
-      <data key="type">discusses</data>
-      <data key="depth">substantial</data>
+      <data key="relationship_type">discusses</data>
     </edge>
     <edge source="paper-2024" target="swarm-intelligence">
-      <data key="type">discusses</data>
-      <data key="depth">comprehensive</data>
+      <data key="relationship_type">discusses</data>
     </edge>
   </graph>
 </graphml>

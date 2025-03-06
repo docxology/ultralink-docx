@@ -1,162 +1,179 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ant Colony Decision Making Study - ActiveInferenceLab Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #ffffff;
-      --text: #000000;
-      --link: #0066cc;
-      --accent: #666666;
-      --border: #dddddd;
-      --text-color: #000000;
-      --bg-color: #ffffff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Ant Colony Decision Making Study</h1>
-  <div class="entity-type">project</div>
+  <header>
+    <h1>Ant Colony Decision Making Study</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Ant Colony Decision Making Study</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>ant-colony-study</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">status</td>
-            <td class="attribute-value">Active</td>
+          <tr>
+            <th>Type</th>
+            <td>project</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">startDate</td>
-            <td class="attribute-value">2023-06-01</td>
+          <tr>
+            <th>status</th>
+            <td>Active</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">endDate</td>
-            <td class="attribute-value">2024-12-31</td>
+          <tr>
+            <th>startDate</th>
+            <td>2023-06-01</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">funding</td>
-            <td class="attribute-value">250000</td>
+          <tr>
+            <th>endDate</th>
+            <td>2024-12-31</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">fundingSource</td>
-            <td class="attribute-value">University Grant</td>
+          <tr>
+            <th>funding</th>
+            <td>250000</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Field study of ant colony decision-making processes in natural environments</td>
+          <tr>
+            <th>fundingSource</th>
+            <td>University Grant</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>applies</strong> → <a href="collective-behavior.html">Collective Behavior</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('collective-behavior')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>centrality:</strong> Core</small> <small><strong>innovation:</strong> Field validation of theoretical predictions</small> </div></li><li class="relationship-item">
-        <strong>uses</strong> → <a href="ant-tracking.html">Ant Tracking System</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('ant-tracking')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> Daily</small> <small><strong>priority:</strong> High</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="bob.html">Dr. Bob Smith</a> <strong>leads</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Principal Investigator</small> <small><strong>timeCommitment:</strong> 0.5</small> </div></li><li class="relationship-item">
-        <a href="emma.html">Emma Taylor</a> <strong>contributes</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Field Researcher</small> <small><strong>timeCommitment:</strong> 0.7</small> </div></li><li class="relationship-item">
-        <a href="frank.html">Dr. Frank Martinez</a> <strong>contributes</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Lab Manager</small> <small><strong>timeCommitment:</strong> 0.3</small> </div></li><li class="relationship-item">
-        <a href="david.html">David Wilson</a> <strong>contributes_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('david')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Behavioral Consultant</small> <small><strong>startDate:</strong> 2024-02-10</small> <small><strong>timeCommitment:</strong> 25%</small> </div></li><li class="relationship-item">
-        <a href="grace.html">Grace Kim</a> <strong>contributes_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('grace')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Lab Technician</small> <small><strong>startDate:</strong> 2023-01-10</small> </div></li><li class="relationship-item">
-        <a href="frank.html">Dr. Frank Martinez</a> <strong>contributes_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Mathematical Modeling</small> <small><strong>startDate:</strong> 2022-11-15</small> </div></li><li class="relationship-item">
-        <a href="emma.html">Emma Taylor</a> <strong>contributes_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>role:</strong> Algorithm Developer</small> <small><strong>startDate:</strong> 2024-01-05</small> </div></li><li class="relationship-item">
-        <a href="paper-2023b.html">Decision Making Patterns in Ant Colonies: A Field Study</a> <strong>results_from</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('paper-2023b')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contribution:</strong> Initial field study findings</small> </div></li><li class="relationship-item">
-        <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a> <strong>results_from</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('paper-2024')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>contribution:</strong> Empirical validation</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>description</th>
+            <td>Field study of ant colony decision-making processes in natural environments</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>applies</strong> → 
+          <a href="collective-behavior.html">Collective Behavior</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('collective-behavior')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>centrality:</strong> Core</span>
+            <span><strong>innovation:</strong> Field validation of theoretical predictions</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>uses</strong> → 
+          <a href="ant-tracking.html">Ant Tracking System</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('ant-tracking')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> Daily</span>
+            <span><strong>priority:</strong> High</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="bob.html">Dr. Bob Smith</a> → 
+          <strong>leads</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Principal Investigator</span>
+            <span><strong>timeCommitment:</strong> 0.5</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="emma.html">Emma Taylor</a> → 
+          <strong>contributes</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Field Researcher</span>
+            <span><strong>timeCommitment:</strong> 0.7</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="frank.html">Dr. Frank Martinez</a> → 
+          <strong>contributes</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Lab Manager</span>
+            <span><strong>timeCommitment:</strong> 0.3</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="david.html">David Wilson</a> → 
+          <strong>contributes_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('david')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Behavioral Consultant</span>
+            <span><strong>startDate:</strong> 2024-02-10</span>
+            <span><strong>timeCommitment:</strong> 25%</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="grace.html">Grace Kim</a> → 
+          <strong>contributes_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('grace')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Lab Technician</span>
+            <span><strong>startDate:</strong> 2023-01-10</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="frank.html">Dr. Frank Martinez</a> → 
+          <strong>contributes_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Mathematical Modeling</span>
+            <span><strong>startDate:</strong> 2022-11-15</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="emma.html">Emma Taylor</a> → 
+          <strong>contributes_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>role:</strong> Algorithm Developer</span>
+            <span><strong>startDate:</strong> 2024-01-05</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="paper-2023b.html">Decision Making Patterns in Ant Colonies: A Field Study</a> → 
+          <strong>results_from</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('paper-2023b')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>contribution:</strong> Initial field study findings</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a> → 
+          <strong>results_from</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('paper-2024')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>contribution:</strong> Empirical validation</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

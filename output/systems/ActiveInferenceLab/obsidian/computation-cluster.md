@@ -1,14 +1,14 @@
 ---
 type: equipment
 id: computation-cluster
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # High Performance Computing Cluster
 
-**Type**: equipment
-**ID**: computation-cluster
+## Metadata
+
+- **Type**: equipment
+- **ID**: computation-cluster
 
 ## Attributes
 
@@ -19,7 +19,9 @@ modified: 2025-03-05T01:16:02.671Z
 - **purchaseDate**: 2022-11-01
 - **maintenanceSchedule**: Monthly
 
-## Backlinks
+## Relationships
 
-- [[active-inference-model|Active Inference Modeling of Collective Behavior]] (uses)
+### Incoming
+
+- **uses** ← [[active-inference-model]] (Active Inference Modeling of Collective Behavior)
 

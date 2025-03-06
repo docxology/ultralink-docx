@@ -1,14 +1,14 @@
 ---
 type: funding
 id: nsf-grant
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # NSF Research Grant
 
-**Type**: funding
-**ID**: nsf-grant
+## Metadata
+
+- **Type**: funding
+- **ID**: nsf-grant
 
 ## Attributes
 
@@ -21,8 +21,8 @@ modified: 2025-03-05T01:16:02.517Z
 
 ## Relationships
 
-### funds
+### Outgoing
 
-- [[computer-vision-project|Advanced Computer Vision Systems]]
-- [[adaptive-robotics-project|Adaptive Robotics Control]]
+- **funds** → [[computer-vision-project]] (Advanced Computer Vision Systems)
+- **funds** → [[adaptive-robotics-project]] (Adaptive Robotics Control)
 

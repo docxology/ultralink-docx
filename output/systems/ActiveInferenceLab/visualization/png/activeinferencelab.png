@@ -1,5 +1,136 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><style>
-    .links line { stroke: #999; stroke-opacity: 0.6; }
-    .nodes circle { stroke: #fff; stroke-width: 1.5px; }
-    text { font-family: Arial, sans-serif; font-size: 12px; }
-  </style><g class="links"><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="0" y2="600" stroke="gray" stroke-width="1" /><line x1="800" y1="0" x2="0" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /><line x1="0" y1="600" x2="800" y2="0" stroke="gray" stroke-width="1" /></g><g class="nodes"><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Dr. Alice Chen</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Dr. Bob Smith</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">Dr. Carol Jimenez</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">David Wilson</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Emma Taylor</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Dr. Frank Martinez</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Grace Kim</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Active Inference Modeling of Collective Behavior</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">Ant Colony Decision Making Study</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Neural Basis of Active Inference</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Active Inference</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Collective Behavior</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Swarm Intelligence</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">Ant Tracking System</text><circle cx="0" cy="0" r="5" fill="#4285F4" /><text x="0" y="20" text-anchor="middle" font-size="12">Neural Recording Setup</text><circle cx="800" cy="600" r="5" fill="#4285F4" /><text x="800" y="620" text-anchor="middle" font-size="12">High Performance Computing Cluster</text><circle cx="800" cy="0" r="5" fill="#4285F4" /><text x="800" y="20" text-anchor="middle" font-size="12">paper-2023a</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">paper-2023b</text><circle cx="0" cy="600" r="5" fill="#4285F4" /><text x="0" y="620" text-anchor="middle" font-size="12">paper-2024</text></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <style>
+    .node { fill: #69b3a2; stroke: #fff; stroke-width: 1.5px; }
+    .node-person { fill: #4e79a7; }
+    .node-project { fill: #f28e2c; }
+    .node-resource { fill: #e15759; }
+    .node-concept { fill: #76b7b2; }
+    .link { stroke: #999; stroke-opacity: 0.6; stroke-width: 1px; }
+    text { font-family: sans-serif; font-size: 10px; fill: #333; }
+  </style>
+  <g class="links">
+    <line class="link" x1="100" y1="100" x2="400" y2="250" data-type="leads"/>
+    <line class="link" x1="250" y1="100" x2="550" y2="250" data-type="leads"/>
+    <line class="link" x1="400" y1="100" x2="400" y2="250" data-type="contributes"/>
+    <line class="link" x1="550" y1="100" x2="400" y2="250" data-type="contributes"/>
+    <line class="link" x1="700" y1="100" x2="550" y2="250" data-type="contributes"/>
+    <line class="link" x1="100" y1="250" x2="550" y2="250" data-type="contributes"/>
+    <line class="link" x1="250" y1="100" x2="400" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="400" y1="100" x2="400" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="550" y1="100" x2="550" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="250" y1="250" x2="550" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="100" y1="250" x2="550" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="700" y1="100" x2="550" y2="250" data-type="contributes_to"/>
+    <line class="link" x1="100" y1="100" x2="550" y2="100" data-type="mentors"/>
+    <line class="link" x1="250" y1="100" x2="700" y2="100" data-type="mentors"/>
+    <line class="link" x1="100" y1="100" x2="400" y2="100" data-type="mentors"/>
+    <line class="link" x1="100" y1="250" x2="700" y2="100" data-type="co_advises"/>
+    <line class="link" x1="400" y1="100" x2="100" y2="100" data-type="reports_to"/>
+    <line class="link" x1="550" y1="100" x2="250" y2="100" data-type="reports_to"/>
+    <line class="link" x1="700" y1="100" x2="100" y2="100" data-type="reports_to"/>
+    <line class="link" x1="250" y1="250" x2="250" y2="100" data-type="reports_to"/>
+    <line class="link" x1="400" y1="250" x2="100" y2="400" data-type="applies"/>
+    <line class="link" x1="550" y1="250" x2="250" y2="400" data-type="applies"/>
+    <line class="link" x1="100" y1="400" x2="250" y2="400" data-type="relates_to"/>
+    <line class="link" x1="550" y1="250" x2="550" y2="400" data-type="uses"/>
+    <line class="link" x1="400" y1="250" x2="100" y2="550" data-type="uses"/>
+    <line class="link" x1="700" y1="250" x2="700" y2="400" data-type="uses"/>
+    <line class="link" x1="100" y1="100" x2="250" y2="550" data-type="authored"/>
+    <line class="link" x1="250" y1="100" x2="250" y2="550" data-type="authored"/>
+    <line class="link" x1="400" y1="100" x2="250" y2="550" data-type="authored"/>
+    <line class="link" x1="250" y1="100" x2="400" y2="550" data-type="authored"/>
+    <line class="link" x1="700" y1="100" x2="400" y2="550" data-type="authored"/>
+    <line class="link" x1="100" y1="250" x2="400" y2="550" data-type="authored"/>
+    <line class="link" x1="100" y1="100" x2="550" y2="550" data-type="authored"/>
+    <line class="link" x1="250" y1="100" x2="550" y2="550" data-type="authored"/>
+    <line class="link" x1="400" y1="100" x2="550" y2="550" data-type="authored"/>
+    <line class="link" x1="550" y1="100" x2="550" y2="550" data-type="authored"/>
+    <line class="link" x1="250" y1="250" x2="550" y2="550" data-type="authored"/>
+    <line class="link" x1="250" y1="550" x2="400" y2="250" data-type="results_from"/>
+    <line class="link" x1="400" y1="550" x2="550" y2="250" data-type="results_from"/>
+    <line class="link" x1="550" y1="550" x2="400" y2="250" data-type="results_from"/>
+    <line class="link" x1="550" y1="550" x2="550" y2="250" data-type="results_from"/>
+    <line class="link" x1="250" y1="550" x2="100" y2="400" data-type="discusses"/>
+    <line class="link" x1="400" y1="550" x2="250" y2="400" data-type="discusses"/>
+    <line class="link" x1="550" y1="550" x2="400" y2="400" data-type="discusses"/>
+  </g>
+  <g class="nodes">
+    <circle class="node node-researcher" cx="100" cy="100" r="10">
+      <title>Dr. Alice Chen</title>
+    </circle>
+    <text x="115" y="105">Dr. Alice Chen</text>
+    <circle class="node node-researcher" cx="250" cy="100" r="10">
+      <title>Dr. Bob Smith</title>
+    </circle>
+    <text x="265" y="105">Dr. Bob Smith</text>
+    <circle class="node node-researcher" cx="400" cy="100" r="10">
+      <title>Dr. Carol Jimenez</title>
+    </circle>
+    <text x="415" y="105">Dr. Carol Jimenez</text>
+    <circle class="node node-researcher" cx="550" cy="100" r="10">
+      <title>David Wilson</title>
+    </circle>
+    <text x="565" y="105">David Wilson</text>
+    <circle class="node node-researcher" cx="700" cy="100" r="10">
+      <title>Emma Taylor</title>
+    </circle>
+    <text x="715" y="105">Emma Taylor</text>
+    <circle class="node node-researcher" cx="100" cy="250" r="10">
+      <title>Dr. Frank Martinez</title>
+    </circle>
+    <text x="115" y="255">Dr. Frank Martinez</text>
+    <circle class="node node-researcher" cx="250" cy="250" r="10">
+      <title>Grace Kim</title>
+    </circle>
+    <text x="265" y="255">Grace Kim</text>
+    <circle class="node node-project" cx="400" cy="250" r="10">
+      <title>Active Inference Modeling of Collective Behavior</title>
+    </circle>
+    <text x="415" y="255">Active Inference Modeling of Collective Behavior</text>
+    <circle class="node node-project" cx="550" cy="250" r="10">
+      <title>Ant Colony Decision Making Study</title>
+    </circle>
+    <text x="565" y="255">Ant Colony Decision Making Study</text>
+    <circle class="node node-project" cx="700" cy="250" r="10">
+      <title>Neural Basis of Active Inference</title>
+    </circle>
+    <text x="715" y="255">Neural Basis of Active Inference</text>
+    <circle class="node node-concept" cx="100" cy="400" r="10">
+      <title>Active Inference</title>
+    </circle>
+    <text x="115" y="405">Active Inference</text>
+    <circle class="node node-concept" cx="250" cy="400" r="10">
+      <title>Collective Behavior</title>
+    </circle>
+    <text x="265" y="405">Collective Behavior</text>
+    <circle class="node node-concept" cx="400" cy="400" r="10">
+      <title>Swarm Intelligence</title>
+    </circle>
+    <text x="415" y="405">Swarm Intelligence</text>
+    <circle class="node node-equipment" cx="550" cy="400" r="10">
+      <title>Ant Tracking System</title>
+    </circle>
+    <text x="565" y="405">Ant Tracking System</text>
+    <circle class="node node-equipment" cx="700" cy="400" r="10">
+      <title>Neural Recording Setup</title>
+    </circle>
+    <text x="715" y="405">Neural Recording Setup</text>
+    <circle class="node node-equipment" cx="100" cy="550" r="10">
+      <title>High Performance Computing Cluster</title>
+    </circle>
+    <text x="115" y="555">High Performance Computing Cluster</text>
+    <circle class="node node-publication" cx="250" cy="550" r="10">
+      <title>paper-2023a</title>
+    </circle>
+    <text x="265" y="555">paper-2023a</text>
+    <circle class="node node-publication" cx="400" cy="550" r="10">
+      <title>paper-2023b</title>
+    </circle>
+    <text x="415" y="555">paper-2023b</text>
+    <circle class="node node-publication" cx="550" cy="550" r="10">
+      <title>paper-2024</title>
+    </circle>
+    <text x="565" y="555">paper-2024</text>
+  </g>
+</svg>

@@ -1,14 +1,14 @@
 ---
 type: person
 id: bob-johnson
-created: 2025-03-05T01:16:03.432Z
-modified: 2025-03-05T01:16:03.432Z
 ---
 
 # Bob Johnson
 
-**Type**: person
-**ID**: bob-johnson
+## Metadata
+
+- **Type**: person
+- **ID**: bob-johnson
 
 ## Attributes
 
@@ -17,8 +17,8 @@ modified: 2025-03-05T01:16:03.432Z
 
 ## Relationships
 
-### works_on
+### Outgoing
 
-- [[project-alpha|Project Alpha]]
-- [[project-beta|Project Beta]]
+- **works_on** → [[project-alpha]] (Project Alpha)
+- **works_on** → [[project-beta]] (Project Beta)
 

@@ -1,14 +1,14 @@
 ---
 type: plant
 id: joshua_tree
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Joshua Tree
 
-**Type**: plant
-**ID**: joshua_tree
+## Metadata
+
+- **Type**: plant
+- **ID**: joshua_tree
 
 ## Attributes
 
@@ -16,19 +16,16 @@ modified: 2025-03-05T01:16:02.596Z
 - **height**: 1200
 - **waterRequirement**: low
 - **description**: Iconic tree-like yucca of the Mojave Desert with unique appearance.
-- **adaptations**: ["Extensive shallow root system","Thick, moisture-retaining trunk","Waxy, spine-tipped leaves reduce water loss","Specialized pollination relationship with yucca moth","Slow growth rate conserves resources"]
+- **adaptations**: Extensive shallow root system,Thick, moisture-retaining trunk,Waxy, spine-tipped leaves reduce water loss,Specialized pollination relationship with yucca moth,Slow growth rate conserves resources
 
 ## Relationships
 
-### grows_in
+### Outgoing
 
-- [[sandy_soil|Sandy Soil]] (frequency: permanent, dependency: high)
+- **grows_in** → [[sandy_soil]] (Sandy Soil)
+- **mutual_dependency** → [[yucca_moth]] (Yucca Moth)
 
-### mutual_dependency
+### Incoming
 
-- [[yucca_moth|Yucca Moth]] (relationship: obligate reproductive site, strength: extreme)
-
-## Backlinks
-
-- [[yucca_moth|Yucca Moth]] (mutual_dependency)
+- **mutual_dependency** ← [[yucca_moth]] (Yucca Moth)
 

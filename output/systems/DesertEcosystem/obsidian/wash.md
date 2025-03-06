@@ -1,14 +1,14 @@
 ---
 type: microhabitat
 id: wash
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Desert Wash
 
-**Type**: microhabitat
-**ID**: wash
+## Metadata
+
+- **Type**: microhabitat
+- **ID**: wash
 
 ## Attributes
 
@@ -17,9 +17,11 @@ modified: 2025-03-05T01:16:02.596Z
 - **area**: variable
 - **soilMoisture**: higher than surroundings
 
-## Backlinks
+## Relationships
 
-- [[cactus_wren|Cactus Wren]] (lives_in)
-- [[mesquite|Honey Mesquite]] (grows_in)
-- [[desert_ironwood|Desert Ironwood]] (grows_in)
+### Incoming
+
+- **lives_in** ← [[cactus_wren]] (Cactus Wren)
+- **grows_in** ← [[mesquite]] (Honey Mesquite)
+- **grows_in** ← [[desert_ironwood]] (Desert Ironwood)
 

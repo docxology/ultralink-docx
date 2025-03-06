@@ -1,0 +1,30 @@
+[
+  {
+    "id": "alice-chen_leads_nlp-project_1741235843850",
+    "source": "alice-chen",
+    "target": "nlp-project",
+    "type": "leads",
+    "attributes": {
+      "role": "Principal Investigator",
+      "startDate": "2023-01-15"
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.850Z",
+      "modified": "2025-03-06T04:37:23.850Z"
+    }
+  },
+  {
+    "id": "alice-chen_authored_ml-paper_1741235843850",
+    "source": "alice-chen",
+    "target": "ml-paper",
+    "type": "authored",
+    "attributes": {
+      "contribution": "Lead author",
+      "date": "2023-06-01"
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.850Z",
+      "modified": "2025-03-06T04:37:23.850Z"
+    }
+  }
+]

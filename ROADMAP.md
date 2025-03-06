@@ -1,3 +1,7 @@
+Update and add to this so the earlier date is March 2025, and the roadmap goes through 2027 (including relevant tech that will come out in that period). 
+
+
+
 # UltraLink Development Roadmap 🗺️
 
 This document outlines the development roadmap for UltraLink, including planned features, improvements, and strategic directions. The roadmap is organized by release milestones and priority areas.
@@ -370,4 +374,4 @@ This roadmap is dynamic and we value community input to help prioritize features
 
 - 💬 [GitHub Discussions](https://github.com/docxology/ultralink/discussions/categories/roadmap)
 - 🐞 [Feature Requests](https://github.com/docxology/ultralink/issues/new?template=feature_request.md)
-- 📧 [Email Feedback](mailto:daniel@activeinference.institute)
+- 📧 [Email Feedback](mailto:DanielAriFriedman@gmail.com)

@@ -121,10 +121,93 @@ function findEntities({ type = null, attributes = {}, filter = null } = {}) {
   return results;
 }
 
+/**
+ * EntityStore - Class for storing and managing entities
+ * 
+ * This class provides a simple interface for storing and retrieving entities.
+ * It is used by the UltraLinkParser for integration tests.
+ */
+class EntityStore {
+  /**
+   * Create a new EntityStore instance
+   */
+  constructor() {
+    this.entities = new Map();
+    this.relationships = new Map();
+  }
+
+  /**
+   * Add a new entity to the store
+   * @param {string} id - Unique identifier for the entity
+   * @param {string} type - Type/category of the entity
+   * @param {Object} attributes - Additional properties of the entity
+   * @returns {Object} The created entity
+   */
+  addEntity(id, type, attributes = {}) {
+    const entity = {
+      id,
+      type,
+      attributes: { ...attributes },
+      metadata: {
+        created: new Date().toISOString(),
+        modified: new Date().toISOString()
+      }
+    };
+
+    this.entities.set(id, entity);
+    return entity;
+  }
+
+  /**
+   * Get an entity by ID
+   * @param {string} id - Entity ID
+   * @returns {Object|null} The entity or null if not found
+   */
+  getEntity(id) {
+    return this.entities.get(id) || null;
+  }
+
+  /**
+   * Add a relationship between entities
+   * @param {string} sourceId - Source entity ID
+   * @param {string} targetId - Target entity ID
+   * @param {string} type - Relationship type
+   * @param {Object} attributes - Additional properties
+   * @returns {Object} The created relationship
+   */
+  addRelationship(sourceId, targetId, type = 'related_to', attributes = {}) {
+    const id = `${sourceId}-${type}-${targetId}`;
+    
+    const relationship = {
+      id,
+      source: sourceId,
+      target: targetId,
+      type,
+      attributes: { ...attributes },
+      metadata: {
+        created: new Date().toISOString(),
+        modified: new Date().toISOString()
+      }
+    };
+
+    this.relationships.set(id, relationship);
+    return relationship;
+  }
+
+  /**
+   * Clear all entities and relationships
+   */
+  async clear() {
+    this.entities.clear();
+    this.relationships.clear();
+  }
+}
+
 module.exports = {
   addEntity,
   getEntity,
   updateEntity,
   deleteEntity,
-  findEntities
+  findEntities,
+  EntityStore
 }; 

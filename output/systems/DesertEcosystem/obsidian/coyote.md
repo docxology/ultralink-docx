@@ -1,14 +1,14 @@
 ---
 type: animal
 id: coyote
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Coyote
 
-**Type**: animal
-**ID**: coyote
+## Metadata
+
+- **Type**: animal
+- **ID**: coyote
 
 ## Attributes
 
@@ -17,20 +17,14 @@ modified: 2025-03-05T01:16:02.596Z
 - **diet**: omnivore
 - **status**: least concern
 - **description**: Adaptable canid found throughout North American deserts and beyond.
-- **adaptations**: ["Can survive on minimal water obtained from prey","Opportunistic feeding habits","Highly adaptable to different habitats","Active during cooler parts of day","Efficient predator of small desert mammals"]
+- **adaptations**: Can survive on minimal water obtained from prey,Opportunistic feeding habits,Highly adaptable to different habitats,Active during cooler parts of day,Efficient predator of small desert mammals
 
 ## Relationships
 
-### adapted_to
+### Outgoing
 
-- [[aridity|Aridity]] (adaptationMechanism: Obtaining moisture from prey, strength: strong)
-
-### lives_in
-
-- [[canyon|Desert Canyon]] (frequency: permanent, dependency: low)
-
-### preys_on
-
-- [[kangaroo_rat|Merriam's Kangaroo Rat]] (frequency: common, method: hunting)
-- [[desert_tortoise|Desert Tortoise]] (frequency: rare, method: opportunistic)
+- **adapted_to** → [[aridity]] (Aridity)
+- **lives_in** → [[canyon]] (Desert Canyon)
+- **preys_on** → [[kangaroo_rat]] (Merriam's Kangaroo Rat)
+- **preys_on** → [[desert_tortoise]] (Desert Tortoise)
 

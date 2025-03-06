@@ -1,137 +1,120 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Extreme Heat - DesertEcosystem Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #f0f8ff;
-      --text: #333333;
-      --link: #006699;
-      --accent: #4a9eff;
-      --border: #b3d9ff;
-      --text-color: #333333;
-      --bg-color: #f0f8ff;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Extreme Heat</h1>
-  <div class="entity-type">abiotic_factor</div>
+  <header>
+    <h1>Extreme Heat</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Extreme Heat</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>heat</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">type</td>
-            <td class="attribute-value">climate</td>
+          <tr>
+            <th>Type</th>
+            <td>abiotic_factor</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Daytime temperatures regularly exceeding 40°C (104°F) in summer.</td>
+          <tr>
+            <th>type</th>
+            <td>climate</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">impact</td>
-            <td class="attribute-value">extreme</td>
+          <tr>
+            <th>description</th>
+            <td>Daytime temperatures regularly exceeding 40°C (104°F) in summer.</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="camel.html">Dromedary Camel</a> <strong>adapted_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('camel')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Physiological temperature regulation</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <a href="fennec_fox.html">Fennec Fox</a> <strong>adapted_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('fennec_fox')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Large ears for heat dissipation</small> <small><strong>strength:</strong> strong</small> </div></li><li class="relationship-item">
-        <a href="gila_monster.html">Gila Monster</a> <strong>adapted_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Fat storage and seasonal activity</small> <small><strong>strength:</strong> strong</small> </div></li><li class="relationship-item">
-        <a href="cactus_wren.html">Cactus Wren</a> <strong>adapted_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('cactus_wren')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Behavioral thermoregulation</small> <small><strong>strength:</strong> strong</small> </div></li><li class="relationship-item">
-        <a href="saguaro.html">Saguaro Cactus</a> <strong>adapted_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('saguaro')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Pleated structure for expansion</small> <small><strong>strength:</strong> extreme</small> </div></li><li class="relationship-item">
-        <a href="brittlebush.html">Brittlebush</a> <strong>adapted_to</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('brittlebush')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Reflective leaf surfaces</small> <small><strong>strength:</strong> strong</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>impact</th>
+            <td>extreme</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="camel.html">Dromedary Camel</a> → 
+          <strong>adapted_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('camel')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Physiological temperature regulation</span>
+            <span><strong>strength:</strong> extreme</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="fennec_fox.html">Fennec Fox</a> → 
+          <strong>adapted_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('fennec_fox')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Large ears for heat dissipation</span>
+            <span><strong>strength:</strong> strong</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="gila_monster.html">Gila Monster</a> → 
+          <strong>adapted_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Fat storage and seasonal activity</span>
+            <span><strong>strength:</strong> strong</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="cactus_wren.html">Cactus Wren</a> → 
+          <strong>adapted_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('cactus_wren')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Behavioral thermoregulation</span>
+            <span><strong>strength:</strong> strong</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="saguaro.html">Saguaro Cactus</a> → 
+          <strong>adapted_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('saguaro')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Pleated structure for expansion</span>
+            <span><strong>strength:</strong> extreme</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <a href="brittlebush.html">Brittlebush</a> → 
+          <strong>adapted_to</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('brittlebush')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Reflective leaf surfaces</span>
+            <span><strong>strength:</strong> strong</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

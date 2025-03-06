@@ -1,146 +1,108 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cactus Wren - DesertEcosystem Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
-    :root {
-      --background: #202124;
-      --text: #e8eaed;
-      --link: #4a9eff;
-      --accent: #666666;
-      --border: #333333;
-      --text-color: #e8eaed;
-      --bg-color: #202124;
-    }
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 20px;
-      background: var(--background);
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    h1, h2, h3, h4 {
-      color: var(--text);
-    }
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back-link {
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-    .entity-type {
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .entity-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .attribute-table {
-      width: 100%;
-      border-collapse: collapse;
+    .attribute-table tr:nth-child(odd) {
       background: rgba(255, 255, 255, 0.05);
-    }
-    .attribute-table tr:nth-child(even) {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    .attribute-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .attribute-key {
-      font-weight: bold;
-      width: 30%;
-    }
-    .attribute-value {
-      width: 70%;
-    }
-    .relationship-list {
-      list-style: none;
-      padding: 0;
-    }
-    .relationship-item {
-      padding: 8px;
-      margin: 4px 0;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .relationship-attributes {
-      margin-top: 4px;
-      font-size: 0.9em;
-      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Graph</a>
-  <h1>Cactus Wren</h1>
-  <div class="entity-type">animal</div>
+  <header>
+    <h1>Cactus Wren</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="entities.html">All Entities</a>
+      <a href="relationships.html">All Relationships</a>
+    </nav>
+  </header>
   
-  <div class="entity-section">
-    <h3>Attributes</h3>
-    <div class="attributes">
-      <table class="attribute-table">
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">name</td>
-            <td class="attribute-value">Cactus Wren</td>
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+        <table class="attribute-table">
+          <tr>
+            <th>ID</th>
+            <td>cactus_wren</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">scientificName</td>
-            <td class="attribute-value">Campylorhynchus brunneicapillus</td>
+          <tr>
+            <th>Type</th>
+            <td>animal</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">lifespan</td>
-            <td class="attribute-value">7</td>
+          <tr>
+            <th>scientificName</th>
+            <td>Campylorhynchus brunneicapillus</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">diet</td>
-            <td class="attribute-value">insectivore</td>
+          <tr>
+            <th>lifespan</th>
+            <td>7</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">status</td>
-            <td class="attribute-value">least concern</td>
+          <tr>
+            <th>diet</th>
+            <td>insectivore</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">description</td>
-            <td class="attribute-value">Desert bird that builds nests in cholla and other cacti for protection.</td>
+          <tr>
+            <th>status</th>
+            <td>least concern</td>
           </tr>
-        
-          <tr class="attribute-row">
-            <td class="attribute-key">adaptations</td>
-            <td class="attribute-value">Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water</td>
+          <tr>
+            <th>description</th>
+            <td>Desert bird that builds nests in cholla and other cacti for protection.</td>
           </tr>
-        
-      </table>
-    </div>
-  </div>
-
-  <div class="entity-section">
-    <h3>Relationships</h3>
-    <h4>Outgoing</h4><ul class="relationship-list"><li class="relationship-item">
-        <strong>adapted_to</strong> → <a href="heat.html">Extreme Heat</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('heat')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>adaptationMechanism:</strong> Behavioral thermoregulation</small> <small><strong>strength:</strong> strong</small> </div></li><li class="relationship-item">
-        <strong>lives_in</strong> → <a href="wash.html">Desert Wash</a>
-        <a href="javascript:void(0)" onclick="selectEntityById('wash')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> permanent</small> <small><strong>dependency:</strong> medium</small> </div></li></ul><h4>Incoming</h4><ul class="relationship-list"><li class="relationship-item">
-        <a href="gila_monster.html">Gila Monster</a> <strong>preys_on</strong> → 
-        <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="select-link" title="Select in graph">(select)</a><div class="relationship-attributes"><small><strong>frequency:</strong> occasional</small> <small><strong>method:</strong> raiding nests</small> </div></li></ul>
-  </div>
+          <tr>
+            <th>adaptations</th>
+            <td>Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      <h3>Outgoing</h3>
+      <ul>
+        <li class="relationship-item">
+          <strong>adapted_to</strong> → 
+          <a href="heat.html">Extreme Heat</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('heat')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>adaptationMechanism:</strong> Behavioral thermoregulation</span>
+            <span><strong>strength:</strong> strong</span>
+          </div>
+        </li>
+        <li class="relationship-item">
+          <strong>lives_in</strong> → 
+          <a href="wash.html">Desert Wash</a>
+          <a href="javascript:void(0)" onclick="selectEntityById('wash')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> permanent</span>
+            <span><strong>dependency:</strong> medium</span>
+          </div>
+        </li>
+      </ul>
+      <h3>Incoming</h3>
+      <ul>
+        <li class="relationship-item">
+          <a href="gila_monster.html">Gila Monster</a> → 
+          <strong>preys_on</strong>
+          <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="visualize-link">(visualize)</a>
+          <div class="relationship-attributes">
+            <span><strong>frequency:</strong> occasional</span>
+            <span><strong>method:</strong> raiding nests</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
 </body>
 </html>

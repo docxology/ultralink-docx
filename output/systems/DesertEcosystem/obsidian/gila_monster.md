@@ -1,14 +1,14 @@
 ---
 type: animal
 id: gila_monster
-created: 2025-03-05T01:16:02.596Z
-modified: 2025-03-05T01:16:02.596Z
 ---
 
 # Gila Monster
 
-**Type**: animal
-**ID**: gila_monster
+## Metadata
+
+- **Type**: animal
+- **ID**: gila_monster
 
 ## Attributes
 
@@ -17,19 +17,13 @@ modified: 2025-03-05T01:16:02.596Z
 - **diet**: carnivore
 - **status**: near threatened
 - **description**: Venomous lizard of the southwestern US and northwestern Mexico.
-- **adaptations**: ["Stores fat in tail for long periods without food","Venomous bite for efficient predation","Thick skin reduces water loss","Slow metabolism allows for infrequent feeding","Can survive on as few as 3-4 meals per year"]
+- **adaptations**: Stores fat in tail for long periods without food,Venomous bite for efficient predation,Thick skin reduces water loss,Slow metabolism allows for infrequent feeding,Can survive on as few as 3-4 meals per year
 
 ## Relationships
 
-### adapted_to
+### Outgoing
 
-- [[heat|Extreme Heat]] (adaptationMechanism: Fat storage and seasonal activity, strength: strong)
-
-### lives_in
-
-- [[rocky_slope|Rocky Slope]] (frequency: permanent, dependency: high)
-
-### preys_on
-
-- [[cactus_wren|Cactus Wren]] (frequency: occasional, method: raiding nests)
+- **adapted_to** → [[heat]] (Extreme Heat)
+- **lives_in** → [[rocky_slope]] (Rocky Slope)
+- **preys_on** → [[cactus_wren]] (Cactus Wren)
 

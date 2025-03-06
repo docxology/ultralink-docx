@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
-     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
-  <key id="name" for="node" attr.name="name" attr.type="string"/>
-  <key id="type" for="node" attr.name="type" attr.type="string"/>
-  <key id="description" for="node" attr.name="description" attr.type="string"/>
-  <key id="status" for="node" attr.name="status" attr.type="string"/>
-  <key id="dueDate" for="node" attr.name="dueDate" attr.type="string"/>
-  <key id="role" for="node" attr.name="role" attr.type="string"/>
-  <key id="email" for="node" attr.name="email" attr.type="string"/>
-  <key id="type" for="edge" attr.name="type" attr.type="string"/>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
   <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="status" for="node" attr.name="status" attr.type="string"/>
+    <key id="dueDate" for="node" attr.name="dueDate" attr.type="string"/>
+    <key id="role" for="node" attr.name="role" attr.type="string"/>
+    <key id="email" for="node" attr.name="email" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
     <node id="machine-learning">
       <data key="type">concept</data>
       <data key="name">Machine Learning</data>
@@ -52,25 +54,25 @@
       <data key="email">bob@example.com</data>
     </node>
     <edge source="project-alpha" target="machine-learning">
-      <data key="type">uses</data>
+      <data key="relationship_type">uses</data>
     </edge>
     <edge source="project-alpha" target="data-analysis">
-      <data key="type">uses</data>
+      <data key="relationship_type">uses</data>
     </edge>
     <edge source="project-beta" target="machine-learning">
-      <data key="type">uses</data>
+      <data key="relationship_type">uses</data>
     </edge>
     <edge source="alice-smith" target="project-alpha">
-      <data key="type">manages</data>
+      <data key="relationship_type">manages</data>
     </edge>
     <edge source="alice-smith" target="project-beta">
-      <data key="type">manages</data>
+      <data key="relationship_type">manages</data>
     </edge>
     <edge source="bob-johnson" target="project-alpha">
-      <data key="type">works_on</data>
+      <data key="relationship_type">works_on</data>
     </edge>
     <edge source="bob-johnson" target="project-beta">
-      <data key="type">works_on</data>
+      <data key="relationship_type">works_on</data>
     </edge>
   </graph>
 </graphml>

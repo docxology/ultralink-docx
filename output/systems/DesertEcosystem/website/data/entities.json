@@ -1,0 +1,45 @@
+[
+  {
+    "id": "saguaro",
+    "type": "organism",
+    "attributes": {
+      "name": "Saguaro Cactus",
+      "scientificName": "Carnegiea gigantea",
+      "type": "plant",
+      "height": "15-50 feet",
+      "lifespan": "150-200 years"
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.847Z",
+      "modified": "2025-03-06T04:37:23.847Z"
+    }
+  },
+  {
+    "id": "kangaroo-rat",
+    "type": "organism",
+    "attributes": {
+      "name": "Kangaroo Rat",
+      "scientificName": "Dipodomys",
+      "type": "mammal",
+      "weight": "100-150g",
+      "nocturnal": true
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.847Z",
+      "modified": "2025-03-06T04:37:23.847Z"
+    }
+  },
+  {
+    "id": "aridity",
+    "type": "environmental_factor",
+    "attributes": {
+      "name": "Aridity",
+      "description": "Extremely dry conditions with minimal rainfall",
+      "annualRainfall": "3-15 inches"
+    },
+    "metadata": {
+      "created": "2025-03-06T04:37:23.847Z",
+      "modified": "2025-03-06T04:37:23.847Z"
+    }
+  }
+]

@@ -1,14 +1,14 @@
 ---
 type: project
 id: climate-impact
-created: 2025-03-05T01:10:35.700Z
-modified: 2025-03-05T01:10:35.700Z
 ---
 
 # Climate Impact Assessment
 
-**Type**: project
-**ID**: climate-impact
+## Metadata
+
+- **Type**: project
+- **ID**: climate-impact
 
 ## Attributes
 
@@ -16,7 +16,9 @@ modified: 2025-03-05T01:10:35.700Z
 - **budget**: 220000
 - **status**: Active
 
-## Backlinks
+## Relationships
 
-- [[alice|Alice Chen]] (contributes_to)
+### Incoming
+
+- **contributes_to** ← [[alice]] (Alice Chen)
 

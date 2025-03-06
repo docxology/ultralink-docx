@@ -1,0 +1,25 @@
+/* UltraLink Theme-Specific Styles */
+:root {
+  --text-color: #e8eaed;
+  --bg-color: #202124;
+  --link-color: #8ab4f8;
+  --accent-color: #8ab4f8;
+  --border-color: #5f6368;
+}
+
+:root {
+  --text-color: #e8eaed;
+  --bg-color: #202124;
+  --link-color: #8ab4f8;
+  --accent-color: #8ab4f8;
+  --border-color: #5f6368;
+}
+
+.sidebar {
+  background: rgba(32, 33, 36, 0.8);
+}
+
+.attribute-table {
+  background: rgba(255, 255, 255, 0.05);
+}
+

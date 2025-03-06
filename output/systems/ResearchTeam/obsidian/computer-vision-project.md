@@ -1,14 +1,14 @@
 ---
 type: project
 id: computer-vision-project
-created: 2025-03-05T01:16:02.517Z
-modified: 2025-03-05T01:16:02.517Z
 ---
 
 # Advanced Computer Vision Systems
 
-**Type**: project
-**ID**: computer-vision-project
+## Metadata
+
+- **Type**: project
+- **ID**: computer-vision-project
 
 ## Attributes
 
@@ -17,28 +17,22 @@ modified: 2025-03-05T01:16:02.517Z
 - **endDate**: 2023-12-31
 - **status**: active
 - **budget**: 500000
-- **objectives**: ["Improve object detection accuracy","Develop real-time processing capabilities","Create robust low-light performance"]
+- **objectives**: Improve object detection accuracy,Develop real-time processing capabilities,Create robust low-light performance
 
 ## Relationships
 
-### produced
+### Outgoing
 
-- [[vision-paper-2022|Novel Approaches to Low-Light Computer Vision]]
+- **produced** → [[vision-paper-2022]] (Novel Approaches to Low-Light Computer Vision)
+- **uses** → [[gpu-cluster]] (High-Performance GPU Cluster)
+- **applies** → [[computer-vision]] (Computer Vision)
+- **applies** → [[machine-learning-theory]] (Machine Learning Theory)
 
-### uses
+### Incoming
 
-- [[gpu-cluster|High-Performance GPU Cluster]]
-
-### applies
-
-- [[computer-vision|Computer Vision]]
-- [[machine-learning-theory|Machine Learning Theory]]
-
-## Backlinks
-
-- [[alice-chen|Alice Chen]] (leads)
-- [[carol-jones|Carol Jones]] (contributes_to)
-- [[elena-rodriguez|Elena Rodriguez]] (contributes_to)
-- [[nsf-grant|NSF Research Grant]] (funds)
-- [[grace-kim|Grace Kim]] (administers)
+- **leads** ← [[alice-chen]] (Alice Chen)
+- **contributes_to** ← [[carol-jones]] (Carol Jones)
+- **contributes_to** ← [[elena-rodriguez]] (Elena Rodriguez)
+- **funds** ← [[nsf-grant]] (NSF Research Grant)
+- **administers** ← [[grace-kim]] (Grace Kim)
 

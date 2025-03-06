@@ -4,7 +4,8 @@
  * This module provides functionality to parse text content and extract links and entities.
  */
 
-const { Link, Entity, EntityStore } = require('./types');
+const { Link, Entity } = require('./types');
+const { EntityStore } = require('../lib/entity-manager');
 
 /**
  * Extract Obsidian-style links from text content
@@ -120,7 +121,7 @@ class UltraLinkParser {
 }
 
 module.exports = {
+  UltraLinkParser,
   extractObsidianLinks,
-  extractCustomLinks,
-  UltraLinkParser
+  extractCustomLinks
 }; 

@@ -1,14 +1,14 @@
 ---
 type: event
 id: september-11
-created: 2025-03-05T01:16:02.702Z
-modified: 2025-03-05T01:16:02.702Z
 ---
 
 # September 11 Attacks
 
-**Type**: event
-**ID**: september-11
+## Metadata
+
+- **Type**: event
+- **ID**: september-11
 
 ## Attributes
 
@@ -16,12 +16,12 @@ modified: 2025-03-05T01:16:02.702Z
 - **location**: New York, Washington D.C., Pennsylvania
 - **description**: Terrorist attacks using hijacked airplanes
 - **significance**: Deadliest terrorist attack in history, led to major changes in US foreign policy
-- **keywords**: ["terrorism","attack","security","war on terror","tragedy"]
-- **vector**: [-0.42,-0.35,-0.48,-0.25,-0.38,-0.32]
+- **keywords**: terrorism,attack,security,war on terror,tragedy
+- **vector**: -0.42,-0.35,-0.48,-0.25,-0.38,-0.32
 
 ## Relationships
 
-### occurred_during
+### Outgoing
 
-- [[modern-era|Modern Era]]
+- **occurred_during** → [[modern-era]] (Modern Era)
 

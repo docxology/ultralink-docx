@@ -1,14 +1,14 @@
 ---
 type: person
 id: alice-smith
-created: 2025-03-05T01:16:03.432Z
-modified: 2025-03-05T01:16:03.432Z
 ---
 
 # Alice Smith
 
-**Type**: person
-**ID**: alice-smith
+## Metadata
+
+- **Type**: person
+- **ID**: alice-smith
 
 ## Attributes
 
@@ -17,8 +17,8 @@ modified: 2025-03-05T01:16:03.432Z
 
 ## Relationships
 
-### manages
+### Outgoing
 
-- [[project-alpha|Project Alpha]]
-- [[project-beta|Project Beta]]
+- **manages** → [[project-alpha]] (Project Alpha)
+- **manages** → [[project-beta]] (Project Beta)
 

@@ -1,14 +1,14 @@
 ---
 type: project
 id: project-beta
-created: 2025-03-05T01:16:03.432Z
-modified: 2025-03-05T01:16:03.432Z
 ---
 
 # Project Beta
 
-**Type**: project
-**ID**: project-beta
+## Metadata
+
+- **Type**: project
+- **ID**: project-beta
 
 ## Attributes
 
@@ -17,12 +17,12 @@ modified: 2025-03-05T01:16:03.432Z
 
 ## Relationships
 
-### uses
+### Outgoing
 
-- [[machine-learning|Machine Learning]]
+- **uses** → [[machine-learning]] (Machine Learning)
 
-## Backlinks
+### Incoming
 
-- [[alice-smith|Alice Smith]] (manages)
-- [[bob-johnson|Bob Johnson]] (works_on)
+- **manages** ← [[alice-smith]] (Alice Smith)
+- **works_on** ← [[bob-johnson]] (Bob Johnson)
 

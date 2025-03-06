@@ -1,14 +1,14 @@
 ---
 type: project
 id: ant-colony-study
-created: 2025-03-05T01:16:02.671Z
-modified: 2025-03-05T01:16:02.671Z
 ---
 
 # Ant Colony Decision Making Study
 
-**Type**: project
-**ID**: ant-colony-study
+## Metadata
+
+- **Type**: project
+- **ID**: ant-colony-study
 
 ## Attributes
 
@@ -21,21 +21,20 @@ modified: 2025-03-05T01:16:02.671Z
 
 ## Relationships
 
-### applies
+### Outgoing
 
-- [[collective-behavior|Collective Behavior]] (centrality: Core, innovation: Field validation of theoretical predictions)
+- **applies** → [[collective-behavior]] (Collective Behavior)
+- **uses** → [[ant-tracking]] (Ant Tracking System)
 
-### uses
+### Incoming
 
-- [[ant-tracking|Ant Tracking System]] (frequency: Daily, priority: High)
-
-## Backlinks
-
-- [[bob|Dr. Bob Smith]] (leads)
-- [[emma|Emma Taylor]] (contributes, contributes_to)
-- [[frank|Dr. Frank Martinez]] (contributes, contributes_to)
-- [[david|David Wilson]] (contributes_to)
-- [[grace|Grace Kim]] (contributes_to)
-- [[paper-2023b|Decision Making Patterns in Ant Colonies: A Field Study]] (results_from)
-- [[paper-2024|Computational Models of Active Inference in Social Insects]] (results_from)
+- **leads** ← [[bob]] (Dr. Bob Smith)
+- **contributes** ← [[emma]] (Emma Taylor)
+- **contributes** ← [[frank]] (Dr. Frank Martinez)
+- **contributes_to** ← [[david]] (David Wilson)
+- **contributes_to** ← [[grace]] (Grace Kim)
+- **contributes_to** ← [[frank]] (Dr. Frank Martinez)
+- **contributes_to** ← [[emma]] (Emma Taylor)
+- **results_from** ← [[paper-2023b]] (Decision Making Patterns in Ant Colonies: A Field Study)
+- **results_from** ← [[paper-2024]] (Computational Models of Active Inference in Social Insects)
 
