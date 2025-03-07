@@ -7,7 +7,7 @@
   <title>Cactus Wren - DesertEcosystem Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Cactus Wren</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,78 +25,102 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>cactus_wren</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>animal</td>
-          </tr>
-          <tr>
-            <th>scientificName</th>
-            <td>Campylorhynchus brunneicapillus</td>
-          </tr>
-          <tr>
-            <th>lifespan</th>
-            <td>7</td>
-          </tr>
-          <tr>
-            <th>diet</th>
-            <td>insectivore</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>least concern</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Desert bird that builds nests in cholla and other cacti for protection.</td>
-          </tr>
-          <tr>
-            <th>adaptations</th>
-            <td>Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>cactus_wren</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Campylorhynchus brunneicapillus</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>7</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>insectivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Desert bird that builds nests in cholla and other cacti for protection.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>adapted_to</strong> → 
-          <a href="heat.html">Extreme Heat</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('heat')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>adaptationMechanism:</strong> Behavioral thermoregulation</span>
-            <span><strong>strength:</strong> strong</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>lives_in</strong> → 
-          <a href="wash.html">Desert Wash</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('wash')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> permanent</span>
-            <span><strong>dependency:</strong> medium</span>
-          </div>
-        </li>
-      </ul>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="gila_monster.html">Gila Monster</a> → 
-          <strong>preys_on</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('gila_monster')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> occasional</span>
-            <span><strong>method:</strong> raiding nests</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="heat.html">Extreme Heat</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Behavioral thermoregulation</div>
+            
+              <div><strong>strength:</strong> strong</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="wash.html">Desert Wash</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> medium</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="gila_monster.html">Gila Monster</a> → <strong>preys_on</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> occasional</div>
+            
+              <div><strong>method:</strong> raiding nests</div>
+            
+        </div>
+      
+    </div>
+      
     </section>
   </main>
   

@@ -7,7 +7,7 @@
   <title>Manifest Destiny - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Manifest Destiny</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,41 +25,50 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>manifest-destiny</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>concept</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Belief that American settlers were destined to expand across North America</td>
-          </tr>
-          <tr>
-            <th>keywords</th>
-            <td>expansion,westward,territory,settlement,imperialism</td>
-          </tr>
-          <tr>
-            <th>vector</th>
-            <td>0.1,0.38,-0.05,0.42,0.25,0.3</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>manifest-destiny</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>concept</td>
+        </tr>
+        
+            <tr>
+              <th>description</th>
+              <td>Belief that American settlers were destined to expand across North America</td>
+            </tr>
+          
+            <tr>
+              <th>keywords</th>
+              <td>expansion,westward,territory,settlement,imperialism</td>
+            </tr>
+          
+            <tr>
+              <th>vector</th>
+              <td>0.1,0.38,-0.05,0.42,0.25,0.3</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="louisiana-purchase.html">Louisiana Purchase</a> → 
-          <strong>exemplifies</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('louisiana-purchase')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="louisiana-purchase.html">Louisiana Purchase</a> → <strong>exemplifies</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

@@ -7,7 +7,7 @@
   <title>Plymouth Colony Established - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Plymouth Colony Established</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,49 +25,60 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>plymouth-colony</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>event</td>
-          </tr>
-          <tr>
-            <th>date</th>
-            <td>1620-12-21</td>
-          </tr>
-          <tr>
-            <th>location</th>
-            <td>Massachusetts</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Pilgrims establish Plymouth Colony after arriving on the Mayflower</td>
-          </tr>
-          <tr>
-            <th>significance</th>
-            <td>Early religious settlement that shaped New England culture</td>
-          </tr>
-          <tr>
-            <th>vector</th>
-            <td>-0.1,0.32,0.05,0.4,-0.15,0.25</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>plymouth-colony</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>event</td>
+        </tr>
+        
+            <tr>
+              <th>date</th>
+              <td>1620-12-21</td>
+            </tr>
+          
+            <tr>
+              <th>location</th>
+              <td>Massachusetts</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Pilgrims establish Plymouth Colony after arriving on the Mayflower</td>
+            </tr>
+          
+            <tr>
+              <th>significance</th>
+              <td>Early religious settlement that shaped New England culture</td>
+            </tr>
+          
+            <tr>
+              <th>vector</th>
+              <td>-0.1,0.32,0.05,0.4,-0.15,0.25</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>occurred_during</strong> → 
-          <a href="colonial-period.html">Colonial Period</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('colonial-period')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>occurred_during</strong> → <a href="colonial-period.html">Colonial Period</a>
+      
+      
+    </div>
+      
+      
+      
     </section>
   </main>
   

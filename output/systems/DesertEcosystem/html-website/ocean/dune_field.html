@@ -7,7 +7,7 @@
   <title>Sand Dune Field - DesertEcosystem Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Sand Dune Field</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,58 +25,76 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>dune_field</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>microhabitat</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Area of wind-deposited sand formations with specialized plant and animal communities.</td>
-          </tr>
-          <tr>
-            <th>type</th>
-            <td>aeolian</td>
-          </tr>
-          <tr>
-            <th>area</th>
-            <td>large</td>
-          </tr>
-          <tr>
-            <th>soilMoisture</th>
-            <td>extremely low</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>dune_field</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>microhabitat</td>
+        </tr>
+        
+            <tr>
+              <th>description</th>
+              <td>Area of wind-deposited sand formations with specialized plant and animal communities.</td>
+            </tr>
+          
+            <tr>
+              <th>type</th>
+              <td>aeolian</td>
+            </tr>
+          
+            <tr>
+              <th>area</th>
+              <td>large</td>
+            </tr>
+          
+            <tr>
+              <th>soilMoisture</th>
+              <td>extremely low</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="sidewinder.html">Sidewinder Rattlesnake</a> → 
-          <strong>lives_in</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('sidewinder')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> permanent</span>
-            <span><strong>dependency:</strong> high</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a> → 
-          <strong>lives_in</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> permanent</span>
-            <span><strong>dependency:</strong> high</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="sidewinder.html">Sidewinder Rattlesnake</a> → <strong>lives_in</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> high</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a> → <strong>lives_in</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> high</div>
+            
+        </div>
+      
+    </div>
+      
     </section>
   </main>
   

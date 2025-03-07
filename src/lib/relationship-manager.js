@@ -17,14 +17,14 @@
 function addRelationship(sourceId, targetId, type, attributes = {}, options = {}) {
   // Validate entities exist
   if (!this.entities.has(sourceId)) {
-    throw new Error(`Source entity "${sourceId}" not found`);
+    throw new Error(`Source entity not found: ${sourceId}`);
   }
   if (!this.entities.has(targetId)) {
-    throw new Error(`Target entity "${targetId}" not found`);
+    throw new Error(`Target entity not found: ${targetId}`);
   }
 
   // Create relationship object
-  const id = options.id || `${sourceId}_${type}_${targetId}_${Date.now()}`;
+  const id = `${sourceId}_${type}_${targetId}`;
   
   const relationship = {
     id,
@@ -51,6 +51,12 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
     this.relationshipsByTarget.set(targetId, new Set());
   }
   this.relationshipsByTarget.get(targetId).add(id);
+
+  // Initialize and update links map for backward compatibility
+  if (!this.links.has(sourceId)) {
+    this.links.set(sourceId, new Map());
+  }
+  this.links.get(sourceId).set(`${targetId}-${type}`, relationship);
 
   return relationship;
 }

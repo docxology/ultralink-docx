@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/diagrams/README.md",
+                "file": "docs/architecture/architecture_overview.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "architecture_overview"
             }
           }
         ]
@@ -165,12 +165,16 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "faa517efcbdc6c33",
+  "active": "e313675ca592a4c3",
   "lastOpenFiles": [
+    "docs/guides/vector-search.md",
+    "docs/guides/entities-and-relationships.md",
+    "docs/core-features/syntax-and-semantics.md",
+    "docs/architecture/architecture.md",
+    "docs/diagrams/README.md",
     "docs/security/security.md",
     "docs/onboarding/onboarding_readme.md",
     "docs/contributing/roadmap.md",
-    "docs/architecture/architecture.md",
     "docs/formats/visualization_format.md",
     "docs/formats/rendering_targets.md",
     "docs/formats/formats_overview.md",
@@ -190,10 +194,6 @@
     "docs/guides/README.md",
     "docs/for-agents/README.md",
     "docs/architecture/README.md",
-    "docs/troubleshooting/README.md",
-    "docs/getting-started/README.md",
-    "docs/core-features/README.md",
-    "docs/formats-combined/README.md",
     "docs/formats-combined",
     "docs/formats",
     "docs/targets"

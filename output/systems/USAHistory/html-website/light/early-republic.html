@@ -7,7 +7,7 @@
   <title>Early Republic - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Early Republic</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,46 +25,55 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>early-republic</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>time_period</td>
-          </tr>
-          <tr>
-            <th>startYear</th>
-            <td>1783</td>
-          </tr>
-          <tr>
-            <th>endYear</th>
-            <td>1815</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Formation and early development of the United States government</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>early-republic</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>time_period</td>
+        </tr>
+        
+            <tr>
+              <th>startYear</th>
+              <td>1783</td>
+            </tr>
+          
+            <tr>
+              <th>endYear</th>
+              <td>1815</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Formation and early development of the United States government</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="constitutional-convention.html">Constitutional Convention</a> → 
-          <strong>occurred_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('constitutional-convention')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="louisiana-purchase.html">Louisiana Purchase</a> → 
-          <strong>occurred_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('louisiana-purchase')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="constitutional-convention.html">Constitutional Convention</a> → <strong>occurred_during</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="louisiana-purchase.html">Louisiana Purchase</a> → <strong>occurred_during</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

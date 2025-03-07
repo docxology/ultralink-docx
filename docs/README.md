@@ -115,6 +115,7 @@ UltraLink supports numerous export formats, each suited for different use cases:
 
 Understand UltraLink's core differentiating features:
 
+- [Syntax and Semantics](./core-features/syntax-and-semantics.md) - The fundamental model and syntax of UltraLink
 - [Rendering Flexibility](./core-features/rendering-flexibility.md) - The power of UltraLink's format-agnostic approach
 - [Vector Integration](./core-features/vector-integration.md) - Working with semantic vector embeddings
 - [LLM Capabilities](./core-features/llm-capabilities.md) - Enhancing knowledge graphs with AI

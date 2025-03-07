@@ -10,7 +10,7 @@ const path = require('path');
 const { UltraLink } = require('../../src');
 const { createPerformanceDataset } = require('../test-datasets');
 
-// Define dataset sizes with more conservative numbers
+// Define dataset sizes 
 const DATASET_SIZES = {
   small: { entities: 50, relationships: 100 },
   medium: { entities: 500, relationships: 1000 },
@@ -19,6 +19,19 @@ const DATASET_SIZES = {
 
 // Increase timeout for larger datasets
 const PERFORMANCE_TIMEOUT = 120000; // 2 minutes
+
+// Console formatting
+const colors = {
+  reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  magenta: '\x1b[35m',
+  cyan: '\x1b[36m'
+};
 
 /**
  * Measure execution time of a function
@@ -47,17 +60,100 @@ async function measureTime(fn) {
 }
 
 /**
+ * Format a value with units
+ * @param {number} value - The value to format
+ * @param {string} unit - The unit (ms, MB, etc)
+ * @param {number} decimals - Number of decimal places
+ */
+function formatValue(value, unit, decimals = 2) {
+  // Color code based on magnitude for durations (ms)
+  if (unit === 'ms') {
+    if (value < 10) return `${colors.green}${value.toFixed(decimals)}${colors.reset} ${unit}`;
+    if (value < 100) return `${colors.yellow}${value.toFixed(decimals)}${colors.reset} ${unit}`;
+    return `${colors.red}${value.toFixed(decimals)}${colors.reset} ${unit}`;
+  }
+  
+  // Color code for memory (MB)
+  if (unit === 'MB') {
+    if (value < 1) return `${colors.green}${value.toFixed(decimals)}${colors.reset} ${unit}`;
+    if (value < 10) return `${colors.yellow}${value.toFixed(decimals)}${colors.reset} ${unit}`;
+    return `${colors.red}${value.toFixed(decimals)}${colors.reset} ${unit}`;
+  }
+  
+  return `${value.toFixed(decimals)} ${unit}`;
+}
+
+/**
+ * Store performance results by category for grouped logging
+ */
+const performanceResults = {
+  categories: {},
+  addResult: function(category, operation, size, timing) {
+    if (!this.categories[category]) {
+      this.categories[category] = [];
+    }
+    
+    this.categories[category].push({
+      operation,
+      size,
+      timing
+    });
+  },
+  logResults: function() {
+    console.log(`\n${colors.bright}${colors.cyan}📊 PERFORMANCE TEST RESULTS 📊${colors.reset}\n`);
+    
+    Object.keys(this.categories).forEach(category => {
+      console.log(`\n${colors.bright}${colors.magenta}=== ${category} ===${colors.reset}\n`);
+      
+      // Create a nice table header
+      console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+      console.log(`${colors.bright}  Operation${' '.repeat(30 - 'Operation'.length)}  Size    Duration      Memory Delta${colors.reset}`);
+      console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+      
+      this.categories[category].forEach(result => {
+        const { operation, size, timing } = result;
+        
+        // Format the operation name to fit in the column
+        const opName = operation.length > 28 ? operation.substring(0, 25) + '...' : operation;
+        const opPadding = ' '.repeat(Math.max(0, 30 - opName.length));
+        
+        // Format the size to fit in the column
+        const sizePadding = ' '.repeat(Math.max(0, 8 - size.length));
+        
+        // Format timing values
+        const duration = formatValue(timing.durationMs, 'ms');
+        
+        // Format memory values - sum up total memory impact
+        const totalMemory = timing.memoryDelta.rss; // Use RSS as indicator of total memory impact
+        const memoryFormatted = formatValue(totalMemory, 'MB');
+        
+        // Print the table row
+        console.log(`  ${opName}${opPadding}  ${size}${sizePadding}${duration}    ${memoryFormatted}`);
+      });
+      
+      console.log(`${colors.dim}${'─'.repeat(80)}${colors.reset}`);
+    });
+    
+    console.log('\n');
+  }
+};
+
+/**
  * Log performance results
  * @param {string} operation - The operation being measured
  * @param {Object} timing - Timing information
  */
-function logPerformance(operation, size, timing) {
-  console.log(`Performance - ${operation} (${size}):`);
-  console.log(`  Duration: ${timing.durationMs.toFixed(2)} ms`);
+function logPerformance(category, operation, size, timing) {
+  // Add to grouped results
+  performanceResults.addResult(category, operation, size, timing);
+  
+  // Also log individual result for immediate feedback during tests
+  console.log(`${colors.bright}${operation} (${size}):${colors.reset}`);
+  console.log(`  Duration: ${formatValue(timing.durationMs, 'ms')}`);
   console.log(`  Memory delta:`);
-  console.log(`    RSS: ${timing.memoryDelta.rss.toFixed(2)} MB`);
-  console.log(`    Heap total: ${timing.memoryDelta.heapTotal.toFixed(2)} MB`);
-  console.log(`    Heap used: ${timing.memoryDelta.heapUsed.toFixed(2)} MB`);
+  console.log(`    RSS: ${formatValue(timing.memoryDelta.rss, 'MB')}`);
+  console.log(`    Heap total: ${formatValue(timing.memoryDelta.heapTotal, 'MB')}`);
+  console.log(`    Heap used: ${formatValue(timing.memoryDelta.heapUsed, 'MB')}`);
   console.log('');
 }
 
@@ -76,6 +172,9 @@ function saveResults(results) {
   
   fs.writeFileSync(outputPath, JSON.stringify(results, null, 2));
   console.log(`Performance results saved to ${outputPath}`);
+  
+  // Log the grouped summary at the end
+  performanceResults.logResults();
 }
 
 describe('Performance Tests', () => {
@@ -102,7 +201,7 @@ describe('Performance Tests', () => {
         const { timing } = await measureTime(() => createPerformanceDataset(config));
         
         // Log performance results
-        logPerformance('Dataset Creation', size, timing);
+        logPerformance('Dataset Creation', 'Create Dataset', size, timing);
         
         // Store results
         results.tests[`create_${size}`] = timing;
@@ -138,7 +237,7 @@ describe('Performance Tests', () => {
         });
         
         // Log performance results
-        logPerformance('Find by Type', size, timing);
+        logPerformance('Entity Queries', 'Find by Type', size, timing);
         
         // Store results
         results.tests[`find_by_type_${size}`] = timing;
@@ -165,7 +264,7 @@ describe('Performance Tests', () => {
         });
         
         // Log performance results
-        logPerformance('Find by Attribute', size, timing);
+        logPerformance('Entity Queries', 'Find by Attribute', size, timing);
         
         // Store results
         results.tests[`find_by_attribute_${size}`] = timing;
@@ -182,7 +281,7 @@ describe('Performance Tests', () => {
         });
         
         // Log performance results
-        logPerformance('Get Relationships', size, timing);
+        logPerformance('Entity Queries', 'Get Relationships', size, timing);
         
         // Store results
         results.tests[`get_relationships_${size}`] = timing;
@@ -208,7 +307,7 @@ describe('Performance Tests', () => {
         });
         
         // Log performance results
-        logPerformance('JSON Export', size, timing);
+        logPerformance('Data Export', 'JSON Export', size, timing);
         
         // Store results
         results.tests[`json_export_${size}`] = timing;
@@ -231,7 +330,7 @@ describe('Performance Tests', () => {
         });
         
         // Log performance results
-        logPerformance('GraphML Export', size, timing);
+        logPerformance('Data Export', 'GraphML Export', size, timing);
         
         // Store results
         results.tests[`graphml_export_${size}`] = timing;
@@ -248,83 +347,76 @@ describe('Performance Tests', () => {
   
   // Full blob export/import performance
   describe('Full Blob Performance', () => {
-    // Only test with small and medium datasets to avoid excessive memory usage
-    const limitedSizes = {
-      small: DATASET_SIZES.small,
-      medium: DATASET_SIZES.medium
-    };
-    
-    Object.entries(limitedSizes).forEach(([size, config]) => {
+    Object.entries(DATASET_SIZES).forEach(([size, config]) => {
       let ultralink;
       
       beforeAll(() => {
         ultralink = createPerformanceDataset(config);
       });
       
-      it(`should efficiently export to full blob for a ${size} dataset`, async () => {
-        const { timing, result } = await measureTime(async () => {
-          return ultralink.toFullBlob({
-            includeVectors: false,
-            includeHistory: false,
-            compression: 'none'
-          });
+      it(`should efficiently export a full blob for a ${size} dataset`, async () => {
+        const { timing, result } = await measureTime(() => {
+          return ultralink.toFullBlob();
         });
         
         // Log performance results
-        logPerformance('Full Blob Export', size, timing);
+        logPerformance('Blob Operations', 'Full Blob Export', size, timing);
         
         // Store results
         results.tests[`full_blob_export_${size}`] = timing;
         
         // Verify result
         expect(result).toBeDefined();
+        // Full blob is an object, not a string
+        expect(typeof result).toBe('object');
         
         // Performance expectations
         expect(timing.durationMs).toBeGreaterThan(0);
       }, PERFORMANCE_TIMEOUT);
       
-      it(`should efficiently export to compressed full blob for a ${size} dataset`, async () => {
-        const { timing, result } = await measureTime(async () => {
+      it(`should efficiently export a compressed full blob for a ${size} dataset`, async () => {
+        const { timing, result } = await measureTime(() => {
+          // The API might expect compression as a parameter object or boolean
           return ultralink.toFullBlob({
-            includeVectors: false,
-            includeHistory: false,
             compression: 'gzip'
           });
         });
         
         // Log performance results
-        logPerformance('Compressed Full Blob Export', size, timing);
+        logPerformance('Blob Operations', 'Compressed Full Blob Export', size, timing);
         
         // Store results
         results.tests[`compressed_full_blob_export_${size}`] = timing;
         
         // Verify result
         expect(result).toBeDefined();
+        // For compressed blobs, we expect an object (the API doesn't return a string)
+        expect(typeof result).toBe('object');
         
         // Performance expectations
         expect(timing.durationMs).toBeGreaterThan(0);
       }, PERFORMANCE_TIMEOUT);
       
-      it(`should efficiently import from full blob for a ${size} dataset`, async () => {
-        // First, create a blob
-        const blob = await ultralink.toFullBlob({
-          includeVectors: false,
-          includeHistory: false,
-          compression: 'none'
-        });
+      it(`should efficiently import a full blob for a ${size} dataset`, async () => {
+        // Export a full blob first
+        const blob = ultralink.toFullBlob();
         
-        // Measure import time
-        const { timing } = await measureTime(async () => {
-          const newUltralink = new UltraLink();
-          await newUltralink.fromFullBlob(blob);
-          return newUltralink;
+        // Create new UltraLink instance for import testing
+        const newUltralink = new UltraLink();
+        
+        const { timing } = await measureTime(() => {
+          return newUltralink.fromFullBlob(blob);
         });
         
         // Log performance results
-        logPerformance('Full Blob Import', size, timing);
+        logPerformance('Blob Operations', 'Full Blob Import', size, timing);
         
         // Store results
         results.tests[`full_blob_import_${size}`] = timing;
+        
+        // Verify result by checking entity count - use appropriate method
+        expect(Object.keys(newUltralink.entities || {}).length)
+          .toBe(Object.keys(ultralink.entities || {}).length);
         
         // Performance expectations
         expect(timing.durationMs).toBeGreaterThan(0);

@@ -7,7 +7,7 @@
   <title>United States Constitution - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>United States Constitution</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,63 +25,75 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>constitution-doc</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>document</td>
-          </tr>
-          <tr>
-            <th>date</th>
-            <td>1787-09-17</td>
-          </tr>
-          <tr>
-            <th>authors</th>
-            <td>Constitutional Convention Delegates</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Supreme law of the United States establishing the structure of the federal government</td>
-          </tr>
-          <tr>
-            <th>significance</th>
-            <td>Foundational legal document of the United States</td>
-          </tr>
-          <tr>
-            <th>keywords</th>
-            <td>government,law,rights,federalism,branches</td>
-          </tr>
-          <tr>
-            <th>vector</th>
-            <td>0.42,0.28,0.38,0.12,0.22,-0.08</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>constitution-doc</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>document</td>
+        </tr>
+        
+            <tr>
+              <th>date</th>
+              <td>1787-09-17</td>
+            </tr>
+          
+            <tr>
+              <th>authors</th>
+              <td>Constitutional Convention Delegates</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Supreme law of the United States establishing the structure of the federal government</td>
+            </tr>
+          
+            <tr>
+              <th>significance</th>
+              <td>Foundational legal document of the United States</td>
+            </tr>
+          
+            <tr>
+              <th>keywords</th>
+              <td>government,law,rights,federalism,branches</td>
+            </tr>
+          
+            <tr>
+              <th>vector</th>
+              <td>0.42,0.28,0.38,0.12,0.22,-0.08</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>supported_by</strong> → 
-          <a href="washington.html">George Washington</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('washington')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>produced_during</strong> → 
-          <a href="constitutional-convention.html">Constitutional Convention</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('constitutional-convention')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>belongs_to_cluster</strong> → 
-          <a href="founding-principles-cluster.html">Founding Principles</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('founding-principles-cluster')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>supported_by</strong> → <a href="washington.html">George Washington</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>produced_during</strong> → <a href="constitutional-convention.html">Constitutional Convention</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>belongs_to_cluster</strong> → <a href="founding-principles-cluster.html">Founding Principles</a>
+      
+      
+    </div>
+      
+      
+      
     </section>
   </main>
   

@@ -7,7 +7,7 @@
   <title>Natural Language Understanding - ResearchTeam Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Natural Language Understanding</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,96 +25,108 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>nlp-project</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>project</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Advanced NLP techniques for context-aware language understanding</td>
-          </tr>
-          <tr>
-            <th>startDate</th>
-            <td>2021-06-01</td>
-          </tr>
-          <tr>
-            <th>endDate</th>
-            <td>2024-05-31</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>active</td>
-          </tr>
-          <tr>
-            <th>budget</th>
-            <td>400000</td>
-          </tr>
-          <tr>
-            <th>objectives</th>
-            <td>Enhance contextual understanding,Improve multilingual capabilities,Develop efficient training methods</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>nlp-project</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>project</td>
+        </tr>
+        
+            <tr>
+              <th>description</th>
+              <td>Advanced NLP techniques for context-aware language understanding</td>
+            </tr>
+          
+            <tr>
+              <th>startDate</th>
+              <td>2021-06-01</td>
+            </tr>
+          
+            <tr>
+              <th>endDate</th>
+              <td>2024-05-31</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>active</td>
+            </tr>
+          
+            <tr>
+              <th>budget</th>
+              <td>400000</td>
+            </tr>
+          
+            <tr>
+              <th>objectives</th>
+              <td>Enhance contextual understanding,Improve multilingual capabilities,Develop efficient training methods</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>produced</strong> → 
-          <a href="nlp-paper-2023.html">Context-Aware Language Understanding in Multi-Domain Settings</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('nlp-paper-2023')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>uses</strong> → 
-          <a href="gpu-cluster.html">High-Performance GPU Cluster</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('gpu-cluster')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>applies</strong> → 
-          <a href="nlp.html">Natural Language Processing</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('nlp')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>applies</strong> → 
-          <a href="machine-learning-theory.html">Machine Learning Theory</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('machine-learning-theory')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="alice-chen.html">Alice Chen</a> → 
-          <strong>contributes_to</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('alice-chen')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="bob-smith.html">Bob Smith</a> → 
-          <strong>leads</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('bob-smith')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="david-patel.html">David Patel</a> → 
-          <strong>contributes_to</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('david-patel')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="tech-partner.html">Tech Industry Partnership</a> → 
-          <strong>funds</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('tech-partner')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="grace-kim.html">Grace Kim</a> → 
-          <strong>administers</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('grace-kim')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>produced</strong> → <a href="nlp-paper-2023.html">Context-Aware Language Understanding in Multi-Domain Settings</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>uses</strong> → <a href="gpu-cluster.html">High-Performance GPU Cluster</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>applies</strong> → <a href="nlp.html">Natural Language Processing</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>applies</strong> → <a href="machine-learning-theory.html">Machine Learning Theory</a>
+      
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="alice-chen.html">Alice Chen</a> → <strong>contributes_to</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="bob-smith.html">Bob Smith</a> → <strong>leads</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="david-patel.html">David Patel</a> → <strong>contributes_to</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="tech-partner.html">Tech Industry Partnership</a> → <strong>funds</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="grace-kim.html">Grace Kim</a> → <strong>administers</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

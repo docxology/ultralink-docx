@@ -7,7 +7,7 @@
   <title>Javelina - DesertEcosystem Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Javelina</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,75 +25,99 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>javelina</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>animal</td>
-          </tr>
-          <tr>
-            <th>scientificName</th>
-            <td>Pecari tajacu</td>
-          </tr>
-          <tr>
-            <th>lifespan</th>
-            <td>10</td>
-          </tr>
-          <tr>
-            <th>diet</th>
-            <td>omnivore</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>least concern</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Also known as collared peccary, a pig-like mammal adapted to desert environments.</td>
-          </tr>
-          <tr>
-            <th>adaptations</th>
-            <td>Can consume water-rich cacti including prickly pear,Active in early morning and evening to avoid heat,Social behavior reduces predation risk,Specialized digestive system for desert plants</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>javelina</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Pecari tajacu</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>10</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>omnivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Also known as collared peccary, a pig-like mammal adapted to desert environments.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Can consume water-rich cacti including prickly pear,Active in early morning and evening to avoid heat,Social behavior reduces predation risk,Specialized digestive system for desert plants</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>adapted_to</strong> → 
-          <a href="aridity.html">Aridity</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>adaptationMechanism:</strong> Consumption of water-rich cacti</span>
-            <span><strong>strength:</strong> moderate</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>lives_in</strong> → 
-          <a href="canyon.html">Desert Canyon</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('canyon')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> permanent</span>
-            <span><strong>dependency:</strong> medium</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>consumes</strong> → 
-          <a href="prickly_pear.html">Prickly Pear Cactus</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('prickly_pear')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> common</span>
-            <span><strong>method:</strong> grazing</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Consumption of water-rich cacti</div>
+            
+              <div><strong>strength:</strong> moderate</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="canyon.html">Desert Canyon</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> medium</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>consumes</strong> → <a href="prickly_pear.html">Prickly Pear Cactus</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> common</div>
+            
+              <div><strong>method:</strong> grazing</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
     </section>
   </main>
   

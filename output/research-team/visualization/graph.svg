@@ -1,36 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
-  <style>
-    .node { fill: #69b3a2; stroke: #fff; stroke-width: 1.5px; }
-    .node-person { fill: #4e79a7; }
-    .node-project { fill: #f28e2c; }
-    .node-resource { fill: #e15759; }
-    .node-concept { fill: #76b7b2; }
-    .link { stroke: #999; stroke-opacity: 0.6; stroke-width: 1px; }
-    text { font-family: sans-serif; font-size: 10px; fill: #333; }
-  </style>
-  <g class="links">
-    <line class="link" x1="100" y1="100" x2="400" y2="100" data-type="leads"/>
-    <line class="link" x1="100" y1="100" x2="550" y2="100" data-type="contributes_to"/>
-    <line class="link" x1="250" y1="100" x2="400" y2="100" data-type="works_on"/>
-    <line class="link" x1="250" y1="100" x2="100" y2="100" data-type="reports_to"/>
-  </g>
-  <g class="nodes">
-    <circle class="node node-researcher" cx="100" cy="100" r="10">
-      <title>Alice Chen</title>
-    </circle>
-    <text x="115" y="105">Alice Chen</text>
-    <circle class="node node-researcher" cx="250" cy="100" r="10">
-      <title>Bob Smith</title>
-    </circle>
-    <text x="265" y="105">Bob Smith</text>
-    <circle class="node node-project" cx="400" cy="100" r="10">
-      <title>Desert Ecology Study</title>
-    </circle>
-    <text x="415" y="105">Desert Ecology Study</text>
-    <circle class="node node-project" cx="550" cy="100" r="10">
-      <title>Climate Impact Assessment</title>
-    </circle>
-    <text x="565" y="105">Climate Impact Assessment</text>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><defs><style>
+        .node circle { stroke: #fff; stroke-width: 1.5px; }
+        .node text { font-family: Arial; font-size: 12px; }
+        .link { stroke: #999; stroke-opacity: 0.6; }
+        .node.selected circle { stroke: #000; stroke-width: 2px; }
+        .node.neighbor circle { stroke: #666; stroke-width: 1.5px; }
+        .link.highlighted { stroke: #666; stroke-width: 2px; }
+      </style></defs><rect width="100%" height="100%" fill="#f8f9fa"></rect><g class="links"><line stroke="#999" stroke-width="1" class="link"></line><line stroke="#999" stroke-width="1" class="link"></line><line stroke="#999" stroke-width="1" class="link"></line><line stroke="#999" stroke-width="1" class="link"></line></g><g class="nodes"><g class="node" data-id="alice"><circle r="8" fill="#4285F4"></circle><text dx="12" dy=".35em" font-family="Arial" font-size="12px">Alice Chen</text></g><g class="node" data-id="bob"><circle r="8" fill="#4285F4"></circle><text dx="12" dy=".35em" font-family="Arial" font-size="12px">Bob Smith</text></g><g class="node" data-id="desert-ecology"><circle r="8" fill="#F39C12"></circle><text dx="12" dy=".35em" font-family="Arial" font-size="12px">Desert Ecology Study</text></g><g class="node" data-id="climate-impact"><circle r="8" fill="#F39C12"></circle><text dx="12" dy=".35em" font-family="Arial" font-size="12px">Climate Impact Assessment</text></g></g></svg>

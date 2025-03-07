@@ -106,6 +106,7 @@ function toKIF(ultralink, options = {}) {
           formattedValue = `"${JSON.stringify(value).replace(/"/g, '\\"')}"`;
         }
         
+        // Format relationship attributes without = prefix
         kif += `(${key}-${rel.type} ${rel.source} ${rel.target} ${formattedValue})\n`;
       }
     }

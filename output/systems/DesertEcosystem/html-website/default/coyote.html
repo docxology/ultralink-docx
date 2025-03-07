@@ -7,7 +7,7 @@
   <title>Coyote - DesertEcosystem Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Coyote</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,84 +25,112 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>coyote</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>animal</td>
-          </tr>
-          <tr>
-            <th>scientificName</th>
-            <td>Canis latrans</td>
-          </tr>
-          <tr>
-            <th>lifespan</th>
-            <td>14</td>
-          </tr>
-          <tr>
-            <th>diet</th>
-            <td>omnivore</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>least concern</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Adaptable canid found throughout North American deserts and beyond.</td>
-          </tr>
-          <tr>
-            <th>adaptations</th>
-            <td>Can survive on minimal water obtained from prey,Opportunistic feeding habits,Highly adaptable to different habitats,Active during cooler parts of day,Efficient predator of small desert mammals</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>coyote</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Canis latrans</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>14</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>omnivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Adaptable canid found throughout North American deserts and beyond.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Can survive on minimal water obtained from prey,Opportunistic feeding habits,Highly adaptable to different habitats,Active during cooler parts of day,Efficient predator of small desert mammals</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>adapted_to</strong> → 
-          <a href="aridity.html">Aridity</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>adaptationMechanism:</strong> Obtaining moisture from prey</span>
-            <span><strong>strength:</strong> strong</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>lives_in</strong> → 
-          <a href="canyon.html">Desert Canyon</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('canyon')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> permanent</span>
-            <span><strong>dependency:</strong> low</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>preys_on</strong> → 
-          <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> common</span>
-            <span><strong>method:</strong> hunting</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>preys_on</strong> → 
-          <a href="desert_tortoise.html">Desert Tortoise</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('desert_tortoise')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> rare</span>
-            <span><strong>method:</strong> opportunistic</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Obtaining moisture from prey</div>
+            
+              <div><strong>strength:</strong> strong</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="canyon.html">Desert Canyon</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> low</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>preys_on</strong> → <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> common</div>
+            
+              <div><strong>method:</strong> hunting</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>preys_on</strong> → <a href="desert_tortoise.html">Desert Tortoise</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> rare</div>
+            
+              <div><strong>method:</strong> opportunistic</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
     </section>
   </main>
   

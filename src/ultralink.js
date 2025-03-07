@@ -44,6 +44,7 @@ class UltraLink {
     this.relationships = new Map();
     this.relationshipsBySource = new Map();
     this.relationshipsByTarget = new Map();
+    this.links = new Map();
   }
 
   /**
@@ -245,11 +246,16 @@ class UltraLink {
   }
 
   /**
-   * Generate a visualization
-   * @param {Object} options - Visualization options
-   * @returns {Object} Visualization files
+   * Export the knowledge graph to a visualization format
+   * @param {Object} options - Export options
+   * @param {string} options.format - Output format (svg, png, d3, cytoscape)
+   * @param {string} options.layout - Layout type (force, circular, grid, hierarchical)
+   * @param {Object} options.style - Visual style options
+   * @param {number} options.width - Canvas width
+   * @param {number} options.height - Canvas height
+   * @returns {Object} Map of filenames to file contents
    */
-  toVisualization(options = {}) {
+  async toVisualization(options = {}) {
     return toVisualization(this, options);
   }
 
@@ -311,6 +317,7 @@ class UltraLink {
     this.relationships = new Map();
     this.relationshipsBySource = new Map();
     this.relationshipsByTarget = new Map();
+    this.links = new Map();
     return this;
   }
 
@@ -563,13 +570,28 @@ class UltraLink {
    * @returns {boolean} True if the relationship was deleted, false if it didn't exist
    */
   deleteLink(sourceId, targetId, type) {
-    // Delete from relationships map
-    const key = `${sourceId}-${targetId}-${type}`;
-    const deleted = this.relationships.delete(key);
+    // Generate relationship ID
+    const id = `${sourceId}_${type}_${targetId}`;
     
-    // Delete from links map
-    if (this.links.has(sourceId)) {
-      this.links.get(sourceId).delete(`${targetId}-${type}`);
+    // Delete from relationships map
+    const deleted = this.relationships.delete(id);
+    
+    // Clean up relationship indices
+    if (deleted) {
+      // Clean up relationshipsBySource
+      if (this.relationshipsBySource.has(sourceId)) {
+        this.relationshipsBySource.get(sourceId).delete(id);
+      }
+      
+      // Clean up relationshipsByTarget
+      if (this.relationshipsByTarget.has(targetId)) {
+        this.relationshipsByTarget.get(targetId).delete(id);
+      }
+      
+      // Clean up links map
+      if (this.links.has(sourceId)) {
+        this.links.get(sourceId).delete(`${targetId}-${type}`);
+      }
     }
     
     return deleted;

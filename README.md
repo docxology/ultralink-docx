@@ -129,6 +129,50 @@ graph LR
     class Metadata1,Metadata2,Metadata3,Metadata4 metaStyle
 ```
 
+### 🛠️ Rich Semantic Model
+UltraLink's advanced entity-relationship model provides a flexible yet powerful foundation:
+
+```mermaid
+graph TD
+    subgraph SemanticModel["Semantic Type System"]
+        EntityTypes["Entity Types"]
+        RelTypes["Relationship Types"]
+        AttributeTypes["Attribute Definitions"]
+        Constraints["Semantic Constraints"]
+        
+        EntityTypes --> Constraints
+        RelTypes --> Constraints
+        AttributeTypes --> Constraints
+    end
+    
+    subgraph SyntaxCapabilities["Core Syntax"]
+        Create["Creation APIs"]
+        Query["Query System"]
+        Transform["Transformations"]
+        Validate["Validation"]
+        
+        Create --> Validate
+        Query --> Transform
+        Validate --> Query
+    end
+    
+    SemanticModel --> SyntaxCapabilities
+    
+    classDef model fill:#4a6fa5,stroke:#2b5086,color:white
+    classDef syntax fill:#57a773,stroke:#2e8049,color:white
+    
+    class SemanticModel model
+    class SyntaxCapabilities syntax
+```
+
+UltraLink's semantic model gives you:
+
+- **Type System**: Define entity and relationship types with validation rules
+- **Rich Relationships**: Multi-dimensional connections with their own attributes
+- **Semantic Validation**: Ensure knowledge integrity with automatic validation
+- **Inheritance**: Support for type hierarchies and relationship inheritance
+- **Inference Rules**: Derive new knowledge through semantic inference
+
 ### 🧠 Vector-based Understanding
 Transform content into vector space for semantic understanding and discovery:
 
@@ -506,6 +550,7 @@ UltraLink is licensed under the [MIT License](LICENSE).
 
 - [📝 Documentation](docs/README.md)
 - [📖 API Reference](docs/api/README.md)
+- [🔗 Syntax & Semantics](docs/core-features/syntax-and-semantics.md)
 - [📊 Examples](docs/examples/README.md)
 - [🚀 Getting Started](docs/getting-started/README.md)
 - [🔒 Security](docs/security/security.md)

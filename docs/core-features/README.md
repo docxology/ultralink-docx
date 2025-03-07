@@ -1,82 +1,105 @@
 # UltraLink Core Features
 
-This directory contains detailed documentation about the core differentiating features of UltraLink that make it a powerful tool for knowledge representation and management.
+This section documents the core features and differentiating capabilities of UltraLink, explaining what makes it unique among knowledge management and graph systems.
 
 ```mermaid
-flowchart TD
-    UL[UltraLink]
-    RF[Rendering Flexibility]
-    VI[Vector Integration]
-    LLMC[LLM Capabilities]
-    TA[Temporal Analysis]
-    UP[UltraLink Paradigm]
-    
-    UL --> RF
-    UL --> VI
-    UL --> LLMC
-    UL --> TA
-    UL --> UP
-    
-    style UL fill:#f5f5f5,stroke:#333,stroke-width:2px
-    style RF fill:#d4f1f9,stroke:#333,stroke-width:1px
-    style VI fill:#d5e8d4,stroke:#333,stroke-width:1px
-    style LLMC fill:#fff2cc,stroke:#333,stroke-width:1px
-    style TA fill:#ffe6cc,stroke:#333,stroke-width:1px
-    style UP fill:#f8cecc,stroke:#333,stroke-width:1px
+mindmap
+  root((Core Features))
+    Syntax & Semantics
+      Enhanced Entity-Relationship Model
+      Rich Attribute System
+      Typed Relationships
+      Semantic Validation
+    Vector Integration
+      Semantic Embeddings
+      Similarity Search
+      Automatic Relationship Discovery
+      Clustering and Visualization
+    Temporal Analysis
+      Change Tracking
+      Versioning
+      Timeline Generation
+      Temporal Queries
+    Rendering Flexibility
+      Multiple Export Formats
+      Format-Specific Optimizations
+      Interactive Visualization
+      Custom Rendering Targets
+    LLM Capabilities
+      Content Enhancement
+      Automatic Analysis
+      Entity/Relationship Extraction
+      Summarization
 ```
 
-## Core Features Overview
+## Core Feature Documentation
 
-### [Rendering Flexibility](./rendering-flexibility.md)
+### [Syntax and Semantics](./syntax-and-semantics.md)
 
-The most distinctive feature of UltraLink is its exceptional rendering flexibility. Unlike traditional knowledge graph tools that lock you into specific formats, UltraLink transforms your knowledge into virtually any target format:
+UltraLink's foundation is built on a rich, semantically enhanced graph model that goes beyond traditional hypertext or knowledge graphs. Key aspects include:
 
-- Export to multiple standard formats (JSON, GraphML, CSV)
-- Create knowledge management artifacts (Obsidian, Wiki, Documentation)
-- Generate analytical representations (Bayesian Networks, KIF)
-- Build interactive experiences (HTML websites, D3.js visualizations)
-- Support custom formats for specialized needs
+- Enhanced entity-relationship model with rich attributes
+- Type system for entities and relationships
+- Semantic validation and constraints
+- Multi-dimensional traversal capabilities
+- Advanced query syntax for precise knowledge retrieval
+
+The [Syntax and Semantics](./syntax-and-semantics.md) document provides comprehensive documentation of UltraLink's core syntax and semantic model.
 
 ### [Vector Integration](./vector-integration.md)
 
-UltraLink's seamless vector integration brings the power of modern embeddings to your knowledge graphs:
+UltraLink integrates vector embeddings throughout its architecture to provide semantic understanding of content:
 
-- Connect entities with semantic similarity
-- Perform context-aware searches
-- Cluster related knowledge
-- Integrate with external vector databases
-- Support for multiple embedding models
+- Automatic vector generation for entities and relationships
+- Semantic similarity search beyond explicit connections
+- Content clustering and recommendation capabilities
+- Automatic relationship inference based on semantic similarity
+- Multi-modal vector representation (text, code, images)
 
-### [LLM Capabilities](./llm-capabilities.md)
+### [Rendering Flexibility](./rendering-flexibility.md)
 
-Enhance your knowledge graphs with advanced AI capabilities:
+The defining feature of UltraLink is its exceptional rendering flexibility:
 
-- Generate entities and relationships from unstructured data
-- Extract insights through natural language queries
-- Augment existing knowledge with AI-generated content
-- Create dynamic content summaries
-- Ground LLM responses in structured knowledge
+- Format-agnostic knowledge representation
+- Multiple export formats for different use cases
+- Preservation of semantics across formats
+- Interactive visualizations and explorations
+- Custom rendering target capabilities
 
 ### [Temporal Analysis](./temporal-analysis.md)
 
-Track and analyze the evolution of knowledge over time:
+UltraLink provides robust tracking of how knowledge evolves over time:
 
-- Historical versioning of entities and relationships
-- Temporal queries to understand knowledge evolution
-- Timeline visualizations
-- Snapshot comparison
-- Forecasting capabilities
+- Complete history of entity and relationship changes
+- Point-in-time querying of historical states
+- Version management and comparison
+- Timeline generation and visualization
+- Continuous vs. discrete temporal modeling
 
-### [UltraLink Paradigm](./ultralink-paradigm.md)
+### [LLM Capabilities](./llm-capabilities.md)
 
-Understand the fundamental paradigm that makes UltraLink different:
+UltraLink leverages large language models to enhance knowledge graphs:
 
-- Meta-linking principles
-- Entity-relationship foundation
-- Multi-dimensional knowledge representation
-- Extensibility model
-- Integration architecture
+- Automatic content enhancement and enrichment
+- Entity and relationship extraction from documents
+- Intelligent summarization and exploration
+- Natural language querying and interaction
+- Multi-modal content understanding
 
-## Implementation Details
+## Getting Started with Core Features
 
-Each core feature is implemented in the UltraLink codebase in dedicated modules that work together to provide a cohesive experience. For technical implementation details, see the [Technical Documentation](../technical/README.md). 
+For practical examples of how to use these core features, refer to the following guides:
+
+- [Working with Entities and Relationships](../guides/entities-and-relationships.md)
+- [Vector-Based Search and Discovery](../guides/vector-search.md)
+- [Temporal Analysis Guide](../guides/temporal-analysis.md)
+- [Format Selection Guide](../guides/choosing-format.md)
+- [LLM Integration Guide](../guides/llm-integration.md)
+
+## Next Steps
+
+After understanding UltraLink's core features, explore:
+
+- [Tutorials](../tutorials/README.md) for step-by-step learning
+- [API Reference](../api/README.md) for detailed function documentation
+- [Advanced Topics](../advanced/README.md) for extending UltraLink 

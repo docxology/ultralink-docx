@@ -111,16 +111,48 @@ describe('Research Team Export Tests', () => {
   });
   
   test('HTML Website Export', async () => {
-    // Generate HTML website for research team
-    const htmlFiles = await ultralink.toHTMLWebsite({
+    // Generate HTML website with specified theme
+    const htmlFiles = ultralink.toHTMLWebsite({
       title: 'Research Team Portal',
       description: 'Interactive visualization of research team relationships',
       theme: 'academic'
     });
     
-    // Save files for inspection
+    // Save for inspection
     const outputDir = getSystemOutputPath(researchSystem, 'html-website');
     
+    // Write files to output directory
+    Object.entries(htmlFiles).forEach(([filename, content]) => {
+      const fullPath = path.join(outputDir, filename);
+      
+      // Create directory for the file if it doesn't exist
+      const dir = path.dirname(fullPath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      
+      fs.writeFileSync(fullPath, content);
+    });
+    
+    // Check basic structure
+    expect(htmlFiles['index.html']).toContain('<!DOCTYPE html>');
+    expect(htmlFiles['index.html']).toContain('<title>Research Team Portal</title>');
+    expect(htmlFiles['index.html']).toContain('Interactive visualization of research team relationships');
+    expect(htmlFiles['index.html']).toContain('d3.v7.min.js');
+    
+    // Check entity page content
+    expect(htmlFiles['alice.html']).toContain('<title>Alice Chen - Research Team Portal</title>');
+    expect(htmlFiles['alice.html']).toContain('Principal Investigator');
+    expect(htmlFiles['alice.html']).toContain('Biology');
+    
+    // Check that academic theme CSS file was generated
+    expect(htmlFiles['styles/academic.css']).toBeDefined();
+    expect(htmlFiles['styles/academic.css']).toContain('academic');
+    expect(htmlFiles['styles/academic.css']).toContain('Palatino Linotype');
+    expect(htmlFiles['styles/academic.css']).toContain('#7b1fa2');
+    
+    // Check that index.html has a reference to the theme
+    expect(htmlFiles['styles/academic.css']).toContain('Palatino Linotype');
     // Ensure the styles directory exists
     const stylesDir = path.join(outputDir, 'styles');
     if (!fs.existsSync(stylesDir)) {
@@ -400,8 +432,8 @@ describe('Research Team Export Tests', () => {
   });
 
   test('Visualization Export', async () => {
-    // Generate SVG visualization
-    const svgOutput = ultralink.toVisualization({ format: 'svg' });
+    // Generate SVG visualization - add await here
+    const svgOutput = await ultralink.toVisualization({ format: 'svg' });
     
     // Save for inspection
     const outputDir = getSystemOutputPath(researchSystem, 'visualization');

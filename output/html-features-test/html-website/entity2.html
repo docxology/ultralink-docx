@@ -7,7 +7,7 @@
   <title>Project Alpha - HTML Features Test</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Project Alpha</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,52 +25,67 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>entity2</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>project</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>Active</td>
-          </tr>
-          <tr>
-            <th>priority</th>
-            <td>High</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>entity2</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>project</td>
+        </tr>
+        
+            <tr>
+              <th>status</th>
+              <td>Active</td>
+            </tr>
+          
+            <tr>
+              <th>priority</th>
+              <td>High</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>contains</strong> → 
-          <a href="entity3.html">entity3</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('entity3')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>section:</strong> Documentation</span>
-          </div>
-        </li>
-      </ul>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="entity1.html">John Doe</a> → 
-          <strong>manages</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('entity1')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>role:</strong> Project Manager</span>
-            <span><strong>since:</strong> 2023-01-15</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>contains</strong> → <a href="entity3.html">entity3</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>section:</strong> Documentation</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="entity1.html">John Doe</a> → <strong>manages</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>role:</strong> Project Manager</div>
+            
+              <div><strong>since:</strong> 2023-01-15</div>
+            
+        </div>
+      
+    </div>
+      
     </section>
   </main>
   

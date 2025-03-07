@@ -7,7 +7,7 @@
   <title>Decision Making Patterns in Ant Colonies: A Field Study - ActiveInferenceLab Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Decision Making Patterns in Ant Colonies: A Field Study</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,90 +25,119 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>paper-2023b</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>publication</td>
-          </tr>
-          <tr>
-            <th>authors</th>
-            <td>bob,emma,frank</td>
-          </tr>
-          <tr>
-            <th>journal</th>
-            <td>Behavioral Ecology</td>
-          </tr>
-          <tr>
-            <th>year</th>
-            <td>2023</td>
-          </tr>
-          <tr>
-            <th>doi</th>
-            <td>10.1093/beheco/2023-0002</td>
-          </tr>
-          <tr>
-            <th>citations</th>
-            <td>8</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>paper-2023b</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>publication</td>
+        </tr>
+        
+            <tr>
+              <th>authors</th>
+              <td>bob,emma,frank</td>
+            </tr>
+          
+            <tr>
+              <th>journal</th>
+              <td>Behavioral Ecology</td>
+            </tr>
+          
+            <tr>
+              <th>year</th>
+              <td>2023</td>
+            </tr>
+          
+            <tr>
+              <th>doi</th>
+              <td>10.1093/beheco/2023-0002</td>
+            </tr>
+          
+            <tr>
+              <th>citations</th>
+              <td>8</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>results_from</strong> → 
-          <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('ant-colony-study')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>contribution:</strong> Initial field study findings</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>discusses</strong> → 
-          <a href="collective-behavior.html">Collective Behavior</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('collective-behavior')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>depth:</strong> substantial</span>
-          </div>
-        </li>
-      </ul>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="bob.html">Dr. Bob Smith</a> → 
-          <strong>authored</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('bob')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>contributionType:</strong> corresponding author</span>
-            <span><strong>contributionPercentage:</strong> 50</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <a href="emma.html">Emma Taylor</a> → 
-          <strong>authored</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('emma')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>contributionType:</strong> co-author</span>
-            <span><strong>contributionPercentage:</strong> 30</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <a href="frank.html">Dr. Frank Martinez</a> → 
-          <strong>authored</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('frank')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>contributionType:</strong> co-author</span>
-            <span><strong>contributionPercentage:</strong> 20</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>results_from</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contribution:</strong> Initial field study findings</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>discusses</strong> → <a href="collective-behavior.html">Collective Behavior</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>depth:</strong> substantial</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="bob.html">Dr. Bob Smith</a> → <strong>authored</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> corresponding author</div>
+            
+              <div><strong>contributionPercentage:</strong> 50</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <a href="emma.html">Emma Taylor</a> → <strong>authored</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> co-author</div>
+            
+              <div><strong>contributionPercentage:</strong> 30</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <a href="frank.html">Dr. Frank Martinez</a> → <strong>authored</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> co-author</div>
+            
+              <div><strong>contributionPercentage:</strong> 20</div>
+            
+        </div>
+      
+    </div>
+      
     </section>
   </main>
   

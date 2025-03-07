@@ -7,7 +7,7 @@
   <title>Civil War - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Civil War</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,56 +25,65 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>civil-war</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>time_period</td>
-          </tr>
-          <tr>
-            <th>startYear</th>
-            <td>1861</td>
-          </tr>
-          <tr>
-            <th>endYear</th>
-            <td>1865</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>War between the Union and Confederate states</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>civil-war</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>time_period</td>
+        </tr>
+        
+            <tr>
+              <th>startYear</th>
+              <td>1861</td>
+            </tr>
+          
+            <tr>
+              <th>endYear</th>
+              <td>1865</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>War between the Union and Confederate states</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="civil-war-start.html">Civil War Begins</a> → 
-          <strong>occurred_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('civil-war-start')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="emancipation-proclamation.html">Emancipation Proclamation</a> → 
-          <strong>occurred_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('emancipation-proclamation')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="civil-war-end.html">Civil War Ends</a> → 
-          <strong>occurred_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('civil-war-end')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="gettysburg-address.html">Gettysburg Address</a> → 
-          <strong>produced_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('gettysburg-address')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="civil-war-start.html">Civil War Begins</a> → <strong>occurred_during</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="emancipation-proclamation.html">Emancipation Proclamation</a> → <strong>occurred_during</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="civil-war-end.html">Civil War Ends</a> → <strong>occurred_during</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="gettysburg-address.html">Gettysburg Address</a> → <strong>produced_during</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

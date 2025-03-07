@@ -7,7 +7,7 @@
   <title>Progressive Era - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Progressive Era</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,41 +25,50 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>progressive-era</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>time_period</td>
-          </tr>
-          <tr>
-            <th>startYear</th>
-            <td>1900</td>
-          </tr>
-          <tr>
-            <th>endYear</th>
-            <td>1920</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Period of social activism and political reform</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>progressive-era</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>time_period</td>
+        </tr>
+        
+            <tr>
+              <th>startYear</th>
+              <td>1900</td>
+            </tr>
+          
+            <tr>
+              <th>endYear</th>
+              <td>1920</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Period of social activism and political reform</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="womens-suffrage.html">19th Amendment</a> → 
-          <strong>occurred_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('womens-suffrage')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="womens-suffrage.html">19th Amendment</a> → <strong>occurred_during</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

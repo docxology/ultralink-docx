@@ -7,7 +7,7 @@
   <title>Desert Monitor - DesertEcosystem Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Desert Monitor</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,57 +25,73 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>desert_monitor</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>animal</td>
-          </tr>
-          <tr>
-            <th>scientificName</th>
-            <td>Varanus griseus</td>
-          </tr>
-          <tr>
-            <th>lifespan</th>
-            <td>15</td>
-          </tr>
-          <tr>
-            <th>diet</th>
-            <td>carnivore</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>least concern</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>A large lizard found across North Africa and parts of Asia.</td>
-          </tr>
-          <tr>
-            <th>adaptations</th>
-            <td>Heat-resistant scales,Efficient water conservation,Can remain inactive for long periods,Burrows to escape extreme temperatures</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>desert_monitor</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Varanus griseus</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>15</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>carnivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>A large lizard found across North Africa and parts of Asia.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Heat-resistant scales,Efficient water conservation,Can remain inactive for long periods,Burrows to escape extreme temperatures</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>preys_on</strong> → 
-          <a href="scorpion.html">Deathstalker Scorpion</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('scorpion')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> occasional</span>
-            <span><strong>method:</strong> hunting</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>preys_on</strong> → <a href="scorpion.html">Deathstalker Scorpion</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> occasional</div>
+            
+              <div><strong>method:</strong> hunting</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
     </section>
   </main>
   

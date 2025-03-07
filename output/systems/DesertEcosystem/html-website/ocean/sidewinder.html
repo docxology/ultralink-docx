@@ -7,7 +7,7 @@
   <title>Sidewinder Rattlesnake - DesertEcosystem Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Sidewinder Rattlesnake</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,87 +25,115 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>sidewinder</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>animal</td>
-          </tr>
-          <tr>
-            <th>scientificName</th>
-            <td>Crotalus cerastes</td>
-          </tr>
-          <tr>
-            <th>lifespan</th>
-            <td>20</td>
-          </tr>
-          <tr>
-            <th>diet</th>
-            <td>carnivore</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>least concern</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Venomous pit viper known for its sideways movement across sand.</td>
-          </tr>
-          <tr>
-            <th>adaptations</th>
-            <td>Sidewinding locomotion minimizes contact with hot sand,Heat-sensing pits detect prey,Scales provide camouflage in sandy environments,Specialized breathing to prevent sand inhalation</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>sidewinder</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Crotalus cerastes</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>20</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>carnivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Venomous pit viper known for its sideways movement across sand.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Sidewinding locomotion minimizes contact with hot sand,Heat-sensing pits detect prey,Scales provide camouflage in sandy environments,Specialized breathing to prevent sand inhalation</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>adapted_to</strong> → 
-          <a href="sand_dunes.html">Sand Dunes</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('sand_dunes')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>adaptationMechanism:</strong> Specialized locomotion</span>
-            <span><strong>strength:</strong> extreme</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>lives_in</strong> → 
-          <a href="dune_field.html">Sand Dune Field</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('dune_field')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> permanent</span>
-            <span><strong>dependency:</strong> high</span>
-          </div>
-        </li>
-        <li class="relationship-item">
-          <strong>preys_on</strong> → 
-          <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('kangaroo_rat')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> common</span>
-            <span><strong>method:</strong> ambush</span>
-          </div>
-        </li>
-      </ul>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="roadrunner.html">Greater Roadrunner</a> → 
-          <strong>preys_on</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('roadrunner')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>frequency:</strong> occasional</span>
-            <span><strong>method:</strong> hunting</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="sand_dunes.html">Sand Dunes</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Specialized locomotion</div>
+            
+              <div><strong>strength:</strong> extreme</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="dune_field.html">Sand Dune Field</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> high</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>preys_on</strong> → <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> common</div>
+            
+              <div><strong>method:</strong> ambush</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="roadrunner.html">Greater Roadrunner</a> → <strong>preys_on</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> occasional</div>
+            
+              <div><strong>method:</strong> hunting</div>
+            
+        </div>
+      
+    </div>
+      
     </section>
   </main>
   

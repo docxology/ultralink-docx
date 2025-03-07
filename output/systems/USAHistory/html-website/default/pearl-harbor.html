@@ -7,7 +7,7 @@
   <title>Attack on Pearl Harbor - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Attack on Pearl Harbor</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,61 +25,73 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>pearl-harbor</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>event</td>
-          </tr>
-          <tr>
-            <th>date</th>
-            <td>1941-12-07</td>
-          </tr>
-          <tr>
-            <th>location</th>
-            <td>Pearl Harbor, Hawaii</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Japanese forces attack the US Naval base at Pearl Harbor</td>
-          </tr>
-          <tr>
-            <th>significance</th>
-            <td>Brought the United States into World War II</td>
-          </tr>
-          <tr>
-            <th>keywords</th>
-            <td>war,Japan,attack,World War II,Roosevelt</td>
-          </tr>
-          <tr>
-            <th>vector</th>
-            <td>-0.38,-0.28,-0.42,-0.2,-0.32,-0.3</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>pearl-harbor</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>event</td>
+        </tr>
+        
+            <tr>
+              <th>date</th>
+              <td>1941-12-07</td>
+            </tr>
+          
+            <tr>
+              <th>location</th>
+              <td>Pearl Harbor, Hawaii</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Japanese forces attack the US Naval base at Pearl Harbor</td>
+            </tr>
+          
+            <tr>
+              <th>significance</th>
+              <td>Brought the United States into World War II</td>
+            </tr>
+          
+            <tr>
+              <th>keywords</th>
+              <td>war,Japan,attack,World War II,Roosevelt</td>
+            </tr>
+          
+            <tr>
+              <th>vector</th>
+              <td>-0.38,-0.28,-0.42,-0.2,-0.32,-0.3</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>occurred_during</strong> → 
-          <a href="world-war-2.html">World War II</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('world-war-2')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="roosevelt-fdr.html">Franklin D. Roosevelt</a> → 
-          <strong>led_during</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('roosevelt-fdr')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>occurred_during</strong> → <a href="world-war-2.html">World War II</a>
+      
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="roosevelt-fdr.html">Franklin D. Roosevelt</a> → <strong>led_during</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

@@ -7,7 +7,7 @@
   <title>Economic Development - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Economic Development</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,51 +25,60 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>economic-development-cluster</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>semantic_cluster</td>
-          </tr>
-          <tr>
-            <th>centerVector</th>
-            <td>0.3,0.25,0.35,0.25,0.3,0.25</td>
-          </tr>
-          <tr>
-            <th>vectorSpace</th>
-            <td>ideological-space</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Cluster representing economic development principles</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>economic-development-cluster</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>semantic_cluster</td>
+        </tr>
+        
+            <tr>
+              <th>centerVector</th>
+              <td>0.3,0.25,0.35,0.25,0.3,0.25</td>
+            </tr>
+          
+            <tr>
+              <th>vectorSpace</th>
+              <td>ideological-space</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Cluster representing economic development principles</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="american-dream.html">American Dream</a> → 
-          <strong>belongs_to_cluster</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('american-dream')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="roosevelt-fdr.html">Franklin D. Roosevelt</a> → 
-          <strong>belongs_to_cluster</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('roosevelt-fdr')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="stock-market-crash.html">Stock Market Crash</a> → 
-          <strong>belongs_to_cluster</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('stock-market-crash')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="american-dream.html">American Dream</a> → <strong>belongs_to_cluster</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="roosevelt-fdr.html">Franklin D. Roosevelt</a> → <strong>belongs_to_cluster</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="stock-market-crash.html">Stock Market Crash</a> → <strong>belongs_to_cluster</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

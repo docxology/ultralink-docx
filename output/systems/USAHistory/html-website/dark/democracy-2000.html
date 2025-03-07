@@ -7,7 +7,7 @@
   <title>democracy-2000 - USAHistory Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>democracy-2000</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,49 +25,60 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>democracy-2000</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>temporal_snapshot</td>
-          </tr>
-          <tr>
-            <th>entityId</th>
-            <td>democracy</td>
-          </tr>
-          <tr>
-            <th>timestamp</th>
-            <td>2000</td>
-          </tr>
-          <tr>
-            <th>popularity</th>
-            <td>0.9</td>
-          </tr>
-          <tr>
-            <th>global_influence</th>
-            <td>0.8</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Democracy in modern era</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>democracy-2000</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>temporal_snapshot</td>
+        </tr>
+        
+            <tr>
+              <th>entityId</th>
+              <td>democracy</td>
+            </tr>
+          
+            <tr>
+              <th>timestamp</th>
+              <td>2000</td>
+            </tr>
+          
+            <tr>
+              <th>popularity</th>
+              <td>0.9</td>
+            </tr>
+          
+            <tr>
+              <th>global_influence</th>
+              <td>0.8</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Democracy in modern era</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="democracy.html">Democracy</a> → 
-          <strong>has_state_at</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('democracy')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="democracy.html">Democracy</a> → <strong>has_state_at</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   

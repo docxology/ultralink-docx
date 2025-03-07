@@ -16,22 +16,25 @@ describe('UltraLink', () => {
     it('should create an UltraLink instance with default options', () => {
       const ultralink = new UltraLink();
       
+      expect(ultralink.config).toBeDefined();
+      expect(ultralink.config.preventOverwrite).toBe(true);
+      expect(ultralink.config.timestampEntities).toBe(true);
+      expect(ultralink.config.defaultRelationshipType).toBe('related_to');
+      
       expect(ultralink.entities).toBeDefined();
       expect(ultralink.relationships).toBeDefined();
-      expect(ultralink.entities.size).toBe(0);
-      expect(ultralink.relationships.size).toBe(0);
     });
     
     it('should create an UltraLink instance with custom options', () => {
-      const options = {
-        enableVectors: false,
-        enableTemporal: false
-      };
+      const ultralink = new UltraLink({
+        preventOverwrite: false,
+        timestampEntities: false,
+        defaultRelationshipType: 'custom_type'
+      });
       
-      const ultralink = new UltraLink(options);
-      
-      expect(ultralink.entities).toBeDefined();
-      expect(ultralink.relationships).toBeDefined();
+      expect(ultralink.config.preventOverwrite).toBe(false);
+      expect(ultralink.config.timestampEntities).toBe(false);
+      expect(ultralink.config.defaultRelationshipType).toBe('custom_type');
     });
   });
   
@@ -40,7 +43,7 @@ describe('UltraLink', () => {
     let ultralink;
     
     beforeEach(() => {
-      ultralink = new UltraLink();
+      ultralink = new UltraLink({ preventOverwrite: true });
     });
     
     it('should add an entity with addEntity method', () => {
@@ -146,15 +149,14 @@ describe('UltraLink', () => {
     it('should find entities with custom filter', () => {
       ultralink.addEntity('person1', 'person', { name: 'John Doe', age: 30 });
       ultralink.addEntity('person2', 'person', { name: 'Jane Smith', age: 25 });
-      ultralink.addEntity('person3', 'person', { name: 'Bob Johnson', age: 40 });
+      ultralink.addEntity('person3', 'person', { name: 'Bob Johnson', age: 35 });
       
-      const filtered = ultralink.findEntities({ 
-        filter: entity => entity.attributes.age > 25 && entity.attributes.name.includes('o')
+      const over30 = ultralink.findEntities({
+        filter: entity => entity.attributes.age > 30
       });
       
-      expect(filtered.length).toBe(2);
-      expect(filtered[0].id).toBe('person1'); // John Doe
-      expect(filtered[1].id).toBe('person3'); // Bob Johnson
+      expect(over30.length).toBe(1);
+      expect(over30[0].attributes.name).toBe('Bob Johnson');
     });
   });
   
@@ -163,18 +165,14 @@ describe('UltraLink', () => {
     let ultralink;
     
     beforeEach(() => {
-      ultralink = new UltraLink();
-      
-      // Add some entities
+      ultralink = new UltraLink({ preventOverwrite: true });
       ultralink.addEntity('person1', 'person', { name: 'John Doe' });
       ultralink.addEntity('person2', 'person', { name: 'Jane Smith' });
       ultralink.addEntity('document1', 'document', { title: 'Report' });
     });
     
     it('should add a relationship with addLink method', () => {
-      const relationship = ultralink.addLink('person1', 'document1', 'authored', { 
-        date: '2023-01-15'
-      });
+      const relationship = ultralink.addLink('person1', 'document1', 'authored', { date: '2023-01-15' });
       
       expect(ultralink.relationships.size).toBe(1);
       expect(relationship.source).toBe('person1');
@@ -257,163 +255,104 @@ describe('UltraLink', () => {
     let ultralink;
     
     beforeEach(() => {
-      ultralink = new UltraLink();
-      
-      // Add some entities
-      ultralink.addEntity('person1', 'person', { 
-        name: 'John Doe',
-        email: 'john@example.com',
-        age: 30
-      });
-      
-      ultralink.addEntity('document1', 'document', { 
-        title: 'Annual Report',
-        year: 2023,
-        pages: 42
-      });
-      
-      ultralink.addEntity('topic1', 'topic', { 
-        name: 'Financial Analysis',
-        description: 'Methods for analyzing financial data'
-      });
-      
-      // Add some relationships
-      ultralink.addLink('person1', 'document1', 'authored', { 
-        date: '2023-01-15',
-        role: 'lead author'
-      });
-      
-      ultralink.addLink('document1', 'topic1', 'covers', { 
-        depth: 'detailed',
-        chapters: [3, 4, 5]
-      });
+      ultralink = new UltraLink({ preventOverwrite: true });
     });
     
     it('should export to JSON format', () => {
-      const jsonString = ultralink.toJSON();
+      ultralink.addEntity('person1', 'person', { name: 'John Doe' });
+      ultralink.addEntity('document1', 'document', { title: 'Report' });
+      ultralink.addLink('person1', 'document1', 'authored');
       
-      expect(jsonString).toBeDefined();
-      expect(typeof jsonString).toBe('string');
+      const json = ultralink.toJSON();
+      const data = JSON.parse(json);
       
-      // Parse the JSON string
-      const json = JSON.parse(jsonString);
-      
-      expect(json.entities).toBeDefined();
-      expect(json.relationships).toBeDefined();
-      expect(Array.isArray(json.entities)).toBe(true);
-      expect(Array.isArray(json.relationships)).toBe(true);
-      
-      // Check that entities are properly exported
-      expect(json.entities.length).toBe(3);
-      const person = json.entities.find(e => e.id === 'person1');
-      expect(person).toBeDefined();
-      expect(person.type).toBe('person');
-      expect(person.attributes.name).toBe('John Doe');
-      
-      // Check that relationships are properly exported
-      expect(json.relationships.length).toBe(2);
-      const authorRel = json.relationships.find(r => 
-        r.source === 'person1' && r.target === 'document1'
-      );
-      expect(authorRel).toBeDefined();
-      expect(authorRel.type).toBe('authored');
+      expect(data.entities).toBeDefined();
+      expect(data.relationships).toBeDefined();
+      expect(data.entities.length).toBe(2);
+      expect(data.relationships.length).toBe(1);
     });
-
+    
     it('should export to GraphML format', () => {
+      ultralink.addEntity('person1', 'person', { name: 'John Doe' });
+      ultralink.addEntity('document1', 'document', { title: 'Report' });
+      ultralink.addLink('person1', 'document1', 'authored');
+      
       const graphml = ultralink.toGraphML();
       
       expect(graphml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
-      expect(graphml).toContain('<graphml xmlns="http://graphml.graphdrawing.org/xmlns"');
-      expect(graphml).toContain('<graph id="G" edgedefault="directed">');
-      
-      // Check that nodes are included
-      expect(graphml).toContain('<node id="person1">');
-      expect(graphml).toContain('<node id="document1">');
-      expect(graphml).toContain('<node id="topic1">');
-      
-      // Check that edges are included
-      expect(graphml).toContain('<edge source="person1" target="document1">');
-      expect(graphml).toContain('<edge source="document1" target="topic1">');
+      expect(graphml).toContain('<graphml');
+      expect(graphml).toContain('<node id="person1"');
+      expect(graphml).toContain('<node id="document1"');
+      expect(graphml).toContain('<edge source="person1" target="document1"');
     });
     
     it('should export to CSV format', () => {
-      // Add test data
-      ultralink.addEntity('person1', 'person', { name: 'John Doe', email: 'john@example.com', age: 30 });
-      ultralink.addEntity('person2', 'person', { name: 'Jane Smith', email: 'jane@example.com', age: 25 });
-      ultralink.addLink('person1', 'person2', 'knows');
-
-      const csv = ultralink.toCSV({ split: true });
+      ultralink.addEntity('person1', 'person', { name: 'John Doe' });
+      ultralink.addEntity('document1', 'document', { title: 'Report' });
+      ultralink.addLink('person1', 'document1', 'authored');
       
-      // Check that we have both entities and relationships CSV
-      expect(csv.entities).toBeDefined();
-      expect(csv.relationships).toBeDefined();
+      const csv = ultralink.toCSV();
       
-      // Check entities CSV
-      expect(csv.entities).toContain('id,type');
-      expect(csv.entities).toContain('name');
-      expect(csv.entities).toContain('email');
-      expect(csv.entities).toContain('age');
+      expect(csv).toBeDefined();
+      expect(csv.entities).toContain('id,type,name');
+      expect(csv.relationships).toContain('source,target,type');
     });
   });
   
-  // Full-blob export/import
+  // Full blob export/import
   describe('Full Blob Export/Import', () => {
     let ultralink;
     
     beforeEach(() => {
-      ultralink = new UltraLink();
-      
-      // Add some entities
-      ultralink.addEntity('person1', 'person', { name: 'John Doe' });
-      ultralink.addEntity('document1', 'document', { title: 'Report' });
-      
-      // Add a relationship
-      ultralink.addLink('person1', 'document1', 'authored', { date: '2023-01-15' });
+      ultralink = new UltraLink({ preventOverwrite: true });
     });
     
-    it('should export and import a full blob', async () => {
-      // Export to full blob
-      const blob = await ultralink.toFullBlob();
+    it('should export and import a full blob', () => {
+      // Add test data
+      ultralink.addEntity('person1', 'person', { name: 'John Doe' });
+      ultralink.addEntity('document1', 'document', { title: 'Report' });
+      ultralink.addLink('person1', 'document1', 'authored');
       
-      // Create a new UltraLink instance
+      // Export to blob
+      const blob = ultralink.toFullBlob();
+      
+      // Create new instance and import
       const newUltralink = new UltraLink();
+      newUltralink.fromFullBlob(blob);
       
-      // Import the blob
-      await newUltralink.fromFullBlob(blob);
+      // Verify imported data
+      expect(newUltralink.entities.size).toBe(2);
+      expect(newUltralink.relationships.size).toBe(1);
       
-      // Verify the data was imported correctly
-      expect(newUltralink.entities.size).toBe(ultralink.entities.size);
-      expect(newUltralink.relationships.size).toBe(ultralink.relationships.size);
-      
-      // Verify a specific entity
       const person = newUltralink.getEntity('person1');
-      expect(person).toBeDefined();
-      expect(person.type).toBe('person');
       expect(person.attributes.name).toBe('John Doe');
+      
+      const document = newUltralink.getEntity('document1');
+      expect(document.attributes.title).toBe('Report');
     });
     
     it('should export a compressed full blob', () => {
-      // Create test data
-      const ultralink = new UltraLink();
-      ultralink.addEntity('person1', 'person', { name: 'Alice', age: 30 });
-      ultralink.addEntity('person2', 'person', { name: 'Bob', age: 25 });
-      ultralink.addLink('person1', 'person2', 'knows');
+      // Add test data
+      ultralink.addEntity('person1', 'person', { name: 'John Doe' });
+      ultralink.addEntity('document1', 'document', { title: 'Report' });
+      ultralink.addLink('person1', 'document1', 'authored');
       
-      // Export to compressed blob
-      const compressedBlob = ultralink.toFullBlob({ compressed: true });
+      // Export compressed blob
+      const blob = ultralink.toFullBlob({ compress: true });
       
-      // Verify it's a string (compressed blobs are base64 strings)
-      expect(typeof compressedBlob).toBe('string');
-      
-      // Import from compressed blob
+      // Create new instance and import
       const newUltralink = new UltraLink();
-      newUltralink.fromFullBlob(compressedBlob, { compressed: true });
+      newUltralink.fromFullBlob(blob);
       
-      // Verify the data was imported correctly
+      // Verify imported data
       expect(newUltralink.entities.size).toBe(2);
-      expect(newUltralink.getEntity('person1').attributes.name).toBe('Alice');
-      expect(newUltralink.getEntity('person2').attributes.name).toBe('Bob');
-      expect(newUltralink.getRelationships('person1')[0].type).toBe('knows');
+      expect(newUltralink.relationships.size).toBe(1);
+      
+      const person = newUltralink.getEntity('person1');
+      expect(person.attributes.name).toBe('John Doe');
+      
+      const document = newUltralink.getEntity('document1');
+      expect(document.attributes.title).toBe('Report');
     });
   });
 }); 

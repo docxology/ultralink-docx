@@ -7,7 +7,7 @@
   <title>Kangaroo Rat - Desert Ecosystem</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Kangaroo Rat</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,49 +25,63 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>kangaroo-rat</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>organism</td>
-          </tr>
-          <tr>
-            <th>scientificName</th>
-            <td>Dipodomys</td>
-          </tr>
-          <tr>
-            <th>type</th>
-            <td>mammal</td>
-          </tr>
-          <tr>
-            <th>weight</th>
-            <td>100-150g</td>
-          </tr>
-          <tr>
-            <th>nocturnal</th>
-            <td>true</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>kangaroo-rat</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>organism</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Dipodomys</td>
+            </tr>
+          
+            <tr>
+              <th>type</th>
+              <td>mammal</td>
+            </tr>
+          
+            <tr>
+              <th>weight</th>
+              <td>100-150g</td>
+            </tr>
+          
+            <tr>
+              <th>nocturnal</th>
+              <td>true</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>adapts_to</strong> → 
-          <a href="aridity.html">Aridity</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('aridity')" class="visualize-link">(visualize)</a>
-          <div class="relationship-attributes">
-            <span><strong>mechanism:</strong> Metabolic water production</span>
-            <span><strong>efficiency:</strong> 0.88</span>
-          </div>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapts_to</strong> → <a href="aridity.html">Aridity</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>mechanism:</strong> Metabolic water production</div>
+            
+              <div><strong>efficiency:</strong> 0.88</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
     </section>
   </main>
   

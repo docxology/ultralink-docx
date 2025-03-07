@@ -179,8 +179,8 @@ describe('UltraLink Data Export', () => {
       expect(kif).toContain('(contributes_to person2 project1)');
       
       // Check relationship attributes
-      expect(kif).toContain('(= (startDate-manages person1 project1) "2023-01-01")');
-      expect(kif).toContain('(= (role-contributes_to person2 project1) "developer")');
+      expect(kif).toContain('(startDate-manages person1 project1 "2023-01-01")');
+      expect(kif).toContain('(role-contributes_to person2 project1 "developer")');
     });
     
     it('should include meta-knowledge when requested', () => {

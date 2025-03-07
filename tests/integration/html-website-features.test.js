@@ -180,7 +180,7 @@ describe('HTML Website Features', () => {
     expect(htmlFiles['entity3.html']).toContain('<h1>entity3</h1>');
     
     // Make sure it's still referenced correctly in index page
-    expect(htmlFiles['index.html']).toContain('.text(d => d.attributes.name || d.attributes.title || d.id)');
+    expect(htmlFiles['graph.js']).toContain('.text(d => d.attributes.name || d.attributes.title || d.id)');
   });
   
   test('should include relationship attributes in details view', () => {

@@ -679,24 +679,9 @@ describe('Bayesian Network Export', () => {
 });
 
 describe('Visualization Export', () => {
-  let ultralink;
-  
-  beforeEach(() => {
-    ultralink = new UltraLink();
-    
-    // Add some entities
-    ultralink.addEntity('person1', 'person', { name: 'John Doe' });
-    ultralink.addEntity('person2', 'person', { name: 'Jane Smith' });
-    ultralink.addEntity('project1', 'project', { name: 'Project Alpha' });
-    
-    // Add some relationships
-    ultralink.addLink('person1', 'project1', 'works_on', { role: 'Developer' });
-    ultralink.addLink('person2', 'project1', 'manages', { since: '2023-01-01' });
-    ultralink.addLink('person1', 'person2', 'reports_to', {});
-  });
-
-  test('SVG format should contain nodes and links', () => {
-    const svgOutput = ultralink.toVisualization({ format: 'svg' });
+  test('SVG format should contain nodes and links', async () => {
+    // Use await since toVisualization is async
+    const svgOutput = await ultralink.toVisualization({ format: 'svg' });
     
     // Check if svgOutput is an object with graph.svg property
     let svg;
@@ -716,13 +701,14 @@ describe('Visualization Export', () => {
     expect(svg).toContain('<g class="links">');
   });
   
-  test('D3 format should create a valid HTML file with D3 code', () => {
-    const d3Output = ultralink.toVisualization({ format: 'd3' });
+  test('D3 format should create a valid HTML file with D3 code', async () => {
+    // Use await since toVisualization is async
+    const d3Output = await ultralink.toVisualization({ format: 'd3' });
     
-    // Check if d3Output is an object with graph-d3.html property
+    // Check if d3Output is an object with graph.html property
     let html;
-    if (typeof d3Output === 'object' && d3Output['graph-d3.html']) {
-      html = d3Output['graph-d3.html'];
+    if (typeof d3Output === 'object' && d3Output['graph.html']) {
+      html = d3Output['graph.html'];
     } else {
       html = String(d3Output);
     }
@@ -733,13 +719,14 @@ describe('Visualization Export', () => {
     expect(html).toContain('const data =');
   });
   
-  test('Cytoscape format should create a valid HTML file with Cytoscape code', () => {
-    const cytoscapeOutput = ultralink.toVisualization({ format: 'cytoscape' });
+  test('Cytoscape format should create a valid HTML file with Cytoscape code', async () => {
+    // Use await since toVisualization is async
+    const cytoscapeOutput = await ultralink.toVisualization({ format: 'cytoscape' });
     
-    // Check if cytoscapeOutput is an object with graph-cytoscape.html property
+    // Check if cytoscapeOutput is an object with graph.html property
     let html;
-    if (typeof cytoscapeOutput === 'object' && cytoscapeOutput['graph-cytoscape.html']) {
-      html = cytoscapeOutput['graph-cytoscape.html'];
+    if (typeof cytoscapeOutput === 'object' && cytoscapeOutput['graph.html']) {
+      html = cytoscapeOutput['graph.html'];
     } else {
       html = String(cytoscapeOutput);
     }

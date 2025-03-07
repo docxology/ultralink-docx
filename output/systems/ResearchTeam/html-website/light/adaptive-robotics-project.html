@@ -7,7 +7,7 @@
   <title>Adaptive Robotics Control - ResearchTeam Knowledge Graph</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .attribute-table tr:nth-child(odd) {
+    .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -17,8 +17,7 @@
     <h1>Adaptive Robotics Control</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="entities.html">All Entities</a>
-      <a href="relationships.html">All Relationships</a>
+      <a href="#" onclick="window.history.back()">Back</a>
     </nav>
   </header>
   
@@ -26,96 +25,108 @@
     <section class="entity-details">
       <h2>Entity Details</h2>
       <div class="entity-section">
-        <table class="attribute-table">
-          <tr>
-            <th>ID</th>
-            <td>adaptive-robotics-project</td>
-          </tr>
-          <tr>
-            <th>Type</th>
-            <td>project</td>
-          </tr>
-          <tr>
-            <th>description</th>
-            <td>Developing reinforcement learning approaches for adaptive robot control in unstructured environments</td>
-          </tr>
-          <tr>
-            <th>startDate</th>
-            <td>2021-09-01</td>
-          </tr>
-          <tr>
-            <th>endDate</th>
-            <td>2024-08-31</td>
-          </tr>
-          <tr>
-            <th>status</th>
-            <td>active</td>
-          </tr>
-          <tr>
-            <th>budget</th>
-            <td>550000</td>
-          </tr>
-          <tr>
-            <th>objectives</th>
-            <td>Create sample-efficient RL algorithms for robotics,Implement transfer learning between simulation and real-world,Demonstrate robust performance in dynamic environments</td>
-          </tr>
-        </table>
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>adaptive-robotics-project</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>project</td>
+        </tr>
+        
+            <tr>
+              <th>description</th>
+              <td>Developing reinforcement learning approaches for adaptive robot control in unstructured environments</td>
+            </tr>
+          
+            <tr>
+              <th>startDate</th>
+              <td>2021-09-01</td>
+            </tr>
+          
+            <tr>
+              <th>endDate</th>
+              <td>2024-08-31</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>active</td>
+            </tr>
+          
+            <tr>
+              <th>budget</th>
+              <td>550000</td>
+            </tr>
+          
+            <tr>
+              <th>objectives</th>
+              <td>Create sample-efficient RL algorithms for robotics,Implement transfer learning between simulation and real-world,Demonstrate robust performance in dynamic environments</td>
+            </tr>
+          
+      </table>
       </div>
     </section>
     
+    
     <section class="relationships">
       <h2>Relationships</h2>
-      <h3>Outgoing</h3>
-      <ul>
-        <li class="relationship-item">
-          <strong>produced</strong> → 
-          <a href="robotics-paper-2022.html">Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('robotics-paper-2022')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>uses</strong> → 
-          <a href="robotics-lab.html">Robotics Laboratory</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('robotics-lab')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>uses</strong> → 
-          <a href="data-collection-system.html">Field Data Collection System</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('data-collection-system')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>applies</strong> → 
-          <a href="robotics.html">Robotics</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('robotics')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <strong>applies</strong> → 
-          <a href="reinforcement-learning.html">Reinforcement Learning</a>
-          <a href="javascript:void(0)" onclick="selectEntityById('reinforcement-learning')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
-      <h3>Incoming</h3>
-      <ul>
-        <li class="relationship-item">
-          <a href="carol-jones.html">Carol Jones</a> → 
-          <strong>leads</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('carol-jones')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="elena-rodriguez.html">Elena Rodriguez</a> → 
-          <strong>contributes_to</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('elena-rodriguez')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="nsf-grant.html">NSF Research Grant</a> → 
-          <strong>funds</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('nsf-grant')" class="visualize-link">(visualize)</a>
-        </li>
-        <li class="relationship-item">
-          <a href="grace-kim.html">Grace Kim</a> → 
-          <strong>administers</strong>
-          <a href="javascript:void(0)" onclick="selectEntityById('grace-kim')" class="visualize-link">(visualize)</a>
-        </li>
-      </ul>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>produced</strong> → <a href="robotics-paper-2022.html">Sim-to-Real Transfer for Robotic Manipulation via Adaptive Domain Randomization</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>uses</strong> → <a href="robotics-lab.html">Robotics Laboratory</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>uses</strong> → <a href="data-collection-system.html">Field Data Collection System</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>applies</strong> → <a href="robotics.html">Robotics</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>applies</strong> → <a href="reinforcement-learning.html">Reinforcement Learning</a>
+      
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="carol-jones.html">Carol Jones</a> → <strong>leads</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="elena-rodriguez.html">Elena Rodriguez</a> → <strong>contributes_to</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="nsf-grant.html">NSF Research Grant</a> → <strong>funds</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="grace-kim.html">Grace Kim</a> → <strong>administers</strong>
+      
+      
+    </div>
+      
     </section>
   </main>
   
