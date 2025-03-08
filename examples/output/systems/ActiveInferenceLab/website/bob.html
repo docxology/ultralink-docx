@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Bob Smith - ActiveInferenceLab - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dr. Bob Smith</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>bob</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>researcher</td>
+        </tr>
+        
+            <tr>
+              <th>role</th>
+              <td>Senior Researcher</td>
+            </tr>
+          
+            <tr>
+              <th>department</th>
+              <td>Biology</td>
+            </tr>
+          
+            <tr>
+              <th>email</th>
+              <td>bob.smith@example.edu</td>
+            </tr>
+          
+            <tr>
+              <th>publications</th>
+              <td>28</td>
+            </tr>
+          
+            <tr>
+              <th>expertise</th>
+              <td>ant colony behavior,entomology,swarm intelligence</td>
+            </tr>
+          
+            <tr>
+              <th>yearsExperience</th>
+              <td>12</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>leads</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>role:</strong> Principal Investigator</div>
+            
+              <div><strong>timeCommitment:</strong> 0.5</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>contributes_to</strong> → <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>role:</strong> Co-Investigator</div>
+            
+              <div><strong>startDate:</strong> 2022-03-15</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>mentors</strong> → <a href="emma.html">Emma Taylor</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>type:</strong> PhD Advisor</div>
+            
+              <div><strong>startDate:</strong> 2022-09-01</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>authored</strong> → <a href="paper-2023a.html">Active Inference Framework for Collective Behavior Analysis</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> co-author</div>
+            
+              <div><strong>contributionPercentage:</strong> 30</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>authored</strong> → <a href="paper-2023b.html">Decision Making Patterns in Ant Colonies: A Field Study</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> corresponding author</div>
+            
+              <div><strong>contributionPercentage:</strong> 50</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>authored</strong> → <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> co-author</div>
+            
+              <div><strong>contributionPercentage:</strong> 30</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="david.html">David Wilson</a> → <strong>reports_to</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>startDate:</strong> 2021-09-01</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <a href="grace.html">Grace Kim</a> → <strong>reports_to</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>startDate:</strong> 2020-05-15</div>
+            
+        </div>
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

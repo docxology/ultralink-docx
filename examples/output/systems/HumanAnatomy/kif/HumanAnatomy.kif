@@ -1,0 +1,377 @@
+;; UltraLink Knowledge Interchange Format (KIF) Export
+;; Generated: 2025-03-08T23:07:33.321Z
+
+;; Meta-knowledge
+(= (creationDate UltraLinkExport) "2025-03-08T23:07:33.321Z")
+(= (entityCount UltraLinkExport) 37)
+(= (relationshipCount UltraLinkExport) 28)
+
+;; Functions
+(deffunction relationshipCount (?x) (length ?kb.relationships))
+
+;; Rules
+(defrule entity-attributes-rule
+    "A rule to infer additional attributes for entities based on their type"
+    (instance ?entity ?type)
+    =>
+    (if (eq ?type Person)
+        then (assert (isAgent ?entity true))))
+
+(forall (?x ?y)
+    (=> (and (adapts_to ?x ?y) (> (efficiency-adapts_to ?x ?y) 0.8))
+        (well-adapted ?x ?y)))
+
+;; Entities and their attributes
+(instance circulatory_system System)
+(name circulatory_system "Circulatory System")
+(description circulatory_system "The system that circulates blood throughout the body, delivering oxygen and nutrients to cells and removing waste products.")
+(functions circulatory_system "[\"Oxygen transport\",\"Nutrient delivery\",\"Waste removal\",\"Hormone transport\",\"Temperature regulation\",\"Immune defense\"]")
+(volume circulatory_system "5 liters of blood (average adult)")
+
+(instance respiratory_system System)
+(name respiratory_system "Respiratory System")
+(description respiratory_system "The system responsible for gas exchange, taking in oxygen and expelling carbon dioxide.")
+(functions respiratory_system "[\"Gas exchange\",\"pH regulation\",\"Voice production\",\"Olfaction support\"]")
+(capacity respiratory_system "4-6 liters (average adult lung capacity)")
+
+(instance nervous_system System)
+(name nervous_system "Nervous System")
+(description nervous_system "The complex network that coordinates body activities by transmitting signals between different body parts.")
+(functions nervous_system "[\"Sensory processing\",\"Motor control\",\"Cognition\",\"Memory\",\"Homeostasis regulation\"]")
+(components nervous_system "[\"Central nervous system\",\"Peripheral nervous system\",\"Autonomic nervous system\"]")
+(neurons nervous_system "Approximately 86 billion neurons")
+
+(instance skeletal_system System)
+(name skeletal_system "Skeletal System")
+(description skeletal_system "The framework of bones and connective tissues that supports the body, protects organs, and enables movement.")
+(functions skeletal_system "[\"Structural support\",\"Organ protection\",\"Movement facilitation\",\"Blood cell production\",\"Mineral storage\"]")
+(boneCount skeletal_system 206)
+
+(instance muscular_system System)
+(name muscular_system "Muscular System")
+(description muscular_system "The system of muscles that enables movement, maintains posture, and generates heat.")
+(functions muscular_system "[\"Movement\",\"Posture maintenance\",\"Joint stabilization\",\"Heat production\"]")
+(muscleCount muscular_system "Over 600 named muscles")
+(types muscular_system "[\"Skeletal muscle\",\"Smooth muscle\",\"Cardiac muscle\"]")
+
+(instance digestive_system System)
+(name digestive_system "Digestive System")
+(description digestive_system "The system that breaks down food into nutrients for absorption and eliminates waste.")
+(functions digestive_system "[\"Food breakdown\",\"Nutrient absorption\",\"Waste elimination\"]")
+(length digestive_system "About 9 meters (30 feet) from mouth to anus")
+
+(instance endocrine_system System)
+(name endocrine_system "Endocrine System")
+(description endocrine_system "The collection of glands that produce hormones to regulate metabolism, growth, development, and other functions.")
+(functions endocrine_system "[\"Hormone production\",\"Metabolism regulation\",\"Growth and development\",\"Mood regulation\"]")
+(majorGlands endocrine_system "[\"Pituitary\",\"Thyroid\",\"Parathyroid\",\"Adrenal\",\"Pancreas\",\"Gonads\",\"Pineal\"]")
+
+(instance immune_system System)
+(name immune_system "Immune System")
+(description immune_system "The complex network that defends the body against pathogens and other threats.")
+(functions immune_system "[\"Pathogen defense\",\"Wound healing\",\"Foreign substance detection\",\"Cancer surveillance\"]")
+(components immune_system "[\"White blood cells\",\"Antibodies\",\"Lymphatic system\",\"Spleen\",\"Thymus\",\"Bone marrow\"]")
+
+(instance heart Organ)
+(name heart "Heart")
+(description heart "A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.")
+(weight heart "250-350 grams")
+(location heart "Mediastinum, left of midline")
+(chambers heart "[\"Right atrium\",\"Right ventricle\",\"Left atrium\",\"Left ventricle\"]")
+(beatRate heart "60-100 beats per minute (at rest)")
+
+(instance lungs Organ)
+(name lungs "Lungs")
+(description lungs "The primary organs of respiration, where gas exchange occurs between the air and blood.")
+(count lungs 2)
+(location lungs "Thoracic cavity")
+(parts lungs "[\"Bronchi\",\"Bronchioles\",\"Alveoli\",\"Pleura\"]")
+(respirationRate lungs "12-20 breaths per minute (at rest)")
+
+(instance brain Organ)
+(name brain "Brain")
+(description brain "The central organ of the nervous system, responsible for processing sensory information and controlling bodily functions and behaviors.")
+(weight brain "1300-1400 grams (average adult)")
+(location brain "Cranial cavity")
+(lobes brain "[\"Frontal\",\"Parietal\",\"Temporal\",\"Occipital\"]")
+(energyUse brain "20% of body's oxygen and calories")
+
+(instance liver Organ)
+(name liver "Liver")
+(description liver "The largest internal organ, performing hundreds of functions including detoxification, protein synthesis, and digestion.")
+(weight liver "1.5 kg (average adult)")
+(location liver "Right upper quadrant of abdomen")
+(lobes liver "[\"Right lobe\",\"Left lobe\",\"Caudate lobe\",\"Quadrate lobe\"]")
+(functions liver "[\"Detoxification\",\"Bile production\",\"Protein synthesis\",\"Glycogen storage\"]")
+
+(instance kidneys Organ)
+(name kidneys "Kidneys")
+(description kidneys "Bean-shaped organs that filter blood to produce urine, regulate electrolytes, and maintain acid-base balance.")
+(count kidneys 2)
+(location kidneys "Posterior abdominal wall, retroperitoneal")
+(weight kidneys "120-170 grams each")
+(filterRate kidneys "About 120-150 quarts of blood daily")
+
+(instance stomach Organ)
+(name stomach "Stomach")
+(description stomach "A muscular, hollow organ that holds food and begins the digestion of proteins.")
+(location stomach "Left upper quadrant of abdomen")
+(capacity stomach "1-2 liters")
+(pH stomach "1.5-3.5 (highly acidic)")
+(regions stomach "[\"Cardia\",\"Fundus\",\"Body\",\"Pylorus\"]")
+
+(instance intestines Organ)
+(name intestines "Intestines")
+(description intestines "The long, coiled tube where most digestion and nutrient absorption occurs.")
+(parts intestines "[\"Small intestine\",\"Large intestine\"]")
+(smallIntestineLength intestines "6-7 meters")
+(largeIntestineLength intestines "1.5 meters")
+(location intestines "Abdominal cavity")
+
+(instance pancreas Organ)
+(name pancreas "Pancreas")
+(description pancreas "A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.")
+(location pancreas "Retroperitoneal, behind stomach")
+(weight pancreas "70-100 grams")
+(functions pancreas "[\"Digestive enzyme production\",\"Hormone secretion\",\"Blood glucose regulation\"]")
+
+(instance spleen Organ)
+(name spleen "Spleen")
+(description spleen "An organ that filters blood and helps defend against pathogens as part of the immune system.")
+(location spleen "Left upper quadrant of abdomen")
+(weight spleen "150 grams (average adult)")
+(functions spleen "[\"Blood filtration\",\"Old red blood cell removal\",\"Immune response support\",\"Blood storage\"]")
+
+(instance skull Bone)
+(name skull "Skull")
+(description skull "The bony structure that forms the head, encases the brain, and supports facial structures.")
+(boneCount skull 22)
+(majorBones skull "[\"Frontal bone\",\"Parietal bones\",\"Temporal bones\",\"Occipital bone\",\"Sphenoid bone\",\"Ethmoid bone\"]")
+(functions skull "[\"Brain protection\",\"Facial structure support\",\"Sensory organ housing\"]")
+
+(instance vertebral_column Bone)
+(name vertebral_column "Vertebral Column (Spine)")
+(description vertebral_column "The flexible column of vertebrae that protects the spinal cord and supports the head and body.")
+(vertebraeCount vertebral_column 33)
+(regions vertebral_column "[\"Cervical (7)\",\"Thoracic (12)\",\"Lumbar (5)\",\"Sacral (5 fused)\",\"Coccygeal (4 fused)\"]")
+(length vertebral_column "70-75 cm (adult)")
+
+(instance ribcage Bone)
+(name ribcage "Ribcage")
+(description ribcage "The bony cage formed by the sternum, ribs, and thoracic vertebrae that protects vital organs.")
+(ribPairs ribcage 12)
+(types ribcage "[\"True ribs (1-7)\",\"False ribs (8-10)\",\"Floating ribs (11-12)\"]")
+(functions ribcage "[\"Heart and lung protection\",\"Respiratory movement support\"]")
+
+(instance femur Bone)
+(name femur "Femur")
+(description femur "The thigh bone, the longest and strongest bone in the human body.")
+(count femur 2)
+(location femur "Thigh")
+(length femur "45-50 cm (adult)")
+(strength femur "Can support 30 times body weight")
+
+(instance heart_muscle Muscle)
+(name heart_muscle "Cardiac Muscle")
+(description heart_muscle "Specialized involuntary muscle tissue found only in the heart, allowing for coordinated contractions.")
+(control heart_muscle "Involuntary")
+(properties heart_muscle "[\"Striated\",\"Self-excitable\",\"Resistant to fatigue\",\"Interconnected by intercalated discs\"]")
+(function heart_muscle "Blood pumping through rhythmic contractions")
+
+(instance diaphragm Muscle)
+(name diaphragm "Diaphragm")
+(description diaphragm "A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.")
+(control diaphragm "Both voluntary and involuntary")
+(location diaphragm "Between thoracic and abdominal cavities")
+(function diaphragm "Primary muscle of respiration")
+
+(instance biceps_brachii Muscle)
+(name biceps_brachii "Biceps Brachii")
+(description biceps_brachii "A large muscle located on the front of the upper arm, primarily responsible for forearm flexion and supination.")
+(control biceps_brachii "Voluntary")
+(location biceps_brachii "Anterior compartment of the upper arm")
+(function biceps_brachii "Forearm flexion and supination")
+
+(instance quadriceps Muscle)
+(name quadriceps "Quadriceps Femoris")
+(description quadriceps "A group of four muscles on the front of the thigh that extend the knee.")
+(control quadriceps "Voluntary")
+(location quadriceps "Anterior thigh")
+(components quadriceps "[\"Rectus femoris\",\"Vastus lateralis\",\"Vastus medialis\",\"Vastus intermedius\"]")
+(function quadriceps "Knee extension and hip flexion")
+
+(instance aorta Blood_vessel)
+(name aorta "Aorta")
+(description aorta "The largest artery in the body, carrying oxygenated blood from the left ventricle of the heart to the body.")
+(diameter aorta "2.5-3.5 cm")
+(sections aorta "[\"Ascending aorta\",\"Aortic arch\",\"Descending thoracic aorta\",\"Abdominal aorta\"]")
+(function aorta "Distribution of oxygenated blood throughout the body")
+
+(instance coronary_arteries Blood_vessel)
+(name coronary_arteries "Coronary Arteries")
+(description coronary_arteries "The arteries that supply blood to the heart muscle.")
+(majorBranches coronary_arteries "[\"Left main coronary artery\",\"Left anterior descending artery\",\"Left circumflex artery\",\"Right coronary artery\"]")
+(function coronary_arteries "Blood supply to cardiac muscle")
+
+(instance pulmonary_arteries Blood_vessel)
+(name pulmonary_arteries "Pulmonary Arteries")
+(description pulmonary_arteries "The arteries that carry deoxygenated blood from the heart to the lungs.")
+(branches pulmonary_arteries "[\"Right pulmonary artery\",\"Left pulmonary artery\"]")
+(uniqueProperty pulmonary_arteries "One of the few arteries carrying deoxygenated blood")
+(function pulmonary_arteries "Transport of deoxygenated blood to lungs for oxygenation")
+
+(instance vena_cava Blood_vessel)
+(name vena_cava "Vena Cava")
+(description vena_cava "The largest veins in the body, returning deoxygenated blood to the right atrium of the heart.")
+(components vena_cava "[\"Superior vena cava\",\"Inferior vena cava\"]")
+(diameter vena_cava "2-3 cm")
+(function vena_cava "Return of deoxygenated blood to the heart")
+
+(instance spinal_cord Nerve)
+(name spinal_cord "Spinal Cord")
+(description spinal_cord "The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.")
+(length spinal_cord "45 cm (average adult)")
+(location spinal_cord "Within the vertebral canal")
+(function spinal_cord "Conduction of neural signals between brain and body, reflex center")
+(components spinal_cord "[\"Grey matter\",\"White matter\",\"Central canal\"]")
+
+(instance vagus_nerve Nerve)
+(name vagus_nerve "Vagus Nerve")
+(description vagus_nerve "The 10th cranial nerve, with the widest distribution in the body, controlling parasympathetic functions.")
+(number vagus_nerve "CN X")
+(function vagus_nerve "Parasympathetic control of heart, lungs, digestive tract; sensory information from viscera")
+(length vagus_nerve "Extends from brainstem to abdomen")
+
+(instance sciatic_nerve Nerve)
+(name sciatic_nerve "Sciatic Nerve")
+(description sciatic_nerve "The largest and longest nerve in the body, running from the lower back down through the leg.")
+(origin sciatic_nerve "L4-S3 spinal nerves")
+(function sciatic_nerve "Motor and sensory innervation of lower limb")
+(diameter sciatic_nerve "About 2 cm at its widest")
+
+(instance hypothalamus Nerve_center)
+(name hypothalamus "Hypothalamus")
+(description hypothalamus "A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.")
+(location hypothalamus "Below thalamus, above brainstem")
+(weight hypothalamus "About 4 grams")
+(functions hypothalamus "[\"Temperature regulation\",\"Hunger and thirst control\",\"Sleep-wake cycles\",\"Hormone production\",\"Autonomic function regulation\"]")
+
+(instance neuron Cell)
+(name neuron "Neuron")
+(description neuron "The basic functional unit of the nervous system, specialized for transmitting information.")
+(components neuron "[\"Cell body\",\"Dendrites\",\"Axon\",\"Synaptic terminals\"]")
+(types neuron "[\"Motor neurons\",\"Sensory neurons\",\"Interneurons\"]")
+(function neuron "Signal transmission and processing")
+(count neuron "Approximately 86 billion in the human brain")
+
+(instance red_blood_cell Cell)
+(name red_blood_cell "Red Blood Cell (Erythrocyte)")
+(description red_blood_cell "The most common type of blood cell, responsible for oxygen transport.")
+(shape red_blood_cell "Biconcave disc")
+(diameter red_blood_cell "7-8 micrometers")
+(lifespan red_blood_cell "120 days")
+(count red_blood_cell "4.5-5.5 million per microliter of blood")
+(uniqueProperty red_blood_cell "No nucleus in mature form")
+(function red_blood_cell "Oxygen and carbon dioxide transport")
+
+(instance cardiomyocyte Cell)
+(name cardiomyocyte "Cardiomyocyte")
+(description cardiomyocyte "Cardiac muscle cells that make up the heart muscle.")
+(length cardiomyocyte "100 micrometers")
+(width cardiomyocyte "10-25 micrometers")
+(properties cardiomyocyte "[\"Striated\",\"Contains many mitochondria\",\"Connected by intercalated discs\"]")
+(function cardiomyocyte "Heart contraction")
+(uniqueProperty cardiomyocyte "Can contract without neural stimulation")
+
+(instance epithelial_tissue Tissue)
+(name epithelial_tissue "Epithelial Tissue")
+(description epithelial_tissue "The tissue that forms the outer layer of the body and lines organs and cavities.")
+(types epithelial_tissue "[\"Simple squamous\",\"Simple cuboidal\",\"Simple columnar\",\"Stratified squamous\",\"Transitional\"]")
+(functions epithelial_tissue "[\"Protection\",\"Absorption\",\"Filtration\",\"Secretion\"]")
+(location epithelial_tissue "Skin surface, organ linings, gland secretory units")
+
+;; Relationships
+(interacts_with circulatory_system respiratory_system)
+(description-interacts_with circulatory_system respiratory_system "Blood picks up oxygen and releases carbon dioxide in the lungs")
+
+(regulated_by circulatory_system nervous_system)
+(description-regulated_by circulatory_system nervous_system "Heart rate and blood pressure are regulated by the autonomic nervous system")
+
+(attaches_to muscular_system skeletal_system)
+(description-attaches_to muscular_system skeletal_system "Muscles attach to bones via tendons to enable movement")
+
+(part_of heart circulatory_system)
+(description-part_of heart circulatory_system "The heart is the central pump of the circulatory system")
+
+(part_of lungs respiratory_system)
+(description-part_of lungs respiratory_system "The lungs are the primary organs of the respiratory system")
+
+(part_of brain nervous_system)
+(description-part_of brain nervous_system "The brain is the central organ of the nervous system")
+
+(part_of skull skeletal_system)
+(description-part_of skull skeletal_system "The skull is part of the axial skeleton")
+
+(part_of liver digestive_system)
+(description-part_of liver digestive_system "The liver produces bile for digestion and processes nutrients")
+
+(interacts_with kidneys circulatory_system)
+(description-interacts_with kidneys circulatory_system "The kidneys filter blood to maintain homeostasis")
+
+(protects skull brain)
+(description-protects skull brain "The skull forms a protective case around the brain")
+
+(protects ribcage heart)
+(description-protects ribcage heart "The ribcage forms a protective structure around the heart")
+
+(protects ribcage lungs)
+(description-protects ribcage lungs "The ribcage forms a protective structure around the lungs")
+
+(protects vertebral_column spinal_cord)
+(description-protects vertebral_column spinal_cord "The vertebral column forms a protective tunnel for the spinal cord")
+
+(connects_to heart aorta)
+(description-connects_to heart aorta "The aorta emerges from the left ventricle of the heart")
+
+(connects_to heart vena_cava)
+(description-connects_to heart vena_cava "The vena cava returns blood to the right atrium of the heart")
+
+(supplies coronary_arteries heart)
+(description-supplies coronary_arteries heart "The coronary arteries deliver oxygenated blood to heart muscle")
+
+(connects_to pulmonary_arteries lungs)
+(description-connects_to pulmonary_arteries lungs "The pulmonary arteries carry deoxygenated blood from the heart to the lungs")
+
+(connects_to brain spinal_cord)
+(description-connects_to brain spinal_cord "The brain connects to the spinal cord at the brainstem")
+
+(innervates vagus_nerve heart)
+(description-innervates vagus_nerve heart "The vagus nerve provides parasympathetic innervation to the heart")
+
+(innervates vagus_nerve stomach)
+(description-innervates vagus_nerve stomach "The vagus nerve provides parasympathetic innervation to the stomach")
+
+(regulates hypothalamus endocrine_system)
+(description-regulates hypothalamus endocrine_system "The hypothalamus produces hormones and controls the pituitary gland")
+
+(composes heart_muscle heart)
+(description-composes heart_muscle heart "The heart is composed primarily of cardiac muscle tissue")
+
+(enables diaphragm respiratory_system)
+(description-enables diaphragm respiratory_system "The diaphragm is the primary muscle of breathing")
+
+(moves biceps_brachii femur)
+(description-moves biceps_brachii femur "The biceps brachii flex the forearm at the elbow")
+
+(composes neuron nervous_system)
+(description-composes neuron nervous_system "Neurons are the primary functional cells of the nervous system")
+
+(functions_in red_blood_cell circulatory_system)
+(description-functions_in red_blood_cell circulatory_system "Red blood cells transport oxygen throughout the circulatory system")
+
+(composes cardiomyocyte heart_muscle)
+(description-composes cardiomyocyte heart_muscle "Cardiomyocytes are the muscle cells that make up heart tissue")
+
+(lines epithelial_tissue lungs)
+(description-lines epithelial_tissue lungs "Epithelial tissue lines the airways of the lungs")
+

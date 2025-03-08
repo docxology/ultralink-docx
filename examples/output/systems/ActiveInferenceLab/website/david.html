@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>David Wilson - ActiveInferenceLab - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>David Wilson</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>david</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>researcher</td>
+        </tr>
+        
+            <tr>
+              <th>role</th>
+              <td>PhD Student</td>
+            </tr>
+          
+            <tr>
+              <th>department</th>
+              <td>Biology</td>
+            </tr>
+          
+            <tr>
+              <th>email</th>
+              <td>david.wilson@example.edu</td>
+            </tr>
+          
+            <tr>
+              <th>publications</th>
+              <td>3</td>
+            </tr>
+          
+            <tr>
+              <th>expertise</th>
+              <td>ant colony optimization,collective behavior,stigmergy</td>
+            </tr>
+          
+            <tr>
+              <th>yearsExperience</th>
+              <td>3</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>contributes</strong> → <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>role:</strong> Data Analyst</div>
+            
+              <div><strong>timeCommitment:</strong> 0.8</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>contributes_to</strong> → <a href="ant-colony-study.html">Ant Colony Decision Making Study</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>role:</strong> Behavioral Consultant</div>
+            
+              <div><strong>startDate:</strong> 2024-02-10</div>
+            
+              <div><strong>timeCommitment:</strong> 25%</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>reports_to</strong> → <a href="bob.html">Dr. Bob Smith</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>startDate:</strong> 2021-09-01</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>authored</strong> → <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> co-author</div>
+            
+              <div><strong>contributionPercentage:</strong> 30</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="alice.html">Dr. Alice Chen</a> → <strong>mentors</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>type:</strong> PhD Advisor</div>
+            
+              <div><strong>startDate:</strong> 2022-09-01</div>
+            
+        </div>
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

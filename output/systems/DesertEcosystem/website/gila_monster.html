@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gila Monster - DesertEcosystem - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gila Monster</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>gila_monster</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Heloderma suspectum</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>20</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>carnivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>near threatened</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Venomous lizard of the southwestern US and northwestern Mexico.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Stores fat in tail for long periods without food,Venomous bite for efficient predation,Thick skin reduces water loss,Slow metabolism allows for infrequent feeding,Can survive on as few as 3-4 meals per year</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="heat.html">Extreme Heat</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Fat storage and seasonal activity</div>
+            
+              <div><strong>strength:</strong> strong</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="rocky_slope.html">Rocky Slope</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> high</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>preys_on</strong> → <a href="cactus_wren.html">Cactus Wren</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> occasional</div>
+            
+              <div><strong>method:</strong> raiding nests</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

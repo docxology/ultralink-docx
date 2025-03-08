@@ -705,10 +705,10 @@ describe('Visualization Export', () => {
     // Use await since toVisualization is async
     const d3Output = await ultralink.toVisualization({ format: 'd3' });
     
-    // Check if d3Output is an object with graph.html property
+    // Check if d3Output is an object with graph-d3.html property
     let html;
-    if (typeof d3Output === 'object' && d3Output['graph.html']) {
-      html = d3Output['graph.html'];
+    if (typeof d3Output === 'object' && d3Output['graph-d3.html']) {
+      html = d3Output['graph-d3.html'];
     } else {
       html = String(d3Output);
     }
@@ -721,14 +721,14 @@ describe('Visualization Export', () => {
   
   test('Cytoscape format should create a valid HTML file with Cytoscape code', async () => {
     // Use await since toVisualization is async
-    const cytoscapeOutput = await ultralink.toVisualization({ format: 'cytoscape' });
+    const cytoOutput = await ultralink.toVisualization({ format: 'cytoscape' });
     
-    // Check if cytoscapeOutput is an object with graph.html property
+    // Check if cytoOutput is an object with graph-cytoscape.html property
     let html;
-    if (typeof cytoscapeOutput === 'object' && cytoscapeOutput['graph.html']) {
-      html = cytoscapeOutput['graph.html'];
+    if (typeof cytoOutput === 'object' && cytoOutput['graph-cytoscape.html']) {
+      html = cytoOutput['graph-cytoscape.html'];
     } else {
-      html = String(cytoscapeOutput);
+      html = String(cytoOutput);
     }
     
     // Check HTML structure

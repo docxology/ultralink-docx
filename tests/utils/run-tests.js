@@ -59,6 +59,31 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
+// Parse command line arguments
+const args = process.argv.slice(2);
+const runAllTests = args.includes('--all') || args.includes('-a');
+const runPerformance = args.includes('--performance') || args.includes('-p');
+const showHelp = args.includes('--help') || args.includes('-h');
+
+// Show help if requested
+if (showHelp) {
+  console.log(`
+${colors.bright}UltraLink Test Runner${colors.reset}
+
+Usage:
+  node tests/utils/run-tests.js [options]
+
+Options:
+  --all, -a           Run all tests including optional ones
+  --performance, -p   Run performance tests (optional)
+  --help, -h          Show this help message
+
+Note: By default, only required tests are run. Performance tests are skipped
+      unless specifically requested with the appropriate flag.
+  `);
+  process.exit(0);
+}
+
 /**
  * Print a section header
  * @param {string} title - The section title
@@ -82,10 +107,16 @@ printSectionHeader('UltraLink Test Suite');
 // Display test plan
 printSubsectionHeader('Test Plan');
 testSuites.forEach((suite, index) => {
-  const required = suite.required 
+  let status = suite.required 
     ? `${colors.green}(required)${colors.reset}` 
     : `${colors.yellow}(optional)${colors.reset}`;
-  console.log(`   ${colors.bright}${index + 1}.${colors.reset} ${suite.name} ${required}`);
+  
+  // Add indicator for performance tests
+  if (suite.name === 'Performance Tests' && !runPerformance && !runAllTests) {
+    status += ` ${colors.yellow}[SKIPPED]${colors.reset}`;
+  }
+  
+  console.log(`   ${colors.bright}${index + 1}.${colors.reset} ${suite.name} ${status}`);
 });
 
 console.log('\n');
@@ -105,6 +136,13 @@ const testReport = {
 };
 
 for (const suite of testSuites) {
+  // Skip performance tests unless specifically requested or all tests requested
+  if (!suite.required && suite.name === 'Performance Tests' && !runPerformance && !runAllTests) {
+    console.log(`${colors.yellow}⏩ Skipping ${suite.name} (use --performance or -p flag to run)${colors.reset}`);
+    testReport.summary.skipped++;
+    continue;
+  }
+  
   const suiteReport = {
     name: suite.name,
     command: suite.command,
@@ -159,10 +197,11 @@ printSectionHeader('Test Results Summary');
 const totalSuites = testSuites.length;
 const passedSuites = testReport.summary.passed;
 const failedSuitesCount = testReport.summary.failed;
-const passPercentage = (passedSuites / totalSuites * 100).toFixed(2);
+const skippedSuites = testReport.summary.skipped;
+const passPercentage = (passedSuites / (totalSuites - skippedSuites) * 100).toFixed(2);
 
 // Print summary table
-console.log(`${colors.bright}Test Suites:${colors.reset}      ${passedSuites} passed, ${failedSuitesCount} failed, ${totalSuites} total`);
+console.log(`${colors.bright}Test Suites:${colors.reset}      ${passedSuites} passed, ${failedSuitesCount} failed, ${skippedSuites} skipped, ${totalSuites} total`);
 console.log(`${colors.bright}Pass Percentage:${colors.reset}  ${passPercentage}%`);
 console.log(`${colors.bright}Timestamp:${colors.reset}        ${new Date().toISOString()}`);
 console.log(`${colors.bright}Node Version:${colors.reset}     ${process.version}`);

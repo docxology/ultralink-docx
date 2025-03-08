@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cactus Wren - DesertEcosystem - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cactus Wren</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>cactus_wren</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Campylorhynchus brunneicapillus</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>7</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>insectivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Desert bird that builds nests in cholla and other cacti for protection.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="heat.html">Extreme Heat</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Behavioral thermoregulation</div>
+            
+              <div><strong>strength:</strong> strong</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="wash.html">Desert Wash</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> medium</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="gila_monster.html">Gila Monster</a> → <strong>preys_on</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> occasional</div>
+            
+              <div><strong>method:</strong> raiding nests</div>
+            
+        </div>
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

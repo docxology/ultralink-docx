@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><style>
+    .node { 
+      fill: #69b3a2; 
+      stroke: #fff; 
+      stroke-width: 1.5px; 
+    }
+    .node-label { 
+      font-family: sans-serif; 
+      font-size: 10px; 
+      text-anchor: middle; 
+      dominant-baseline: text-before-edge;
+      fill: #333;
+    }
+    .link { 
+      stroke: #999; 
+      stroke-opacity: 0.6; 
+      stroke-width: 1px;
+    }
+    .link-label {
+      font-family: sans-serif;
+      font-size: 8px;
+      fill: #666;
+      text-anchor: middle;
+    }
+  </style><g class="links"></g><g class="nodes"></g><g class="node-labels"></g></svg>

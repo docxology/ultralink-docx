@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coyote - DesertEcosystem - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Coyote</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>coyote</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Canis latrans</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>14</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>omnivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Adaptable canid found throughout North American deserts and beyond.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Can survive on minimal water obtained from prey,Opportunistic feeding habits,Highly adaptable to different habitats,Active during cooler parts of day,Efficient predator of small desert mammals</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Obtaining moisture from prey</div>
+            
+              <div><strong>strength:</strong> strong</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="canyon.html">Desert Canyon</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> permanent</div>
+            
+              <div><strong>dependency:</strong> low</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>preys_on</strong> → <a href="kangaroo_rat.html">Merriam's Kangaroo Rat</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> common</div>
+            
+              <div><strong>method:</strong> hunting</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>preys_on</strong> → <a href="desert_tortoise.html">Desert Tortoise</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> rare</div>
+            
+              <div><strong>method:</strong> opportunistic</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

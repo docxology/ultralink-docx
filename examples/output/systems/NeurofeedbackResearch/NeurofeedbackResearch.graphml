@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="discovery_year" for="node" attr.name="discovery_year" attr.type="string"/>
+    <key id="signal_type" for="node" attr.name="signal_type" attr.type="string"/>
+    <key id="measurement_location" for="node" attr.name="measurement_location" attr.type="string"/>
+    <key id="temporal_resolution" for="node" attr.name="temporal_resolution" attr.type="string"/>
+    <key id="spatial_resolution" for="node" attr.name="spatial_resolution" attr.type="string"/>
+    <key id="cost_effectiveness" for="node" attr.name="cost_effectiveness" attr.type="string"/>
+    <key id="portability" for="node" attr.name="portability" attr.type="string"/>
+    <key id="target_frequency" for="node" attr.name="target_frequency" attr.type="string"/>
+    <key id="typical_locations" for="node" attr.name="typical_locations" attr.type="string"/>
+    <key id="typical_applications" for="node" attr.name="typical_applications" attr.type="string"/>
+    <key id="development_year" for="node" attr.name="development_year" attr.type="string"/>
+    <key id="evidence_level" for="node" attr.name="evidence_level" attr.type="string"/>
+    <key id="target_symptoms" for="node" attr.name="target_symptoms" attr.type="string"/>
+    <key id="typical_protocols" for="node" attr.name="typical_protocols" attr.type="string"/>
+    <key id="efficacy_rating" for="node" attr.name="efficacy_rating" attr.type="string"/>
+    <key id="research_volume" for="node" attr.name="research_volume" attr.type="string"/>
+    <key id="typical_session_count" for="node" attr.name="typical_session_count" attr.type="string"/>
+    <key id="affiliation" for="node" attr.name="affiliation" attr.type="string"/>
+    <key id="key_contributions" for="node" attr.name="key_contributions" attr.type="string"/>
+    <key id="active_years" for="node" attr.name="active_years" attr.type="string"/>
+    <key id="key_publications" for="node" attr.name="key_publications" attr.type="string"/>
+    <key id="types" for="node" attr.name="types" attr.type="string"/>
+    <key id="key_specifications" for="node" attr.name="key_specifications" attr.type="string"/>
+    <key id="typical_cost_range" for="node" attr.name="typical_cost_range" attr.type="string"/>
+    <key id="development_trends" for="node" attr.name="development_trends" attr.type="string"/>
+    <key id="title" for="node" attr.name="title" attr.type="string"/>
+    <key id="authors" for="node" attr.name="authors" attr.type="string"/>
+    <key id="year" for="node" attr.name="year" attr.type="string"/>
+    <key id="journal" for="node" attr.name="journal" attr.type="string"/>
+    <key id="key_findings" for="node" attr.name="key_findings" attr.type="string"/>
+    <key id="methodology" for="node" attr.name="methodology" attr.type="string"/>
+    <key id="citation_count" for="node" attr.name="citation_count" attr.type="string"/>
+    <key id="study_type" for="node" attr.name="study_type" attr.type="string"/>
+    <key id="key_concepts" for="node" attr.name="key_concepts" attr.type="string"/>
+    <key id="originators" for="node" attr.name="originators" attr.type="string"/>
+    <key id="relevance" for="node" attr.name="relevance" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
+    <node id="eeg-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">EEG Neurofeedback</data>
+      <data key="description">Feedback based on electroencephalography (EEG) signals, measuring electrical activity of the brain.</data>
+      <data key="discovery_year">1968</data>
+      <data key="signal_type">electrical</data>
+      <data key="measurement_location">scalp</data>
+      <data key="temporal_resolution">milliseconds</data>
+      <data key="spatial_resolution">centimeters</data>
+      <data key="cost_effectiveness">high</data>
+      <data key="portability">medium to high</data>
+    </node>
+    <node id="fmri-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">fMRI Neurofeedback</data>
+      <data key="description">Feedback based on functional magnetic resonance imaging, measuring blood oxygen level-dependent (BOLD) response.</data>
+      <data key="discovery_year">1995</data>
+      <data key="signal_type">hemodynamic</data>
+      <data key="measurement_location">whole brain</data>
+      <data key="temporal_resolution">seconds</data>
+      <data key="spatial_resolution">millimeters</data>
+      <data key="cost_effectiveness">low</data>
+      <data key="portability">low</data>
+    </node>
+    <node id="fnirs-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">fNIRS Neurofeedback</data>
+      <data key="description">Feedback based on functional near-infrared spectroscopy, measuring hemodynamic responses in the cortex.</data>
+      <data key="discovery_year">2004</data>
+      <data key="signal_type">hemodynamic</data>
+      <data key="measurement_location">cortical surface</data>
+      <data key="temporal_resolution">seconds</data>
+      <data key="spatial_resolution">centimeters</data>
+      <data key="cost_effectiveness">medium</data>
+      <data key="portability">medium to high</data>
+    </node>
+    <node id="meg-neurofeedback">
+      <data key="type">modality</data>
+      <data key="name">MEG Neurofeedback</data>
+      <data key="description">Feedback based on magnetoencephalography, measuring magnetic fields produced by electrical activity in the brain.</data>
+      <data key="discovery_year">1998</data>
+      <data key="signal_type">magnetic</data>
+      <data key="measurement_location">whole head</data>
+      <data key="temporal_resolution">milliseconds</data>
+      <data key="spatial_resolution">centimeters</data>
+      <data key="cost_effectiveness">very low</data>
+      <data key="portability">very low</data>
+    </node>
+    <node id="smr-training">
+      <data key="type">protocol</data>
+      <data key="name">SMR Training</data>
+      <data key="description">Sensorimotor rhythm training, typically enhancing 12-15 Hz activity over sensorimotor cortex.</data>
+      <data key="target_frequency">12-15 Hz</data>
+      <data key="typical_locations">C3,C4,Cz</data>
+      <data key="typical_applications">ADHD,Epilepsy,Sleep disorders</data>
+      <data key="development_year">1972</data>
+      <data key="evidence_level">high</data>
+    </node>
+    <node id="alpha-training">
+      <data key="type">protocol</data>
+      <data key="name">Alpha Training</data>
+      <data key="description">Enhancement of alpha rhythms (8-12 Hz), promoting relaxation and stress reduction.</data>
+      <data key="target_frequency">8-12 Hz</data>
+      <data key="typical_locations">O1,O2,P3,P4</data>
+      <data key="typical_applications">Anxiety,Stress,Creativity enhancement</data>
+      <data key="development_year">1968</data>
+      <data key="evidence_level">medium</data>
+    </node>
+    <node id="theta-training">
+      <data key="type">protocol</data>
+      <data key="name">Theta Training</data>
+      <data key="description">Training focused on theta waves (4-8 Hz), often used for deep relaxation and memory enhancement.</data>
+      <data key="target_frequency">4-8 Hz</data>
+      <data key="typical_locations">Fz,Pz</data>
+      <data key="typical_applications">Memory enhancement,Deep relaxation,Trauma treatment</data>
+      <data key="development_year">1975</data>
+      <data key="evidence_level">medium</data>
+    </node>
+    <node id="beta-training">
+      <data key="type">protocol</data>
+      <data key="name">Beta Training</data>
+      <data key="description">Enhancement of beta activity (15-20 Hz), promoting focus and attention.</data>
+      <data key="target_frequency">15-20 Hz</data>
+      <data key="typical_locations">F3,F4,Fz</data>
+      <data key="typical_applications">ADHD,Cognitive enhancement,Performance optimization</data>
+      <data key="development_year">1976</data>
+      <data key="evidence_level">high</data>
+    </node>
+    <node id="alpha-theta-training">
+      <data key="type">protocol</data>
+      <data key="name">Alpha-Theta Training</data>
+      <data key="description">Training that promotes transitions between alpha and theta states, used for trauma, addiction and PTSD treatment.</data>
+      <data key="target_frequency">4-12 Hz</data>
+      <data key="typical_locations">Pz,Oz</data>
+      <data key="typical_applications">PTSD,Addiction,Trauma recovery,Peak performance</data>
+      <data key="development_year">1989</data>
+      <data key="evidence_level">medium</data>
+    </node>
+    <node id="infra-low-frequency">
+      <data key="type">protocol</data>
+      <data key="name">Infra-Low Frequency Training</data>
+      <data key="description">Training of very slow brain oscillations below 0.5 Hz.</data>
+      <data key="target_frequency">&lt;0.5 Hz</data>
+      <data key="typical_locations">T3,T4,Fp1,Fp2</data>
+      <data key="typical_applications">Complex trauma,Mood disorders,Migraine</data>
+      <data key="development_year">2006</data>
+      <data key="evidence_level">medium</data>
+    </node>
+    <node id="adhd-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">ADHD Treatment</data>
+      <data key="description">Application of neurofeedback for attention deficit hyperactivity disorder.</data>
+      <data key="target_symptoms">Inattention,Hyperactivity,Impulsivity</data>
+      <data key="typical_protocols">smr-training,beta-training,theta-beta-ratio</data>
+      <data key="efficacy_rating">Level 5 - Efficacious and Specific</data>
+      <data key="research_volume">high</data>
+      <data key="typical_session_count">30-40</data>
+    </node>
+    <node id="anxiety-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">Anxiety Treatment</data>
+      <data key="description">Application of neurofeedback for anxiety disorders.</data>
+      <data key="target_symptoms">Excessive worry,Physiological arousal,Avoidance behavior</data>
+      <data key="typical_protocols">alpha-training,alpha-theta-training</data>
+      <data key="efficacy_rating">Level 4 - Efficacious</data>
+      <data key="research_volume">medium</data>
+      <data key="typical_session_count">20-30</data>
+    </node>
+    <node id="epilepsy-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">Epilepsy Treatment</data>
+      <data key="description">Application of neurofeedback for seizure reduction in epilepsy.</data>
+      <data key="target_symptoms">Seizure frequency,Seizure intensity</data>
+      <data key="typical_protocols">smr-training,slow-cortical-potentials</data>
+      <data key="efficacy_rating">Level 4 - Efficacious</data>
+      <data key="research_volume">medium</data>
+      <data key="typical_session_count">30-40</data>
+    </node>
+    <node id="insomnia-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">Insomnia Treatment</data>
+      <data key="description">Application of neurofeedback for sleep disorders.</data>
+      <data key="target_symptoms">Sleep onset latency,Sleep maintenance,Sleep quality</data>
+      <data key="typical_protocols">smr-training,z-score-training</data>
+      <data key="efficacy_rating">Level 3 - Probably Efficacious</data>
+      <data key="research_volume">low</data>
+      <data key="typical_session_count">20-30</data>
+    </node>
+    <node id="ptsd-treatment">
+      <data key="type">clinical_application</data>
+      <data key="name">PTSD Treatment</data>
+      <data key="description">Application of neurofeedback for post-traumatic stress disorder.</data>
+      <data key="target_symptoms">Intrusive memories,Hyperarousal,Emotional dysregulation</data>
+      <data key="typical_protocols">alpha-theta-training,infra-low-frequency</data>
+      <data key="efficacy_rating">Level 3 - Probably Efficacious</data>
+      <data key="research_volume">medium</data>
+      <data key="typical_session_count">30-50</data>
+    </node>
+    <node id="sterman-mb">
+      <data key="type">researcher</data>
+      <data key="name">M. Barry Sterman</data>
+      <data key="description">Pioneer of SMR neurofeedback training, first demonstrated efficacy in treating epilepsy.</data>
+      <data key="affiliation">University of California, Los Angeles</data>
+      <data key="key_contributions">Discovery of SMR,EEG biofeedback for epilepsy,Sleep research</data>
+      <data key="active_years">1967-2010</data>
+      <data key="key_publications">Sterman, M. B., &amp; Friar, L. (1972). Suppression of seizures in an epileptic following sensorimotor EEG feedback training.,Sterman, M. B. (2000). Basic concepts and clinical findings in the treatment of seizure disorders with EEG operant conditioning.</data>
+    </node>
+    <node id="lubar-jf">
+      <data key="type">researcher</data>
+      <data key="name">Joel F. Lubar</data>
+      <data key="description">Pioneer in applying neurofeedback to ADHD treatment.</data>
+      <data key="affiliation">University of Tennessee</data>
+      <data key="key_contributions">ADHD neurofeedback protocols,Theta/Beta ratio,Quantitative EEG assessment</data>
+      <data key="active_years">1976-2010</data>
+      <data key="key_publications">Lubar, J. F., &amp; Shouse, M. N. (1976). EEG and behavioral changes in a hyperkinetic child concurrent with training of the sensorimotor rhythm (SMR).,Lubar, J. F. (1991). Discourse on the development of EEG diagnostics and biofeedback for attention-deficit/hyperactivity disorders.</data>
+    </node>
+    <node id="peniston-eg">
+      <data key="type">researcher</data>
+      <data key="name">Eugene G. Peniston</data>
+      <data key="description">Developer of the Peniston Protocol (alpha-theta training) for alcoholism and PTSD.</data>
+      <data key="affiliation">Veterans Administration Hospital, Fort Lyon</data>
+      <data key="key_contributions">Alpha-Theta protocol,PTSD treatment,Substance abuse applications</data>
+      <data key="active_years">1989-2005</data>
+      <data key="key_publications">Peniston, E. G., &amp; Kulkosky, P. J. (1989). Alpha-theta brainwave training and beta-endorphin levels in alcoholics.,Peniston, E. G., &amp; Kulkosky, P. J. (1991). Alpha-theta brainwave neurofeedback for Vietnam veterans with combat-related post-traumatic stress disorder.</data>
+    </node>
+    <node id="othmer-sf">
+      <data key="type">researcher</data>
+      <data key="name">Siegfried Othmer</data>
+      <data key="description">Developer of infra-low frequency neurofeedback and clinical researcher.</data>
+      <data key="affiliation">EEG Institute</data>
+      <data key="key_contributions">Infra-low frequency training,Clinical applications across disorders,Neurofeedback technology development</data>
+      <data key="active_years">1985-present</data>
+      <data key="key_publications">Othmer, S., Othmer, S. F., &amp; Kaiser, D. A. (1999). EEG biofeedback: An emerging model for its global efficacy.,Othmer, S., &amp; Othmer, S. F. (2009). Post traumatic stress disorder—The neurofeedback remedy.</data>
+    </node>
+    <node id="eeg-amplifier">
+      <data key="type">equipment</data>
+      <data key="name">EEG Amplifier</data>
+      <data key="description">Device for amplifying and digitizing EEG signals from electrodes.</data>
+      <data key="types">Research grade,Clinical grade,Consumer grade</data>
+      <data key="key_specifications">Number of channels,Sampling rate,Resolution,Noise level</data>
+      <data key="typical_cost_range">$500 - $50,000</data>
+      <data key="development_trends">Increasingly wireless, mobile, and user-friendly</data>
+    </node>
+    <node id="eeg-cap">
+      <data key="type">equipment</data>
+      <data key="name">EEG Cap/Headset</data>
+      <data key="description">Wearable cap or headset containing electrodes for EEG recording.</data>
+      <data key="types">Wet electrode caps,Dry electrode headsets,Hybrid systems</data>
+      <data key="key_specifications">Number of electrodes,Electrode material,Comfort,Setup time</data>
+      <data key="typical_cost_range">$200 - $5,000</data>
+      <data key="development_trends">Dry electrode technology, faster setup, increased comfort</data>
+    </node>
+    <node id="nf-software">
+      <data key="type">equipment</data>
+      <data key="name">Neurofeedback Software</data>
+      <data key="description">Software for signal processing, feedback generation, and session management.</data>
+      <data key="types">Clinical systems,Research platforms,Consumer applications</data>
+      <data key="key_specifications">Signal processing capabilities,Protocol flexibility,Data management,User interface</data>
+      <data key="typical_cost_range">$0 (open-source) - $15,000</data>
+      <data key="development_trends">Cloud integration, AI-assisted protocol selection, improved visualizations</data>
+    </node>
+    <node id="sterman-epilepsy-1972">
+      <data key="type">research_study</data>
+      <data key="title">Suppression of seizures in an epileptic following sensorimotor EEG feedback training</data>
+      <data key="authors">sterman-mb,Friar, L.</data>
+      <data key="year">1972</data>
+      <data key="journal">Electroencephalography and Clinical Neurophysiology</data>
+      <data key="key_findings">First demonstration of SMR training reducing seizure frequency,Established foundation for neurofeedback in epilepsy treatment</data>
+      <data key="methodology">Single case design with a female subject with epilepsy</data>
+      <data key="citation_count">476</data>
+      <data key="study_type">clinical case study</data>
+    </node>
+    <node id="lubar-adhd-1976">
+      <data key="type">research_study</data>
+      <data key="title">EEG and behavioral changes in a hyperkinetic child concurrent with training of the sensorimotor rhythm (SMR)</data>
+      <data key="authors">lubar-jf,Shouse, M.N.</data>
+      <data key="year">1976</data>
+      <data key="journal">Biofeedback and Self-regulation</data>
+      <data key="key_findings">First application of SMR training to ADHD symptoms,Demonstrated reduction in hyperactivity,Showed reversal of effects when training was reversed</data>
+      <data key="methodology">ABA reversal design with a single hyperkinetic child</data>
+      <data key="citation_count">543</data>
+      <data key="study_type">clinical case study</data>
+    </node>
+    <node id="peniston-alcoholism-1989">
+      <data key="type">research_study</data>
+      <data key="title">Alpha-theta brainwave training and beta-endorphin levels in alcoholics</data>
+      <data key="authors">peniston-eg,Kulkosky, P.J.</data>
+      <data key="year">1989</data>
+      <data key="journal">Alcoholism: Clinical and Experimental Research</data>
+      <data key="key_findings">Alpha-theta training reduced depression and anxiety in alcoholics,Observed significant increases in beta-endorphin levels,Demonstrated 13-month abstinence in treatment group</data>
+      <data key="methodology">Controlled study with alcoholic participants</data>
+      <data key="citation_count">312</data>
+      <data key="study_type">controlled clinical trial</data>
+    </node>
+    <node id="arns-tdcs-2012">
+      <data key="type">research_study</data>
+      <data key="title">Neurophysiological predictors of non-response to rTMS in depression</data>
+      <data key="authors">Arns, M.,Several others</data>
+      <data key="year">2012</data>
+      <data key="journal">Journal of Affective Disorders</data>
+      <data key="key_findings">EEG alpha asymmetry predicted response to rTMS treatment,Integration of neurofeedback with other neuromodulation techniques,Personalized treatment approaches based on QEEG</data>
+      <data key="methodology">Retrospective analysis of treatment outcomes</data>
+      <data key="citation_count">227</data>
+      <data key="study_type">retrospective analysis</data>
+    </node>
+    <node id="operant-conditioning">
+      <data key="type">theoretical_framework</data>
+      <data key="name">Operant Conditioning</data>
+      <data key="description">Learning framework where behavior is modified by consequences, applied to brain activity in neurofeedback.</data>
+      <data key="key_concepts">Reinforcement,Instrumental learning,Behavior shaping</data>
+      <data key="originators">B.F. Skinner</data>
+      <data key="relevance">Provides core theoretical foundation for neurofeedback as a learning process</data>
+    </node>
+    <node id="neuroplasticity">
+      <data key="type">theoretical_framework</data>
+      <data key="name">Neuroplasticity</data>
+      <data key="description">Brain&apos;s ability to reorganize itself by forming new neural connections, the basis for long-term neurofeedback effects.</data>
+      <data key="key_concepts">Hebbian learning,Synaptic plasticity,Neural reorganization</data>
+      <data key="originators">Donald Hebb,Michael Merzenich</data>
+      <data key="relevance">Explains the lasting changes in brain function that result from neurofeedback training</data>
+    </node>
+    <node id="arousal-model">
+      <data key="type">theoretical_framework</data>
+      <data key="name">Arousal Model of Neurofeedback</data>
+      <data key="description">Framework explaining neurofeedback effects through optimizing cortical arousal levels.</data>
+      <data key="key_concepts">Optimal arousal,Over/under-arousal,Performance optimization</data>
+      <data key="originators">Karl Pribram,Barry Sterman</data>
+      <data key="relevance">Particularly relevant for ADHD, anxiety, and performance applications</data>
+    </node>
+    <edge source="eeg-neurofeedback" target="smr-training">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="alpha-training">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="beta-training">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="theta-training">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="eeg-neurofeedback" target="infra-low-frequency">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="fmri-neurofeedback" target="alpha-training">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="smr-training" target="adhd-treatment">
+      <data key="relationship_type">used_for</data>
+    </edge>
+    <edge source="beta-training" target="adhd-treatment">
+      <data key="relationship_type">used_for</data>
+    </edge>
+    <edge source="alpha-training" target="anxiety-treatment">
+      <data key="relationship_type">used_for</data>
+    </edge>
+    <edge source="smr-training" target="epilepsy-treatment">
+      <data key="relationship_type">used_for</data>
+    </edge>
+    <edge source="alpha-theta-training" target="ptsd-treatment">
+      <data key="relationship_type">used_for</data>
+    </edge>
+    <edge source="infra-low-frequency" target="ptsd-treatment">
+      <data key="relationship_type">used_for</data>
+    </edge>
+    <edge source="sterman-mb" target="smr-training">
+      <data key="relationship_type">developed</data>
+    </edge>
+    <edge source="lubar-jf" target="beta-training">
+      <data key="relationship_type">developed</data>
+    </edge>
+    <edge source="peniston-eg" target="alpha-theta-training">
+      <data key="relationship_type">developed</data>
+    </edge>
+    <edge source="othmer-sf" target="infra-low-frequency">
+      <data key="relationship_type">developed</data>
+    </edge>
+    <edge source="sterman-mb" target="sterman-epilepsy-1972">
+      <data key="relationship_type">conducted</data>
+    </edge>
+    <edge source="lubar-jf" target="lubar-adhd-1976">
+      <data key="relationship_type">conducted</data>
+    </edge>
+    <edge source="peniston-eg" target="peniston-alcoholism-1989">
+      <data key="relationship_type">conducted</data>
+    </edge>
+    <edge source="eeg-amplifier" target="eeg-neurofeedback">
+      <data key="relationship_type">enables</data>
+    </edge>
+    <edge source="eeg-cap" target="eeg-neurofeedback">
+      <data key="relationship_type">enables</data>
+    </edge>
+    <edge source="nf-software" target="smr-training">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="nf-software" target="alpha-training">
+      <data key="relationship_type">implements</data>
+    </edge>
+    <edge source="operant-conditioning" target="smr-training">
+      <data key="relationship_type">explains</data>
+    </edge>
+    <edge source="neuroplasticity" target="eeg-neurofeedback">
+      <data key="relationship_type">explains</data>
+    </edge>
+    <edge source="arousal-model" target="adhd-treatment">
+      <data key="relationship_type">explains</data>
+    </edge>
+  </graph>
+</graphml>

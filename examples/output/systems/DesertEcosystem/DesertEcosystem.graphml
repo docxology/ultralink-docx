@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="scientificName" for="node" attr.name="scientificName" attr.type="string"/>
+    <key id="lifespan" for="node" attr.name="lifespan" attr.type="string"/>
+    <key id="diet" for="node" attr.name="diet" attr.type="string"/>
+    <key id="status" for="node" attr.name="status" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="adaptations" for="node" attr.name="adaptations" attr.type="string"/>
+    <key id="height" for="node" attr.name="height" attr.type="string"/>
+    <key id="waterRequirement" for="node" attr.name="waterRequirement" attr.type="string"/>
+    <key id="impact" for="node" attr.name="impact" attr.type="string"/>
+    <key id="area" for="node" attr.name="area" attr.type="string"/>
+    <key id="soilMoisture" for="node" attr.name="soilMoisture" attr.type="string"/>
+    <key id="participants" for="node" attr.name="participants" attr.type="string"/>
+    <key id="strength" for="node" attr.name="strength" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
+    <node id="camel">
+      <data key="type">animal</data>
+      <data key="name">Dromedary Camel</data>
+      <data key="scientificName">Camelus dromedarius</data>
+      <data key="lifespan">40</data>
+      <data key="diet">herbivore</data>
+      <data key="status">least concern</data>
+      <data key="description">The dromedary camel is a large, single-humped ungulate adapted for desert conditions.</data>
+      <data key="adaptations">Can go for long periods without water,Humps store fat for energy,Thick fur insulates against heat,Specialized eyelids and nostrils for sand protection,Can tolerate extreme temperatures</data>
+    </node>
+    <node id="fennec_fox">
+      <data key="type">animal</data>
+      <data key="name">Fennec Fox</data>
+      <data key="scientificName">Vulpes zerda</data>
+      <data key="lifespan">12</data>
+      <data key="diet">omnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">The smallest canid species, known for its unusually large ears.</data>
+      <data key="adaptations">Large ears dissipate heat and detect prey underground,Thick fur insulates against cold nights,Kidney adaptations to conserve water,Pale coat reflects sunlight,Nocturnal behavior to avoid daytime heat</data>
+    </node>
+    <node id="desert_monitor">
+      <data key="type">animal</data>
+      <data key="name">Desert Monitor</data>
+      <data key="scientificName">Varanus griseus</data>
+      <data key="lifespan">15</data>
+      <data key="diet">carnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">A large lizard found across North Africa and parts of Asia.</data>
+      <data key="adaptations">Heat-resistant scales,Efficient water conservation,Can remain inactive for long periods,Burrows to escape extreme temperatures</data>
+    </node>
+    <node id="sidewinder">
+      <data key="type">animal</data>
+      <data key="name">Sidewinder Rattlesnake</data>
+      <data key="scientificName">Crotalus cerastes</data>
+      <data key="lifespan">20</data>
+      <data key="diet">carnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Venomous pit viper known for its sideways movement across sand.</data>
+      <data key="adaptations">Sidewinding locomotion minimizes contact with hot sand,Heat-sensing pits detect prey,Scales provide camouflage in sandy environments,Specialized breathing to prevent sand inhalation</data>
+    </node>
+    <node id="scorpion">
+      <data key="type">animal</data>
+      <data key="name">Deathstalker Scorpion</data>
+      <data key="scientificName">Leiurus quinquestriatus</data>
+      <data key="lifespan">5</data>
+      <data key="diet">carnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">One of the most dangerous scorpion species, with potent venom.</data>
+      <data key="adaptations">Nocturnal behavior to avoid heat,Exoskeleton prevents water loss,UV fluorescence may help detect light levels,Burrowing behavior for temperature regulation</data>
+    </node>
+    <node id="darkling_beetle">
+      <data key="type">animal</data>
+      <data key="name">Darkling Beetle</data>
+      <data key="scientificName">Tenebrionidae family</data>
+      <data key="lifespan">2</data>
+      <data key="diet">omnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Desert beetles with numerous adaptations for arid environments.</data>
+      <data key="adaptations">Waxy cuticle reduces water loss,Can collect water from fog on body,Stands with head down and abdomen raised to collect moisture,Nocturnal to avoid daytime heat</data>
+    </node>
+    <node id="roadrunner">
+      <data key="type">animal</data>
+      <data key="name">Greater Roadrunner</data>
+      <data key="scientificName">Geococcyx californianus</data>
+      <data key="lifespan">8</data>
+      <data key="diet">carnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Fast-running ground cuckoo that rarely flies.</data>
+      <data key="adaptations">Can extract water from prey,Salt glands to excrete excess salt,Ground-dwelling to avoid flying in thin, hot air,Special feathers for insulation</data>
+    </node>
+    <node id="desert_tortoise">
+      <data key="type">animal</data>
+      <data key="name">Desert Tortoise</data>
+      <data key="scientificName">Gopherus agassizii</data>
+      <data key="lifespan">80</data>
+      <data key="diet">herbivore</data>
+      <data key="status">vulnerable</data>
+      <data key="description">Long-lived reptile of the Mojave and Sonoran deserts with high-domed shell.</data>
+      <data key="adaptations">Can store water in bladder for extended periods,Digs burrows to escape extreme temperatures,Metabolic adaptations to survive drought,Specialized digestive system for low-quality plant material,Slow metabolism conserves energy</data>
+    </node>
+    <node id="cactus_wren">
+      <data key="type">animal</data>
+      <data key="name">Cactus Wren</data>
+      <data key="scientificName">Campylorhynchus brunneicapillus</data>
+      <data key="lifespan">7</data>
+      <data key="diet">insectivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Desert bird that builds nests in cholla and other cacti for protection.</data>
+      <data key="adaptations">Obtains most water from food rather than drinking,Specialized nest-building in protective cacti,Heat-resistant metabolism,Efficient kidney function to conserve water</data>
+    </node>
+    <node id="kangaroo_rat">
+      <data key="type">animal</data>
+      <data key="name">Merriam's Kangaroo Rat</data>
+      <data key="scientificName">Dipodomys merriami</data>
+      <data key="lifespan">5</data>
+      <data key="diet">granivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Small desert rodent with highly specialized adaptations for water conservation.</data>
+      <data key="adaptations">Can survive without drinking water,Extracts water metabolically from dry seeds,Specialized kidneys concentrate urine,Nocturnal to avoid daytime heat,Burrows underground during day to avoid heat</data>
+    </node>
+    <node id="gila_monster">
+      <data key="type">animal</data>
+      <data key="name">Gila Monster</data>
+      <data key="scientificName">Heloderma suspectum</data>
+      <data key="lifespan">20</data>
+      <data key="diet">carnivore</data>
+      <data key="status">near threatened</data>
+      <data key="description">Venomous lizard of the southwestern US and northwestern Mexico.</data>
+      <data key="adaptations">Stores fat in tail for long periods without food,Venomous bite for efficient predation,Thick skin reduces water loss,Slow metabolism allows for infrequent feeding,Can survive on as few as 3-4 meals per year</data>
+    </node>
+    <node id="javelina">
+      <data key="type">animal</data>
+      <data key="name">Javelina</data>
+      <data key="scientificName">Pecari tajacu</data>
+      <data key="lifespan">10</data>
+      <data key="diet">omnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Also known as collared peccary, a pig-like mammal adapted to desert environments.</data>
+      <data key="adaptations">Can consume water-rich cacti including prickly pear,Active in early morning and evening to avoid heat,Social behavior reduces predation risk,Specialized digestive system for desert plants</data>
+    </node>
+    <node id="saguaro">
+      <data key="type">plant</data>
+      <data key="name">Saguaro Cactus</data>
+      <data key="scientificName">Carnegiea gigantea</data>
+      <data key="height">1200</data>
+      <data key="waterRequirement">very low</data>
+      <data key="description">Iconic columnar cactus with arm-like branches.</data>
+      <data key="adaptations">Accordion-like pleats expand when absorbing water,Extensive shallow root system,Thick waxy coating to reduce water loss,Slow growth to conserve energy,CAM photosynthesis for water conservation</data>
+    </node>
+    <node id="barrel_cactus">
+      <data key="type">plant</data>
+      <data key="name">Barrel Cactus</data>
+      <data key="scientificName">Ferocactus wislizeni</data>
+      <data key="height">150</data>
+      <data key="waterRequirement">very low</data>
+      <data key="description">Cylindrical-shaped cactus known for tilting toward the sun.</data>
+      <data key="adaptations">Ribbed structure allows expansion during water absorption,Thick waxy coating to reduce evaporation,Spines create microclimate of shade,Can survive extremely high temperatures</data>
+    </node>
+    <node id="mesquite">
+      <data key="type">plant</data>
+      <data key="name">Honey Mesquite</data>
+      <data key="scientificName">Prosopis glandulosa</data>
+      <data key="height">900</data>
+      <data key="waterRequirement">low</data>
+      <data key="description">Deciduous tree with deep roots that can access groundwater.</data>
+      <data key="adaptations">Extremely deep taproots can reach 50m below surface,Small leaves reduce water loss,Drought deciduous - can shed leaves during extreme drought,Nitrogen fixing ability improves soil quality</data>
+    </node>
+    <node id="creosote_bush">
+      <data key="type">plant</data>
+      <data key="name">Creosote Bush</data>
+      <data key="scientificName">Larrea tridentata</data>
+      <data key="height">300</data>
+      <data key="waterRequirement">very low</data>
+      <data key="description">One of the most drought-tolerant plants, can live over 10,000 years.</data>
+      <data key="adaptations">Resinous coating on leaves prevents water loss,Toxins in soil prevent other plants from growing nearby (allelopathy),Small leaves reduce surface area for evaporation,Can survive with just 75mm of annual rainfall</data>
+    </node>
+    <node id="desert_poppy">
+      <data key="type">plant</data>
+      <data key="name">Desert Poppy</data>
+      <data key="scientificName">Eschscholzia glyptosperma</data>
+      <data key="height">30</data>
+      <data key="waterRequirement">low</data>
+      <data key="description">Annual wildflower that blooms spectacularly after rains.</data>
+      <data key="adaptations">Seeds can remain dormant for years until rainfall,Quick lifecycle to complete before drought returns,Deep taproots to access underground moisture,Waxy leaf coating to reduce evaporation</data>
+    </node>
+    <node id="ocotillo">
+      <data key="type">plant</data>
+      <data key="name">Ocotillo</data>
+      <data key="scientificName">Fouquieria splendens</data>
+      <data key="height">500</data>
+      <data key="waterRequirement">low</data>
+      <data key="description">Spindly desert plant with bright red flowers.</data>
+      <data key="adaptations">Drought deciduous - drops leaves during dry periods,Grows leaves quickly after rain,Deep tap root,Waxy coating on stems,Thorns for protection</data>
+    </node>
+    <node id="brittlebush">
+      <data key="type">plant</data>
+      <data key="name">Brittlebush</data>
+      <data key="scientificName">Encelia farinosa</data>
+      <data key="height">150</data>
+      <data key="waterRequirement">very low</data>
+      <data key="description">Common desert shrub with silvery leaves and yellow flowers.</data>
+      <data key="adaptations">Resinous sap seals wounds to prevent water loss,Light-colored leaves reflect sunlight,Dense leaf hairs (trichomes) reduce water loss,Seasonal leaf drop during extreme drought,Quick response to rainfall with new growth</data>
+    </node>
+    <node id="desert_ironwood">
+      <data key="type">plant</data>
+      <data key="name">Desert Ironwood</data>
+      <data key="scientificName">Olneya tesota</data>
+      <data key="height">1000</data>
+      <data key="waterRequirement">low</data>
+      <data key="description">Long-lived desert tree with extremely dense wood, can live 800+ years.</data>
+      <data key="adaptations">Nitrogen fixing capability improves soil,Extremely deep root system,Small, drought-deciduous leaves,Dense wood stores water,Provides &quot;nurse plant&quot; habitat for other species</data>
+    </node>
+    <node id="agave">
+      <data key="type">plant</data>
+      <data key="name">Century Plant</data>
+      <data key="scientificName">Agave americana</data>
+      <data key="height">200</data>
+      <data key="waterRequirement">very low</data>
+      <data key="description">Large succulent that flowers once at the end of its life.</data>
+      <data key="adaptations">CAM photosynthesis to conserve water,Thick, waxy leaves reduce water loss,Rosette form channels water to central root,Fibrous leaf structure for structural support,Monocarpic lifecycle (flowers once then dies)</data>
+    </node>
+    <node id="joshua_tree">
+      <data key="type">plant</data>
+      <data key="name">Joshua Tree</data>
+      <data key="scientificName">Yucca brevifolia</data>
+      <data key="height">1200</data>
+      <data key="waterRequirement">low</data>
+      <data key="description">Iconic tree-like yucca of the Mojave Desert with unique appearance.</data>
+      <data key="adaptations">Extensive shallow root system,Thick, moisture-retaining trunk,Waxy, spine-tipped leaves reduce water loss,Specialized pollination relationship with yucca moth,Slow growth rate conserves resources</data>
+    </node>
+    <node id="prickly_pear">
+      <data key="type">plant</data>
+      <data key="name">Prickly Pear Cactus</data>
+      <data key="scientificName">Opuntia spp.</data>
+      <data key="height">200</data>
+      <data key="waterRequirement">very low</data>
+      <data key="description">Flat-padded cacti with colorful fruits and sharp spines.</data>
+      <data key="adaptations">Flat pads maximize photosynthesis while minimizing surface area,Waxy coating reduces water loss,Shallow, extensive root system,Spines protect from herbivores and provide shade</data>
+    </node>
+    <node id="cholla_cactus">
+      <data key="type">plant</data>
+      <data key="name">Cholla Cactus</data>
+      <data key="scientificName">Cylindropuntia spp.</data>
+      <data key="height">300</data>
+      <data key="waterRequirement">very low</data>
+      <data key="description">Known for detachable barbed spines that easily attach to passersby.</data>
+      <data key="adaptations">Segmented structure allows for vegetative reproduction,Dense, barbed spines deter predation,Water storage in stem segments,Shallow but extensive root system</data>
+    </node>
+    <node id="other_plants">
+      <data key="type">plant</data>
+      <data key="name">Various Desert Plants</data>
+      <data key="description">Collection of various smaller desert plants and grasses</data>
+      <data key="waterRequirement">low to moderate</data>
+      <data key="adaptations">Various drought adaptations,Seasonal growth patterns,Seed dormancy during dry periods</data>
+    </node>
+    <node id="heat">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Extreme Heat</data>
+      <data key="description">Daytime temperatures regularly exceeding 40°C (104°F) in summer.</data>
+      <data key="impact">extreme</data>
+    </node>
+    <node id="temperature_variation">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Temperature Variation</data>
+      <data key="description">Large daily temperature fluctuations, often exceeding 20°C between day and night.</data>
+      <data key="impact">high</data>
+    </node>
+    <node id="aridity">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Aridity</data>
+      <data key="description">Low precipitation, typically less than 250mm annually, with high evaporation rates.</data>
+      <data key="impact">extreme</data>
+    </node>
+    <node id="sand_dunes">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Sand Dunes</data>
+      <data key="description">Mounds of windblown sand that can move and shift over time.</data>
+      <data key="impact">high</data>
+    </node>
+    <node id="rocky_outcrops">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Rocky Outcrops</data>
+      <data key="description">Exposed rock formations that provide shade and shelter.</data>
+      <data key="impact">medium</data>
+    </node>
+    <node id="oasis">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Oasis</data>
+      <data key="description">Isolated water source surrounded by desert, often fed by underground springs.</data>
+      <data key="impact">high</data>
+    </node>
+    <node id="ephemeral_streams">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Ephemeral Streams</data>
+      <data key="description">Temporary waterways that flow only after rainfall events.</data>
+      <data key="impact">medium</data>
+    </node>
+    <node id="sandy_soil">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Sandy Soil</data>
+      <data key="description">Coarse-grained soil with poor water retention but good drainage.</data>
+      <data key="impact">high</data>
+    </node>
+    <node id="desert_pavement">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Desert Pavement</data>
+      <data key="description">Dense layer of pebbles and rocks at the surface, formed by wind removing fine particles.</data>
+      <data key="impact">high</data>
+    </node>
+    <node id="desert_varnish">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Desert Varnish</data>
+      <data key="description">Dark coating on exposed rock surfaces, composed of clay minerals with iron and manganese oxides.</data>
+      <data key="impact">low</data>
+    </node>
+    <node id="playa">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Playa</data>
+      <data key="description">Flat, dry lake bed that occasionally floods after heavy rain.</data>
+      <data key="impact">medium</data>
+    </node>
+    <node id="flash_floods">
+      <data key="type">abiotic_factor</data>
+      <data key="name">Flash Floods</data>
+      <data key="description">Sudden, intense flooding events often occurring in desert washes after heavy rainfall.</data>
+      <data key="impact">extreme</data>
+    </node>
+    <node id="wash">
+      <data key="type">microhabitat</data>
+      <data key="name">Desert Wash</data>
+      <data key="description">Dry streambed that carries water only after rainfall, often with distinct vegetation.</data>
+      <data key="area">variable</data>
+      <data key="soilMoisture">higher than surroundings</data>
+    </node>
+    <node id="dune_field">
+      <data key="type">microhabitat</data>
+      <data key="name">Sand Dune Field</data>
+      <data key="description">Area of wind-deposited sand formations with specialized plant and animal communities.</data>
+      <data key="area">large</data>
+      <data key="soilMoisture">extremely low</data>
+    </node>
+    <node id="rocky_slope">
+      <data key="type">microhabitat</data>
+      <data key="name">Rocky Slope</data>
+      <data key="description">Elevated area with exposed bedrock and boulders, providing shade and shelter.</data>
+      <data key="area">medium</data>
+      <data key="soilMoisture">very low</data>
+    </node>
+    <node id="canyon">
+      <data key="type">microhabitat</data>
+      <data key="name">Desert Canyon</data>
+      <data key="description">Deep, narrow channel with steep walls, often with increased moisture and biodiversity.</data>
+      <data key="area">variable</data>
+      <data key="soilMoisture">variable</data>
+    </node>
+    <node id="pollination_yucca">
+      <data key="type">interaction</data>
+      <data key="name">Yucca-Moth Pollination</data>
+      <data key="description">Specialized mutualistic relationship between yucca plants and yucca moths.</data>
+      <data key="participants">joshua_tree,yucca_moth</data>
+      <data key="strength">obligate</data>
+    </node>
+    <node id="nurse_plant">
+      <data key="type">interaction</data>
+      <data key="name">Nurse Plant Relationship</data>
+      <data key="description">Protection of seedlings by established desert plants providing shade and improved soil.</data>
+      <data key="participants">desert_ironwood,saguaro</data>
+      <data key="strength">facultative</data>
+    </node>
+    <node id="seed_dispersal">
+      <data key="type">interaction</data>
+      <data key="name">Seed Dispersal</data>
+      <data key="description">Movement of plant seeds by desert animals, aiding plant reproduction and distribution.</data>
+      <data key="participants">mesquite,coyote</data>
+      <data key="strength">facultative</data>
+    </node>
+    <node id="yucca_moth">
+      <data key="type">animal</data>
+      <data key="name">Yucca Moth</data>
+      <data key="scientificName">Tegeticula yuccasella</data>
+      <data key="lifespan">0.5</data>
+      <data key="diet">herbivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Small moth with specialized relationship with Joshua trees and other yuccas.</data>
+      <data key="adaptations">Specialized mouthparts for collecting pollen,Ovipositor for laying eggs in yucca flowers,Lifecycle synchronized with yucca flowering,Larvae feed only on some yucca seeds, preserving others</data>
+    </node>
+    <node id="coyote">
+      <data key="type">animal</data>
+      <data key="name">Coyote</data>
+      <data key="scientificName">Canis latrans</data>
+      <data key="lifespan">14</data>
+      <data key="diet">omnivore</data>
+      <data key="status">least concern</data>
+      <data key="description">Adaptable canid found throughout North American deserts and beyond.</data>
+      <data key="adaptations">Can survive on minimal water obtained from prey,Opportunistic feeding habits,Highly adaptable to different habitats,Active during cooler parts of day,Efficient predator of small desert mammals</data>
+    </node>
+    <edge source="camel" target="heat">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="fennec_fox" target="heat">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="darkling_beetle" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="sidewinder" target="sand_dunes">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="desert_tortoise" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="kangaroo_rat" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="gila_monster" target="heat">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="cactus_wren" target="heat">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="javelina" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="yucca_moth" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="coyote" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="saguaro" target="heat">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="barrel_cactus" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="mesquite" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="creosote_bush" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="ocotillo" target="temperature_variation">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="brittlebush" target="heat">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="desert_ironwood" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="agave" target="aridity">
+      <data key="relationship_type">adapted_to</data>
+    </edge>
+    <edge source="joshua_tree" target="sandy_soil">
+      <data key="relationship_type">grows_in</data>
+    </edge>
+    <edge source="sidewinder" target="dune_field">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="desert_tortoise" target="rocky_slope">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="cactus_wren" target="wash">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="gila_monster" target="rocky_slope">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="javelina" target="canyon">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="kangaroo_rat" target="dune_field">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="scorpion" target="rocky_slope">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="coyote" target="canyon">
+      <data key="relationship_type">lives_in</data>
+    </edge>
+    <edge source="saguaro" target="rocky_slope">
+      <data key="relationship_type">grows_in</data>
+    </edge>
+    <edge source="mesquite" target="wash">
+      <data key="relationship_type">grows_in</data>
+    </edge>
+    <edge source="desert_ironwood" target="wash">
+      <data key="relationship_type">grows_in</data>
+    </edge>
+    <edge source="brittlebush" target="rocky_slope">
+      <data key="relationship_type">grows_in</data>
+    </edge>
+    <edge source="coyote" target="kangaroo_rat">
+      <data key="relationship_type">preys_on</data>
+    </edge>
+    <edge source="coyote" target="desert_tortoise">
+      <data key="relationship_type">preys_on</data>
+    </edge>
+    <edge source="sidewinder" target="kangaroo_rat">
+      <data key="relationship_type">preys_on</data>
+    </edge>
+    <edge source="desert_monitor" target="scorpion">
+      <data key="relationship_type">preys_on</data>
+    </edge>
+    <edge source="gila_monster" target="cactus_wren">
+      <data key="relationship_type">preys_on</data>
+    </edge>
+    <edge source="roadrunner" target="scorpion">
+      <data key="relationship_type">preys_on</data>
+    </edge>
+    <edge source="roadrunner" target="sidewinder">
+      <data key="relationship_type">preys_on</data>
+    </edge>
+    <edge source="javelina" target="prickly_pear">
+      <data key="relationship_type">consumes</data>
+    </edge>
+    <edge source="desert_tortoise" target="desert_poppy">
+      <data key="relationship_type">consumes</data>
+    </edge>
+    <edge source="kangaroo_rat" target="mesquite">
+      <data key="relationship_type">consumes</data>
+    </edge>
+    <edge source="desert_ironwood" target="saguaro">
+      <data key="relationship_type">nurses</data>
+    </edge>
+    <edge source="mesquite" target="desert_poppy">
+      <data key="relationship_type">facilitates</data>
+    </edge>
+    <edge source="creosote_bush" target="other_plants">
+      <data key="relationship_type">inhibits</data>
+    </edge>
+    <edge source="joshua_tree" target="yucca_moth">
+      <data key="relationship_type">mutual_dependency</data>
+    </edge>
+    <edge source="yucca_moth" target="joshua_tree">
+      <data key="relationship_type">mutual_dependency</data>
+    </edge>
+  </graph>
+</graphml>

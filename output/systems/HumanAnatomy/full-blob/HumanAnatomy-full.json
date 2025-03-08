@@ -1,0 +1,869 @@
+{
+  "json": {
+    "metadata": {
+      "exportDate": "2025-03-08T22:42:12.580Z",
+      "entityCount": 37,
+      "relationshipCount": 28
+    },
+    "entities": [
+      {
+        "id": "circulatory_system",
+        "type": "system",
+        "attributes": {
+          "name": "Circulatory System",
+          "description": "The system that circulates blood throughout the body, delivering oxygen and nutrients to cells and removing waste products.",
+          "functions": [
+            "Oxygen transport",
+            "Nutrient delivery",
+            "Waste removal",
+            "Hormone transport",
+            "Temperature regulation",
+            "Immune defense"
+          ],
+          "volume": "5 liters of blood (average adult)"
+        }
+      },
+      {
+        "id": "respiratory_system",
+        "type": "system",
+        "attributes": {
+          "name": "Respiratory System",
+          "description": "The system responsible for gas exchange, taking in oxygen and expelling carbon dioxide.",
+          "functions": [
+            "Gas exchange",
+            "pH regulation",
+            "Voice production",
+            "Olfaction support"
+          ],
+          "capacity": "4-6 liters (average adult lung capacity)"
+        }
+      },
+      {
+        "id": "nervous_system",
+        "type": "system",
+        "attributes": {
+          "name": "Nervous System",
+          "description": "The complex network that coordinates body activities by transmitting signals between different body parts.",
+          "functions": [
+            "Sensory processing",
+            "Motor control",
+            "Cognition",
+            "Memory",
+            "Homeostasis regulation"
+          ],
+          "components": [
+            "Central nervous system",
+            "Peripheral nervous system",
+            "Autonomic nervous system"
+          ],
+          "neurons": "Approximately 86 billion neurons"
+        }
+      },
+      {
+        "id": "skeletal_system",
+        "type": "system",
+        "attributes": {
+          "name": "Skeletal System",
+          "description": "The framework of bones and connective tissues that supports the body, protects organs, and enables movement.",
+          "functions": [
+            "Structural support",
+            "Organ protection",
+            "Movement facilitation",
+            "Blood cell production",
+            "Mineral storage"
+          ],
+          "boneCount": 206
+        }
+      },
+      {
+        "id": "muscular_system",
+        "type": "system",
+        "attributes": {
+          "name": "Muscular System",
+          "description": "The system of muscles that enables movement, maintains posture, and generates heat.",
+          "functions": [
+            "Movement",
+            "Posture maintenance",
+            "Joint stabilization",
+            "Heat production"
+          ],
+          "muscleCount": "Over 600 named muscles",
+          "types": [
+            "Skeletal muscle",
+            "Smooth muscle",
+            "Cardiac muscle"
+          ]
+        }
+      },
+      {
+        "id": "digestive_system",
+        "type": "system",
+        "attributes": {
+          "name": "Digestive System",
+          "description": "The system that breaks down food into nutrients for absorption and eliminates waste.",
+          "functions": [
+            "Food breakdown",
+            "Nutrient absorption",
+            "Waste elimination"
+          ],
+          "length": "About 9 meters (30 feet) from mouth to anus"
+        }
+      },
+      {
+        "id": "endocrine_system",
+        "type": "system",
+        "attributes": {
+          "name": "Endocrine System",
+          "description": "The collection of glands that produce hormones to regulate metabolism, growth, development, and other functions.",
+          "functions": [
+            "Hormone production",
+            "Metabolism regulation",
+            "Growth and development",
+            "Mood regulation"
+          ],
+          "majorGlands": [
+            "Pituitary",
+            "Thyroid",
+            "Parathyroid",
+            "Adrenal",
+            "Pancreas",
+            "Gonads",
+            "Pineal"
+          ]
+        }
+      },
+      {
+        "id": "immune_system",
+        "type": "system",
+        "attributes": {
+          "name": "Immune System",
+          "description": "The complex network that defends the body against pathogens and other threats.",
+          "functions": [
+            "Pathogen defense",
+            "Wound healing",
+            "Foreign substance detection",
+            "Cancer surveillance"
+          ],
+          "components": [
+            "White blood cells",
+            "Antibodies",
+            "Lymphatic system",
+            "Spleen",
+            "Thymus",
+            "Bone marrow"
+          ]
+        }
+      },
+      {
+        "id": "heart",
+        "type": "organ",
+        "attributes": {
+          "name": "Heart",
+          "description": "A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.",
+          "weight": "250-350 grams",
+          "location": "Mediastinum, left of midline",
+          "chambers": [
+            "Right atrium",
+            "Right ventricle",
+            "Left atrium",
+            "Left ventricle"
+          ],
+          "beatRate": "60-100 beats per minute (at rest)"
+        }
+      },
+      {
+        "id": "lungs",
+        "type": "organ",
+        "attributes": {
+          "name": "Lungs",
+          "description": "The primary organs of respiration, where gas exchange occurs between the air and blood.",
+          "count": 2,
+          "location": "Thoracic cavity",
+          "parts": [
+            "Bronchi",
+            "Bronchioles",
+            "Alveoli",
+            "Pleura"
+          ],
+          "respirationRate": "12-20 breaths per minute (at rest)"
+        }
+      },
+      {
+        "id": "brain",
+        "type": "organ",
+        "attributes": {
+          "name": "Brain",
+          "description": "The central organ of the nervous system, responsible for processing sensory information and controlling bodily functions and behaviors.",
+          "weight": "1300-1400 grams (average adult)",
+          "location": "Cranial cavity",
+          "lobes": [
+            "Frontal",
+            "Parietal",
+            "Temporal",
+            "Occipital"
+          ],
+          "energyUse": "20% of body's oxygen and calories"
+        }
+      },
+      {
+        "id": "liver",
+        "type": "organ",
+        "attributes": {
+          "name": "Liver",
+          "description": "The largest internal organ, performing hundreds of functions including detoxification, protein synthesis, and digestion.",
+          "weight": "1.5 kg (average adult)",
+          "location": "Right upper quadrant of abdomen",
+          "lobes": [
+            "Right lobe",
+            "Left lobe",
+            "Caudate lobe",
+            "Quadrate lobe"
+          ],
+          "functions": [
+            "Detoxification",
+            "Bile production",
+            "Protein synthesis",
+            "Glycogen storage"
+          ]
+        }
+      },
+      {
+        "id": "kidneys",
+        "type": "organ",
+        "attributes": {
+          "name": "Kidneys",
+          "description": "Bean-shaped organs that filter blood to produce urine, regulate electrolytes, and maintain acid-base balance.",
+          "count": 2,
+          "location": "Posterior abdominal wall, retroperitoneal",
+          "weight": "120-170 grams each",
+          "filterRate": "About 120-150 quarts of blood daily"
+        }
+      },
+      {
+        "id": "stomach",
+        "type": "organ",
+        "attributes": {
+          "name": "Stomach",
+          "description": "A muscular, hollow organ that holds food and begins the digestion of proteins.",
+          "location": "Left upper quadrant of abdomen",
+          "capacity": "1-2 liters",
+          "pH": "1.5-3.5 (highly acidic)",
+          "regions": [
+            "Cardia",
+            "Fundus",
+            "Body",
+            "Pylorus"
+          ]
+        }
+      },
+      {
+        "id": "intestines",
+        "type": "organ",
+        "attributes": {
+          "name": "Intestines",
+          "description": "The long, coiled tube where most digestion and nutrient absorption occurs.",
+          "parts": [
+            "Small intestine",
+            "Large intestine"
+          ],
+          "smallIntestineLength": "6-7 meters",
+          "largeIntestineLength": "1.5 meters",
+          "location": "Abdominal cavity"
+        }
+      },
+      {
+        "id": "pancreas",
+        "type": "organ",
+        "attributes": {
+          "name": "Pancreas",
+          "description": "A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.",
+          "location": "Retroperitoneal, behind stomach",
+          "weight": "70-100 grams",
+          "functions": [
+            "Digestive enzyme production",
+            "Hormone secretion",
+            "Blood glucose regulation"
+          ]
+        }
+      },
+      {
+        "id": "spleen",
+        "type": "organ",
+        "attributes": {
+          "name": "Spleen",
+          "description": "An organ that filters blood and helps defend against pathogens as part of the immune system.",
+          "location": "Left upper quadrant of abdomen",
+          "weight": "150 grams (average adult)",
+          "functions": [
+            "Blood filtration",
+            "Old red blood cell removal",
+            "Immune response support",
+            "Blood storage"
+          ]
+        }
+      },
+      {
+        "id": "skull",
+        "type": "bone",
+        "attributes": {
+          "name": "Skull",
+          "description": "The bony structure that forms the head, encases the brain, and supports facial structures.",
+          "boneCount": 22,
+          "majorBones": [
+            "Frontal bone",
+            "Parietal bones",
+            "Temporal bones",
+            "Occipital bone",
+            "Sphenoid bone",
+            "Ethmoid bone"
+          ],
+          "functions": [
+            "Brain protection",
+            "Facial structure support",
+            "Sensory organ housing"
+          ]
+        }
+      },
+      {
+        "id": "vertebral_column",
+        "type": "bone",
+        "attributes": {
+          "name": "Vertebral Column (Spine)",
+          "description": "The flexible column of vertebrae that protects the spinal cord and supports the head and body.",
+          "vertebraeCount": 33,
+          "regions": [
+            "Cervical (7)",
+            "Thoracic (12)",
+            "Lumbar (5)",
+            "Sacral (5 fused)",
+            "Coccygeal (4 fused)"
+          ],
+          "length": "70-75 cm (adult)"
+        }
+      },
+      {
+        "id": "ribcage",
+        "type": "bone",
+        "attributes": {
+          "name": "Ribcage",
+          "description": "The bony cage formed by the sternum, ribs, and thoracic vertebrae that protects vital organs.",
+          "ribPairs": 12,
+          "types": [
+            "True ribs (1-7)",
+            "False ribs (8-10)",
+            "Floating ribs (11-12)"
+          ],
+          "functions": [
+            "Heart and lung protection",
+            "Respiratory movement support"
+          ]
+        }
+      },
+      {
+        "id": "femur",
+        "type": "bone",
+        "attributes": {
+          "name": "Femur",
+          "description": "The thigh bone, the longest and strongest bone in the human body.",
+          "count": 2,
+          "location": "Thigh",
+          "length": "45-50 cm (adult)",
+          "strength": "Can support 30 times body weight"
+        }
+      },
+      {
+        "id": "heart_muscle",
+        "type": "muscle",
+        "attributes": {
+          "name": "Cardiac Muscle",
+          "description": "Specialized involuntary muscle tissue found only in the heart, allowing for coordinated contractions.",
+          "type": "Cardiac",
+          "control": "Involuntary",
+          "properties": [
+            "Striated",
+            "Self-excitable",
+            "Resistant to fatigue",
+            "Interconnected by intercalated discs"
+          ],
+          "function": "Blood pumping through rhythmic contractions"
+        }
+      },
+      {
+        "id": "diaphragm",
+        "type": "muscle",
+        "attributes": {
+          "name": "Diaphragm",
+          "description": "A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.",
+          "type": "Skeletal",
+          "control": "Both voluntary and involuntary",
+          "location": "Between thoracic and abdominal cavities",
+          "function": "Primary muscle of respiration"
+        }
+      },
+      {
+        "id": "biceps_brachii",
+        "type": "muscle",
+        "attributes": {
+          "name": "Biceps Brachii",
+          "description": "A large muscle located on the front of the upper arm, primarily responsible for forearm flexion and supination.",
+          "type": "Skeletal",
+          "control": "Voluntary",
+          "location": "Anterior compartment of the upper arm",
+          "function": "Forearm flexion and supination"
+        }
+      },
+      {
+        "id": "quadriceps",
+        "type": "muscle",
+        "attributes": {
+          "name": "Quadriceps Femoris",
+          "description": "A group of four muscles on the front of the thigh that extend the knee.",
+          "type": "Skeletal",
+          "control": "Voluntary",
+          "location": "Anterior thigh",
+          "components": [
+            "Rectus femoris",
+            "Vastus lateralis",
+            "Vastus medialis",
+            "Vastus intermedius"
+          ],
+          "function": "Knee extension and hip flexion"
+        }
+      },
+      {
+        "id": "aorta",
+        "type": "blood_vessel",
+        "attributes": {
+          "name": "Aorta",
+          "description": "The largest artery in the body, carrying oxygenated blood from the left ventricle of the heart to the body.",
+          "type": "Artery",
+          "diameter": "2.5-3.5 cm",
+          "sections": [
+            "Ascending aorta",
+            "Aortic arch",
+            "Descending thoracic aorta",
+            "Abdominal aorta"
+          ],
+          "function": "Distribution of oxygenated blood throughout the body"
+        }
+      },
+      {
+        "id": "coronary_arteries",
+        "type": "blood_vessel",
+        "attributes": {
+          "name": "Coronary Arteries",
+          "description": "The arteries that supply blood to the heart muscle.",
+          "type": "Artery",
+          "majorBranches": [
+            "Left main coronary artery",
+            "Left anterior descending artery",
+            "Left circumflex artery",
+            "Right coronary artery"
+          ],
+          "function": "Blood supply to cardiac muscle"
+        }
+      },
+      {
+        "id": "pulmonary_arteries",
+        "type": "blood_vessel",
+        "attributes": {
+          "name": "Pulmonary Arteries",
+          "description": "The arteries that carry deoxygenated blood from the heart to the lungs.",
+          "type": "Artery",
+          "branches": [
+            "Right pulmonary artery",
+            "Left pulmonary artery"
+          ],
+          "uniqueProperty": "One of the few arteries carrying deoxygenated blood",
+          "function": "Transport of deoxygenated blood to lungs for oxygenation"
+        }
+      },
+      {
+        "id": "vena_cava",
+        "type": "blood_vessel",
+        "attributes": {
+          "name": "Vena Cava",
+          "description": "The largest veins in the body, returning deoxygenated blood to the right atrium of the heart.",
+          "type": "Vein",
+          "components": [
+            "Superior vena cava",
+            "Inferior vena cava"
+          ],
+          "diameter": "2-3 cm",
+          "function": "Return of deoxygenated blood to the heart"
+        }
+      },
+      {
+        "id": "spinal_cord",
+        "type": "nerve",
+        "attributes": {
+          "name": "Spinal Cord",
+          "description": "The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.",
+          "length": "45 cm (average adult)",
+          "location": "Within the vertebral canal",
+          "function": "Conduction of neural signals between brain and body, reflex center",
+          "components": [
+            "Grey matter",
+            "White matter",
+            "Central canal"
+          ]
+        }
+      },
+      {
+        "id": "vagus_nerve",
+        "type": "nerve",
+        "attributes": {
+          "name": "Vagus Nerve",
+          "description": "The 10th cranial nerve, with the widest distribution in the body, controlling parasympathetic functions.",
+          "type": "Cranial nerve",
+          "number": "CN X",
+          "function": "Parasympathetic control of heart, lungs, digestive tract; sensory information from viscera",
+          "length": "Extends from brainstem to abdomen"
+        }
+      },
+      {
+        "id": "sciatic_nerve",
+        "type": "nerve",
+        "attributes": {
+          "name": "Sciatic Nerve",
+          "description": "The largest and longest nerve in the body, running from the lower back down through the leg.",
+          "type": "Peripheral nerve",
+          "origin": "L4-S3 spinal nerves",
+          "function": "Motor and sensory innervation of lower limb",
+          "diameter": "About 2 cm at its widest"
+        }
+      },
+      {
+        "id": "hypothalamus",
+        "type": "nerve_center",
+        "attributes": {
+          "name": "Hypothalamus",
+          "description": "A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.",
+          "location": "Below thalamus, above brainstem",
+          "weight": "About 4 grams",
+          "functions": [
+            "Temperature regulation",
+            "Hunger and thirst control",
+            "Sleep-wake cycles",
+            "Hormone production",
+            "Autonomic function regulation"
+          ]
+        }
+      },
+      {
+        "id": "neuron",
+        "type": "cell",
+        "attributes": {
+          "name": "Neuron",
+          "description": "The basic functional unit of the nervous system, specialized for transmitting information.",
+          "components": [
+            "Cell body",
+            "Dendrites",
+            "Axon",
+            "Synaptic terminals"
+          ],
+          "types": [
+            "Motor neurons",
+            "Sensory neurons",
+            "Interneurons"
+          ],
+          "function": "Signal transmission and processing",
+          "count": "Approximately 86 billion in the human brain"
+        }
+      },
+      {
+        "id": "red_blood_cell",
+        "type": "cell",
+        "attributes": {
+          "name": "Red Blood Cell (Erythrocyte)",
+          "description": "The most common type of blood cell, responsible for oxygen transport.",
+          "shape": "Biconcave disc",
+          "diameter": "7-8 micrometers",
+          "lifespan": "120 days",
+          "count": "4.5-5.5 million per microliter of blood",
+          "uniqueProperty": "No nucleus in mature form",
+          "function": "Oxygen and carbon dioxide transport"
+        }
+      },
+      {
+        "id": "cardiomyocyte",
+        "type": "cell",
+        "attributes": {
+          "name": "Cardiomyocyte",
+          "description": "Cardiac muscle cells that make up the heart muscle.",
+          "length": "100 micrometers",
+          "width": "10-25 micrometers",
+          "properties": [
+            "Striated",
+            "Contains many mitochondria",
+            "Connected by intercalated discs"
+          ],
+          "function": "Heart contraction",
+          "uniqueProperty": "Can contract without neural stimulation"
+        }
+      },
+      {
+        "id": "epithelial_tissue",
+        "type": "tissue",
+        "attributes": {
+          "name": "Epithelial Tissue",
+          "description": "The tissue that forms the outer layer of the body and lines organs and cavities.",
+          "types": [
+            "Simple squamous",
+            "Simple cuboidal",
+            "Simple columnar",
+            "Stratified squamous",
+            "Transitional"
+          ],
+          "functions": [
+            "Protection",
+            "Absorption",
+            "Filtration",
+            "Secretion"
+          ],
+          "location": "Skin surface, organ linings, gland secretory units"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "source": "circulatory_system",
+        "target": "respiratory_system",
+        "type": "interacts_with",
+        "attributes": {
+          "description": "Blood picks up oxygen and releases carbon dioxide in the lungs"
+        }
+      },
+      {
+        "source": "circulatory_system",
+        "target": "nervous_system",
+        "type": "regulated_by",
+        "attributes": {
+          "description": "Heart rate and blood pressure are regulated by the autonomic nervous system"
+        }
+      },
+      {
+        "source": "muscular_system",
+        "target": "skeletal_system",
+        "type": "attaches_to",
+        "attributes": {
+          "description": "Muscles attach to bones via tendons to enable movement"
+        }
+      },
+      {
+        "source": "heart",
+        "target": "circulatory_system",
+        "type": "part_of",
+        "attributes": {
+          "description": "The heart is the central pump of the circulatory system"
+        }
+      },
+      {
+        "source": "lungs",
+        "target": "respiratory_system",
+        "type": "part_of",
+        "attributes": {
+          "description": "The lungs are the primary organs of the respiratory system"
+        }
+      },
+      {
+        "source": "brain",
+        "target": "nervous_system",
+        "type": "part_of",
+        "attributes": {
+          "description": "The brain is the central organ of the nervous system"
+        }
+      },
+      {
+        "source": "skull",
+        "target": "skeletal_system",
+        "type": "part_of",
+        "attributes": {
+          "description": "The skull is part of the axial skeleton"
+        }
+      },
+      {
+        "source": "liver",
+        "target": "digestive_system",
+        "type": "part_of",
+        "attributes": {
+          "description": "The liver produces bile for digestion and processes nutrients"
+        }
+      },
+      {
+        "source": "kidneys",
+        "target": "circulatory_system",
+        "type": "interacts_with",
+        "attributes": {
+          "description": "The kidneys filter blood to maintain homeostasis"
+        }
+      },
+      {
+        "source": "skull",
+        "target": "brain",
+        "type": "protects",
+        "attributes": {
+          "description": "The skull forms a protective case around the brain"
+        }
+      },
+      {
+        "source": "ribcage",
+        "target": "heart",
+        "type": "protects",
+        "attributes": {
+          "description": "The ribcage forms a protective structure around the heart"
+        }
+      },
+      {
+        "source": "ribcage",
+        "target": "lungs",
+        "type": "protects",
+        "attributes": {
+          "description": "The ribcage forms a protective structure around the lungs"
+        }
+      },
+      {
+        "source": "vertebral_column",
+        "target": "spinal_cord",
+        "type": "protects",
+        "attributes": {
+          "description": "The vertebral column forms a protective tunnel for the spinal cord"
+        }
+      },
+      {
+        "source": "heart",
+        "target": "aorta",
+        "type": "connects_to",
+        "attributes": {
+          "description": "The aorta emerges from the left ventricle of the heart"
+        }
+      },
+      {
+        "source": "heart",
+        "target": "vena_cava",
+        "type": "connects_to",
+        "attributes": {
+          "description": "The vena cava returns blood to the right atrium of the heart"
+        }
+      },
+      {
+        "source": "coronary_arteries",
+        "target": "heart",
+        "type": "supplies",
+        "attributes": {
+          "description": "The coronary arteries deliver oxygenated blood to heart muscle"
+        }
+      },
+      {
+        "source": "pulmonary_arteries",
+        "target": "lungs",
+        "type": "connects_to",
+        "attributes": {
+          "description": "The pulmonary arteries carry deoxygenated blood from the heart to the lungs"
+        }
+      },
+      {
+        "source": "brain",
+        "target": "spinal_cord",
+        "type": "connects_to",
+        "attributes": {
+          "description": "The brain connects to the spinal cord at the brainstem"
+        }
+      },
+      {
+        "source": "vagus_nerve",
+        "target": "heart",
+        "type": "innervates",
+        "attributes": {
+          "description": "The vagus nerve provides parasympathetic innervation to the heart"
+        }
+      },
+      {
+        "source": "vagus_nerve",
+        "target": "stomach",
+        "type": "innervates",
+        "attributes": {
+          "description": "The vagus nerve provides parasympathetic innervation to the stomach"
+        }
+      },
+      {
+        "source": "hypothalamus",
+        "target": "endocrine_system",
+        "type": "regulates",
+        "attributes": {
+          "description": "The hypothalamus produces hormones and controls the pituitary gland"
+        }
+      },
+      {
+        "source": "heart_muscle",
+        "target": "heart",
+        "type": "composes",
+        "attributes": {
+          "description": "The heart is composed primarily of cardiac muscle tissue"
+        }
+      },
+      {
+        "source": "diaphragm",
+        "target": "respiratory_system",
+        "type": "enables",
+        "attributes": {
+          "description": "The diaphragm is the primary muscle of breathing"
+        }
+      },
+      {
+        "source": "biceps_brachii",
+        "target": "femur",
+        "type": "moves",
+        "attributes": {
+          "description": "The biceps brachii flex the forearm at the elbow"
+        }
+      },
+      {
+        "source": "neuron",
+        "target": "nervous_system",
+        "type": "composes",
+        "attributes": {
+          "description": "Neurons are the primary functional cells of the nervous system"
+        }
+      },
+      {
+        "source": "red_blood_cell",
+        "target": "circulatory_system",
+        "type": "functions_in",
+        "attributes": {
+          "description": "Red blood cells transport oxygen throughout the circulatory system"
+        }
+      },
+      {
+        "source": "cardiomyocyte",
+        "target": "heart_muscle",
+        "type": "composes",
+        "attributes": {
+          "description": "Cardiomyocytes are the muscle cells that make up heart tissue"
+        }
+      },
+      {
+        "source": "epithelial_tissue",
+        "target": "lungs",
+        "type": "lines",
+        "attributes": {
+          "description": "Epithelial tissue lines the airways of the lungs"
+        }
+      }
+    ]
+  },
+  "csv": {
+    "entities.csv": "id,type,name,description,functions,volume,capacity,components,neurons,boneCount,muscleCount,types,length,majorGlands,weight,location,chambers,beatRate,count,parts,respirationRate,lobes,energyUse,filterRate,pH,regions,smallIntestineLength,largeIntestineLength,majorBones,vertebraeCount,ribPairs,strength,type,control,properties,function,diameter,sections,majorBranches,branches,uniqueProperty,number,origin,shape,lifespan,width\ncirculatory_system,system,Circulatory System,The system that circulates blood throughout the body; delivering oxygen and nutrients to cells and removing waste products.,Oxygen transport,Nutrient delivery,Waste removal,Hormone transport,Temperature regulation,Immune defense,5 liters of blood (average adult),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nrespiratory_system,system,Respiratory System,The system responsible for gas exchange; taking in oxygen and expelling carbon dioxide.,Gas exchange,pH regulation,Voice production,Olfaction support,,4-6 liters (average adult lung capacity),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nnervous_system,system,Nervous System,The complex network that coordinates body activities by transmitting signals between different body parts.,Sensory processing,Motor control,Cognition,Memory,Homeostasis regulation,,,Central nervous system,Peripheral nervous system,Autonomic nervous system,Approximately 86 billion neurons,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nskeletal_system,system,Skeletal System,The framework of bones and connective tissues that supports the body; protects organs; and enables movement.,Structural support,Organ protection,Movement facilitation,Blood cell production,Mineral storage,,,,,206,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nmuscular_system,system,Muscular System,The system of muscles that enables movement; maintains posture; and generates heat.,Movement,Posture maintenance,Joint stabilization,Heat production,,,,,,Over 600 named muscles,Skeletal muscle,Smooth muscle,Cardiac muscle,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\ndigestive_system,system,Digestive System,The system that breaks down food into nutrients for absorption and eliminates waste.,Food breakdown,Nutrient absorption,Waste elimination,,,,,,,,About 9 meters (30 feet) from mouth to anus,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nendocrine_system,system,Endocrine System,The collection of glands that produce hormones to regulate metabolism; growth; development; and other functions.,Hormone production,Metabolism regulation,Growth and development,Mood regulation,,,,,,,,,Pituitary,Thyroid,Parathyroid,Adrenal,Pancreas,Gonads,Pineal,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nimmune_system,system,Immune System,The complex network that defends the body against pathogens and other threats.,Pathogen defense,Wound healing,Foreign substance detection,Cancer surveillance,,,White blood cells,Antibodies,Lymphatic system,Spleen,Thymus,Bone marrow,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nheart,organ,Heart,A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.,,,,,,,,,,,250-350 grams,Mediastinum; left of midline,Right atrium,Right ventricle,Left atrium,Left ventricle,60-100 beats per minute (at rest),,,,,,,,,,,,,,,,,,,,,,,,,,,,\nlungs,organ,Lungs,The primary organs of respiration; where gas exchange occurs between the air and blood.,,,,,,,,,,,,Thoracic cavity,,,2,Bronchi,Bronchioles,Alveoli,Pleura,12-20 breaths per minute (at rest),,,,,,,,,,,,,,,,,,,,,,,,,\nbrain,organ,Brain,The central organ of the nervous system; responsible for processing sensory information and controlling bodily functions and behaviors.,,,,,,,,,,,1300-1400 grams (average adult),Cranial cavity,,,,,,Frontal,Parietal,Temporal,Occipital,20% of body's oxygen and calories,,,,,,,,,,,,,,,,,,,,,,,\nliver,organ,Liver,The largest internal organ; performing hundreds of functions including detoxification; protein synthesis; and digestion.,Detoxification,Bile production,Protein synthesis,Glycogen storage,,,,,,,,,,1.5 kg (average adult),Right upper quadrant of abdomen,,,,,,Right lobe,Left lobe,Caudate lobe,Quadrate lobe,,,,,,,,,,,,,,,,,,,,,,,,\nkidneys,organ,Kidneys,Bean-shaped organs that filter blood to produce urine; regulate electrolytes; and maintain acid-base balance.,,,,,,,,,,,120-170 grams each,Posterior abdominal wall; retroperitoneal,,,2,,,,,About 120-150 quarts of blood daily,,,,,,,,,,,,,,,,,,,,,,\nstomach,organ,Stomach,A muscular; hollow organ that holds food and begins the digestion of proteins.,,,1-2 liters,,,,,,,,,Left upper quadrant of abdomen,,,,,,,,,1.5-3.5 (highly acidic),Cardia,Fundus,Body,Pylorus,,,,,,,,,,,,,,,,,,,,\nintestines,organ,Intestines,The long; coiled tube where most digestion and nutrient absorption occurs.,,,,,,,,,,,,Abdominal cavity,,,,Small intestine,Large intestine,,,,,,,6-7 meters,1.5 meters,,,,,,,,,,,,,,,,,,\npancreas,organ,Pancreas,A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.,Digestive enzyme production,Hormone secretion,Blood glucose regulation,,,,,,,,,,70-100 grams,Retroperitoneal; behind stomach,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nspleen,organ,Spleen,An organ that filters blood and helps defend against pathogens as part of the immune system.,Blood filtration,Old red blood cell removal,Immune response support,Blood storage,,,,,,,,,,150 grams (average adult),Left upper quadrant of abdomen,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nskull,bone,Skull,The bony structure that forms the head; encases the brain; and supports facial structures.,Brain protection,Facial structure support,Sensory organ housing,,,,,22,,,,,,,,,,,,,,,,,,,Frontal bone,Parietal bones,Temporal bones,Occipital bone,Sphenoid bone,Ethmoid bone,,,,,,,,,,,,,,,,,\nvertebral_column,bone,Vertebral Column (Spine),The flexible column of vertebrae that protects the spinal cord and supports the head and body.,,,,,,,,,70-75 cm (adult),,,,,,,,,,,,,Cervical (7),Thoracic (12),Lumbar (5),Sacral (5 fused),Coccygeal (4 fused),,,,33,,,,,,,,,,,,,,,,\nribcage,bone,Ribcage,The bony cage formed by the sternum; ribs; and thoracic vertebrae that protects vital organs.,Heart and lung protection,Respiratory movement support,,,,,,,True ribs (1-7),False ribs (8-10),Floating ribs (11-12),,,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,\nfemur,bone,Femur,The thigh bone; the longest and strongest bone in the human body.,,,,,,,,,45-50 cm (adult),,,Thigh,,,2,,,,,,,,,,,,,Can support 30 times body weight,,,,,,,,,,,,,,\nheart_muscle,muscle,Cardiac Muscle,Specialized involuntary muscle tissue found only in the heart; allowing for coordinated contractions.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Cardiac,Involuntary,Striated,Self-excitable,Resistant to fatigue,Interconnected by intercalated discs,Blood pumping through rhythmic contractions,,,,,,,,,,\ndiaphragm,muscle,Diaphragm,A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.,,,,,,,,,,,,Between thoracic and abdominal cavities,,,,,,,,,,,,,,,,,Skeletal,Both voluntary and involuntary,,Primary muscle of respiration,,,,,,,,,,\nbiceps_brachii,muscle,Biceps Brachii,A large muscle located on the front of the upper arm; primarily responsible for forearm flexion and supination.,,,,,,,,,,,,Anterior compartment of the upper arm,,,,,,,,,,,,,,,,,Skeletal,Voluntary,,Forearm flexion and supination,,,,,,,,,,\nquadriceps,muscle,Quadriceps Femoris,A group of four muscles on the front of the thigh that extend the knee.,,,,Rectus femoris,Vastus lateralis,Vastus medialis,Vastus intermedius,,,,,,,,Anterior thigh,,,,,,,,,,,,,,,,,Skeletal,Voluntary,,Knee extension and hip flexion,,,,,,,,,,\naorta,blood_vessel,Aorta,The largest artery in the body; carrying oxygenated blood from the left ventricle of the heart to the body.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Artery,,,Distribution of oxygenated blood throughout the body,2.5-3.5 cm,Ascending aorta,Aortic arch,Descending thoracic aorta,Abdominal aorta,,,,,,,,\ncoronary_arteries,blood_vessel,Coronary Arteries,The arteries that supply blood to the heart muscle.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Artery,,,Blood supply to cardiac muscle,,,Left main coronary artery,Left anterior descending artery,Left circumflex artery,Right coronary artery,,,,,,,\npulmonary_arteries,blood_vessel,Pulmonary Arteries,The arteries that carry deoxygenated blood from the heart to the lungs.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Artery,,,Transport of deoxygenated blood to lungs for oxygenation,,,,Right pulmonary artery,Left pulmonary artery,One of the few arteries carrying deoxygenated blood,,,,,\nvena_cava,blood_vessel,Vena Cava,The largest veins in the body; returning deoxygenated blood to the right atrium of the heart.,,,,Superior vena cava,Inferior vena cava,,,,,,,,,,,,,,,,,,,,,,,,,Vein,,,Return of deoxygenated blood to the heart,2-3 cm,,,,,,,,,\nspinal_cord,nerve,Spinal Cord,The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.,,,,Grey matter,White matter,Central canal,,,,,45 cm (average adult),,,Within the vertebral canal,,,,,,,,,,,,,,,,,,,,Conduction of neural signals between brain and body; reflex center,,,,,,,,,,\nvagus_nerve,nerve,Vagus Nerve,The 10th cranial nerve; with the widest distribution in the body; controlling parasympathetic functions.,,,,,,,,,Extends from brainstem to abdomen,,,,,,,,,,,,,,,,,,,,Cranial nerve,,,Parasympathetic control of heart; lungs; digestive tract; sensory information from viscera,,,,,,CN X,,,,\nsciatic_nerve,nerve,Sciatic Nerve,The largest and longest nerve in the body; running from the lower back down through the leg.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Peripheral nerve,,,Motor and sensory innervation of lower limb,About 2 cm at its widest,,,,,,L4-S3 spinal nerves,,,\nhypothalamus,nerve_center,Hypothalamus,A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.,Temperature regulation,Hunger and thirst control,Sleep-wake cycles,Hormone production,Autonomic function regulation,,,,,,,,,,About 4 grams,Below thalamus; above brainstem,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nneuron,cell,Neuron,The basic functional unit of the nervous system; specialized for transmitting information.,,,,Cell body,Dendrites,Axon,Synaptic terminals,,,,Motor neurons,Sensory neurons,Interneurons,,,,,,,Approximately 86 billion in the human brain,,,,,,,,,,,,,,,,,Signal transmission and processing,,,,,,,,,,\nred_blood_cell,cell,Red Blood Cell (Erythrocyte),The most common type of blood cell; responsible for oxygen transport.,,,,,,,,,,,,,,,4.5-5.5 million per microliter of blood,,,,,,,,,,,,,,,,,Oxygen and carbon dioxide transport,7-8 micrometers,,,,No nucleus in mature form,,,Biconcave disc,120 days,\ncardiomyocyte,cell,Cardiomyocyte,Cardiac muscle cells that make up the heart muscle.,,,,,,,,,100 micrometers,,,,,,,,,,,,,,,,,,,,,,Striated,Contains many mitochondria,Connected by intercalated discs,Heart contraction,,,,,Can contract without neural stimulation,,,,,10-25 micrometers\nepithelial_tissue,tissue,Epithelial Tissue,The tissue that forms the outer layer of the body and lines organs and cavities.,Protection,Absorption,Filtration,Secretion,,,,,,,Simple squamous,Simple cuboidal,Simple columnar,Stratified squamous,Transitional,,,,Skin surface; organ linings; gland secretory units,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+    "relationships.csv": "source,target,type,description\ncirculatory_system,respiratory_system,interacts_with,Blood picks up oxygen and releases carbon dioxide in the lungs\ncirculatory_system,nervous_system,regulated_by,Heart rate and blood pressure are regulated by the autonomic nervous system\nmuscular_system,skeletal_system,attaches_to,Muscles attach to bones via tendons to enable movement\nheart,circulatory_system,part_of,The heart is the central pump of the circulatory system\nlungs,respiratory_system,part_of,The lungs are the primary organs of the respiratory system\nbrain,nervous_system,part_of,The brain is the central organ of the nervous system\nskull,skeletal_system,part_of,The skull is part of the axial skeleton\nliver,digestive_system,part_of,The liver produces bile for digestion and processes nutrients\nkidneys,circulatory_system,interacts_with,The kidneys filter blood to maintain homeostasis\nskull,brain,protects,The skull forms a protective case around the brain\nribcage,heart,protects,The ribcage forms a protective structure around the heart\nribcage,lungs,protects,The ribcage forms a protective structure around the lungs\nvertebral_column,spinal_cord,protects,The vertebral column forms a protective tunnel for the spinal cord\nheart,aorta,connects_to,The aorta emerges from the left ventricle of the heart\nheart,vena_cava,connects_to,The vena cava returns blood to the right atrium of the heart\ncoronary_arteries,heart,supplies,The coronary arteries deliver oxygenated blood to heart muscle\npulmonary_arteries,lungs,connects_to,The pulmonary arteries carry deoxygenated blood from the heart to the lungs\nbrain,spinal_cord,connects_to,The brain connects to the spinal cord at the brainstem\nvagus_nerve,heart,innervates,The vagus nerve provides parasympathetic innervation to the heart\nvagus_nerve,stomach,innervates,The vagus nerve provides parasympathetic innervation to the stomach\nhypothalamus,endocrine_system,regulates,The hypothalamus produces hormones and controls the pituitary gland\nheart_muscle,heart,composes,The heart is composed primarily of cardiac muscle tissue\ndiaphragm,respiratory_system,enables,The diaphragm is the primary muscle of breathing\nbiceps_brachii,femur,moves,The biceps brachii flex the forearm at the elbow\nneuron,nervous_system,composes,Neurons are the primary functional cells of the nervous system\nred_blood_cell,circulatory_system,functions_in,Red blood cells transport oxygen throughout the circulatory system\ncardiomyocyte,heart_muscle,composes,Cardiomyocytes are the muscle cells that make up heart tissue\nepithelial_tissue,lungs,lines,Epithelial tissue lines the airways of the lungs",
+    "entities": "id,type,name,description,functions,volume,capacity,components,neurons,boneCount,muscleCount,types,length,majorGlands,weight,location,chambers,beatRate,count,parts,respirationRate,lobes,energyUse,filterRate,pH,regions,smallIntestineLength,largeIntestineLength,majorBones,vertebraeCount,ribPairs,strength,type,control,properties,function,diameter,sections,majorBranches,branches,uniqueProperty,number,origin,shape,lifespan,width\ncirculatory_system,system,Circulatory System,The system that circulates blood throughout the body; delivering oxygen and nutrients to cells and removing waste products.,Oxygen transport,Nutrient delivery,Waste removal,Hormone transport,Temperature regulation,Immune defense,5 liters of blood (average adult),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nrespiratory_system,system,Respiratory System,The system responsible for gas exchange; taking in oxygen and expelling carbon dioxide.,Gas exchange,pH regulation,Voice production,Olfaction support,,4-6 liters (average adult lung capacity),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nnervous_system,system,Nervous System,The complex network that coordinates body activities by transmitting signals between different body parts.,Sensory processing,Motor control,Cognition,Memory,Homeostasis regulation,,,Central nervous system,Peripheral nervous system,Autonomic nervous system,Approximately 86 billion neurons,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nskeletal_system,system,Skeletal System,The framework of bones and connective tissues that supports the body; protects organs; and enables movement.,Structural support,Organ protection,Movement facilitation,Blood cell production,Mineral storage,,,,,206,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nmuscular_system,system,Muscular System,The system of muscles that enables movement; maintains posture; and generates heat.,Movement,Posture maintenance,Joint stabilization,Heat production,,,,,,Over 600 named muscles,Skeletal muscle,Smooth muscle,Cardiac muscle,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\ndigestive_system,system,Digestive System,The system that breaks down food into nutrients for absorption and eliminates waste.,Food breakdown,Nutrient absorption,Waste elimination,,,,,,,,About 9 meters (30 feet) from mouth to anus,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nendocrine_system,system,Endocrine System,The collection of glands that produce hormones to regulate metabolism; growth; development; and other functions.,Hormone production,Metabolism regulation,Growth and development,Mood regulation,,,,,,,,,Pituitary,Thyroid,Parathyroid,Adrenal,Pancreas,Gonads,Pineal,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nimmune_system,system,Immune System,The complex network that defends the body against pathogens and other threats.,Pathogen defense,Wound healing,Foreign substance detection,Cancer surveillance,,,White blood cells,Antibodies,Lymphatic system,Spleen,Thymus,Bone marrow,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nheart,organ,Heart,A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.,,,,,,,,,,,250-350 grams,Mediastinum; left of midline,Right atrium,Right ventricle,Left atrium,Left ventricle,60-100 beats per minute (at rest),,,,,,,,,,,,,,,,,,,,,,,,,,,,\nlungs,organ,Lungs,The primary organs of respiration; where gas exchange occurs between the air and blood.,,,,,,,,,,,,Thoracic cavity,,,2,Bronchi,Bronchioles,Alveoli,Pleura,12-20 breaths per minute (at rest),,,,,,,,,,,,,,,,,,,,,,,,,\nbrain,organ,Brain,The central organ of the nervous system; responsible for processing sensory information and controlling bodily functions and behaviors.,,,,,,,,,,,1300-1400 grams (average adult),Cranial cavity,,,,,,Frontal,Parietal,Temporal,Occipital,20% of body's oxygen and calories,,,,,,,,,,,,,,,,,,,,,,,\nliver,organ,Liver,The largest internal organ; performing hundreds of functions including detoxification; protein synthesis; and digestion.,Detoxification,Bile production,Protein synthesis,Glycogen storage,,,,,,,,,,1.5 kg (average adult),Right upper quadrant of abdomen,,,,,,Right lobe,Left lobe,Caudate lobe,Quadrate lobe,,,,,,,,,,,,,,,,,,,,,,,,\nkidneys,organ,Kidneys,Bean-shaped organs that filter blood to produce urine; regulate electrolytes; and maintain acid-base balance.,,,,,,,,,,,120-170 grams each,Posterior abdominal wall; retroperitoneal,,,2,,,,,About 120-150 quarts of blood daily,,,,,,,,,,,,,,,,,,,,,,\nstomach,organ,Stomach,A muscular; hollow organ that holds food and begins the digestion of proteins.,,,1-2 liters,,,,,,,,,Left upper quadrant of abdomen,,,,,,,,,1.5-3.5 (highly acidic),Cardia,Fundus,Body,Pylorus,,,,,,,,,,,,,,,,,,,,\nintestines,organ,Intestines,The long; coiled tube where most digestion and nutrient absorption occurs.,,,,,,,,,,,,Abdominal cavity,,,,Small intestine,Large intestine,,,,,,,6-7 meters,1.5 meters,,,,,,,,,,,,,,,,,,\npancreas,organ,Pancreas,A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.,Digestive enzyme production,Hormone secretion,Blood glucose regulation,,,,,,,,,,70-100 grams,Retroperitoneal; behind stomach,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nspleen,organ,Spleen,An organ that filters blood and helps defend against pathogens as part of the immune system.,Blood filtration,Old red blood cell removal,Immune response support,Blood storage,,,,,,,,,,150 grams (average adult),Left upper quadrant of abdomen,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nskull,bone,Skull,The bony structure that forms the head; encases the brain; and supports facial structures.,Brain protection,Facial structure support,Sensory organ housing,,,,,22,,,,,,,,,,,,,,,,,,,Frontal bone,Parietal bones,Temporal bones,Occipital bone,Sphenoid bone,Ethmoid bone,,,,,,,,,,,,,,,,,\nvertebral_column,bone,Vertebral Column (Spine),The flexible column of vertebrae that protects the spinal cord and supports the head and body.,,,,,,,,,70-75 cm (adult),,,,,,,,,,,,,Cervical (7),Thoracic (12),Lumbar (5),Sacral (5 fused),Coccygeal (4 fused),,,,33,,,,,,,,,,,,,,,,\nribcage,bone,Ribcage,The bony cage formed by the sternum; ribs; and thoracic vertebrae that protects vital organs.,Heart and lung protection,Respiratory movement support,,,,,,,True ribs (1-7),False ribs (8-10),Floating ribs (11-12),,,,,,,,,,,,,,,,,,,12,,,,,,,,,,,,,,,\nfemur,bone,Femur,The thigh bone; the longest and strongest bone in the human body.,,,,,,,,,45-50 cm (adult),,,Thigh,,,2,,,,,,,,,,,,,Can support 30 times body weight,,,,,,,,,,,,,,\nheart_muscle,muscle,Cardiac Muscle,Specialized involuntary muscle tissue found only in the heart; allowing for coordinated contractions.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Cardiac,Involuntary,Striated,Self-excitable,Resistant to fatigue,Interconnected by intercalated discs,Blood pumping through rhythmic contractions,,,,,,,,,,\ndiaphragm,muscle,Diaphragm,A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.,,,,,,,,,,,,Between thoracic and abdominal cavities,,,,,,,,,,,,,,,,,Skeletal,Both voluntary and involuntary,,Primary muscle of respiration,,,,,,,,,,\nbiceps_brachii,muscle,Biceps Brachii,A large muscle located on the front of the upper arm; primarily responsible for forearm flexion and supination.,,,,,,,,,,,,Anterior compartment of the upper arm,,,,,,,,,,,,,,,,,Skeletal,Voluntary,,Forearm flexion and supination,,,,,,,,,,\nquadriceps,muscle,Quadriceps Femoris,A group of four muscles on the front of the thigh that extend the knee.,,,,Rectus femoris,Vastus lateralis,Vastus medialis,Vastus intermedius,,,,,,,,Anterior thigh,,,,,,,,,,,,,,,,,Skeletal,Voluntary,,Knee extension and hip flexion,,,,,,,,,,\naorta,blood_vessel,Aorta,The largest artery in the body; carrying oxygenated blood from the left ventricle of the heart to the body.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Artery,,,Distribution of oxygenated blood throughout the body,2.5-3.5 cm,Ascending aorta,Aortic arch,Descending thoracic aorta,Abdominal aorta,,,,,,,,\ncoronary_arteries,blood_vessel,Coronary Arteries,The arteries that supply blood to the heart muscle.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Artery,,,Blood supply to cardiac muscle,,,Left main coronary artery,Left anterior descending artery,Left circumflex artery,Right coronary artery,,,,,,,\npulmonary_arteries,blood_vessel,Pulmonary Arteries,The arteries that carry deoxygenated blood from the heart to the lungs.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Artery,,,Transport of deoxygenated blood to lungs for oxygenation,,,,Right pulmonary artery,Left pulmonary artery,One of the few arteries carrying deoxygenated blood,,,,,\nvena_cava,blood_vessel,Vena Cava,The largest veins in the body; returning deoxygenated blood to the right atrium of the heart.,,,,Superior vena cava,Inferior vena cava,,,,,,,,,,,,,,,,,,,,,,,,,Vein,,,Return of deoxygenated blood to the heart,2-3 cm,,,,,,,,,\nspinal_cord,nerve,Spinal Cord,The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.,,,,Grey matter,White matter,Central canal,,,,,45 cm (average adult),,,Within the vertebral canal,,,,,,,,,,,,,,,,,,,,Conduction of neural signals between brain and body; reflex center,,,,,,,,,,\nvagus_nerve,nerve,Vagus Nerve,The 10th cranial nerve; with the widest distribution in the body; controlling parasympathetic functions.,,,,,,,,,Extends from brainstem to abdomen,,,,,,,,,,,,,,,,,,,,Cranial nerve,,,Parasympathetic control of heart; lungs; digestive tract; sensory information from viscera,,,,,,CN X,,,,\nsciatic_nerve,nerve,Sciatic Nerve,The largest and longest nerve in the body; running from the lower back down through the leg.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Peripheral nerve,,,Motor and sensory innervation of lower limb,About 2 cm at its widest,,,,,,L4-S3 spinal nerves,,,\nhypothalamus,nerve_center,Hypothalamus,A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.,Temperature regulation,Hunger and thirst control,Sleep-wake cycles,Hormone production,Autonomic function regulation,,,,,,,,,,About 4 grams,Below thalamus; above brainstem,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\nneuron,cell,Neuron,The basic functional unit of the nervous system; specialized for transmitting information.,,,,Cell body,Dendrites,Axon,Synaptic terminals,,,,Motor neurons,Sensory neurons,Interneurons,,,,,,,Approximately 86 billion in the human brain,,,,,,,,,,,,,,,,,Signal transmission and processing,,,,,,,,,,\nred_blood_cell,cell,Red Blood Cell (Erythrocyte),The most common type of blood cell; responsible for oxygen transport.,,,,,,,,,,,,,,,4.5-5.5 million per microliter of blood,,,,,,,,,,,,,,,,,Oxygen and carbon dioxide transport,7-8 micrometers,,,,No nucleus in mature form,,,Biconcave disc,120 days,\ncardiomyocyte,cell,Cardiomyocyte,Cardiac muscle cells that make up the heart muscle.,,,,,,,,,100 micrometers,,,,,,,,,,,,,,,,,,,,,,Striated,Contains many mitochondria,Connected by intercalated discs,Heart contraction,,,,,Can contract without neural stimulation,,,,,10-25 micrometers\nepithelial_tissue,tissue,Epithelial Tissue,The tissue that forms the outer layer of the body and lines organs and cavities.,Protection,Absorption,Filtration,Secretion,,,,,,,Simple squamous,Simple cuboidal,Simple columnar,Stratified squamous,Transitional,,,,Skin surface; organ linings; gland secretory units,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+    "relationships": "source,target,type,description\ncirculatory_system,respiratory_system,interacts_with,Blood picks up oxygen and releases carbon dioxide in the lungs\ncirculatory_system,nervous_system,regulated_by,Heart rate and blood pressure are regulated by the autonomic nervous system\nmuscular_system,skeletal_system,attaches_to,Muscles attach to bones via tendons to enable movement\nheart,circulatory_system,part_of,The heart is the central pump of the circulatory system\nlungs,respiratory_system,part_of,The lungs are the primary organs of the respiratory system\nbrain,nervous_system,part_of,The brain is the central organ of the nervous system\nskull,skeletal_system,part_of,The skull is part of the axial skeleton\nliver,digestive_system,part_of,The liver produces bile for digestion and processes nutrients\nkidneys,circulatory_system,interacts_with,The kidneys filter blood to maintain homeostasis\nskull,brain,protects,The skull forms a protective case around the brain\nribcage,heart,protects,The ribcage forms a protective structure around the heart\nribcage,lungs,protects,The ribcage forms a protective structure around the lungs\nvertebral_column,spinal_cord,protects,The vertebral column forms a protective tunnel for the spinal cord\nheart,aorta,connects_to,The aorta emerges from the left ventricle of the heart\nheart,vena_cava,connects_to,The vena cava returns blood to the right atrium of the heart\ncoronary_arteries,heart,supplies,The coronary arteries deliver oxygenated blood to heart muscle\npulmonary_arteries,lungs,connects_to,The pulmonary arteries carry deoxygenated blood from the heart to the lungs\nbrain,spinal_cord,connects_to,The brain connects to the spinal cord at the brainstem\nvagus_nerve,heart,innervates,The vagus nerve provides parasympathetic innervation to the heart\nvagus_nerve,stomach,innervates,The vagus nerve provides parasympathetic innervation to the stomach\nhypothalamus,endocrine_system,regulates,The hypothalamus produces hormones and controls the pituitary gland\nheart_muscle,heart,composes,The heart is composed primarily of cardiac muscle tissue\ndiaphragm,respiratory_system,enables,The diaphragm is the primary muscle of breathing\nbiceps_brachii,femur,moves,The biceps brachii flex the forearm at the elbow\nneuron,nervous_system,composes,Neurons are the primary functional cells of the nervous system\nred_blood_cell,circulatory_system,functions_in,Red blood cells transport oxygen throughout the circulatory system\ncardiomyocyte,heart_muscle,composes,Cardiomyocytes are the muscle cells that make up heart tissue\nepithelial_tissue,lungs,lines,Epithelial tissue lines the airways of the lungs"
+  },
+  "graphml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\n         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n  <graph id=\"G\" edgedefault=\"directed\">\n    <!-- Node attribute keys -->\n    <key id=\"type\" for=\"node\" attr.name=\"type\" attr.type=\"string\"/>\n    <key id=\"name\" for=\"node\" attr.name=\"name\" attr.type=\"string\"/>\n    <key id=\"description\" for=\"node\" attr.name=\"description\" attr.type=\"string\"/>\n    <key id=\"functions\" for=\"node\" attr.name=\"functions\" attr.type=\"string\"/>\n    <key id=\"volume\" for=\"node\" attr.name=\"volume\" attr.type=\"string\"/>\n    <key id=\"capacity\" for=\"node\" attr.name=\"capacity\" attr.type=\"string\"/>\n    <key id=\"components\" for=\"node\" attr.name=\"components\" attr.type=\"string\"/>\n    <key id=\"neurons\" for=\"node\" attr.name=\"neurons\" attr.type=\"string\"/>\n    <key id=\"boneCount\" for=\"node\" attr.name=\"boneCount\" attr.type=\"string\"/>\n    <key id=\"muscleCount\" for=\"node\" attr.name=\"muscleCount\" attr.type=\"string\"/>\n    <key id=\"types\" for=\"node\" attr.name=\"types\" attr.type=\"string\"/>\n    <key id=\"length\" for=\"node\" attr.name=\"length\" attr.type=\"string\"/>\n    <key id=\"majorGlands\" for=\"node\" attr.name=\"majorGlands\" attr.type=\"string\"/>\n    <key id=\"weight\" for=\"node\" attr.name=\"weight\" attr.type=\"string\"/>\n    <key id=\"location\" for=\"node\" attr.name=\"location\" attr.type=\"string\"/>\n    <key id=\"chambers\" for=\"node\" attr.name=\"chambers\" attr.type=\"string\"/>\n    <key id=\"beatRate\" for=\"node\" attr.name=\"beatRate\" attr.type=\"string\"/>\n    <key id=\"count\" for=\"node\" attr.name=\"count\" attr.type=\"string\"/>\n    <key id=\"parts\" for=\"node\" attr.name=\"parts\" attr.type=\"string\"/>\n    <key id=\"respirationRate\" for=\"node\" attr.name=\"respirationRate\" attr.type=\"string\"/>\n    <key id=\"lobes\" for=\"node\" attr.name=\"lobes\" attr.type=\"string\"/>\n    <key id=\"energyUse\" for=\"node\" attr.name=\"energyUse\" attr.type=\"string\"/>\n    <key id=\"filterRate\" for=\"node\" attr.name=\"filterRate\" attr.type=\"string\"/>\n    <key id=\"pH\" for=\"node\" attr.name=\"pH\" attr.type=\"string\"/>\n    <key id=\"regions\" for=\"node\" attr.name=\"regions\" attr.type=\"string\"/>\n    <key id=\"smallIntestineLength\" for=\"node\" attr.name=\"smallIntestineLength\" attr.type=\"string\"/>\n    <key id=\"largeIntestineLength\" for=\"node\" attr.name=\"largeIntestineLength\" attr.type=\"string\"/>\n    <key id=\"majorBones\" for=\"node\" attr.name=\"majorBones\" attr.type=\"string\"/>\n    <key id=\"vertebraeCount\" for=\"node\" attr.name=\"vertebraeCount\" attr.type=\"string\"/>\n    <key id=\"ribPairs\" for=\"node\" attr.name=\"ribPairs\" attr.type=\"string\"/>\n    <key id=\"strength\" for=\"node\" attr.name=\"strength\" attr.type=\"string\"/>\n    <key id=\"control\" for=\"node\" attr.name=\"control\" attr.type=\"string\"/>\n    <key id=\"properties\" for=\"node\" attr.name=\"properties\" attr.type=\"string\"/>\n    <key id=\"function\" for=\"node\" attr.name=\"function\" attr.type=\"string\"/>\n    <key id=\"diameter\" for=\"node\" attr.name=\"diameter\" attr.type=\"string\"/>\n    <key id=\"sections\" for=\"node\" attr.name=\"sections\" attr.type=\"string\"/>\n    <key id=\"majorBranches\" for=\"node\" attr.name=\"majorBranches\" attr.type=\"string\"/>\n    <key id=\"branches\" for=\"node\" attr.name=\"branches\" attr.type=\"string\"/>\n    <key id=\"uniqueProperty\" for=\"node\" attr.name=\"uniqueProperty\" attr.type=\"string\"/>\n    <key id=\"number\" for=\"node\" attr.name=\"number\" attr.type=\"string\"/>\n    <key id=\"origin\" for=\"node\" attr.name=\"origin\" attr.type=\"string\"/>\n    <key id=\"shape\" for=\"node\" attr.name=\"shape\" attr.type=\"string\"/>\n    <key id=\"lifespan\" for=\"node\" attr.name=\"lifespan\" attr.type=\"string\"/>\n    <key id=\"width\" for=\"node\" attr.name=\"width\" attr.type=\"string\"/>\n    <!-- Edge attribute keys -->\n    <key id=\"relationship_type\" for=\"edge\" attr.name=\"type\" attr.type=\"string\"/>\n    <node id=\"circulatory_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Circulatory System</data>\n      <data key=\"description\">The system that circulates blood throughout the body, delivering oxygen and nutrients to cells and removing waste products.</data>\n      <data key=\"functions\">Oxygen transport,Nutrient delivery,Waste removal,Hormone transport,Temperature regulation,Immune defense</data>\n      <data key=\"volume\">5 liters of blood (average adult)</data>\n    </node>\n    <node id=\"respiratory_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Respiratory System</data>\n      <data key=\"description\">The system responsible for gas exchange, taking in oxygen and expelling carbon dioxide.</data>\n      <data key=\"functions\">Gas exchange,pH regulation,Voice production,Olfaction support</data>\n      <data key=\"capacity\">4-6 liters (average adult lung capacity)</data>\n    </node>\n    <node id=\"nervous_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Nervous System</data>\n      <data key=\"description\">The complex network that coordinates body activities by transmitting signals between different body parts.</data>\n      <data key=\"functions\">Sensory processing,Motor control,Cognition,Memory,Homeostasis regulation</data>\n      <data key=\"components\">Central nervous system,Peripheral nervous system,Autonomic nervous system</data>\n      <data key=\"neurons\">Approximately 86 billion neurons</data>\n    </node>\n    <node id=\"skeletal_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Skeletal System</data>\n      <data key=\"description\">The framework of bones and connective tissues that supports the body, protects organs, and enables movement.</data>\n      <data key=\"functions\">Structural support,Organ protection,Movement facilitation,Blood cell production,Mineral storage</data>\n      <data key=\"boneCount\">206</data>\n    </node>\n    <node id=\"muscular_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Muscular System</data>\n      <data key=\"description\">The system of muscles that enables movement, maintains posture, and generates heat.</data>\n      <data key=\"functions\">Movement,Posture maintenance,Joint stabilization,Heat production</data>\n      <data key=\"muscleCount\">Over 600 named muscles</data>\n      <data key=\"types\">Skeletal muscle,Smooth muscle,Cardiac muscle</data>\n    </node>\n    <node id=\"digestive_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Digestive System</data>\n      <data key=\"description\">The system that breaks down food into nutrients for absorption and eliminates waste.</data>\n      <data key=\"functions\">Food breakdown,Nutrient absorption,Waste elimination</data>\n      <data key=\"length\">About 9 meters (30 feet) from mouth to anus</data>\n    </node>\n    <node id=\"endocrine_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Endocrine System</data>\n      <data key=\"description\">The collection of glands that produce hormones to regulate metabolism, growth, development, and other functions.</data>\n      <data key=\"functions\">Hormone production,Metabolism regulation,Growth and development,Mood regulation</data>\n      <data key=\"majorGlands\">Pituitary,Thyroid,Parathyroid,Adrenal,Pancreas,Gonads,Pineal</data>\n    </node>\n    <node id=\"immune_system\">\n      <data key=\"type\">system</data>\n      <data key=\"name\">Immune System</data>\n      <data key=\"description\">The complex network that defends the body against pathogens and other threats.</data>\n      <data key=\"functions\">Pathogen defense,Wound healing,Foreign substance detection,Cancer surveillance</data>\n      <data key=\"components\">White blood cells,Antibodies,Lymphatic system,Spleen,Thymus,Bone marrow</data>\n    </node>\n    <node id=\"heart\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Heart</data>\n      <data key=\"description\">A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.</data>\n      <data key=\"weight\">250-350 grams</data>\n      <data key=\"location\">Mediastinum, left of midline</data>\n      <data key=\"chambers\">Right atrium,Right ventricle,Left atrium,Left ventricle</data>\n      <data key=\"beatRate\">60-100 beats per minute (at rest)</data>\n    </node>\n    <node id=\"lungs\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Lungs</data>\n      <data key=\"description\">The primary organs of respiration, where gas exchange occurs between the air and blood.</data>\n      <data key=\"count\">2</data>\n      <data key=\"location\">Thoracic cavity</data>\n      <data key=\"parts\">Bronchi,Bronchioles,Alveoli,Pleura</data>\n      <data key=\"respirationRate\">12-20 breaths per minute (at rest)</data>\n    </node>\n    <node id=\"brain\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Brain</data>\n      <data key=\"description\">The central organ of the nervous system, responsible for processing sensory information and controlling bodily functions and behaviors.</data>\n      <data key=\"weight\">1300-1400 grams (average adult)</data>\n      <data key=\"location\">Cranial cavity</data>\n      <data key=\"lobes\">Frontal,Parietal,Temporal,Occipital</data>\n      <data key=\"energyUse\">20% of body&apos;s oxygen and calories</data>\n    </node>\n    <node id=\"liver\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Liver</data>\n      <data key=\"description\">The largest internal organ, performing hundreds of functions including detoxification, protein synthesis, and digestion.</data>\n      <data key=\"weight\">1.5 kg (average adult)</data>\n      <data key=\"location\">Right upper quadrant of abdomen</data>\n      <data key=\"lobes\">Right lobe,Left lobe,Caudate lobe,Quadrate lobe</data>\n      <data key=\"functions\">Detoxification,Bile production,Protein synthesis,Glycogen storage</data>\n    </node>\n    <node id=\"kidneys\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Kidneys</data>\n      <data key=\"description\">Bean-shaped organs that filter blood to produce urine, regulate electrolytes, and maintain acid-base balance.</data>\n      <data key=\"count\">2</data>\n      <data key=\"location\">Posterior abdominal wall, retroperitoneal</data>\n      <data key=\"weight\">120-170 grams each</data>\n      <data key=\"filterRate\">About 120-150 quarts of blood daily</data>\n    </node>\n    <node id=\"stomach\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Stomach</data>\n      <data key=\"description\">A muscular, hollow organ that holds food and begins the digestion of proteins.</data>\n      <data key=\"location\">Left upper quadrant of abdomen</data>\n      <data key=\"capacity\">1-2 liters</data>\n      <data key=\"pH\">1.5-3.5 (highly acidic)</data>\n      <data key=\"regions\">Cardia,Fundus,Body,Pylorus</data>\n    </node>\n    <node id=\"intestines\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Intestines</data>\n      <data key=\"description\">The long, coiled tube where most digestion and nutrient absorption occurs.</data>\n      <data key=\"parts\">Small intestine,Large intestine</data>\n      <data key=\"smallIntestineLength\">6-7 meters</data>\n      <data key=\"largeIntestineLength\">1.5 meters</data>\n      <data key=\"location\">Abdominal cavity</data>\n    </node>\n    <node id=\"pancreas\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Pancreas</data>\n      <data key=\"description\">A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.</data>\n      <data key=\"location\">Retroperitoneal, behind stomach</data>\n      <data key=\"weight\">70-100 grams</data>\n      <data key=\"functions\">Digestive enzyme production,Hormone secretion,Blood glucose regulation</data>\n    </node>\n    <node id=\"spleen\">\n      <data key=\"type\">organ</data>\n      <data key=\"name\">Spleen</data>\n      <data key=\"description\">An organ that filters blood and helps defend against pathogens as part of the immune system.</data>\n      <data key=\"location\">Left upper quadrant of abdomen</data>\n      <data key=\"weight\">150 grams (average adult)</data>\n      <data key=\"functions\">Blood filtration,Old red blood cell removal,Immune response support,Blood storage</data>\n    </node>\n    <node id=\"skull\">\n      <data key=\"type\">bone</data>\n      <data key=\"name\">Skull</data>\n      <data key=\"description\">The bony structure that forms the head, encases the brain, and supports facial structures.</data>\n      <data key=\"boneCount\">22</data>\n      <data key=\"majorBones\">Frontal bone,Parietal bones,Temporal bones,Occipital bone,Sphenoid bone,Ethmoid bone</data>\n      <data key=\"functions\">Brain protection,Facial structure support,Sensory organ housing</data>\n    </node>\n    <node id=\"vertebral_column\">\n      <data key=\"type\">bone</data>\n      <data key=\"name\">Vertebral Column (Spine)</data>\n      <data key=\"description\">The flexible column of vertebrae that protects the spinal cord and supports the head and body.</data>\n      <data key=\"vertebraeCount\">33</data>\n      <data key=\"regions\">Cervical (7),Thoracic (12),Lumbar (5),Sacral (5 fused),Coccygeal (4 fused)</data>\n      <data key=\"length\">70-75 cm (adult)</data>\n    </node>\n    <node id=\"ribcage\">\n      <data key=\"type\">bone</data>\n      <data key=\"name\">Ribcage</data>\n      <data key=\"description\">The bony cage formed by the sternum, ribs, and thoracic vertebrae that protects vital organs.</data>\n      <data key=\"ribPairs\">12</data>\n      <data key=\"types\">True ribs (1-7),False ribs (8-10),Floating ribs (11-12)</data>\n      <data key=\"functions\">Heart and lung protection,Respiratory movement support</data>\n    </node>\n    <node id=\"femur\">\n      <data key=\"type\">bone</data>\n      <data key=\"name\">Femur</data>\n      <data key=\"description\">The thigh bone, the longest and strongest bone in the human body.</data>\n      <data key=\"count\">2</data>\n      <data key=\"location\">Thigh</data>\n      <data key=\"length\">45-50 cm (adult)</data>\n      <data key=\"strength\">Can support 30 times body weight</data>\n    </node>\n    <node id=\"heart_muscle\">\n      <data key=\"type\">muscle</data>\n      <data key=\"name\">Cardiac Muscle</data>\n      <data key=\"description\">Specialized involuntary muscle tissue found only in the heart, allowing for coordinated contractions.</data>\n      <data key=\"control\">Involuntary</data>\n      <data key=\"properties\">Striated,Self-excitable,Resistant to fatigue,Interconnected by intercalated discs</data>\n      <data key=\"function\">Blood pumping through rhythmic contractions</data>\n    </node>\n    <node id=\"diaphragm\">\n      <data key=\"type\">muscle</data>\n      <data key=\"name\">Diaphragm</data>\n      <data key=\"description\">A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.</data>\n      <data key=\"control\">Both voluntary and involuntary</data>\n      <data key=\"location\">Between thoracic and abdominal cavities</data>\n      <data key=\"function\">Primary muscle of respiration</data>\n    </node>\n    <node id=\"biceps_brachii\">\n      <data key=\"type\">muscle</data>\n      <data key=\"name\">Biceps Brachii</data>\n      <data key=\"description\">A large muscle located on the front of the upper arm, primarily responsible for forearm flexion and supination.</data>\n      <data key=\"control\">Voluntary</data>\n      <data key=\"location\">Anterior compartment of the upper arm</data>\n      <data key=\"function\">Forearm flexion and supination</data>\n    </node>\n    <node id=\"quadriceps\">\n      <data key=\"type\">muscle</data>\n      <data key=\"name\">Quadriceps Femoris</data>\n      <data key=\"description\">A group of four muscles on the front of the thigh that extend the knee.</data>\n      <data key=\"control\">Voluntary</data>\n      <data key=\"location\">Anterior thigh</data>\n      <data key=\"components\">Rectus femoris,Vastus lateralis,Vastus medialis,Vastus intermedius</data>\n      <data key=\"function\">Knee extension and hip flexion</data>\n    </node>\n    <node id=\"aorta\">\n      <data key=\"type\">blood_vessel</data>\n      <data key=\"name\">Aorta</data>\n      <data key=\"description\">The largest artery in the body, carrying oxygenated blood from the left ventricle of the heart to the body.</data>\n      <data key=\"diameter\">2.5-3.5 cm</data>\n      <data key=\"sections\">Ascending aorta,Aortic arch,Descending thoracic aorta,Abdominal aorta</data>\n      <data key=\"function\">Distribution of oxygenated blood throughout the body</data>\n    </node>\n    <node id=\"coronary_arteries\">\n      <data key=\"type\">blood_vessel</data>\n      <data key=\"name\">Coronary Arteries</data>\n      <data key=\"description\">The arteries that supply blood to the heart muscle.</data>\n      <data key=\"majorBranches\">Left main coronary artery,Left anterior descending artery,Left circumflex artery,Right coronary artery</data>\n      <data key=\"function\">Blood supply to cardiac muscle</data>\n    </node>\n    <node id=\"pulmonary_arteries\">\n      <data key=\"type\">blood_vessel</data>\n      <data key=\"name\">Pulmonary Arteries</data>\n      <data key=\"description\">The arteries that carry deoxygenated blood from the heart to the lungs.</data>\n      <data key=\"branches\">Right pulmonary artery,Left pulmonary artery</data>\n      <data key=\"uniqueProperty\">One of the few arteries carrying deoxygenated blood</data>\n      <data key=\"function\">Transport of deoxygenated blood to lungs for oxygenation</data>\n    </node>\n    <node id=\"vena_cava\">\n      <data key=\"type\">blood_vessel</data>\n      <data key=\"name\">Vena Cava</data>\n      <data key=\"description\">The largest veins in the body, returning deoxygenated blood to the right atrium of the heart.</data>\n      <data key=\"components\">Superior vena cava,Inferior vena cava</data>\n      <data key=\"diameter\">2-3 cm</data>\n      <data key=\"function\">Return of deoxygenated blood to the heart</data>\n    </node>\n    <node id=\"spinal_cord\">\n      <data key=\"type\">nerve</data>\n      <data key=\"name\">Spinal Cord</data>\n      <data key=\"description\">The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.</data>\n      <data key=\"length\">45 cm (average adult)</data>\n      <data key=\"location\">Within the vertebral canal</data>\n      <data key=\"function\">Conduction of neural signals between brain and body, reflex center</data>\n      <data key=\"components\">Grey matter,White matter,Central canal</data>\n    </node>\n    <node id=\"vagus_nerve\">\n      <data key=\"type\">nerve</data>\n      <data key=\"name\">Vagus Nerve</data>\n      <data key=\"description\">The 10th cranial nerve, with the widest distribution in the body, controlling parasympathetic functions.</data>\n      <data key=\"number\">CN X</data>\n      <data key=\"function\">Parasympathetic control of heart, lungs, digestive tract; sensory information from viscera</data>\n      <data key=\"length\">Extends from brainstem to abdomen</data>\n    </node>\n    <node id=\"sciatic_nerve\">\n      <data key=\"type\">nerve</data>\n      <data key=\"name\">Sciatic Nerve</data>\n      <data key=\"description\">The largest and longest nerve in the body, running from the lower back down through the leg.</data>\n      <data key=\"origin\">L4-S3 spinal nerves</data>\n      <data key=\"function\">Motor and sensory innervation of lower limb</data>\n      <data key=\"diameter\">About 2 cm at its widest</data>\n    </node>\n    <node id=\"hypothalamus\">\n      <data key=\"type\">nerve_center</data>\n      <data key=\"name\">Hypothalamus</data>\n      <data key=\"description\">A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.</data>\n      <data key=\"location\">Below thalamus, above brainstem</data>\n      <data key=\"weight\">About 4 grams</data>\n      <data key=\"functions\">Temperature regulation,Hunger and thirst control,Sleep-wake cycles,Hormone production,Autonomic function regulation</data>\n    </node>\n    <node id=\"neuron\">\n      <data key=\"type\">cell</data>\n      <data key=\"name\">Neuron</data>\n      <data key=\"description\">The basic functional unit of the nervous system, specialized for transmitting information.</data>\n      <data key=\"components\">Cell body,Dendrites,Axon,Synaptic terminals</data>\n      <data key=\"types\">Motor neurons,Sensory neurons,Interneurons</data>\n      <data key=\"function\">Signal transmission and processing</data>\n      <data key=\"count\">Approximately 86 billion in the human brain</data>\n    </node>\n    <node id=\"red_blood_cell\">\n      <data key=\"type\">cell</data>\n      <data key=\"name\">Red Blood Cell (Erythrocyte)</data>\n      <data key=\"description\">The most common type of blood cell, responsible for oxygen transport.</data>\n      <data key=\"shape\">Biconcave disc</data>\n      <data key=\"diameter\">7-8 micrometers</data>\n      <data key=\"lifespan\">120 days</data>\n      <data key=\"count\">4.5-5.5 million per microliter of blood</data>\n      <data key=\"uniqueProperty\">No nucleus in mature form</data>\n      <data key=\"function\">Oxygen and carbon dioxide transport</data>\n    </node>\n    <node id=\"cardiomyocyte\">\n      <data key=\"type\">cell</data>\n      <data key=\"name\">Cardiomyocyte</data>\n      <data key=\"description\">Cardiac muscle cells that make up the heart muscle.</data>\n      <data key=\"length\">100 micrometers</data>\n      <data key=\"width\">10-25 micrometers</data>\n      <data key=\"properties\">Striated,Contains many mitochondria,Connected by intercalated discs</data>\n      <data key=\"function\">Heart contraction</data>\n      <data key=\"uniqueProperty\">Can contract without neural stimulation</data>\n    </node>\n    <node id=\"epithelial_tissue\">\n      <data key=\"type\">tissue</data>\n      <data key=\"name\">Epithelial Tissue</data>\n      <data key=\"description\">The tissue that forms the outer layer of the body and lines organs and cavities.</data>\n      <data key=\"types\">Simple squamous,Simple cuboidal,Simple columnar,Stratified squamous,Transitional</data>\n      <data key=\"functions\">Protection,Absorption,Filtration,Secretion</data>\n      <data key=\"location\">Skin surface, organ linings, gland secretory units</data>\n    </node>\n    <edge source=\"circulatory_system\" target=\"respiratory_system\">\n      <data key=\"relationship_type\">interacts_with</data>\n    </edge>\n    <edge source=\"circulatory_system\" target=\"nervous_system\">\n      <data key=\"relationship_type\">regulated_by</data>\n    </edge>\n    <edge source=\"muscular_system\" target=\"skeletal_system\">\n      <data key=\"relationship_type\">attaches_to</data>\n    </edge>\n    <edge source=\"heart\" target=\"circulatory_system\">\n      <data key=\"relationship_type\">part_of</data>\n    </edge>\n    <edge source=\"lungs\" target=\"respiratory_system\">\n      <data key=\"relationship_type\">part_of</data>\n    </edge>\n    <edge source=\"brain\" target=\"nervous_system\">\n      <data key=\"relationship_type\">part_of</data>\n    </edge>\n    <edge source=\"skull\" target=\"skeletal_system\">\n      <data key=\"relationship_type\">part_of</data>\n    </edge>\n    <edge source=\"liver\" target=\"digestive_system\">\n      <data key=\"relationship_type\">part_of</data>\n    </edge>\n    <edge source=\"kidneys\" target=\"circulatory_system\">\n      <data key=\"relationship_type\">interacts_with</data>\n    </edge>\n    <edge source=\"skull\" target=\"brain\">\n      <data key=\"relationship_type\">protects</data>\n    </edge>\n    <edge source=\"ribcage\" target=\"heart\">\n      <data key=\"relationship_type\">protects</data>\n    </edge>\n    <edge source=\"ribcage\" target=\"lungs\">\n      <data key=\"relationship_type\">protects</data>\n    </edge>\n    <edge source=\"vertebral_column\" target=\"spinal_cord\">\n      <data key=\"relationship_type\">protects</data>\n    </edge>\n    <edge source=\"heart\" target=\"aorta\">\n      <data key=\"relationship_type\">connects_to</data>\n    </edge>\n    <edge source=\"heart\" target=\"vena_cava\">\n      <data key=\"relationship_type\">connects_to</data>\n    </edge>\n    <edge source=\"coronary_arteries\" target=\"heart\">\n      <data key=\"relationship_type\">supplies</data>\n    </edge>\n    <edge source=\"pulmonary_arteries\" target=\"lungs\">\n      <data key=\"relationship_type\">connects_to</data>\n    </edge>\n    <edge source=\"brain\" target=\"spinal_cord\">\n      <data key=\"relationship_type\">connects_to</data>\n    </edge>\n    <edge source=\"vagus_nerve\" target=\"heart\">\n      <data key=\"relationship_type\">innervates</data>\n    </edge>\n    <edge source=\"vagus_nerve\" target=\"stomach\">\n      <data key=\"relationship_type\">innervates</data>\n    </edge>\n    <edge source=\"hypothalamus\" target=\"endocrine_system\">\n      <data key=\"relationship_type\">regulates</data>\n    </edge>\n    <edge source=\"heart_muscle\" target=\"heart\">\n      <data key=\"relationship_type\">composes</data>\n    </edge>\n    <edge source=\"diaphragm\" target=\"respiratory_system\">\n      <data key=\"relationship_type\">enables</data>\n    </edge>\n    <edge source=\"biceps_brachii\" target=\"femur\">\n      <data key=\"relationship_type\">moves</data>\n    </edge>\n    <edge source=\"neuron\" target=\"nervous_system\">\n      <data key=\"relationship_type\">composes</data>\n    </edge>\n    <edge source=\"red_blood_cell\" target=\"circulatory_system\">\n      <data key=\"relationship_type\">functions_in</data>\n    </edge>\n    <edge source=\"cardiomyocyte\" target=\"heart_muscle\">\n      <data key=\"relationship_type\">composes</data>\n    </edge>\n    <edge source=\"epithelial_tissue\" target=\"lungs\">\n      <data key=\"relationship_type\">lines</data>\n    </edge>\n  </graph>\n</graphml>",
+  "kif": ";; UltraLink Knowledge Interchange Format (KIF) Export\n;; Generated: 2025-03-08T22:42:12.580Z\n\n;; Meta-knowledge\n(= (creationDate UltraLinkExport) \"2025-03-08T22:42:12.580Z\")\n(= (entityCount UltraLinkExport) 37)\n(= (relationshipCount UltraLinkExport) 28)\n\n;; Functions\n(deffunction relationshipCount (?x) (length ?kb.relationships))\n\n;; Rules\n(defrule entity-attributes-rule\n    \"A rule to infer additional attributes for entities based on their type\"\n    (instance ?entity ?type)\n    =>\n    (if (eq ?type Person)\n        then (assert (isAgent ?entity true))))\n\n(forall (?x ?y)\n    (=> (and (adapts_to ?x ?y) (> (efficiency-adapts_to ?x ?y) 0.8))\n        (well-adapted ?x ?y)))\n\n;; Entities and their attributes\n(instance circulatory_system System)\n(name circulatory_system \"Circulatory System\")\n(description circulatory_system \"The system that circulates blood throughout the body, delivering oxygen and nutrients to cells and removing waste products.\")\n(functions circulatory_system \"[\\\"Oxygen transport\\\",\\\"Nutrient delivery\\\",\\\"Waste removal\\\",\\\"Hormone transport\\\",\\\"Temperature regulation\\\",\\\"Immune defense\\\"]\")\n(volume circulatory_system \"5 liters of blood (average adult)\")\n\n(instance respiratory_system System)\n(name respiratory_system \"Respiratory System\")\n(description respiratory_system \"The system responsible for gas exchange, taking in oxygen and expelling carbon dioxide.\")\n(functions respiratory_system \"[\\\"Gas exchange\\\",\\\"pH regulation\\\",\\\"Voice production\\\",\\\"Olfaction support\\\"]\")\n(capacity respiratory_system \"4-6 liters (average adult lung capacity)\")\n\n(instance nervous_system System)\n(name nervous_system \"Nervous System\")\n(description nervous_system \"The complex network that coordinates body activities by transmitting signals between different body parts.\")\n(functions nervous_system \"[\\\"Sensory processing\\\",\\\"Motor control\\\",\\\"Cognition\\\",\\\"Memory\\\",\\\"Homeostasis regulation\\\"]\")\n(components nervous_system \"[\\\"Central nervous system\\\",\\\"Peripheral nervous system\\\",\\\"Autonomic nervous system\\\"]\")\n(neurons nervous_system \"Approximately 86 billion neurons\")\n\n(instance skeletal_system System)\n(name skeletal_system \"Skeletal System\")\n(description skeletal_system \"The framework of bones and connective tissues that supports the body, protects organs, and enables movement.\")\n(functions skeletal_system \"[\\\"Structural support\\\",\\\"Organ protection\\\",\\\"Movement facilitation\\\",\\\"Blood cell production\\\",\\\"Mineral storage\\\"]\")\n(boneCount skeletal_system 206)\n\n(instance muscular_system System)\n(name muscular_system \"Muscular System\")\n(description muscular_system \"The system of muscles that enables movement, maintains posture, and generates heat.\")\n(functions muscular_system \"[\\\"Movement\\\",\\\"Posture maintenance\\\",\\\"Joint stabilization\\\",\\\"Heat production\\\"]\")\n(muscleCount muscular_system \"Over 600 named muscles\")\n(types muscular_system \"[\\\"Skeletal muscle\\\",\\\"Smooth muscle\\\",\\\"Cardiac muscle\\\"]\")\n\n(instance digestive_system System)\n(name digestive_system \"Digestive System\")\n(description digestive_system \"The system that breaks down food into nutrients for absorption and eliminates waste.\")\n(functions digestive_system \"[\\\"Food breakdown\\\",\\\"Nutrient absorption\\\",\\\"Waste elimination\\\"]\")\n(length digestive_system \"About 9 meters (30 feet) from mouth to anus\")\n\n(instance endocrine_system System)\n(name endocrine_system \"Endocrine System\")\n(description endocrine_system \"The collection of glands that produce hormones to regulate metabolism, growth, development, and other functions.\")\n(functions endocrine_system \"[\\\"Hormone production\\\",\\\"Metabolism regulation\\\",\\\"Growth and development\\\",\\\"Mood regulation\\\"]\")\n(majorGlands endocrine_system \"[\\\"Pituitary\\\",\\\"Thyroid\\\",\\\"Parathyroid\\\",\\\"Adrenal\\\",\\\"Pancreas\\\",\\\"Gonads\\\",\\\"Pineal\\\"]\")\n\n(instance immune_system System)\n(name immune_system \"Immune System\")\n(description immune_system \"The complex network that defends the body against pathogens and other threats.\")\n(functions immune_system \"[\\\"Pathogen defense\\\",\\\"Wound healing\\\",\\\"Foreign substance detection\\\",\\\"Cancer surveillance\\\"]\")\n(components immune_system \"[\\\"White blood cells\\\",\\\"Antibodies\\\",\\\"Lymphatic system\\\",\\\"Spleen\\\",\\\"Thymus\\\",\\\"Bone marrow\\\"]\")\n\n(instance heart Organ)\n(name heart \"Heart\")\n(description heart \"A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.\")\n(weight heart \"250-350 grams\")\n(location heart \"Mediastinum, left of midline\")\n(chambers heart \"[\\\"Right atrium\\\",\\\"Right ventricle\\\",\\\"Left atrium\\\",\\\"Left ventricle\\\"]\")\n(beatRate heart \"60-100 beats per minute (at rest)\")\n\n(instance lungs Organ)\n(name lungs \"Lungs\")\n(description lungs \"The primary organs of respiration, where gas exchange occurs between the air and blood.\")\n(count lungs 2)\n(location lungs \"Thoracic cavity\")\n(parts lungs \"[\\\"Bronchi\\\",\\\"Bronchioles\\\",\\\"Alveoli\\\",\\\"Pleura\\\"]\")\n(respirationRate lungs \"12-20 breaths per minute (at rest)\")\n\n(instance brain Organ)\n(name brain \"Brain\")\n(description brain \"The central organ of the nervous system, responsible for processing sensory information and controlling bodily functions and behaviors.\")\n(weight brain \"1300-1400 grams (average adult)\")\n(location brain \"Cranial cavity\")\n(lobes brain \"[\\\"Frontal\\\",\\\"Parietal\\\",\\\"Temporal\\\",\\\"Occipital\\\"]\")\n(energyUse brain \"20% of body's oxygen and calories\")\n\n(instance liver Organ)\n(name liver \"Liver\")\n(description liver \"The largest internal organ, performing hundreds of functions including detoxification, protein synthesis, and digestion.\")\n(weight liver \"1.5 kg (average adult)\")\n(location liver \"Right upper quadrant of abdomen\")\n(lobes liver \"[\\\"Right lobe\\\",\\\"Left lobe\\\",\\\"Caudate lobe\\\",\\\"Quadrate lobe\\\"]\")\n(functions liver \"[\\\"Detoxification\\\",\\\"Bile production\\\",\\\"Protein synthesis\\\",\\\"Glycogen storage\\\"]\")\n\n(instance kidneys Organ)\n(name kidneys \"Kidneys\")\n(description kidneys \"Bean-shaped organs that filter blood to produce urine, regulate electrolytes, and maintain acid-base balance.\")\n(count kidneys 2)\n(location kidneys \"Posterior abdominal wall, retroperitoneal\")\n(weight kidneys \"120-170 grams each\")\n(filterRate kidneys \"About 120-150 quarts of blood daily\")\n\n(instance stomach Organ)\n(name stomach \"Stomach\")\n(description stomach \"A muscular, hollow organ that holds food and begins the digestion of proteins.\")\n(location stomach \"Left upper quadrant of abdomen\")\n(capacity stomach \"1-2 liters\")\n(pH stomach \"1.5-3.5 (highly acidic)\")\n(regions stomach \"[\\\"Cardia\\\",\\\"Fundus\\\",\\\"Body\\\",\\\"Pylorus\\\"]\")\n\n(instance intestines Organ)\n(name intestines \"Intestines\")\n(description intestines \"The long, coiled tube where most digestion and nutrient absorption occurs.\")\n(parts intestines \"[\\\"Small intestine\\\",\\\"Large intestine\\\"]\")\n(smallIntestineLength intestines \"6-7 meters\")\n(largeIntestineLength intestines \"1.5 meters\")\n(location intestines \"Abdominal cavity\")\n\n(instance pancreas Organ)\n(name pancreas \"Pancreas\")\n(description pancreas \"A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.\")\n(location pancreas \"Retroperitoneal, behind stomach\")\n(weight pancreas \"70-100 grams\")\n(functions pancreas \"[\\\"Digestive enzyme production\\\",\\\"Hormone secretion\\\",\\\"Blood glucose regulation\\\"]\")\n\n(instance spleen Organ)\n(name spleen \"Spleen\")\n(description spleen \"An organ that filters blood and helps defend against pathogens as part of the immune system.\")\n(location spleen \"Left upper quadrant of abdomen\")\n(weight spleen \"150 grams (average adult)\")\n(functions spleen \"[\\\"Blood filtration\\\",\\\"Old red blood cell removal\\\",\\\"Immune response support\\\",\\\"Blood storage\\\"]\")\n\n(instance skull Bone)\n(name skull \"Skull\")\n(description skull \"The bony structure that forms the head, encases the brain, and supports facial structures.\")\n(boneCount skull 22)\n(majorBones skull \"[\\\"Frontal bone\\\",\\\"Parietal bones\\\",\\\"Temporal bones\\\",\\\"Occipital bone\\\",\\\"Sphenoid bone\\\",\\\"Ethmoid bone\\\"]\")\n(functions skull \"[\\\"Brain protection\\\",\\\"Facial structure support\\\",\\\"Sensory organ housing\\\"]\")\n\n(instance vertebral_column Bone)\n(name vertebral_column \"Vertebral Column (Spine)\")\n(description vertebral_column \"The flexible column of vertebrae that protects the spinal cord and supports the head and body.\")\n(vertebraeCount vertebral_column 33)\n(regions vertebral_column \"[\\\"Cervical (7)\\\",\\\"Thoracic (12)\\\",\\\"Lumbar (5)\\\",\\\"Sacral (5 fused)\\\",\\\"Coccygeal (4 fused)\\\"]\")\n(length vertebral_column \"70-75 cm (adult)\")\n\n(instance ribcage Bone)\n(name ribcage \"Ribcage\")\n(description ribcage \"The bony cage formed by the sternum, ribs, and thoracic vertebrae that protects vital organs.\")\n(ribPairs ribcage 12)\n(types ribcage \"[\\\"True ribs (1-7)\\\",\\\"False ribs (8-10)\\\",\\\"Floating ribs (11-12)\\\"]\")\n(functions ribcage \"[\\\"Heart and lung protection\\\",\\\"Respiratory movement support\\\"]\")\n\n(instance femur Bone)\n(name femur \"Femur\")\n(description femur \"The thigh bone, the longest and strongest bone in the human body.\")\n(count femur 2)\n(location femur \"Thigh\")\n(length femur \"45-50 cm (adult)\")\n(strength femur \"Can support 30 times body weight\")\n\n(instance heart_muscle Muscle)\n(name heart_muscle \"Cardiac Muscle\")\n(description heart_muscle \"Specialized involuntary muscle tissue found only in the heart, allowing for coordinated contractions.\")\n(control heart_muscle \"Involuntary\")\n(properties heart_muscle \"[\\\"Striated\\\",\\\"Self-excitable\\\",\\\"Resistant to fatigue\\\",\\\"Interconnected by intercalated discs\\\"]\")\n(function heart_muscle \"Blood pumping through rhythmic contractions\")\n\n(instance diaphragm Muscle)\n(name diaphragm \"Diaphragm\")\n(description diaphragm \"A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.\")\n(control diaphragm \"Both voluntary and involuntary\")\n(location diaphragm \"Between thoracic and abdominal cavities\")\n(function diaphragm \"Primary muscle of respiration\")\n\n(instance biceps_brachii Muscle)\n(name biceps_brachii \"Biceps Brachii\")\n(description biceps_brachii \"A large muscle located on the front of the upper arm, primarily responsible for forearm flexion and supination.\")\n(control biceps_brachii \"Voluntary\")\n(location biceps_brachii \"Anterior compartment of the upper arm\")\n(function biceps_brachii \"Forearm flexion and supination\")\n\n(instance quadriceps Muscle)\n(name quadriceps \"Quadriceps Femoris\")\n(description quadriceps \"A group of four muscles on the front of the thigh that extend the knee.\")\n(control quadriceps \"Voluntary\")\n(location quadriceps \"Anterior thigh\")\n(components quadriceps \"[\\\"Rectus femoris\\\",\\\"Vastus lateralis\\\",\\\"Vastus medialis\\\",\\\"Vastus intermedius\\\"]\")\n(function quadriceps \"Knee extension and hip flexion\")\n\n(instance aorta Blood_vessel)\n(name aorta \"Aorta\")\n(description aorta \"The largest artery in the body, carrying oxygenated blood from the left ventricle of the heart to the body.\")\n(diameter aorta \"2.5-3.5 cm\")\n(sections aorta \"[\\\"Ascending aorta\\\",\\\"Aortic arch\\\",\\\"Descending thoracic aorta\\\",\\\"Abdominal aorta\\\"]\")\n(function aorta \"Distribution of oxygenated blood throughout the body\")\n\n(instance coronary_arteries Blood_vessel)\n(name coronary_arteries \"Coronary Arteries\")\n(description coronary_arteries \"The arteries that supply blood to the heart muscle.\")\n(majorBranches coronary_arteries \"[\\\"Left main coronary artery\\\",\\\"Left anterior descending artery\\\",\\\"Left circumflex artery\\\",\\\"Right coronary artery\\\"]\")\n(function coronary_arteries \"Blood supply to cardiac muscle\")\n\n(instance pulmonary_arteries Blood_vessel)\n(name pulmonary_arteries \"Pulmonary Arteries\")\n(description pulmonary_arteries \"The arteries that carry deoxygenated blood from the heart to the lungs.\")\n(branches pulmonary_arteries \"[\\\"Right pulmonary artery\\\",\\\"Left pulmonary artery\\\"]\")\n(uniqueProperty pulmonary_arteries \"One of the few arteries carrying deoxygenated blood\")\n(function pulmonary_arteries \"Transport of deoxygenated blood to lungs for oxygenation\")\n\n(instance vena_cava Blood_vessel)\n(name vena_cava \"Vena Cava\")\n(description vena_cava \"The largest veins in the body, returning deoxygenated blood to the right atrium of the heart.\")\n(components vena_cava \"[\\\"Superior vena cava\\\",\\\"Inferior vena cava\\\"]\")\n(diameter vena_cava \"2-3 cm\")\n(function vena_cava \"Return of deoxygenated blood to the heart\")\n\n(instance spinal_cord Nerve)\n(name spinal_cord \"Spinal Cord\")\n(description spinal_cord \"The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.\")\n(length spinal_cord \"45 cm (average adult)\")\n(location spinal_cord \"Within the vertebral canal\")\n(function spinal_cord \"Conduction of neural signals between brain and body, reflex center\")\n(components spinal_cord \"[\\\"Grey matter\\\",\\\"White matter\\\",\\\"Central canal\\\"]\")\n\n(instance vagus_nerve Nerve)\n(name vagus_nerve \"Vagus Nerve\")\n(description vagus_nerve \"The 10th cranial nerve, with the widest distribution in the body, controlling parasympathetic functions.\")\n(number vagus_nerve \"CN X\")\n(function vagus_nerve \"Parasympathetic control of heart, lungs, digestive tract; sensory information from viscera\")\n(length vagus_nerve \"Extends from brainstem to abdomen\")\n\n(instance sciatic_nerve Nerve)\n(name sciatic_nerve \"Sciatic Nerve\")\n(description sciatic_nerve \"The largest and longest nerve in the body, running from the lower back down through the leg.\")\n(origin sciatic_nerve \"L4-S3 spinal nerves\")\n(function sciatic_nerve \"Motor and sensory innervation of lower limb\")\n(diameter sciatic_nerve \"About 2 cm at its widest\")\n\n(instance hypothalamus Nerve_center)\n(name hypothalamus \"Hypothalamus\")\n(description hypothalamus \"A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.\")\n(location hypothalamus \"Below thalamus, above brainstem\")\n(weight hypothalamus \"About 4 grams\")\n(functions hypothalamus \"[\\\"Temperature regulation\\\",\\\"Hunger and thirst control\\\",\\\"Sleep-wake cycles\\\",\\\"Hormone production\\\",\\\"Autonomic function regulation\\\"]\")\n\n(instance neuron Cell)\n(name neuron \"Neuron\")\n(description neuron \"The basic functional unit of the nervous system, specialized for transmitting information.\")\n(components neuron \"[\\\"Cell body\\\",\\\"Dendrites\\\",\\\"Axon\\\",\\\"Synaptic terminals\\\"]\")\n(types neuron \"[\\\"Motor neurons\\\",\\\"Sensory neurons\\\",\\\"Interneurons\\\"]\")\n(function neuron \"Signal transmission and processing\")\n(count neuron \"Approximately 86 billion in the human brain\")\n\n(instance red_blood_cell Cell)\n(name red_blood_cell \"Red Blood Cell (Erythrocyte)\")\n(description red_blood_cell \"The most common type of blood cell, responsible for oxygen transport.\")\n(shape red_blood_cell \"Biconcave disc\")\n(diameter red_blood_cell \"7-8 micrometers\")\n(lifespan red_blood_cell \"120 days\")\n(count red_blood_cell \"4.5-5.5 million per microliter of blood\")\n(uniqueProperty red_blood_cell \"No nucleus in mature form\")\n(function red_blood_cell \"Oxygen and carbon dioxide transport\")\n\n(instance cardiomyocyte Cell)\n(name cardiomyocyte \"Cardiomyocyte\")\n(description cardiomyocyte \"Cardiac muscle cells that make up the heart muscle.\")\n(length cardiomyocyte \"100 micrometers\")\n(width cardiomyocyte \"10-25 micrometers\")\n(properties cardiomyocyte \"[\\\"Striated\\\",\\\"Contains many mitochondria\\\",\\\"Connected by intercalated discs\\\"]\")\n(function cardiomyocyte \"Heart contraction\")\n(uniqueProperty cardiomyocyte \"Can contract without neural stimulation\")\n\n(instance epithelial_tissue Tissue)\n(name epithelial_tissue \"Epithelial Tissue\")\n(description epithelial_tissue \"The tissue that forms the outer layer of the body and lines organs and cavities.\")\n(types epithelial_tissue \"[\\\"Simple squamous\\\",\\\"Simple cuboidal\\\",\\\"Simple columnar\\\",\\\"Stratified squamous\\\",\\\"Transitional\\\"]\")\n(functions epithelial_tissue \"[\\\"Protection\\\",\\\"Absorption\\\",\\\"Filtration\\\",\\\"Secretion\\\"]\")\n(location epithelial_tissue \"Skin surface, organ linings, gland secretory units\")\n\n;; Relationships\n(interacts_with circulatory_system respiratory_system)\n(description-interacts_with circulatory_system respiratory_system \"Blood picks up oxygen and releases carbon dioxide in the lungs\")\n\n(regulated_by circulatory_system nervous_system)\n(description-regulated_by circulatory_system nervous_system \"Heart rate and blood pressure are regulated by the autonomic nervous system\")\n\n(attaches_to muscular_system skeletal_system)\n(description-attaches_to muscular_system skeletal_system \"Muscles attach to bones via tendons to enable movement\")\n\n(part_of heart circulatory_system)\n(description-part_of heart circulatory_system \"The heart is the central pump of the circulatory system\")\n\n(part_of lungs respiratory_system)\n(description-part_of lungs respiratory_system \"The lungs are the primary organs of the respiratory system\")\n\n(part_of brain nervous_system)\n(description-part_of brain nervous_system \"The brain is the central organ of the nervous system\")\n\n(part_of skull skeletal_system)\n(description-part_of skull skeletal_system \"The skull is part of the axial skeleton\")\n\n(part_of liver digestive_system)\n(description-part_of liver digestive_system \"The liver produces bile for digestion and processes nutrients\")\n\n(interacts_with kidneys circulatory_system)\n(description-interacts_with kidneys circulatory_system \"The kidneys filter blood to maintain homeostasis\")\n\n(protects skull brain)\n(description-protects skull brain \"The skull forms a protective case around the brain\")\n\n(protects ribcage heart)\n(description-protects ribcage heart \"The ribcage forms a protective structure around the heart\")\n\n(protects ribcage lungs)\n(description-protects ribcage lungs \"The ribcage forms a protective structure around the lungs\")\n\n(protects vertebral_column spinal_cord)\n(description-protects vertebral_column spinal_cord \"The vertebral column forms a protective tunnel for the spinal cord\")\n\n(connects_to heart aorta)\n(description-connects_to heart aorta \"The aorta emerges from the left ventricle of the heart\")\n\n(connects_to heart vena_cava)\n(description-connects_to heart vena_cava \"The vena cava returns blood to the right atrium of the heart\")\n\n(supplies coronary_arteries heart)\n(description-supplies coronary_arteries heart \"The coronary arteries deliver oxygenated blood to heart muscle\")\n\n(connects_to pulmonary_arteries lungs)\n(description-connects_to pulmonary_arteries lungs \"The pulmonary arteries carry deoxygenated blood from the heart to the lungs\")\n\n(connects_to brain spinal_cord)\n(description-connects_to brain spinal_cord \"The brain connects to the spinal cord at the brainstem\")\n\n(innervates vagus_nerve heart)\n(description-innervates vagus_nerve heart \"The vagus nerve provides parasympathetic innervation to the heart\")\n\n(innervates vagus_nerve stomach)\n(description-innervates vagus_nerve stomach \"The vagus nerve provides parasympathetic innervation to the stomach\")\n\n(regulates hypothalamus endocrine_system)\n(description-regulates hypothalamus endocrine_system \"The hypothalamus produces hormones and controls the pituitary gland\")\n\n(composes heart_muscle heart)\n(description-composes heart_muscle heart \"The heart is composed primarily of cardiac muscle tissue\")\n\n(enables diaphragm respiratory_system)\n(description-enables diaphragm respiratory_system \"The diaphragm is the primary muscle of breathing\")\n\n(moves biceps_brachii femur)\n(description-moves biceps_brachii femur \"The biceps brachii flex the forearm at the elbow\")\n\n(composes neuron nervous_system)\n(description-composes neuron nervous_system \"Neurons are the primary functional cells of the nervous system\")\n\n(functions_in red_blood_cell circulatory_system)\n(description-functions_in red_blood_cell circulatory_system \"Red blood cells transport oxygen throughout the circulatory system\")\n\n(composes cardiomyocyte heart_muscle)\n(description-composes cardiomyocyte heart_muscle \"Cardiomyocytes are the muscle cells that make up heart tissue\")\n\n(lines epithelial_tissue lungs)\n(description-lines epithelial_tissue lungs \"Epithelial tissue lines the airways of the lungs\")\n\n",
+  "bayesian": {
+    "json": "{\"nodes\":{\"circulatory_system\":{\"id\":\"circulatory_system\",\"name\":\"Circulatory System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"heart\",\"kidneys\",\"red_blood_cell\"],\"attributes\":{\"name\":\"Circulatory System\",\"description\":\"The system that circulates blood throughout the body, delivering oxygen and nutrients to cells and removing waste products.\",\"functions\":[\"Oxygen transport\",\"Nutrient delivery\",\"Waste removal\",\"Hormone transport\",\"Temperature regulation\",\"Immune defense\"],\"volume\":\"5 liters of blood (average adult)\"}},\"respiratory_system\":{\"id\":\"respiratory_system\",\"name\":\"Respiratory System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"circulatory_system\",\"lungs\",\"diaphragm\"],\"attributes\":{\"name\":\"Respiratory System\",\"description\":\"The system responsible for gas exchange, taking in oxygen and expelling carbon dioxide.\",\"functions\":[\"Gas exchange\",\"pH regulation\",\"Voice production\",\"Olfaction support\"],\"capacity\":\"4-6 liters (average adult lung capacity)\"}},\"nervous_system\":{\"id\":\"nervous_system\",\"name\":\"Nervous System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"circulatory_system\",\"brain\",\"neuron\"],\"attributes\":{\"name\":\"Nervous System\",\"description\":\"The complex network that coordinates body activities by transmitting signals between different body parts.\",\"functions\":[\"Sensory processing\",\"Motor control\",\"Cognition\",\"Memory\",\"Homeostasis regulation\"],\"components\":[\"Central nervous system\",\"Peripheral nervous system\",\"Autonomic nervous system\"],\"neurons\":\"Approximately 86 billion neurons\"}},\"skeletal_system\":{\"id\":\"skeletal_system\",\"name\":\"Skeletal System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"muscular_system\",\"skull\"],\"attributes\":{\"name\":\"Skeletal System\",\"description\":\"The framework of bones and connective tissues that supports the body, protects organs, and enables movement.\",\"functions\":[\"Structural support\",\"Organ protection\",\"Movement facilitation\",\"Blood cell production\",\"Mineral storage\"],\"boneCount\":206}},\"muscular_system\":{\"id\":\"muscular_system\",\"name\":\"Muscular System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Muscular System\",\"description\":\"The system of muscles that enables movement, maintains posture, and generates heat.\",\"functions\":[\"Movement\",\"Posture maintenance\",\"Joint stabilization\",\"Heat production\"],\"muscleCount\":\"Over 600 named muscles\",\"types\":[\"Skeletal muscle\",\"Smooth muscle\",\"Cardiac muscle\"]}},\"digestive_system\":{\"id\":\"digestive_system\",\"name\":\"Digestive System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"liver\"],\"attributes\":{\"name\":\"Digestive System\",\"description\":\"The system that breaks down food into nutrients for absorption and eliminates waste.\",\"functions\":[\"Food breakdown\",\"Nutrient absorption\",\"Waste elimination\"],\"length\":\"About 9 meters (30 feet) from mouth to anus\"}},\"endocrine_system\":{\"id\":\"endocrine_system\",\"name\":\"Endocrine System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"hypothalamus\"],\"attributes\":{\"name\":\"Endocrine System\",\"description\":\"The collection of glands that produce hormones to regulate metabolism, growth, development, and other functions.\",\"functions\":[\"Hormone production\",\"Metabolism regulation\",\"Growth and development\",\"Mood regulation\"],\"majorGlands\":[\"Pituitary\",\"Thyroid\",\"Parathyroid\",\"Adrenal\",\"Pancreas\",\"Gonads\",\"Pineal\"]}},\"immune_system\":{\"id\":\"immune_system\",\"name\":\"Immune System\",\"type\":\"system\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Immune System\",\"description\":\"The complex network that defends the body against pathogens and other threats.\",\"functions\":[\"Pathogen defense\",\"Wound healing\",\"Foreign substance detection\",\"Cancer surveillance\"],\"components\":[\"White blood cells\",\"Antibodies\",\"Lymphatic system\",\"Spleen\",\"Thymus\",\"Bone marrow\"]}},\"heart\":{\"id\":\"heart\",\"name\":\"Heart\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"ribcage\",\"coronary_arteries\",\"vagus_nerve\",\"heart_muscle\"],\"attributes\":{\"name\":\"Heart\",\"description\":\"A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.\",\"weight\":\"250-350 grams\",\"location\":\"Mediastinum, left of midline\",\"chambers\":[\"Right atrium\",\"Right ventricle\",\"Left atrium\",\"Left ventricle\"],\"beatRate\":\"60-100 beats per minute (at rest)\"}},\"lungs\":{\"id\":\"lungs\",\"name\":\"Lungs\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"ribcage\",\"pulmonary_arteries\",\"epithelial_tissue\"],\"attributes\":{\"name\":\"Lungs\",\"description\":\"The primary organs of respiration, where gas exchange occurs between the air and blood.\",\"count\":2,\"location\":\"Thoracic cavity\",\"parts\":[\"Bronchi\",\"Bronchioles\",\"Alveoli\",\"Pleura\"],\"respirationRate\":\"12-20 breaths per minute (at rest)\"}},\"brain\":{\"id\":\"brain\",\"name\":\"Brain\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"skull\"],\"attributes\":{\"name\":\"Brain\",\"description\":\"The central organ of the nervous system, responsible for processing sensory information and controlling bodily functions and behaviors.\",\"weight\":\"1300-1400 grams (average adult)\",\"location\":\"Cranial cavity\",\"lobes\":[\"Frontal\",\"Parietal\",\"Temporal\",\"Occipital\"],\"energyUse\":\"20% of body's oxygen and calories\"}},\"liver\":{\"id\":\"liver\",\"name\":\"Liver\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Liver\",\"description\":\"The largest internal organ, performing hundreds of functions including detoxification, protein synthesis, and digestion.\",\"weight\":\"1.5 kg (average adult)\",\"location\":\"Right upper quadrant of abdomen\",\"lobes\":[\"Right lobe\",\"Left lobe\",\"Caudate lobe\",\"Quadrate lobe\"],\"functions\":[\"Detoxification\",\"Bile production\",\"Protein synthesis\",\"Glycogen storage\"]}},\"kidneys\":{\"id\":\"kidneys\",\"name\":\"Kidneys\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Kidneys\",\"description\":\"Bean-shaped organs that filter blood to produce urine, regulate electrolytes, and maintain acid-base balance.\",\"count\":2,\"location\":\"Posterior abdominal wall, retroperitoneal\",\"weight\":\"120-170 grams each\",\"filterRate\":\"About 120-150 quarts of blood daily\"}},\"stomach\":{\"id\":\"stomach\",\"name\":\"Stomach\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"vagus_nerve\"],\"attributes\":{\"name\":\"Stomach\",\"description\":\"A muscular, hollow organ that holds food and begins the digestion of proteins.\",\"location\":\"Left upper quadrant of abdomen\",\"capacity\":\"1-2 liters\",\"pH\":\"1.5-3.5 (highly acidic)\",\"regions\":[\"Cardia\",\"Fundus\",\"Body\",\"Pylorus\"]}},\"intestines\":{\"id\":\"intestines\",\"name\":\"Intestines\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Intestines\",\"description\":\"The long, coiled tube where most digestion and nutrient absorption occurs.\",\"parts\":[\"Small intestine\",\"Large intestine\"],\"smallIntestineLength\":\"6-7 meters\",\"largeIntestineLength\":\"1.5 meters\",\"location\":\"Abdominal cavity\"}},\"pancreas\":{\"id\":\"pancreas\",\"name\":\"Pancreas\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Pancreas\",\"description\":\"A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.\",\"location\":\"Retroperitoneal, behind stomach\",\"weight\":\"70-100 grams\",\"functions\":[\"Digestive enzyme production\",\"Hormone secretion\",\"Blood glucose regulation\"]}},\"spleen\":{\"id\":\"spleen\",\"name\":\"Spleen\",\"type\":\"organ\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Spleen\",\"description\":\"An organ that filters blood and helps defend against pathogens as part of the immune system.\",\"location\":\"Left upper quadrant of abdomen\",\"weight\":\"150 grams (average adult)\",\"functions\":[\"Blood filtration\",\"Old red blood cell removal\",\"Immune response support\",\"Blood storage\"]}},\"skull\":{\"id\":\"skull\",\"name\":\"Skull\",\"type\":\"bone\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Skull\",\"description\":\"The bony structure that forms the head, encases the brain, and supports facial structures.\",\"boneCount\":22,\"majorBones\":[\"Frontal bone\",\"Parietal bones\",\"Temporal bones\",\"Occipital bone\",\"Sphenoid bone\",\"Ethmoid bone\"],\"functions\":[\"Brain protection\",\"Facial structure support\",\"Sensory organ housing\"]}},\"vertebral_column\":{\"id\":\"vertebral_column\",\"name\":\"Vertebral Column (Spine)\",\"type\":\"bone\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Vertebral Column (Spine)\",\"description\":\"The flexible column of vertebrae that protects the spinal cord and supports the head and body.\",\"vertebraeCount\":33,\"regions\":[\"Cervical (7)\",\"Thoracic (12)\",\"Lumbar (5)\",\"Sacral (5 fused)\",\"Coccygeal (4 fused)\"],\"length\":\"70-75 cm (adult)\"}},\"ribcage\":{\"id\":\"ribcage\",\"name\":\"Ribcage\",\"type\":\"bone\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Ribcage\",\"description\":\"The bony cage formed by the sternum, ribs, and thoracic vertebrae that protects vital organs.\",\"ribPairs\":12,\"types\":[\"True ribs (1-7)\",\"False ribs (8-10)\",\"Floating ribs (11-12)\"],\"functions\":[\"Heart and lung protection\",\"Respiratory movement support\"]}},\"femur\":{\"id\":\"femur\",\"name\":\"Femur\",\"type\":\"bone\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"biceps_brachii\"],\"attributes\":{\"name\":\"Femur\",\"description\":\"The thigh bone, the longest and strongest bone in the human body.\",\"count\":2,\"location\":\"Thigh\",\"length\":\"45-50 cm (adult)\",\"strength\":\"Can support 30 times body weight\"}},\"heart_muscle\":{\"id\":\"heart_muscle\",\"name\":\"Cardiac Muscle\",\"type\":\"muscle\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"cardiomyocyte\"],\"attributes\":{\"name\":\"Cardiac Muscle\",\"description\":\"Specialized involuntary muscle tissue found only in the heart, allowing for coordinated contractions.\",\"type\":\"Cardiac\",\"control\":\"Involuntary\",\"properties\":[\"Striated\",\"Self-excitable\",\"Resistant to fatigue\",\"Interconnected by intercalated discs\"],\"function\":\"Blood pumping through rhythmic contractions\"}},\"diaphragm\":{\"id\":\"diaphragm\",\"name\":\"Diaphragm\",\"type\":\"muscle\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Diaphragm\",\"description\":\"A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.\",\"type\":\"Skeletal\",\"control\":\"Both voluntary and involuntary\",\"location\":\"Between thoracic and abdominal cavities\",\"function\":\"Primary muscle of respiration\"}},\"biceps_brachii\":{\"id\":\"biceps_brachii\",\"name\":\"Biceps Brachii\",\"type\":\"muscle\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Biceps Brachii\",\"description\":\"A large muscle located on the front of the upper arm, primarily responsible for forearm flexion and supination.\",\"type\":\"Skeletal\",\"control\":\"Voluntary\",\"location\":\"Anterior compartment of the upper arm\",\"function\":\"Forearm flexion and supination\"}},\"quadriceps\":{\"id\":\"quadriceps\",\"name\":\"Quadriceps Femoris\",\"type\":\"muscle\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Quadriceps Femoris\",\"description\":\"A group of four muscles on the front of the thigh that extend the knee.\",\"type\":\"Skeletal\",\"control\":\"Voluntary\",\"location\":\"Anterior thigh\",\"components\":[\"Rectus femoris\",\"Vastus lateralis\",\"Vastus medialis\",\"Vastus intermedius\"],\"function\":\"Knee extension and hip flexion\"}},\"aorta\":{\"id\":\"aorta\",\"name\":\"Aorta\",\"type\":\"blood_vessel\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"heart\"],\"attributes\":{\"name\":\"Aorta\",\"description\":\"The largest artery in the body, carrying oxygenated blood from the left ventricle of the heart to the body.\",\"type\":\"Artery\",\"diameter\":\"2.5-3.5 cm\",\"sections\":[\"Ascending aorta\",\"Aortic arch\",\"Descending thoracic aorta\",\"Abdominal aorta\"],\"function\":\"Distribution of oxygenated blood throughout the body\"}},\"coronary_arteries\":{\"id\":\"coronary_arteries\",\"name\":\"Coronary Arteries\",\"type\":\"blood_vessel\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Coronary Arteries\",\"description\":\"The arteries that supply blood to the heart muscle.\",\"type\":\"Artery\",\"majorBranches\":[\"Left main coronary artery\",\"Left anterior descending artery\",\"Left circumflex artery\",\"Right coronary artery\"],\"function\":\"Blood supply to cardiac muscle\"}},\"pulmonary_arteries\":{\"id\":\"pulmonary_arteries\",\"name\":\"Pulmonary Arteries\",\"type\":\"blood_vessel\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Pulmonary Arteries\",\"description\":\"The arteries that carry deoxygenated blood from the heart to the lungs.\",\"type\":\"Artery\",\"branches\":[\"Right pulmonary artery\",\"Left pulmonary artery\"],\"uniqueProperty\":\"One of the few arteries carrying deoxygenated blood\",\"function\":\"Transport of deoxygenated blood to lungs for oxygenation\"}},\"vena_cava\":{\"id\":\"vena_cava\",\"name\":\"Vena Cava\",\"type\":\"blood_vessel\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"heart\"],\"attributes\":{\"name\":\"Vena Cava\",\"description\":\"The largest veins in the body, returning deoxygenated blood to the right atrium of the heart.\",\"type\":\"Vein\",\"components\":[\"Superior vena cava\",\"Inferior vena cava\"],\"diameter\":\"2-3 cm\",\"function\":\"Return of deoxygenated blood to the heart\"}},\"spinal_cord\":{\"id\":\"spinal_cord\",\"name\":\"Spinal Cord\",\"type\":\"nerve\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[\"vertebral_column\",\"brain\"],\"attributes\":{\"name\":\"Spinal Cord\",\"description\":\"The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.\",\"length\":\"45 cm (average adult)\",\"location\":\"Within the vertebral canal\",\"function\":\"Conduction of neural signals between brain and body, reflex center\",\"components\":[\"Grey matter\",\"White matter\",\"Central canal\"]}},\"vagus_nerve\":{\"id\":\"vagus_nerve\",\"name\":\"Vagus Nerve\",\"type\":\"nerve\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Vagus Nerve\",\"description\":\"The 10th cranial nerve, with the widest distribution in the body, controlling parasympathetic functions.\",\"type\":\"Cranial nerve\",\"number\":\"CN X\",\"function\":\"Parasympathetic control of heart, lungs, digestive tract; sensory information from viscera\",\"length\":\"Extends from brainstem to abdomen\"}},\"sciatic_nerve\":{\"id\":\"sciatic_nerve\",\"name\":\"Sciatic Nerve\",\"type\":\"nerve\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Sciatic Nerve\",\"description\":\"The largest and longest nerve in the body, running from the lower back down through the leg.\",\"type\":\"Peripheral nerve\",\"origin\":\"L4-S3 spinal nerves\",\"function\":\"Motor and sensory innervation of lower limb\",\"diameter\":\"About 2 cm at its widest\"}},\"hypothalamus\":{\"id\":\"hypothalamus\",\"name\":\"Hypothalamus\",\"type\":\"nerve_center\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Hypothalamus\",\"description\":\"A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.\",\"location\":\"Below thalamus, above brainstem\",\"weight\":\"About 4 grams\",\"functions\":[\"Temperature regulation\",\"Hunger and thirst control\",\"Sleep-wake cycles\",\"Hormone production\",\"Autonomic function regulation\"]}},\"neuron\":{\"id\":\"neuron\",\"name\":\"Neuron\",\"type\":\"cell\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Neuron\",\"description\":\"The basic functional unit of the nervous system, specialized for transmitting information.\",\"components\":[\"Cell body\",\"Dendrites\",\"Axon\",\"Synaptic terminals\"],\"types\":[\"Motor neurons\",\"Sensory neurons\",\"Interneurons\"],\"function\":\"Signal transmission and processing\",\"count\":\"Approximately 86 billion in the human brain\"}},\"red_blood_cell\":{\"id\":\"red_blood_cell\",\"name\":\"Red Blood Cell (Erythrocyte)\",\"type\":\"cell\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Red Blood Cell (Erythrocyte)\",\"description\":\"The most common type of blood cell, responsible for oxygen transport.\",\"shape\":\"Biconcave disc\",\"diameter\":\"7-8 micrometers\",\"lifespan\":\"120 days\",\"count\":\"4.5-5.5 million per microliter of blood\",\"uniqueProperty\":\"No nucleus in mature form\",\"function\":\"Oxygen and carbon dioxide transport\"}},\"cardiomyocyte\":{\"id\":\"cardiomyocyte\",\"name\":\"Cardiomyocyte\",\"type\":\"cell\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Cardiomyocyte\",\"description\":\"Cardiac muscle cells that make up the heart muscle.\",\"length\":\"100 micrometers\",\"width\":\"10-25 micrometers\",\"properties\":[\"Striated\",\"Contains many mitochondria\",\"Connected by intercalated discs\"],\"function\":\"Heart contraction\",\"uniqueProperty\":\"Can contract without neural stimulation\"}},\"epithelial_tissue\":{\"id\":\"epithelial_tissue\",\"name\":\"Epithelial Tissue\",\"type\":\"tissue\",\"bayesianType\":\"discrete\",\"states\":[\"true\",\"false\"],\"cpt\":{\"true\":0.5,\"false\":0.5},\"parents\":[],\"attributes\":{\"name\":\"Epithelial Tissue\",\"description\":\"The tissue that forms the outer layer of the body and lines organs and cavities.\",\"types\":[\"Simple squamous\",\"Simple cuboidal\",\"Simple columnar\",\"Stratified squamous\",\"Transitional\"],\"functions\":[\"Protection\",\"Absorption\",\"Filtration\",\"Secretion\"],\"location\":\"Skin surface, organ linings, gland secretory units\"}}},\"edges\":[{\"source\":\"circulatory_system\",\"target\":\"respiratory_system\",\"type\":\"interacts_with\",\"weight\":1,\"attributes\":{\"description\":\"Blood picks up oxygen and releases carbon dioxide in the lungs\"}},{\"source\":\"circulatory_system\",\"target\":\"nervous_system\",\"type\":\"regulated_by\",\"weight\":1,\"attributes\":{\"description\":\"Heart rate and blood pressure are regulated by the autonomic nervous system\"}},{\"source\":\"muscular_system\",\"target\":\"skeletal_system\",\"type\":\"attaches_to\",\"weight\":1,\"attributes\":{\"description\":\"Muscles attach to bones via tendons to enable movement\"}},{\"source\":\"heart\",\"target\":\"circulatory_system\",\"type\":\"part_of\",\"weight\":1,\"attributes\":{\"description\":\"The heart is the central pump of the circulatory system\"}},{\"source\":\"lungs\",\"target\":\"respiratory_system\",\"type\":\"part_of\",\"weight\":1,\"attributes\":{\"description\":\"The lungs are the primary organs of the respiratory system\"}},{\"source\":\"brain\",\"target\":\"nervous_system\",\"type\":\"part_of\",\"weight\":1,\"attributes\":{\"description\":\"The brain is the central organ of the nervous system\"}},{\"source\":\"skull\",\"target\":\"skeletal_system\",\"type\":\"part_of\",\"weight\":1,\"attributes\":{\"description\":\"The skull is part of the axial skeleton\"}},{\"source\":\"liver\",\"target\":\"digestive_system\",\"type\":\"part_of\",\"weight\":1,\"attributes\":{\"description\":\"The liver produces bile for digestion and processes nutrients\"}},{\"source\":\"kidneys\",\"target\":\"circulatory_system\",\"type\":\"interacts_with\",\"weight\":1,\"attributes\":{\"description\":\"The kidneys filter blood to maintain homeostasis\"}},{\"source\":\"skull\",\"target\":\"brain\",\"type\":\"protects\",\"weight\":1,\"attributes\":{\"description\":\"The skull forms a protective case around the brain\"}},{\"source\":\"ribcage\",\"target\":\"heart\",\"type\":\"protects\",\"weight\":1,\"attributes\":{\"description\":\"The ribcage forms a protective structure around the heart\"}},{\"source\":\"ribcage\",\"target\":\"lungs\",\"type\":\"protects\",\"weight\":1,\"attributes\":{\"description\":\"The ribcage forms a protective structure around the lungs\"}},{\"source\":\"vertebral_column\",\"target\":\"spinal_cord\",\"type\":\"protects\",\"weight\":1,\"attributes\":{\"description\":\"The vertebral column forms a protective tunnel for the spinal cord\"}},{\"source\":\"heart\",\"target\":\"aorta\",\"type\":\"connects_to\",\"weight\":1,\"attributes\":{\"description\":\"The aorta emerges from the left ventricle of the heart\"}},{\"source\":\"heart\",\"target\":\"vena_cava\",\"type\":\"connects_to\",\"weight\":1,\"attributes\":{\"description\":\"The vena cava returns blood to the right atrium of the heart\"}},{\"source\":\"coronary_arteries\",\"target\":\"heart\",\"type\":\"supplies\",\"weight\":1,\"attributes\":{\"description\":\"The coronary arteries deliver oxygenated blood to heart muscle\"}},{\"source\":\"pulmonary_arteries\",\"target\":\"lungs\",\"type\":\"connects_to\",\"weight\":1,\"attributes\":{\"description\":\"The pulmonary arteries carry deoxygenated blood from the heart to the lungs\"}},{\"source\":\"brain\",\"target\":\"spinal_cord\",\"type\":\"connects_to\",\"weight\":1,\"attributes\":{\"description\":\"The brain connects to the spinal cord at the brainstem\"}},{\"source\":\"vagus_nerve\",\"target\":\"heart\",\"type\":\"innervates\",\"weight\":1,\"attributes\":{\"description\":\"The vagus nerve provides parasympathetic innervation to the heart\"}},{\"source\":\"vagus_nerve\",\"target\":\"stomach\",\"type\":\"innervates\",\"weight\":1,\"attributes\":{\"description\":\"The vagus nerve provides parasympathetic innervation to the stomach\"}},{\"source\":\"hypothalamus\",\"target\":\"endocrine_system\",\"type\":\"regulates\",\"weight\":1,\"attributes\":{\"description\":\"The hypothalamus produces hormones and controls the pituitary gland\"}},{\"source\":\"heart_muscle\",\"target\":\"heart\",\"type\":\"composes\",\"weight\":1,\"attributes\":{\"description\":\"The heart is composed primarily of cardiac muscle tissue\"}},{\"source\":\"diaphragm\",\"target\":\"respiratory_system\",\"type\":\"enables\",\"weight\":1,\"attributes\":{\"description\":\"The diaphragm is the primary muscle of breathing\"}},{\"source\":\"biceps_brachii\",\"target\":\"femur\",\"type\":\"moves\",\"weight\":1,\"attributes\":{\"description\":\"The biceps brachii flex the forearm at the elbow\"}},{\"source\":\"neuron\",\"target\":\"nervous_system\",\"type\":\"composes\",\"weight\":1,\"attributes\":{\"description\":\"Neurons are the primary functional cells of the nervous system\"}},{\"source\":\"red_blood_cell\",\"target\":\"circulatory_system\",\"type\":\"functions_in\",\"weight\":1,\"attributes\":{\"description\":\"Red blood cells transport oxygen throughout the circulatory system\"}},{\"source\":\"cardiomyocyte\",\"target\":\"heart_muscle\",\"type\":\"composes\",\"weight\":1,\"attributes\":{\"description\":\"Cardiomyocytes are the muscle cells that make up heart tissue\"}},{\"source\":\"epithelial_tissue\",\"target\":\"lungs\",\"type\":\"lines\",\"weight\":1,\"attributes\":{\"description\":\"Epithelial tissue lines the airways of the lungs\"}}],\"metadata\":{\"name\":\"UltraLink Bayesian Network\",\"description\":\"Automatically generated from UltraLink data\",\"variables\":[{\"name\":\"circulatory_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"respiratory_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"nervous_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"skeletal_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"muscular_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"digestive_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"endocrine_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"immune_system\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"heart\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"lungs\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"brain\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"liver\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"kidneys\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"stomach\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"intestines\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"pancreas\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"spleen\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"skull\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"vertebral_column\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"ribcage\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"femur\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"heart_muscle\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"diaphragm\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"biceps_brachii\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"quadriceps\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"aorta\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"coronary_arteries\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"pulmonary_arteries\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"vena_cava\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"spinal_cord\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"vagus_nerve\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"sciatic_nerve\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"hypothalamus\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"neuron\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"red_blood_cell\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"cardiomyocyte\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]},{\"name\":\"epithelial_tissue\",\"type\":\"discrete\",\"states\":[\"true\",\"false\"]}]}}"
+  },
+  "visualization": {
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800\" height=\"600\" viewBox=\"0 0 800 600\">\n        <style>\n          .node circle { stroke: #fff; stroke-width: 1.5px; }\n          .node text { font-family: Arial; font-size: 12px; }\n        </style>\n        <rect width=\"100%\" height=\"100%\" fill=\"#f8f9fa\"/>\n        <g class=\"nodes\">\n          <g class=\"node\" transform=\"translate(50,50)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Circulatory System</text>\n            </g><g class=\"node\" transform=\"translate(200,50)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Respiratory System</text>\n            </g><g class=\"node\" transform=\"translate(350,50)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Nervous System</text>\n            </g><g class=\"node\" transform=\"translate(500,50)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Skeletal System</text>\n            </g><g class=\"node\" transform=\"translate(650,50)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Muscular System</text>\n            </g><g class=\"node\" transform=\"translate(50,150)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Digestive System</text>\n            </g><g class=\"node\" transform=\"translate(200,150)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Endocrine System</text>\n            </g><g class=\"node\" transform=\"translate(350,150)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Immune System</text>\n            </g><g class=\"node\" transform=\"translate(500,150)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Heart</text>\n            </g><g class=\"node\" transform=\"translate(650,150)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Lungs</text>\n            </g><g class=\"node\" transform=\"translate(50,250)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Brain</text>\n            </g><g class=\"node\" transform=\"translate(200,250)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Liver</text>\n            </g><g class=\"node\" transform=\"translate(350,250)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Kidneys</text>\n            </g><g class=\"node\" transform=\"translate(500,250)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Stomach</text>\n            </g><g class=\"node\" transform=\"translate(650,250)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Intestines</text>\n            </g><g class=\"node\" transform=\"translate(50,350)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Pancreas</text>\n            </g><g class=\"node\" transform=\"translate(200,350)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Spleen</text>\n            </g><g class=\"node\" transform=\"translate(350,350)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Skull</text>\n            </g><g class=\"node\" transform=\"translate(500,350)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Vertebral Column (Spine)</text>\n            </g><g class=\"node\" transform=\"translate(650,350)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Ribcage</text>\n            </g><g class=\"node\" transform=\"translate(50,450)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Femur</text>\n            </g><g class=\"node\" transform=\"translate(200,450)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Cardiac Muscle</text>\n            </g><g class=\"node\" transform=\"translate(350,450)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Diaphragm</text>\n            </g><g class=\"node\" transform=\"translate(500,450)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Biceps Brachii</text>\n            </g><g class=\"node\" transform=\"translate(650,450)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Quadriceps Femoris</text>\n            </g><g class=\"node\" transform=\"translate(50,550)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Aorta</text>\n            </g><g class=\"node\" transform=\"translate(200,550)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Coronary Arteries</text>\n            </g><g class=\"node\" transform=\"translate(350,550)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Pulmonary Arteries</text>\n            </g><g class=\"node\" transform=\"translate(500,550)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Vena Cava</text>\n            </g><g class=\"node\" transform=\"translate(650,550)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Spinal Cord</text>\n            </g><g class=\"node\" transform=\"translate(50,650)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Vagus Nerve</text>\n            </g><g class=\"node\" transform=\"translate(200,650)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Sciatic Nerve</text>\n            </g><g class=\"node\" transform=\"translate(350,650)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Hypothalamus</text>\n            </g><g class=\"node\" transform=\"translate(500,650)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Neuron</text>\n            </g><g class=\"node\" transform=\"translate(650,650)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Red Blood Cell (Erythrocyte)</text>\n            </g><g class=\"node\" transform=\"translate(50,750)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Cardiomyocyte</text>\n            </g><g class=\"node\" transform=\"translate(200,750)\">\n              <circle r=\"8\" fill=\"#4285F4\"/>\n              <text dx=\"12\" dy=\".35em\">Epithelial Tissue</text>\n            </g>\n        </g>\n      </svg>"
+  }
+}

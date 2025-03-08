@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brain - HumanAnatomy - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Brain</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>brain</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>organ</td>
+        </tr>
+        
+            <tr>
+              <th>description</th>
+              <td>The central organ of the nervous system, responsible for processing sensory information and controlling bodily functions and behaviors.</td>
+            </tr>
+          
+            <tr>
+              <th>weight</th>
+              <td>1300-1400 grams (average adult)</td>
+            </tr>
+          
+            <tr>
+              <th>location</th>
+              <td>Cranial cavity</td>
+            </tr>
+          
+            <tr>
+              <th>lobes</th>
+              <td>Frontal,Parietal,Temporal,Occipital</td>
+            </tr>
+          
+            <tr>
+              <th>energyUse</th>
+              <td>20% of body's oxygen and calories</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>part_of</strong> → <a href="nervous_system.html">Nervous System</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>description:</strong> The brain is the central organ of the nervous system</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>connects_to</strong> → <a href="spinal_cord.html">Spinal Cord</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>description:</strong> The brain connects to the spinal cord at the brainstem</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="skull.html">Skull</a> → <strong>protects</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>description:</strong> The skull forms a protective case around the brain</div>
+            
+        </div>
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

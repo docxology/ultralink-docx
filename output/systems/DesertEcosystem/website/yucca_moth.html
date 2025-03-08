@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yucca Moth - DesertEcosystem - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Yucca Moth</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>yucca_moth</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Tegeticula yuccasella</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>0.5</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>herbivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>least concern</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Small moth with specialized relationship with Joshua trees and other yuccas.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Specialized mouthparts for collecting pollen,Ovipositor for laying eggs in yucca flowers,Lifecycle synchronized with yucca flowering,Larvae feed only on some yucca seeds, preserving others</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Short lifecycle synchronized with yucca flowering</div>
+            
+              <div><strong>strength:</strong> extreme</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>mutual_dependency</strong> → <a href="joshua_tree.html">Joshua Tree</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>relationship:</strong> obligate reproductive site</div>
+            
+              <div><strong>strength:</strong> extreme</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="joshua_tree.html">Joshua Tree</a> → <strong>mutual_dependency</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>relationship:</strong> obligate reproductive site</div>
+            
+              <div><strong>strength:</strong> extreme</div>
+            
+        </div>
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

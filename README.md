@@ -366,14 +366,22 @@ UltraLink includes a comprehensive test suite that verifies functionality and ge
 ### Running Tests
 
 ```bash
-# Run the full test suite
+# Run the full test suite (excluding performance tests by default)
 npm test
+
+# Run all tests including performance tests
+npm run test:all
+
+# Run only performance tests
+npm run test:performance
+
+# View all test command options
+npm run test:help
 
 # Run specific test categories
 npm run test:unit        # Unit tests only
 npm run test:integration # Integration tests only
 npm run test:e2e         # End-to-end tests only
-npm run test:performance # Performance tests only
 
 # Generate all system-specific renderings
 npm run test:systems

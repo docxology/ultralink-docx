@@ -1,0 +1,29 @@
+source,target,type,description
+circulatory_system,respiratory_system,interacts_with,Blood picks up oxygen and releases carbon dioxide in the lungs
+circulatory_system,nervous_system,regulated_by,Heart rate and blood pressure are regulated by the autonomic nervous system
+muscular_system,skeletal_system,attaches_to,Muscles attach to bones via tendons to enable movement
+heart,circulatory_system,part_of,The heart is the central pump of the circulatory system
+lungs,respiratory_system,part_of,The lungs are the primary organs of the respiratory system
+brain,nervous_system,part_of,The brain is the central organ of the nervous system
+skull,skeletal_system,part_of,The skull is part of the axial skeleton
+liver,digestive_system,part_of,The liver produces bile for digestion and processes nutrients
+kidneys,circulatory_system,interacts_with,The kidneys filter blood to maintain homeostasis
+skull,brain,protects,The skull forms a protective case around the brain
+ribcage,heart,protects,The ribcage forms a protective structure around the heart
+ribcage,lungs,protects,The ribcage forms a protective structure around the lungs
+vertebral_column,spinal_cord,protects,The vertebral column forms a protective tunnel for the spinal cord
+heart,aorta,connects_to,The aorta emerges from the left ventricle of the heart
+heart,vena_cava,connects_to,The vena cava returns blood to the right atrium of the heart
+coronary_arteries,heart,supplies,The coronary arteries deliver oxygenated blood to heart muscle
+pulmonary_arteries,lungs,connects_to,The pulmonary arteries carry deoxygenated blood from the heart to the lungs
+brain,spinal_cord,connects_to,The brain connects to the spinal cord at the brainstem
+vagus_nerve,heart,innervates,The vagus nerve provides parasympathetic innervation to the heart
+vagus_nerve,stomach,innervates,The vagus nerve provides parasympathetic innervation to the stomach
+hypothalamus,endocrine_system,regulates,The hypothalamus produces hormones and controls the pituitary gland
+heart_muscle,heart,composes,The heart is composed primarily of cardiac muscle tissue
+diaphragm,respiratory_system,enables,The diaphragm is the primary muscle of breathing
+biceps_brachii,femur,moves,The biceps brachii flex the forearm at the elbow
+neuron,nervous_system,composes,Neurons are the primary functional cells of the nervous system
+red_blood_cell,circulatory_system,functions_in,Red blood cells transport oxygen throughout the circulatory system
+cardiomyocyte,heart_muscle,composes,Cardiomyocytes are the muscle cells that make up heart tissue
+epithelial_tissue,lungs,lines,Epithelial tissue lines the airways of the lungs

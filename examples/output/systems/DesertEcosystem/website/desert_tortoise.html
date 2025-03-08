@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desert Tortoise - DesertEcosystem - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Desert Tortoise</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>desert_tortoise</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>animal</td>
+        </tr>
+        
+            <tr>
+              <th>scientificName</th>
+              <td>Gopherus agassizii</td>
+            </tr>
+          
+            <tr>
+              <th>lifespan</th>
+              <td>80</td>
+            </tr>
+          
+            <tr>
+              <th>diet</th>
+              <td>herbivore</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>vulnerable</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Long-lived reptile of the Mojave and Sonoran deserts with high-domed shell.</td>
+            </tr>
+          
+            <tr>
+              <th>adaptations</th>
+              <td>Can store water in bladder for extended periods,Digs burrows to escape extreme temperatures,Metabolic adaptations to survive drought,Specialized digestive system for low-quality plant material,Slow metabolism conserves energy</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>adapted_to</strong> → <a href="aridity.html">Aridity</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>adaptationMechanism:</strong> Water storage in bladder</div>
+            
+              <div><strong>strength:</strong> extreme</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>lives_in</strong> → <a href="rocky_slope.html">Rocky Slope</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> seasonal</div>
+            
+              <div><strong>dependency:</strong> medium</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>consumes</strong> → <a href="desert_poppy.html">Desert Poppy</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> seasonal</div>
+            
+              <div><strong>method:</strong> grazing</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="coyote.html">Coyote</a> → <strong>preys_on</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>frequency:</strong> rare</div>
+            
+              <div><strong>method:</strong> opportunistic</div>
+            
+        </div>
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

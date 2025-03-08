@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="functions" for="node" attr.name="functions" attr.type="string"/>
+    <key id="volume" for="node" attr.name="volume" attr.type="string"/>
+    <key id="capacity" for="node" attr.name="capacity" attr.type="string"/>
+    <key id="components" for="node" attr.name="components" attr.type="string"/>
+    <key id="neurons" for="node" attr.name="neurons" attr.type="string"/>
+    <key id="boneCount" for="node" attr.name="boneCount" attr.type="string"/>
+    <key id="muscleCount" for="node" attr.name="muscleCount" attr.type="string"/>
+    <key id="types" for="node" attr.name="types" attr.type="string"/>
+    <key id="length" for="node" attr.name="length" attr.type="string"/>
+    <key id="majorGlands" for="node" attr.name="majorGlands" attr.type="string"/>
+    <key id="weight" for="node" attr.name="weight" attr.type="string"/>
+    <key id="location" for="node" attr.name="location" attr.type="string"/>
+    <key id="chambers" for="node" attr.name="chambers" attr.type="string"/>
+    <key id="beatRate" for="node" attr.name="beatRate" attr.type="string"/>
+    <key id="count" for="node" attr.name="count" attr.type="string"/>
+    <key id="parts" for="node" attr.name="parts" attr.type="string"/>
+    <key id="respirationRate" for="node" attr.name="respirationRate" attr.type="string"/>
+    <key id="lobes" for="node" attr.name="lobes" attr.type="string"/>
+    <key id="energyUse" for="node" attr.name="energyUse" attr.type="string"/>
+    <key id="filterRate" for="node" attr.name="filterRate" attr.type="string"/>
+    <key id="pH" for="node" attr.name="pH" attr.type="string"/>
+    <key id="regions" for="node" attr.name="regions" attr.type="string"/>
+    <key id="smallIntestineLength" for="node" attr.name="smallIntestineLength" attr.type="string"/>
+    <key id="largeIntestineLength" for="node" attr.name="largeIntestineLength" attr.type="string"/>
+    <key id="majorBones" for="node" attr.name="majorBones" attr.type="string"/>
+    <key id="vertebraeCount" for="node" attr.name="vertebraeCount" attr.type="string"/>
+    <key id="ribPairs" for="node" attr.name="ribPairs" attr.type="string"/>
+    <key id="strength" for="node" attr.name="strength" attr.type="string"/>
+    <key id="control" for="node" attr.name="control" attr.type="string"/>
+    <key id="properties" for="node" attr.name="properties" attr.type="string"/>
+    <key id="function" for="node" attr.name="function" attr.type="string"/>
+    <key id="diameter" for="node" attr.name="diameter" attr.type="string"/>
+    <key id="sections" for="node" attr.name="sections" attr.type="string"/>
+    <key id="majorBranches" for="node" attr.name="majorBranches" attr.type="string"/>
+    <key id="branches" for="node" attr.name="branches" attr.type="string"/>
+    <key id="uniqueProperty" for="node" attr.name="uniqueProperty" attr.type="string"/>
+    <key id="number" for="node" attr.name="number" attr.type="string"/>
+    <key id="origin" for="node" attr.name="origin" attr.type="string"/>
+    <key id="shape" for="node" attr.name="shape" attr.type="string"/>
+    <key id="lifespan" for="node" attr.name="lifespan" attr.type="string"/>
+    <key id="width" for="node" attr.name="width" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
+    <node id="circulatory_system">
+      <data key="type">system</data>
+      <data key="name">Circulatory System</data>
+      <data key="description">The system that circulates blood throughout the body, delivering oxygen and nutrients to cells and removing waste products.</data>
+      <data key="functions">Oxygen transport,Nutrient delivery,Waste removal,Hormone transport,Temperature regulation,Immune defense</data>
+      <data key="volume">5 liters of blood (average adult)</data>
+    </node>
+    <node id="respiratory_system">
+      <data key="type">system</data>
+      <data key="name">Respiratory System</data>
+      <data key="description">The system responsible for gas exchange, taking in oxygen and expelling carbon dioxide.</data>
+      <data key="functions">Gas exchange,pH regulation,Voice production,Olfaction support</data>
+      <data key="capacity">4-6 liters (average adult lung capacity)</data>
+    </node>
+    <node id="nervous_system">
+      <data key="type">system</data>
+      <data key="name">Nervous System</data>
+      <data key="description">The complex network that coordinates body activities by transmitting signals between different body parts.</data>
+      <data key="functions">Sensory processing,Motor control,Cognition,Memory,Homeostasis regulation</data>
+      <data key="components">Central nervous system,Peripheral nervous system,Autonomic nervous system</data>
+      <data key="neurons">Approximately 86 billion neurons</data>
+    </node>
+    <node id="skeletal_system">
+      <data key="type">system</data>
+      <data key="name">Skeletal System</data>
+      <data key="description">The framework of bones and connective tissues that supports the body, protects organs, and enables movement.</data>
+      <data key="functions">Structural support,Organ protection,Movement facilitation,Blood cell production,Mineral storage</data>
+      <data key="boneCount">206</data>
+    </node>
+    <node id="muscular_system">
+      <data key="type">system</data>
+      <data key="name">Muscular System</data>
+      <data key="description">The system of muscles that enables movement, maintains posture, and generates heat.</data>
+      <data key="functions">Movement,Posture maintenance,Joint stabilization,Heat production</data>
+      <data key="muscleCount">Over 600 named muscles</data>
+      <data key="types">Skeletal muscle,Smooth muscle,Cardiac muscle</data>
+    </node>
+    <node id="digestive_system">
+      <data key="type">system</data>
+      <data key="name">Digestive System</data>
+      <data key="description">The system that breaks down food into nutrients for absorption and eliminates waste.</data>
+      <data key="functions">Food breakdown,Nutrient absorption,Waste elimination</data>
+      <data key="length">About 9 meters (30 feet) from mouth to anus</data>
+    </node>
+    <node id="endocrine_system">
+      <data key="type">system</data>
+      <data key="name">Endocrine System</data>
+      <data key="description">The collection of glands that produce hormones to regulate metabolism, growth, development, and other functions.</data>
+      <data key="functions">Hormone production,Metabolism regulation,Growth and development,Mood regulation</data>
+      <data key="majorGlands">Pituitary,Thyroid,Parathyroid,Adrenal,Pancreas,Gonads,Pineal</data>
+    </node>
+    <node id="immune_system">
+      <data key="type">system</data>
+      <data key="name">Immune System</data>
+      <data key="description">The complex network that defends the body against pathogens and other threats.</data>
+      <data key="functions">Pathogen defense,Wound healing,Foreign substance detection,Cancer surveillance</data>
+      <data key="components">White blood cells,Antibodies,Lymphatic system,Spleen,Thymus,Bone marrow</data>
+    </node>
+    <node id="heart">
+      <data key="type">organ</data>
+      <data key="name">Heart</data>
+      <data key="description">A muscular organ that pumps blood through the circulatory system by rhythmic contraction and dilation.</data>
+      <data key="weight">250-350 grams</data>
+      <data key="location">Mediastinum, left of midline</data>
+      <data key="chambers">Right atrium,Right ventricle,Left atrium,Left ventricle</data>
+      <data key="beatRate">60-100 beats per minute (at rest)</data>
+    </node>
+    <node id="lungs">
+      <data key="type">organ</data>
+      <data key="name">Lungs</data>
+      <data key="description">The primary organs of respiration, where gas exchange occurs between the air and blood.</data>
+      <data key="count">2</data>
+      <data key="location">Thoracic cavity</data>
+      <data key="parts">Bronchi,Bronchioles,Alveoli,Pleura</data>
+      <data key="respirationRate">12-20 breaths per minute (at rest)</data>
+    </node>
+    <node id="brain">
+      <data key="type">organ</data>
+      <data key="name">Brain</data>
+      <data key="description">The central organ of the nervous system, responsible for processing sensory information and controlling bodily functions and behaviors.</data>
+      <data key="weight">1300-1400 grams (average adult)</data>
+      <data key="location">Cranial cavity</data>
+      <data key="lobes">Frontal,Parietal,Temporal,Occipital</data>
+      <data key="energyUse">20% of body&apos;s oxygen and calories</data>
+    </node>
+    <node id="liver">
+      <data key="type">organ</data>
+      <data key="name">Liver</data>
+      <data key="description">The largest internal organ, performing hundreds of functions including detoxification, protein synthesis, and digestion.</data>
+      <data key="weight">1.5 kg (average adult)</data>
+      <data key="location">Right upper quadrant of abdomen</data>
+      <data key="lobes">Right lobe,Left lobe,Caudate lobe,Quadrate lobe</data>
+      <data key="functions">Detoxification,Bile production,Protein synthesis,Glycogen storage</data>
+    </node>
+    <node id="kidneys">
+      <data key="type">organ</data>
+      <data key="name">Kidneys</data>
+      <data key="description">Bean-shaped organs that filter blood to produce urine, regulate electrolytes, and maintain acid-base balance.</data>
+      <data key="count">2</data>
+      <data key="location">Posterior abdominal wall, retroperitoneal</data>
+      <data key="weight">120-170 grams each</data>
+      <data key="filterRate">About 120-150 quarts of blood daily</data>
+    </node>
+    <node id="stomach">
+      <data key="type">organ</data>
+      <data key="name">Stomach</data>
+      <data key="description">A muscular, hollow organ that holds food and begins the digestion of proteins.</data>
+      <data key="location">Left upper quadrant of abdomen</data>
+      <data key="capacity">1-2 liters</data>
+      <data key="pH">1.5-3.5 (highly acidic)</data>
+      <data key="regions">Cardia,Fundus,Body,Pylorus</data>
+    </node>
+    <node id="intestines">
+      <data key="type">organ</data>
+      <data key="name">Intestines</data>
+      <data key="description">The long, coiled tube where most digestion and nutrient absorption occurs.</data>
+      <data key="parts">Small intestine,Large intestine</data>
+      <data key="smallIntestineLength">6-7 meters</data>
+      <data key="largeIntestineLength">1.5 meters</data>
+      <data key="location">Abdominal cavity</data>
+    </node>
+    <node id="pancreas">
+      <data key="type">organ</data>
+      <data key="name">Pancreas</data>
+      <data key="description">A glandular organ that secretes digestive enzymes and hormones like insulin and glucagon.</data>
+      <data key="location">Retroperitoneal, behind stomach</data>
+      <data key="weight">70-100 grams</data>
+      <data key="functions">Digestive enzyme production,Hormone secretion,Blood glucose regulation</data>
+    </node>
+    <node id="spleen">
+      <data key="type">organ</data>
+      <data key="name">Spleen</data>
+      <data key="description">An organ that filters blood and helps defend against pathogens as part of the immune system.</data>
+      <data key="location">Left upper quadrant of abdomen</data>
+      <data key="weight">150 grams (average adult)</data>
+      <data key="functions">Blood filtration,Old red blood cell removal,Immune response support,Blood storage</data>
+    </node>
+    <node id="skull">
+      <data key="type">bone</data>
+      <data key="name">Skull</data>
+      <data key="description">The bony structure that forms the head, encases the brain, and supports facial structures.</data>
+      <data key="boneCount">22</data>
+      <data key="majorBones">Frontal bone,Parietal bones,Temporal bones,Occipital bone,Sphenoid bone,Ethmoid bone</data>
+      <data key="functions">Brain protection,Facial structure support,Sensory organ housing</data>
+    </node>
+    <node id="vertebral_column">
+      <data key="type">bone</data>
+      <data key="name">Vertebral Column (Spine)</data>
+      <data key="description">The flexible column of vertebrae that protects the spinal cord and supports the head and body.</data>
+      <data key="vertebraeCount">33</data>
+      <data key="regions">Cervical (7),Thoracic (12),Lumbar (5),Sacral (5 fused),Coccygeal (4 fused)</data>
+      <data key="length">70-75 cm (adult)</data>
+    </node>
+    <node id="ribcage">
+      <data key="type">bone</data>
+      <data key="name">Ribcage</data>
+      <data key="description">The bony cage formed by the sternum, ribs, and thoracic vertebrae that protects vital organs.</data>
+      <data key="ribPairs">12</data>
+      <data key="types">True ribs (1-7),False ribs (8-10),Floating ribs (11-12)</data>
+      <data key="functions">Heart and lung protection,Respiratory movement support</data>
+    </node>
+    <node id="femur">
+      <data key="type">bone</data>
+      <data key="name">Femur</data>
+      <data key="description">The thigh bone, the longest and strongest bone in the human body.</data>
+      <data key="count">2</data>
+      <data key="location">Thigh</data>
+      <data key="length">45-50 cm (adult)</data>
+      <data key="strength">Can support 30 times body weight</data>
+    </node>
+    <node id="heart_muscle">
+      <data key="type">muscle</data>
+      <data key="name">Cardiac Muscle</data>
+      <data key="description">Specialized involuntary muscle tissue found only in the heart, allowing for coordinated contractions.</data>
+      <data key="control">Involuntary</data>
+      <data key="properties">Striated,Self-excitable,Resistant to fatigue,Interconnected by intercalated discs</data>
+      <data key="function">Blood pumping through rhythmic contractions</data>
+    </node>
+    <node id="diaphragm">
+      <data key="type">muscle</data>
+      <data key="name">Diaphragm</data>
+      <data key="description">A dome-shaped skeletal muscle that separates the thoracic and abdominal cavities and is essential for breathing.</data>
+      <data key="control">Both voluntary and involuntary</data>
+      <data key="location">Between thoracic and abdominal cavities</data>
+      <data key="function">Primary muscle of respiration</data>
+    </node>
+    <node id="biceps_brachii">
+      <data key="type">muscle</data>
+      <data key="name">Biceps Brachii</data>
+      <data key="description">A large muscle located on the front of the upper arm, primarily responsible for forearm flexion and supination.</data>
+      <data key="control">Voluntary</data>
+      <data key="location">Anterior compartment of the upper arm</data>
+      <data key="function">Forearm flexion and supination</data>
+    </node>
+    <node id="quadriceps">
+      <data key="type">muscle</data>
+      <data key="name">Quadriceps Femoris</data>
+      <data key="description">A group of four muscles on the front of the thigh that extend the knee.</data>
+      <data key="control">Voluntary</data>
+      <data key="location">Anterior thigh</data>
+      <data key="components">Rectus femoris,Vastus lateralis,Vastus medialis,Vastus intermedius</data>
+      <data key="function">Knee extension and hip flexion</data>
+    </node>
+    <node id="aorta">
+      <data key="type">blood_vessel</data>
+      <data key="name">Aorta</data>
+      <data key="description">The largest artery in the body, carrying oxygenated blood from the left ventricle of the heart to the body.</data>
+      <data key="diameter">2.5-3.5 cm</data>
+      <data key="sections">Ascending aorta,Aortic arch,Descending thoracic aorta,Abdominal aorta</data>
+      <data key="function">Distribution of oxygenated blood throughout the body</data>
+    </node>
+    <node id="coronary_arteries">
+      <data key="type">blood_vessel</data>
+      <data key="name">Coronary Arteries</data>
+      <data key="description">The arteries that supply blood to the heart muscle.</data>
+      <data key="majorBranches">Left main coronary artery,Left anterior descending artery,Left circumflex artery,Right coronary artery</data>
+      <data key="function">Blood supply to cardiac muscle</data>
+    </node>
+    <node id="pulmonary_arteries">
+      <data key="type">blood_vessel</data>
+      <data key="name">Pulmonary Arteries</data>
+      <data key="description">The arteries that carry deoxygenated blood from the heart to the lungs.</data>
+      <data key="branches">Right pulmonary artery,Left pulmonary artery</data>
+      <data key="uniqueProperty">One of the few arteries carrying deoxygenated blood</data>
+      <data key="function">Transport of deoxygenated blood to lungs for oxygenation</data>
+    </node>
+    <node id="vena_cava">
+      <data key="type">blood_vessel</data>
+      <data key="name">Vena Cava</data>
+      <data key="description">The largest veins in the body, returning deoxygenated blood to the right atrium of the heart.</data>
+      <data key="components">Superior vena cava,Inferior vena cava</data>
+      <data key="diameter">2-3 cm</data>
+      <data key="function">Return of deoxygenated blood to the heart</data>
+    </node>
+    <node id="spinal_cord">
+      <data key="type">nerve</data>
+      <data key="name">Spinal Cord</data>
+      <data key="description">The cylindrical bundle of nerve fibers that extends from the brain and is protected by the vertebral column.</data>
+      <data key="length">45 cm (average adult)</data>
+      <data key="location">Within the vertebral canal</data>
+      <data key="function">Conduction of neural signals between brain and body, reflex center</data>
+      <data key="components">Grey matter,White matter,Central canal</data>
+    </node>
+    <node id="vagus_nerve">
+      <data key="type">nerve</data>
+      <data key="name">Vagus Nerve</data>
+      <data key="description">The 10th cranial nerve, with the widest distribution in the body, controlling parasympathetic functions.</data>
+      <data key="number">CN X</data>
+      <data key="function">Parasympathetic control of heart, lungs, digestive tract; sensory information from viscera</data>
+      <data key="length">Extends from brainstem to abdomen</data>
+    </node>
+    <node id="sciatic_nerve">
+      <data key="type">nerve</data>
+      <data key="name">Sciatic Nerve</data>
+      <data key="description">The largest and longest nerve in the body, running from the lower back down through the leg.</data>
+      <data key="origin">L4-S3 spinal nerves</data>
+      <data key="function">Motor and sensory innervation of lower limb</data>
+      <data key="diameter">About 2 cm at its widest</data>
+    </node>
+    <node id="hypothalamus">
+      <data key="type">nerve_center</data>
+      <data key="name">Hypothalamus</data>
+      <data key="description">A small region of the brain that coordinates both the autonomic nervous system and the endocrine system.</data>
+      <data key="location">Below thalamus, above brainstem</data>
+      <data key="weight">About 4 grams</data>
+      <data key="functions">Temperature regulation,Hunger and thirst control,Sleep-wake cycles,Hormone production,Autonomic function regulation</data>
+    </node>
+    <node id="neuron">
+      <data key="type">cell</data>
+      <data key="name">Neuron</data>
+      <data key="description">The basic functional unit of the nervous system, specialized for transmitting information.</data>
+      <data key="components">Cell body,Dendrites,Axon,Synaptic terminals</data>
+      <data key="types">Motor neurons,Sensory neurons,Interneurons</data>
+      <data key="function">Signal transmission and processing</data>
+      <data key="count">Approximately 86 billion in the human brain</data>
+    </node>
+    <node id="red_blood_cell">
+      <data key="type">cell</data>
+      <data key="name">Red Blood Cell (Erythrocyte)</data>
+      <data key="description">The most common type of blood cell, responsible for oxygen transport.</data>
+      <data key="shape">Biconcave disc</data>
+      <data key="diameter">7-8 micrometers</data>
+      <data key="lifespan">120 days</data>
+      <data key="count">4.5-5.5 million per microliter of blood</data>
+      <data key="uniqueProperty">No nucleus in mature form</data>
+      <data key="function">Oxygen and carbon dioxide transport</data>
+    </node>
+    <node id="cardiomyocyte">
+      <data key="type">cell</data>
+      <data key="name">Cardiomyocyte</data>
+      <data key="description">Cardiac muscle cells that make up the heart muscle.</data>
+      <data key="length">100 micrometers</data>
+      <data key="width">10-25 micrometers</data>
+      <data key="properties">Striated,Contains many mitochondria,Connected by intercalated discs</data>
+      <data key="function">Heart contraction</data>
+      <data key="uniqueProperty">Can contract without neural stimulation</data>
+    </node>
+    <node id="epithelial_tissue">
+      <data key="type">tissue</data>
+      <data key="name">Epithelial Tissue</data>
+      <data key="description">The tissue that forms the outer layer of the body and lines organs and cavities.</data>
+      <data key="types">Simple squamous,Simple cuboidal,Simple columnar,Stratified squamous,Transitional</data>
+      <data key="functions">Protection,Absorption,Filtration,Secretion</data>
+      <data key="location">Skin surface, organ linings, gland secretory units</data>
+    </node>
+    <edge source="circulatory_system" target="respiratory_system">
+      <data key="relationship_type">interacts_with</data>
+    </edge>
+    <edge source="circulatory_system" target="nervous_system">
+      <data key="relationship_type">regulated_by</data>
+    </edge>
+    <edge source="muscular_system" target="skeletal_system">
+      <data key="relationship_type">attaches_to</data>
+    </edge>
+    <edge source="heart" target="circulatory_system">
+      <data key="relationship_type">part_of</data>
+    </edge>
+    <edge source="lungs" target="respiratory_system">
+      <data key="relationship_type">part_of</data>
+    </edge>
+    <edge source="brain" target="nervous_system">
+      <data key="relationship_type">part_of</data>
+    </edge>
+    <edge source="skull" target="skeletal_system">
+      <data key="relationship_type">part_of</data>
+    </edge>
+    <edge source="liver" target="digestive_system">
+      <data key="relationship_type">part_of</data>
+    </edge>
+    <edge source="kidneys" target="circulatory_system">
+      <data key="relationship_type">interacts_with</data>
+    </edge>
+    <edge source="skull" target="brain">
+      <data key="relationship_type">protects</data>
+    </edge>
+    <edge source="ribcage" target="heart">
+      <data key="relationship_type">protects</data>
+    </edge>
+    <edge source="ribcage" target="lungs">
+      <data key="relationship_type">protects</data>
+    </edge>
+    <edge source="vertebral_column" target="spinal_cord">
+      <data key="relationship_type">protects</data>
+    </edge>
+    <edge source="heart" target="aorta">
+      <data key="relationship_type">connects_to</data>
+    </edge>
+    <edge source="heart" target="vena_cava">
+      <data key="relationship_type">connects_to</data>
+    </edge>
+    <edge source="coronary_arteries" target="heart">
+      <data key="relationship_type">supplies</data>
+    </edge>
+    <edge source="pulmonary_arteries" target="lungs">
+      <data key="relationship_type">connects_to</data>
+    </edge>
+    <edge source="brain" target="spinal_cord">
+      <data key="relationship_type">connects_to</data>
+    </edge>
+    <edge source="vagus_nerve" target="heart">
+      <data key="relationship_type">innervates</data>
+    </edge>
+    <edge source="vagus_nerve" target="stomach">
+      <data key="relationship_type">innervates</data>
+    </edge>
+    <edge source="hypothalamus" target="endocrine_system">
+      <data key="relationship_type">regulates</data>
+    </edge>
+    <edge source="heart_muscle" target="heart">
+      <data key="relationship_type">composes</data>
+    </edge>
+    <edge source="diaphragm" target="respiratory_system">
+      <data key="relationship_type">enables</data>
+    </edge>
+    <edge source="biceps_brachii" target="femur">
+      <data key="relationship_type">moves</data>
+    </edge>
+    <edge source="neuron" target="nervous_system">
+      <data key="relationship_type">composes</data>
+    </edge>
+    <edge source="red_blood_cell" target="circulatory_system">
+      <data key="relationship_type">functions_in</data>
+    </edge>
+    <edge source="cardiomyocyte" target="heart_muscle">
+      <data key="relationship_type">composes</data>
+    </edge>
+    <edge source="epithelial_tissue" target="lungs">
+      <data key="relationship_type">lines</data>
+    </edge>
+  </graph>
+</graphml>

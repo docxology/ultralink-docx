@@ -1,0 +1,343 @@
+;; UltraLink Knowledge Interchange Format (KIF) Export
+;; Generated: 2025-03-08T23:07:33.441Z
+
+;; Meta-knowledge
+(= (creationDate UltraLinkExport) "2025-03-08T23:07:33.441Z")
+(= (entityCount UltraLinkExport) 19)
+(= (relationshipCount UltraLinkExport) 44)
+
+;; Functions
+(deffunction relationshipCount (?x) (length ?kb.relationships))
+
+;; Rules
+(defrule entity-attributes-rule
+    "A rule to infer additional attributes for entities based on their type"
+    (instance ?entity ?type)
+    =>
+    (if (eq ?type Person)
+        then (assert (isAgent ?entity true))))
+
+(forall (?x ?y)
+    (=> (and (adapts_to ?x ?y) (> (efficiency-adapts_to ?x ?y) 0.8))
+        (well-adapted ?x ?y)))
+
+;; Entities and their attributes
+(instance alice Researcher)
+(name alice "Dr. Alice Chen")
+(role alice "Principal Investigator")
+(department alice "Cognitive Science")
+(email alice "alice.chen@example.edu")
+(publications alice 42)
+(expertise alice "[\"active inference\",\"computational neuroscience\",\"bayesian modeling\"]")
+(yearsExperience alice 15)
+
+(instance bob Researcher)
+(name bob "Dr. Bob Smith")
+(role bob "Senior Researcher")
+(department bob "Biology")
+(email bob "bob.smith@example.edu")
+(publications bob 28)
+(expertise bob "[\"ant colony behavior\",\"entomology\",\"swarm intelligence\"]")
+(yearsExperience bob 12)
+
+(instance carol Researcher)
+(name carol "Dr. Carol Jimenez")
+(role carol "Postdoctoral Researcher")
+(department carol "Cognitive Science")
+(email carol "carol.jimenez@example.edu")
+(publications carol 11)
+(expertise carol "[\"active inference\",\"machine learning\",\"cognitive modeling\"]")
+(yearsExperience carol 3)
+
+(instance david Researcher)
+(name david "David Wilson")
+(role david "PhD Student")
+(department david "Biology")
+(email david "david.wilson@example.edu")
+(publications david 3)
+(expertise david "[\"ant colony optimization\",\"collective behavior\",\"stigmergy\"]")
+(yearsExperience david 3)
+
+(instance emma Researcher)
+(name emma "Emma Taylor")
+(role emma "PhD Student")
+(department emma "Computer Science")
+(email emma "emma.taylor@example.edu")
+(publications emma 4)
+(expertise emma "[\"machine learning\",\"reinforcement learning\",\"neural networks\"]")
+(yearsExperience emma 2)
+
+(instance frank Researcher)
+(name frank "Dr. Frank Martinez")
+(role frank "Research Associate")
+(department frank "Mathematics")
+(email frank "frank.martinez@example.edu")
+(publications frank 16)
+(expertise frank "[\"dynamical systems\",\"chaos theory\",\"mathematical modeling\"]")
+(yearsExperience frank 8)
+
+(instance grace Researcher)
+(name grace "Grace Kim")
+(role grace "Lab Technician")
+(department grace "Biology")
+(email grace "grace.kim@example.edu")
+(publications grace 0)
+(expertise grace "[\"ant husbandry\",\"experiment design\",\"data collection\"]")
+(yearsExperience grace 4)
+
+(instance active-inference-model Project)
+(name active-inference-model "Active Inference Modeling of Collective Behavior")
+(status active-inference-model "Active")
+(startDate active-inference-model "2023-01-15")
+(endDate active-inference-model "2025-01-14")
+(funding active-inference-model 750000)
+(fundingSource active-inference-model "National Science Foundation")
+(description active-inference-model "Developing computational models of collective behavior using the Active Inference framework")
+
+(instance ant-colony-study Project)
+(name ant-colony-study "Ant Colony Decision Making Study")
+(status ant-colony-study "Active")
+(startDate ant-colony-study "2023-06-01")
+(endDate ant-colony-study "2024-12-31")
+(funding ant-colony-study 250000)
+(fundingSource ant-colony-study "University Grant")
+(description ant-colony-study "Field study of ant colony decision-making processes in natural environments")
+
+(instance neural-basis Project)
+(name neural-basis "Neural Basis of Active Inference")
+(status neural-basis "Planning")
+(startDate neural-basis "2024-01-01")
+(endDate neural-basis "2026-12-31")
+(funding neural-basis 1200000)
+(fundingSource neural-basis "NIH")
+(description neural-basis "Investigation of neural mechanisms underlying active inference in biological systems")
+
+(instance active-inference Concept)
+(name active-inference "Active Inference")
+(field active-inference "Computational Neuroscience")
+(description active-inference "Framework for understanding perception and action based on free energy minimization")
+(keyPapers active-inference "[\"10.1038/nn.2635\",\"10.1016/j.tics.2009.04.005\"]")
+
+(instance collective-behavior Concept)
+(name collective-behavior "Collective Behavior")
+(field collective-behavior "Biology")
+(description collective-behavior "Emergent properties and dynamics of group behavior in social organisms")
+(keyPapers collective-behavior "[\"10.1016/j.tree.2018.01.003\"]")
+
+(instance swarm-intelligence Concept)
+(name swarm-intelligence "Swarm Intelligence")
+(field swarm-intelligence "Computer Science")
+(description swarm-intelligence "Collective problem-solving abilities emerging from local interactions")
+(keyPapers swarm-intelligence "[\"10.1007/s11721-007-0004-y\"]")
+
+(instance ant-tracking Equipment)
+(name ant-tracking "Ant Tracking System")
+(status ant-tracking "Operational")
+(location ant-tracking "Main Lab")
+(cost ant-tracking 75000)
+(purchaseDate ant-tracking "2023-02-15")
+(maintenanceSchedule ant-tracking "Monthly")
+
+(instance neural-recording Equipment)
+(name neural-recording "Neural Recording Setup")
+(status neural-recording "Operational")
+(location neural-recording "Neuroscience Lab")
+(cost neural-recording 150000)
+(purchaseDate neural-recording "2023-05-01")
+(maintenanceSchedule neural-recording "Weekly")
+
+(instance computation-cluster Equipment)
+(name computation-cluster "High Performance Computing Cluster")
+(status computation-cluster "Operational")
+(location computation-cluster "Server Room")
+(cost computation-cluster 200000)
+(purchaseDate computation-cluster "2022-11-01")
+(maintenanceSchedule computation-cluster "Monthly")
+
+(instance paper-2023a Publication)
+(title paper-2023a "Active Inference Framework for Collective Behavior Analysis")
+(authors paper-2023a "[\"alice\",\"carol\",\"david\"]")
+(journal paper-2023a "Nature Computational Science")
+(year paper-2023a 2023)
+(doi paper-2023a "10.1038/s41467-023-0001-1")
+(citations paper-2023a 15)
+
+(instance paper-2023b Publication)
+(title paper-2023b "Decision Making Patterns in Ant Colonies: A Field Study")
+(authors paper-2023b "[\"bob\",\"emma\",\"frank\"]")
+(journal paper-2023b "Behavioral Ecology")
+(year paper-2023b 2023)
+(doi paper-2023b "10.1093/beheco/2023-0002")
+(citations paper-2023b 8)
+
+(instance paper-2024 Publication)
+(title paper-2024 "Computational Models of Active Inference in Social Insects")
+(authors paper-2024 "[\"alice\",\"bob\",\"carol\",\"david\"]")
+(journal paper-2024 "PLOS Computational Biology")
+(year paper-2024 2024)
+(doi paper-2024 "10.1371/journal.pcbi.2024-0001")
+(citations paper-2024 3)
+
+;; Relationships
+(leads alice active-inference-model)
+(role-leads alice active-inference-model "Principal Investigator")
+(timeCommitment-leads alice active-inference-model 0.4)
+
+(leads bob ant-colony-study)
+(role-leads bob ant-colony-study "Principal Investigator")
+(timeCommitment-leads bob ant-colony-study 0.5)
+
+(contributes carol active-inference-model)
+(role-contributes carol active-inference-model "Lead Developer")
+(timeCommitment-contributes carol active-inference-model 0.6)
+
+(contributes david active-inference-model)
+(role-contributes david active-inference-model "Data Analyst")
+(timeCommitment-contributes david active-inference-model 0.8)
+
+(contributes emma ant-colony-study)
+(role-contributes emma ant-colony-study "Field Researcher")
+(timeCommitment-contributes emma ant-colony-study 0.7)
+
+(contributes frank ant-colony-study)
+(role-contributes frank ant-colony-study "Lab Manager")
+(timeCommitment-contributes frank ant-colony-study 0.3)
+
+(contributes_to bob active-inference-model)
+(role-contributes_to bob active-inference-model "Co-Investigator")
+(startDate-contributes_to bob active-inference-model "2022-03-15")
+
+(contributes_to carol active-inference-model)
+(role-contributes_to carol active-inference-model "Lead Researcher")
+(startDate-contributes_to carol active-inference-model "2022-09-01")
+
+(contributes_to david ant-colony-study)
+(role-contributes_to david ant-colony-study "Behavioral Consultant")
+(startDate-contributes_to david ant-colony-study "2024-02-10")
+(timeCommitment-contributes_to david ant-colony-study "25%")
+
+(contributes_to grace ant-colony-study)
+(role-contributes_to grace ant-colony-study "Lab Technician")
+(startDate-contributes_to grace ant-colony-study "2023-01-10")
+
+(contributes_to frank ant-colony-study)
+(role-contributes_to frank ant-colony-study "Mathematical Modeling")
+(startDate-contributes_to frank ant-colony-study "2022-11-15")
+
+(contributes_to emma ant-colony-study)
+(role-contributes_to emma ant-colony-study "Algorithm Developer")
+(startDate-contributes_to emma ant-colony-study "2024-01-05")
+
+(mentors alice david)
+(startDate-mentors alice david "2022-09-01")
+
+(mentors bob emma)
+(startDate-mentors bob emma "2022-09-01")
+
+(mentors alice carol)
+(startDate-mentors alice carol "2023-01-15")
+
+(co_advises frank emma)
+(startDate-co_advises frank emma "2022-09-01")
+
+(reports_to carol alice)
+(startDate-reports_to carol alice "2022-01-15")
+
+(reports_to david bob)
+(startDate-reports_to david bob "2021-09-01")
+
+(reports_to emma alice)
+(startDate-reports_to emma alice "2022-09-01")
+
+(reports_to grace bob)
+(startDate-reports_to grace bob "2020-05-15")
+
+(applies active-inference-model active-inference)
+(centrality-applies active-inference-model active-inference "Core")
+(innovation-applies active-inference-model active-inference "Novel application to collective behavior")
+
+(applies ant-colony-study collective-behavior)
+(centrality-applies ant-colony-study collective-behavior "Core")
+(innovation-applies ant-colony-study collective-behavior "Field validation of theoretical predictions")
+
+(relates_to active-inference collective-behavior)
+(relationship-relates_to active-inference collective-behavior "Theoretical framework application")
+(strength-relates_to active-inference collective-behavior "Strong")
+
+(uses ant-colony-study ant-tracking)
+(frequency-uses ant-colony-study ant-tracking "Daily")
+(priority-uses ant-colony-study ant-tracking "High")
+
+(uses active-inference-model computation-cluster)
+(frequency-uses active-inference-model computation-cluster "Continuous")
+(priority-uses active-inference-model computation-cluster "High")
+
+(uses neural-basis neural-recording)
+(frequency-uses neural-basis neural-recording "Daily")
+(priority-uses neural-basis neural-recording "High")
+
+(authored alice paper-2023a)
+(contributionType-authored alice paper-2023a "corresponding author")
+(contributionPercentage-authored alice paper-2023a 40)
+
+(authored bob paper-2023a)
+(contributionType-authored bob paper-2023a "co-author")
+(contributionPercentage-authored bob paper-2023a 30)
+
+(authored carol paper-2023a)
+(contributionType-authored carol paper-2023a "co-author")
+(contributionPercentage-authored carol paper-2023a 30)
+
+(authored bob paper-2023b)
+(contributionType-authored bob paper-2023b "corresponding author")
+(contributionPercentage-authored bob paper-2023b 50)
+
+(authored emma paper-2023b)
+(contributionType-authored emma paper-2023b "co-author")
+(contributionPercentage-authored emma paper-2023b 30)
+
+(authored frank paper-2023b)
+(contributionType-authored frank paper-2023b "co-author")
+(contributionPercentage-authored frank paper-2023b 20)
+
+(authored alice paper-2024)
+(contributionType-authored alice paper-2024 "co-author")
+(contributionPercentage-authored alice paper-2024 25)
+
+(authored bob paper-2024)
+(contributionType-authored bob paper-2024 "co-author")
+(contributionPercentage-authored bob paper-2024 30)
+
+(authored carol paper-2024)
+(contributionType-authored carol paper-2024 "co-author")
+(contributionPercentage-authored carol paper-2024 30)
+
+(authored david paper-2024)
+(contributionType-authored david paper-2024 "co-author")
+(contributionPercentage-authored david paper-2024 30)
+
+(authored grace paper-2024)
+(contributionType-authored grace paper-2024 "co-author")
+(contributionPercentage-authored grace paper-2024 20)
+
+(results_from paper-2023a active-inference-model)
+(contribution-results_from paper-2023a active-inference-model "Primary theoretical framework")
+
+(results_from paper-2023b ant-colony-study)
+(contribution-results_from paper-2023b ant-colony-study "Initial field study findings")
+
+(results_from paper-2024 active-inference-model)
+(contribution-results_from paper-2024 active-inference-model "Computational modeling results")
+
+(results_from paper-2024 ant-colony-study)
+(contribution-results_from paper-2024 ant-colony-study "Empirical validation")
+
+(discusses paper-2023a active-inference)
+(depth-discusses paper-2023a active-inference "comprehensive")
+
+(discusses paper-2023b collective-behavior)
+(depth-discusses paper-2023b collective-behavior "substantial")
+
+(discusses paper-2024 swarm-intelligence)
+(depth-discusses paper-2024 swarm-intelligence "comprehensive")
+

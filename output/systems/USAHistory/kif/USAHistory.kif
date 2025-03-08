@@ -1,0 +1,653 @@
+;; UltraLink Knowledge Interchange Format (KIF) Export
+;; Generated: 2025-03-08T22:42:12.740Z
+
+;; Meta-knowledge
+(= (creationDate UltraLinkExport) "2025-03-08T22:42:12.740Z")
+(= (entityCount UltraLinkExport) 69)
+(= (relationshipCount UltraLinkExport) 66)
+
+;; Functions
+(deffunction relationshipCount (?x) (length ?kb.relationships))
+
+;; Rules
+(defrule entity-attributes-rule
+    "A rule to infer additional attributes for entities based on their type"
+    (instance ?entity ?type)
+    =>
+    (if (eq ?type Person)
+        then (assert (isAgent ?entity true))))
+
+(forall (?x ?y)
+    (=> (and (adapts_to ?x ?y) (> (efficiency-adapts_to ?x ?y) 0.8))
+        (well-adapted ?x ?y)))
+
+;; Entities and their attributes
+(instance colonial-period Time_period)
+(name colonial-period "Colonial Period")
+(startYear colonial-period 1607)
+(endYear colonial-period 1776)
+(description colonial-period "Period of American colonization by European powers, primarily Great Britain")
+
+(instance revolutionary-war Time_period)
+(name revolutionary-war "American Revolution")
+(startYear revolutionary-war 1775)
+(endYear revolutionary-war 1783)
+(description revolutionary-war "War for independence from Great Britain")
+
+(instance early-republic Time_period)
+(name early-republic "Early Republic")
+(startYear early-republic 1783)
+(endYear early-republic 1815)
+(description early-republic "Formation and early development of the United States government")
+
+(instance antebellum Time_period)
+(name antebellum "Antebellum Era")
+(startYear antebellum 1815)
+(endYear antebellum 1861)
+(description antebellum "Period of growth and division leading to the Civil War")
+
+(instance civil-war Time_period)
+(name civil-war "Civil War")
+(startYear civil-war 1861)
+(endYear civil-war 1865)
+(description civil-war "War between the Union and Confederate states")
+
+(instance reconstruction Time_period)
+(name reconstruction "Reconstruction")
+(startYear reconstruction 1865)
+(endYear reconstruction 1877)
+(description reconstruction "Post-Civil War rebuilding and integration of Southern states")
+
+(instance gilded-age Time_period)
+(name gilded-age "Gilded Age")
+(startYear gilded-age 1877)
+(endYear gilded-age 1900)
+(description gilded-age "Era of rapid economic growth, industrialization, and wealth inequality")
+
+(instance progressive-era Time_period)
+(name progressive-era "Progressive Era")
+(startYear progressive-era 1900)
+(endYear progressive-era 1920)
+(description progressive-era "Period of social activism and political reform")
+
+(instance roaring-twenties Time_period)
+(name roaring-twenties "Roaring Twenties")
+(startYear roaring-twenties 1920)
+(endYear roaring-twenties 1929)
+(description roaring-twenties "Period of economic prosperity and cultural dynamism")
+
+(instance great-depression Time_period)
+(name great-depression "Great Depression")
+(startYear great-depression 1929)
+(endYear great-depression 1941)
+(description great-depression "Severe economic downturn causing high unemployment and economic hardship")
+
+(instance world-war-2 Time_period)
+(name world-war-2 "World War II")
+(startYear world-war-2 1941)
+(endYear world-war-2 1945)
+(description world-war-2 "American involvement in the global conflict")
+
+(instance cold-war Time_period)
+(name cold-war "Cold War")
+(startYear cold-war 1945)
+(endYear cold-war 1991)
+(description cold-war "Geopolitical tension between the United States and Soviet Union")
+
+(instance civil-rights Time_period)
+(name civil-rights "Civil Rights Movement")
+(startYear civil-rights 1954)
+(endYear civil-rights 1968)
+(description civil-rights "Movement for racial equality and ending discrimination")
+
+(instance modern-era Time_period)
+(name modern-era "Modern Era")
+(startYear modern-era 1991)
+(endYear modern-era 2023)
+(description modern-era "Post-Cold War period to present day")
+
+(instance jamestown-founding Event)
+(name jamestown-founding "Founding of Jamestown")
+(date jamestown-founding "1607-05-14")
+(location jamestown-founding "Virginia")
+(description jamestown-founding "First permanent English settlement in North America")
+(significance jamestown-founding "Established English presence in North America")
+(vector jamestown-founding "[-0.12,0.35,0.02,0.41,-0.18,0.22]")
+
+(instance plymouth-colony Event)
+(name plymouth-colony "Plymouth Colony Established")
+(date plymouth-colony "1620-12-21")
+(location plymouth-colony "Massachusetts")
+(description plymouth-colony "Pilgrims establish Plymouth Colony after arriving on the Mayflower")
+(significance plymouth-colony "Early religious settlement that shaped New England culture")
+(vector plymouth-colony "[-0.1,0.32,0.05,0.4,-0.15,0.25]")
+
+(instance declaration-independence Event)
+(name declaration-independence "Declaration of Independence")
+(date declaration-independence "1776-07-04")
+(location declaration-independence "Philadelphia, Pennsylvania")
+(description declaration-independence "Formal declaration of independence from Great Britain")
+(significance declaration-independence "Foundational document establishing American independence")
+(keywords declaration-independence "[\"independence\",\"liberty\",\"revolution\",\"rights\"]")
+(vector declaration-independence "[0.45,0.28,0.34,0.12,0.22,-0.15]")
+
+(instance constitutional-convention Event)
+(name constitutional-convention "Constitutional Convention")
+(date constitutional-convention "1787-05-25")
+(endDate constitutional-convention "1787-09-17")
+(location constitutional-convention "Philadelphia, Pennsylvania")
+(description constitutional-convention "Convention to create a new constitution for the United States")
+(significance constitutional-convention "Created the United States Constitution")
+(keywords constitutional-convention "[\"constitution\",\"government\",\"federalism\",\"compromise\"]")
+(vector constitutional-convention "[0.42,0.25,0.38,0.1,0.24,-0.12]")
+
+(instance louisiana-purchase Event)
+(name louisiana-purchase "Louisiana Purchase")
+(date louisiana-purchase "1803-04-30")
+(location louisiana-purchase "Paris, France")
+(description louisiana-purchase "Purchase of the Louisiana Territory from France")
+(significance louisiana-purchase "Doubled the size of the United States")
+(keywords louisiana-purchase "[\"expansion\",\"territory\",\"Jefferson\",\"Napoleon\"]")
+(vector louisiana-purchase "[0.05,0.42,-0.15,0.28,0.33,0.22]")
+
+(instance civil-war-start Event)
+(name civil-war-start "Civil War Begins")
+(date civil-war-start "1861-04-12")
+(location civil-war-start "Fort Sumter, South Carolina")
+(description civil-war-start "Confederate forces attack Fort Sumter, beginning the Civil War")
+(significance civil-war-start "Started the bloodiest conflict in American history")
+(keywords civil-war-start "[\"war\",\"slavery\",\"secession\",\"conflict\"]")
+(vector civil-war-start "[-0.35,-0.22,-0.42,-0.18,-0.3,-0.25]")
+
+(instance emancipation-proclamation Event)
+(name emancipation-proclamation "Emancipation Proclamation")
+(date emancipation-proclamation "1863-01-01")
+(location emancipation-proclamation "Washington, D.C.")
+(description emancipation-proclamation "Lincoln declares slaves in Confederate states to be free")
+(significance emancipation-proclamation "Changed the character of the Civil War and began the process of ending slavery")
+(keywords emancipation-proclamation "[\"slavery\",\"freedom\",\"Lincoln\",\"abolition\"]")
+(vector emancipation-proclamation "[0.48,0.3,0.38,0.15,0.25,-0.1]")
+
+(instance civil-war-end Event)
+(name civil-war-end "Civil War Ends")
+(date civil-war-end "1865-04-09")
+(location civil-war-end "Appomattox Court House, Virginia")
+(description civil-war-end "General Lee surrenders to General Grant, effectively ending the Civil War")
+(significance civil-war-end "Ended the Civil War and preserved the Union")
+(keywords civil-war-end "[\"surrender\",\"war end\",\"Lee\",\"Grant\",\"reconciliation\"]")
+(vector civil-war-end "[0.1,0.15,0.2,0.3,0.25,0.22]")
+
+(instance womens-suffrage Event)
+(name womens-suffrage "19th Amendment")
+(date womens-suffrage "1920-08-18")
+(location womens-suffrage "United States")
+(description womens-suffrage "Constitutional amendment giving women the right to vote")
+(significance womens-suffrage "Major achievement for women's rights and democracy")
+(keywords womens-suffrage "[\"women\",\"voting\",\"rights\",\"suffrage\",\"equality\"]")
+(vector womens-suffrage "[0.46,0.32,0.33,0.14,0.26,-0.12]")
+
+(instance stock-market-crash Event)
+(name stock-market-crash "Stock Market Crash")
+(date stock-market-crash "1929-10-29")
+(location stock-market-crash "New York, New York")
+(description stock-market-crash "Stock market crashes, triggering the Great Depression")
+(significance stock-market-crash "Led to the worst economic crisis in American history")
+(keywords stock-market-crash "[\"depression\",\"economy\",\"crash\",\"financial\",\"poverty\"]")
+(vector stock-market-crash "[-0.32,-0.18,-0.38,-0.25,-0.28,-0.2]")
+
+(instance pearl-harbor Event)
+(name pearl-harbor "Attack on Pearl Harbor")
+(date pearl-harbor "1941-12-07")
+(location pearl-harbor "Pearl Harbor, Hawaii")
+(description pearl-harbor "Japanese forces attack the US Naval base at Pearl Harbor")
+(significance pearl-harbor "Brought the United States into World War II")
+(keywords pearl-harbor "[\"war\",\"Japan\",\"attack\",\"World War II\",\"Roosevelt\"]")
+(vector pearl-harbor "[-0.38,-0.28,-0.42,-0.2,-0.32,-0.3]")
+
+(instance mlk-speech Event)
+(name mlk-speech "I Have a Dream Speech")
+(date mlk-speech "1963-08-28")
+(location mlk-speech "Washington, D.C.")
+(description mlk-speech "Martin Luther King Jr. delivers his famous speech during the March on Washington")
+(significance mlk-speech "Defining moment in the Civil Rights Movement")
+(keywords mlk-speech "[\"civil rights\",\"equality\",\"King\",\"dream\",\"racial justice\"]")
+(vector mlk-speech "[0.5,0.35,0.4,0.18,0.28,-0.08]")
+
+(instance moon-landing Event)
+(name moon-landing "Moon Landing")
+(date moon-landing "1969-07-20")
+(location moon-landing "Moon")
+(description moon-landing "NASA's Apollo 11 mission lands humans on the Moon")
+(significance moon-landing "Major achievement in space exploration and technology")
+(keywords moon-landing "[\"space\",\"NASA\",\"Apollo\",\"Armstrong\",\"technology\"]")
+(vector moon-landing "[0.25,0.45,0.05,0.38,0.15,0.42]")
+
+(instance september-11 Event)
+(name september-11 "September 11 Attacks")
+(date september-11 "2001-09-11")
+(location september-11 "New York, Washington D.C., Pennsylvania")
+(description september-11 "Terrorist attacks using hijacked airplanes")
+(significance september-11 "Deadliest terrorist attack in history, led to major changes in US foreign policy")
+(keywords september-11 "[\"terrorism\",\"attack\",\"security\",\"war on terror\",\"tragedy\"]")
+(vector september-11 "[-0.42,-0.35,-0.48,-0.25,-0.38,-0.32]")
+
+(instance obama-election Event)
+(name obama-election "Barack Obama Elected President")
+(date obama-election "2008-11-04")
+(location obama-election "United States")
+(description obama-election "Barack Obama elected as first African American president of the United States")
+(significance obama-election "Historic milestone in American race relations and politics")
+(keywords obama-election "[\"election\",\"Obama\",\"presidency\",\"African American\",\"milestone\"]")
+(vector obama-election "[0.42,0.3,0.35,0.2,0.28,0.15]")
+
+(instance washington Person)
+(name washington "George Washington")
+(birth washington "1732-02-22")
+(death washington "1799-12-14")
+(role washington "Military leader, 1st President")
+(significance washington "Led Continental Army, first US President, established presidential precedents")
+(keywords washington "[\"president\",\"revolutionary war\",\"founding father\",\"Mount Vernon\"]")
+(vector washington "[0.4,0.32,0.28,0.25,0.38,0.22]")
+
+(instance jefferson Person)
+(name jefferson "Thomas Jefferson")
+(birth jefferson "1743-04-13")
+(death jefferson "1826-07-04")
+(role jefferson "Statesman, 3rd President")
+(significance jefferson "Authored Declaration of Independence, expanded US territory, founded University of Virginia")
+(keywords jefferson "[\"declaration\",\"president\",\"founding father\",\"Monticello\",\"Louisiana Purchase\"]")
+(vector jefferson "[0.38,0.35,0.32,0.3,0.25,0.18]")
+
+(instance lincoln Person)
+(name lincoln "Abraham Lincoln")
+(birth lincoln "1809-02-12")
+(death lincoln "1865-04-15")
+(role lincoln "16th President")
+(significance lincoln "Preserved the Union during Civil War, emancipated slaves, modernized economy")
+(keywords lincoln "[\"civil war\",\"emancipation\",\"Gettysburg\",\"assassination\",\"union\"]")
+(vector lincoln "[0.42,0.36,0.3,0.28,0.32,0.15]")
+
+(instance douglass Person)
+(name douglass "Frederick Douglass")
+(birth douglass "1818-02-01")
+(death douglass "1895-02-20")
+(role douglass "Abolitionist, Writer")
+(significance douglass "Escaped slave who became leading abolitionist and advocate for equality")
+(keywords douglass "[\"abolition\",\"slavery\",\"civil rights\",\"orator\",\"writer\"]")
+(vector douglass "[0.44,0.36,0.34,0.25,0.3,0.12]")
+
+(instance roosevelt-fdr Person)
+(name roosevelt-fdr "Franklin D. Roosevelt")
+(birth roosevelt-fdr "1882-01-30")
+(death roosevelt-fdr "1945-04-12")
+(role roosevelt-fdr "32nd President")
+(significance roosevelt-fdr "Led US through Great Depression and most of World War II, established New Deal programs")
+(keywords roosevelt-fdr "[\"New Deal\",\"depression\",\"World War II\",\"polio\",\"four terms\"]")
+(vector roosevelt-fdr "[0.4,0.34,0.3,0.25,0.35,0.2]")
+
+(instance mlk Person)
+(name mlk "Martin Luther King Jr.")
+(birth mlk "1929-01-15")
+(death mlk "1968-04-04")
+(role mlk "Civil Rights Leader")
+(significance mlk "Led nonviolent civil rights movement, advocated for racial equality")
+(keywords mlk "[\"civil rights\",\"nonviolence\",\"dream speech\",\"equality\",\"Nobel Peace Prize\"]")
+(vector mlk "[0.48,0.38,0.42,0.3,0.35,0.15]")
+
+(instance democracy Concept)
+(name democracy "Democracy")
+(description democracy "System of government by the people, typically through elected representatives")
+(keywords democracy "[\"voting\",\"representation\",\"elections\",\"governance\",\"people\"]")
+(vector democracy "[0.35,0.3,0.4,0.25,0.32,0.22]")
+
+(instance slavery Concept)
+(name slavery "Slavery")
+(description slavery "System of forced labor where people are owned as property")
+(keywords slavery "[\"bondage\",\"plantation\",\"abolition\",\"slaves\",\"human property\"]")
+(vector slavery "[-0.4,-0.32,-0.45,-0.38,-0.42,-0.3]")
+
+(instance manifest-destiny Concept)
+(name manifest-destiny "Manifest Destiny")
+(description manifest-destiny "Belief that American settlers were destined to expand across North America")
+(keywords manifest-destiny "[\"expansion\",\"westward\",\"territory\",\"settlement\",\"imperialism\"]")
+(vector manifest-destiny "[0.1,0.38,-0.05,0.42,0.25,0.3]")
+
+(instance civil-rights-concept Concept)
+(name civil-rights-concept "Civil Rights")
+(description civil-rights-concept "Rights to personal liberty and equality under the law")
+(keywords civil-rights-concept "[\"equality\",\"rights\",\"discrimination\",\"freedom\",\"justice\"]")
+(vector civil-rights-concept "[0.46,0.35,0.42,0.28,0.32,0.15]")
+
+(instance american-dream Concept)
+(name american-dream "American Dream")
+(description american-dream "Belief that anyone can achieve success and prosperity through hard work")
+(keywords american-dream "[\"opportunity\",\"success\",\"prosperity\",\"upward mobility\",\"work ethic\"]")
+(vector american-dream "[0.35,0.42,0.3,0.25,0.28,0.38]")
+
+(instance declaration-doc Document)
+(name declaration-doc "Declaration of Independence")
+(date declaration-doc "1776-07-04")
+(authors declaration-doc "[\"Thomas Jefferson\",\"Continental Congress\"]")
+(description declaration-doc "Document declaring the thirteen American colonies as independent sovereign states")
+(significance declaration-doc "Foundational document of the United States")
+(keywords declaration-doc "[\"independence\",\"liberty\",\"rights\",\"revolution\",\"Jefferson\"]")
+(vector declaration-doc "[0.45,0.3,0.35,0.15,0.25,-0.1]")
+
+(instance constitution-doc Document)
+(name constitution-doc "United States Constitution")
+(date constitution-doc "1787-09-17")
+(authors constitution-doc "[\"Constitutional Convention Delegates\"]")
+(description constitution-doc "Supreme law of the United States establishing the structure of the federal government")
+(significance constitution-doc "Foundational legal document of the United States")
+(keywords constitution-doc "[\"government\",\"law\",\"rights\",\"federalism\",\"branches\"]")
+(vector constitution-doc "[0.42,0.28,0.38,0.12,0.22,-0.08]")
+
+(instance gettysburg-address Document)
+(name gettysburg-address "Gettysburg Address")
+(date gettysburg-address "1863-11-19")
+(authors gettysburg-address "[\"Abraham Lincoln\"]")
+(description gettysburg-address "Speech given by President Lincoln during the Civil War")
+(significance gettysburg-address "Redefined the purpose of the Civil War and American democracy")
+(keywords gettysburg-address "[\"civil war\",\"liberty\",\"democracy\",\"equality\",\"Lincoln\"]")
+(vector gettysburg-address "[0.44,0.32,0.36,0.18,0.28,-0.05]")
+
+(instance democracy-1776 Temporal_snapshot)
+(entityId democracy-1776 "democracy")
+(timestamp democracy-1776 "1776")
+(popularity democracy-1776 0.4)
+(global_influence democracy-1776 0.2)
+(description democracy-1776 "Democracy at founding of United States")
+
+(instance democracy-1800 Temporal_snapshot)
+(entityId democracy-1800 "democracy")
+(timestamp democracy-1800 "1800")
+(popularity democracy-1800 0.5)
+(global_influence democracy-1800 0.3)
+(description democracy-1800 "Democracy in early republic era")
+
+(instance democracy-1850 Temporal_snapshot)
+(entityId democracy-1850 "democracy")
+(timestamp democracy-1850 "1850")
+(popularity democracy-1850 0.6)
+(global_influence democracy-1850 0.4)
+(description democracy-1850 "Democracy in pre-Civil War America")
+
+(instance democracy-1900 Temporal_snapshot)
+(entityId democracy-1900 "democracy")
+(timestamp democracy-1900 "1900")
+(popularity democracy-1900 0.7)
+(global_influence democracy-1900 0.5)
+(description democracy-1900 "Democracy during Progressive Era")
+
+(instance democracy-1950 Temporal_snapshot)
+(entityId democracy-1950 "democracy")
+(timestamp democracy-1950 "1950")
+(popularity democracy-1950 0.8)
+(global_influence democracy-1950 0.7)
+(description democracy-1950 "Democracy during Cold War")
+
+(instance democracy-2000 Temporal_snapshot)
+(entityId democracy-2000 "democracy")
+(timestamp democracy-2000 "2000")
+(popularity democracy-2000 0.9)
+(global_influence democracy-2000 0.8)
+(description democracy-2000 "Democracy in modern era")
+
+(instance democracy-2020 Temporal_snapshot)
+(entityId democracy-2020 "democracy")
+(timestamp democracy-2020 "2020")
+(popularity democracy-2020 0.85)
+(global_influence democracy-2020 0.75)
+(description democracy-2020 "Democracy in contemporary America")
+
+(instance slavery-1700 Temporal_snapshot)
+(entityId slavery-1700 "slavery")
+(timestamp slavery-1700 "1700")
+(acceptance slavery-1700 0.8)
+(economic_importance slavery-1700 0.7)
+(description slavery-1700 "Slavery in colonial America")
+
+(instance slavery-1776 Temporal_snapshot)
+(entityId slavery-1776 "slavery")
+(timestamp slavery-1776 "1776")
+(acceptance slavery-1776 0.7)
+(economic_importance slavery-1776 0.8)
+(description slavery-1776 "Slavery at founding of United States")
+
+(instance slavery-1800 Temporal_snapshot)
+(entityId slavery-1800 "slavery")
+(timestamp slavery-1800 "1800")
+(acceptance slavery-1800 0.65)
+(economic_importance slavery-1800 0.85)
+(description slavery-1800 "Slavery during early republic")
+
+(instance slavery-1850 Temporal_snapshot)
+(entityId slavery-1850 "slavery")
+(timestamp slavery-1850 "1850")
+(acceptance slavery-1850 0.5)
+(economic_importance slavery-1850 0.8)
+(description slavery-1850 "Slavery during antebellum period")
+
+(instance slavery-1863 Temporal_snapshot)
+(entityId slavery-1863 "slavery")
+(timestamp slavery-1863 "1863")
+(acceptance slavery-1863 0.3)
+(economic_importance slavery-1863 0.6)
+(description slavery-1863 "Slavery during Civil War")
+
+(instance slavery-1870 Temporal_snapshot)
+(entityId slavery-1870 "slavery")
+(timestamp slavery-1870 "1870")
+(acceptance slavery-1870 0.1)
+(economic_importance slavery-1870 0.1)
+(description slavery-1870 "Slavery after emancipation")
+
+(instance founding-era Historical_snapshot)
+(date founding-era "1789-04-30")
+(description founding-era "Beginning of George Washington's presidency")
+(significance founding-era "Start of the Constitutional government of the United States")
+
+(instance pre-civil-war Historical_snapshot)
+(date pre-civil-war "1860-11-06")
+(description pre-civil-war "Election of Abraham Lincoln")
+(significance pre-civil-war "Event that triggered secession of Southern states")
+
+(instance civil-rights-era Historical_snapshot)
+(date civil-rights-era "1964-07-02")
+(description civil-rights-era "Civil Rights Act of 1964")
+(significance civil-rights-era "Landmark civil rights legislation")
+
+(instance post-cold-war Historical_snapshot)
+(date post-cold-war "1991-12-26")
+(description post-cold-war "Dissolution of the Soviet Union")
+(significance post-cold-war "End of the Cold War and beginning of a new geopolitical era")
+
+(instance ideological-space Vector_space)
+(name ideological-space "Ideological Positions")
+(description ideological-space "Ideological positions and political philosophies")
+(dimensions ideological-space "[\"individual_liberty\",\"equality\",\"government_role\",\"tradition\",\"progress\",\"isolationism\"]")
+
+(instance social-values-space Vector_space)
+(name social-values-space "Social Values")
+(description social-values-space "Social and cultural values across time")
+(dimensions social-values-space "[\"individualism\",\"community\",\"diversity\",\"spirituality\",\"materialism\",\"civic_duty\"]")
+
+(instance founding-principles-cluster Semantic_cluster)
+(name founding-principles-cluster "Founding Principles")
+(centerVector founding-principles-cluster "[0.4,0.35,0.25,0.3,0.25,0.1]")
+(vectorSpace founding-principles-cluster "ideological-space")
+(description founding-principles-cluster "Cluster representing founding principles of American democracy")
+
+(instance civil-rights-cluster Semantic_cluster)
+(name civil-rights-cluster "Civil Rights Movement")
+(centerVector civil-rights-cluster "[0.45,0.4,0.3,0.2,0.35,0.15]")
+(vectorSpace civil-rights-cluster "ideological-space")
+(description civil-rights-cluster "Cluster representing civil rights movement principles")
+
+(instance economic-development-cluster Semantic_cluster)
+(name economic-development-cluster "Economic Development")
+(centerVector economic-development-cluster "[0.3,0.25,0.35,0.25,0.3,0.25]")
+(vectorSpace economic-development-cluster "ideological-space")
+(description economic-development-cluster "Cluster representing economic development principles")
+
+(instance democracy-rights-similarity Similarity_analysis)
+(name democracy-rights-similarity "Democracy and Civil Rights Relationship")
+(entities democracy-rights-similarity "[\"democracy\",\"civil-rights-concept\"]")
+(similarity democracy-rights-similarity 0.85)
+(interpretation democracy-rights-similarity "Strong conceptual link between democratic governance and civil rights")
+
+(instance liberty-dream-similarity Similarity_analysis)
+(name liberty-dream-similarity "Liberty and American Dream Relationship")
+(entities liberty-dream-similarity "[\"declaration-independence\",\"american-dream\"]")
+(similarity liberty-dream-similarity 0.78)
+(interpretation liberty-dream-similarity "American founding principles closely aligned with aspirational values")
+
+(instance democracy-evolution Concept_drift)
+(name democracy-evolution "Evolution of Democracy")
+(concept democracy-evolution "democracy")
+(startPoint democracy-evolution "1776")
+(endPoint democracy-evolution "2020")
+(drift democracy-evolution 0.35)
+(interpretation democracy-evolution "Significant expansion of democratic concepts to include broader participation")
+
+(instance equality-evolution Concept_drift)
+(name equality-evolution "Evolution of Equality")
+(concept equality-evolution "civil-rights-concept")
+(startPoint equality-evolution "1776")
+(endPoint equality-evolution "2020")
+(drift equality-evolution 0.62)
+(interpretation equality-evolution "Major transformation in understanding of equality across demographic groups")
+
+;; Relationships
+(occurred_during jamestown-founding colonial-period)
+
+(occurred_during plymouth-colony colonial-period)
+
+(occurred_during declaration-independence revolutionary-war)
+
+(occurred_during constitutional-convention early-republic)
+
+(occurred_during louisiana-purchase early-republic)
+
+(occurred_during civil-war-start civil-war)
+
+(occurred_during emancipation-proclamation civil-war)
+
+(occurred_during civil-war-end civil-war)
+
+(occurred_during womens-suffrage progressive-era)
+
+(occurred_during stock-market-crash great-depression)
+
+(occurred_during pearl-harbor world-war-2)
+
+(occurred_during mlk-speech civil-rights)
+
+(occurred_during mlk-speech cold-war)
+
+(occurred_during moon-landing cold-war)
+
+(occurred_during september-11 modern-era)
+
+(occurred_during obama-election modern-era)
+
+(participated_in washington declaration-independence)
+
+(created jefferson declaration-independence)
+
+(initiated jefferson louisiana-purchase)
+
+(led_during lincoln civil-war-start)
+
+(issued lincoln emancipation-proclamation)
+
+(led_during lincoln civil-war-end)
+
+(led_during roosevelt-fdr pearl-harbor)
+
+(delivered mlk mlk-speech)
+
+(championed washington democracy)
+
+(championed jefferson democracy)
+
+(opposed douglass slavery)
+
+(championed douglass civil-rights-concept)
+
+(opposed lincoln slavery)
+
+(championed mlk civil-rights-concept)
+
+(exemplifies declaration-independence democracy)
+
+(opposed emancipation-proclamation slavery)
+
+(exemplifies louisiana-purchase manifest-destiny)
+
+(exemplifies mlk-speech civil-rights-concept)
+
+(exemplifies obama-election american-dream)
+
+(authored_by declaration-doc jefferson)
+
+(supported_by constitution-doc washington)
+
+(authored_by gettysburg-address lincoln)
+
+(produced_during declaration-doc declaration-independence)
+
+(produced_during constitution-doc constitutional-convention)
+
+(produced_during gettysburg-address civil-war)
+
+(has_state_at democracy democracy-1776)
+
+(has_state_at democracy democracy-1800)
+
+(has_state_at democracy democracy-1850)
+
+(has_state_at democracy democracy-1900)
+
+(has_state_at democracy democracy-1950)
+
+(has_state_at democracy democracy-2000)
+
+(has_state_at democracy democracy-2020)
+
+(has_state_at slavery slavery-1700)
+
+(has_state_at slavery slavery-1776)
+
+(has_state_at slavery slavery-1800)
+
+(has_state_at slavery slavery-1850)
+
+(has_state_at slavery slavery-1863)
+
+(has_state_at slavery slavery-1870)
+
+(belongs_to_cluster democracy founding-principles-cluster)
+
+(belongs_to_cluster declaration-doc founding-principles-cluster)
+
+(belongs_to_cluster constitution-doc founding-principles-cluster)
+
+(belongs_to_cluster washington founding-principles-cluster)
+
+(belongs_to_cluster jefferson founding-principles-cluster)
+
+(belongs_to_cluster civil-rights-concept civil-rights-cluster)
+
+(belongs_to_cluster mlk civil-rights-cluster)
+
+(belongs_to_cluster mlk-speech civil-rights-cluster)
+
+(belongs_to_cluster douglass civil-rights-cluster)
+
+(belongs_to_cluster american-dream economic-development-cluster)
+
+(belongs_to_cluster roosevelt-fdr economic-development-cluster)
+
+(belongs_to_cluster stock-market-crash economic-development-cluster)
+

@@ -62,20 +62,41 @@ UltraLink uses Jest as its testing framework. To run the tests:
 # Install dependencies
 npm install
 
-# Run all tests
+# Run all tests (excluding performance tests by default)
 npm test
+
+# Run all tests including performance tests
+npm run test:all
+
+# Run only performance tests
+npm run test:performance
+
+# View all test command options
+npm run test:help
 
 # Run specific test types
 npm run test:unit
 npm run test:integration
 npm run test:e2e
-npm run test:performance
 
 # Run specific test file
 npm test -- tests/unit/entity.test.js
 
 # Run with coverage
 npm run test:coverage
+```
+
+### Performance Tests
+
+Performance tests are considered optional and are not run by default to speed up the regular test workflow. These tests are located in the [performance](./performance/) directory and verify the system's performance characteristics under various conditions.
+
+To run performance tests, use one of the following commands:
+```bash
+# Run only performance tests
+npm run test:performance
+
+# Run all tests including performance tests
+npm run test:all
 ```
 
 ## Code Coverage

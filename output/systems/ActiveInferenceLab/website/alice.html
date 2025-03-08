@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Alice Chen - ActiveInferenceLab - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dr. Alice Chen</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>alice</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>researcher</td>
+        </tr>
+        
+            <tr>
+              <th>role</th>
+              <td>Principal Investigator</td>
+            </tr>
+          
+            <tr>
+              <th>department</th>
+              <td>Cognitive Science</td>
+            </tr>
+          
+            <tr>
+              <th>email</th>
+              <td>alice.chen@example.edu</td>
+            </tr>
+          
+            <tr>
+              <th>publications</th>
+              <td>42</td>
+            </tr>
+          
+            <tr>
+              <th>expertise</th>
+              <td>active inference,computational neuroscience,bayesian modeling</td>
+            </tr>
+          
+            <tr>
+              <th>yearsExperience</th>
+              <td>15</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>leads</strong> → <a href="active-inference-model.html">Active Inference Modeling of Collective Behavior</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>role:</strong> Principal Investigator</div>
+            
+              <div><strong>timeCommitment:</strong> 0.4</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>mentors</strong> → <a href="david.html">David Wilson</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>type:</strong> PhD Advisor</div>
+            
+              <div><strong>startDate:</strong> 2022-09-01</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>mentors</strong> → <a href="carol.html">Dr. Carol Jimenez</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>type:</strong> Postdoc Advisor</div>
+            
+              <div><strong>startDate:</strong> 2023-01-15</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>authored</strong> → <a href="paper-2023a.html">Active Inference Framework for Collective Behavior Analysis</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> corresponding author</div>
+            
+              <div><strong>contributionPercentage:</strong> 40</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <strong>authored</strong> → <a href="paper-2024.html">Computational Models of Active Inference in Social Insects</a>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>contributionType:</strong> co-author</div>
+            
+              <div><strong>contributionPercentage:</strong> 25</div>
+            
+        </div>
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="carol.html">Dr. Carol Jimenez</a> → <strong>reports_to</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>startDate:</strong> 2022-01-15</div>
+            
+        </div>
+      
+    </div>
+    <div class="relationship-item">
+      <a href="emma.html">Emma Taylor</a> → <strong>reports_to</strong>
+      
+      
+        <div class="relationship-attributes">
+          
+              <div><strong>startDate:</strong> 2022-09-01</div>
+            
+        </div>
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>
