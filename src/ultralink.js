@@ -252,16 +252,32 @@ class UltraLink {
   }
 
   /**
-   * Export the knowledge graph to a visualization format
-   * @param {Object} options - Export options
-   * @param {string} options.format - Output format (svg, png, d3, cytoscape)
-   * @param {string} options.layout - Layout type (force, circular, grid, hierarchical)
-   * @param {Object} options.style - Visual style options
-   * @param {number} options.width - Canvas width
-   * @param {number} options.height - Canvas height
-   * @returns {Object} Map of filenames to file contents
+   * Generate visualizations of the knowledge graph
+   * @param {Object} options - Visualization options
+   * @param {string} options.format - Visualization format ('svg', 'png', 'd3', 'cytoscape')
+   * @param {string} options.layout - Graph layout ('force', 'radial', 'grid', 'cluster')
+   * @param {Object} options.style - Visualization style options
+   * @param {number} options.width - Width of the visualization in pixels
+   * @param {number} options.height - Height of the visualization in pixels
+   * @param {boolean} options.useSystemTemplate - Whether to use system-specific templated visualizations 
+   * @param {string} options.systemName - Name of the system for system-specific visualizations
+   * @returns {Promise<Object>} Visualization output (format depends on options.format)
    */
   async toVisualization(options = {}) {
+    // If system-specific visualization with templated summary is requested,
+    // set the system name based on the class name or provided name
+    if (options.useSystemTemplate === undefined && options.systemName) {
+      // Auto-enable system template if system name is provided
+      options.useSystemTemplate = true;
+    }
+    
+    if (options.useSystemTemplate && !options.systemName) {
+      // Use the class name as the system name if not provided
+      // This allows custom subclasses to automatically use their specific template
+      options.systemName = this.constructor.name !== 'UltraLink' ? 
+        this.constructor.name : (this.name || 'UltraLink');
+    }
+    
     return toVisualization(this, options);
   }
 

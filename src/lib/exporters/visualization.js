@@ -38,12 +38,16 @@
 // We'll import d3 dynamically when needed
 const { JSDOM } = require('jsdom');
 const cytoscape = require('cytoscape');
+const path = require('path');
+const fs = require('fs');
 
 // Import our enhanced visualization helpers
 const { 
   enhancedSVGtoPNG, 
   createFallbackPNG 
 } = require('./visualization-helpers');
+
+const { generateSystemVisualization } = require('./system-template-visualizer');
 
 // Helper function to load d3 dynamically
 async function getD3() {
@@ -65,6 +69,7 @@ async function toVisualization(ultralink, options = {}) {
   const style = options.style || 'default';
   const width = options.width || 800;
   const height = options.height || 600;
+  const systemName = options.systemName || ''; // Capture system name from options
   
   // Prepare graph data
   const graphData = {
@@ -143,7 +148,36 @@ async function toVisualization(ultralink, options = {}) {
         case 'svg':
           return { 'graph.svg': await generateSVG(graphData, { layout, style, width, height }) };
         case 'png':
-          return { 'graph.png': await generatePNG(graphData, { layout, style, width, height }) };
+          const result = {};
+          result['graph.png'] = await generatePNG(graphData, { layout, style, width, height, systemName });
+          if (layout === 'radial') {
+            result['graph-radial.png'] = await generatePNG(graphData, { 
+              layout: 'radial', 
+              style: style, 
+              width, 
+              height,
+              systemName
+            });
+          }
+          if (layout === 'grid') {
+            result['graph-grid.png'] = await generatePNG(graphData, { 
+              layout: 'grid', 
+              style: style, 
+              width, 
+              height,
+              systemName
+            });
+          }
+          if (layout === 'cluster') {
+            result['graph-cluster.png'] = await generatePNG(graphData, { 
+              layout: 'cluster', 
+              style: style, 
+              width, 
+              height,
+              systemName
+            });
+          }
+          return result;
         case 'd3':
           const d3Html = await generateD3(graphData, { layout, style, width, height });
           return { 'graph-d3.html': d3Html };
@@ -312,13 +346,53 @@ async function generateSVG(graphData, options) {
 }
 
 /**
- * Generate PNG visualization
+ * Enhanced PNG generation from graph data
  * @param {Object} graphData - Graph data with nodes and links
- * @param {Object} options - Visualization options
+ * @param {Object} options - Visualization options including systemName
  * @returns {Buffer} PNG buffer
  */
 async function generatePNG(graphData, options) {
   try {
+    // Check if we should use the system-specific template visualizer
+    if (options.systemName && options.useSystemTemplate) {
+      // Generate system-specific visualization with templated summary
+      const { enhancedSVGtoPNG } = require('./visualization-helpers');
+      const { generateSystemSVG } = require('./system-template-visualizer');
+      
+      // Get correct parameters
+      const width = options.width || 1200;
+      const height = options.height || 900;
+      const layout = options.layout || 'force';
+      const style = options.style || 'default';
+      const systemName = options.systemName;
+      
+      console.log(`Generating system-specific visualization for ${systemName} with layout ${layout} and style ${style}`);
+      
+      // Generate the system-specific SVG first
+      const svgString = generateSystemSVG(
+        systemName,
+        null, // Let the function lookup the template
+        width,
+        height,
+        layout,
+        style
+      );
+      
+      // Convert SVG to PNG directly without writing temp files
+      const pngBuffer = await enhancedSVGtoPNG(svgString, {
+        width: width,
+        height: height,
+        density: 300,
+        message: 'UltraLink Graph Visualization',
+        style: style,
+        layout: layout,
+        systemName: systemName
+      });
+      
+      return pngBuffer;
+    }
+    
+    // If not using system template, use the standard approach
     // Generate SVG first
     const svgString = await generateSVG(graphData, options);
     
@@ -329,7 +403,8 @@ async function generatePNG(graphData, options) {
       density: 300, // Higher density for better quality
       message: 'UltraLink Graph Visualization',
       style: options.style || 'default',  // Pass the style parameter
-      layout: options.layout || 'force'   // Pass the layout parameter
+      layout: options.layout || 'force',  // Pass the layout parameter
+      systemName: options.systemName || '' // Pass the system name
     });
   } catch (error) {
     console.error('Error generating PNG:', error);

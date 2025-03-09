@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/architecture/architecture_overview.md",
+                "file": "docs/getting-started.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "architecture_overview"
+              "title": "getting-started"
             }
           }
         ]
@@ -167,6 +167,7 @@
   },
   "active": "e313675ca592a4c3",
   "lastOpenFiles": [
+    "docs/architecture/architecture_overview.md",
     "docs/guides/vector-search.md",
     "docs/guides/entities-and-relationships.md",
     "docs/core-features/syntax-and-semantics.md",
@@ -193,7 +194,6 @@
     "docs/architecture/ARCHITECTURE.md",
     "docs/guides/README.md",
     "docs/for-agents/README.md",
-    "docs/architecture/README.md",
     "docs/formats-combined",
     "docs/formats",
     "docs/targets"

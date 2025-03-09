@@ -51,13 +51,13 @@ const RENDERING_TARGETS = [
   { name: 'obsidian', method: 'toObsidian', outputDir: 'obsidian', multipleFiles: true },
   { name: 'html-website', method: 'toHTMLWebsite', outputDir: 'website', multipleFiles: true },
   { name: 'visualization', method: 'toVisualization', outputDir: 'visualization', outputFiles: [
-    { format: 'svg', filename: 'graph.svg' },
-    { format: 'png', filename: 'graph.png' },
-    { format: 'png', filename: 'graph-radial.png', layout: 'radial', style: 'colorful' },
-    { format: 'png', filename: 'graph-grid.png', layout: 'grid', style: 'grayscale' },
-    { format: 'png', filename: 'graph-cluster.png', layout: 'cluster', style: 'minimal' },
-    { format: 'd3', filename: 'graph.d3.js' },
-    { format: 'cytoscape', filename: 'graph.cytoscape.js' }
+    { format: 'svg', filename: '{{system}}-graph.svg' },
+    { format: 'png', filename: '{{system}}-graph.png', useSystemTemplate: true },
+    { format: 'png', filename: '{{system}}-graph-radial.png', layout: 'radial', style: 'colorful', useSystemTemplate: true },
+    { format: 'png', filename: '{{system}}-graph-grid.png', layout: 'grid', style: 'grayscale', useSystemTemplate: true },
+    { format: 'png', filename: '{{system}}-graph-cluster.png', layout: 'cluster', style: 'minimal', useSystemTemplate: true },
+    { format: 'd3', filename: '{{system}}-graph.d3.js' },
+    { format: 'cytoscape', filename: '{{system}}-graph.cytoscape.js' }
   ]},
   { name: 'bayesian', method: 'toBayesianNetwork', outputDir: 'bayesian', outputFiles: [
     { format: 'json', filename: '{{system}}-bayesian.json' },
@@ -160,21 +160,21 @@ function generatePlaceholderD3(systemName) {
   <script>
     // Create a simple fallback visualization
     const svg = d3.select('#graph')
-      .append('svg')
+    .append('svg')
       .attr('width', '100%')
       .attr('height', '100%')
       .attr('viewBox', [0, 0, 800, 600]);
       
-    svg.append('rect')
+  svg.append('rect')
       .attr('width', 800)
       .attr('height', 600)
-      .attr('fill', '#f8f9fa');
-      
-    svg.append('text')
+    .attr('fill', '#f8f9fa');
+  
+  svg.append('text')
       .attr('x', 400)
       .attr('y', 300)
-      .attr('font-size', '24px')
-      .attr('text-anchor', 'middle')
+    .attr('font-size', '24px')
+    .attr('text-anchor', 'middle')
       .text('${systemName} Knowledge Graph (Fallback D3)');
   </script>
 </body>
@@ -564,28 +564,40 @@ async function renderSystem(systemName, createDatasetFn) {
                 layout: vizFormat.layout || 'force',
                 style: vizFormat.style || 'default',
                 width: 1200,  // Increased resolution for better quality
-                height: 900
+                height: 900,
+                systemName: systemName,  // Pass the system name to the visualization functions
+                useSystemTemplate: vizFormat.useSystemTemplate || false  // Enable system-specific templates if specified
               };
               
               const vizOutputObj = await safeExecuteAsync(async () => {
                 return await ultralink.toVisualization(vizOptions);
               }, {});
               
-              // Get the appropriate content based on format
-              let filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
-              const outputPath = path.join(targetDir, filename);
-              
               // Extract the content from the visualization output based on format
               let content;
               if (vizFormat.format === 'svg') {
                 content = vizOutputObj['graph.svg'] || vizOutputObj;
               } else if (vizFormat.format === 'png') {
+                // For PNG, we need to extract the content regardless of layout
                 content = vizOutputObj['graph.png'] || vizOutputObj;
+                
+                // If we're dealing with a specialized layout PNG, check if we have specific content
+                if (vizFormat.layout === 'radial') {
+                  content = vizOutputObj['graph-radial.png'] || content;
+                } else if (vizFormat.layout === 'grid') {
+                  content = vizOutputObj['graph-grid.png'] || content;
+                } else if (vizFormat.layout === 'cluster') {
+                  content = vizOutputObj['graph-cluster.png'] || content;
+                }
               } else if (vizFormat.format === 'd3') {
                 content = vizOutputObj['graph-d3.html'] || vizOutputObj;
               } else if (vizFormat.format === 'cytoscape') {
                 content = vizOutputObj['graph-cytoscape.html'] || vizOutputObj;
               }
+              
+              // Get the appropriate filename with system name replacement
+              let filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
+              const outputPath = path.join(targetDir, filename);
               
               // If content was successfully generated
               if (content && (typeof content === 'string' || content instanceof Buffer) && 
@@ -698,9 +710,9 @@ async function renderSystem(systemName, createDatasetFn) {
                 }, format === 'json' ? {} : '');
                 
                 if (bayesOutput) {
-                  if (format === 'json') {
+                if (format === 'json') {
                     safeWriteFile(outputPath, bayesOutput, true);
-                  } else {
+                } else {
                     safeWriteFile(outputPath, bayesOutput);
                   }
                   console.log(`      ✅ Saved ${format} Bayesian network to: ${outputPath}`);
@@ -722,11 +734,11 @@ async function renderSystem(systemName, createDatasetFn) {
                   STATS.formatStats[target.name].warnings++;
                   STATS.systemStats[systemName].warnings++;
                   STATS.systemStats[systemName].formats[target.name].warnings++;
-                  
-                  // Create a placeholder file
-                  if (format === 'json') {
+                
+                // Create a placeholder file
+                if (format === 'json') {
                     safeWriteFile(outputPath, { error: 'Failed to generate Bayesian network' }, true);
-                  } else {
+                } else {
                     safeWriteFile(outputPath, `# Failed to generate Bayesian network`);
                   }
                   console.log(`      ✅ Created placeholder ${format} file at: ${outputPath}`);
@@ -736,8 +748,8 @@ async function renderSystem(systemName, createDatasetFn) {
                   STATS.formatStats[target.name].files++;
                   STATS.systemStats[systemName].files++;
                   STATS.systemStats[systemName].formats[target.name].files++;
-                }
-              } catch (error) {
+              }
+            } catch (error) {
                 console.warn(`      ⚠️ Error generating Bayesian network: ${error.message}`);
                 console.log(`      📄 Creating placeholder file...`);
                 
@@ -746,11 +758,11 @@ async function renderSystem(systemName, createDatasetFn) {
                 STATS.formatStats[target.name].errors++;
                 STATS.systemStats[systemName].errors++;
                 STATS.systemStats[systemName].formats[target.name].errors++;
-                
-                // Create a placeholder file
-                if (format === 'json') {
+              
+              // Create a placeholder file
+              if (format === 'json') {
                   safeWriteFile(outputPath, { error: `Failed to generate Bayesian network: ${error.message}` }, true);
-                } else {
+              } else {
                   safeWriteFile(outputPath, `# Failed to generate Bayesian network: ${error.message}`);
                 }
                 console.log(`      ✅ Created error placeholder at: ${outputPath}`);

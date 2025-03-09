@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <style>
+    .node { cursor: pointer; }
+    .node text { font-family: Arial; font-size: 14px; font-weight: bold; }
+    .link { stroke-opacity: 0.8; stroke-width: 1.5px; }
+    .label { font-family: Arial; font-size: 12px; }
+  </style>
+  <rect width="1200" height="900" fill="#ffffff"/>
+  
+  <!-- POMDP Visualization -->
+  <g class="links">
+    <!-- Links from model to other components -->
+    <path class="link" d="M600,450 L330,261" stroke="#e0e0e0" />
+    <path class="link" d="M600,450 L870,261" stroke="#e0e0e0" />
+    <path class="link" d="M600,450 L600,180" stroke="#e0e0e0" />
+    <path class="link" d="M600,450 L330,639" stroke="#e0e0e0" />
+    <path class="link" d="M600,450 L870,639" stroke="#e0e0e0" />
+    <path class="link" d="M600,450 L411,720" stroke="#e0e0e0" />
+    <path class="link" d="M600,450 L789,720" stroke="#e0e0e0" />
+    
+    <!-- Matrix relationships -->
+    <path class="link" d="M330,639 L330,261" stroke="#e0e0e0" stroke-dasharray="5,5" />
+    <path class="link" d="M870,639 L870,261" stroke="#e0e0e0" stroke-dasharray="5,5" />
+    <path class="link" d="M411,720 L330,261" stroke="#e0e0e0" stroke-dasharray="5,5" />
+    <path class="link" d="M789,720 L870,261" stroke="#e0e0e0" stroke-dasharray="5,5" />
+  </g>
+  
+  <g class="nodes">
+    <!-- POMDP Model node -->
+    <g class="node" transform="translate(600, 450)">
+      <circle r="40" fill="#f7f7f7" stroke="#999" stroke-width="3"></circle>
+      <text text-anchor="middle" dy="0" fill="#333">POMDP</text>
+      <text text-anchor="middle" dy="18" fill="#333">Model</text>
+    </g>
+    
+    <!-- Observation Space node -->
+    <g class="node" transform="translate(330, 261)">
+      <circle r="35" fill="#f7f7f7" stroke="#999" stroke-width="2"></circle>
+      <text text-anchor="middle" dy="0" fill="#333">Observation</text>
+      <text text-anchor="middle" dy="18" fill="#333">Space</text>
+    </g>
+    
+    <!-- State Space node -->
+    <g class="node" transform="translate(870, 261)">
+      <circle r="35" fill="#f7f7f7" stroke="#999" stroke-width="2"></circle>
+      <text text-anchor="middle" dy="0" fill="#333">State</text>
+      <text text-anchor="middle" dy="18" fill="#333">Space</text>
+    </g>
+    
+    <!-- Action Space node -->
+    <g class="node" transform="translate(600, 180)">
+      <circle r="30" fill="#f7f7f7" stroke="#999" stroke-width="2"></circle>
+      <text text-anchor="middle" dy="7" fill="#333">Action Space</text>
+    </g>
+    
+    <!-- A Matrix node -->
+    <g class="node" transform="translate(330, 639)">
+      <circle r="25" fill="#f7f7f7" stroke="#999" stroke-width="2"></circle>
+      <text text-anchor="middle" dy="7" fill="#333">A Matrix</text>
+    </g>
+    
+    <!-- B Matrix node -->
+    <g class="node" transform="translate(870, 639)">
+      <circle r="25" fill="#f7f7f7" stroke="#999" stroke-width="2"></circle>
+      <text text-anchor="middle" dy="7" fill="#333">B Matrix</text>
+    </g>
+    
+    <!-- C Matrix node -->
+    <g class="node" transform="translate(411, 720)">
+      <circle r="25" fill="#f7f7f7" stroke="#999" stroke-width="2"></circle>
+      <text text-anchor="middle" dy="7" fill="#333">C Matrix</text>
+    </g>
+    
+    <!-- D Matrix node -->
+    <g class="node" transform="translate(789, 720)">
+      <circle r="25" fill="#f7f7f7" stroke="#999" stroke-width="2"></circle>
+      <text text-anchor="middle" dy="7" fill="#333">D Matrix</text>
+    </g>
+  </g>
+  
+  <!-- Title -->
+  <text x="600" y="40" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold">POMDP System Visualization</text>
+  
+  <!-- Legend -->
+  <g transform="translate(20, 800)">
+    <rect width="200" height="80" fill="#ffffff" stroke="#ccc" rx="5"></rect>
+    <text x="10" y="20" font-family="Arial" font-size="14" font-weight="bold">Legend</text>
+    <circle cx="20" cy="40" r="8" fill="#f7f7f7"></circle>
+    <text x="35" y="45" font-family="Arial" font-size="12">Model</text>
+    <circle cx="20" cy="60" r="8" fill="#f7f7f7"></circle>
+    <text x="35" y="65" font-family="Arial" font-size="12">Spaces</text>
+    <circle cx="100" cy="40" r="8" fill="#f7f7f7"></circle>
+    <text x="115" y="45" font-family="Arial" font-size="12">Matrices</text>
+  </g>
+</svg>
