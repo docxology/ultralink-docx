@@ -19,6 +19,7 @@ const { toVisualization } = require('./lib/exporters/visualization');
 const { toBayesianNetwork } = require('./lib/exporters/bayesian-network');
 const { toFullBlob } = require('./lib/exporters/full-blob');
 const zlib = require('zlib');
+const BayesianNetworkExporter = require('./lib/exporters/bayesian-network');
 
 /**
  * UltraLink class for knowledge graph management
@@ -37,6 +38,11 @@ class UltraLink {
       timestampEntities: true,
       defaultRelationshipType: 'related_to',
       ...config
+    };
+    
+    this.store = {
+      entities: {},
+      relationships: {}
     };
     
     // Initialize data storage
@@ -260,12 +266,13 @@ class UltraLink {
   }
 
   /**
-   * Convert to a Bayesian network
-   * @param {Object} options - Conversion options
-   * @returns {Object} Bayesian network object
+   * Export the knowledge base as a Bayesian network
+   * @param {Object} options - Export options
+   * @returns {string|Object} The Bayesian network representation
    */
   toBayesianNetwork(options = {}) {
-    return toBayesianNetwork(this, options);
+    const exporter = new BayesianNetworkExporter(this);
+    return exporter.export(options);
   }
 
   /**

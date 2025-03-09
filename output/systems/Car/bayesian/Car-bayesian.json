@@ -1,0 +1,2290 @@
+{
+  "nodes": {
+    "sedan-model": {
+      "id": "sedan-model",
+      "name": "Sedan XR5",
+      "type": "vehicle",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "chief-engineer",
+        "manufacturing-plant",
+        "quality-manager"
+      ],
+      "attributes": {
+        "name": "Sedan XR5",
+        "type": "Sedan",
+        "description": "Mid-size family sedan with modern features",
+        "year": "2023",
+        "dimensions": {
+          "length": "4.8m",
+          "width": "1.8m",
+          "height": "1.5m"
+        },
+        "weight": "1500kg",
+        "fuelType": "Hybrid",
+        "fuelEfficiency": "18km/l",
+        "engineSize": "2.0L",
+        "status": "production"
+      }
+    },
+    "engine-system": {
+      "id": "engine-system",
+      "name": "Hybrid Engine System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "engine-engineer",
+        "cooling-system",
+        "exhaust-system"
+      ],
+      "attributes": {
+        "name": "Hybrid Engine System",
+        "componentType": "Engine",
+        "description": "2.0L hybrid engine with electric motor assistance",
+        "partNumber": "ENG2023-H20",
+        "weight": "180kg",
+        "dimensions": {
+          "length": "0.65m",
+          "width": "0.58m",
+          "height": "0.62m"
+        },
+        "manufacturer": "PowerTech Industries",
+        "status": "active"
+      }
+    },
+    "engine-block": {
+      "id": "engine-block",
+      "name": "Engine Block",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Engine Block",
+        "componentType": "Engine Part",
+        "description": "Main engine block housing for cylinders",
+        "partNumber": "EB2023-H20",
+        "material": "Aluminum Alloy",
+        "cylinders": 4,
+        "weight": "75kg",
+        "manufacturer": "PowerTech Industries",
+        "status": "active"
+      }
+    },
+    "pistons": {
+      "id": "pistons",
+      "name": "Piston Assembly",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Piston Assembly",
+        "componentType": "Engine Part",
+        "description": "Set of 4 pistons with connecting rods",
+        "partNumber": "PA2023-4C",
+        "material": "Forged Steel",
+        "count": 4,
+        "weight": "12kg",
+        "manufacturer": "PowerTech Industries",
+        "status": "active"
+      }
+    },
+    "fuel-injection": {
+      "id": "fuel-injection",
+      "name": "Fuel Injection System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Fuel Injection System",
+        "componentType": "Engine Part",
+        "description": "Direct injection system for fuel delivery",
+        "partNumber": "FI2023-DI",
+        "type": "Direct Injection",
+        "pressure": "200bar",
+        "weight": "8kg",
+        "manufacturer": "FuelTech Systems",
+        "status": "active"
+      }
+    },
+    "electric-motor": {
+      "id": "electric-motor",
+      "name": "Electric Assist Motor",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Electric Assist Motor",
+        "componentType": "Hybrid System",
+        "description": "Electric motor for hybrid operation",
+        "partNumber": "EM2023-45",
+        "power": "45kW",
+        "voltage": "240V",
+        "weight": "25kg",
+        "manufacturer": "ElectroDrive Inc",
+        "status": "active"
+      }
+    },
+    "transmission-system": {
+      "id": "transmission-system",
+      "name": "CVT Transmission",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "CVT Transmission",
+        "componentType": "Transmission",
+        "description": "Continuously Variable Transmission system",
+        "partNumber": "TR2023-CVT",
+        "type": "CVT",
+        "gearRatios": "Continuously Variable",
+        "weight": "90kg",
+        "manufacturer": "TransTech Auto",
+        "status": "active"
+      }
+    },
+    "cvt-belt": {
+      "id": "cvt-belt",
+      "name": "CVT Belt",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "transmission-system"
+      ],
+      "attributes": {
+        "name": "CVT Belt",
+        "componentType": "Transmission Part",
+        "description": "Main belt for continuously variable transmission",
+        "partNumber": "CB2023-H1",
+        "material": "High-Strength Polymer",
+        "weight": "5kg",
+        "manufacturer": "TransTech Auto",
+        "status": "active"
+      }
+    },
+    "torque-converter": {
+      "id": "torque-converter",
+      "name": "Torque Converter",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "transmission-system"
+      ],
+      "attributes": {
+        "name": "Torque Converter",
+        "componentType": "Transmission Part",
+        "description": "Hydraulic torque converter for CVT system",
+        "partNumber": "TC2023-H1",
+        "diameter": "28cm",
+        "weight": "15kg",
+        "manufacturer": "TransTech Auto",
+        "status": "active"
+      }
+    },
+    "chassis-system": {
+      "id": "chassis-system",
+      "name": "Chassis and Frame",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "suspension-system"
+      ],
+      "attributes": {
+        "name": "Chassis and Frame",
+        "componentType": "Chassis",
+        "description": "Unibody chassis with reinforced safety frame",
+        "partNumber": "CH2023-UB",
+        "material": "High-Strength Steel with Aluminum Components",
+        "weight": "320kg",
+        "manufacturer": "FrameTech Engineering",
+        "status": "active"
+      }
+    },
+    "interior-system": {
+      "id": "interior-system",
+      "name": "Interior System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "interior-designer"
+      ],
+      "attributes": {
+        "name": "Interior System",
+        "componentType": "Interior",
+        "description": "Complete interior setup including dash, seats, and trim",
+        "partNumber": "INT2023-STD",
+        "capacity": "5 passengers",
+        "weight": "180kg",
+        "manufacturer": "ComfortDesign Interiors",
+        "status": "active"
+      }
+    },
+    "dashboard": {
+      "id": "dashboard",
+      "name": "Dashboard Assembly",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "interior-system"
+      ],
+      "attributes": {
+        "name": "Dashboard Assembly",
+        "componentType": "Interior Part",
+        "description": "Main dashboard with instrument cluster and controls",
+        "partNumber": "DA2023-DX",
+        "features": [
+          "Digital Display",
+          "Touch Controls",
+          "Climate Interface"
+        ],
+        "weight": "25kg",
+        "manufacturer": "ComfortDesign Interiors",
+        "status": "active"
+      }
+    },
+    "seats": {
+      "id": "seats",
+      "name": "Seating System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "interior-system"
+      ],
+      "attributes": {
+        "name": "Seating System",
+        "componentType": "Interior Part",
+        "description": "Full set of 5 seats with adjustable features",
+        "partNumber": "SS2023-5S",
+        "material": "Synthetic Leather",
+        "features": [
+          "Heating",
+          "Power Adjustment",
+          "Memory Settings"
+        ],
+        "weight": "85kg",
+        "manufacturer": "ComfortDesign Interiors",
+        "status": "active"
+      }
+    },
+    "infotainment": {
+      "id": "infotainment",
+      "name": "Infotainment System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "interior-system",
+        "electrical-system"
+      ],
+      "attributes": {
+        "name": "Infotainment System",
+        "componentType": "Electronics",
+        "description": "10-inch touchscreen with navigation and media",
+        "partNumber": "INF2023-10T",
+        "screenSize": "10 inches",
+        "features": [
+          "Navigation",
+          "Smartphone Integration",
+          "Voice Control"
+        ],
+        "weight": "5kg",
+        "manufacturer": "TechTouch Electronics",
+        "status": "active"
+      }
+    },
+    "wheel-system": {
+      "id": "wheel-system",
+      "name": "Wheels and Tires",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "transmission-system",
+        "brake-system",
+        "suspension-system"
+      ],
+      "attributes": {
+        "name": "Wheels and Tires",
+        "componentType": "Wheel System",
+        "description": "Complete wheel system including rims and tires",
+        "partNumber": "WH2023-17A",
+        "count": 4,
+        "weight": "80kg",
+        "manufacturer": "RoadGrip Tire Co",
+        "status": "active"
+      }
+    },
+    "rims": {
+      "id": "rims",
+      "name": "Alloy Rims",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "wheel-system"
+      ],
+      "attributes": {
+        "name": "Alloy Rims",
+        "componentType": "Wheel Part",
+        "description": "17-inch aluminum alloy rims",
+        "partNumber": "RIM2023-17A",
+        "size": "17 inches",
+        "material": "Aluminum Alloy",
+        "count": 4,
+        "weight": "32kg",
+        "manufacturer": "AlloyTech Wheels",
+        "status": "active"
+      }
+    },
+    "tires": {
+      "id": "tires",
+      "name": "All-Season Tires",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "wheel-system"
+      ],
+      "attributes": {
+        "name": "All-Season Tires",
+        "componentType": "Wheel Part",
+        "description": "215/55R17 all-season tires",
+        "partNumber": "TIRE2023-17AS",
+        "size": "215/55R17",
+        "type": "All-Season",
+        "count": 4,
+        "weight": "48kg",
+        "manufacturer": "RoadGrip Tire Co",
+        "status": "active"
+      }
+    },
+    "brake-system": {
+      "id": "brake-system",
+      "name": "Brake System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model"
+      ],
+      "attributes": {
+        "name": "Brake System",
+        "componentType": "Brakes",
+        "description": "Four-wheel disc brake system with ABS",
+        "partNumber": "BR2023-ABS",
+        "type": "Disc",
+        "features": [
+          "ABS",
+          "Electronic Brake Distribution",
+          "Brake Assist"
+        ],
+        "weight": "65kg",
+        "manufacturer": "StopTech Braking",
+        "status": "active"
+      }
+    },
+    "electrical-system": {
+      "id": "electrical-system",
+      "name": "Electrical System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "engine-system",
+        "electrical-engineer",
+        "hvac-system",
+        "airbag-system",
+        "seatbelt-system",
+        "cooling-system"
+      ],
+      "attributes": {
+        "name": "Electrical System",
+        "componentType": "Electrical",
+        "description": "Complete electrical system including battery and wiring",
+        "partNumber": "ES2023-12V",
+        "voltage": "12V",
+        "weight": "45kg",
+        "manufacturer": "PowerCircuit Electronics",
+        "status": "active"
+      }
+    },
+    "battery": {
+      "id": "battery",
+      "name": "Hybrid Battery System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "electrical-system",
+        "electrical-engineer"
+      ],
+      "attributes": {
+        "name": "Hybrid Battery System",
+        "componentType": "Electrical Part",
+        "description": "Lithium-ion battery pack for hybrid operation",
+        "partNumber": "BAT2023-LION",
+        "capacity": "2.5kWh",
+        "voltage": "240V",
+        "weight": "35kg",
+        "manufacturer": "PowerCell Technologies",
+        "status": "active"
+      }
+    },
+    "suspension-system": {
+      "id": "suspension-system",
+      "name": "Suspension System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model"
+      ],
+      "attributes": {
+        "name": "Suspension System",
+        "componentType": "Suspension",
+        "description": "MacPherson strut front, multi-link rear suspension",
+        "partNumber": "SUS2023-MPS",
+        "type": "Independent",
+        "weight": "120kg",
+        "manufacturer": "RideTech Suspension",
+        "status": "active"
+      }
+    },
+    "engine-specifications": {
+      "id": "engine-specifications",
+      "name": "Engine Technical Specifications",
+      "type": "specifications",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Engine Technical Specifications",
+        "documentType": "Technical Specifications",
+        "version": "2.3",
+        "lastUpdated": "2022-11-15",
+        "author": "Engineering Team",
+        "sections": [
+          "Performance Characteristics",
+          "Mechanical Specifications",
+          "Electrical Integration",
+          "Cooling Requirements"
+        ]
+      }
+    },
+    "safety-standards": {
+      "id": "safety-standards",
+      "name": "Vehicle Safety Standards",
+      "type": "specifications",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model"
+      ],
+      "attributes": {
+        "name": "Vehicle Safety Standards",
+        "documentType": "Regulatory Compliance",
+        "version": "4.1",
+        "lastUpdated": "2022-09-30",
+        "author": "Safety Department",
+        "standards": [
+          "NHTSA Crash Test Requirements",
+          "IIHS Safety Guidelines",
+          "EU Safety Regulations"
+        ]
+      }
+    },
+    "maintenance-guide": {
+      "id": "maintenance-guide",
+      "name": "Vehicle Maintenance Guidelines",
+      "type": "documentation",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model"
+      ],
+      "attributes": {
+        "name": "Vehicle Maintenance Guidelines",
+        "documentType": "Maintenance Manual",
+        "version": "1.2",
+        "lastUpdated": "2023-01-10",
+        "author": "Service Department",
+        "sections": [
+          "Routine Maintenance Schedule",
+          "Engine Service Procedures",
+          "Electrical System Diagnostics",
+          "Brake System Maintenance"
+        ]
+      }
+    },
+    "chief-engineer": {
+      "id": "chief-engineer",
+      "name": "Dr. Sarah Johnson",
+      "type": "person",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "quality-manager"
+      ],
+      "attributes": {
+        "name": "Dr. Sarah Johnson",
+        "title": "Chief Engineering Officer",
+        "department": "Engineering",
+        "expertise": [
+          "Automotive Design",
+          "Systems Integration",
+          "Project Management"
+        ],
+        "email": "sarah.johnson@carcompany.com"
+      }
+    },
+    "engine-engineer": {
+      "id": "engine-engineer",
+      "name": "Michael Chen",
+      "type": "person",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "chief-engineer"
+      ],
+      "attributes": {
+        "name": "Michael Chen",
+        "title": "Senior Powertrain Engineer",
+        "department": "Powertrain Engineering",
+        "expertise": [
+          "Engine Design",
+          "Hybrid Systems",
+          "Thermal Management"
+        ],
+        "email": "michael.chen@carcompany.com"
+      }
+    },
+    "electrical-engineer": {
+      "id": "electrical-engineer",
+      "name": "Elena Rodriguez",
+      "type": "person",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-engineer",
+        "chief-engineer",
+        "hvac-engineer",
+        "safety-engineer"
+      ],
+      "attributes": {
+        "name": "Elena Rodriguez",
+        "title": "Electrical Systems Engineer",
+        "department": "Electrical Engineering",
+        "expertise": [
+          "Automotive Electronics",
+          "Battery Systems",
+          "Sensor Integration"
+        ],
+        "email": "elena.rodriguez@carcompany.com"
+      }
+    },
+    "interior-designer": {
+      "id": "interior-designer",
+      "name": "James Wilson",
+      "type": "person",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "electrical-engineer",
+        "chief-engineer"
+      ],
+      "attributes": {
+        "name": "James Wilson",
+        "title": "Senior Interior Designer",
+        "department": "Interior Design",
+        "expertise": [
+          "Ergonomics",
+          "Materials Science",
+          "User Experience"
+        ],
+        "email": "james.wilson@carcompany.com"
+      }
+    },
+    "manufacturing-plant": {
+      "id": "manufacturing-plant",
+      "name": "Central Manufacturing Plant",
+      "type": "facility",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "attributes": {
+        "name": "Central Manufacturing Plant",
+        "location": "Detroit, Michigan",
+        "size": "1.2 million sq ft",
+        "capacity": "200,000 vehicles annually",
+        "employees": 3500,
+        "established": "1985"
+      }
+    },
+    "camshaft": {
+      "id": "camshaft",
+      "name": "Camshaft Assembly",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Camshaft Assembly",
+        "componentType": "Engine Part",
+        "description": "DOHC camshaft system",
+        "partNumber": "CA2023-DOHC",
+        "material": "Hardened Steel",
+        "weight": "8kg",
+        "manufacturer": "PowerTech Industries",
+        "status": "active"
+      }
+    },
+    "valves": {
+      "id": "valves",
+      "name": "Valve System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Valve System",
+        "componentType": "Engine Part",
+        "description": "16-valve system with variable timing",
+        "partNumber": "VS2023-16V",
+        "material": "Titanium Alloy",
+        "count": 16,
+        "weight": "3kg",
+        "manufacturer": "PowerTech Industries",
+        "status": "active"
+      }
+    },
+    "crankshaft": {
+      "id": "crankshaft",
+      "name": "Crankshaft",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Crankshaft",
+        "componentType": "Engine Part",
+        "description": "Forged steel crankshaft",
+        "partNumber": "CS2023-F4",
+        "material": "Forged Steel",
+        "weight": "15kg",
+        "manufacturer": "PowerTech Industries",
+        "status": "active"
+      }
+    },
+    "cooling-system": {
+      "id": "cooling-system",
+      "name": "Engine Cooling System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "hvac-system"
+      ],
+      "attributes": {
+        "name": "Engine Cooling System",
+        "componentType": "Cooling",
+        "description": "Liquid cooling system with electric pump",
+        "partNumber": "CS2023-LC",
+        "weight": "25kg",
+        "manufacturer": "ThermalTech Systems",
+        "status": "active"
+      }
+    },
+    "radiator": {
+      "id": "radiator",
+      "name": "Radiator",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "cooling-system"
+      ],
+      "attributes": {
+        "name": "Radiator",
+        "componentType": "Cooling Part",
+        "description": "Aluminum radiator with electric fan",
+        "partNumber": "RAD2023-AL",
+        "material": "Aluminum",
+        "weight": "8kg",
+        "manufacturer": "ThermalTech Systems",
+        "status": "active"
+      }
+    },
+    "water-pump": {
+      "id": "water-pump",
+      "name": "Water Pump",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "cooling-system"
+      ],
+      "attributes": {
+        "name": "Water Pump",
+        "componentType": "Cooling Part",
+        "description": "Electric water pump",
+        "partNumber": "WP2023-E",
+        "type": "Electric",
+        "weight": "3kg",
+        "manufacturer": "ThermalTech Systems",
+        "status": "active"
+      }
+    },
+    "hvac-system": {
+      "id": "hvac-system",
+      "name": "HVAC System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "hvac-engineer"
+      ],
+      "attributes": {
+        "name": "HVAC System",
+        "componentType": "HVAC",
+        "description": "Dual-zone climate control system",
+        "partNumber": "HVAC2023-DZ",
+        "weight": "35kg",
+        "manufacturer": "ClimateControl Corp",
+        "status": "active"
+      }
+    },
+    "ac-compressor": {
+      "id": "ac-compressor",
+      "name": "AC Compressor",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "hvac-system"
+      ],
+      "attributes": {
+        "name": "AC Compressor",
+        "componentType": "HVAC Part",
+        "description": "Electric AC compressor",
+        "partNumber": "AC2023-E",
+        "type": "Electric",
+        "weight": "8kg",
+        "manufacturer": "ClimateControl Corp",
+        "status": "active"
+      }
+    },
+    "heater-core": {
+      "id": "heater-core",
+      "name": "Heater Core",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "hvac-system"
+      ],
+      "attributes": {
+        "name": "Heater Core",
+        "componentType": "HVAC Part",
+        "description": "Aluminum heater core",
+        "partNumber": "HC2023-AL",
+        "material": "Aluminum",
+        "weight": "4kg",
+        "manufacturer": "ClimateControl Corp",
+        "status": "active"
+      }
+    },
+    "exhaust-system": {
+      "id": "exhaust-system",
+      "name": "Exhaust System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "engine-system"
+      ],
+      "attributes": {
+        "name": "Exhaust System",
+        "componentType": "Exhaust",
+        "description": "Complete exhaust system with catalytic converter",
+        "partNumber": "EX2023-CAT",
+        "weight": "45kg",
+        "manufacturer": "ExhaustTech",
+        "status": "active"
+      }
+    },
+    "catalytic-converter": {
+      "id": "catalytic-converter",
+      "name": "Catalytic Converter",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "exhaust-system"
+      ],
+      "attributes": {
+        "name": "Catalytic Converter",
+        "componentType": "Exhaust Part",
+        "description": "Three-way catalytic converter",
+        "partNumber": "CAT2023-3W",
+        "type": "Three-Way",
+        "weight": "12kg",
+        "manufacturer": "ExhaustTech",
+        "status": "active"
+      }
+    },
+    "muffler": {
+      "id": "muffler",
+      "name": "Muffler",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "exhaust-system"
+      ],
+      "attributes": {
+        "name": "Muffler",
+        "componentType": "Exhaust Part",
+        "description": "Performance muffler with noise reduction",
+        "partNumber": "MUF2023-PR",
+        "material": "Stainless Steel",
+        "weight": "8kg",
+        "manufacturer": "ExhaustTech",
+        "status": "active"
+      }
+    },
+    "airbag-system": {
+      "id": "airbag-system",
+      "name": "Airbag System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "safety-engineer"
+      ],
+      "attributes": {
+        "name": "Airbag System",
+        "componentType": "Safety",
+        "description": "Multi-airbag safety system",
+        "partNumber": "AB2023-MS",
+        "airbagCount": 8,
+        "weight": "25kg",
+        "manufacturer": "SafetyTech Systems",
+        "status": "active"
+      }
+    },
+    "seatbelt-system": {
+      "id": "seatbelt-system",
+      "name": "Seatbelt System",
+      "type": "component",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "sedan-model",
+        "safety-engineer"
+      ],
+      "attributes": {
+        "name": "Seatbelt System",
+        "componentType": "Safety",
+        "description": "Advanced seatbelt system with pretensioners",
+        "partNumber": "SB2023-PT",
+        "seatCount": 5,
+        "weight": "15kg",
+        "manufacturer": "SafetyTech Systems",
+        "status": "active"
+      }
+    },
+    "hvac-specifications": {
+      "id": "hvac-specifications",
+      "name": "HVAC Technical Specifications",
+      "type": "specifications",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "hvac-system"
+      ],
+      "attributes": {
+        "name": "HVAC Technical Specifications",
+        "documentType": "Technical Specifications",
+        "version": "1.5",
+        "lastUpdated": "2023-01-20",
+        "author": "Climate Control Team",
+        "sections": [
+          "Cooling Performance",
+          "Heating Performance",
+          "Air Distribution",
+          "Control Systems"
+        ]
+      }
+    },
+    "exhaust-specifications": {
+      "id": "exhaust-specifications",
+      "name": "Exhaust System Specifications",
+      "type": "specifications",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "exhaust-system"
+      ],
+      "attributes": {
+        "name": "Exhaust System Specifications",
+        "documentType": "Technical Specifications",
+        "version": "2.1",
+        "lastUpdated": "2023-02-15",
+        "author": "Emissions Team",
+        "sections": [
+          "Emissions Standards",
+          "Flow Characteristics",
+          "Noise Levels",
+          "Heat Management"
+        ]
+      }
+    },
+    "hvac-engineer": {
+      "id": "hvac-engineer",
+      "name": "Lisa Thompson",
+      "type": "person",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "chief-engineer"
+      ],
+      "attributes": {
+        "name": "Lisa Thompson",
+        "title": "HVAC Systems Engineer",
+        "department": "Climate Control",
+        "expertise": [
+          "HVAC Design",
+          "Thermal Management",
+          "Control Systems"
+        ],
+        "email": "lisa.thompson@carcompany.com"
+      }
+    },
+    "safety-engineer": {
+      "id": "safety-engineer",
+      "name": "Robert Kim",
+      "type": "person",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [
+        "chief-engineer"
+      ],
+      "attributes": {
+        "name": "Robert Kim",
+        "title": "Safety Systems Engineer",
+        "department": "Vehicle Safety",
+        "expertise": [
+          "Crash Systems",
+          "Safety Electronics",
+          "Regulatory Compliance"
+        ],
+        "email": "robert.kim@carcompany.com"
+      }
+    },
+    "quality-manager": {
+      "id": "quality-manager",
+      "name": "Maria Garcia",
+      "type": "person",
+      "bayesianType": "discrete",
+      "states": [
+        "true",
+        "false"
+      ],
+      "cpt": {
+        "true": 0.5,
+        "false": 0.5
+      },
+      "parents": [],
+      "attributes": {
+        "name": "Maria Garcia",
+        "title": "Quality Assurance Manager",
+        "department": "Quality Control",
+        "expertise": [
+          "Quality Systems",
+          "Process Control",
+          "Regulatory Compliance"
+        ],
+        "email": "maria.garcia@carcompany.com"
+      }
+    }
+  },
+  "edges": [
+    {
+      "source": "sedan-model",
+      "target": "engine-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "transmission-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "chassis-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "interior-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "wheel-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "brake-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "electrical-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "suspension-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "engine-block",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "pistons",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "fuel-injection",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "electric-motor",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "transmission-system",
+      "target": "cvt-belt",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "transmission-system",
+      "target": "torque-converter",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "interior-system",
+      "target": "dashboard",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "interior-system",
+      "target": "seats",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "interior-system",
+      "target": "infotainment",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "wheel-system",
+      "target": "rims",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "wheel-system",
+      "target": "tires",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "electrical-system",
+      "target": "battery",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "electrical-system",
+      "target": "infotainment",
+      "type": "connects_to",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "electrical-system",
+      "type": "depends_on",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "transmission-system",
+      "type": "connects_to",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "transmission-system",
+      "target": "wheel-system",
+      "type": "transfers_power_to",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "brake-system",
+      "target": "wheel-system",
+      "type": "acts_on",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "suspension-system",
+      "target": "wheel-system",
+      "type": "supports",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "suspension-system",
+      "target": "chassis-system",
+      "type": "attaches_to",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "engine-specifications",
+      "type": "documented_by",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "safety-standards",
+      "type": "complies_with",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "maintenance-guide",
+      "type": "documented_by",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "chief-engineer",
+      "target": "sedan-model",
+      "type": "oversees",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-engineer",
+      "target": "engine-system",
+      "type": "designs",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "electrical-engineer",
+      "target": "electrical-system",
+      "type": "designs",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "electrical-engineer",
+      "target": "battery",
+      "type": "designs",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "interior-designer",
+      "target": "interior-system",
+      "type": "designs",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "manufacturing-plant",
+      "target": "sedan-model",
+      "type": "manufactures",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-engineer",
+      "target": "electrical-engineer",
+      "type": "collaborates_with",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "electrical-engineer",
+      "target": "interior-designer",
+      "type": "collaborates_with",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "chief-engineer",
+      "target": "engine-engineer",
+      "type": "supervises",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "chief-engineer",
+      "target": "electrical-engineer",
+      "type": "supervises",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "chief-engineer",
+      "target": "interior-designer",
+      "type": "supervises",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "camshaft",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "valves",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "crankshaft",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "cooling-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "cooling-system",
+      "target": "radiator",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "cooling-system",
+      "target": "water-pump",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "cooling-system",
+      "target": "engine-system",
+      "type": "cools",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "hvac-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "hvac-system",
+      "target": "ac-compressor",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "hvac-system",
+      "target": "heater-core",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "hvac-system",
+      "target": "electrical-system",
+      "type": "depends_on",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "exhaust-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "exhaust-system",
+      "target": "catalytic-converter",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "exhaust-system",
+      "target": "muffler",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "exhaust-system",
+      "target": "engine-system",
+      "type": "connects_to",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "airbag-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "sedan-model",
+      "target": "seatbelt-system",
+      "type": "contains",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "airbag-system",
+      "target": "electrical-system",
+      "type": "depends_on",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "seatbelt-system",
+      "target": "electrical-system",
+      "type": "depends_on",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "hvac-system",
+      "target": "hvac-specifications",
+      "type": "documented_by",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "exhaust-system",
+      "target": "exhaust-specifications",
+      "type": "documented_by",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "hvac-engineer",
+      "target": "hvac-system",
+      "type": "designs",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "safety-engineer",
+      "target": "airbag-system",
+      "type": "designs",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "safety-engineer",
+      "target": "seatbelt-system",
+      "type": "designs",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "quality-manager",
+      "target": "sedan-model",
+      "type": "oversees_quality",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "hvac-engineer",
+      "target": "electrical-engineer",
+      "type": "collaborates_with",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "safety-engineer",
+      "target": "electrical-engineer",
+      "type": "collaborates_with",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "quality-manager",
+      "target": "chief-engineer",
+      "type": "reports_to",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "chief-engineer",
+      "target": "hvac-engineer",
+      "type": "supervises",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "chief-engineer",
+      "target": "safety-engineer",
+      "type": "supervises",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "hvac-system",
+      "target": "cooling-system",
+      "type": "interacts_with",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "engine-system",
+      "target": "exhaust-system",
+      "type": "outputs_to",
+      "weight": 1,
+      "attributes": {}
+    },
+    {
+      "source": "cooling-system",
+      "target": "electrical-system",
+      "type": "depends_on",
+      "weight": 1,
+      "attributes": {}
+    }
+  ],
+  "metadata": {
+    "name": "UltraLink Bayesian Network",
+    "description": "Automatically generated from UltraLink data",
+    "variables": [
+      {
+        "name": "sedan-model",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "engine-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "engine-block",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "pistons",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "fuel-injection",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "electric-motor",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "transmission-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "cvt-belt",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "torque-converter",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "chassis-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "interior-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "dashboard",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "seats",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "infotainment",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "wheel-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "rims",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "tires",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "brake-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "electrical-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "battery",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "suspension-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "engine-specifications",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "safety-standards",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "maintenance-guide",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "chief-engineer",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "engine-engineer",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "electrical-engineer",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "interior-designer",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "manufacturing-plant",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "camshaft",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "valves",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "crankshaft",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "cooling-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "radiator",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "water-pump",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "hvac-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "ac-compressor",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "heater-core",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "exhaust-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "catalytic-converter",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "muffler",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "airbag-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "seatbelt-system",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "hvac-specifications",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "exhaust-specifications",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "hvac-engineer",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "safety-engineer",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "name": "quality-manager",
+        "type": "discrete",
+        "states": [
+          "true",
+          "false"
+        ]
+      }
+    ]
+  }
+}

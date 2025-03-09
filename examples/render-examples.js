@@ -16,6 +16,7 @@ const { createActiveInferenceLabDataset } = require('../tests/fixtures/Systems/A
 const { createUSAHistoryDataset } = require('../tests/fixtures/Systems/USAHistory/usa-history');
 const { createNeurofeedbackResearchDataset } = require('../tests/fixtures/Systems/NeurofeedbackResearch/neurofeedback-research');
 const { createHumanAnatomyDataset } = require('../tests/fixtures/Systems/HumanAnatomy/human-anatomy');
+const { createCarDataset } = require('../tests/fixtures/Systems/Car/car');
 
 // Define the systems and their dataset creators
 const SYSTEMS = {
@@ -24,7 +25,8 @@ const SYSTEMS = {
   ResearchTeam: createResearchTeamDataset,
   ActiveInferenceLab: createActiveInferenceLabDataset,
   USAHistory: createUSAHistoryDataset,
-  NeurofeedbackResearch: createNeurofeedbackResearchDataset
+  NeurofeedbackResearch: createNeurofeedbackResearchDataset,
+  Car: createCarDataset
 };
 
 // Define the rendering formats
@@ -305,7 +307,7 @@ async function renderSystem(systemName, createDatasetFn) {
   }
   
   // Create the base output directory for this system
-  const baseOutputDir = path.join('output', 'systems', systemName);
+  const baseOutputDir = path.join(__dirname, 'output', 'systems', systemName);
   ensureDirectoryExists(baseOutputDir);
   
   // Process each rendering target
@@ -359,13 +361,154 @@ async function renderSystem(systemName, createDatasetFn) {
           
         case 'html-website':
           // HTML Website output (multiple files)
-          const websiteOutput = safeExecute(() => ultralink.toHTMLWebsite({
-            title: `${systemName} - UltraLink Knowledge Graph`,
-            description: `Interactive exploration of the ${systemName} knowledge graph`
-          }), {});
-          
-          for (const [filename, content] of Object.entries(websiteOutput)) {
-            safeWriteFile(path.join(targetDir, filename), content);
+          try {
+            console.log(`    Generating HTML website for ${systemName}...`);
+            const websiteOutput = safeExecute(() => ultralink.toHTMLWebsite({
+              title: `${systemName} - UltraLink Knowledge Graph`,
+              description: `Interactive exploration of the ${systemName} knowledge graph`,
+              includeSearch: true,
+              includeDownloadButtons: true
+            }), {});
+            
+            // Ensure output directory exists
+            ensureDirectoryExists(targetDir);
+            
+            // Write all website files
+            for (const [filename, content] of Object.entries(websiteOutput)) {
+              safeWriteFile(path.join(targetDir, filename), content);
+            }
+            
+            // Verify that graph.js was generated
+            if (!websiteOutput['graph.js']) {
+              console.warn(`    Warning: graph.js was not generated for ${systemName}`);
+              // Generate a fallback graph.js with proper D3 initialization
+              const fallbackGraphJs = `// Fallback graph.js for ${systemName}
+const data = {
+  nodes: [],
+  links: []
+};
+
+// Color mapping function
+function getColorByType(type) {
+  const colors = {
+    person: '#4285F4',     // Google Blue
+    project: '#EA4335',    // Google Red
+    organization: '#FBBC04', // Google Yellow
+    place: '#34A853',      // Google Green
+    concept: '#9C27B0',    // Purple
+    event: '#FF9800',      // Orange
+    article: '#795548',    // Brown
+    technology: '#607D8B', // Blue Grey
+    default: '#9E9E9E'     // Grey
+  };
+  
+  return colors[type] || colors.default;
+}
+
+// Initialize graph with data
+function initializeGraph(data) {
+  const container = document.getElementById('graph');
+  if (!container) {
+    console.error('Graph container not found');
+    return;
+  }
+  
+  // Add a message about the empty graph
+  container.innerHTML = '<div style="text-align: center; padding: 50px;"><h3>No graph data available</h3><p>The knowledge graph could not be generated properly.</p></div>';
+  
+  // Initialize an empty graph with D3
+  const svg = d3.select('#graph')
+    .append('svg')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .attr('viewBox', [0, 0, 800, 600]);
+    
+  svg.append('text')
+    .attr('x', 400)
+    .attr('y', 300)
+    .attr('text-anchor', 'middle')
+    .text('No graph data available');
+}
+
+// Initialize the visualization when the document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  initializeGraph(data);
+});`;
+              safeWriteFile(path.join(targetDir, 'graph.js'), fallbackGraphJs);
+            } else {
+              // Verify that graph.js contains the necessary data
+              const graphJs = websiteOutput['graph.js'];
+              if (!graphJs.includes('nodes') || !graphJs.includes('links')) {
+                console.warn(`    Warning: graph.js for ${systemName} may not contain proper graph data`);
+              } else {
+                console.log(`    Successfully generated graph.js for ${systemName}`);
+              }
+            }
+            
+            console.log(`    HTML website for ${systemName} saved to ${targetDir}`);
+          } catch (error) {
+            console.error(`    Error generating HTML website: ${error.message}`);
+            
+            // Create a minimal fallback website if generation fails
+            try {
+              ensureDirectoryExists(targetDir);
+              
+              // Create a basic index.html
+              const fallbackIndexHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <title>${systemName} - UltraLink Knowledge Graph</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    .error-message { color: #d32f2f; padding: 20px; border: 1px solid #d32f2f; border-radius: 4px; }
+    #graph { width: 100%; height: 600px; border: 1px solid #ccc; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>${systemName} - UltraLink Knowledge Graph</h1>
+  <div class="error-message">
+    <h3>Error Generating Visualization</h3>
+    <p>There was an error generating the knowledge graph visualization: ${error.message}</p>
+  </div>
+  <div id="graph"></div>
+  <script src="graph.js"></script>
+</body>
+</html>`;
+              safeWriteFile(path.join(targetDir, 'index.html'), fallbackIndexHtml);
+              
+              // Create a fallback graph.js
+              const fallbackGraphJs = `// Fallback graph.js for ${systemName}
+const data = {
+  nodes: [],
+  links: []
+};
+
+// Initialize the visualization when the document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.getElementById('graph');
+  if (!container) return;
+  
+  const svg = d3.select('#graph')
+    .append('svg')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .attr('viewBox', [0, 0, 800, 600]);
+    
+  svg.append('text')
+    .attr('x', 400)
+    .attr('y', 300)
+    .attr('text-anchor', 'middle')
+    .text('Error generating graph visualization');
+});`;
+              safeWriteFile(path.join(targetDir, 'graph.js'), fallbackGraphJs);
+              
+              console.log(`    Created fallback HTML website for ${systemName} in ${targetDir}`);
+            } catch (fallbackError) {
+              console.error(`    Failed to create fallback website: ${fallbackError.message}`);
+            }
           }
           break;
           
@@ -375,67 +518,160 @@ async function renderSystem(systemName, createDatasetFn) {
             try {
               console.log(`    Processing ${vizFormat.format} visualization...`);
               
-              let vizOutput;
+              // Generate the visualization
+              const vizOutputObj = await safeExecuteAsync(async () => {
+                return await ultralink.toVisualization({ format: vizFormat.format });
+              }, {});
+              
+              // Get the appropriate content based on format
+              let filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
+              
+              // Extract the content from the visualization output
               let content;
-              
-              // Special handling for D3 format which seems to have issues
-              if (vizFormat.format === 'd3') {
-                console.log(`    Using placeholder D3 visualization for ${systemName}`);
-                content = generatePlaceholderD3(systemName);
-                safeWriteFile(path.join(targetDir, vizFormat.filename), content);
-                continue;
+              if (vizFormat.format === 'svg') {
+                content = vizOutputObj['graph.svg'] || vizOutputObj;
+              } else if (vizFormat.format === 'png') {
+                content = vizOutputObj['graph.png'] || vizOutputObj;
+              } else if (vizFormat.format === 'd3') {
+                content = vizOutputObj['graph-d3.html'] || vizOutputObj;
+                filename = `${systemName.toLowerCase()}-d3.html`;
+              } else if (vizFormat.format === 'cytoscape') {
+                content = vizOutputObj['graph-cytoscape.html'] || vizOutputObj;
+                filename = `${systemName.toLowerCase()}-cytoscape.html`;
               }
               
-              // Try to generate the visualization with the patched UltraLink instance
-              try {
-                vizOutput = await safeExecuteAsync(async () => {
-                  return await ultralink.toVisualization({ format: vizFormat.format });
-                }, { 'placeholder': `Failed to generate ${vizFormat.format} visualization` });
-              } catch (error) {
-                console.warn(`    Visualization generation error: ${error.message}`);
-                // Create a placeholder visualization file
-                const placeholderContent = (vizFormat.format === 'svg') 
-                  ? `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="100%" height="100%" fill="#f8f9fa"/><text x="50%" y="50%" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#333">${systemName}</text><text x="50%" y="52%" dy="1.2em" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#666">Placeholder ${vizFormat.format.toUpperCase()} Visualization</text></svg>`
-                  : (vizFormat.format === 'png') 
-                    ? Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64') // 1x1 transparent PNG
-                    : `/* Placeholder for ${vizFormat.format} visualization */`;
-                  
-                safeWriteFile(path.join(targetDir, vizFormat.filename), placeholderContent);
-                continue;
-              }
-              
-              if (!vizOutput || Object.keys(vizOutput).length === 0) {
-                console.warn(`    No output generated for ${vizFormat.format} visualization`);
-                const placeholderContent = (vizFormat.format === 'svg') 
-                  ? `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="100%" height="100%" fill="#f8f9fa"/><text x="50%" y="50%" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#333">${systemName}</text><text x="50%" y="52%" dy="1.2em" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#666">Empty ${vizFormat.format.toUpperCase()} Visualization</text></svg>`
-                  : (vizFormat.format === 'png') 
-                    ? Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64') // 1x1 transparent PNG
-                    : `/* Empty ${vizFormat.format} visualization */`;
-                safeWriteFile(path.join(targetDir, vizFormat.filename), placeholderContent);
-                continue;
-              }
-              
-              // Get the first entry or use a placeholder
-              try {
-                content = vizOutput[Object.keys(vizOutput)[0]];
-                safeWriteFile(path.join(targetDir, vizFormat.filename), content);
-              } catch (error) {
-                console.warn(`    Error getting visualization content: ${error.message}`);
-                const placeholderContent = (vizFormat.format === 'svg') 
-                  ? `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="100%" height="100%" fill="#f8f9fa"/><text x="50%" y="50%" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#333">${systemName}</text><text x="50%" y="52%" dy="1.2em" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#666">Error in ${vizFormat.format.toUpperCase()} Visualization</text></svg>`
-                  : (vizFormat.format === 'png') 
-                    ? Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64') // 1x1 transparent PNG
-                    : `/* Error in ${vizFormat.format} visualization: ${error.message} */`;
-                safeWriteFile(path.join(targetDir, vizFormat.filename), placeholderContent);
+              // If content was successfully generated
+              if (content && typeof content === 'string' && content.length > 0) {
+                ensureDirectoryExists(targetDir);
+                safeWriteFile(path.join(targetDir, filename), content);
+                console.log(`    Saved ${vizFormat.format} visualization to ${filename}`);
+              } else {
+                console.warn(`    ${vizFormat.format.toUpperCase()} visualization output for ${systemName} is not in expected format`);
+                
+                // Create a fallback visualization file
+                let fallbackContent;
+                
+                if (vizFormat.format === 'svg') {
+                  fallbackContent = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+  <rect width="800" height="600" fill="#f8f9fa" />
+  <text x="400" y="300" font-family="Arial" font-size="24" text-anchor="middle">
+    ${systemName} Knowledge Graph (Fallback SVG)
+  </text>
+</svg>`;
+                } else if (vizFormat.format === 'png') {
+                  // For PNG, we can't easily create a fallback image, so we'll create a text file
+                  fallbackContent = `Fallback PNG visualization for ${systemName}`;
+                } else if (vizFormat.format === 'd3') {
+                  fallbackContent = `<!DOCTYPE html>
+<html>
+<head>
+  <title>${systemName} Knowledge Graph - D3 Visualization</title>
+  <meta charset="UTF-8">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #graph { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>${systemName} Knowledge Graph</h1>
+  <p>This is a fallback D3.js visualization.</p>
+  <div id="graph"></div>
+  <script>
+    // Create a simple fallback visualization
+    const svg = d3.select('#graph')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', '100%')
+      .attr('viewBox', [0, 0, 800, 600]);
+      
+    svg.append('rect')
+      .attr('width', 800)
+      .attr('height', 600)
+      .attr('fill', '#f8f9fa');
+      
+    svg.append('text')
+      .attr('x', 400)
+      .attr('y', 300)
+      .attr('font-size', '24px')
+      .attr('text-anchor', 'middle')
+      .text('${systemName} Knowledge Graph (Fallback D3)');
+  </script>
+</body>
+</html>`;
+                  filename = `${systemName.toLowerCase()}-d3.html`;
+                } else if (vizFormat.format === 'cytoscape') {
+                  fallbackContent = `<!DOCTYPE html>
+<html>
+<head>
+  <title>${systemName} Knowledge Graph - Cytoscape Visualization</title>
+  <meta charset="UTF-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>${systemName} Knowledge Graph</h1>
+  <p>This is a fallback Cytoscape visualization.</p>
+  <div id="cy"></div>
+  <script>
+    // Create a simple fallback visualization
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: [
+        { data: { id: 'fallback-node', label: 'Fallback Node' } }
+      ],
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': '#6495ED',
+            'label': 'data(label)',
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'width': 120,
+            'height': 120
+          }
+        }
+      ],
+      layout: {
+        name: 'grid'
+      }
+    });
+  </script>
+</body>
+</html>`;
+                  filename = `${systemName.toLowerCase()}-cytoscape.html`;
+                }
+                
+                if (fallbackContent) {
+                  ensureDirectoryExists(targetDir);
+                  safeWriteFile(path.join(targetDir, filename), fallbackContent);
+                  console.log(`    Created fallback ${vizFormat.format} visualization in ${filename}`);
+                }
               }
             } catch (error) {
-              console.warn(`    Failed to process ${vizFormat.format} visualization: ${error.message}`);
-              const placeholderContent = (vizFormat.format === 'svg') 
-                ? `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="100%" height="100%" fill="#f8f9fa"/><text x="50%" y="50%" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#333">${systemName}</text><text x="50%" y="52%" dy="1.2em" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#666">Processing Error in ${vizFormat.format.toUpperCase()} Visualization</text></svg>`
-                : (vizFormat.format === 'png') 
-                  ? Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64') // 1x1 transparent PNG
-                  : `/* Error processing ${vizFormat.format} visualization: ${error.message} */`;
-              safeWriteFile(path.join(targetDir, vizFormat.filename), placeholderContent);
+              console.error(`    Error generating ${vizFormat.format} visualization: ${error.message}`);
+              
+              // Create a fallback file even in case of error
+              try {
+                ensureDirectoryExists(targetDir);
+                let filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
+                let fallbackContent = `Error generating ${vizFormat.format} visualization for ${systemName}: ${error.message}`;
+                
+                if (vizFormat.format === 'd3') {
+                  filename = `${systemName.toLowerCase()}-d3.html`;
+                } else if (vizFormat.format === 'cytoscape') {
+                  filename = `${systemName.toLowerCase()}-cytoscape.html`;
+                }
+                
+                safeWriteFile(path.join(targetDir, filename), fallbackContent);
+                console.log(`    Created error message file for ${vizFormat.format} visualization`);
+              } catch (fallbackError) {
+                console.error(`    Failed to create fallback file: ${fallbackError.message}`);
+              }
             }
           }
           break;
@@ -665,7 +901,7 @@ async function renderAllSystems() {
   console.log('========================');
   
   // Create the main output directory
-  const outputDir = path.join('output', 'systems');
+  const outputDir = path.join(__dirname, 'output', 'systems');
   ensureDirectoryExists(outputDir);
   
   // Loop through each system and render it

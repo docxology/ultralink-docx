@@ -7,6 +7,23 @@
  * - D3.js - Interactive visualizations using D3 library
  * - Cytoscape.js - Network visualizations using Cytoscape.js
  * 
+ * Recent improvements:
+ * - Added style tags to SVG output for consistent appearance
+ * - Fixed node positioning with a more reliable lookup approach using Map
+ * - Improved error handling with meaningful fallback visualizations
+ * - Enhanced browser compatibility through proper HTML output
+ * - Added Node.js compatibility with proper JSDOM integration
+ * - Fixed D3 and Cytoscape output to return proper HTML content
+ * - Added proper object structure for visualization returns
+ * 
+ * Environment compatibility:
+ * - Browser: Uses native DOM capabilities when available
+ * - Node.js: Uses JSDOM for DOM simulation in headless environments
+ * 
+ * Dependencies:
+ * - jsdom: Required for Node.js environments
+ * - sharp: Optional, needed for PNG generation
+ * 
  * @param {Object} ultralink - UltraLink instance
  * @param {Object} options - Configuration options for the export
  * @param {string} [options.format='svg'] - Output format ('svg', 'png', 'd3', 'cytoscape')

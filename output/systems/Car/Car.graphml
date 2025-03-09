@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="year" for="node" attr.name="year" attr.type="string"/>
+    <key id="dimensions" for="node" attr.name="dimensions" attr.type="string"/>
+    <key id="weight" for="node" attr.name="weight" attr.type="string"/>
+    <key id="fuelType" for="node" attr.name="fuelType" attr.type="string"/>
+    <key id="fuelEfficiency" for="node" attr.name="fuelEfficiency" attr.type="string"/>
+    <key id="engineSize" for="node" attr.name="engineSize" attr.type="string"/>
+    <key id="status" for="node" attr.name="status" attr.type="string"/>
+    <key id="componentType" for="node" attr.name="componentType" attr.type="string"/>
+    <key id="partNumber" for="node" attr.name="partNumber" attr.type="string"/>
+    <key id="manufacturer" for="node" attr.name="manufacturer" attr.type="string"/>
+    <key id="material" for="node" attr.name="material" attr.type="string"/>
+    <key id="cylinders" for="node" attr.name="cylinders" attr.type="string"/>
+    <key id="count" for="node" attr.name="count" attr.type="string"/>
+    <key id="pressure" for="node" attr.name="pressure" attr.type="string"/>
+    <key id="power" for="node" attr.name="power" attr.type="string"/>
+    <key id="voltage" for="node" attr.name="voltage" attr.type="string"/>
+    <key id="gearRatios" for="node" attr.name="gearRatios" attr.type="string"/>
+    <key id="diameter" for="node" attr.name="diameter" attr.type="string"/>
+    <key id="capacity" for="node" attr.name="capacity" attr.type="string"/>
+    <key id="features" for="node" attr.name="features" attr.type="string"/>
+    <key id="screenSize" for="node" attr.name="screenSize" attr.type="string"/>
+    <key id="size" for="node" attr.name="size" attr.type="string"/>
+    <key id="documentType" for="node" attr.name="documentType" attr.type="string"/>
+    <key id="version" for="node" attr.name="version" attr.type="string"/>
+    <key id="lastUpdated" for="node" attr.name="lastUpdated" attr.type="string"/>
+    <key id="author" for="node" attr.name="author" attr.type="string"/>
+    <key id="sections" for="node" attr.name="sections" attr.type="string"/>
+    <key id="standards" for="node" attr.name="standards" attr.type="string"/>
+    <key id="title" for="node" attr.name="title" attr.type="string"/>
+    <key id="department" for="node" attr.name="department" attr.type="string"/>
+    <key id="expertise" for="node" attr.name="expertise" attr.type="string"/>
+    <key id="email" for="node" attr.name="email" attr.type="string"/>
+    <key id="location" for="node" attr.name="location" attr.type="string"/>
+    <key id="employees" for="node" attr.name="employees" attr.type="string"/>
+    <key id="established" for="node" attr.name="established" attr.type="string"/>
+    <key id="airbagCount" for="node" attr.name="airbagCount" attr.type="string"/>
+    <key id="seatCount" for="node" attr.name="seatCount" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
+    <node id="sedan-model">
+      <data key="type">vehicle</data>
+      <data key="name">Sedan XR5</data>
+      <data key="description">Mid-size family sedan with modern features</data>
+      <data key="year">2023</data>
+      <data key="dimensions">[object Object]</data>
+      <data key="weight">1500kg</data>
+      <data key="fuelType">Hybrid</data>
+      <data key="fuelEfficiency">18km/l</data>
+      <data key="engineSize">2.0L</data>
+      <data key="status">production</data>
+    </node>
+    <node id="engine-system">
+      <data key="type">component</data>
+      <data key="name">Hybrid Engine System</data>
+      <data key="componentType">Engine</data>
+      <data key="description">2.0L hybrid engine with electric motor assistance</data>
+      <data key="partNumber">ENG2023-H20</data>
+      <data key="weight">180kg</data>
+      <data key="dimensions">[object Object]</data>
+      <data key="manufacturer">PowerTech Industries</data>
+      <data key="status">active</data>
+    </node>
+    <node id="engine-block">
+      <data key="type">component</data>
+      <data key="name">Engine Block</data>
+      <data key="componentType">Engine Part</data>
+      <data key="description">Main engine block housing for cylinders</data>
+      <data key="partNumber">EB2023-H20</data>
+      <data key="material">Aluminum Alloy</data>
+      <data key="cylinders">4</data>
+      <data key="weight">75kg</data>
+      <data key="manufacturer">PowerTech Industries</data>
+      <data key="status">active</data>
+    </node>
+    <node id="pistons">
+      <data key="type">component</data>
+      <data key="name">Piston Assembly</data>
+      <data key="componentType">Engine Part</data>
+      <data key="description">Set of 4 pistons with connecting rods</data>
+      <data key="partNumber">PA2023-4C</data>
+      <data key="material">Forged Steel</data>
+      <data key="count">4</data>
+      <data key="weight">12kg</data>
+      <data key="manufacturer">PowerTech Industries</data>
+      <data key="status">active</data>
+    </node>
+    <node id="fuel-injection">
+      <data key="type">component</data>
+      <data key="name">Fuel Injection System</data>
+      <data key="componentType">Engine Part</data>
+      <data key="description">Direct injection system for fuel delivery</data>
+      <data key="partNumber">FI2023-DI</data>
+      <data key="pressure">200bar</data>
+      <data key="weight">8kg</data>
+      <data key="manufacturer">FuelTech Systems</data>
+      <data key="status">active</data>
+    </node>
+    <node id="electric-motor">
+      <data key="type">component</data>
+      <data key="name">Electric Assist Motor</data>
+      <data key="componentType">Hybrid System</data>
+      <data key="description">Electric motor for hybrid operation</data>
+      <data key="partNumber">EM2023-45</data>
+      <data key="power">45kW</data>
+      <data key="voltage">240V</data>
+      <data key="weight">25kg</data>
+      <data key="manufacturer">ElectroDrive Inc</data>
+      <data key="status">active</data>
+    </node>
+    <node id="transmission-system">
+      <data key="type">component</data>
+      <data key="name">CVT Transmission</data>
+      <data key="componentType">Transmission</data>
+      <data key="description">Continuously Variable Transmission system</data>
+      <data key="partNumber">TR2023-CVT</data>
+      <data key="gearRatios">Continuously Variable</data>
+      <data key="weight">90kg</data>
+      <data key="manufacturer">TransTech Auto</data>
+      <data key="status">active</data>
+    </node>
+    <node id="cvt-belt">
+      <data key="type">component</data>
+      <data key="name">CVT Belt</data>
+      <data key="componentType">Transmission Part</data>
+      <data key="description">Main belt for continuously variable transmission</data>
+      <data key="partNumber">CB2023-H1</data>
+      <data key="material">High-Strength Polymer</data>
+      <data key="weight">5kg</data>
+      <data key="manufacturer">TransTech Auto</data>
+      <data key="status">active</data>
+    </node>
+    <node id="torque-converter">
+      <data key="type">component</data>
+      <data key="name">Torque Converter</data>
+      <data key="componentType">Transmission Part</data>
+      <data key="description">Hydraulic torque converter for CVT system</data>
+      <data key="partNumber">TC2023-H1</data>
+      <data key="diameter">28cm</data>
+      <data key="weight">15kg</data>
+      <data key="manufacturer">TransTech Auto</data>
+      <data key="status">active</data>
+    </node>
+    <node id="chassis-system">
+      <data key="type">component</data>
+      <data key="name">Chassis and Frame</data>
+      <data key="componentType">Chassis</data>
+      <data key="description">Unibody chassis with reinforced safety frame</data>
+      <data key="partNumber">CH2023-UB</data>
+      <data key="material">High-Strength Steel with Aluminum Components</data>
+      <data key="weight">320kg</data>
+      <data key="manufacturer">FrameTech Engineering</data>
+      <data key="status">active</data>
+    </node>
+    <node id="interior-system">
+      <data key="type">component</data>
+      <data key="name">Interior System</data>
+      <data key="componentType">Interior</data>
+      <data key="description">Complete interior setup including dash, seats, and trim</data>
+      <data key="partNumber">INT2023-STD</data>
+      <data key="capacity">5 passengers</data>
+      <data key="weight">180kg</data>
+      <data key="manufacturer">ComfortDesign Interiors</data>
+      <data key="status">active</data>
+    </node>
+    <node id="dashboard">
+      <data key="type">component</data>
+      <data key="name">Dashboard Assembly</data>
+      <data key="componentType">Interior Part</data>
+      <data key="description">Main dashboard with instrument cluster and controls</data>
+      <data key="partNumber">DA2023-DX</data>
+      <data key="features">Digital Display,Touch Controls,Climate Interface</data>
+      <data key="weight">25kg</data>
+      <data key="manufacturer">ComfortDesign Interiors</data>
+      <data key="status">active</data>
+    </node>
+    <node id="seats">
+      <data key="type">component</data>
+      <data key="name">Seating System</data>
+      <data key="componentType">Interior Part</data>
+      <data key="description">Full set of 5 seats with adjustable features</data>
+      <data key="partNumber">SS2023-5S</data>
+      <data key="material">Synthetic Leather</data>
+      <data key="features">Heating,Power Adjustment,Memory Settings</data>
+      <data key="weight">85kg</data>
+      <data key="manufacturer">ComfortDesign Interiors</data>
+      <data key="status">active</data>
+    </node>
+    <node id="infotainment">
+      <data key="type">component</data>
+      <data key="name">Infotainment System</data>
+      <data key="componentType">Electronics</data>
+      <data key="description">10-inch touchscreen with navigation and media</data>
+      <data key="partNumber">INF2023-10T</data>
+      <data key="screenSize">10 inches</data>
+      <data key="features">Navigation,Smartphone Integration,Voice Control</data>
+      <data key="weight">5kg</data>
+      <data key="manufacturer">TechTouch Electronics</data>
+      <data key="status">active</data>
+    </node>
+    <node id="wheel-system">
+      <data key="type">component</data>
+      <data key="name">Wheels and Tires</data>
+      <data key="componentType">Wheel System</data>
+      <data key="description">Complete wheel system including rims and tires</data>
+      <data key="partNumber">WH2023-17A</data>
+      <data key="count">4</data>
+      <data key="weight">80kg</data>
+      <data key="manufacturer">RoadGrip Tire Co</data>
+      <data key="status">active</data>
+    </node>
+    <node id="rims">
+      <data key="type">component</data>
+      <data key="name">Alloy Rims</data>
+      <data key="componentType">Wheel Part</data>
+      <data key="description">17-inch aluminum alloy rims</data>
+      <data key="partNumber">RIM2023-17A</data>
+      <data key="size">17 inches</data>
+      <data key="material">Aluminum Alloy</data>
+      <data key="count">4</data>
+      <data key="weight">32kg</data>
+      <data key="manufacturer">AlloyTech Wheels</data>
+      <data key="status">active</data>
+    </node>
+    <node id="tires">
+      <data key="type">component</data>
+      <data key="name">All-Season Tires</data>
+      <data key="componentType">Wheel Part</data>
+      <data key="description">215/55R17 all-season tires</data>
+      <data key="partNumber">TIRE2023-17AS</data>
+      <data key="size">215/55R17</data>
+      <data key="count">4</data>
+      <data key="weight">48kg</data>
+      <data key="manufacturer">RoadGrip Tire Co</data>
+      <data key="status">active</data>
+    </node>
+    <node id="brake-system">
+      <data key="type">component</data>
+      <data key="name">Brake System</data>
+      <data key="componentType">Brakes</data>
+      <data key="description">Four-wheel disc brake system with ABS</data>
+      <data key="partNumber">BR2023-ABS</data>
+      <data key="features">ABS,Electronic Brake Distribution,Brake Assist</data>
+      <data key="weight">65kg</data>
+      <data key="manufacturer">StopTech Braking</data>
+      <data key="status">active</data>
+    </node>
+    <node id="electrical-system">
+      <data key="type">component</data>
+      <data key="name">Electrical System</data>
+      <data key="componentType">Electrical</data>
+      <data key="description">Complete electrical system including battery and wiring</data>
+      <data key="partNumber">ES2023-12V</data>
+      <data key="voltage">12V</data>
+      <data key="weight">45kg</data>
+      <data key="manufacturer">PowerCircuit Electronics</data>
+      <data key="status">active</data>
+    </node>
+    <node id="battery">
+      <data key="type">component</data>
+      <data key="name">Hybrid Battery System</data>
+      <data key="componentType">Electrical Part</data>
+      <data key="description">Lithium-ion battery pack for hybrid operation</data>
+      <data key="partNumber">BAT2023-LION</data>
+      <data key="capacity">2.5kWh</data>
+      <data key="voltage">240V</data>
+      <data key="weight">35kg</data>
+      <data key="manufacturer">PowerCell Technologies</data>
+      <data key="status">active</data>
+    </node>
+    <node id="suspension-system">
+      <data key="type">component</data>
+      <data key="name">Suspension System</data>
+      <data key="componentType">Suspension</data>
+      <data key="description">MacPherson strut front, multi-link rear suspension</data>
+      <data key="partNumber">SUS2023-MPS</data>
+      <data key="weight">120kg</data>
+      <data key="manufacturer">RideTech Suspension</data>
+      <data key="status">active</data>
+    </node>
+    <node id="engine-specifications">
+      <data key="type">specifications</data>
+      <data key="name">Engine Technical Specifications</data>
+      <data key="documentType">Technical Specifications</data>
+      <data key="version">2.3</data>
+      <data key="lastUpdated">2022-11-15</data>
+      <data key="author">Engineering Team</data>
+      <data key="sections">Performance Characteristics,Mechanical Specifications,Electrical Integration,Cooling Requirements</data>
+    </node>
+    <node id="safety-standards">
+      <data key="type">specifications</data>
+      <data key="name">Vehicle Safety Standards</data>
+      <data key="documentType">Regulatory Compliance</data>
+      <data key="version">4.1</data>
+      <data key="lastUpdated">2022-09-30</data>
+      <data key="author">Safety Department</data>
+      <data key="standards">NHTSA Crash Test Requirements,IIHS Safety Guidelines,EU Safety Regulations</data>
+    </node>
+    <node id="maintenance-guide">
+      <data key="type">documentation</data>
+      <data key="name">Vehicle Maintenance Guidelines</data>
+      <data key="documentType">Maintenance Manual</data>
+      <data key="version">1.2</data>
+      <data key="lastUpdated">2023-01-10</data>
+      <data key="author">Service Department</data>
+      <data key="sections">Routine Maintenance Schedule,Engine Service Procedures,Electrical System Diagnostics,Brake System Maintenance</data>
+    </node>
+    <node id="chief-engineer">
+      <data key="type">person</data>
+      <data key="name">Dr. Sarah Johnson</data>
+      <data key="title">Chief Engineering Officer</data>
+      <data key="department">Engineering</data>
+      <data key="expertise">Automotive Design,Systems Integration,Project Management</data>
+      <data key="email">sarah.johnson@carcompany.com</data>
+    </node>
+    <node id="engine-engineer">
+      <data key="type">person</data>
+      <data key="name">Michael Chen</data>
+      <data key="title">Senior Powertrain Engineer</data>
+      <data key="department">Powertrain Engineering</data>
+      <data key="expertise">Engine Design,Hybrid Systems,Thermal Management</data>
+      <data key="email">michael.chen@carcompany.com</data>
+    </node>
+    <node id="electrical-engineer">
+      <data key="type">person</data>
+      <data key="name">Elena Rodriguez</data>
+      <data key="title">Electrical Systems Engineer</data>
+      <data key="department">Electrical Engineering</data>
+      <data key="expertise">Automotive Electronics,Battery Systems,Sensor Integration</data>
+      <data key="email">elena.rodriguez@carcompany.com</data>
+    </node>
+    <node id="interior-designer">
+      <data key="type">person</data>
+      <data key="name">James Wilson</data>
+      <data key="title">Senior Interior Designer</data>
+      <data key="department">Interior Design</data>
+      <data key="expertise">Ergonomics,Materials Science,User Experience</data>
+      <data key="email">james.wilson@carcompany.com</data>
+    </node>
+    <node id="manufacturing-plant">
+      <data key="type">facility</data>
+      <data key="name">Central Manufacturing Plant</data>
+      <data key="location">Detroit, Michigan</data>
+      <data key="size">1.2 million sq ft</data>
+      <data key="capacity">200,000 vehicles annually</data>
+      <data key="employees">3500</data>
+      <data key="established">1985</data>
+    </node>
+    <node id="camshaft">
+      <data key="type">component</data>
+      <data key="name">Camshaft Assembly</data>
+      <data key="componentType">Engine Part</data>
+      <data key="description">DOHC camshaft system</data>
+      <data key="partNumber">CA2023-DOHC</data>
+      <data key="material">Hardened Steel</data>
+      <data key="weight">8kg</data>
+      <data key="manufacturer">PowerTech Industries</data>
+      <data key="status">active</data>
+    </node>
+    <node id="valves">
+      <data key="type">component</data>
+      <data key="name">Valve System</data>
+      <data key="componentType">Engine Part</data>
+      <data key="description">16-valve system with variable timing</data>
+      <data key="partNumber">VS2023-16V</data>
+      <data key="material">Titanium Alloy</data>
+      <data key="count">16</data>
+      <data key="weight">3kg</data>
+      <data key="manufacturer">PowerTech Industries</data>
+      <data key="status">active</data>
+    </node>
+    <node id="crankshaft">
+      <data key="type">component</data>
+      <data key="name">Crankshaft</data>
+      <data key="componentType">Engine Part</data>
+      <data key="description">Forged steel crankshaft</data>
+      <data key="partNumber">CS2023-F4</data>
+      <data key="material">Forged Steel</data>
+      <data key="weight">15kg</data>
+      <data key="manufacturer">PowerTech Industries</data>
+      <data key="status">active</data>
+    </node>
+    <node id="cooling-system">
+      <data key="type">component</data>
+      <data key="name">Engine Cooling System</data>
+      <data key="componentType">Cooling</data>
+      <data key="description">Liquid cooling system with electric pump</data>
+      <data key="partNumber">CS2023-LC</data>
+      <data key="weight">25kg</data>
+      <data key="manufacturer">ThermalTech Systems</data>
+      <data key="status">active</data>
+    </node>
+    <node id="radiator">
+      <data key="type">component</data>
+      <data key="name">Radiator</data>
+      <data key="componentType">Cooling Part</data>
+      <data key="description">Aluminum radiator with electric fan</data>
+      <data key="partNumber">RAD2023-AL</data>
+      <data key="material">Aluminum</data>
+      <data key="weight">8kg</data>
+      <data key="manufacturer">ThermalTech Systems</data>
+      <data key="status">active</data>
+    </node>
+    <node id="water-pump">
+      <data key="type">component</data>
+      <data key="name">Water Pump</data>
+      <data key="componentType">Cooling Part</data>
+      <data key="description">Electric water pump</data>
+      <data key="partNumber">WP2023-E</data>
+      <data key="weight">3kg</data>
+      <data key="manufacturer">ThermalTech Systems</data>
+      <data key="status">active</data>
+    </node>
+    <node id="hvac-system">
+      <data key="type">component</data>
+      <data key="name">HVAC System</data>
+      <data key="componentType">HVAC</data>
+      <data key="description">Dual-zone climate control system</data>
+      <data key="partNumber">HVAC2023-DZ</data>
+      <data key="weight">35kg</data>
+      <data key="manufacturer">ClimateControl Corp</data>
+      <data key="status">active</data>
+    </node>
+    <node id="ac-compressor">
+      <data key="type">component</data>
+      <data key="name">AC Compressor</data>
+      <data key="componentType">HVAC Part</data>
+      <data key="description">Electric AC compressor</data>
+      <data key="partNumber">AC2023-E</data>
+      <data key="weight">8kg</data>
+      <data key="manufacturer">ClimateControl Corp</data>
+      <data key="status">active</data>
+    </node>
+    <node id="heater-core">
+      <data key="type">component</data>
+      <data key="name">Heater Core</data>
+      <data key="componentType">HVAC Part</data>
+      <data key="description">Aluminum heater core</data>
+      <data key="partNumber">HC2023-AL</data>
+      <data key="material">Aluminum</data>
+      <data key="weight">4kg</data>
+      <data key="manufacturer">ClimateControl Corp</data>
+      <data key="status">active</data>
+    </node>
+    <node id="exhaust-system">
+      <data key="type">component</data>
+      <data key="name">Exhaust System</data>
+      <data key="componentType">Exhaust</data>
+      <data key="description">Complete exhaust system with catalytic converter</data>
+      <data key="partNumber">EX2023-CAT</data>
+      <data key="weight">45kg</data>
+      <data key="manufacturer">ExhaustTech</data>
+      <data key="status">active</data>
+    </node>
+    <node id="catalytic-converter">
+      <data key="type">component</data>
+      <data key="name">Catalytic Converter</data>
+      <data key="componentType">Exhaust Part</data>
+      <data key="description">Three-way catalytic converter</data>
+      <data key="partNumber">CAT2023-3W</data>
+      <data key="weight">12kg</data>
+      <data key="manufacturer">ExhaustTech</data>
+      <data key="status">active</data>
+    </node>
+    <node id="muffler">
+      <data key="type">component</data>
+      <data key="name">Muffler</data>
+      <data key="componentType">Exhaust Part</data>
+      <data key="description">Performance muffler with noise reduction</data>
+      <data key="partNumber">MUF2023-PR</data>
+      <data key="material">Stainless Steel</data>
+      <data key="weight">8kg</data>
+      <data key="manufacturer">ExhaustTech</data>
+      <data key="status">active</data>
+    </node>
+    <node id="airbag-system">
+      <data key="type">component</data>
+      <data key="name">Airbag System</data>
+      <data key="componentType">Safety</data>
+      <data key="description">Multi-airbag safety system</data>
+      <data key="partNumber">AB2023-MS</data>
+      <data key="airbagCount">8</data>
+      <data key="weight">25kg</data>
+      <data key="manufacturer">SafetyTech Systems</data>
+      <data key="status">active</data>
+    </node>
+    <node id="seatbelt-system">
+      <data key="type">component</data>
+      <data key="name">Seatbelt System</data>
+      <data key="componentType">Safety</data>
+      <data key="description">Advanced seatbelt system with pretensioners</data>
+      <data key="partNumber">SB2023-PT</data>
+      <data key="seatCount">5</data>
+      <data key="weight">15kg</data>
+      <data key="manufacturer">SafetyTech Systems</data>
+      <data key="status">active</data>
+    </node>
+    <node id="hvac-specifications">
+      <data key="type">specifications</data>
+      <data key="name">HVAC Technical Specifications</data>
+      <data key="documentType">Technical Specifications</data>
+      <data key="version">1.5</data>
+      <data key="lastUpdated">2023-01-20</data>
+      <data key="author">Climate Control Team</data>
+      <data key="sections">Cooling Performance,Heating Performance,Air Distribution,Control Systems</data>
+    </node>
+    <node id="exhaust-specifications">
+      <data key="type">specifications</data>
+      <data key="name">Exhaust System Specifications</data>
+      <data key="documentType">Technical Specifications</data>
+      <data key="version">2.1</data>
+      <data key="lastUpdated">2023-02-15</data>
+      <data key="author">Emissions Team</data>
+      <data key="sections">Emissions Standards,Flow Characteristics,Noise Levels,Heat Management</data>
+    </node>
+    <node id="hvac-engineer">
+      <data key="type">person</data>
+      <data key="name">Lisa Thompson</data>
+      <data key="title">HVAC Systems Engineer</data>
+      <data key="department">Climate Control</data>
+      <data key="expertise">HVAC Design,Thermal Management,Control Systems</data>
+      <data key="email">lisa.thompson@carcompany.com</data>
+    </node>
+    <node id="safety-engineer">
+      <data key="type">person</data>
+      <data key="name">Robert Kim</data>
+      <data key="title">Safety Systems Engineer</data>
+      <data key="department">Vehicle Safety</data>
+      <data key="expertise">Crash Systems,Safety Electronics,Regulatory Compliance</data>
+      <data key="email">robert.kim@carcompany.com</data>
+    </node>
+    <node id="quality-manager">
+      <data key="type">person</data>
+      <data key="name">Maria Garcia</data>
+      <data key="title">Quality Assurance Manager</data>
+      <data key="department">Quality Control</data>
+      <data key="expertise">Quality Systems,Process Control,Regulatory Compliance</data>
+      <data key="email">maria.garcia@carcompany.com</data>
+    </node>
+    <edge source="sedan-model" target="engine-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="transmission-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="chassis-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="interior-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="wheel-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="brake-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="electrical-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="suspension-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="engine-system" target="engine-block">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="engine-system" target="pistons">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="engine-system" target="fuel-injection">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="engine-system" target="electric-motor">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="transmission-system" target="cvt-belt">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="transmission-system" target="torque-converter">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="interior-system" target="dashboard">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="interior-system" target="seats">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="interior-system" target="infotainment">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="wheel-system" target="rims">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="wheel-system" target="tires">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="electrical-system" target="battery">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="electrical-system" target="infotainment">
+      <data key="relationship_type">connects_to</data>
+    </edge>
+    <edge source="engine-system" target="electrical-system">
+      <data key="relationship_type">depends_on</data>
+    </edge>
+    <edge source="engine-system" target="transmission-system">
+      <data key="relationship_type">connects_to</data>
+    </edge>
+    <edge source="transmission-system" target="wheel-system">
+      <data key="relationship_type">transfers_power_to</data>
+    </edge>
+    <edge source="brake-system" target="wheel-system">
+      <data key="relationship_type">acts_on</data>
+    </edge>
+    <edge source="suspension-system" target="wheel-system">
+      <data key="relationship_type">supports</data>
+    </edge>
+    <edge source="suspension-system" target="chassis-system">
+      <data key="relationship_type">attaches_to</data>
+    </edge>
+    <edge source="engine-system" target="engine-specifications">
+      <data key="relationship_type">documented_by</data>
+    </edge>
+    <edge source="sedan-model" target="safety-standards">
+      <data key="relationship_type">complies_with</data>
+    </edge>
+    <edge source="sedan-model" target="maintenance-guide">
+      <data key="relationship_type">documented_by</data>
+    </edge>
+    <edge source="chief-engineer" target="sedan-model">
+      <data key="relationship_type">oversees</data>
+    </edge>
+    <edge source="engine-engineer" target="engine-system">
+      <data key="relationship_type">designs</data>
+    </edge>
+    <edge source="electrical-engineer" target="electrical-system">
+      <data key="relationship_type">designs</data>
+    </edge>
+    <edge source="electrical-engineer" target="battery">
+      <data key="relationship_type">designs</data>
+    </edge>
+    <edge source="interior-designer" target="interior-system">
+      <data key="relationship_type">designs</data>
+    </edge>
+    <edge source="manufacturing-plant" target="sedan-model">
+      <data key="relationship_type">manufactures</data>
+    </edge>
+    <edge source="engine-engineer" target="electrical-engineer">
+      <data key="relationship_type">collaborates_with</data>
+    </edge>
+    <edge source="electrical-engineer" target="interior-designer">
+      <data key="relationship_type">collaborates_with</data>
+    </edge>
+    <edge source="chief-engineer" target="engine-engineer">
+      <data key="relationship_type">supervises</data>
+    </edge>
+    <edge source="chief-engineer" target="electrical-engineer">
+      <data key="relationship_type">supervises</data>
+    </edge>
+    <edge source="chief-engineer" target="interior-designer">
+      <data key="relationship_type">supervises</data>
+    </edge>
+    <edge source="engine-system" target="camshaft">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="engine-system" target="valves">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="engine-system" target="crankshaft">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="cooling-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="cooling-system" target="radiator">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="cooling-system" target="water-pump">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="cooling-system" target="engine-system">
+      <data key="relationship_type">cools</data>
+    </edge>
+    <edge source="sedan-model" target="hvac-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="hvac-system" target="ac-compressor">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="hvac-system" target="heater-core">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="hvac-system" target="electrical-system">
+      <data key="relationship_type">depends_on</data>
+    </edge>
+    <edge source="sedan-model" target="exhaust-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="exhaust-system" target="catalytic-converter">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="exhaust-system" target="muffler">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="exhaust-system" target="engine-system">
+      <data key="relationship_type">connects_to</data>
+    </edge>
+    <edge source="sedan-model" target="airbag-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="sedan-model" target="seatbelt-system">
+      <data key="relationship_type">contains</data>
+    </edge>
+    <edge source="airbag-system" target="electrical-system">
+      <data key="relationship_type">depends_on</data>
+    </edge>
+    <edge source="seatbelt-system" target="electrical-system">
+      <data key="relationship_type">depends_on</data>
+    </edge>
+    <edge source="hvac-system" target="hvac-specifications">
+      <data key="relationship_type">documented_by</data>
+    </edge>
+    <edge source="exhaust-system" target="exhaust-specifications">
+      <data key="relationship_type">documented_by</data>
+    </edge>
+    <edge source="hvac-engineer" target="hvac-system">
+      <data key="relationship_type">designs</data>
+    </edge>
+    <edge source="safety-engineer" target="airbag-system">
+      <data key="relationship_type">designs</data>
+    </edge>
+    <edge source="safety-engineer" target="seatbelt-system">
+      <data key="relationship_type">designs</data>
+    </edge>
+    <edge source="quality-manager" target="sedan-model">
+      <data key="relationship_type">oversees_quality</data>
+    </edge>
+    <edge source="hvac-engineer" target="electrical-engineer">
+      <data key="relationship_type">collaborates_with</data>
+    </edge>
+    <edge source="safety-engineer" target="electrical-engineer">
+      <data key="relationship_type">collaborates_with</data>
+    </edge>
+    <edge source="quality-manager" target="chief-engineer">
+      <data key="relationship_type">reports_to</data>
+    </edge>
+    <edge source="chief-engineer" target="hvac-engineer">
+      <data key="relationship_type">supervises</data>
+    </edge>
+    <edge source="chief-engineer" target="safety-engineer">
+      <data key="relationship_type">supervises</data>
+    </edge>
+    <edge source="hvac-system" target="cooling-system">
+      <data key="relationship_type">interacts_with</data>
+    </edge>
+    <edge source="engine-system" target="exhaust-system">
+      <data key="relationship_type">outputs_to</data>
+    </edge>
+    <edge source="cooling-system" target="electrical-system">
+      <data key="relationship_type">depends_on</data>
+    </edge>
+  </graph>
+</graphml>

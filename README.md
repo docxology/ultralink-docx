@@ -562,3 +562,18 @@ UltraLink is licensed under the [MIT License](LICENSE).
 - [📊 Examples](docs/examples/README.md)
 - [🚀 Getting Started](docs/getting-started/README.md)
 - [🔒 Security](docs/security/security.md)
+
+## 📝 Recent Updates
+
+### Visualization Improvements
+
+We've significantly enhanced the visualization module with the following improvements:
+
+- **Enhanced SVG Output**: Added style tags and improved node/edge rendering for better appearance
+- **D3.js Integration**: Fixed HTML output for more reliable interactive visualizations
+- **Cytoscape.js Support**: Improved HTML generation for complex network visualizations
+- **Environment Compatibility**: Better support for both browser and Node.js environments
+- **Error Handling**: Added graceful fallbacks for visualization generation
+- **Layout Options**: Multiple layout algorithms: force-directed, grid, and radial
+
+Check out the [Visualization Guide](examples/visualization-guide.md) and the [Visualization Example](examples/visualization-example.js) for more details.

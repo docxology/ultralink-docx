@@ -387,48 +387,38 @@ describe('Research Team Export Tests', () => {
     expect(svgContent).toContain('</svg>');
   });
 
-  test('Bayesian Network Export', async () => {
-    // Generate Bayesian network
-    const bayesianOutput = ultralink.toBayesianNetwork();
+  test('Bayesian Network Export', () => {
+    const network = ultralink.toBayesianNetwork({ outputFormat: 'json' });
     
-    // Save for inspection
-    const outputDir = getSystemOutputPath(researchSystem, 'bayesian');
-    
-    // Check if bayesianOutput is an object with network.json property
-    let networkJson;
-    if (typeof bayesianOutput === 'object' && bayesianOutput['network.json']) {
-      networkJson = bayesianOutput['network.json'];
-      fs.writeFileSync(path.join(outputDir, 'network.json'), networkJson);
-    } else {
-      networkJson = JSON.stringify(bayesianOutput);
-      fs.writeFileSync(path.join(outputDir, 'network.json'), networkJson);
-    }
-    
-    // Parse the network
-    const network = JSON.parse(networkJson);
-    
-    // Verify structure
+    // Check basic structure
+    expect(network).toBeDefined();
+    expect(network).toHaveProperty('metadata');
     expect(network).toHaveProperty('nodes');
     expect(network).toHaveProperty('edges');
-    
+    expect(network.metadata).toHaveProperty('type', 'ResearchTeam');
+    expect(network.nodes.length).toBeGreaterThan(0);
+
     // Check for specific nodes
-    if (Array.isArray(network.nodes)) {
-      expect(network.nodes.length).toBeGreaterThan(0);
-      const nodeIds = network.nodes.map(node => node.id);
-      expect(nodeIds).toContain('alice');
-      expect(nodeIds).toContain('bob');
-    } else {
-      // Handle object format
-      expect(Object.keys(network.nodes).length).toBeGreaterThan(0);
-      expect(network.nodes).toHaveProperty('alice');
-      expect(network.nodes).toHaveProperty('bob');
-    }
-    
-    // Check for specific edges
-    expect(network.edges.length).toBeGreaterThan(0);
-    const edgeTypes = network.edges.map(edge => edge.type);
-    expect(edgeTypes).toContain('leads');
-    expect(edgeTypes).toContain('reports_to');
+    const nodeNames = network.nodes.map(n => n.id);
+    expect(nodeNames).toContain('researcher_productivity');
+    expect(nodeNames).toContain('project_success');
+    expect(nodeNames).toContain('team_collaboration');
+
+    // Check node structure
+    network.nodes.forEach(node => {
+      expect(node).toHaveProperty('id');
+      expect(node).toHaveProperty('type');
+      expect(node).toHaveProperty('outcomes');
+      expect(node).toHaveProperty('comment');
+    });
+
+    // Check edge structure
+    network.edges.forEach(edge => {
+      expect(edge).toHaveProperty('source');
+      expect(edge).toHaveProperty('target');
+      expect(edge).toHaveProperty('probabilities');
+      expect(Array.isArray(edge.probabilities)).toBe(true);
+    });
   });
 
   test('Visualization Export', async () => {

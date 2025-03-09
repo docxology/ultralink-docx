@@ -1,0 +1,624 @@
+;; UltraLink Knowledge Interchange Format (KIF) Export
+;; Generated: 2025-03-09T03:03:44.236Z
+
+;; Meta-knowledge
+(= (creationDate UltraLinkExport) "2025-03-09T03:03:44.236Z")
+(= (entityCount UltraLinkExport) 48)
+(= (relationshipCount UltraLinkExport) 74)
+
+;; Functions
+(deffunction relationshipCount (?x) (length ?kb.relationships))
+
+;; Rules
+(defrule entity-attributes-rule
+    "A rule to infer additional attributes for entities based on their type"
+    (instance ?entity ?type)
+    =>
+    (if (eq ?type Person)
+        then (assert (isAgent ?entity true))))
+
+(forall (?x ?y)
+    (=> (and (adapts_to ?x ?y) (> (efficiency-adapts_to ?x ?y) 0.8))
+        (well-adapted ?x ?y)))
+
+;; Entities and their attributes
+(instance sedan-model Vehicle)
+(name sedan-model "Sedan XR5")
+(description sedan-model "Mid-size family sedan with modern features")
+(year sedan-model "2023")
+(dimensions sedan-model "{\"length\":\"4.8m\",\"width\":\"1.8m\",\"height\":\"1.5m\"}")
+(weight sedan-model "1500kg")
+(fuelType sedan-model "Hybrid")
+(fuelEfficiency sedan-model "18km/l")
+(engineSize sedan-model "2.0L")
+(status sedan-model "production")
+
+(instance engine-system Component)
+(name engine-system "Hybrid Engine System")
+(componentType engine-system "Engine")
+(description engine-system "2.0L hybrid engine with electric motor assistance")
+(partNumber engine-system "ENG2023-H20")
+(weight engine-system "180kg")
+(dimensions engine-system "{\"length\":\"0.65m\",\"width\":\"0.58m\",\"height\":\"0.62m\"}")
+(manufacturer engine-system "PowerTech Industries")
+(status engine-system "active")
+
+(instance engine-block Component)
+(name engine-block "Engine Block")
+(componentType engine-block "Engine Part")
+(description engine-block "Main engine block housing for cylinders")
+(partNumber engine-block "EB2023-H20")
+(material engine-block "Aluminum Alloy")
+(cylinders engine-block 4)
+(weight engine-block "75kg")
+(manufacturer engine-block "PowerTech Industries")
+(status engine-block "active")
+
+(instance pistons Component)
+(name pistons "Piston Assembly")
+(componentType pistons "Engine Part")
+(description pistons "Set of 4 pistons with connecting rods")
+(partNumber pistons "PA2023-4C")
+(material pistons "Forged Steel")
+(count pistons 4)
+(weight pistons "12kg")
+(manufacturer pistons "PowerTech Industries")
+(status pistons "active")
+
+(instance fuel-injection Component)
+(name fuel-injection "Fuel Injection System")
+(componentType fuel-injection "Engine Part")
+(description fuel-injection "Direct injection system for fuel delivery")
+(partNumber fuel-injection "FI2023-DI")
+(pressure fuel-injection "200bar")
+(weight fuel-injection "8kg")
+(manufacturer fuel-injection "FuelTech Systems")
+(status fuel-injection "active")
+
+(instance electric-motor Component)
+(name electric-motor "Electric Assist Motor")
+(componentType electric-motor "Hybrid System")
+(description electric-motor "Electric motor for hybrid operation")
+(partNumber electric-motor "EM2023-45")
+(power electric-motor "45kW")
+(voltage electric-motor "240V")
+(weight electric-motor "25kg")
+(manufacturer electric-motor "ElectroDrive Inc")
+(status electric-motor "active")
+
+(instance transmission-system Component)
+(name transmission-system "CVT Transmission")
+(componentType transmission-system "Transmission")
+(description transmission-system "Continuously Variable Transmission system")
+(partNumber transmission-system "TR2023-CVT")
+(gearRatios transmission-system "Continuously Variable")
+(weight transmission-system "90kg")
+(manufacturer transmission-system "TransTech Auto")
+(status transmission-system "active")
+
+(instance cvt-belt Component)
+(name cvt-belt "CVT Belt")
+(componentType cvt-belt "Transmission Part")
+(description cvt-belt "Main belt for continuously variable transmission")
+(partNumber cvt-belt "CB2023-H1")
+(material cvt-belt "High-Strength Polymer")
+(weight cvt-belt "5kg")
+(manufacturer cvt-belt "TransTech Auto")
+(status cvt-belt "active")
+
+(instance torque-converter Component)
+(name torque-converter "Torque Converter")
+(componentType torque-converter "Transmission Part")
+(description torque-converter "Hydraulic torque converter for CVT system")
+(partNumber torque-converter "TC2023-H1")
+(diameter torque-converter "28cm")
+(weight torque-converter "15kg")
+(manufacturer torque-converter "TransTech Auto")
+(status torque-converter "active")
+
+(instance chassis-system Component)
+(name chassis-system "Chassis and Frame")
+(componentType chassis-system "Chassis")
+(description chassis-system "Unibody chassis with reinforced safety frame")
+(partNumber chassis-system "CH2023-UB")
+(material chassis-system "High-Strength Steel with Aluminum Components")
+(weight chassis-system "320kg")
+(manufacturer chassis-system "FrameTech Engineering")
+(status chassis-system "active")
+
+(instance interior-system Component)
+(name interior-system "Interior System")
+(componentType interior-system "Interior")
+(description interior-system "Complete interior setup including dash, seats, and trim")
+(partNumber interior-system "INT2023-STD")
+(capacity interior-system "5 passengers")
+(weight interior-system "180kg")
+(manufacturer interior-system "ComfortDesign Interiors")
+(status interior-system "active")
+
+(instance dashboard Component)
+(name dashboard "Dashboard Assembly")
+(componentType dashboard "Interior Part")
+(description dashboard "Main dashboard with instrument cluster and controls")
+(partNumber dashboard "DA2023-DX")
+(features dashboard "[\"Digital Display\",\"Touch Controls\",\"Climate Interface\"]")
+(weight dashboard "25kg")
+(manufacturer dashboard "ComfortDesign Interiors")
+(status dashboard "active")
+
+(instance seats Component)
+(name seats "Seating System")
+(componentType seats "Interior Part")
+(description seats "Full set of 5 seats with adjustable features")
+(partNumber seats "SS2023-5S")
+(material seats "Synthetic Leather")
+(features seats "[\"Heating\",\"Power Adjustment\",\"Memory Settings\"]")
+(weight seats "85kg")
+(manufacturer seats "ComfortDesign Interiors")
+(status seats "active")
+
+(instance infotainment Component)
+(name infotainment "Infotainment System")
+(componentType infotainment "Electronics")
+(description infotainment "10-inch touchscreen with navigation and media")
+(partNumber infotainment "INF2023-10T")
+(screenSize infotainment "10 inches")
+(features infotainment "[\"Navigation\",\"Smartphone Integration\",\"Voice Control\"]")
+(weight infotainment "5kg")
+(manufacturer infotainment "TechTouch Electronics")
+(status infotainment "active")
+
+(instance wheel-system Component)
+(name wheel-system "Wheels and Tires")
+(componentType wheel-system "Wheel System")
+(description wheel-system "Complete wheel system including rims and tires")
+(partNumber wheel-system "WH2023-17A")
+(count wheel-system 4)
+(weight wheel-system "80kg")
+(manufacturer wheel-system "RoadGrip Tire Co")
+(status wheel-system "active")
+
+(instance rims Component)
+(name rims "Alloy Rims")
+(componentType rims "Wheel Part")
+(description rims "17-inch aluminum alloy rims")
+(partNumber rims "RIM2023-17A")
+(size rims "17 inches")
+(material rims "Aluminum Alloy")
+(count rims 4)
+(weight rims "32kg")
+(manufacturer rims "AlloyTech Wheels")
+(status rims "active")
+
+(instance tires Component)
+(name tires "All-Season Tires")
+(componentType tires "Wheel Part")
+(description tires "215/55R17 all-season tires")
+(partNumber tires "TIRE2023-17AS")
+(size tires "215/55R17")
+(count tires 4)
+(weight tires "48kg")
+(manufacturer tires "RoadGrip Tire Co")
+(status tires "active")
+
+(instance brake-system Component)
+(name brake-system "Brake System")
+(componentType brake-system "Brakes")
+(description brake-system "Four-wheel disc brake system with ABS")
+(partNumber brake-system "BR2023-ABS")
+(features brake-system "[\"ABS\",\"Electronic Brake Distribution\",\"Brake Assist\"]")
+(weight brake-system "65kg")
+(manufacturer brake-system "StopTech Braking")
+(status brake-system "active")
+
+(instance electrical-system Component)
+(name electrical-system "Electrical System")
+(componentType electrical-system "Electrical")
+(description electrical-system "Complete electrical system including battery and wiring")
+(partNumber electrical-system "ES2023-12V")
+(voltage electrical-system "12V")
+(weight electrical-system "45kg")
+(manufacturer electrical-system "PowerCircuit Electronics")
+(status electrical-system "active")
+
+(instance battery Component)
+(name battery "Hybrid Battery System")
+(componentType battery "Electrical Part")
+(description battery "Lithium-ion battery pack for hybrid operation")
+(partNumber battery "BAT2023-LION")
+(capacity battery "2.5kWh")
+(voltage battery "240V")
+(weight battery "35kg")
+(manufacturer battery "PowerCell Technologies")
+(status battery "active")
+
+(instance suspension-system Component)
+(name suspension-system "Suspension System")
+(componentType suspension-system "Suspension")
+(description suspension-system "MacPherson strut front, multi-link rear suspension")
+(partNumber suspension-system "SUS2023-MPS")
+(weight suspension-system "120kg")
+(manufacturer suspension-system "RideTech Suspension")
+(status suspension-system "active")
+
+(instance engine-specifications Specifications)
+(name engine-specifications "Engine Technical Specifications")
+(documentType engine-specifications "Technical Specifications")
+(version engine-specifications "2.3")
+(lastUpdated engine-specifications "2022-11-15")
+(author engine-specifications "Engineering Team")
+(sections engine-specifications "[\"Performance Characteristics\",\"Mechanical Specifications\",\"Electrical Integration\",\"Cooling Requirements\"]")
+
+(instance safety-standards Specifications)
+(name safety-standards "Vehicle Safety Standards")
+(documentType safety-standards "Regulatory Compliance")
+(version safety-standards "4.1")
+(lastUpdated safety-standards "2022-09-30")
+(author safety-standards "Safety Department")
+(standards safety-standards "[\"NHTSA Crash Test Requirements\",\"IIHS Safety Guidelines\",\"EU Safety Regulations\"]")
+
+(instance maintenance-guide Documentation)
+(name maintenance-guide "Vehicle Maintenance Guidelines")
+(documentType maintenance-guide "Maintenance Manual")
+(version maintenance-guide "1.2")
+(lastUpdated maintenance-guide "2023-01-10")
+(author maintenance-guide "Service Department")
+(sections maintenance-guide "[\"Routine Maintenance Schedule\",\"Engine Service Procedures\",\"Electrical System Diagnostics\",\"Brake System Maintenance\"]")
+
+(instance chief-engineer Person)
+(name chief-engineer "Dr. Sarah Johnson")
+(title chief-engineer "Chief Engineering Officer")
+(department chief-engineer "Engineering")
+(expertise chief-engineer "[\"Automotive Design\",\"Systems Integration\",\"Project Management\"]")
+(email chief-engineer "sarah.johnson@carcompany.com")
+
+(instance engine-engineer Person)
+(name engine-engineer "Michael Chen")
+(title engine-engineer "Senior Powertrain Engineer")
+(department engine-engineer "Powertrain Engineering")
+(expertise engine-engineer "[\"Engine Design\",\"Hybrid Systems\",\"Thermal Management\"]")
+(email engine-engineer "michael.chen@carcompany.com")
+
+(instance electrical-engineer Person)
+(name electrical-engineer "Elena Rodriguez")
+(title electrical-engineer "Electrical Systems Engineer")
+(department electrical-engineer "Electrical Engineering")
+(expertise electrical-engineer "[\"Automotive Electronics\",\"Battery Systems\",\"Sensor Integration\"]")
+(email electrical-engineer "elena.rodriguez@carcompany.com")
+
+(instance interior-designer Person)
+(name interior-designer "James Wilson")
+(title interior-designer "Senior Interior Designer")
+(department interior-designer "Interior Design")
+(expertise interior-designer "[\"Ergonomics\",\"Materials Science\",\"User Experience\"]")
+(email interior-designer "james.wilson@carcompany.com")
+
+(instance manufacturing-plant Facility)
+(name manufacturing-plant "Central Manufacturing Plant")
+(location manufacturing-plant "Detroit, Michigan")
+(size manufacturing-plant "1.2 million sq ft")
+(capacity manufacturing-plant "200,000 vehicles annually")
+(employees manufacturing-plant 3500)
+(established manufacturing-plant "1985")
+
+(instance camshaft Component)
+(name camshaft "Camshaft Assembly")
+(componentType camshaft "Engine Part")
+(description camshaft "DOHC camshaft system")
+(partNumber camshaft "CA2023-DOHC")
+(material camshaft "Hardened Steel")
+(weight camshaft "8kg")
+(manufacturer camshaft "PowerTech Industries")
+(status camshaft "active")
+
+(instance valves Component)
+(name valves "Valve System")
+(componentType valves "Engine Part")
+(description valves "16-valve system with variable timing")
+(partNumber valves "VS2023-16V")
+(material valves "Titanium Alloy")
+(count valves 16)
+(weight valves "3kg")
+(manufacturer valves "PowerTech Industries")
+(status valves "active")
+
+(instance crankshaft Component)
+(name crankshaft "Crankshaft")
+(componentType crankshaft "Engine Part")
+(description crankshaft "Forged steel crankshaft")
+(partNumber crankshaft "CS2023-F4")
+(material crankshaft "Forged Steel")
+(weight crankshaft "15kg")
+(manufacturer crankshaft "PowerTech Industries")
+(status crankshaft "active")
+
+(instance cooling-system Component)
+(name cooling-system "Engine Cooling System")
+(componentType cooling-system "Cooling")
+(description cooling-system "Liquid cooling system with electric pump")
+(partNumber cooling-system "CS2023-LC")
+(weight cooling-system "25kg")
+(manufacturer cooling-system "ThermalTech Systems")
+(status cooling-system "active")
+
+(instance radiator Component)
+(name radiator "Radiator")
+(componentType radiator "Cooling Part")
+(description radiator "Aluminum radiator with electric fan")
+(partNumber radiator "RAD2023-AL")
+(material radiator "Aluminum")
+(weight radiator "8kg")
+(manufacturer radiator "ThermalTech Systems")
+(status radiator "active")
+
+(instance water-pump Component)
+(name water-pump "Water Pump")
+(componentType water-pump "Cooling Part")
+(description water-pump "Electric water pump")
+(partNumber water-pump "WP2023-E")
+(weight water-pump "3kg")
+(manufacturer water-pump "ThermalTech Systems")
+(status water-pump "active")
+
+(instance hvac-system Component)
+(name hvac-system "HVAC System")
+(componentType hvac-system "HVAC")
+(description hvac-system "Dual-zone climate control system")
+(partNumber hvac-system "HVAC2023-DZ")
+(weight hvac-system "35kg")
+(manufacturer hvac-system "ClimateControl Corp")
+(status hvac-system "active")
+
+(instance ac-compressor Component)
+(name ac-compressor "AC Compressor")
+(componentType ac-compressor "HVAC Part")
+(description ac-compressor "Electric AC compressor")
+(partNumber ac-compressor "AC2023-E")
+(weight ac-compressor "8kg")
+(manufacturer ac-compressor "ClimateControl Corp")
+(status ac-compressor "active")
+
+(instance heater-core Component)
+(name heater-core "Heater Core")
+(componentType heater-core "HVAC Part")
+(description heater-core "Aluminum heater core")
+(partNumber heater-core "HC2023-AL")
+(material heater-core "Aluminum")
+(weight heater-core "4kg")
+(manufacturer heater-core "ClimateControl Corp")
+(status heater-core "active")
+
+(instance exhaust-system Component)
+(name exhaust-system "Exhaust System")
+(componentType exhaust-system "Exhaust")
+(description exhaust-system "Complete exhaust system with catalytic converter")
+(partNumber exhaust-system "EX2023-CAT")
+(weight exhaust-system "45kg")
+(manufacturer exhaust-system "ExhaustTech")
+(status exhaust-system "active")
+
+(instance catalytic-converter Component)
+(name catalytic-converter "Catalytic Converter")
+(componentType catalytic-converter "Exhaust Part")
+(description catalytic-converter "Three-way catalytic converter")
+(partNumber catalytic-converter "CAT2023-3W")
+(weight catalytic-converter "12kg")
+(manufacturer catalytic-converter "ExhaustTech")
+(status catalytic-converter "active")
+
+(instance muffler Component)
+(name muffler "Muffler")
+(componentType muffler "Exhaust Part")
+(description muffler "Performance muffler with noise reduction")
+(partNumber muffler "MUF2023-PR")
+(material muffler "Stainless Steel")
+(weight muffler "8kg")
+(manufacturer muffler "ExhaustTech")
+(status muffler "active")
+
+(instance airbag-system Component)
+(name airbag-system "Airbag System")
+(componentType airbag-system "Safety")
+(description airbag-system "Multi-airbag safety system")
+(partNumber airbag-system "AB2023-MS")
+(airbagCount airbag-system 8)
+(weight airbag-system "25kg")
+(manufacturer airbag-system "SafetyTech Systems")
+(status airbag-system "active")
+
+(instance seatbelt-system Component)
+(name seatbelt-system "Seatbelt System")
+(componentType seatbelt-system "Safety")
+(description seatbelt-system "Advanced seatbelt system with pretensioners")
+(partNumber seatbelt-system "SB2023-PT")
+(seatCount seatbelt-system 5)
+(weight seatbelt-system "15kg")
+(manufacturer seatbelt-system "SafetyTech Systems")
+(status seatbelt-system "active")
+
+(instance hvac-specifications Specifications)
+(name hvac-specifications "HVAC Technical Specifications")
+(documentType hvac-specifications "Technical Specifications")
+(version hvac-specifications "1.5")
+(lastUpdated hvac-specifications "2023-01-20")
+(author hvac-specifications "Climate Control Team")
+(sections hvac-specifications "[\"Cooling Performance\",\"Heating Performance\",\"Air Distribution\",\"Control Systems\"]")
+
+(instance exhaust-specifications Specifications)
+(name exhaust-specifications "Exhaust System Specifications")
+(documentType exhaust-specifications "Technical Specifications")
+(version exhaust-specifications "2.1")
+(lastUpdated exhaust-specifications "2023-02-15")
+(author exhaust-specifications "Emissions Team")
+(sections exhaust-specifications "[\"Emissions Standards\",\"Flow Characteristics\",\"Noise Levels\",\"Heat Management\"]")
+
+(instance hvac-engineer Person)
+(name hvac-engineer "Lisa Thompson")
+(title hvac-engineer "HVAC Systems Engineer")
+(department hvac-engineer "Climate Control")
+(expertise hvac-engineer "[\"HVAC Design\",\"Thermal Management\",\"Control Systems\"]")
+(email hvac-engineer "lisa.thompson@carcompany.com")
+
+(instance safety-engineer Person)
+(name safety-engineer "Robert Kim")
+(title safety-engineer "Safety Systems Engineer")
+(department safety-engineer "Vehicle Safety")
+(expertise safety-engineer "[\"Crash Systems\",\"Safety Electronics\",\"Regulatory Compliance\"]")
+(email safety-engineer "robert.kim@carcompany.com")
+
+(instance quality-manager Person)
+(name quality-manager "Maria Garcia")
+(title quality-manager "Quality Assurance Manager")
+(department quality-manager "Quality Control")
+(expertise quality-manager "[\"Quality Systems\",\"Process Control\",\"Regulatory Compliance\"]")
+(email quality-manager "maria.garcia@carcompany.com")
+
+;; Relationships
+(contains sedan-model engine-system)
+
+(contains sedan-model transmission-system)
+
+(contains sedan-model chassis-system)
+
+(contains sedan-model interior-system)
+
+(contains sedan-model wheel-system)
+
+(contains sedan-model brake-system)
+
+(contains sedan-model electrical-system)
+
+(contains sedan-model suspension-system)
+
+(contains engine-system engine-block)
+
+(contains engine-system pistons)
+
+(contains engine-system fuel-injection)
+
+(contains engine-system electric-motor)
+
+(contains transmission-system cvt-belt)
+
+(contains transmission-system torque-converter)
+
+(contains interior-system dashboard)
+
+(contains interior-system seats)
+
+(contains interior-system infotainment)
+
+(contains wheel-system rims)
+
+(contains wheel-system tires)
+
+(contains electrical-system battery)
+
+(connects_to electrical-system infotainment)
+
+(depends_on engine-system electrical-system)
+
+(connects_to engine-system transmission-system)
+
+(transfers_power_to transmission-system wheel-system)
+
+(acts_on brake-system wheel-system)
+
+(supports suspension-system wheel-system)
+
+(attaches_to suspension-system chassis-system)
+
+(documented_by engine-system engine-specifications)
+
+(complies_with sedan-model safety-standards)
+
+(documented_by sedan-model maintenance-guide)
+
+(oversees chief-engineer sedan-model)
+
+(designs engine-engineer engine-system)
+
+(designs electrical-engineer electrical-system)
+
+(designs electrical-engineer battery)
+
+(designs interior-designer interior-system)
+
+(manufactures manufacturing-plant sedan-model)
+
+(collaborates_with engine-engineer electrical-engineer)
+
+(collaborates_with electrical-engineer interior-designer)
+
+(supervises chief-engineer engine-engineer)
+
+(supervises chief-engineer electrical-engineer)
+
+(supervises chief-engineer interior-designer)
+
+(contains engine-system camshaft)
+
+(contains engine-system valves)
+
+(contains engine-system crankshaft)
+
+(contains sedan-model cooling-system)
+
+(contains cooling-system radiator)
+
+(contains cooling-system water-pump)
+
+(cools cooling-system engine-system)
+
+(contains sedan-model hvac-system)
+
+(contains hvac-system ac-compressor)
+
+(contains hvac-system heater-core)
+
+(depends_on hvac-system electrical-system)
+
+(contains sedan-model exhaust-system)
+
+(contains exhaust-system catalytic-converter)
+
+(contains exhaust-system muffler)
+
+(connects_to exhaust-system engine-system)
+
+(contains sedan-model airbag-system)
+
+(contains sedan-model seatbelt-system)
+
+(depends_on airbag-system electrical-system)
+
+(depends_on seatbelt-system electrical-system)
+
+(documented_by hvac-system hvac-specifications)
+
+(documented_by exhaust-system exhaust-specifications)
+
+(designs hvac-engineer hvac-system)
+
+(designs safety-engineer airbag-system)
+
+(designs safety-engineer seatbelt-system)
+
+(oversees_quality quality-manager sedan-model)
+
+(collaborates_with hvac-engineer electrical-engineer)
+
+(collaborates_with safety-engineer electrical-engineer)
+
+(reports_to quality-manager chief-engineer)
+
+(supervises chief-engineer hvac-engineer)
+
+(supervises chief-engineer safety-engineer)
+
+(interacts_with hvac-system cooling-system)
+
+(outputs_to engine-system exhaust-system)
+
+(depends_on cooling-system electrical-system)
+

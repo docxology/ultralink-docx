@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HVAC System - Car - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HVAC System</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>hvac-system</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>component</td>
+        </tr>
+        
+            <tr>
+              <th>componentType</th>
+              <td>HVAC</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Dual-zone climate control system</td>
+            </tr>
+          
+            <tr>
+              <th>partNumber</th>
+              <td>HVAC2023-DZ</td>
+            </tr>
+          
+            <tr>
+              <th>weight</th>
+              <td>35kg</td>
+            </tr>
+          
+            <tr>
+              <th>manufacturer</th>
+              <td>ClimateControl Corp</td>
+            </tr>
+          
+            <tr>
+              <th>status</th>
+              <td>active</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>contains</strong> → <a href="ac-compressor.html">AC Compressor</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>contains</strong> → <a href="heater-core.html">Heater Core</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>depends_on</strong> → <a href="electrical-system.html">Electrical System</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>documented_by</strong> → <a href="hvac-specifications.html">HVAC Technical Specifications</a>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <strong>interacts_with</strong> → <a href="cooling-system.html">Engine Cooling System</a>
+      
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="sedan-model.html">Sedan XR5</a> → <strong>contains</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="hvac-engineer.html">Lisa Thompson</a> → <strong>designs</strong>
+      
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>
