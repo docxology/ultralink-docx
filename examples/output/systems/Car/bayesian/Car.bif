@@ -3,205 +3,34 @@
 <BIF VERSION="0.3">
 <NETWORK>
 <NAME>Car</NAME>
-<COMMENT>Bayesian Network representing Car system components and their dependencies</COMMENT>
+<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
 
-<!-- Major Systems -->
+<!-- Sample Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>engine_system</NAME>
-    <OUTCOME>operational</OUTCOME>
-    <OUTCOME>degraded</OUTCOME>
-    <OUTCOME>failed</OUTCOME>
-    <COMMENT>Overall engine system state</COMMENT>
+    <NAME>variable1</NAME>
+    <OUTCOME>true</OUTCOME>
+    <OUTCOME>false</OUTCOME>
+    <COMMENT>Placeholder Variable 1</COMMENT>
 </VARIABLE>
 
 <VARIABLE TYPE="discrete">
-    <NAME>electrical_system</NAME>
-    <OUTCOME>operational</OUTCOME>
-    <OUTCOME>degraded</OUTCOME>
-    <OUTCOME>failed</OUTCOME>
-    <COMMENT>Overall electrical system state</COMMENT>
+    <NAME>variable2</NAME>
+    <OUTCOME>high</OUTCOME>
+    <OUTCOME>medium</OUTCOME>
+    <OUTCOME>low</OUTCOME>
+    <COMMENT>Placeholder Variable 2</COMMENT>
 </VARIABLE>
 
-<VARIABLE TYPE="discrete">
-    <NAME>hvac_system</NAME>
-    <OUTCOME>operational</OUTCOME>
-    <OUTCOME>degraded</OUTCOME>
-    <OUTCOME>failed</OUTCOME>
-    <COMMENT>Overall HVAC system state</COMMENT>
-</VARIABLE>
-
-<!-- Engine Components -->
-<VARIABLE TYPE="discrete">
-    <NAME>fuel_injection</NAME>
-    <OUTCOME>optimal</OUTCOME>
-    <OUTCOME>suboptimal</OUTCOME>
-    <OUTCOME>failed</OUTCOME>
-    <COMMENT>Fuel injection system state</COMMENT>
-</VARIABLE>
-
-<VARIABLE TYPE="discrete">
-    <NAME>engine_block</NAME>
-    <OUTCOME>good</OUTCOME>
-    <OUTCOME>worn</OUTCOME>
-    <OUTCOME>damaged</OUTCOME>
-    <COMMENT>Engine block condition</COMMENT>
-</VARIABLE>
-
-<VARIABLE TYPE="discrete">
-    <NAME>cooling_system</NAME>
-    <OUTCOME>operational</OUTCOME>
-    <OUTCOME>degraded</OUTCOME>
-    <OUTCOME>failed</OUTCOME>
-    <COMMENT>Engine cooling system state</COMMENT>
-</VARIABLE>
-
-<!-- Electrical Components -->
-<VARIABLE TYPE="discrete">
-    <NAME>battery</NAME>
-    <OUTCOME>good</OUTCOME>
-    <OUTCOME>weak</OUTCOME>
-    <OUTCOME>dead</OUTCOME>
-    <COMMENT>Battery condition</COMMENT>
-</VARIABLE>
-
-<VARIABLE TYPE="discrete">
-    <NAME>alternator</NAME>
-    <OUTCOME>operational</OUTCOME>
-    <OUTCOME>degraded</OUTCOME>
-    <OUTCOME>failed</OUTCOME>
-    <COMMENT>Alternator state</COMMENT>
-</VARIABLE>
-
-<!-- Safety Systems -->
-<VARIABLE TYPE="discrete">
-    <NAME>airbag_system</NAME>
-    <OUTCOME>operational</OUTCOME>
-    <OUTCOME>warning</OUTCOME>
-    <OUTCOME>failed</OUTCOME>
-    <COMMENT>Airbag system state</COMMENT>
-</VARIABLE>
-
-<VARIABLE TYPE="discrete">
-    <NAME>brake_system</NAME>
-    <OUTCOME>optimal</OUTCOME>
-    <OUTCOME>degraded</OUTCOME>
-    <OUTCOME>critical</OUTCOME>
-    <COMMENT>Brake system state</COMMENT>
-</VARIABLE>
-
-<!-- Probability Distributions -->
-
-<!-- Engine System Dependencies -->
+<!-- Sample Probability Distributions -->
 <DEFINITION>
-    <FOR>engine_system</FOR>
-    <GIVEN>fuel_injection</GIVEN>
-    <GIVEN>engine_block</GIVEN>
-    <GIVEN>cooling_system</GIVEN>
-    <TABLE>
-        0.95 0.04 0.01  // optimal-good-operational
-        0.70 0.25 0.05  // optimal-good-degraded
-        0.10 0.30 0.60  // optimal-good-failed
-        0.80 0.15 0.05  // optimal-worn-operational
-        0.50 0.40 0.10  // optimal-worn-degraded
-        0.05 0.35 0.60  // optimal-worn-failed
-        0.20 0.50 0.30  // optimal-damaged-operational
-        0.10 0.40 0.50  // optimal-damaged-degraded
-        0.01 0.19 0.80  // optimal-damaged-failed
-        0.85 0.12 0.03  // suboptimal-good-operational
-        0.60 0.30 0.10  // suboptimal-good-degraded
-        0.05 0.35 0.60  // suboptimal-good-failed
-        0.70 0.20 0.10  // suboptimal-worn-operational
-        0.40 0.45 0.15  // suboptimal-worn-degraded
-        0.03 0.27 0.70  // suboptimal-worn-failed
-        0.15 0.45 0.40  // suboptimal-damaged-operational
-        0.05 0.35 0.60  // suboptimal-damaged-degraded
-        0.01 0.14 0.85  // suboptimal-damaged-failed
-        0.40 0.40 0.20  // failed-good-operational
-        0.20 0.50 0.30  // failed-good-degraded
-        0.02 0.18 0.80  // failed-good-failed
-        0.30 0.40 0.30  // failed-worn-operational
-        0.10 0.40 0.50  // failed-worn-degraded
-        0.01 0.09 0.90  // failed-worn-failed
-        0.10 0.30 0.60  // failed-damaged-operational
-        0.05 0.25 0.70  // failed-damaged-degraded
-        0.01 0.04 0.95  // failed-damaged-failed
-    </TABLE>
-</DEFINITION>
-
-<!-- Electrical System Dependencies -->
-<DEFINITION>
-    <FOR>electrical_system</FOR>
-    <GIVEN>battery</GIVEN>
-    <GIVEN>alternator</GIVEN>
-    <TABLE>
-        0.95 0.04 0.01  // good-operational
-        0.70 0.25 0.05  // good-degraded
-        0.10 0.30 0.60  // good-failed
-        0.80 0.15 0.05  // weak-operational
-        0.50 0.40 0.10  // weak-degraded
-        0.05 0.25 0.70  // weak-failed
-        0.20 0.30 0.50  // dead-operational
-        0.10 0.20 0.70  // dead-degraded
-        0.01 0.09 0.90  // dead-failed
-    </TABLE>
-</DEFINITION>
-
-<!-- HVAC System Dependencies -->
-<DEFINITION>
-    <FOR>hvac_system</FOR>
-    <GIVEN>electrical_system</GIVEN>
-    <TABLE>
-        0.90 0.08 0.02  // operational
-        0.60 0.30 0.10  // degraded
-        0.10 0.30 0.60  // failed
-    </TABLE>
-</DEFINITION>
-
-<!-- Safety System Dependencies -->
-<DEFINITION>
-    <FOR>airbag_system</FOR>
-    <GIVEN>electrical_system</GIVEN>
-    <TABLE>
-        0.98 0.01 0.01  // operational
-        0.70 0.20 0.10  // degraded
-        0.10 0.20 0.70  // failed
-    </TABLE>
+    <FOR>variable1</FOR>
+    <TABLE>0.5 0.5</TABLE>
 </DEFINITION>
 
 <DEFINITION>
-    <FOR>brake_system</FOR>
-    <GIVEN>electrical_system</GIVEN>
-    <TABLE>
-        0.95 0.04 0.01  // operational
-        0.75 0.20 0.05  // degraded
-        0.30 0.40 0.30  // failed
-    </TABLE>
-</DEFINITION>
-
-<!-- Base Probabilities -->
-<DEFINITION>
-    <FOR>fuel_injection</FOR>
-    <TABLE>0.85 0.12 0.03</TABLE>
-</DEFINITION>
-
-<DEFINITION>
-    <FOR>engine_block</FOR>
-    <TABLE>0.90 0.08 0.02</TABLE>
-</DEFINITION>
-
-<DEFINITION>
-    <FOR>cooling_system</FOR>
-    <TABLE>0.88 0.10 0.02</TABLE>
-</DEFINITION>
-
-<DEFINITION>
-    <FOR>battery</FOR>
-    <TABLE>0.85 0.12 0.03</TABLE>
-</DEFINITION>
-
-<DEFINITION>
-    <FOR>alternator</FOR>
-    <TABLE>0.90 0.08 0.02</TABLE>
+    <FOR>variable2</FOR>
+    <GIVEN>variable1</GIVEN>
+    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
 </DEFINITION>
 
 </NETWORK>

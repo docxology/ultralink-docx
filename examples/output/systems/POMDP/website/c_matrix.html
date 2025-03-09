@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preference Matrix - POMDP - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Preference Matrix</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>c_matrix</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>matrix</td>
+        </tr>
+        
+            <tr>
+              <th>symbol</th>
+              <td>C</td>
+            </tr>
+          
+            <tr>
+              <th>dimensions</th>
+              <td>3,1</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>Specifies the agent preferences over observations (as log probabilities)</td>
+            </tr>
+          
+            <tr>
+              <th>matrix_type</th>
+              <td>preference</td>
+            </tr>
+          
+            <tr>
+              <th>matrix_data</th>
+              <td>-3,0,3</td>
+            </tr>
+          
+            <tr>
+              <th>row_labels</th>
+              <td>o1,o2,o3</td>
+            </tr>
+          
+            <tr>
+              <th>precision</th>
+              <td>1</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>evaluates</strong> → <a href="observation_space.html">Observation Space</a>
+      
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="pomdp_model.html">Active Inference POMDP Model</a> → <strong>includes</strong>
+      
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

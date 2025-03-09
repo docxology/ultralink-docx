@@ -1,0 +1,17 @@
+source,target,type
+pomdp_model,observation_space,includes
+pomdp_model,state_space,includes
+pomdp_model,action_space,includes
+pomdp_model,a_matrix,includes
+pomdp_model,b_matrix,includes
+pomdp_model,c_matrix,includes
+pomdp_model,d_matrix,includes
+pomdp_model,e_matrix,includes
+a_matrix,observation_space,maps_from
+a_matrix,state_space,maps_to
+b_matrix,state_space,maps_from
+b_matrix,state_space,maps_to
+b_matrix,action_space,conditioned_on
+c_matrix,observation_space,evaluates
+d_matrix,state_space,distributes_over
+e_matrix,action_space,distributes_over

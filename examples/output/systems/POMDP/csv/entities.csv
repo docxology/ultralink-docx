@@ -1,0 +1,10 @@
+id,type,name,description,domain,model_type,discount_factor,horizon,time_steps,symbol,dimensions,observations,states,actions,matrix_type,matrix_data,precision,column_labels,row_labels,action_labels
+pomdp_model,model,Active Inference POMDP Model,A Partially Observable Markov Decision Process implemented with Active Inference,computational_neuroscience,discrete,0.95,10,100,,,,,,,,,,,
+observation_space,space,Observation Space,The set of possible observations an agent can perceive,,,,,,o,3,1,[object Object],[object Object],[object Object],,,,,,,,
+state_space,space,Latent State Space,The set of possible hidden states the environment can be in,,,,,,s,5,1,,[object Object],[object Object],[object Object],[object Object],[object Object],,,,,,,
+action_space,space,Action Space,The set of possible actions an agent can take,,,,,,a,2,1,,,[object Object],[object Object],,,,,,
+a_matrix,matrix,Observation Likelihood Matrix,Maps hidden states to observations (likelihood mapping),,,,,,A,3,5,,,,likelihood,0.8,0.3,0.1,0,0,0.2,0.6,0.7,0.3,0.1,0,0.1,0.2,0.7,0.9,0.9,s1,s2,s3,s4,s5,o1,o2,o3,
+b_matrix,matrix,State Transition Matrix,Defines the dynamics of state transitions based on actions,,,,,,B,5,5,2,,,,transition,0.9,0.2,0,0,0,0.1,0.7,0.2,0,0,0,0.1,0.7,0.2,0,0,0,0.1,0.7,0.1,0,0,0,0.1,0.9,0.9,0.1,0,0,0,0.1,0.7,0.1,0,0,0,0.2,0.7,0.1,0,0,0,0.2,0.7,0.1,0,0,0,0.2,0.9,,s1,s2,s3,s4,s5,s1,s2,s3,s4,s5,a1,a2
+c_matrix,matrix,Preference Matrix,Specifies the agent preferences over observations (as log probabilities),,,,,,C,3,1,,,,preference,-3,0,3,1,,o1,o2,o3,
+d_matrix,matrix,Initial State Prior,Defines the prior distribution over initial states,,,,,,D,5,1,,,,prior,0.2,0.2,0.4,0.1,0.1,,,s1,s2,s3,s4,s5,
+e_matrix,matrix,Policy Prior,Defines the prior distribution over policies/actions,,,,,,E,2,1,,,,policy_prior,0.5,0.5,,,a1,a2,

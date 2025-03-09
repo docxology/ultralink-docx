@@ -9,6 +9,18 @@
 const fs = require('fs');
 const path = require('path');
 
+// Statistics tracking
+const STATS = {
+  systemStats: {},
+  formatStats: {},
+  totalFiles: 0,
+  successfulFiles: 0,
+  warningFiles: 0,
+  errorFiles: 0,
+  startTime: null,
+  endTime: null
+};
+
 // Import system datasets
 const { createDesertEcosystemDataset } = require('../tests/fixtures/Systems/DesertEcosystem/desert-ecosystem');
 const { createResearchTeamDataset } = require('../tests/fixtures/Systems/ResearchTeam/research-team');
@@ -17,6 +29,7 @@ const { createUSAHistoryDataset } = require('../tests/fixtures/Systems/USAHistor
 const { createNeurofeedbackResearchDataset } = require('../tests/fixtures/Systems/NeurofeedbackResearch/neurofeedback-research');
 const { createHumanAnatomyDataset } = require('../tests/fixtures/Systems/HumanAnatomy/human-anatomy');
 const { createCarDataset } = require('../tests/fixtures/Systems/Car/car');
+const { createPOMDPDataset } = require('../tests/fixtures/Systems/POMDP/pomdp');
 
 // Define the systems and their dataset creators
 const SYSTEMS = {
@@ -26,7 +39,8 @@ const SYSTEMS = {
   ActiveInferenceLab: createActiveInferenceLabDataset,
   USAHistory: createUSAHistoryDataset,
   NeurofeedbackResearch: createNeurofeedbackResearchDataset,
-  Car: createCarDataset
+  Car: createCarDataset,
+  POMDP: createPOMDPDataset
 };
 
 // Define the rendering formats
@@ -39,6 +53,9 @@ const RENDERING_TARGETS = [
   { name: 'visualization', method: 'toVisualization', outputDir: 'visualization', outputFiles: [
     { format: 'svg', filename: 'graph.svg' },
     { format: 'png', filename: 'graph.png' },
+    { format: 'png', filename: 'graph-radial.png', layout: 'radial', style: 'colorful' },
+    { format: 'png', filename: 'graph-grid.png', layout: 'grid', style: 'grayscale' },
+    { format: 'png', filename: 'graph-cluster.png', layout: 'cluster', style: 'minimal' },
     { format: 'd3', filename: 'graph.d3.js' },
     { format: 'cytoscape', filename: 'graph.cytoscape.js' }
   ]},
@@ -122,101 +139,96 @@ function safeWriteFile(filePath, content, isJson = false) {
 /**
  * Generate a placeholder D3.js visualization
  * @param {string} systemName - Name of the system
- * @returns {string} Placeholder D3 visualization code
+ * @returns {string} Placeholder D3 visualization HTML
  */
 function generatePlaceholderD3(systemName) {
-  return `/**
- * Placeholder D3.js Visualization for ${systemName}
- * 
- * This is a fallback visualization created when the actual renderer encountered issues.
- * In a real application, this would be replaced with a proper D3.js visualization.
- */
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <title>${systemName} Knowledge Graph - D3 Visualization</title>
+  <meta charset="UTF-8">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #graph { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>${systemName} Knowledge Graph</h1>
+  <p>This is a fallback D3.js visualization.</p>
+  <div id="graph"></div>
+  <script>
+    // Create a simple fallback visualization
+    const svg = d3.select('#graph')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', '100%')
+      .attr('viewBox', [0, 0, 800, 600]);
+      
+    svg.append('rect')
+      .attr('width', 800)
+      .attr('height', 600)
+      .attr('fill', '#f8f9fa');
+      
+    svg.append('text')
+      .attr('x', 400)
+      .attr('y', 300)
+      .attr('font-size', '24px')
+      .attr('text-anchor', 'middle')
+      .text('${systemName} Knowledge Graph (Fallback D3)');
+  </script>
+</body>
+</html>`;
+}
 
-// Sample D3.js visualization code
-(function() {
-  const width = 800;
-  const height = 600;
-  
-  // Create SVG container
-  const svg = d3.select('#visualization')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('viewBox', [0, 0, width, height]);
-  
-  // Add background
-  svg.append('rect')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('fill', '#f8f9fa');
-  
-  // Add placeholder text
-  svg.append('text')
-    .attr('x', width / 2)
-    .attr('y', height / 2)
-    .attr('text-anchor', 'middle')
-    .attr('font-family', 'sans-serif')
-    .attr('font-size', '24px')
-    .attr('fill', '#333')
-    .text('${systemName} - Placeholder Visualization');
-  
-  // Add subtitle
-  svg.append('text')
-    .attr('x', width / 2)
-    .attr('y', height / 2 + 30)
-    .attr('text-anchor', 'middle')
-    .attr('font-family', 'sans-serif')
-    .attr('font-size', '14px')
-    .attr('fill', '#666')
-    .text('The actual visualization renderer encountered issues.');
-    
-  // This would normally represent the nodes and links from your data
-  const sampleNodes = [
-    { id: 'entity1', name: 'Entity 1', x: width/3, y: height/3 },
-    { id: 'entity2', name: 'Entity 2', x: 2*width/3, y: height/3 },
-    { id: 'entity3', name: 'Entity 3', x: width/2, y: 2*height/3 }
-  ];
-  
-  const sampleLinks = [
-    { source: 'entity1', target: 'entity2', type: 'related_to' },
-    { source: 'entity2', target: 'entity3', type: 'connected_to' },
-    { source: 'entity3', target: 'entity1', type: 'interacts_with' }
-  ];
-  
-  // Draw sample nodes
-  svg.selectAll('.node')
-    .data(sampleNodes)
-    .enter()
-    .append('circle')
-    .attr('cx', d => d.x)
-    .attr('cy', d => d.y)
-    .attr('r', 15)
-    .attr('fill', '#69b3a2');
-    
-  // Add node labels
-  svg.selectAll('.node-label')
-    .data(sampleNodes)
-    .enter()
-    .append('text')
-    .attr('x', d => d.x)
-    .attr('y', d => d.y + 25)
-    .attr('text-anchor', 'middle')
-    .attr('font-family', 'sans-serif')
-    .attr('font-size', '10px')
-    .text(d => d.name);
-    
-  // Draw sample links
-  svg.selectAll('.link')
-    .data(sampleLinks)
-    .enter()
-    .append('line')
-    .attr('x1', d => sampleNodes.find(n => n.id === d.source).x)
-    .attr('y1', d => sampleNodes.find(n => n.id === d.source).y)
-    .attr('x2', d => sampleNodes.find(n => n.id === d.target).x)
-    .attr('y2', d => sampleNodes.find(n => n.id === d.target).y)
-    .attr('stroke', '#999')
-    .attr('stroke-width', 1);
-})();`;
+/**
+ * Generate a placeholder Cytoscape visualization
+ * @param {string} systemName - Name of the system
+ * @returns {string} Placeholder Cytoscape visualization HTML
+ */
+function generatePlaceholderCytoscape(systemName) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <title>${systemName} Knowledge Graph - Cytoscape Visualization</title>
+  <meta charset="UTF-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+    #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>${systemName} Knowledge Graph</h1>
+  <p>This is a fallback Cytoscape visualization.</p>
+  <div id="cy"></div>
+  <script>
+    // Create a simple fallback visualization
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: [
+        { data: { id: 'fallback-node', label: 'Fallback Node' } }
+      ],
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': '#6495ED',
+            'label': 'data(label)',
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'width': 120,
+            'height': 120
+          }
+        }
+      ],
+      layout: {
+        name: 'grid'
+      }
+    });
+  </script>
+</body>
+</html>`;
 }
 
 /**
@@ -284,36 +296,72 @@ function generatePlaceholderCompressedBlob() {
  * @param {Function} createDatasetFn - Function to create the system dataset
  */
 async function renderSystem(systemName, createDatasetFn) {
-  console.log(`\nRendering ${systemName}...`);
+  const startTime = process.hrtime();
+  console.log(`\n🔄 Rendering ${systemName}...`);
+  
+  // Initialize statistics for this system
+  STATS.systemStats[systemName] = {
+    files: 0,
+    successful: 0,
+    warnings: 0,
+    errors: 0,
+    formats: {}
+  };
+  
+  // Create the base output directory for this system
+  const baseOutputDir = path.join(__dirname, 'output', 'systems', systemName);
+  console.log(`  📁 Output directory: ${baseOutputDir}`);
   
   // Safely create the UltraLink dataset
   let ultralink;
   try {
     ultralink = createDatasetFn();
+    const entityCount = Object.keys(ultralink.store?.entities || {}).length;
+    const relationshipCount = Object.keys(ultralink.store?.relationships || {}).length;
+    console.log(`  ✅ Successfully created UltraLink dataset with ${entityCount} entities and ${relationshipCount} relationships`);
   } catch (error) {
-    console.error(`  Error creating UltraLink dataset for ${systemName}: ${error.message}`);
+    console.error(`  ❌ Error creating UltraLink dataset for ${systemName}: ${error.message}`);
+    STATS.systemStats[systemName].errors++;
     return;
   }
   
   if (!ultralink) {
-    console.error(`  Invalid UltraLink dataset for ${systemName}`);
+    console.error(`  ❌ Invalid UltraLink dataset for ${systemName}`);
+    STATS.systemStats[systemName].errors++;
     return;
   }
   
   // Patch the UltraLink instance if needed
   if (!ultralink.store) {
-    console.warn(`  Adding missing 'store' property to UltraLink instance`);
+    console.warn(`  ⚠️ Adding missing 'store' property to UltraLink instance`);
     ultralink.store = { entities: {}, relationships: {} };
+    STATS.systemStats[systemName].warnings++;
   }
-  
-  // Create the base output directory for this system
-  const baseOutputDir = path.join(__dirname, 'output', 'systems', systemName);
-  ensureDirectoryExists(baseOutputDir);
   
   // Process each rendering target
   for (const target of RENDERING_TARGETS) {
     try {
-      console.log(`  Rendering ${target.name} format...`);
+      console.log(`  🔄 Rendering ${target.name} format...`);
+      
+      // Initialize format stats if not exists
+      if (!STATS.formatStats[target.name]) {
+        STATS.formatStats[target.name] = {
+          files: 0,
+          successful: 0,
+          warnings: 0,
+          errors: 0
+        };
+      }
+      
+      // Initialize system format stats if not exists
+      if (!STATS.systemStats[systemName].formats[target.name]) {
+        STATS.systemStats[systemName].formats[target.name] = {
+          files: 0,
+          successful: 0,
+          warnings: 0,
+          errors: 0
+        };
+      }
       
       // Create the target output directory if needed
       const targetDir = target.outputDir 
@@ -327,42 +375,87 @@ async function renderSystem(systemName, createDatasetFn) {
         case 'json':
           // JSON output
           const jsonOutput = safeExecute(() => ultralink.toJSON(), {});
-          safeWriteFile(
-            path.join(baseOutputDir, target.outputFile.replace('{{system}}', systemName)),
-            jsonOutput,
-            true
-          );
+          const jsonPath = path.join(baseOutputDir, target.outputFile.replace('{{system}}', systemName));
+          safeWriteFile(jsonPath, jsonOutput, true);
+          console.log(`    ✅ JSON output saved to: ${jsonPath}`);
+          
+          // Update statistics
+          STATS.totalFiles++;
+          STATS.successfulFiles++;
+          STATS.formatStats[target.name].files++;
+          STATS.formatStats[target.name].successful++;
+          STATS.systemStats[systemName].files++;
+          STATS.systemStats[systemName].successful++;
+          STATS.systemStats[systemName].formats[target.name].files++;
+          STATS.systemStats[systemName].formats[target.name].successful++;
           break;
           
         case 'graphml':
           // GraphML output
           const graphmlOutput = safeExecute(() => ultralink.toGraphML(), '');
-          safeWriteFile(
-            path.join(baseOutputDir, target.outputFile.replace('{{system}}', systemName)),
-            graphmlOutput
-          );
+          const graphmlPath = path.join(baseOutputDir, target.outputFile.replace('{{system}}', systemName));
+          safeWriteFile(graphmlPath, graphmlOutput);
+          console.log(`    ✅ GraphML output saved to: ${graphmlPath}`);
+          
+          // Update statistics
+          STATS.totalFiles++;
+          STATS.successfulFiles++;
+          STATS.formatStats[target.name].files++;
+          STATS.formatStats[target.name].successful++;
+          STATS.systemStats[systemName].files++;
+          STATS.systemStats[systemName].successful++;
+          STATS.systemStats[systemName].formats[target.name].files++;
+          STATS.systemStats[systemName].formats[target.name].successful++;
           break;
           
         case 'csv':
           // CSV output
           const csvOutput = safeExecute(() => ultralink.toCSV(), { entities: '', relationships: '' });
-          safeWriteFile(path.join(targetDir, 'entities.csv'), csvOutput.entities || '');
-          safeWriteFile(path.join(targetDir, 'relationships.csv'), csvOutput.relationships || '');
+          const entitiesPath = path.join(targetDir, 'entities.csv');
+          const relationshipsPath = path.join(targetDir, 'relationships.csv');
+          safeWriteFile(entitiesPath, csvOutput.entities || '');
+          safeWriteFile(relationshipsPath, csvOutput.relationships || '');
+          console.log(`    ✅ CSV outputs saved to:\n      - ${entitiesPath}\n      - ${relationshipsPath}`);
+          
+          // Update statistics
+          STATS.totalFiles += 2; // Two files: entities.csv and relationships.csv
+          STATS.successfulFiles += 2;
+          STATS.formatStats[target.name].files += 2;
+          STATS.formatStats[target.name].successful += 2;
+          STATS.systemStats[systemName].files += 2;
+          STATS.systemStats[systemName].successful += 2;
+          STATS.systemStats[systemName].formats[target.name].files += 2;
+          STATS.systemStats[systemName].formats[target.name].successful += 2;
           break;
           
         case 'obsidian':
           // Obsidian output (multiple files)
+          console.log(`    📝 Generating Obsidian markdown files in: ${targetDir}`);
           const obsidianOutput = safeExecute(() => ultralink.toObsidian({ backlinks: true }), {});
           
+          let fileCount = 0;
           for (const [filename, content] of Object.entries(obsidianOutput)) {
-            safeWriteFile(path.join(targetDir, `${filename}.md`), content);
+            const filePath = path.join(targetDir, `${filename}.md`);
+            safeWriteFile(filePath, content);
+            console.log(`      ✅ ${filePath}`);
+            fileCount++;
           }
+          
+          // Update statistics
+          STATS.totalFiles += fileCount;
+          STATS.successfulFiles += fileCount;
+          STATS.formatStats[target.name].files += fileCount;
+          STATS.formatStats[target.name].successful += fileCount;
+          STATS.systemStats[systemName].files += fileCount;
+          STATS.systemStats[systemName].successful += fileCount;
+          STATS.systemStats[systemName].formats[target.name].files += fileCount;
+          STATS.systemStats[systemName].formats[target.name].successful += fileCount;
           break;
           
         case 'html-website':
           // HTML Website output (multiple files)
           try {
-            console.log(`    Generating HTML website for ${systemName}...`);
+            console.log(`    🌐 Generating HTML website for ${systemName}...`);
             const websiteOutput = safeExecute(() => ultralink.toHTMLWebsite({
               title: `${systemName} - UltraLink Knowledge Graph`,
               description: `Interactive exploration of the ${systemName} knowledge graph`,
@@ -372,161 +465,117 @@ async function renderSystem(systemName, createDatasetFn) {
             
             // Ensure output directory exists
             ensureDirectoryExists(targetDir);
+            console.log(`    📁 Writing website files to: ${targetDir}`);
             
             // Write all website files
+            let fileCount = 0;
             for (const [filename, content] of Object.entries(websiteOutput)) {
-              safeWriteFile(path.join(targetDir, filename), content);
+              const filePath = path.join(targetDir, filename);
+              safeWriteFile(filePath, content);
+              console.log(`      ✅ ${filePath}`);
+              fileCount++;
+              
+              // Update file statistics
+              STATS.totalFiles++;
+              STATS.successfulFiles++;
+              STATS.formatStats[target.name].files++;
+              STATS.formatStats[target.name].successful++;
+              STATS.systemStats[systemName].files++;
+              STATS.systemStats[systemName].successful++;
+              STATS.systemStats[systemName].formats[target.name].files++;
+              STATS.systemStats[systemName].formats[target.name].successful++;
             }
             
             // Verify that graph.js was generated
             if (!websiteOutput['graph.js']) {
-              console.warn(`    Warning: graph.js was not generated for ${systemName}`);
+              console.warn(`    ⚠️ Warning: graph.js was not generated for ${systemName}`);
               // Generate a fallback graph.js with proper D3 initialization
-              const fallbackGraphJs = `// Fallback graph.js for ${systemName}
-const data = {
-  nodes: [],
-  links: []
-};
-
-// Color mapping function
-function getColorByType(type) {
-  const colors = {
-    person: '#4285F4',     // Google Blue
-    project: '#EA4335',    // Google Red
-    organization: '#FBBC04', // Google Yellow
-    place: '#34A853',      // Google Green
-    concept: '#9C27B0',    // Purple
-    event: '#FF9800',      // Orange
-    article: '#795548',    // Brown
-    technology: '#607D8B', // Blue Grey
-    default: '#9E9E9E'     // Grey
-  };
-  
-  return colors[type] || colors.default;
-}
-
-// Initialize graph with data
-function initializeGraph(data) {
-  const container = document.getElementById('graph');
-  if (!container) {
-    console.error('Graph container not found');
-    return;
-  }
-  
-  // Add a message about the empty graph
-  container.innerHTML = '<div style="text-align: center; padding: 50px;"><h3>No graph data available</h3><p>The knowledge graph could not be generated properly.</p></div>';
-  
-  // Initialize an empty graph with D3
-  const svg = d3.select('#graph')
-    .append('svg')
-    .attr('width', '100%')
-    .attr('height', '100%')
-    .attr('viewBox', [0, 0, 800, 600]);
-    
-  svg.append('text')
-    .attr('x', 400)
-    .attr('y', 300)
-    .attr('text-anchor', 'middle')
-    .text('No graph data available');
-}
-
-// Initialize the visualization when the document is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  initializeGraph(data);
-});`;
-              safeWriteFile(path.join(targetDir, 'graph.js'), fallbackGraphJs);
-            } else {
-              // Verify that graph.js contains the necessary data
-              const graphJs = websiteOutput['graph.js'];
-              if (!graphJs.includes('nodes') || !graphJs.includes('links')) {
-                console.warn(`    Warning: graph.js for ${systemName} may not contain proper graph data`);
-              } else {
-                console.log(`    Successfully generated graph.js for ${systemName}`);
-              }
+              const fallbackGraphJs = generatePlaceholderD3(systemName);
+              const graphJsPath = path.join(targetDir, 'graph.js');
+              safeWriteFile(graphJsPath, fallbackGraphJs);
+              console.log(`    ✅ Created fallback graph.js at: ${graphJsPath}`);
+              
+              // Update stats for fallback file
+              STATS.totalFiles++;
+              STATS.warningFiles++;
+              STATS.formatStats[target.name].files++;
+              STATS.formatStats[target.name].warnings++;
+              STATS.systemStats[systemName].files++;
+              STATS.systemStats[systemName].warnings++;
+              STATS.systemStats[systemName].formats[target.name].files++;
+              STATS.systemStats[systemName].formats[target.name].warnings++;
             }
-            
-            console.log(`    HTML website for ${systemName} saved to ${targetDir}`);
           } catch (error) {
-            console.error(`    Error generating HTML website: ${error.message}`);
+            console.error(`    ❌ Failed to generate website: ${error.message}`);
             
-            // Create a minimal fallback website if generation fails
+            // Update error statistics
+            STATS.errorFiles++;
+            STATS.formatStats[target.name].errors++;
+            STATS.systemStats[systemName].errors++;
+            STATS.systemStats[systemName].formats[target.name].errors++;
+            
             try {
-              ensureDirectoryExists(targetDir);
+              const fallbackIndexPath = path.join(targetDir, 'index.html');
+              const fallbackGraphJsPath = path.join(targetDir, 'graph.js');
               
-              // Create a basic index.html
-              const fallbackIndexHtml = `<!DOCTYPE html>
+              // Create a simple fallback website
+              safeWriteFile(fallbackIndexPath, `<!DOCTYPE html>
 <html>
-<head>
-  <title>${systemName} - UltraLink Knowledge Graph</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-    .error-message { color: #d32f2f; padding: 20px; border: 1px solid #d32f2f; border-radius: 4px; }
-    #graph { width: 100%; height: 600px; border: 1px solid #ccc; margin-top: 20px; }
-  </style>
-</head>
-<body>
-  <h1>${systemName} - UltraLink Knowledge Graph</h1>
-  <div class="error-message">
-    <h3>Error Generating Visualization</h3>
-    <p>There was an error generating the knowledge graph visualization: ${error.message}</p>
-  </div>
-  <div id="graph"></div>
-  <script src="graph.js"></script>
-</body>
-</html>`;
-              safeWriteFile(path.join(targetDir, 'index.html'), fallbackIndexHtml);
+<head><title>${systemName} - Error</title></head>
+<body><h1>Error generating website for ${systemName}</h1><p>${error.message}</p></body>
+</html>`);
+              safeWriteFile(fallbackGraphJsPath, `console.error("Failed to generate graph visualization");`);
               
-              // Create a fallback graph.js
-              const fallbackGraphJs = `// Fallback graph.js for ${systemName}
-const data = {
-  nodes: [],
-  links: []
-};
-
-// Initialize the visualization when the document is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.getElementById('graph');
-  if (!container) return;
-  
-  const svg = d3.select('#graph')
-    .append('svg')
-    .attr('width', '100%')
-    .attr('height', '100%')
-    .attr('viewBox', [0, 0, 800, 600]);
-    
-  svg.append('text')
-    .attr('x', 400)
-    .attr('y', 300)
-    .attr('text-anchor', 'middle')
-    .text('Error generating graph visualization');
-});`;
-              safeWriteFile(path.join(targetDir, 'graph.js'), fallbackGraphJs);
+              console.log(`    📄 Created fallback website files:`);
+              console.log(`      ✅ ${fallbackIndexPath}`);
+              console.log(`      ✅ ${fallbackGraphJsPath}`);
               
-              console.log(`    Created fallback HTML website for ${systemName} in ${targetDir}`);
+              // Update stats for fallback files
+              STATS.totalFiles += 2;
+              STATS.warningFiles += 2;
+              STATS.formatStats[target.name].files += 2;
+              STATS.formatStats[target.name].warnings += 2;
+              STATS.systemStats[systemName].files += 2;
+              STATS.systemStats[systemName].warnings += 2;
+              STATS.systemStats[systemName].formats[target.name].files += 2;
+              STATS.systemStats[systemName].formats[target.name].warnings += 2;
             } catch (fallbackError) {
-              console.error(`    Failed to create fallback website: ${fallbackError.message}`);
+              console.error(`    ❌ Failed to create fallback website: ${fallbackError.message}`);
+              
+              // Update error statistics for fallback failure
+              STATS.errorFiles++;
+              STATS.formatStats[target.name].errors++;
+              STATS.systemStats[systemName].errors++;
+              STATS.systemStats[systemName].formats[target.name].errors++;
             }
           }
           break;
           
         case 'visualization':
           // Visualization outputs (multiple formats)
+          console.log(`    🎨 Generating visualizations in: ${targetDir}`);
           for (const vizFormat of target.outputFiles) {
             try {
-              console.log(`    Processing ${vizFormat.format} visualization...`);
+              console.log(`    🔄 Processing ${vizFormat.format}${vizFormat.layout ? ` (${vizFormat.layout})` : ''} visualization...`);
               
-              // Generate the visualization
+              // Generate the visualization with specific options
+              const vizOptions = {
+                format: vizFormat.format,
+                layout: vizFormat.layout || 'force',
+                style: vizFormat.style || 'default',
+                width: 1200,  // Increased resolution for better quality
+                height: 900
+              };
+              
               const vizOutputObj = await safeExecuteAsync(async () => {
-                return await ultralink.toVisualization({ format: vizFormat.format });
+                return await ultralink.toVisualization(vizOptions);
               }, {});
               
               // Get the appropriate content based on format
               let filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
+              const outputPath = path.join(targetDir, filename);
               
-              // Extract the content from the visualization output
+              // Extract the content from the visualization output based on format
               let content;
               if (vizFormat.format === 'svg') {
                 content = vizOutputObj['graph.svg'] || vizOutputObj;
@@ -534,19 +583,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 content = vizOutputObj['graph.png'] || vizOutputObj;
               } else if (vizFormat.format === 'd3') {
                 content = vizOutputObj['graph-d3.html'] || vizOutputObj;
-                filename = `${systemName.toLowerCase()}-d3.html`;
               } else if (vizFormat.format === 'cytoscape') {
                 content = vizOutputObj['graph-cytoscape.html'] || vizOutputObj;
-                filename = `${systemName.toLowerCase()}-cytoscape.html`;
               }
               
               // If content was successfully generated
-              if (content && typeof content === 'string' && content.length > 0) {
+              if (content && (typeof content === 'string' || content instanceof Buffer) && 
+                 (typeof content === 'string' ? content.length > 0 : content.length > 100)) {
                 ensureDirectoryExists(targetDir);
-                safeWriteFile(path.join(targetDir, filename), content);
-                console.log(`    Saved ${vizFormat.format} visualization to ${filename}`);
+                
+                // Use the correct method to write file based on content type (Buffer or string)
+                if (content instanceof Buffer) {
+                  fs.writeFileSync(outputPath, content);
+                } else {
+                  safeWriteFile(outputPath, content);
+                }
+                
+                console.log(`      ✅ Saved ${vizFormat.format}${vizFormat.layout ? ` (${vizFormat.layout})` : ''} visualization to: ${outputPath}`);
+                
+                // Update statistics
+                STATS.totalFiles++;
+                STATS.successfulFiles++;
+                STATS.formatStats[target.name].files++;
+                STATS.formatStats[target.name].successful++;
+                STATS.systemStats[systemName].files++;
+                STATS.systemStats[systemName].successful++;
+                STATS.systemStats[systemName].formats[target.name].files++;
+                STATS.systemStats[systemName].formats[target.name].successful++;
               } else {
-                console.warn(`    ${vizFormat.format.toUpperCase()} visualization output for ${systemName} is not in expected format`);
+                console.warn(`      ⚠️ ${vizFormat.format.toUpperCase()} visualization output for ${systemName} is not in expected format`);
+                
+                // Update warning statistics
+                STATS.warningFiles++;
+                STATS.formatStats[target.name].warnings++;
+                STATS.systemStats[systemName].warnings++;
+                STATS.systemStats[systemName].formats[target.name].warnings++;
                 
                 // Create a fallback visualization file
                 let fallbackContent;
@@ -559,140 +630,64 @@ document.addEventListener('DOMContentLoaded', function() {
   </text>
 </svg>`;
                 } else if (vizFormat.format === 'png') {
-                  // For PNG, we can't easily create a fallback image, so we'll create a text file
                   fallbackContent = `Fallback PNG visualization for ${systemName}`;
                 } else if (vizFormat.format === 'd3') {
-                  fallbackContent = `<!DOCTYPE html>
-<html>
-<head>
-  <title>${systemName} Knowledge Graph - D3 Visualization</title>
-  <meta charset="UTF-8">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-    #graph { width: 100%; height: 600px; border: 1px solid #ccc; }
-  </style>
-</head>
-<body>
-  <h1>${systemName} Knowledge Graph</h1>
-  <p>This is a fallback D3.js visualization.</p>
-  <div id="graph"></div>
-  <script>
-    // Create a simple fallback visualization
-    const svg = d3.select('#graph')
-      .append('svg')
-      .attr('width', '100%')
-      .attr('height', '100%')
-      .attr('viewBox', [0, 0, 800, 600]);
-      
-    svg.append('rect')
-      .attr('width', 800)
-      .attr('height', 600)
-      .attr('fill', '#f8f9fa');
-      
-    svg.append('text')
-      .attr('x', 400)
-      .attr('y', 300)
-      .attr('font-size', '24px')
-      .attr('text-anchor', 'middle')
-      .text('${systemName} Knowledge Graph (Fallback D3)');
-  </script>
-</body>
-</html>`;
-                  filename = `${systemName.toLowerCase()}-d3.html`;
+                  fallbackContent = generatePlaceholderD3(systemName);
                 } else if (vizFormat.format === 'cytoscape') {
-                  fallbackContent = `<!DOCTYPE html>
-<html>
-<head>
-  <title>${systemName} Knowledge Graph - Cytoscape Visualization</title>
-  <meta charset="UTF-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-    #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
-  </style>
-</head>
-<body>
-  <h1>${systemName} Knowledge Graph</h1>
-  <p>This is a fallback Cytoscape visualization.</p>
-  <div id="cy"></div>
-  <script>
-    // Create a simple fallback visualization
-    const cy = cytoscape({
-      container: document.getElementById('cy'),
-      elements: [
-        { data: { id: 'fallback-node', label: 'Fallback Node' } }
-      ],
-      style: [
-        {
-          selector: 'node',
-          style: {
-            'background-color': '#6495ED',
-            'label': 'data(label)',
-            'text-valign': 'center',
-            'text-halign': 'center',
-            'width': 120,
-            'height': 120
-          }
-        }
-      ],
-      layout: {
-        name: 'grid'
-      }
-    });
-  </script>
-</body>
-</html>`;
-                  filename = `${systemName.toLowerCase()}-cytoscape.html`;
+                  fallbackContent = generatePlaceholderCytoscape(systemName);
                 }
                 
                 if (fallbackContent) {
                   ensureDirectoryExists(targetDir);
-                  safeWriteFile(path.join(targetDir, filename), fallbackContent);
-                  console.log(`    Created fallback ${vizFormat.format} visualization in ${filename}`);
+                  safeWriteFile(outputPath, fallbackContent);
+                  console.log(`      ✅ Created fallback ${vizFormat.format} visualization at: ${outputPath}`);
+                  
+                  // Update statistics for fallback file
+                  STATS.totalFiles++;
+                  STATS.formatStats[target.name].files++;
+                  STATS.systemStats[systemName].files++;
+                  STATS.systemStats[systemName].formats[target.name].files++;
                 }
               }
             } catch (error) {
-              console.error(`    Error generating ${vizFormat.format} visualization: ${error.message}`);
+              console.error(`      ❌ Error generating ${vizFormat.format} visualization: ${error.message}`);
               
-              // Create a fallback file even in case of error
-              try {
-                ensureDirectoryExists(targetDir);
-                let filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
-                let fallbackContent = `Error generating ${vizFormat.format} visualization for ${systemName}: ${error.message}`;
-                
-                if (vizFormat.format === 'd3') {
-                  filename = `${systemName.toLowerCase()}-d3.html`;
-                } else if (vizFormat.format === 'cytoscape') {
-                  filename = `${systemName.toLowerCase()}-cytoscape.html`;
-                }
-                
-                safeWriteFile(path.join(targetDir, filename), fallbackContent);
-                console.log(`    Created error message file for ${vizFormat.format} visualization`);
-              } catch (fallbackError) {
-                console.error(`    Failed to create fallback file: ${fallbackError.message}`);
-              }
+              // Update error statistics
+              STATS.errorFiles++;
+              STATS.formatStats[target.name].errors++;
+              STATS.systemStats[systemName].errors++;
+              STATS.systemStats[systemName].formats[target.name].errors++;
             }
           }
           break;
           
         case 'bayesian':
           // Bayesian Network outputs
+          console.log(`    🧠 Generating Bayesian network formats in: ${targetDir}`);
           for (const bayesFormat of target.outputFiles) {
             try {
-              console.log(`    Processing ${bayesFormat.format} Bayesian format...`);
+              console.log(`    🔄 Processing ${bayesFormat.format} Bayesian format...`);
               
               const format = bayesFormat.format;
+              const outputPath = path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName));
               let bayesOutput;
               
               // Special handling for BIF format which seems to have issues
               if (format === 'bif') {
-                console.log(`    Using placeholder BIF file for ${systemName}`);
+                console.log(`      🔧 Using placeholder BIF file for ${systemName}`);
                 bayesOutput = generatePlaceholderBIF(systemName);
-                safeWriteFile(
-                  path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                  bayesOutput
-                );
+                safeWriteFile(outputPath, bayesOutput);
+                console.log(`      ✅ Saved BIF file to: ${outputPath}`);
+                
+                // Update statistics
+                STATS.totalFiles++;
+                STATS.warningFiles++; // Count as warning since it's a placeholder
+                STATS.formatStats[target.name].files++;
+                STATS.formatStats[target.name].warnings++;
+                STATS.systemStats[systemName].files++;
+                STATS.systemStats[systemName].warnings++;
+                STATS.systemStats[systemName].formats[target.name].files++;
+                STATS.systemStats[systemName].formats[target.name].warnings++;
                 continue;
               }
               
@@ -701,78 +696,86 @@ document.addEventListener('DOMContentLoaded', function() {
                 bayesOutput = safeExecute(() => {
                   return ultralink.toBayesianNetwork({ outputFormat: format });
                 }, format === 'json' ? {} : '');
+                
+                if (bayesOutput) {
+                  if (format === 'json') {
+                    safeWriteFile(outputPath, bayesOutput, true);
+                  } else {
+                    safeWriteFile(outputPath, bayesOutput);
+                  }
+                  console.log(`      ✅ Saved ${format} Bayesian network to: ${outputPath}`);
+                  
+                  // Update statistics
+                  STATS.totalFiles++;
+                  STATS.successfulFiles++;
+                  STATS.formatStats[target.name].files++;
+                  STATS.formatStats[target.name].successful++;
+                  STATS.systemStats[systemName].files++;
+                  STATS.systemStats[systemName].successful++;
+                  STATS.systemStats[systemName].formats[target.name].files++;
+                  STATS.systemStats[systemName].formats[target.name].successful++;
+                } else {
+                  console.warn(`      ⚠️ Failed to generate Bayesian output in ${format} format`);
+                  
+                  // Update warning statistics
+                  STATS.warningFiles++;
+                  STATS.formatStats[target.name].warnings++;
+                  STATS.systemStats[systemName].warnings++;
+                  STATS.systemStats[systemName].formats[target.name].warnings++;
+                  
+                  // Create a placeholder file
+                  if (format === 'json') {
+                    safeWriteFile(outputPath, { error: 'Failed to generate Bayesian network' }, true);
+                  } else {
+                    safeWriteFile(outputPath, `# Failed to generate Bayesian network`);
+                  }
+                  console.log(`      ✅ Created placeholder ${format} file at: ${outputPath}`);
+                  
+                  // Update file statistics
+                  STATS.totalFiles++;
+                  STATS.formatStats[target.name].files++;
+                  STATS.systemStats[systemName].files++;
+                  STATS.systemStats[systemName].formats[target.name].files++;
+                }
               } catch (error) {
-                console.warn(`    Error generating Bayesian network: ${error.message}`);
+                console.warn(`      ⚠️ Error generating Bayesian network: ${error.message}`);
+                console.log(`      📄 Creating placeholder file...`);
+                
+                // Update error statistics
+                STATS.errorFiles++;
+                STATS.formatStats[target.name].errors++;
+                STATS.systemStats[systemName].errors++;
+                STATS.systemStats[systemName].formats[target.name].errors++;
                 
                 // Create a placeholder file
                 if (format === 'json') {
-                  safeWriteFile(
-                    path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                    { error: `Failed to generate Bayesian network: ${error.message}` },
-                    true
-                  );
+                  safeWriteFile(outputPath, { error: `Failed to generate Bayesian network: ${error.message}` }, true);
                 } else {
-                  safeWriteFile(
-                    path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                    `# Failed to generate Bayesian network: ${error.message}`
-                  );
+                  safeWriteFile(outputPath, `# Failed to generate Bayesian network: ${error.message}`);
                 }
-                continue;
-              }
-              
-              if (bayesOutput) {
-                if (format === 'json') {
-                  safeWriteFile(
-                    path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                    bayesOutput,
-                    true
-                  );
-                } else {
-                  safeWriteFile(
-                    path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                    bayesOutput
-                  );
-                }
-              } else {
-                console.warn(`    Failed to generate Bayesian output in ${format} format`);
+                console.log(`      ✅ Created error placeholder at: ${outputPath}`);
                 
-                // Create a placeholder file
-                if (format === 'json') {
-                  safeWriteFile(
-                    path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                    { error: 'Failed to generate Bayesian network' },
-                    true
-                  );
-                } else {
-                  safeWriteFile(
-                    path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                    `# Failed to generate Bayesian network`
-                  );
-                }
+                // Update file statistics
+                STATS.totalFiles++;
+                STATS.formatStats[target.name].files++;
+                STATS.systemStats[systemName].files++;
+                STATS.systemStats[systemName].formats[target.name].files++;
               }
             } catch (error) {
-              console.warn(`    Error rendering Bayesian ${bayesFormat.format} format: ${error.message}`);
+              console.warn(`      ❌ Error processing Bayesian ${bayesFormat.format} format: ${error.message}`);
               
-              // Create a placeholder file
-              const format = bayesFormat.format;
-              if (format === 'json') {
-                safeWriteFile(
-                  path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                  { error: `Processing error: ${error.message}` },
-                  true
-                );
-              } else {
-                safeWriteFile(
-                  path.join(targetDir, bayesFormat.filename.replace('{{system}}', systemName)),
-                  `# Processing error: ${error.message}`
-                );
-              }
+              // Update error statistics
+              STATS.errorFiles++;
+              STATS.formatStats[target.name].errors++;
+              STATS.systemStats[systemName].errors++;
+              STATS.systemStats[systemName].formats[target.name].errors++;
             }
           }
           break;
           
         case 'kif':
           // KIF output
+          console.log(`    📜 Generating KIF format...`);
           const kifOutput = safeExecute(() => {
             return ultralink.toKIF({
               includeMetaKnowledge: true,
@@ -781,85 +784,98 @@ document.addEventListener('DOMContentLoaded', function() {
             });
           }, `; Failed to generate KIF for ${systemName}`);
           
-          safeWriteFile(
-            path.join(targetDir, target.outputFile.replace('{{system}}', systemName)),
-            kifOutput
-          );
+          const kifPath = path.join(targetDir, target.outputFile.replace('{{system}}', systemName));
+          safeWriteFile(kifPath, kifOutput);
+          console.log(`    ✅ KIF output saved to: ${kifPath}`);
+          
+          // Update statistics
+          STATS.totalFiles++;
+          STATS.successfulFiles++;
+          STATS.formatStats[target.name].files++;
+          STATS.formatStats[target.name].successful++;
+          STATS.systemStats[systemName].files++;
+          STATS.systemStats[systemName].successful++;
+          STATS.systemStats[systemName].formats[target.name].files++;
+          STATS.systemStats[systemName].formats[target.name].successful++;
           break;
           
         case 'full-blob':
-          // Full Blob outputs
+          // Full blob outputs
+          console.log(`    💾 Generating full-blob formats in: ${targetDir}`);
           for (const blobFormat of target.outputFiles) {
             try {
-              console.log(`    Processing ${blobFormat.format} full-blob format...`);
+              console.log(`    🔄 Processing ${blobFormat.format} full-blob format...`);
+              
+              const outputPath = path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName));
               
               if (blobFormat.format === 'uncompressed') {
-                try {
-                  // For uncompressed format, we can use a JSON object
-                  const blobOutput = safeExecute(() => {
-                    const blob = ultralink.toFullBlob({
-                      includeHistory: true,
-                      includeVectors: true
-                    });
-                    return blob;
-                  }, { 
-                    metadata: {
-                      generatedAt: new Date().toISOString(),
-                      system: systemName,
-                      isPlaceholder: true
-                    },
-                    entities: Object.entries(ultralink.store.entities || {}).map(([id, entity]) => ({
-                      id,
-                      type: entity.type || 'unknown',
-                      attributes: entity.attributes || {}
-                    })),
-                    relationships: []
-                  });
-                  
-                  safeWriteFile(
-                    path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName)),
-                    blobOutput,
-                    true
-                  );
-                } catch (error) {
-                  console.warn(`    Error generating uncompressed full-blob: ${error.message}`);
-                  safeWriteFile(
-                    path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName)),
-                    { 
-                      error: `Failed to generate uncompressed full-blob: ${error.message}`,
-                      timestamp: new Date().toISOString(),
-                      system: systemName
-                    },
-                    true
-                  );
-                }
+                const uncompressedBlob = safeExecute(() => {
+                  return ultralink.toFullBlob({ compress: false });
+                }, {});
+                
+                safeWriteFile(outputPath, uncompressedBlob, true);
+                console.log(`      ✅ Saved uncompressed blob to: ${outputPath}`);
+                
+                // Update statistics
+                STATS.totalFiles++;
+                STATS.successfulFiles++;
+                STATS.formatStats[target.name].files++;
+                STATS.formatStats[target.name].successful++;
+                STATS.systemStats[systemName].files++;
+                STATS.systemStats[systemName].successful++;
+                STATS.systemStats[systemName].formats[target.name].files++;
+                STATS.systemStats[systemName].formats[target.name].successful++;
               } else if (blobFormat.format === 'compressed') {
                 try {
-                  console.log(`    Using placeholder compressed blob for ${systemName}`);
-                  // Use our placeholder binary buffer for compressed format
+                  console.log(`      🔧 Using placeholder compressed blob for ${systemName}`);
                   const compressedBlob = generatePlaceholderCompressedBlob();
                   
-                  safeWriteFile(
-                    path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName)),
-                    compressedBlob
-                  );
+                  safeWriteFile(outputPath, compressedBlob);
+                  console.log(`      ✅ Saved compressed blob to: ${outputPath}`);
+                  
+                  // Update statistics for placeholder (count as warning)
+                  STATS.totalFiles++;
+                  STATS.warningFiles++;
+                  STATS.formatStats[target.name].files++;
+                  STATS.formatStats[target.name].warnings++;
+                  STATS.systemStats[systemName].files++;
+                  STATS.systemStats[systemName].warnings++;
+                  STATS.systemStats[systemName].formats[target.name].files++;
+                  STATS.systemStats[systemName].formats[target.name].warnings++;
                 } catch (error) {
-                  console.warn(`    Error handling compressed blob: ${error.message}`);
-                  // Use a simple JSON string as fallback
+                  console.warn(`      ⚠️ Error handling compressed blob: ${error.message}`);
+                  console.log(`      📄 Creating JSON placeholder...`);
+                  
+                  // Update error statistics
+                  STATS.errorFiles++;
+                  STATS.formatStats[target.name].errors++;
+                  STATS.systemStats[systemName].errors++;
+                  STATS.systemStats[systemName].formats[target.name].errors++;
+                  
                   const placeholderBlob = JSON.stringify({
                     error: `Failed to generate compressed blob: ${error.message}`,
                     timestamp: new Date().toISOString(),
                     system: systemName
                   });
                   
-                  safeWriteFile(
-                    path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName)),
-                    placeholderBlob
-                  );
+                  safeWriteFile(outputPath, placeholderBlob);
+                  console.log(`      ✅ Created compressed blob placeholder at: ${outputPath}`);
+                  
+                  // Update statistics for placeholder file
+                  STATS.totalFiles++;
+                  STATS.formatStats[target.name].files++;
+                  STATS.systemStats[systemName].files++;
+                  STATS.systemStats[systemName].formats[target.name].files++;
                 }
               }
             } catch (error) {
-              console.warn(`    Error rendering ${blobFormat.format} full-blob format: ${error.message}`);
+              console.warn(`      ❌ Error rendering ${blobFormat.format} full-blob format: ${error.message}`);
+              
+              // Update error statistics
+              STATS.errorFiles++;
+              STATS.formatStats[target.name].errors++;
+              STATS.systemStats[systemName].errors++;
+              STATS.systemStats[systemName].formats[target.name].errors++;
               
               const placeholderError = JSON.stringify({
                 error: `Failed during ${blobFormat.format} full-blob processing: ${error.message}`,
@@ -867,10 +883,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 system: systemName
               });
               
-              safeWriteFile(
-                path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName)),
-                placeholderError
-              );
+              const outputPath = path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName));
+              safeWriteFile(outputPath, placeholderError);
+              console.log(`      ✅ Created error placeholder at: ${outputPath}`);
+              
+              // Update statistics for placeholder file
+              STATS.totalFiles++;
+              STATS.formatStats[target.name].files++;
+              STATS.systemStats[systemName].files++;
+              STATS.systemStats[systemName].formats[target.name].files++;
             }
           }
           break;
@@ -890,15 +911,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  console.log(`Completed rendering ${systemName}`);
+  const endTime = process.hrtime(startTime);
+  const duration = (endTime[0] + endTime[1] / 1e9).toFixed(2);
+  
+  // Get system stats for summary
+  const systemStats = STATS.systemStats[systemName];
+  
+  console.log(`\n📊 Summary for ${systemName}:`);
+  console.log(`  ⏱️ Rendered in ${duration}s`);
+  console.log(`  📄 Files: ${systemStats.files} total`);
+  console.log(`  ✅ Success: ${systemStats.successful}`);
+  console.log(`  ⚠️ Warnings: ${systemStats.warnings}`);
+  console.log(`  ❌ Errors: ${systemStats.errors}`);
+  console.log(`✅ Completed rendering ${systemName}`);
+  console.log(`📂 All outputs available in: ${baseOutputDir}`);
 }
 
 /**
  * Main function to render all systems
  */
 async function renderAllSystems() {
-  console.log('UltraLink Render Examples');
+  console.log('🚀 UltraLink Render Examples');
   console.log('========================');
+  
+  // Record start time
+  STATS.startTime = process.hrtime();
   
   // Create the main output directory
   const outputDir = path.join(__dirname, 'output', 'systems');
@@ -909,16 +946,184 @@ async function renderAllSystems() {
     try {
       await renderSystem(systemName, createDatasetFn);
     } catch (error) {
-      console.error(`Error rendering ${systemName}: ${error.message}`);
+      console.error(`❌ Error rendering ${systemName}: ${error.message}`);
+      // Make sure the system is in stats
+      if (!STATS.systemStats[systemName]) {
+        STATS.systemStats[systemName] = {
+          files: 0,
+          successful: 0,
+          warnings: 0,
+          errors: 1,
+          formats: {}
+        };
+      } else {
+        STATS.systemStats[systemName].errors++;
+      }
     }
   }
   
-  console.log('\nRendering complete!');
-  console.log(`Output is available in the 'output/systems' directory.`);
+  // Record end time
+  STATS.endTime = process.hrtime(STATS.startTime);
+  const durationSeconds = (STATS.endTime[0] + STATS.endTime[1] / 1e9).toFixed(2);
+  
+  // Generate and display summary report
+  console.log('\n✨✨✨ RENDERING SUMMARY REPORT ✨✨✨');
+  console.log('=======================================');
+  
+  // Performance metrics
+  console.log('\n⏱️  PERFORMANCE METRICS');
+  console.log('--------------------');
+  console.log(`🕒 Total execution time: ${durationSeconds} seconds`);
+  console.log(`⚡ Average time per system: ${(durationSeconds / Object.keys(SYSTEMS).length).toFixed(2)} seconds`);
+  
+  // Output statistics
+  console.log('\n📊 OUTPUT STATISTICS');
+  console.log('------------------');
+  console.log(`📄 Total files rendered: ${STATS.totalFiles}`);
+  console.log(`✅ Successfully rendered: ${STATS.successfulFiles} (${((STATS.successfulFiles / STATS.totalFiles) * 100).toFixed(1)}%)`);
+  console.log(`⚠️ Rendered with warnings: ${STATS.warningFiles} (${((STATS.warningFiles / STATS.totalFiles) * 100).toFixed(1)}%)`);
+  console.log(`❌ Failed to render: ${STATS.errorFiles} (${((STATS.errorFiles / STATS.totalFiles) * 100).toFixed(1)}%)`);
+  
+  // System statistics with ASCII table
+  console.log('\n📋 SYSTEM STATISTICS');
+  console.log('-----------------');
+  
+  // Sort systems by number of files
+  const sortedSystems = Object.entries(STATS.systemStats)
+    .sort((a, b) => b[1].files - a[1].files);
+  
+  // Create system statistics table
+  const systemHeaders = ['System', 'Total Files', 'Success', 'Warnings', 'Errors', 'Success Rate'];
+  const systemRows = sortedSystems.map(([sysName, sysStats]) => {
+    const successRate = ((sysStats.successful / sysStats.files) * 100).toFixed(1) + '%';
+    const systemEmoji = successRate.startsWith('100') ? '🌟' : 
+                        parseFloat(successRate) >= 90 ? '✅' : 
+                        parseFloat(successRate) >= 70 ? '✓' : '⚠️';
+    return [
+      `${systemEmoji} ${sysName}`,
+      sysStats.files,
+      sysStats.successful,
+      sysStats.warnings,
+      sysStats.errors,
+      successRate
+    ];
+  });
+  console.log(createAsciiTable(systemRows, systemHeaders));
+  
+  // Format statistics with ASCII table
+  console.log('\n📋 FORMAT STATISTICS');
+  console.log('-----------------');
+  
+  // Sort formats by number of files
+  const sortedFormats = Object.entries(STATS.formatStats)
+    .sort((a, b) => b[1].files - a[1].files);
+  
+  // Create format statistics table
+  const formatHeaders = ['Format', 'Total Files', 'Success', 'Warnings', 'Errors', 'Success Rate'];
+  const formatRows = sortedFormats.map(([formatName, formatStats]) => {
+    const successRate = ((formatStats.successful / formatStats.files) * 100).toFixed(1) + '%';
+    const formatEmoji = successRate.startsWith('100') ? '🌟' : 
+                        parseFloat(successRate) >= 90 ? '✅' : 
+                        parseFloat(successRate) >= 70 ? '✓' : '⚠️';
+    return [
+      `${formatEmoji} ${formatName}`,
+      formatStats.files,
+      formatStats.successful,
+      formatStats.warnings,
+      formatStats.errors,
+      successRate
+    ];
+  });
+  console.log(createAsciiTable(formatRows, formatHeaders));
+  
+  // Generate a detailed format-per-system table
+  console.log('\n📊 DETAILED FORMAT STATISTICS PER SYSTEM');
+  console.log('------------------------------------');
+  
+  // Get all format names
+  const allFormatNames = Object.keys(STATS.formatStats);
+  
+  // Create headers for the detailed table
+  const detailedHeaders = ['System', ...allFormatNames, 'Total'];
+  
+  // Create rows for the detailed table
+  const detailedRows = sortedSystems.map(([sysName, sysStats]) => {
+    const systemRow = [sysName];
+    
+    // Add counts for each format
+    allFormatNames.forEach(formatName => {
+      const formatStats = sysStats.formats[formatName] || { files: 0 };
+      systemRow.push(formatStats.files);
+    });
+    
+    // Add total
+    systemRow.push(sysStats.files);
+    
+    return systemRow;
+  });
+  
+  // Add a total row
+  const totalRow = ['TOTAL'];
+  allFormatNames.forEach(formatName => {
+    totalRow.push(STATS.formatStats[formatName].files);
+  });
+  totalRow.push(STATS.totalFiles);
+  
+  detailedRows.push(totalRow);
+  
+  console.log(createAsciiTable(detailedRows, detailedHeaders));
+  
+  console.log('\n🏁 RENDERING COMPLETE! 🏁');
+  console.log(`📂 All outputs are available in: ${outputDir}`);
+  console.log('=======================================');
+}
+
+/**
+ * Create an ASCII table for displaying data
+ * @param {Array<Array<string>>} rows - Array of rows, where each row is an array of column values
+ * @param {Array<string>} headers - Array of header values
+ * @param {Array<number>} [columnWidths] - Optional array of column widths
+ * @returns {string} Formatted ASCII table
+ */
+function createAsciiTable(rows, headers, columnWidths) {
+  // Calculate column widths if not provided
+  if (!columnWidths) {
+    columnWidths = headers.map((header, index) => {
+      // Get the maximum width needed for this column
+      return Math.max(
+        header.length,
+        ...rows.map(row => String(row[index] || '').length)
+      );
+    });
+  }
+  
+  // Create the header row
+  const headerRow = headers.map((header, i) => 
+    header.padEnd(columnWidths[i])
+  ).join(' | ');
+  
+  // Create the separator row
+  const separatorRow = columnWidths.map(width => 
+    '-'.repeat(width)
+  ).join('-+-');
+  
+  // Create the data rows
+  const dataRows = rows.map(row => 
+    row.map((cell, i) => 
+      String(cell || '').padEnd(columnWidths[i])
+    ).join(' | ')
+  );
+  
+  // Combine all rows
+  return [
+    headerRow,
+    separatorRow,
+    ...dataRows
+  ].join('\n');
 }
 
 // Run the example
 renderAllSystems().catch(error => {
-  console.error('Error rendering systems:', error);
+  console.error('❌ Error rendering systems:', error);
   process.exit(1);
 }); 

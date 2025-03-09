@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latent State Space - POMDP - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Latent State Space</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>state_space</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>space</td>
+        </tr>
+        
+            <tr>
+              <th>symbol</th>
+              <td>s</td>
+            </tr>
+          
+            <tr>
+              <th>dimensions</th>
+              <td>5,1</td>
+            </tr>
+          
+            <tr>
+              <th>description</th>
+              <td>The set of possible hidden states the environment can be in</td>
+            </tr>
+          
+            <tr>
+              <th>states</th>
+              <td>[object Object],[object Object],[object Object],[object Object],[object Object]</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="pomdp_model.html">Active Inference POMDP Model</a> → <strong>includes</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="a_matrix.html">Observation Likelihood Matrix</a> → <strong>maps_to</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="b_matrix.html">State Transition Matrix</a> → <strong>maps_from</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="b_matrix.html">State Transition Matrix</a> → <strong>maps_to</strong>
+      
+      
+    </div>
+    <div class="relationship-item">
+      <a href="d_matrix.html">Initial State Prior</a> → <strong>distributes_over</strong>
+      
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

@@ -15,6 +15,7 @@
  * - Added Node.js compatibility with proper JSDOM integration
  * - Fixed D3 and Cytoscape output to return proper HTML content
  * - Added proper object structure for visualization returns
+ * - Enhanced PNG generation with better quality and error handling
  * 
  * Environment compatibility:
  * - Browser: Uses native DOM capabilities when available
@@ -36,8 +37,13 @@
 // Use dynamic import for d3 (ES Module)
 // We'll import d3 dynamically when needed
 const { JSDOM } = require('jsdom');
-const sharp = require('sharp');
 const cytoscape = require('cytoscape');
+
+// Import our enhanced visualization helpers
+const { 
+  enhancedSVGtoPNG, 
+  createFallbackPNG 
+} = require('./visualization-helpers');
 
 // Helper function to load d3 dynamically
 async function getD3() {
@@ -309,37 +315,30 @@ async function generateSVG(graphData, options) {
  * Generate PNG visualization
  * @param {Object} graphData - Graph data with nodes and links
  * @param {Object} options - Visualization options
- * @returns {Buffer} PNG image buffer
+ * @returns {Buffer} PNG buffer
  */
 async function generatePNG(graphData, options) {
   try {
     // Generate SVG first
     const svgString = await generateSVG(graphData, options);
     
-    try {
-      // Convert SVG to PNG using Sharp
-      const Sharp = await import('sharp').catch(() => null);
-      
-      if (!Sharp) {
-        console.warn('Sharp module not available. Returning fallback PNG.');
-        // Return 1x1 transparent PNG as fallback
-        return Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64');
-      }
-      
-      const pngBuffer = await Sharp.default(Buffer.from(svgString))
-        .png()
-        .toBuffer();
-      
-      return pngBuffer;
-    } catch (error) {
-      console.error('Error converting SVG to PNG:', error);
-      // Return 1x1 transparent PNG as fallback
-      return Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64');
-    }
+    // Convert SVG to PNG using our enhanced function
+    return await enhancedSVGtoPNG(svgString, {
+      width: options.width || 800,
+      height: options.height || 600,
+      density: 300, // Higher density for better quality
+      message: 'UltraLink Graph Visualization',
+      style: options.style || 'default',  // Pass the style parameter
+      layout: options.layout || 'force'   // Pass the layout parameter
+    });
   } catch (error) {
     console.error('Error generating PNG:', error);
-    // Return 1x1 transparent PNG as fallback
-    return Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64');
+    // Create a proper fallback PNG with a descriptive message
+    return await createFallbackPNG(
+      options.width || 800, 
+      options.height || 600, 
+      `UltraLink Visualization (${options.style || 'default'} style, ${options.layout || 'force'} layout)`
+    );
   }
 }
 

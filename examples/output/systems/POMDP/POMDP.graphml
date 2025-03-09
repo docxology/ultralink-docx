@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="domain" for="node" attr.name="domain" attr.type="string"/>
+    <key id="model_type" for="node" attr.name="model_type" attr.type="string"/>
+    <key id="discount_factor" for="node" attr.name="discount_factor" attr.type="string"/>
+    <key id="horizon" for="node" attr.name="horizon" attr.type="string"/>
+    <key id="time_steps" for="node" attr.name="time_steps" attr.type="string"/>
+    <key id="symbol" for="node" attr.name="symbol" attr.type="string"/>
+    <key id="dimensions" for="node" attr.name="dimensions" attr.type="string"/>
+    <key id="observations" for="node" attr.name="observations" attr.type="string"/>
+    <key id="states" for="node" attr.name="states" attr.type="string"/>
+    <key id="actions" for="node" attr.name="actions" attr.type="string"/>
+    <key id="matrix_type" for="node" attr.name="matrix_type" attr.type="string"/>
+    <key id="matrix_data" for="node" attr.name="matrix_data" attr.type="string"/>
+    <key id="precision" for="node" attr.name="precision" attr.type="string"/>
+    <key id="column_labels" for="node" attr.name="column_labels" attr.type="string"/>
+    <key id="row_labels" for="node" attr.name="row_labels" attr.type="string"/>
+    <key id="action_labels" for="node" attr.name="action_labels" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
+    <node id="pomdp_model">
+      <data key="type">model</data>
+      <data key="name">Active Inference POMDP Model</data>
+      <data key="description">A Partially Observable Markov Decision Process implemented with Active Inference</data>
+      <data key="domain">computational_neuroscience</data>
+      <data key="model_type">discrete</data>
+      <data key="discount_factor">0.95</data>
+      <data key="horizon">10</data>
+      <data key="time_steps">100</data>
+    </node>
+    <node id="observation_space">
+      <data key="type">space</data>
+      <data key="name">Observation Space</data>
+      <data key="symbol">o</data>
+      <data key="dimensions">3,1</data>
+      <data key="description">The set of possible observations an agent can perceive</data>
+      <data key="observations">[object Object],[object Object],[object Object]</data>
+    </node>
+    <node id="state_space">
+      <data key="type">space</data>
+      <data key="name">Latent State Space</data>
+      <data key="symbol">s</data>
+      <data key="dimensions">5,1</data>
+      <data key="description">The set of possible hidden states the environment can be in</data>
+      <data key="states">[object Object],[object Object],[object Object],[object Object],[object Object]</data>
+    </node>
+    <node id="action_space">
+      <data key="type">space</data>
+      <data key="name">Action Space</data>
+      <data key="symbol">a</data>
+      <data key="dimensions">2,1</data>
+      <data key="description">The set of possible actions an agent can take</data>
+      <data key="actions">[object Object],[object Object]</data>
+    </node>
+    <node id="a_matrix">
+      <data key="type">matrix</data>
+      <data key="name">Observation Likelihood Matrix</data>
+      <data key="symbol">A</data>
+      <data key="dimensions">3,5</data>
+      <data key="description">Maps hidden states to observations (likelihood mapping)</data>
+      <data key="matrix_type">likelihood</data>
+      <data key="matrix_data">0.8,0.3,0.1,0,0,0.2,0.6,0.7,0.3,0.1,0,0.1,0.2,0.7,0.9</data>
+      <data key="precision">0.9</data>
+      <data key="column_labels">s1,s2,s3,s4,s5</data>
+      <data key="row_labels">o1,o2,o3</data>
+    </node>
+    <node id="b_matrix">
+      <data key="type">matrix</data>
+      <data key="name">State Transition Matrix</data>
+      <data key="symbol">B</data>
+      <data key="dimensions">5,5,2</data>
+      <data key="description">Defines the dynamics of state transitions based on actions</data>
+      <data key="matrix_type">transition</data>
+      <data key="matrix_data">0.9,0.2,0,0,0,0.1,0.7,0.2,0,0,0,0.1,0.7,0.2,0,0,0,0.1,0.7,0.1,0,0,0,0.1,0.9,0.9,0.1,0,0,0,0.1,0.7,0.1,0,0,0,0.2,0.7,0.1,0,0,0,0.2,0.7,0.1,0,0,0,0.2,0.9</data>
+      <data key="action_labels">a1,a2</data>
+      <data key="column_labels">s1,s2,s3,s4,s5</data>
+      <data key="row_labels">s1,s2,s3,s4,s5</data>
+    </node>
+    <node id="c_matrix">
+      <data key="type">matrix</data>
+      <data key="name">Preference Matrix</data>
+      <data key="symbol">C</data>
+      <data key="dimensions">3,1</data>
+      <data key="description">Specifies the agent preferences over observations (as log probabilities)</data>
+      <data key="matrix_type">preference</data>
+      <data key="matrix_data">-3,0,3</data>
+      <data key="row_labels">o1,o2,o3</data>
+      <data key="precision">1</data>
+    </node>
+    <node id="d_matrix">
+      <data key="type">matrix</data>
+      <data key="name">Initial State Prior</data>
+      <data key="symbol">D</data>
+      <data key="dimensions">5,1</data>
+      <data key="description">Defines the prior distribution over initial states</data>
+      <data key="matrix_type">prior</data>
+      <data key="matrix_data">0.2,0.2,0.4,0.1,0.1</data>
+      <data key="row_labels">s1,s2,s3,s4,s5</data>
+    </node>
+    <node id="e_matrix">
+      <data key="type">matrix</data>
+      <data key="name">Policy Prior</data>
+      <data key="symbol">E</data>
+      <data key="dimensions">2,1</data>
+      <data key="description">Defines the prior distribution over policies/actions</data>
+      <data key="matrix_type">policy_prior</data>
+      <data key="matrix_data">0.5,0.5</data>
+      <data key="row_labels">a1,a2</data>
+    </node>
+    <edge source="pomdp_model" target="observation_space">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="pomdp_model" target="state_space">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="pomdp_model" target="action_space">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="pomdp_model" target="a_matrix">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="pomdp_model" target="b_matrix">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="pomdp_model" target="c_matrix">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="pomdp_model" target="d_matrix">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="pomdp_model" target="e_matrix">
+      <data key="relationship_type">includes</data>
+    </edge>
+    <edge source="a_matrix" target="observation_space">
+      <data key="relationship_type">maps_from</data>
+    </edge>
+    <edge source="a_matrix" target="state_space">
+      <data key="relationship_type">maps_to</data>
+    </edge>
+    <edge source="b_matrix" target="state_space">
+      <data key="relationship_type">maps_from</data>
+    </edge>
+    <edge source="b_matrix" target="state_space">
+      <data key="relationship_type">maps_to</data>
+    </edge>
+    <edge source="b_matrix" target="action_space">
+      <data key="relationship_type">conditioned_on</data>
+    </edge>
+    <edge source="c_matrix" target="observation_space">
+      <data key="relationship_type">evaluates</data>
+    </edge>
+    <edge source="d_matrix" target="state_space">
+      <data key="relationship_type">distributes_over</data>
+    </edge>
+    <edge source="e_matrix" target="action_space">
+      <data key="relationship_type">distributes_over</data>
+    </edge>
+  </graph>
+</graphml>
