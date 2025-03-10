@@ -112,6 +112,19 @@ graph TD
 3. Export to **KIF** for AI reasoning systems
 4. Generate **CSV** for business intelligence tools
 
+### RxInfer.jl Format
+
+RxInfer.jl format converts UltraLink knowledge graphs to Julia code using the RxInfer.jl `@model` macro syntax for Bayesian inference through factor graphs and reactive programming.
+
+**Key uses:**
+- Probabilistic modeling with factor graphs
+- Reactive Bayesian inference
+- Message passing algorithms
+- Dynamic belief updating
+- Uncertainty quantification
+
+**Primary Consumers:** Julia programmers, researchers working with Bayesian models, probabilistic programming enthusiasts
+
 ## Implementation Notes
 
 When implementing export format support in your applications:

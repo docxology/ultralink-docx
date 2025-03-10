@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurofeedback Research System - System Visualization</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+        .header p {
+            color: #666;
+            margin: 0;
+            font-size: 16px;
+        }
+        .visualization {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .visualization svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .controls button {
+            padding: 8px 16px;
+            margin: 0 8px;
+            border: none;
+            border-radius: 4px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .controls button:hover {
+            background: #0056b3;
+        }
+        .metrics {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .metrics h2 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .metric-item {
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Neurofeedback Research System</h1>
+            <p>A system for analyzing EEG neurofeedback research data, including alpha and SMR training protocols for ADHD and anxiety treatments.</p>
+        </div>
+        
+        <div class="visualization">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f7fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c3cfe2;stop-opacity:1" />
+    </linearGradient>
+    <style>
+      text { font-family: Arial, sans-serif; }
+      .title { font-size: 24px; font-weight: bold; fill: #333; }
+      .summary { font-size: 14px; fill: #555; }
+      .node-label { font-size: 14px; fill: white; font-weight: bold; }
+      .metric-label { font-size: 12px; fill: #555; }
+      .metric-value { font-size: 14px; fill: #333; font-weight: bold; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bgGradient)" />
+  
+  <!-- Content area -->
+  <rect x="40" y="40" width="1120" height="820" rx="10" fill="#fff" stroke="#ddd" stroke-width="1" />
+  
+  <!-- Title and system info -->
+  <text x="60" y="80" class="title">Neurofeedback Research System</text>
+  <text x="60" y="110" class="summary">A system for analyzing EEG neurofeedback research data, including alpha and SMR training protocols for ADHD and anxiety treatments.</text>
+  
+  <!-- System date and info -->
+  <text x="1140" y="80" text-anchor="end" font-size="14" fill="#666">Generated: 3/10/2025</text>
+  <text x="1140" y="100" text-anchor="end" font-size="14" fill="#666">System ID: NEUROFEEDBACK-2622</text>
+  <text x="1140" y="120" text-anchor="end" font-size="14" fill="#666">Layout: force / Style: default</text>
+  
+  <!-- Visualization area -->
+  <g transform="translate(0, 50)">
+  <!-- System nodes (Force Layout) -->
+  <g class="nodes">
+    <!-- Main node -->
+    <g class="node" transform="translate(600, 450)">
+      <circle r="50" fill="#4682b4" stroke="#333" stroke-width="2"></circle>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="node-label">EEG Data</text>
+    </g>
+    <g class="node" transform="translate(814.0681154837645, 458.33512452366864)">
+      <circle r="26.22398177406572" fill="#3cb371" stroke="#333" stroke-width="1.5"></circle>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="node-label">Alpha Training</text>
+    </g>
+    <g class="node" transform="translate(573.6372872302986, 687.6063279886914)">
+      <circle r="34.62786963928027" fill="#9370db" stroke="#333" stroke-width="1.5"></circle>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="node-label">SMR Training</text>
+    </g>
+    <g class="node" transform="translate(353.33148171430946, 444.31165806634067)">
+      <circle r="32.49996579059938" fill="#ff7f50" stroke="#333" stroke-width="1.5"></circle>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="node-label">ADHD Treatment</text>
+    </g>
+    <g class="node" transform="translate(607.6959319791583, 225.96628853747228)">
+      <circle r="27.500962999028957" fill="#da70d6" stroke="#333" stroke-width="1.5"></circle>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" class="node-label">Anxiety Treatment</text>
+    </g>
+  </g>
+  
+  <!-- System links (Force Layout) -->
+  <g class="links">
+    <path d="M600,450 L839.064713063925,521.0617235408133" stroke="#666" stroke-width="2" stroke-opacity="0.6" fill="none"></path>
+    <path d="M600,450 L548.3666289421932,694.7566743709656" stroke="#666" stroke-width="2" stroke-opacity="0.6" fill="none"></path>
+    <path d="M600,450 L350.9156940790791,442.07493374718354" stroke="#666" stroke-width="2" stroke-opacity="0.6" fill="none"></path>
+    <path d="M600,450 L614.4048483177148,212.2066045558588" stroke="#666" stroke-width="2" stroke-opacity="0.6" fill="none"></path>
+        <path d="M579.4832800201613,702.7591378696055 L630.2652496376761,237.2460782484558" stroke="#999" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="5,5" fill="none"></path>
+        <path d="M404.593601635332,413.28372793081 L848.3610109733299,477.66681074493255" stroke="#999" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="5,5" fill="none"></path>
+        <path d="M395.67602959788917,408.7555464604395 L570.7855442006045,665.1827402557309" stroke="#999" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="5,5" fill="none"></path>
+        <path d="M634.6163380498475,241.3293389413393 L792.2325882576372,465.5626290901845" stroke="#999" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="5,5" fill="none"></path>
+  </g>
+  <!-- Metrics panel -->
+  <rect x="920" y="680" width="220" height="140" rx="5" fill="#f8f9fa" stroke="#ddd" stroke-width="1" />
+  <text x="930" y="710" font-size="16" fill="#333" font-weight="bold">System Metrics</text>
+  
+    <text x="930" y="740" class="metric-label">Training Sessions:</text>
+    <text x="1080" y="740" class="metric-value">42</text>
+    
+    <text x="930" y="770" class="metric-label">Success Rate:</text>
+    <text x="1080" y="770" class="metric-value">78%</text>
+    
+    <text x="930" y="800" class="metric-label">Avg. Session Duration:</text>
+    <text x="1080" y="800" class="metric-value">45 min</text>
+    
+  </g>
+</svg>
+        </div>
+        
+        <div class="controls">
+            <button onclick="zoomIn()">Zoom In</button>
+            <button onclick="zoomOut()">Zoom Out</button>
+            <button onclick="resetZoom()">Reset</button>
+        </div>
+        
+        <div class="metrics">
+            <h2>System Metrics</h2>
+            <div class="metrics-grid">
+                
+                    <div class="metric-item">
+                        <div class="metric-label">Training Sessions</div>
+                        <div class="metric-value">42</div>
+                    </div>
+                
+                    <div class="metric-item">
+                        <div class="metric-label">Success Rate</div>
+                        <div class="metric-value">78%</div>
+                    </div>
+                
+                    <div class="metric-item">
+                        <div class="metric-label">Avg. Session Duration</div>
+                        <div class="metric-value">45 min</div>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple zoom functionality
+        let currentZoom = 1;
+        const svg = document.querySelector('.visualization svg');
+        
+        function zoomIn() {
+            currentZoom = Math.min(currentZoom * 1.2, 3);
+            updateZoom();
+        }
+        
+        function zoomOut() {
+            currentZoom = Math.max(currentZoom / 1.2, 0.5);
+            updateZoom();
+        }
+        
+        function resetZoom() {
+            currentZoom = 1;
+            updateZoom();
+        }
+        
+        function updateZoom() {
+            svg.style.transform = 'scale(' + currentZoom + ')';
+            svg.style.transformOrigin = 'center';
+        }
+        
+        // Add pan functionality
+        let isPanning = false;
+        let startPoint = { x: 0, y: 0 };
+        let currentTranslate = { x: 0, y: 0 };
+        
+        svg.addEventListener('mousedown', function(e) {
+            isPanning = true;
+            startPoint = {
+                x: e.clientX - currentTranslate.x,
+                y: e.clientY - currentTranslate.y
+            };
+            svg.style.cursor = 'grabbing';
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (!isPanning) return;
+            
+            currentTranslate = {
+                x: e.clientX - startPoint.x,
+                y: e.clientY - startPoint.y
+            };
+            
+            svg.style.transform = 'scale(' + currentZoom + ') translate(' + 
+                currentTranslate.x + 'px, ' + currentTranslate.y + 'px)';
+        });
+        
+        document.addEventListener('mouseup', function() {
+            isPanning = false;
+            svg.style.cursor = 'grab';
+        });
+        
+        // Initialize
+        svg.style.cursor = 'grab';
+    </script>
+</body>
+</html>

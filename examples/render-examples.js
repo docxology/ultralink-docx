@@ -64,6 +64,11 @@ const RENDERING_TARGETS = [
     { format: 'bif', filename: '{{system}}.bif' }
   ]},
   { name: 'kif', method: 'toKIF', outputDir: 'kif', outputFile: '{{system}}.kif' },
+  { name: 'rxinfer', method: 'toRxInfer', outputDir: 'rxinfer', outputFiles: [
+    { format: 'model', filename: '{{system}}-model.jl' },
+    { format: 'model-with-constraints', filename: '{{system}}-model-with-constraints.jl', useConstraints: true },
+    { format: 'model-with-test', filename: '{{system}}-model-with-test.jl', generateTest: true }
+  ]},
   { name: 'full-blob', method: 'toFullBlob', outputDir: 'full-blob', outputFiles: [
     { format: 'uncompressed', filename: '{{system}}-full.json' },
     { format: 'compressed', filename: '{{system}}-full-compressed.blob' }
@@ -811,6 +816,94 @@ async function renderSystem(systemName, createDatasetFn) {
           STATS.systemStats[systemName].formats[target.name].successful++;
           break;
           
+        case 'rxinfer':
+          // RxInfer outputs
+          console.log(`    🧠 Generating RxInfer formats in: ${targetDir}`);
+          for (const rxinferFormat of target.outputFiles) {
+            try {
+              console.log(`    🔄 Processing ${rxinferFormat.format} RxInfer format...`);
+              
+              const outputPath = path.join(targetDir, rxinferFormat.filename.replace('{{system}}', systemName));
+              
+              if (rxinferFormat.format === 'model') {
+                const modelOutput = safeExecute(() => {
+                  return ultralink.toRxInfer({ outputFormat: rxinferFormat.format });
+                }, {});
+                
+                safeWriteFile(outputPath, modelOutput, true);
+                console.log(`      ✅ Saved ${rxinferFormat.format} model to: ${outputPath}`);
+                
+                // Update statistics
+                STATS.totalFiles++;
+                STATS.successfulFiles++;
+                STATS.formatStats[target.name].files++;
+                STATS.formatStats[target.name].successful++;
+                STATS.systemStats[systemName].files++;
+                STATS.systemStats[systemName].successful++;
+                STATS.systemStats[systemName].formats[target.name].files++;
+                STATS.systemStats[systemName].formats[target.name].successful++;
+              } else if (rxinferFormat.format === 'model-with-constraints') {
+                const modelWithConstraintsOutput = safeExecute(() => {
+                  return ultralink.toRxInfer({ outputFormat: rxinferFormat.format, useConstraints: rxinferFormat.useConstraints });
+                }, {});
+                
+                safeWriteFile(outputPath, modelWithConstraintsOutput, true);
+                console.log(`      ✅ Saved ${rxinferFormat.format} model with constraints to: ${outputPath}`);
+                
+                // Update statistics
+                STATS.totalFiles++;
+                STATS.successfulFiles++;
+                STATS.formatStats[target.name].files++;
+                STATS.formatStats[target.name].successful++;
+                STATS.systemStats[systemName].files++;
+                STATS.systemStats[systemName].successful++;
+                STATS.systemStats[systemName].formats[target.name].files++;
+                STATS.systemStats[systemName].formats[target.name].successful++;
+              } else if (rxinferFormat.format === 'model-with-test') {
+                const modelWithTestOutput = safeExecute(() => {
+                  return ultralink.toRxInfer({ outputFormat: rxinferFormat.format, generateTest: rxinferFormat.generateTest });
+                }, {});
+                
+                safeWriteFile(outputPath, modelWithTestOutput, true);
+                console.log(`      ✅ Saved ${rxinferFormat.format} model with test to: ${outputPath}`);
+                
+                // Update statistics
+                STATS.totalFiles++;
+                STATS.successfulFiles++;
+                STATS.formatStats[target.name].files++;
+                STATS.formatStats[target.name].successful++;
+                STATS.systemStats[systemName].files++;
+                STATS.systemStats[systemName].successful++;
+                STATS.systemStats[systemName].formats[target.name].files++;
+                STATS.systemStats[systemName].formats[target.name].successful++;
+              }
+            } catch (error) {
+              console.warn(`      ❌ Error rendering ${rxinferFormat.format} RxInfer format: ${error.message}`);
+              
+              // Update error statistics
+              STATS.errorFiles++;
+              STATS.formatStats[target.name].errors++;
+              STATS.systemStats[systemName].errors++;
+              STATS.systemStats[systemName].formats[target.name].errors++;
+              
+              const placeholderError = JSON.stringify({
+                error: `Failed during ${rxinferFormat.format} RxInfer processing: ${error.message}`,
+                timestamp: new Date().toISOString(),
+                system: systemName
+              });
+              
+              safeWriteFile(outputPath, placeholderError);
+              console.log(`      ✅ Created error placeholder at: ${outputPath}`);
+              
+              // Update statistics for placeholder file
+              STATS.totalFiles++;
+              STATS.formatStats[target.name].files++;
+              STATS.systemStats[systemName].files++;
+              STATS.systemStats[systemName].formats[target.name].files++;
+            }
+          }
+          break;
+          
         case 'full-blob':
           // Full blob outputs
           console.log(`    💾 Generating full-blob formats in: ${targetDir}`);
@@ -895,7 +988,6 @@ async function renderSystem(systemName, createDatasetFn) {
                 system: systemName
               });
               
-              const outputPath = path.join(targetDir, blobFormat.filename.replace('{{system}}', systemName));
               safeWriteFile(outputPath, placeholderError);
               console.log(`      ✅ Created error placeholder at: ${outputPath}`);
               

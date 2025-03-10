@@ -145,47 +145,60 @@ async function generateSystemVisualization(systemType, options = {}) {
   // Normalize system type to lowercase for template lookup
   const normalizedSystemType = systemType.toLowerCase();
   
-  // Get template for the system type (default if not found)
-  const template = SYSTEM_TEMPLATES[normalizedSystemType] || SYSTEM_TEMPLATES.default;
-  
   // Set defaults
-  const width = options.width || 1200;
-  const height = options.height || 900;
   const outputDir = options.outputDir || path.join(process.cwd(), 'output', 'visualizations');
-  const filename = options.filename || `${normalizedSystemType}-system-visualization.png`;
-  const layout = options.layout || 'force';
-  const style = options.style || 'default';
+  const format = options.format || 'png';
   
   // Create output directory if it doesn't exist
   fs.mkdirSync(outputDir, { recursive: true });
   
-  // Generate SVG visualization with templated summary
-  const svgString = generateSystemSVG(systemType, template, width, height, layout, style);
-  
-  // Convert SVG to PNG
-  const pngBuffer = await sharp(Buffer.from(svgString))
-    .resize({
-      width: width,
-      height: height,
-      fit: 'contain'
-    })
-    .png({
-      compressionLevel: 9,
-      adaptiveFiltering: true,
-      quality: 100
-    })
-    .withMetadata({
-      density: 300 // High density for better quality
-    })
-    .toBuffer();
-  
-  // Save PNG to file
-  const outputPath = path.join(outputDir, filename);
-  fs.writeFileSync(outputPath, pngBuffer);
-  
-  console.log(`Generated system visualization for ${systemType} at: ${outputPath}`);
-  
-  return outputPath;
+  if (format === 'html') {
+    // Generate HTML visualization
+    const htmlString = generateSystemHTML(systemType, options);
+    const filename = options.filename || `${normalizedSystemType}-system-visualization.html`;
+    const outputPath = path.join(outputDir, filename);
+    fs.writeFileSync(outputPath, htmlString);
+    console.log(`Generated HTML system visualization for ${systemType} at: ${outputPath}`);
+    return outputPath;
+  } else {
+    // Get template for the system type (default if not found)
+    const template = SYSTEM_TEMPLATES[normalizedSystemType] || SYSTEM_TEMPLATES.default;
+    
+    // Set defaults
+    const width = options.width || 1200;
+    const height = options.height || 900;
+    const filename = options.filename || `${normalizedSystemType}-system-visualization.png`;
+    const layout = options.layout || 'force';
+    const style = options.style || 'default';
+    
+    // Generate SVG visualization with templated summary
+    const svgString = generateSystemSVG(systemType, template, width, height, layout, style);
+    
+    // Convert SVG to PNG
+    const pngBuffer = await sharp(Buffer.from(svgString))
+      .resize({
+        width: width,
+        height: height,
+        fit: 'contain'
+      })
+      .png({
+        compressionLevel: 9,
+        adaptiveFiltering: true,
+        quality: 100
+      })
+      .withMetadata({
+        density: 300 // High density for better quality
+      })
+      .toBuffer();
+    
+    // Save PNG to file
+    const outputPath = path.join(outputDir, filename);
+    fs.writeFileSync(outputPath, pngBuffer);
+    
+    console.log(`Generated system visualization for ${systemType} at: ${outputPath}`);
+    
+    return outputPath;
+  }
 }
 
 /**
@@ -635,9 +648,242 @@ async function generateAllSystemVisualizations(options = {}) {
   return results;
 }
 
+/**
+ * Generate a complete HTML document with the system visualization
+ * 
+ * @param {string} systemType - Type of system to visualize
+ * @param {Object} options - Visualization options
+ * @returns {string} Complete HTML document string
+ */
+function generateSystemHTML(systemType, options = {}) {
+  // Get template and generate SVG
+  const normalizedSystemType = systemType.toLowerCase();
+  const template = SYSTEM_TEMPLATES[normalizedSystemType] || SYSTEM_TEMPLATES.default;
+  const width = options.width || 1200;
+  const height = options.height || 900;
+  const layout = options.layout || 'force';
+  const style = options.style || 'default';
+  
+  const svgString = generateSystemSVG(systemType, template, width, height, layout, style);
+  
+  // Create complete HTML document
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${template.title} - System Visualization</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: ${width + 40}px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+        .header p {
+            color: #666;
+            margin: 0;
+            font-size: 16px;
+        }
+        .visualization {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .visualization svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .controls button {
+            padding: 8px 16px;
+            margin: 0 8px;
+            border: none;
+            border-radius: 4px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .controls button:hover {
+            background: #0056b3;
+        }
+        .metrics {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .metrics h2 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .metric-item {
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>${template.title}</h1>
+            <p>${template.summary}</p>
+        </div>
+        
+        <div class="visualization">
+            ${svgString}
+        </div>
+        
+        <div class="controls">
+            <button onclick="zoomIn()">Zoom In</button>
+            <button onclick="zoomOut()">Zoom Out</button>
+            <button onclick="resetZoom()">Reset</button>
+        </div>
+        
+        <div class="metrics">
+            <h2>System Metrics</h2>
+            <div class="metrics-grid">
+                ${template.metrics.map(metric => `
+                    <div class="metric-item">
+                        <div class="metric-label">${metric.label}</div>
+                        <div class="metric-value">${metric.value}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple zoom functionality
+        let currentZoom = 1;
+        const svg = document.querySelector('.visualization svg');
+        
+        function zoomIn() {
+            currentZoom = Math.min(currentZoom * 1.2, 3);
+            updateZoom();
+        }
+        
+        function zoomOut() {
+            currentZoom = Math.max(currentZoom / 1.2, 0.5);
+            updateZoom();
+        }
+        
+        function resetZoom() {
+            currentZoom = 1;
+            updateZoom();
+        }
+        
+        function updateZoom() {
+            svg.style.transform = 'scale(' + currentZoom + ')';
+            svg.style.transformOrigin = 'center';
+        }
+        
+        // Add pan functionality
+        let isPanning = false;
+        let startPoint = { x: 0, y: 0 };
+        let currentTranslate = { x: 0, y: 0 };
+        
+        svg.addEventListener('mousedown', function(e) {
+            isPanning = true;
+            startPoint = {
+                x: e.clientX - currentTranslate.x,
+                y: e.clientY - currentTranslate.y
+            };
+            svg.style.cursor = 'grabbing';
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (!isPanning) return;
+            
+            currentTranslate = {
+                x: e.clientX - startPoint.x,
+                y: e.clientY - startPoint.y
+            };
+            
+            svg.style.transform = 'scale(' + currentZoom + ') translate(' + 
+                currentTranslate.x + 'px, ' + currentTranslate.y + 'px)';
+        });
+        
+        document.addEventListener('mouseup', function() {
+            isPanning = false;
+            svg.style.cursor = 'grab';
+        });
+        
+        // Initialize
+        svg.style.cursor = 'grab';
+    </script>
+</body>
+</html>`;
+}
+
 module.exports = {
   generateSystemVisualization,
   generateAllSystemVisualizations,
   generateSystemSVG,
-  SYSTEM_TEMPLATES
+  generateSystemHTML,
+  SYSTEM_TEMPLATES,
+  testHTMLVisualization: async function(systemType = 'neurofeedback', options = {}) {
+    const outputDir = options.outputDir || path.join(process.cwd(), 'output', 'visualizations');
+    const filename = `${systemType}-visualization.html`;
+    const outputPath = path.join(outputDir, filename);
+    
+    // Ensure output directory exists
+    fs.mkdirSync(outputDir, { recursive: true });
+    
+    // Generate HTML
+    const htmlContent = generateSystemHTML(systemType, {
+      width: 1200,
+      height: 900,
+      layout: 'force',
+      style: 'default',
+      ...options
+    });
+    
+    // Write to file
+    fs.writeFileSync(outputPath, htmlContent);
+    
+    console.log(`Generated HTML visualization for ${systemType} at: ${outputPath}`);
+    return outputPath;
+  }
 }; 

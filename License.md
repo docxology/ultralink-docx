@@ -1,15 +1,36 @@
-Attribution-NonCommercial-ShareAlike 4.0 International
+# Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
 
+## Your Freedoms
 You are free to:
-Share — copy and redistribute the material in any medium or format
-Adapt — remix, transform, and build upon the material
-The licensor cannot revoke these freedoms as long as you follow the license terms.
-Under the following terms:
-Attribution — You must give appropriate credit , provide a link to the license, and indicate if changes were made . You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-NonCommercial — You may not use the material for commercial purposes .
-ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
-No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-Notices:
-You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation .
+- **Share** - Copy and redistribute the material in any medium or format
+- **Adapt** - Remix, transform, and build upon the material
 
-No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
+These freedoms are perpetual and cannot be revoked by the licensor provided you adhere to these license terms.
+
+## License Conditions
+### Attribution
+You must:
+- Give appropriate credit to the original work
+- Provide a link to the license
+- Indicate if changes were made
+- Credit must be given in a reasonable manner without suggesting licensor endorsement
+
+### NonCommercial
+- You may not use the material for commercial purposes
+
+### ShareAlike 
+- Any derivative works must be distributed under this same license
+- You must apply identical terms to transformed/adapted versions
+
+### Freedom Protection
+- No additional legal or technological restrictions may be applied
+- You may not restrict others from exercising rights granted by this license
+
+## Important Notices
+- Applies only to copyright-protected material
+- Does not override public domain status
+- Does not affect fair use/fair dealing rights
+- Does not limit moral/publicity/privacy rights
+
+## Disclaimer
+THE WORK IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. This license may not provide all necessary permissions for your intended use. Compliance with other applicable laws and rights remains your responsibility.

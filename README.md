@@ -65,7 +65,30 @@ graph TD
     class applications purple
 ```
 
-## 📋 Table of Contents
+## 📋 API Usage Guide
+
+> **Important Notice**: Please refer to our comprehensive [API Usage Guide](docs/API_USAGE.md) for the correct method names and parameter orders. Some examples in the older documentation may use deprecated method names like `createEntity` and `createLink` instead of the current methods `addEntity` and `addLink`.
+
+Key methods to be aware of:
+- Use `addEntity(id, type, attributes)` to create entities
+- Use `addLink(sourceId, targetId, type, attributes)` to create relationships
+- Use `toJSON()`, `toCSV()`, etc. for exports (not `exportAll()`)
+
+For a complete overview of the correct API usage, see the [API Usage Guide](docs/API_USAGE.md).
+
+## 📚 Documentation Resources
+
+UltraLink comes with comprehensive documentation to help you get the most out of the package:
+
+- [API Usage Guide](docs/API_USAGE.md) - Detailed examples and patterns for using the API
+- [API Structure](docs/API_STRUCTURE.md) - Visual diagrams of the API architecture
+- [Visualization Guide](docs/VISUALIZATION_GUIDE.md) - How to create and customize visualizations
+- [Export Formats](docs/EXPORT_FORMATS.md) - Detailed information about all export formats
+- [Testing Guide](docs/TESTING.md) - How to run and extend the test suite
+
+For installation instructions, see the [Installation Guide](INSTALLATION.md).
+
+## �� Table of Contents
 
 - [🌟 Overview](#-overview)
 - [🚀 Key Features](#-key-features)

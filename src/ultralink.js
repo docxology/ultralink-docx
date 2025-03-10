@@ -20,6 +20,7 @@ const { toBayesianNetwork } = require('./lib/exporters/bayesian-network');
 const { toFullBlob } = require('./lib/exporters/full-blob');
 const zlib = require('zlib');
 const BayesianNetworkExporter = require('./lib/exporters/bayesian-network');
+const RxInferExporter = require('./lib/exporters/rxinfer');
 
 /**
  * UltraLink class for knowledge graph management
@@ -618,6 +619,23 @@ class UltraLink {
     }
     
     return deleted;
+  }
+
+  /**
+   * Export UltraLink data to RxInfer.jl model format
+   * @param {Object} options - Export options
+   * @param {boolean} options.includeComments - Whether to include descriptive comments (default: true)
+   * @param {boolean} options.includeVectors - Whether to include vector representations (default: false)
+   * @param {string} options.modelName - Name for the generated RxInfer model (default: 'ultralink_model')
+   * @param {Object} options.distributionMapping - Mapping from entity types to distributions
+   * @param {boolean} options.useConstraints - Whether to include variational constraints (default: false)
+   * @param {boolean} options.generateTest - Whether to generate a test script (default: false)
+   * @param {boolean} options.prettyPrint - Format output for readability (default: true)
+   * @returns {string} RxInfer.jl model code
+   */
+  toRxInfer(options = {}) {
+    const exporter = new RxInferExporter(this);
+    return exporter.export(options);
   }
 }
 

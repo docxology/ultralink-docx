@@ -15,6 +15,7 @@ const toKIF = require('./kif');
 const toVisualization = require('./visualization');
 const toBayesianNetwork = require('./bayesian-network');
 const toFullBlob = require('./full-blob');
+const toRxInfer = require('./rxinfer');
 const { generateRelationshipHTML } = require('./utils/relationship-html');
 
 module.exports = {
@@ -27,5 +28,6 @@ module.exports = {
   toVisualization,
   toBayesianNetwork,
   toFullBlob,
+  toRxInfer,
   generateRelationshipHTML
 }; 

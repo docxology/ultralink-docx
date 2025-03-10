@@ -136,17 +136,18 @@ UltraLink's cross-rendering capabilities enable the transformation of the same k
 | [Visualization](./VISUALIZATION_FORMAT.md) | Visual representation | Presentations, diagrams, embedding in other media | Visual, Structural |
 | [Bayesian Network](./BAYESIAN_NETWORK_FORMAT.md) | Probabilistic relationships | Causal inference, probability analysis | Semantic, Probabilistic |
 | [KIF](./KIF_FORMAT.md) | Formal logic | Automated reasoning, AI systems | Semantic, Logical |
+| [RxInfer.jl](./RXINFER_FORMAT.md) | Probabilistic programming | Bayesian inference, factor graphs, message passing | Semantic, Probabilistic, Vector |
 | [Full Blob](./FULL_BLOB_FORMAT.md) | Complete system state | Backup, system transfer | All dimensions |
 
 ### Transformation Examples
 
 How entity attributes are transformed across formats:
 
-| UltraLink Entity | JSON | GraphML | Obsidian | KIF | HTML |
-|------------------|------|---------|----------|-----|------|
-| `id: "saguaro"` | `"id": "saguaro"` | `<node id="saguaro">` | Filename: `saguaro.md` | `saguaro` as term | `<div id="saguaro">` |
-| `type: "organism"` | `"type": "organism"` | `<data key="type">organism</data>` | Front matter: `type: organism` | `(instance saguaro Organism)` | Class: `"entity organism"` |
-| `name: "Saguaro Cactus"` | `"name": "Saguaro Cactus"` | `<data key="name">Saguaro Cactus</data>` | `# Saguaro Cactus` | `(name saguaro "Saguaro Cactus")` | `<h1>Saguaro Cactus</h1>` |
+| UltraLink Entity | JSON | GraphML | Obsidian | KIF | RxInfer.jl | HTML |
+|------------------|------|---------|----------|-----|------------|------|
+| `id: "saguaro"` | `"id": "saguaro"` | `<node id="saguaro">` | Filename: `saguaro.md` | `saguaro` as term | `saguaro ~ Normal(...)` | `<div id="saguaro">` |
+| `type: "organism"` | `"type": "organism"` | `<data key="type">organism</data>` | Front matter: `type: organism` | `(instance saguaro Organism)` | Comment: `# Entity: saguaro (type: organism)` | Class: `"entity organism"` |
+| `name: "Saguaro Cactus"` | `"name": "Saguaro Cactus"` | `<data key="name">Saguaro Cactus</data>` | `# Saguaro Cactus` | `(name saguaro "Saguaro Cactus")` | Not typically included (comment only) | `<h1>Saguaro Cactus</h1>` |
 
 How relationships are transformed:
 

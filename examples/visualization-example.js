@@ -15,7 +15,7 @@ const ultralink = new UltraLink();
 // Create a social network dataset
 function createSocialNetwork() {
   // Create people
-  ultralink.createEntity('person', 'Alice', {
+  ultralink.addEntity('Alice', 'person', {
     name: 'Alice Chen',
     age: 32,
     profession: 'Data Scientist',
@@ -23,7 +23,7 @@ function createSocialNetwork() {
     bio: 'Alice is a data scientist specializing in network analysis and visualization.'
   });
 
-  ultralink.createEntity('person', 'Bob', {
+  ultralink.addEntity('Bob', 'person', {
     name: 'Bob Smith',
     age: 28,
     profession: 'Software Engineer',
@@ -31,7 +31,7 @@ function createSocialNetwork() {
     bio: 'Bob is a software engineer with expertise in graph algorithms.'
   });
 
-  ultralink.createEntity('person', 'Charlie', {
+  ultralink.addEntity('Charlie', 'person', {
     name: 'Charlie Davis',
     age: 35,
     profession: 'UX Designer',
@@ -39,7 +39,7 @@ function createSocialNetwork() {
     bio: 'Charlie creates intuitive user interfaces for data-heavy applications.'
   });
 
-  ultralink.createEntity('person', 'Diana', {
+  ultralink.addEntity('Diana', 'person', {
     name: 'Diana Wong',
     age: 40,
     profession: 'Project Manager',
@@ -48,14 +48,14 @@ function createSocialNetwork() {
   });
 
   // Create projects
-  ultralink.createEntity('project', 'NetworkViz', {
+  ultralink.addEntity('NetworkViz', 'project', {
     name: 'Network Visualization Tool',
     description: 'A tool for visualizing complex network data',
     startDate: '2023-03-15',
     status: 'In Progress'
   });
   
-  ultralink.createEntity('project', 'DataInsights', {
+  ultralink.addEntity('DataInsights', 'project', {
     name: 'Data Insights Platform',
     description: 'Analytics platform for extracting insights from large datasets',
     startDate: '2022-11-01',
@@ -63,19 +63,19 @@ function createSocialNetwork() {
   });
 
   // Create technologies
-  ultralink.createEntity('technology', 'D3js', {
+  ultralink.addEntity('D3js', 'technology', {
     name: 'D3.js',
     description: 'JavaScript library for data visualization',
     website: 'https://d3js.org'
   });
   
-  ultralink.createEntity('technology', 'Cytoscape', {
+  ultralink.addEntity('Cytoscape', 'technology', {
     name: 'Cytoscape.js',
     description: 'Graph theory library for visualization and analysis',
     website: 'https://js.cytoscape.org'
   });
   
-  ultralink.createEntity('technology', 'React', {
+  ultralink.addEntity('React', 'technology', {
     name: 'React',
     description: 'JavaScript library for building user interfaces',
     website: 'https://reactjs.org'
@@ -83,117 +83,125 @@ function createSocialNetwork() {
 
   // Create relationships
   // Team connections
-  ultralink.createBidirectionalLink('Alice', 'Bob', 'collaborates_with');
-  ultralink.createBidirectionalLink('Alice', 'Charlie', 'collaborates_with');
-  ultralink.createBidirectionalLink('Diana', 'Alice', 'manages');
-  ultralink.createBidirectionalLink('Bob', 'Charlie', 'collaborates_with');
-  ultralink.createBidirectionalLink('Diana', 'Bob', 'manages');
-  ultralink.createBidirectionalLink('Diana', 'Charlie', 'manages');
+  ultralink.addLink('Alice', 'Bob', 'collaborates_with');
+  ultralink.addLink('Bob', 'Alice', 'collaborates_with');
+  ultralink.addLink('Alice', 'Charlie', 'collaborates_with');
+  ultralink.addLink('Charlie', 'Alice', 'collaborates_with');
+  ultralink.addLink('Diana', 'Alice', 'manages');
+  ultralink.addLink('Alice', 'Diana', 'reports_to');
+  ultralink.addLink('Bob', 'Charlie', 'collaborates_with');
+  ultralink.addLink('Charlie', 'Bob', 'collaborates_with');
+  ultralink.addLink('Diana', 'Bob', 'manages');
+  ultralink.addLink('Bob', 'Diana', 'reports_to');
+  ultralink.addLink('Diana', 'Charlie', 'manages');
+  ultralink.addLink('Charlie', 'Diana', 'reports_to');
   
   // Project assignments
-  ultralink.createLink('Alice', 'NetworkViz', 'works_on', { role: 'Lead Data Scientist' });
-  ultralink.createLink('Bob', 'NetworkViz', 'works_on', { role: 'Backend Developer' });
-  ultralink.createLink('Charlie', 'NetworkViz', 'works_on', { role: 'UX Designer' });
-  ultralink.createLink('Diana', 'NetworkViz', 'manages_project');
+  ultralink.addLink('Alice', 'NetworkViz', 'works_on', { role: 'Lead Data Scientist' });
+  ultralink.addLink('Bob', 'NetworkViz', 'works_on', { role: 'Backend Developer' });
+  ultralink.addLink('Charlie', 'NetworkViz', 'works_on', { role: 'UX Designer' });
+  ultralink.addLink('Diana', 'NetworkViz', 'manages_project');
   
-  ultralink.createLink('Alice', 'DataInsights', 'works_on', { role: 'Data Analyst' });
-  ultralink.createLink('Bob', 'DataInsights', 'works_on', { role: 'Frontend Developer' });
-  
+  ultralink.addLink('Alice', 'DataInsights', 'works_on', { role: 'Data Analyst' });
+  ultralink.addLink('Bob', 'DataInsights', 'works_on', { role: 'Frontend Developer' });
+
   // Technology usage
-  ultralink.createLink('NetworkViz', 'D3js', 'uses_technology');
-  ultralink.createLink('NetworkViz', 'Cytoscape', 'uses_technology');
-  ultralink.createLink('NetworkViz', 'React', 'uses_technology');
-  ultralink.createLink('DataInsights', 'D3js', 'uses_technology');
-  ultralink.createLink('DataInsights', 'React', 'uses_technology');
+  ultralink.addLink('NetworkViz', 'D3js', 'uses_technology');
+  ultralink.addLink('NetworkViz', 'Cytoscape', 'uses_technology');
+  ultralink.addLink('NetworkViz', 'React', 'uses_technology');
+  ultralink.addLink('DataInsights', 'D3js', 'uses_technology');
+  ultralink.addLink('DataInsights', 'React', 'uses_technology');
 
   return ultralink;
 }
 
-// Ensure output directory exists
-const outputDir = path.join(__dirname, 'output', 'visualizations');
-if (!fs.existsSync(outputDir)) {
-  fs.mkdirSync(outputDir, { recursive: true });
-}
-
-// Generate and save visualizations
+// Generate visualizations in different formats
 async function generateVisualizations() {
-  console.log('Creating social network dataset...');
-  createSocialNetwork();
-  console.log('Dataset created with entities and relationships.');
-  
-  // Generate SVG visualization
-  console.log('Generating SVG visualization...');
-  const svgOutput = await ultralink.toVisualization({ 
-    format: 'svg',
-    width: 1000,
-    height: 800
-  });
-  fs.writeFileSync(path.join(outputDir, 'social-network.svg'), svgOutput['graph.svg']);
-  console.log('SVG visualization saved to output/visualizations/social-network.svg');
-
-  // Generate PNG visualization
-  console.log('Generating PNG visualization...');
   try {
-    const pngOutput = await ultralink.toVisualization({ 
-      format: 'png',
-      width: 1000,
-      height: 800
+    console.log('Creating social network dataset...');
+    createSocialNetwork();
+    
+    const outputDir = path.join(__dirname, 'output', 'visualizations');
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+    
+    // Generate SVG visualization
+    console.log('Generating SVG visualization...');
+    const svgResult = await ultralink.toVisualization({ 
+      format: 'svg',
+      layout: 'force',
+      style: 'default',
+      width: 800,
+      height: 600,
+      includeLabels: true,
+      title: 'Social Network Visualization'
     });
-    fs.writeFileSync(path.join(outputDir, 'social-network.png'), pngOutput['graph.png']);
-    console.log('PNG visualization saved to output/visualizations/social-network.png');
+    
+    fs.writeFileSync(path.join(outputDir, 'social-network.svg'), svgResult.data);
+    console.log(`Saved SVG to ${path.join(outputDir, 'social-network.svg')}`);
+    
+    // Generate PNG visualization
+    console.log('Generating PNG visualization...');
+    const pngResult = await ultralink.toVisualization({ 
+      format: 'png',
+      layout: 'force',
+      style: 'colorful',
+      width: 1200,
+      height: 900,
+      includeLabels: true,
+      title: 'Social Network Visualization (Colorful)'
+    });
+    
+    fs.writeFileSync(path.join(outputDir, 'social-network.png'), pngResult.data);
+    console.log(`Saved PNG to ${path.join(outputDir, 'social-network.png')}`);
+    
+    // Generate radial layout PNG visualization
+    console.log('Generating radial layout PNG visualization...');
+    const radialResult = await ultralink.toVisualization({ 
+      format: 'png',
+      layout: 'radial',
+      style: 'colorful',
+      width: 1200,
+      height: 900,
+      includeLabels: true,
+      title: 'Social Network Visualization (Radial)'
+    });
+    
+    fs.writeFileSync(path.join(outputDir, 'social-network-radial.png'), radialResult.data);
+    console.log(`Saved radial PNG to ${path.join(outputDir, 'social-network-radial.png')}`);
+    
+    // Generate D3.js visualization
+    console.log('Generating D3.js visualization...');
+    const d3Result = await ultralink.toVisualization({ 
+      format: 'd3',
+      style: 'colorful',
+      title: 'Interactive Social Network Visualization',
+      description: 'This is an interactive visualization of a social network created with D3.js',
+      includeControls: true
+    });
+    
+    fs.writeFileSync(path.join(outputDir, 'social-network-d3.html'), d3Result.data);
+    console.log(`Saved D3.js visualization to ${path.join(outputDir, 'social-network-d3.html')}`);
+    
+    // Generate Cytoscape.js visualization
+    console.log('Generating Cytoscape.js visualization...');
+    const cytoscapeResult = await ultralink.toVisualization({ 
+      format: 'cytoscape',
+      style: 'default',
+      title: 'Interactive Graph Visualization with Cytoscape.js',
+      description: 'This is an interactive visualization created with Cytoscape.js',
+      includeControls: true
+    });
+    
+    fs.writeFileSync(path.join(outputDir, 'social-network-cytoscape.html'), cytoscapeResult.data);
+    console.log(`Saved Cytoscape.js visualization to ${path.join(outputDir, 'social-network-cytoscape.html')}`);
+    
+    console.log('All visualizations generated successfully!');
   } catch (error) {
-    console.error('Error generating PNG visualization:', error.message);
-    console.log('PNG generation requires the "sharp" library. Install with: npm install sharp');
+    console.error('Error generating visualizations:', error);
   }
-
-  // Generate D3 visualization
-  console.log('Generating D3 visualization...');
-  const d3Output = await ultralink.toVisualization({ 
-    format: 'd3',
-    width: 1000,
-    height: 800
-  });
-  fs.writeFileSync(path.join(outputDir, 'social-network-d3.html'), d3Output['graph-d3.html']);
-  console.log('D3 visualization saved to output/visualizations/social-network-d3.html');
-
-  // Generate Cytoscape visualization
-  console.log('Generating Cytoscape visualization...');
-  const cytoOutput = await ultralink.toVisualization({ 
-    format: 'cytoscape',
-    width: 1000,
-    height: 800
-  });
-  fs.writeFileSync(path.join(outputDir, 'social-network-cytoscape.html'), cytoOutput['graph-cytoscape.html']);
-  console.log('Cytoscape visualization saved to output/visualizations/social-network-cytoscape.html');
-
-  // Generate visualizations with different layouts
-  console.log('Generating visualizations with different layouts...');
-  
-  // Grid layout
-  const gridSvgOutput = await ultralink.toVisualization({ 
-    format: 'svg',
-    layout: 'grid',
-    width: 1000,
-    height: 800
-  });
-  fs.writeFileSync(path.join(outputDir, 'social-network-grid.svg'), gridSvgOutput['graph.svg']);
-  console.log('Grid layout visualization saved to output/visualizations/social-network-grid.svg');
-  
-  // Radial layout
-  const radialSvgOutput = await ultralink.toVisualization({ 
-    format: 'svg',
-    layout: 'radial',
-    width: 1000,
-    height: 800
-  });
-  fs.writeFileSync(path.join(outputDir, 'social-network-radial.svg'), radialSvgOutput['graph.svg']);
-  console.log('Radial layout visualization saved to output/visualizations/social-network-radial.svg');
-
-  console.log('\nAll visualizations have been generated successfully.');
-  console.log('Open the HTML files in a web browser to see the interactive visualizations.');
 }
 
-// Run the example
-generateVisualizations().catch(error => {
-  console.error('Error generating visualizations:', error);
-}); 
+// Run the visualization generation
+generateVisualizations(); 

@@ -10,7 +10,7 @@ const { UltraLink } = require('../src');
 const ultralink = new UltraLink();
 
 // Create some entities
-const alanTuring = ultralink.createEntity('person', 'Alan Turing', {
+const alanTuring = ultralink.addEntity('Alan Turing', 'person', {
   name: 'Alan Turing',
   birthDate: 'June 23, 1912',
   deathDate: 'June 7, 1954',
@@ -19,7 +19,7 @@ const alanTuring = ultralink.createEntity('person', 'Alan Turing', {
   bio: 'Alan Mathison Turing OBE FRS was an English mathematician, computer scientist, logician, cryptanalyst, philosopher, and theoretical biologist. Turing was highly influential in the development of theoretical computer science, providing a formalization of the concepts of algorithm and computation with the Turing machine, which can be considered a model of a general-purpose computer. Turing is widely considered to be the father of theoretical computer science and artificial intelligence.'
 });
 
-const cambridge = ultralink.createEntity('place', 'Cambridge', {
+const cambridge = ultralink.addEntity('Cambridge', 'place', {
   name: 'Cambridge',
   location: 'East of England',
   country: 'United Kingdom',
@@ -27,7 +27,7 @@ const cambridge = ultralink.createEntity('place', 'Cambridge', {
   description: 'Cambridge is a university city and the county town of Cambridgeshire, England, on the River Cam approximately 55 miles (89 km) north of London.'
 });
 
-const computingMachine = ultralink.createEntity('concept', 'Computing Machine', {
+const computingMachine = ultralink.addEntity('Computing Machine', 'concept', {
   name: 'Computing Machine',
   field: 'Computer Science',
   definition: 'A device that manipulates data according to a set of instructions.',
@@ -35,9 +35,9 @@ const computingMachine = ultralink.createEntity('concept', 'Computing Machine', 
 });
 
 // Add links between entities
-ultralink.createLink('Alan Turing', 'Cambridge', 'studied_at', { years: '1931-1934' });
-ultralink.createLink('Alan Turing', 'Computing Machine', 'pioneered');
-ultralink.createLink('Computing Machine', 'Alan Turing', 'pioneered_by');
+ultralink.addLink('Alan Turing', 'Cambridge', 'studied_at', { years: '1931-1934' });
+ultralink.addLink('Alan Turing', 'Computing Machine', 'pioneered');
+ultralink.addLink('Computing Machine', 'Alan Turing', 'pioneered_by');
 
 // Parse a text document with Obsidian-style links
 const documentContent = `
@@ -54,7 +54,7 @@ Other notable figures include [[John von Neumann]] and [[Claude Shannon]].
 ultralink.parse(documentContent, 'The Birth of Computer Science');
 
 // Export entities to Obsidian format
-const obsidianOutput = ultralink.exportAll('obsidian');
+const obsidianOutput = ultralink.toObsidian();
 
 // Print the exported content for one entity
 console.log('=== ALAN TURING (OBSIDIAN FORMAT) ===');
