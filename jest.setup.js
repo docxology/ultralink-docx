@@ -191,4 +191,11 @@ jest.mock('sharp', () => {
       metadata: jest.fn().mockResolvedValue({ width: 100, height: 100 })
     };
   });
-}); 
+});
+
+// Configure Jest to handle ES modules in node_modules
+module.exports = {
+  transformIgnorePatterns: [
+    "/node_modules/(?!(chai)/)"
+  ]
+}; 

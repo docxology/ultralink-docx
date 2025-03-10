@@ -1,37 +1,76 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for ActiveInferenceLab -->
+<!-- System-specific Bayesian Network BIF File for ActiveInferenceLab -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>ActiveInferenceLab</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>ActiveInferenceLab</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
+    <n>prior_belief</n>    <OUTCOME>weak</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>strong</OUTCOME>
+    <COMMENT>ActiveInferenceLab variable: prior_belief</COMMENT>
 </VARIABLE>
-
 <VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
+    <n>sensory_certainty</n>    <OUTCOME>low</OUTCOME>
     <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>ActiveInferenceLab variable: sensory_certainty</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>prediction_error</n>    <OUTCOME>small</OUTCOME>
+    <OUTCOME>medium</OUTCOME>
+    <OUTCOME>large</OUTCOME>
+    <COMMENT>ActiveInferenceLab variable: prediction_error</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>action_precision</n>    <OUTCOME>low</OUTCOME>
+    <OUTCOME>medium</OUTCOME>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>ActiveInferenceLab variable: action_precision</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>learning_rate</n>    <OUTCOME>slow</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>fast</OUTCOME>
+    <COMMENT>ActiveInferenceLab variable: learning_rate</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>belief_update</n>    <OUTCOME>minor</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>major</OUTCOME>
+    <COMMENT>ActiveInferenceLab variable: belief_update</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>prior_belief</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.2 0.5 0.3</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>sensory_certainty</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.3 0.5 0.2</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>prediction_error</FOR>    <GIVEN>prior_belief</GIVEN>
+    <GIVEN>sensory_certainty</GIVEN>
+    <TABLE>0.2 0.3 0.5 0.3 0.4 0.3 0.4 0.4 0.2 0.3 0.4 0.3 0.4 0.5 0.1 0.5 0.4 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.7 0.25 0.05</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>action_precision</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.25 0.5 0.25</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>learning_rate</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.2 0.6 0.2</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>belief_update</FOR>    <GIVEN>prediction_error</GIVEN>
+    <GIVEN>action_precision</GIVEN>
+    <GIVEN>learning_rate</GIVEN>
+    <TABLE>0.8 0.15 0.05 0.7 0.25 0.05 0.6 0.3 0.1 0.7 0.25 0.05 0.6 0.3 0.1 0.5 0.4 0.1 0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.5 0.1
+                0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.4 0.5 0.1 0.3 0.5 0.2 0.4 0.5 0.1 0.3 0.5 0.2 0.2 0.5 0.3
+                0.5 0.4 0.1 0.4 0.4 0.2 0.3 0.4 0.3 0.4 0.4 0.2 0.3 0.4 0.3 0.2 0.3 0.5 0.3 0.4 0.3 0.2 0.3 0.5 0.1 0.2 0.7</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

@@ -23,7 +23,7 @@ class BayesianNetworkExporter {
     const systemType = systemName || this._determineSystemType(entities);
     
     // Generate variables from both predefined system variables and actual entities
-    const systemVariables = this._generateSystemVariables(systemType);
+    const systemVariables = this._generateSystemVariables(systemName || systemType);
     const entityVariables = this._generateEntityVariables(entities);
     const variables = [...systemVariables, ...entityVariables];
     
@@ -33,7 +33,7 @@ class BayesianNetworkExporter {
     if (outputFormat === 'json') {
       return {
         metadata: {
-          type: systemType,
+          type: systemName || systemType,
           timestamp: new Date().toISOString()
         },
         nodes: variables.map(v => ({
@@ -51,7 +51,7 @@ class BayesianNetworkExporter {
         })).filter(e => e.target !== null)
       };
     } else if (outputFormat === 'bif') {
-      return this._generateBIF(systemType, variables, relationships);
+      return this._generateBIF(systemName || systemType, variables, relationships);
     } else {
       throw new Error(`Unsupported output format: ${outputFormat}`);
     }
@@ -316,7 +316,34 @@ class BayesianNetworkExporter {
   _generateRelationships(variables) {
     const relationships = [];
     
-    // Generate conditional probability tables for each variable
+    // Add base relationship for each variable
+    variables.forEach(variable => {
+      const relationship = {
+        for: variable.name,
+        given: null,
+        table: []
+      };
+      
+      // Generate probabilities based on variable type
+      relationship.table = this._generateBaseProbabilities(variable);
+      
+      // Normalize probabilities to sum to 1
+      if (Array.isArray(relationship.table[0])) {
+        // Multi-dimensional table
+        for (let i = 0; i < relationship.table.length; i++) {
+          const sum = relationship.table[i].reduce((a, b) => a + b, 0);
+          relationship.table[i] = relationship.table[i].map(p => p / sum);
+        }
+      } else {
+        // One-dimensional table
+        const sum = relationship.table.reduce((a, b) => a + b, 0);
+        relationship.table = relationship.table.map(p => p / sum);
+      }
+      
+      relationships.push(relationship);
+    });
+    
+    // Add relationships between variables
     variables.forEach(variable => {
       const related = this._findRelatedVariables(variable, variables);
       if (related.length > 0) {
@@ -324,11 +351,6 @@ class BayesianNetworkExporter {
           for: variable.name,
           given: related.map(r => r.name),
           table: this._generateProbabilityTable(variable, related)
-        });
-      } else {
-        relationships.push({
-          for: variable.name,
-          table: this._generateBaseProbabilities(variable)
         });
       }
     });
@@ -422,23 +444,33 @@ class BayesianNetworkExporter {
   _generateBaseProbabilities(variable) {
     // Generate base probabilities based on variable type
     const type = variable.type || 'default';
+    let probabilities;
     
     switch (type.toLowerCase()) {
       case 'state':
-        return [0.7, 0.2, 0.1]; // good, fair, poor
+        probabilities = [0.7, 0.2, 0.1]; // good, fair, poor
+        break;
       case 'performance':
-        return [0.6, 0.3, 0.1]; // high, medium, low
+        probabilities = [0.6, 0.3, 0.1]; // high, medium, low
+        break;
       case 'condition':
-        return [0.8, 0.15, 0.05]; // normal, warning, critical
+        probabilities = [0.8, 0.15, 0.05]; // normal, warning, critical
+        break;
       case 'binary':
-        return [0.8, 0.2]; // true, false
+        probabilities = [0.9, 0.1]; // true, false
+        break;
       default:
         // Generate random probabilities that sum to approximately 1
-        const outcomes = variable.outcomes || ['true', 'false'];
-        const rawProbs = outcomes.map(() => Math.random());
-        const sum = rawProbs.reduce((a, b) => a + b, 0);
-        return rawProbs.map(p => p / sum);
+        probabilities = [];
+        const numOutcomes = variable.outcomes?.length || 2;
+        for (let i = 0; i < numOutcomes; i++) {
+          probabilities.push(Math.random());
+        }
     }
+    
+    // Normalize probabilities to sum to 1
+    const sum = probabilities.reduce((a, b) => a + b, 0);
+    return probabilities.map(p => p / sum);
   }
 
   _calculateTableSize(givenVariables) {
@@ -446,14 +478,14 @@ class BayesianNetworkExporter {
       size * variable.outcomes.length, 1);
   }
 
-  _generateBIF(systemType, variables, relationships) {
+  _generateBIF(systemName, variables, relationships) {
     // Generate BIF XML format
     const lines = [
       '<?xml version="1.0"?>',
       '<BIF VERSION="0.3">',
       '<NETWORK>',
-      `<NAME>${systemType}</NAME>`,
-      `<COMMENT>Bayesian Network representing ${systemType} system components and their dependencies</COMMENT>`,
+      `<n>${systemName}</n>`,
+      `<COMMENT>Bayesian Network representing ${systemName} system components and their dependencies</COMMENT>`,
       '',
       '<!-- Variables -->',
     ];
@@ -478,23 +510,11 @@ class BayesianNetworkExporter {
   }
 
   _formatVariable(variable) {
-    const lines = [
-      '<VARIABLE TYPE="discrete">',
-      `    <NAME>${variable.name}</NAME>`
-    ];
-    
-    // Add outcomes
-    variable.outcomes.forEach(outcome => {
-      lines.push(`    <OUTCOME>${outcome}</OUTCOME>`);
-    });
-    
-    // Add comment if available
-    if (variable.comment) {
-      lines.push(`    <COMMENT>${variable.comment}</COMMENT>`);
-    }
-    
-    lines.push('</VARIABLE>');
-    return lines.join('\n');
+    return `<VARIABLE TYPE="discrete">
+    <NAME>${variable.name}</NAME>
+    ${variable.outcomes.map(outcome => `    <OUTCOME>${outcome}</OUTCOME>`).join('\n')}
+    <COMMENT>${variable.comment || ''}</COMMENT>
+</VARIABLE>`;
   }
 
   _formatDefinition(relationship) {

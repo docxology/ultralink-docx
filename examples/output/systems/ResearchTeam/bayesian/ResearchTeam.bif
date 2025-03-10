@@ -1,37 +1,77 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for ResearchTeam -->
+<!-- System-specific Bayesian Network BIF File for ResearchTeam -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>ResearchTeam</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>ResearchTeam</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
-</VARIABLE>
-
-<VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
+    <n>team_size</n>    <OUTCOME>small</OUTCOME>
     <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <OUTCOME>large</OUTCOME>
+    <COMMENT>ResearchTeam variable: team_size</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>funding_level</n>    <OUTCOME>limited</OUTCOME>
+    <OUTCOME>adequate</OUTCOME>
+    <OUTCOME>abundant</OUTCOME>
+    <COMMENT>ResearchTeam variable: funding_level</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>expertise_diversity</n>    <OUTCOME>low</OUTCOME>
+    <OUTCOME>medium</OUTCOME>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>ResearchTeam variable: expertise_diversity</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>collaboration_quality</n>    <OUTCOME>poor</OUTCOME>
+    <OUTCOME>adequate</OUTCOME>
+    <OUTCOME>excellent</OUTCOME>
+    <COMMENT>ResearchTeam variable: collaboration_quality</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>research_methodology</n>    <OUTCOME>traditional</OUTCOME>
+    <OUTCOME>mixed</OUTCOME>
+    <OUTCOME>innovative</OUTCOME>
+    <COMMENT>ResearchTeam variable: research_methodology</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>publication_impact</n>    <OUTCOME>low</OUTCOME>
+    <OUTCOME>medium</OUTCOME>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>ResearchTeam variable: publication_impact</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>team_size</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.4 0.4 0.2</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>funding_level</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.5 0.3 0.2</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>expertise_diversity</FOR>    <GIVEN>team_size</GIVEN>
+    <TABLE>0.6 0.3 0.1 0.3 0.5 0.2 0.2 0.3 0.5</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>collaboration_quality</FOR>    <GIVEN>team_size</GIVEN>
+    <GIVEN>expertise_diversity</GIVEN>
+    <TABLE>0.3 0.5 0.2 0.2 0.5 0.3 0.1 0.3 0.6 0.4 0.4 0.2 0.2 0.5 0.3 0.1 0.2 0.7 0.5 0.3 0.2 0.3 0.4 0.3 0.1 0.2 0.7</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>research_methodology</FOR>    <GIVEN>expertise_diversity</GIVEN>
+    <GIVEN>funding_level</GIVEN>
+    <TABLE>0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.5 0.3 0.4 0.4 0.2 0.3 0.4 0.3 0.1 0.4 0.5 0.3 0.4 0.3 0.1 0.3 0.6 0.1 0.2 0.7</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>publication_impact</FOR>    <GIVEN>collaboration_quality</GIVEN>
+    <GIVEN>research_methodology</GIVEN>
+    <GIVEN>funding_level</GIVEN>
+    <TABLE>0.8 0.15 0.05 0.7 0.2 0.1 0.5 0.3 0.2 0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.5 0.2 0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.5 0.3
+                0.6 0.3 0.1 0.5 0.4 0.1 0.3 0.4 0.3 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.4 0.4 0.2 0.2 0.5 0.3 0.1 0.3 0.6
+                0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.3 0.6 0.4 0.4 0.2 0.2 0.4 0.4 0.1 0.2 0.7 0.2 0.5 0.3 0.1 0.3 0.6 0.05 0.15 0.8</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

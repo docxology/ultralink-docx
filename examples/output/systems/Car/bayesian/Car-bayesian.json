@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "type": "Generic",
-    "timestamp": "2025-03-10T17:42:25.194Z"
+    "type": "Car",
+    "timestamp": "2025-03-10T19:33:30.861Z"
   },
   "nodes": [
     {
@@ -13,7 +13,59 @@
         "poor"
       ],
       "comment": "Overall system state"
+    },
+    {
+      "id": "engine_system",
+      "type": "condition",
+      "outcomes": [
+        "normal",
+        "warning",
+        "critical"
+      ],
+      "comment": "Engine system status"
+    },
+    {
+      "id": "electrical_system",
+      "type": "condition",
+      "outcomes": [
+        "normal",
+        "warning",
+        "critical"
+      ],
+      "comment": "Electrical system status"
+    },
+    {
+      "id": "hvac_system",
+      "type": "condition",
+      "outcomes": [
+        "normal",
+        "warning",
+        "critical"
+      ],
+      "comment": "HVAC system status"
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "hvac_system",
+      "target": "electrical_system",
+      "probabilities": [
+        [
+          0.8,
+          0.15,
+          0.05
+        ],
+        [
+          0.8,
+          0.15,
+          0.05
+        ],
+        [
+          0.8,
+          0.15,
+          0.05
+        ]
+      ]
+    }
+  ]
 }

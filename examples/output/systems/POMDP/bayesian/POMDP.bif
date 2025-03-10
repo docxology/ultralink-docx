@@ -1,37 +1,77 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for POMDP -->
+<!-- System-specific Bayesian Network BIF File for POMDP -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>POMDP</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>POMDP</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
+    <n>hidden_state</n>    <OUTCOME>state1</OUTCOME>
+    <OUTCOME>state2</OUTCOME>
+    <OUTCOME>state3</OUTCOME>
+    <COMMENT>POMDP variable: hidden_state</COMMENT>
 </VARIABLE>
-
 <VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
+    <n>observation</n>    <OUTCOME>obs1</OUTCOME>
+    <OUTCOME>obs2</OUTCOME>
+    <OUTCOME>obs3</OUTCOME>
+    <COMMENT>POMDP variable: observation</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>action</n>    <OUTCOME>action1</OUTCOME>
+    <OUTCOME>action2</OUTCOME>
+    <OUTCOME>action3</OUTCOME>
+    <COMMENT>POMDP variable: action</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>reward</n>    <OUTCOME>low</OUTCOME>
     <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>POMDP variable: reward</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>next_state</n>    <OUTCOME>state1</OUTCOME>
+    <OUTCOME>state2</OUTCOME>
+    <OUTCOME>state3</OUTCOME>
+    <COMMENT>POMDP variable: next_state</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>belief</n>    <OUTCOME>uncertain</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>confident</OUTCOME>
+    <COMMENT>POMDP variable: belief</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>hidden_state</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.33 0.33 0.34</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>observation</FOR>    <GIVEN>hidden_state</GIVEN>
+    <TABLE>0.7 0.2 0.1 0.2 0.6 0.2 0.1 0.3 0.6</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>action</FOR>    <GIVEN>belief</GIVEN>
+    <TABLE>0.5 0.3 0.2 0.3 0.5 0.2 0.2 0.3 0.5</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>reward</FOR>    <GIVEN>hidden_state</GIVEN>
+    <GIVEN>action</GIVEN>
+    <TABLE>0.7 0.2 0.1 0.3 0.6 0.1 0.2 0.3 0.5 0.2 0.7 0.1 0.6 0.3 0.1 0.3 0.4 0.3 0.1 0.3 0.6 0.2 0.3 0.5 0.7 0.2 0.1</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>next_state</FOR>    <GIVEN>hidden_state</GIVEN>
+    <GIVEN>action</GIVEN>
+    <TABLE>0.8 0.15 0.05 0.3 0.6 0.1 0.2 0.2 0.6 0.1 0.8 0.1 0.2 0.7 0.1 0.1 0.3 0.6 0.05 0.15 0.8 0.1 0.2 0.7 0.6 0.1 0.3</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>belief</FOR>    <GIVEN>belief</GIVEN>
+    <GIVEN>observation</GIVEN>
+    <GIVEN>action</GIVEN>
+    <TABLE>0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.4 0.5 0.1 0.3 0.5 0.2 0.4 0.4 0.2 0.3 0.5 0.2 0.2 0.5 0.3
+                0.4 0.4 0.2 0.3 0.5 0.2 0.2 0.5 0.3 0.3 0.5 0.2 0.2 0.6 0.2 0.1 0.6 0.3 0.2 0.5 0.3 0.1 0.5 0.4 0.1 0.4 0.5
+                0.3 0.3 0.4 0.2 0.4 0.4 0.1 0.4 0.5 0.2 0.4 0.4 0.1 0.4 0.5 0.1 0.3 0.6 0.1 0.3 0.6 0.1 0.2 0.7 0.05 0.15 0.8</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

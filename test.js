@@ -1,0 +1,1 @@
+const { UltraLink } = require('./src'); const ultralink = new UltraLink(); ultralink.addEntity('test', 'test', { name: 'Test' }); console.log('Entities:', ultralink.entities); console.log('Store:', ultralink.store);

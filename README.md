@@ -85,10 +85,11 @@ UltraLink comes with comprehensive documentation to help you get the most out of
 - [Visualization Guide](docs/VISUALIZATION_GUIDE.md) - How to create and customize visualizations
 - [Export Formats](docs/EXPORT_FORMATS.md) - Detailed information about all export formats
 - [Testing Guide](docs/TESTING.md) - How to run and extend the test suite
+- [Project Status](docs/PROJECT_STATUS.md) - Current status, recent enhancements, and known limitations
 
 For installation instructions, see the [Installation Guide](INSTALLATION.md).
 
-## �� Table of Contents
+## 📄 Table of Contents
 
 - [🌟 Overview](#-overview)
 - [🚀 Key Features](#-key-features)

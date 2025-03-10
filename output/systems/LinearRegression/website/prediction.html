@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regression Prediction - Linear Regression - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Regression Prediction</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>prediction</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>process</td>
+        </tr>
+        
+            <tr>
+              <th>description</th>
+              <td>Process to generate predictions using the linear regression model</td>
+            </tr>
+          
+            <tr>
+              <th>formula</th>
+              <td>Y = β₀ + β₁X₁ + β₂X₂ + β₃X₃ + ε</td>
+            </tr>
+          
+            <tr>
+              <th>steps</th>
+              <td>Collect feature values (X₁, X₂, X₃),Multiply each feature by its coefficient,Sum all terms including the intercept,Output the predicted value of Y</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>estimates</strong> → <a href="dependent_variable.html">Dependent Variable (Y)</a>
+      
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="linear_regression_model.html">Linear Regression Model</a> → <strong>performs</strong>
+      
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

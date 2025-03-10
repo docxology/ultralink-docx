@@ -1,37 +1,63 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for DesertEcosystem -->
+<!-- System-specific Bayesian Network BIF File for DesertEcosystem -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>DesertEcosystem</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>DesertEcosystem</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
-</VARIABLE>
-
-<VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
+    <n>rainfall</n>    <OUTCOME>low</OUTCOME>
     <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>DesertEcosystem variable: rainfall</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>temperature</n>    <OUTCOME>cool</OUTCOME>
+    <OUTCOME>warm</OUTCOME>
+    <OUTCOME>hot</OUTCOME>
+    <COMMENT>DesertEcosystem variable: temperature</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>plant_density</n>    <OUTCOME>sparse</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>dense</OUTCOME>
+    <COMMENT>DesertEcosystem variable: plant_density</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>animal_activity</n>    <OUTCOME>nocturnal</OUTCOME>
+    <OUTCOME>crepuscular</OUTCOME>
+    <OUTCOME>diurnal</OUTCOME>
+    <COMMENT>DesertEcosystem variable: animal_activity</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>species_abundance</n>    <OUTCOME>low</OUTCOME>
+    <OUTCOME>medium</OUTCOME>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>DesertEcosystem variable: species_abundance</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>rainfall</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.7 0.25 0.05</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>temperature</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.1 0.3 0.6</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>plant_density</FOR>    <GIVEN>rainfall</GIVEN>
+    <GIVEN>temperature</GIVEN>
+    <TABLE>0.6 0.3 0.1 0.7 0.25 0.05 0.9 0.09 0.01 0.3 0.5 0.2 0.4 0.5 0.1 0.6 0.35 0.05 0.1 0.3 0.6 0.2 0.4 0.4 0.4 0.4 0.2</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>animal_activity</FOR>    <GIVEN>temperature</GIVEN>
+    <TABLE>0.2 0.3 0.5 0.3 0.5 0.2 0.7 0.25 0.05</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>species_abundance</FOR>    <GIVEN>rainfall</GIVEN>
+    <GIVEN>plant_density</GIVEN>
+    <TABLE>0.8 0.15 0.05 0.6 0.3 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.3 0.5 0.2 0.2 0.5 0.3 0.3 0.5 0.2 0.2 0.6 0.2 0.1 0.3 0.6</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

@@ -1,37 +1,65 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for NeurofeedbackResearch -->
+<!-- System-specific Bayesian Network BIF File for NeurofeedbackResearch -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>NeurofeedbackResearch</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>NeurofeedbackResearch</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
-</VARIABLE>
-
-<VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
+    <n>eeg_signal</n>    <OUTCOME>low</OUTCOME>
     <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>NeurofeedbackResearch variable: eeg_signal</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>attention_state</n>    <OUTCOME>distracted</OUTCOME>
+    <OUTCOME>normal</OUTCOME>
+    <OUTCOME>focused</OUTCOME>
+    <COMMENT>NeurofeedbackResearch variable: attention_state</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>feedback_type</n>    <OUTCOME>audio</OUTCOME>
+    <OUTCOME>visual</OUTCOME>
+    <COMMENT>NeurofeedbackResearch variable: feedback_type</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>brainwave_type</n>    <OUTCOME>alpha</OUTCOME>
+    <OUTCOME>beta</OUTCOME>
+    <OUTCOME>theta</OUTCOME>
+    <OUTCOME>smr</OUTCOME>
+    <COMMENT>NeurofeedbackResearch variable: brainwave_type</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>training_effectiveness</n>    <OUTCOME>low</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>NeurofeedbackResearch variable: training_effectiveness</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>eeg_signal</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.3 0.4 0.3</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>attention_state</FOR>    <GIVEN>eeg_signal</GIVEN>
+    <TABLE>0.7 0.2 0.1 0.3 0.5 0.2 0.1 0.3 0.6</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>feedback_type</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.6 0.4</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>brainwave_type</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.3 0.3 0.2 0.2</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>training_effectiveness</FOR>    <GIVEN>attention_state</GIVEN>
+    <GIVEN>feedback_type</GIVEN>
+    <GIVEN>brainwave_type</GIVEN>
+    <TABLE>0.6 0.3 0.1 0.5 0.3 0.2 0.7 0.2 0.1 0.6 0.3 0.1 0.5 0.3 0.2 0.4 0.4 0.2 0.6 0.3 0.1 0.5 0.3 0.2
+                0.3 0.5 0.2 0.2 0.5 0.3 0.4 0.4 0.2 0.3 0.5 0.2 0.2 0.5 0.3 0.1 0.5 0.4 0.3 0.5 0.2 0.2 0.4 0.4
+                0.1 0.4 0.5 0.1 0.3 0.6 0.2 0.4 0.4 0.1 0.4 0.5 0.1 0.3 0.6 0.05 0.25 0.7 0.15 0.35 0.5 0.1 0.3 0.6</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

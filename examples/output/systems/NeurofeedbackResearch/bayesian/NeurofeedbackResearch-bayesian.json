@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "type": "Generic",
-    "timestamp": "2025-03-10T17:42:24.226Z"
+    "type": "NeurofeedbackResearch",
+    "timestamp": "2025-03-10T19:33:29.916Z"
   },
   "nodes": [
     {
@@ -13,6 +13,36 @@
         "poor"
       ],
       "comment": "Overall system state"
+    },
+    {
+      "id": "brain_activity",
+      "type": "condition",
+      "outcomes": [
+        "normal",
+        "elevated",
+        "suppressed"
+      ],
+      "comment": "Brain activity patterns"
+    },
+    {
+      "id": "feedback_effectiveness",
+      "type": "performance",
+      "outcomes": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "comment": "Neurofeedback effectiveness"
+    },
+    {
+      "id": "patient_progress",
+      "type": "performance",
+      "outcomes": [
+        "good",
+        "moderate",
+        "limited"
+      ],
+      "comment": "Patient progress status"
     }
   ],
   "edges": []

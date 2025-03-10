@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Training - Linear Regression - UltraLink Knowledge Graph</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .attribute-table th {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Model Training</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="window.history.back()">Back</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="entity-details">
+      <h2>Entity Details</h2>
+      <div class="entity-section">
+      <table class="attribute-table">
+        <tr>
+          <th>ID</th>
+          <td>training</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>process</td>
+        </tr>
+        
+            <tr>
+              <th>description</th>
+              <td>Process to estimate model parameters from training data</td>
+            </tr>
+          
+            <tr>
+              <th>method</th>
+              <td>Ordinary Least Squares (OLS)</td>
+            </tr>
+          
+            <tr>
+              <th>objective</th>
+              <td>Minimize the sum of squared errors</td>
+            </tr>
+          
+            <tr>
+              <th>steps</th>
+              <td>Split data into training and testing sets,Calculate coefficients using OLS formula,Evaluate model fit on training data,Validate model on testing data,Calculate model quality metrics</td>
+            </tr>
+          
+      </table>
+      </div>
+    </section>
+    
+    
+    <section class="relationships">
+      <h2>Relationships</h2>
+      
+      
+        <h3>Outgoing Relationships</h3>
+        
+    <div class="relationship-item">
+      <strong>produces</strong> → <a href="model_metrics.html">Model Quality Metrics</a>
+      
+      
+    </div>
+      
+      
+      
+        <h3>Incoming Relationships</h3>
+        
+    <div class="relationship-item">
+      <a href="linear_regression_model.html">Linear Regression Model</a> → <strong>undergoes</strong>
+      
+      
+    </div>
+      
+    </section>
+  </main>
+  
+  <footer>
+    <p>Generated with UltraLink</p>
+  </footer>
+</body>
+</html>

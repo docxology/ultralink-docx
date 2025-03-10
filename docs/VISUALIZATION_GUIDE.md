@@ -280,6 +280,63 @@ const customRelationships = await ultralink.toVisualization({
 });
 ```
 
+## Fallback Visualizations
+
+UltraLink includes a robust fallback visualization system that ensures you always get usable output, even when the standard visualization process encounters issues. This is particularly useful in automated environments or when dealing with edge cases in knowledge graph structure.
+
+### Automatic Fallback Generation
+
+When the standard visualization process encounters an error, UltraLink automatically generates a fallback visualization:
+
+```javascript
+try {
+  const visualization = await ultralink.toVisualization({ format: 'svg' });
+  fs.writeFileSync('graph.svg', visualization.data);
+} catch (error) {
+  console.warn("Standard visualization failed, using fallback");
+  const fallback = generateFallbackVisualization('svg', ultralink.name);
+  fs.writeFileSync('graph.svg', fallback);
+}
+```
+
+In most cases, you don't need to manually handle fallbacks - UltraLink does this automatically when you call `toVisualization()`.
+
+### Customizing Fallback Visualizations
+
+You can generate customized fallback content for different formats:
+
+```javascript
+const { generateFallbackVisualization, createFallbackPNG } = require('ultralink/src/lib/exporters/visualization-helpers');
+
+// Generate a fallback SVG
+const svgFallback = generateFallbackVisualization('svg', 'MySystem', 1000, 800);
+
+// Generate a fallback PNG with a custom message
+const pngFallback = await createFallbackPNG(800, 600, 'Custom fallback visualization', 'MySystem');
+```
+
+### Available Fallback Formats
+
+UltraLink supports fallbacks for all standard visualization formats:
+
+- SVG: Clean, simple SVG with system name and timestamp
+- PNG: Generated image with system name and optional message
+- D3.js: Simple interactive visualization with basic node structure
+- Cytoscape.js: Basic interactive visualization with minimal functionality
+
+### Detecting Fallback Output
+
+You can detect if you received fallback content by checking for marker text or attributes:
+
+```javascript
+const visualization = await ultralink.toVisualization({ format: 'svg' });
+const isFallback = visualization.data.includes('Fallback Visualization');
+
+if (isFallback) {
+  console.log('Received fallback visualization - you may want to check your knowledge graph structure');
+}
+```
+
 ## Examples
 
 ### Basic Social Network Visualization

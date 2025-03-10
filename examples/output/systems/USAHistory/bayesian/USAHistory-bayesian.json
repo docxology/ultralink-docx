@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "type": "Generic",
-    "timestamp": "2025-03-10T17:42:23.241Z"
+    "type": "USAHistory",
+    "timestamp": "2025-03-10T19:33:28.984Z"
   },
   "nodes": [
     {
@@ -13,6 +13,36 @@
         "poor"
       ],
       "comment": "Overall system state"
+    },
+    {
+      "id": "political_climate",
+      "type": "state",
+      "outcomes": [
+        "stable",
+        "tense",
+        "volatile"
+      ],
+      "comment": "Political climate state"
+    },
+    {
+      "id": "economic_conditions",
+      "type": "state",
+      "outcomes": [
+        "growth",
+        "stable",
+        "recession"
+      ],
+      "comment": "Economic conditions"
+    },
+    {
+      "id": "social_change",
+      "type": "state",
+      "outcomes": [
+        "progressive",
+        "moderate",
+        "conservative"
+      ],
+      "comment": "Social change dynamics"
     }
   ],
   "edges": []

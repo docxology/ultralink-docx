@@ -1,37 +1,78 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for Car -->
+<!-- System-specific Bayesian Network BIF File for Car -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>Car</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>Car</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
+    <n>engine_condition</n>    <OUTCOME>poor</OUTCOME>
+    <OUTCOME>fair</OUTCOME>
+    <OUTCOME>good</OUTCOME>
+    <COMMENT>Car variable: engine_condition</COMMENT>
 </VARIABLE>
-
 <VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
+    <n>fuel_quality</n>    <OUTCOME>regular</OUTCOME>
+    <OUTCOME>premium</OUTCOME>
+    <COMMENT>Car variable: fuel_quality</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>maintenance_schedule</n>    <OUTCOME>neglected</OUTCOME>
+    <OUTCOME>regular</OUTCOME>
+    <OUTCOME>meticulous</OUTCOME>
+    <COMMENT>Car variable: maintenance_schedule</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>driving_style</n>    <OUTCOME>aggressive</OUTCOME>
+    <OUTCOME>normal</OUTCOME>
+    <OUTCOME>conservative</OUTCOME>
+    <COMMENT>Car variable: driving_style</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>fuel_efficiency</n>    <OUTCOME>low</OUTCOME>
     <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>Car variable: fuel_efficiency</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>engine_performance</n>    <OUTCOME>poor</OUTCOME>
+    <OUTCOME>adequate</OUTCOME>
+    <OUTCOME>excellent</OUTCOME>
+    <COMMENT>Car variable: engine_performance</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>engine_condition</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.2 0.5 0.3</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>fuel_quality</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.7 0.3</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>maintenance_schedule</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.3 0.5 0.2</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>driving_style</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.25 0.6 0.15</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>fuel_efficiency</FOR>    <GIVEN>engine_condition</GIVEN>
+    <GIVEN>fuel_quality</GIVEN>
+    <GIVEN>driving_style</GIVEN>
+    <TABLE>0.8 0.15 0.05 0.6 0.3 0.1 0.5 0.4 0.1 0.7 0.2 0.1 0.5 0.4 0.1 0.4 0.4 0.2
+                0.6 0.3 0.1 0.4 0.5 0.1 0.3 0.5 0.2 0.5 0.4 0.1 0.3 0.5 0.2 0.2 0.5 0.3
+                0.4 0.4 0.2 0.2 0.5 0.3 0.1 0.4 0.5 0.3 0.4 0.3 0.1 0.4 0.5 0.05 0.35 0.6</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>engine_performance</FOR>    <GIVEN>engine_condition</GIVEN>
+    <GIVEN>maintenance_schedule</GIVEN>
+    <GIVEN>fuel_quality</GIVEN>
+    <TABLE>0.9 0.09 0.01 0.8 0.15 0.05 0.7 0.25 0.05 0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.4 0.2
+                0.6 0.3 0.1 0.5 0.4 0.1 0.3 0.6 0.1 0.2 0.6 0.2 0.2 0.5 0.3 0.1 0.5 0.4
+                0.4 0.5 0.1 0.3 0.5 0.2 0.2 0.5 0.3 0.1 0.4 0.5 0.05 0.35 0.6 0.01 0.29 0.7</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

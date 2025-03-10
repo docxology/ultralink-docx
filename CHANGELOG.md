@@ -15,18 +15,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced GraphML export with detailed attribute handling
 - Performance benchmarking for all export formats
 - Obsidian export with backlinks and frontmatter support
+- Fallback visualization system for all formats (SVG, PNG, D3, Cytoscape)
+- System-specific visualization examples for various knowledge domains
+- Comprehensive project status documentation
 
 ### Changed
 - Improved CSV export with better metadata handling
 - Enhanced JSON export with configurable pretty-printing
 - Optimized performance for large datasets
 - Updated documentation with detailed export format information
+- Enhanced test infrastructure with better mocking and async operation handling
+- Improved visualization robustness across all supported systems
 
 ### Fixed
 - Resolved issues with GraphML attribute serialization
 - Fixed relationship counting in Full Blob exports
 - Corrected theme handling in HTML Website exports
 - Addressed precision issues in JSON exports
+- Fixed visualization testing issues related to D3.js integration
+- Resolved UltraLink constructor issues in testing environment
+- Added proper cleanup for async operations in tests
 
 ## [0.1.0] - 2025-03-03
 

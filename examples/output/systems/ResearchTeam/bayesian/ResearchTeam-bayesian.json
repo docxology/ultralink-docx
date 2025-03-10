@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "type": "Generic",
-    "timestamp": "2025-03-10T17:42:21.309Z"
+    "type": "ResearchTeam",
+    "timestamp": "2025-03-10T19:33:27.102Z"
   },
   "nodes": [
     {
@@ -13,7 +13,89 @@
         "poor"
       ],
       "comment": "Overall system state"
+    },
+    {
+      "id": "researcher_productivity",
+      "type": "performance",
+      "outcomes": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "comment": "Individual researcher productivity"
+    },
+    {
+      "id": "project_success",
+      "type": "performance",
+      "outcomes": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "comment": "Project success rate"
+    },
+    {
+      "id": "team_collaboration",
+      "type": "performance",
+      "outcomes": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "comment": "Team collaboration effectiveness"
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "project_success",
+      "target": "researcher_productivity",
+      "probabilities": [
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ]
+      ]
+    }
+  ]
 }

@@ -18,12 +18,11 @@ Tools
 
 
 Ongoing + ToDo
-- Make three blue one brown type videos 
 - Connect UltraLink in and out of more sophisticated graphical database tools. 
 - Perplexity or Internet API calls for doing research and returning as UltraLink format.  
-- Do https://github.com/ManimCommunity/manim Manim animations. 
 
-
+Agenda
+- 
 
 
 

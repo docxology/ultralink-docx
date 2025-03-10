@@ -1,37 +1,77 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for HumanAnatomy -->
+<!-- System-specific Bayesian Network BIF File for HumanAnatomy -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>HumanAnatomy</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>HumanAnatomy</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
+    <n>cardiovascular_health</n>    <OUTCOME>poor</OUTCOME>
+    <OUTCOME>average</OUTCOME>
+    <OUTCOME>excellent</OUTCOME>
+    <COMMENT>HumanAnatomy variable: cardiovascular_health</COMMENT>
 </VARIABLE>
-
 <VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
+    <n>respiratory_function</n>    <OUTCOME>impaired</OUTCOME>
+    <OUTCOME>normal</OUTCOME>
+    <OUTCOME>optimized</OUTCOME>
+    <COMMENT>HumanAnatomy variable: respiratory_function</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>digestive_efficiency</n>    <OUTCOME>low</OUTCOME>
     <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <OUTCOME>high</OUTCOME>
+    <COMMENT>HumanAnatomy variable: digestive_efficiency</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>exercise_frequency</n>    <OUTCOME>sedentary</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>active</OUTCOME>
+    <COMMENT>HumanAnatomy variable: exercise_frequency</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>nutrition_quality</n>    <OUTCOME>poor</OUTCOME>
+    <OUTCOME>adequate</OUTCOME>
+    <OUTCOME>excellent</OUTCOME>
+    <COMMENT>HumanAnatomy variable: nutrition_quality</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>overall_health</n>    <OUTCOME>compromised</OUTCOME>
+    <OUTCOME>fair</OUTCOME>
+    <OUTCOME>excellent</OUTCOME>
+    <COMMENT>HumanAnatomy variable: overall_health</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>exercise_frequency</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.4 0.4 0.2</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>nutrition_quality</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.3 0.5 0.2</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>cardiovascular_health</FOR>    <GIVEN>exercise_frequency</GIVEN>
+    <GIVEN>nutrition_quality</GIVEN>
+    <TABLE>0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.4 0.3 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.3 0.5 0.2 0.1 0.4 0.5 0.05 0.25 0.7</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>respiratory_function</FOR>    <GIVEN>exercise_frequency</GIVEN>
+    <GIVEN>cardiovascular_health</GIVEN>
+    <TABLE>0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.4 0.4 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.3 0.5 0.2 0.1 0.3 0.6 0.05 0.15 0.8</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>digestive_efficiency</FOR>    <GIVEN>nutrition_quality</GIVEN>
+    <TABLE>0.7 0.2 0.1 0.3 0.6 0.1 0.1 0.3 0.6</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>overall_health</FOR>    <GIVEN>cardiovascular_health</GIVEN>
+    <GIVEN>respiratory_function</GIVEN>
+    <GIVEN>digestive_efficiency</GIVEN>
+    <TABLE>0.9 0.1 0 0.7 0.2 0.1 0.5 0.4 0.1 0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.5 0.2 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5
+                0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.4 0.3 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.3 0.6 0.3 0.5 0.2 0.1 0.4 0.5 0.05 0.15 0.8
+                0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.3 0.6 0.3 0.5 0.2 0.1 0.4 0.5 0.05 0.15 0.8 0.1 0.3 0.6 0.05 0.15 0.8 0.01 0.09 0.9</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

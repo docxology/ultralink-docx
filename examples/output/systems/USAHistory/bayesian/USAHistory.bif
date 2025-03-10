@@ -1,37 +1,78 @@
 <?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for USAHistory -->
+<!-- System-specific Bayesian Network BIF File for USAHistory -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>USAHistory</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>USAHistory</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
+    <n>economic_conditions</n>    <OUTCOME>depression</OUTCOME>
+    <OUTCOME>recession</OUTCOME>
+    <OUTCOME>growth</OUTCOME>
+    <OUTCOME>boom</OUTCOME>
+    <COMMENT>USAHistory variable: economic_conditions</COMMENT>
 </VARIABLE>
-
 <VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
-    <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
+    <n>political_climate</n>    <OUTCOME>divided</OUTCOME>
+    <OUTCOME>partisan</OUTCOME>
+    <OUTCOME>unified</OUTCOME>
+    <COMMENT>USAHistory variable: political_climate</COMMENT>
 </VARIABLE>
-
-<!-- Sample Probability Distributions -->
+<VARIABLE TYPE="discrete">
+    <n>foreign_relations</n>    <OUTCOME>hostile</OUTCOME>
+    <OUTCOME>neutral</OUTCOME>
+    <OUTCOME>friendly</OUTCOME>
+    <COMMENT>USAHistory variable: foreign_relations</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>social_movement</n>    <OUTCOME>weak</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>strong</OUTCOME>
+    <COMMENT>USAHistory variable: social_movement</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>technological_advancement</n>    <OUTCOME>slow</OUTCOME>
+    <OUTCOME>steady</OUTCOME>
+    <OUTCOME>rapid</OUTCOME>
+    <COMMENT>USAHistory variable: technological_advancement</COMMENT>
+</VARIABLE>
+<VARIABLE TYPE="discrete">
+    <n>historical_period_significance</n>    <OUTCOME>minor</OUTCOME>
+    <OUTCOME>moderate</OUTCOME>
+    <OUTCOME>major</OUTCOME>
+    <COMMENT>USAHistory variable: historical_period_significance</COMMENT>
+</VARIABLE>
+<!-- Probability Distributions -->
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
+    <FOR>economic_conditions</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.1 0.3 0.4 0.2</TABLE>
 </DEFINITION>
-
 <DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
+    <FOR>political_climate</FOR>    <GIVEN></GIVEN>
+    <TABLE>0.4 0.4 0.2</TABLE>
 </DEFINITION>
-
+<DEFINITION>
+    <FOR>foreign_relations</FOR>    <GIVEN>political_climate</GIVEN>
+    <TABLE>0.5 0.3 0.2 0.3 0.4 0.3 0.2 0.3 0.5</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>social_movement</FOR>    <GIVEN>economic_conditions</GIVEN>
+    <GIVEN>political_climate</GIVEN>
+    <TABLE>0.2 0.3 0.5 0.3 0.4 0.3 0.5 0.3 0.2 0.3 0.4 0.3 0.5 0.3 0.2 0.6 0.3 0.1 0.4 0.4 0.2 0.6 0.3 0.1 0.7 0.2 0.1
+                0.3 0.4 0.3 0.4 0.4 0.2 0.6 0.3 0.1 0.1 0.4 0.5 0.2 0.5 0.3 0.3 0.5 0.2 0.05 0.35 0.6 0.1 0.4 0.5 0.2 0.5 0.3</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>technological_advancement</FOR>    <GIVEN>economic_conditions</GIVEN>
+    <TABLE>0.6 0.3 0.1 0.4 0.5 0.1 0.2 0.5 0.3 0.1 0.3 0.6</TABLE>
+</DEFINITION>
+<DEFINITION>
+    <FOR>historical_period_significance</FOR>    <GIVEN>economic_conditions</GIVEN>
+    <GIVEN>social_movement</GIVEN>
+    <GIVEN>foreign_relations</GIVEN>
+    <TABLE>0.4 0.4 0.2 0.3 0.4 0.3 0.1 0.3 0.6 0.3 0.4 0.3 0.2 0.3 0.5 0.1 0.2 0.7 0.2 0.4 0.4 0.1 0.3 0.6 0.05 0.15 0.8
+                0.3 0.5 0.2 0.2 0.4 0.4 0.1 0.2 0.7 0.2 0.4 0.4 0.1 0.3 0.6 0.05 0.15 0.8 0.1 0.3 0.6 0.05 0.15 0.8 0.01 0.09 0.9
+                0.2 0.4 0.4 0.1 0.3 0.6 0.05 0.15 0.8 0.1 0.3 0.6 0.05 0.15 0.8 0.01 0.09 0.9 0.05 0.15 0.8 0.01 0.09 0.9 0.01 0.04 0.95</TABLE>
+</DEFINITION>
 </NETWORK>
 </BIF>

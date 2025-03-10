@@ -244,61 +244,472 @@ function generatePlaceholderCytoscape(systemName) {
 
 /**
  * Generate a placeholder Bayesian Network BIF file
- * @param {string} systemName - Name of the system
+ * @param {string} systemName - Name of the system to model
  * @returns {string} Placeholder BIF content
  */
 function generatePlaceholderBIF(systemName) {
-  return `<?xml version="1.0"?>
-<!-- Placeholder Bayesian Network BIF File for ${systemName} -->
+  console.log(`Generating placeholder BIF for ${systemName}`);
+  
+  // Define system-specific variables based on the system name
+  let variables = [];
+  let relationships = [];
+  
+  // Normalize system name to lowercase for comparison
+  const system = (systemName || '').toLowerCase();
+  
+  // Define system-specific variables and relationships
+  if (system === 'neurofeedbackresearch' || system.includes('neurofeedback')) {
+    variables = [
+      { name: 'eeg_signal', outcomes: ['low', 'medium', 'high'] },
+      { name: 'attention_state', outcomes: ['distracted', 'normal', 'focused'] },
+      { name: 'feedback_type', outcomes: ['audio', 'visual'] },
+      { name: 'brainwave_type', outcomes: ['alpha', 'beta', 'theta', 'smr'] },
+      { name: 'training_effectiveness', outcomes: ['low', 'moderate', 'high'] }
+    ];
+    
+    relationships = [
+      { for: 'eeg_signal', given: [], table: '0.3 0.4 0.3' },
+      { for: 'attention_state', given: ['eeg_signal'], table: '0.7 0.2 0.1 0.3 0.5 0.2 0.1 0.3 0.6' },
+      { for: 'feedback_type', given: [], table: '0.6 0.4' },
+      { for: 'brainwave_type', given: [], table: '0.3 0.3 0.2 0.2' },
+      { for: 'training_effectiveness', given: ['attention_state', 'feedback_type', 'brainwave_type'], 
+        table: `0.6 0.3 0.1 0.5 0.3 0.2 0.7 0.2 0.1 0.6 0.3 0.1 0.5 0.3 0.2 0.4 0.4 0.2 0.6 0.3 0.1 0.5 0.3 0.2
+                0.3 0.5 0.2 0.2 0.5 0.3 0.4 0.4 0.2 0.3 0.5 0.2 0.2 0.5 0.3 0.1 0.5 0.4 0.3 0.5 0.2 0.2 0.4 0.4
+                0.1 0.4 0.5 0.1 0.3 0.6 0.2 0.4 0.4 0.1 0.4 0.5 0.1 0.3 0.6 0.05 0.25 0.7 0.15 0.35 0.5 0.1 0.3 0.6` }
+    ];
+  } else if (system === 'desertecosystem' || system.includes('desert')) {
+    variables = [
+      { name: 'rainfall', outcomes: ['low', 'medium', 'high'] },
+      { name: 'temperature', outcomes: ['cool', 'warm', 'hot'] },
+      { name: 'plant_density', outcomes: ['sparse', 'moderate', 'dense'] },
+      { name: 'animal_activity', outcomes: ['nocturnal', 'crepuscular', 'diurnal'] },
+      { name: 'species_abundance', outcomes: ['low', 'medium', 'high'] }
+    ];
+    
+    relationships = [
+      { for: 'rainfall', given: [], table: '0.7 0.25 0.05' },
+      { for: 'temperature', given: [], table: '0.1 0.3 0.6' },
+      { for: 'plant_density', given: ['rainfall', 'temperature'], 
+        table: `0.6 0.3 0.1 0.7 0.25 0.05 0.9 0.09 0.01 0.3 0.5 0.2 0.4 0.5 0.1 0.6 0.35 0.05 0.1 0.3 0.6 0.2 0.4 0.4 0.4 0.4 0.2` },
+      { for: 'animal_activity', given: ['temperature'], table: '0.2 0.3 0.5 0.3 0.5 0.2 0.7 0.25 0.05' },
+      { for: 'species_abundance', given: ['rainfall', 'plant_density'], 
+        table: `0.8 0.15 0.05 0.6 0.3 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.3 0.5 0.2 0.2 0.5 0.3 0.3 0.5 0.2 0.2 0.6 0.2 0.1 0.3 0.6` }
+    ];
+  } else if (system === 'activeinferencelab' || system.includes('inference')) {
+    variables = [
+      { name: 'prior_belief', outcomes: ['weak', 'moderate', 'strong'] },
+      { name: 'sensory_certainty', outcomes: ['low', 'medium', 'high'] },
+      { name: 'prediction_error', outcomes: ['small', 'medium', 'large'] },
+      { name: 'action_precision', outcomes: ['low', 'medium', 'high'] },
+      { name: 'learning_rate', outcomes: ['slow', 'moderate', 'fast'] },
+      { name: 'belief_update', outcomes: ['minor', 'moderate', 'major'] }
+    ];
+    
+    relationships = [
+      { for: 'prior_belief', given: [], table: '0.2 0.5 0.3' },
+      { for: 'sensory_certainty', given: [], table: '0.3 0.5 0.2' },
+      { for: 'prediction_error', given: ['prior_belief', 'sensory_certainty'], 
+        table: `0.2 0.3 0.5 0.3 0.4 0.3 0.4 0.4 0.2 0.3 0.4 0.3 0.4 0.5 0.1 0.5 0.4 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.7 0.25 0.05` },
+      { for: 'action_precision', given: [], table: '0.25 0.5 0.25' },
+      { for: 'learning_rate', given: [], table: '0.2 0.6 0.2' },
+      { for: 'belief_update', given: ['prediction_error', 'action_precision', 'learning_rate'], 
+        table: `0.8 0.15 0.05 0.7 0.25 0.05 0.6 0.3 0.1 0.7 0.25 0.05 0.6 0.3 0.1 0.5 0.4 0.1 0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.5 0.1
+                0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.4 0.5 0.1 0.3 0.5 0.2 0.4 0.5 0.1 0.3 0.5 0.2 0.2 0.5 0.3
+                0.5 0.4 0.1 0.4 0.4 0.2 0.3 0.4 0.3 0.4 0.4 0.2 0.3 0.4 0.3 0.2 0.3 0.5 0.3 0.4 0.3 0.2 0.3 0.5 0.1 0.2 0.7` }
+    ];
+  } else if (system === 'pomdp') {
+    variables = [
+      { name: 'hidden_state', outcomes: ['state1', 'state2', 'state3'] },
+      { name: 'observation', outcomes: ['obs1', 'obs2', 'obs3'] },
+      { name: 'action', outcomes: ['action1', 'action2', 'action3'] },
+      { name: 'reward', outcomes: ['low', 'medium', 'high'] },
+      { name: 'next_state', outcomes: ['state1', 'state2', 'state3'] },
+      { name: 'belief', outcomes: ['uncertain', 'moderate', 'confident'] }
+    ];
+    
+    relationships = [
+      { for: 'hidden_state', given: [], table: '0.33 0.33 0.34' },
+      { for: 'observation', given: ['hidden_state'], table: '0.7 0.2 0.1 0.2 0.6 0.2 0.1 0.3 0.6' },
+      { for: 'action', given: ['belief'], table: '0.5 0.3 0.2 0.3 0.5 0.2 0.2 0.3 0.5' },
+      { for: 'reward', given: ['hidden_state', 'action'], 
+        table: `0.7 0.2 0.1 0.3 0.6 0.1 0.2 0.3 0.5 0.2 0.7 0.1 0.6 0.3 0.1 0.3 0.4 0.3 0.1 0.3 0.6 0.2 0.3 0.5 0.7 0.2 0.1` },
+      { for: 'next_state', given: ['hidden_state', 'action'], 
+        table: `0.8 0.15 0.05 0.3 0.6 0.1 0.2 0.2 0.6 0.1 0.8 0.1 0.2 0.7 0.1 0.1 0.3 0.6 0.05 0.15 0.8 0.1 0.2 0.7 0.6 0.1 0.3` },
+      { for: 'belief', given: ['belief', 'observation', 'action'], 
+        table: `0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.4 0.2 0.5 0.4 0.1 0.4 0.5 0.1 0.3 0.5 0.2 0.4 0.4 0.2 0.3 0.5 0.2 0.2 0.5 0.3
+                0.4 0.4 0.2 0.3 0.5 0.2 0.2 0.5 0.3 0.3 0.5 0.2 0.2 0.6 0.2 0.1 0.6 0.3 0.2 0.5 0.3 0.1 0.5 0.4 0.1 0.4 0.5
+                0.3 0.3 0.4 0.2 0.4 0.4 0.1 0.4 0.5 0.2 0.4 0.4 0.1 0.4 0.5 0.1 0.3 0.6 0.1 0.3 0.6 0.1 0.2 0.7 0.05 0.15 0.8` }
+    ];
+  } else if (system === 'car' || system.includes('vehicle')) {
+    variables = [
+      { name: 'engine_condition', outcomes: ['poor', 'fair', 'good'] },
+      { name: 'fuel_quality', outcomes: ['regular', 'premium'] },
+      { name: 'maintenance_schedule', outcomes: ['neglected', 'regular', 'meticulous'] },
+      { name: 'driving_style', outcomes: ['aggressive', 'normal', 'conservative'] },
+      { name: 'fuel_efficiency', outcomes: ['low', 'medium', 'high'] },
+      { name: 'engine_performance', outcomes: ['poor', 'adequate', 'excellent'] }
+    ];
+    
+    relationships = [
+      { for: 'engine_condition', given: [], table: '0.2 0.5 0.3' },
+      { for: 'fuel_quality', given: [], table: '0.7 0.3' },
+      { for: 'maintenance_schedule', given: [], table: '0.3 0.5 0.2' },
+      { for: 'driving_style', given: [], table: '0.25 0.6 0.15' },
+      { for: 'fuel_efficiency', given: ['engine_condition', 'fuel_quality', 'driving_style'], 
+        table: `0.8 0.15 0.05 0.6 0.3 0.1 0.5 0.4 0.1 0.7 0.2 0.1 0.5 0.4 0.1 0.4 0.4 0.2
+                0.6 0.3 0.1 0.4 0.5 0.1 0.3 0.5 0.2 0.5 0.4 0.1 0.3 0.5 0.2 0.2 0.5 0.3
+                0.4 0.4 0.2 0.2 0.5 0.3 0.1 0.4 0.5 0.3 0.4 0.3 0.1 0.4 0.5 0.05 0.35 0.6` },
+      { for: 'engine_performance', given: ['engine_condition', 'maintenance_schedule', 'fuel_quality'], 
+        table: `0.9 0.09 0.01 0.8 0.15 0.05 0.7 0.25 0.05 0.6 0.3 0.1 0.5 0.4 0.1 0.4 0.4 0.2
+                0.6 0.3 0.1 0.5 0.4 0.1 0.3 0.6 0.1 0.2 0.6 0.2 0.2 0.5 0.3 0.1 0.5 0.4
+                0.4 0.5 0.1 0.3 0.5 0.2 0.2 0.5 0.3 0.1 0.4 0.5 0.05 0.35 0.6 0.01 0.29 0.7` }
+    ];
+  } else if (system === 'humananatomy' || system.includes('anatomy')) {
+    variables = [
+      { name: 'cardiovascular_health', outcomes: ['poor', 'average', 'excellent'] },
+      { name: 'respiratory_function', outcomes: ['impaired', 'normal', 'optimized'] },
+      { name: 'digestive_efficiency', outcomes: ['low', 'medium', 'high'] },
+      { name: 'exercise_frequency', outcomes: ['sedentary', 'moderate', 'active'] },
+      { name: 'nutrition_quality', outcomes: ['poor', 'adequate', 'excellent'] },
+      { name: 'overall_health', outcomes: ['compromised', 'fair', 'excellent'] }
+    ];
+    
+    relationships = [
+      { for: 'exercise_frequency', given: [], table: '0.4 0.4 0.2' },
+      { for: 'nutrition_quality', given: [], table: '0.3 0.5 0.2' },
+      { for: 'cardiovascular_health', given: ['exercise_frequency', 'nutrition_quality'], 
+        table: `0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.4 0.3 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.3 0.5 0.2 0.1 0.4 0.5 0.05 0.25 0.7` },
+      { for: 'respiratory_function', given: ['exercise_frequency', 'cardiovascular_health'], 
+        table: `0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.4 0.4 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.3 0.5 0.2 0.1 0.3 0.6 0.05 0.15 0.8` },
+      { for: 'digestive_efficiency', given: ['nutrition_quality'], table: '0.7 0.2 0.1 0.3 0.6 0.1 0.1 0.3 0.6' },
+      { for: 'overall_health', given: ['cardiovascular_health', 'respiratory_function', 'digestive_efficiency'], 
+        table: `0.9 0.1 0 0.7 0.2 0.1 0.5 0.4 0.1 0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.5 0.2 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5
+                0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.4 0.3 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.3 0.6 0.3 0.5 0.2 0.1 0.4 0.5 0.05 0.15 0.8
+                0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.3 0.6 0.3 0.5 0.2 0.1 0.4 0.5 0.05 0.15 0.8 0.1 0.3 0.6 0.05 0.15 0.8 0.01 0.09 0.9` }
+    ];
+  } else if (system === 'usahistory' || system.includes('history')) {
+    variables = [
+      { name: 'economic_conditions', outcomes: ['depression', 'recession', 'growth', 'boom'] },
+      { name: 'political_climate', outcomes: ['divided', 'partisan', 'unified'] },
+      { name: 'foreign_relations', outcomes: ['hostile', 'neutral', 'friendly'] },
+      { name: 'social_movement', outcomes: ['weak', 'moderate', 'strong'] },
+      { name: 'technological_advancement', outcomes: ['slow', 'steady', 'rapid'] },
+      { name: 'historical_period_significance', outcomes: ['minor', 'moderate', 'major'] }
+    ];
+    
+    relationships = [
+      { for: 'economic_conditions', given: [], table: '0.1 0.3 0.4 0.2' },
+      { for: 'political_climate', given: [], table: '0.4 0.4 0.2' },
+      { for: 'foreign_relations', given: ['political_climate'], table: '0.5 0.3 0.2 0.3 0.4 0.3 0.2 0.3 0.5' },
+      { for: 'social_movement', given: ['economic_conditions', 'political_climate'], 
+        table: `0.2 0.3 0.5 0.3 0.4 0.3 0.5 0.3 0.2 0.3 0.4 0.3 0.5 0.3 0.2 0.6 0.3 0.1 0.4 0.4 0.2 0.6 0.3 0.1 0.7 0.2 0.1
+                0.3 0.4 0.3 0.4 0.4 0.2 0.6 0.3 0.1 0.1 0.4 0.5 0.2 0.5 0.3 0.3 0.5 0.2 0.05 0.35 0.6 0.1 0.4 0.5 0.2 0.5 0.3` },
+      { for: 'technological_advancement', given: ['economic_conditions'], 
+        table: `0.6 0.3 0.1 0.4 0.5 0.1 0.2 0.5 0.3 0.1 0.3 0.6` },
+      { for: 'historical_period_significance', given: ['economic_conditions', 'social_movement', 'foreign_relations'], 
+        table: `0.4 0.4 0.2 0.3 0.4 0.3 0.1 0.3 0.6 0.3 0.4 0.3 0.2 0.3 0.5 0.1 0.2 0.7 0.2 0.4 0.4 0.1 0.3 0.6 0.05 0.15 0.8
+                0.3 0.5 0.2 0.2 0.4 0.4 0.1 0.2 0.7 0.2 0.4 0.4 0.1 0.3 0.6 0.05 0.15 0.8 0.1 0.3 0.6 0.05 0.15 0.8 0.01 0.09 0.9
+                0.2 0.4 0.4 0.1 0.3 0.6 0.05 0.15 0.8 0.1 0.3 0.6 0.05 0.15 0.8 0.01 0.09 0.9 0.05 0.15 0.8 0.01 0.09 0.9 0.01 0.04 0.95` }
+    ];
+  } else if (system === 'researchteam' || system.includes('research')) {
+    variables = [
+      { name: 'team_size', outcomes: ['small', 'medium', 'large'] },
+      { name: 'funding_level', outcomes: ['limited', 'adequate', 'abundant'] },
+      { name: 'expertise_diversity', outcomes: ['low', 'medium', 'high'] },
+      { name: 'collaboration_quality', outcomes: ['poor', 'adequate', 'excellent'] },
+      { name: 'research_methodology', outcomes: ['traditional', 'mixed', 'innovative'] },
+      { name: 'publication_impact', outcomes: ['low', 'medium', 'high'] }
+    ];
+    
+    relationships = [
+      { for: 'team_size', given: [], table: '0.4 0.4 0.2' },
+      { for: 'funding_level', given: [], table: '0.5 0.3 0.2' },
+      { for: 'expertise_diversity', given: ['team_size'], table: '0.6 0.3 0.1 0.3 0.5 0.2 0.2 0.3 0.5' },
+      { for: 'collaboration_quality', given: ['team_size', 'expertise_diversity'], 
+        table: `0.3 0.5 0.2 0.2 0.5 0.3 0.1 0.3 0.6 0.4 0.4 0.2 0.2 0.5 0.3 0.1 0.2 0.7 0.5 0.3 0.2 0.3 0.4 0.3 0.1 0.2 0.7` },
+      { for: 'research_methodology', given: ['expertise_diversity', 'funding_level'], 
+        table: `0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.5 0.3 0.4 0.4 0.2 0.3 0.4 0.3 0.1 0.4 0.5 0.3 0.4 0.3 0.1 0.3 0.6 0.1 0.2 0.7` },
+      { for: 'publication_impact', given: ['collaboration_quality', 'research_methodology', 'funding_level'], 
+        table: `0.8 0.15 0.05 0.7 0.2 0.1 0.5 0.3 0.2 0.7 0.2 0.1 0.5 0.4 0.1 0.3 0.5 0.2 0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.5 0.3
+                0.6 0.3 0.1 0.5 0.4 0.1 0.3 0.4 0.3 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.4 0.4 0.2 0.2 0.5 0.3 0.1 0.3 0.6
+                0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.3 0.6 0.4 0.4 0.2 0.2 0.4 0.4 0.1 0.2 0.7 0.2 0.5 0.3 0.1 0.3 0.6 0.05 0.15 0.8` }
+    ];
+  } else if (system === 'datascience' || system.includes('data')) {
+    variables = [
+      { name: 'data_quality', outcomes: ['poor', 'adequate', 'excellent'] },
+      { name: 'data_volume', outcomes: ['small', 'medium', 'large'] },
+      { name: 'feature_engineering', outcomes: ['basic', 'intermediate', 'advanced'] },
+      { name: 'algorithm_complexity', outcomes: ['simple', 'moderate', 'complex'] },
+      { name: 'computational_resources', outcomes: ['limited', 'adequate', 'abundant'] },
+      { name: 'model_performance', outcomes: ['underperforming', 'acceptable', 'superior'] }
+    ];
+    
+    relationships = [
+      { for: 'data_quality', given: [], table: '0.3 0.5 0.2' },
+      { for: 'data_volume', given: [], table: '0.2 0.5 0.3' },
+      { for: 'feature_engineering', given: ['data_quality'], table: '0.7 0.2 0.1 0.3 0.5 0.2 0.1 0.4 0.5' },
+      { for: 'algorithm_complexity', given: ['feature_engineering'], table: '0.6 0.3 0.1 0.3 0.5 0.2 0.1 0.3 0.6' },
+      { for: 'computational_resources', given: [], table: '0.3 0.5 0.2' },
+      { for: 'model_performance', given: ['data_quality', 'feature_engineering', 'algorithm_complexity', 'computational_resources'], 
+        table: `0.9 0.1 0 0.8 0.2 0 0.6 0.3 0.1 0.8 0.2 0 0.7 0.3 0 0.5 0.4 0.1 0.7 0.3 0 0.5 0.4 0.1 0.3 0.5 0.2
+                0.7 0.3 0 0.6 0.3 0.1 0.4 0.5 0.1 0.6 0.3 0.1 0.4 0.5 0.1 0.3 0.5 0.2 0.5 0.3 0.2 0.3 0.4 0.3 0.1 0.3 0.6
+                0.6 0.3 0.1 0.4 0.5 0.1 0.2 0.5 0.3 0.5 0.3 0.2 0.3 0.4 0.3 0.1 0.3 0.6 0.3 0.4 0.3 0.1 0.3 0.6 0.05 0.15 0.8
+                0.8 0.2 0 0.7 0.3 0 0.5 0.4 0.1 0.7 0.3 0 0.5 0.4 0.1 0.3 0.5 0.2 0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.5 0.3
+                0.6 0.3 0.1 0.5 0.4 0.1 0.3 0.5 0.2 0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.4 0.4 0.2 0.2 0.5 0.3 0.1 0.3 0.6
+                0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.4 0.4 0.2 0.2 0.4 0.4 0.1 0.2 0.7 0.2 0.5 0.3 0.1 0.2 0.7 0.05 0.15 0.8
+                0.7 0.3 0 0.5 0.4 0.1 0.3 0.5 0.2 0.6 0.3 0.1 0.4 0.4 0.2 0.2 0.4 0.4 0.4 0.4 0.2 0.2 0.3 0.5 0.1 0.2 0.7
+                0.5 0.4 0.1 0.3 0.5 0.2 0.1 0.4 0.5 0.4 0.4 0.2 0.2 0.4 0.4 0.1 0.2 0.7 0.3 0.4 0.3 0.1 0.2 0.7 0.05 0.15 0.8
+                0.3 0.5 0.2 0.2 0.4 0.4 0.05 0.25 0.7 0.2 0.5 0.3 0.1 0.3 0.6 0.05 0.15 0.8 0.1 0.3 0.6 0.05 0.15 0.8 0.01 0.09 0.9` }
+    ];
+  }
+  
+  // Use default variables if none are specified for this system
+  if (variables.length === 0) {
+    variables = [
+      { name: 'variable_a', outcomes: ['low', 'medium', 'high'] },
+      { name: 'variable_b', outcomes: ['low', 'medium', 'high'] },
+      { name: 'variable_c', outcomes: ['weak', 'strong'] },
+      { name: 'variable_d', outcomes: ['inactive', 'active'] },
+      { name: 'variable_e', outcomes: ['failure', 'success'] }
+    ];
+    
+    relationships = [
+      { for: 'variable_a', given: [], table: '0.3 0.4 0.3' },
+      { for: 'variable_b', given: [], table: '0.25 0.5 0.25' },
+      { for: 'variable_c', given: ['variable_a'], table: '0.7 0.3 0.4 0.6 0.2 0.8' },
+      { for: 'variable_d', given: ['variable_b'], table: '0.6 0.4 0.3 0.7 0.1 0.9' },
+      { for: 'variable_e', given: ['variable_c', 'variable_d'], table: '0.8 0.2 0.6 0.4 0.4 0.6 0.1 0.9' }
+    ];
+  }
+
+  // Generate BIF XML with system-specific or default variables and relationships
+  let bif = `<?xml version="1.0"?>
+<!-- System-specific Bayesian Network BIF File for ${systemName} -->
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>${systemName}</NAME>
-<COMMENT>This is a placeholder BIF file created when the actual renderer encountered issues.</COMMENT>
+<n>${systemName}</n>
+<COMMENT>This is a system-specific BIF file with placeholder data modeled for this particular system.</COMMENT>
 
-<!-- Sample Variables -->
+<!-- Variables -->`;
+
+  // Add variable definitions
+  for (const variable of variables) {
+    bif += `
 <VARIABLE TYPE="discrete">
-    <NAME>variable1</NAME>
-    <OUTCOME>true</OUTCOME>
-    <OUTCOME>false</OUTCOME>
-    <COMMENT>Placeholder Variable 1</COMMENT>
-</VARIABLE>
+    <n>${variable.name}</n>`;
+    
+    // Add outcomes
+    for (const outcome of variable.outcomes) {
+      bif += `    <OUTCOME>${outcome}</OUTCOME>\n`;
+    }
+    
+    bif += `    <COMMENT>${systemName} variable: ${variable.name}</COMMENT>
+</VARIABLE>`;
+  }
 
-<VARIABLE TYPE="discrete">
-    <NAME>variable2</NAME>
-    <OUTCOME>high</OUTCOME>
-    <OUTCOME>medium</OUTCOME>
-    <OUTCOME>low</OUTCOME>
-    <COMMENT>Placeholder Variable 2</COMMENT>
-</VARIABLE>
+  // Add probability distributions
+  bif += `
+<!-- Probability Distributions -->`;
 
-<!-- Sample Probability Distributions -->
+  for (const relationship of relationships) {
+    bif += `
 <DEFINITION>
-    <FOR>variable1</FOR>
-    <TABLE>0.5 0.5</TABLE>
-</DEFINITION>
+    <FOR>${relationship.for}</FOR>`;
+    
+    // Add given variables if any
+    if (relationship.given && relationship.given.length > 0) {
+      for (const given of relationship.given) {
+          bif += `    <GIVEN>${given}</GIVEN>\n`;
+      }
+    } else if (relationship.given) {
+        bif += `    <GIVEN>${relationship.given}</GIVEN>\n`;
+    }
+    
+    bif += `    <TABLE>${Array.isArray(relationship.table) ? relationship.table.join(' ') : relationship.table}</TABLE>
+</DEFINITION>`;
+  }
 
-<DEFINITION>
-    <FOR>variable2</FOR>
-    <GIVEN>variable1</GIVEN>
-    <TABLE>0.7 0.2 0.1 0.1 0.3 0.6</TABLE>
-</DEFINITION>
-
+  bif += `
 </NETWORK>
 </BIF>`;
+
+  return bif;
 }
 
 /**
  * Generate placeholder binary content for compressed blobs
  * @returns {Buffer} Placeholder binary content
  */
-function generatePlaceholderCompressedBlob() {
-  // Create a simple compressed-like buffer with identifiable header
-  const header = Buffer.from('ULTRALINK-COMPRESSED-PLACEHOLDER');
-  const timestamp = Buffer.from(new Date().toISOString());
-  const data = Buffer.from(JSON.stringify({ message: 'This is a placeholder for compressed data' }));
+function generatePlaceholderCompressedBlob(systemName) {
+  // Create a system-specific placeholder metadata
+  const metadata = {
+    system: systemName,
+    timestamp: new Date().toISOString(),
+    format: 'compressed-blob',
+    compression: 'lz4',
+    version: '1.0'
+  };
   
-  // Combine the buffers
-  return Buffer.concat([header, Buffer.from([0x00]), timestamp, Buffer.from([0x00]), data]);
+  // Basic system-specific template data based on the system name
+  const systemSpecificData = {
+    'ProjectCollaboration': {
+      entities: [
+        { id: 'emilie', type: 'person', attributes: { name: 'Emilie', role: 'Team Lead' }},
+        { id: 'taylor', type: 'person', attributes: { name: 'Taylor', role: 'Documentation Specialist' }},
+        { id: 'peter', type: 'person', attributes: { name: 'Peter', role: 'Licensing Specialist' }},
+        { id: 'sam', type: 'person', attributes: { name: 'Sam', role: 'Documentation Lead' }}
+      ],
+      relationships: [
+        { source: 'sam', target: 'proceedings', type: 'leads' },
+        { source: 'peter', target: 'licensing-task', type: 'leads' }
+      ]
+    },
+    'DesertEcosystem': {
+      entities: [
+        { id: 'saguaro', type: 'organism', attributes: { name: 'Saguaro Cactus' }},
+        { id: 'kangaroo-rat', type: 'organism', attributes: { name: 'Kangaroo Rat' }},
+        { id: 'aridity', type: 'environmental_factor', attributes: { name: 'Aridity' }}
+      ],
+      relationships: [
+        { source: 'saguaro', target: 'aridity', type: 'adapts_to' },
+        { source: 'kangaroo-rat', target: 'aridity', type: 'adapts_to' }
+      ]
+    },
+    'ResearchTeam': {
+      entities: [
+        { id: 'alice-chen', type: 'person', attributes: { name: 'Alice Chen', title: 'Principal Investigator' }},
+        { id: 'bob-smith', type: 'person', attributes: { name: 'Bob Smith', title: 'Senior Researcher' }},
+        { id: 'computer-vision-project', type: 'project', attributes: { title: 'Advanced Computer Vision Systems' }}
+      ],
+      relationships: [
+        { source: 'alice-chen', target: 'computer-vision-project', type: 'leads' },
+        { source: 'bob-smith', target: 'alice-chen', type: 'reports_to' }
+      ]
+    },
+    'HumanAnatomy': {
+      entities: [
+        { id: 'heart', type: 'organ', attributes: { name: 'Heart' }},
+        { id: 'lungs', type: 'organ', attributes: { name: 'Lungs' }},
+        { id: 'circulatory-system', type: 'system', attributes: { name: 'Circulatory System' }}
+      ],
+      relationships: [
+        { source: 'heart', target: 'circulatory-system', type: 'part_of' },
+        { source: 'heart', target: 'lungs', type: 'interacts_with' }
+      ]
+    },
+    'USAHistory': {
+      entities: [
+        { id: 'american-revolution', type: 'event', attributes: { name: 'American Revolution', year: '1775-1783' }},
+        { id: 'george-washington', type: 'person', attributes: { name: 'George Washington', role: 'First President' }},
+        { id: 'declaration-of-independence', type: 'document', attributes: { name: 'Declaration of Independence', year: '1776' }}
+      ],
+      relationships: [
+        { source: 'george-washington', target: 'american-revolution', type: 'participated_in' },
+        { source: 'declaration-of-independence', target: 'american-revolution', type: 'resulted_from' }
+      ]
+    },
+    'NeurofeedbackResearch': {
+      entities: [
+        { id: 'eeg', type: 'equipment', attributes: { name: 'Electroencephalogram' }},
+        { id: 'neurofeedback-protocol', type: 'protocol', attributes: { name: 'Neurofeedback Protocol' }},
+        { id: 'attention-deficit', type: 'condition', attributes: { name: 'Attention Deficit' }}
+      ],
+      relationships: [
+        { source: 'neurofeedback-protocol', target: 'attention-deficit', type: 'treats' },
+        { source: 'eeg', target: 'neurofeedback-protocol', type: 'used_in' }
+      ]
+    },
+    'Car': {
+      entities: [
+        { id: 'engine', type: 'component', attributes: { name: 'Engine', type: 'V6' }},
+        { id: 'transmission', type: 'component', attributes: { name: 'Transmission', type: 'Automatic' }},
+        { id: 'chassis', type: 'component', attributes: { name: 'Chassis', material: 'Aluminum' }},
+        { id: 'electrical-system', type: 'system', attributes: { name: 'Electrical System', voltage: '12V' }}
+      ],
+      relationships: [
+        { source: 'engine', target: 'transmission', type: 'connects_to' },
+        { source: 'transmission', target: 'chassis', type: 'mounted_on' },
+        { source: 'electrical-system', target: 'engine', type: 'powers' }
+      ]
+    },
+    'POMDP': {
+      entities: [
+        { id: 'state-space', type: 'mathematical_concept', attributes: { name: 'State Space', dimension: 'Finite' }},
+        { id: 'observation-space', type: 'mathematical_concept', attributes: { name: 'Observation Space', dimension: 'Finite' }},
+        { id: 'action-space', type: 'mathematical_concept', attributes: { name: 'Action Space', dimension: 'Finite' }},
+        { id: 'transition-model', type: 'model', attributes: { name: 'Transition Model', type: 'Probabilistic' }}
+      ],
+      relationships: [
+        { source: 'state-space', target: 'observation-space', type: 'generates' },
+        { source: 'action-space', target: 'state-space', type: 'influences' },
+        { source: 'transition-model', target: 'state-space', type: 'maps' }
+      ]
+    },
+    'ActiveInferenceLab': {
+      entities: [
+        { id: 'free-energy-principle', type: 'theory', attributes: { name: 'Free Energy Principle', author: 'Karl Friston' }},
+        { id: 'predictive-coding', type: 'model', attributes: { name: 'Predictive Coding', type: 'Hierarchical' }},
+        { id: 'markov-blanket', type: 'concept', attributes: { name: 'Markov Blanket', domain: 'Statistical Physics' }},
+        { id: 'variational-inference', type: 'method', attributes: { name: 'Variational Inference', approach: 'Bayesian' }}
+      ],
+      relationships: [
+        { source: 'free-energy-principle', target: 'predictive-coding', type: 'encompasses' },
+        { source: 'markov-blanket', target: 'free-energy-principle', type: 'foundational_to' },
+        { source: 'variational-inference', target: 'predictive-coding', type: 'implements' }
+      ]
+    },
+    'DataScience': {
+      entities: [
+        { id: 'data-preprocessing', type: 'process', attributes: { name: 'Data Preprocessing', importance: 'Critical' }},
+        { id: 'feature-engineering', type: 'process', attributes: { name: 'Feature Engineering', complexity: 'High' }},
+        { id: 'model-training', type: 'process', attributes: { name: 'Model Training', approach: 'Supervised' }},
+        { id: 'model-evaluation', type: 'process', attributes: { name: 'Model Evaluation', metrics: 'Accuracy, F1-Score' }}
+      ],
+      relationships: [
+        { source: 'data-preprocessing', target: 'feature-engineering', type: 'precedes' },
+        { source: 'feature-engineering', target: 'model-training', type: 'enhances' },
+        { source: 'model-training', target: 'model-evaluation', type: 'requires' }
+      ]
+    }
+  };
+  
+  // Default template for unknown systems
+  const defaultTemplate = {
+    entities: [
+      { id: 'entity1', type: 'default', attributes: { name: 'Entity 1' }},
+      { id: 'entity2', type: 'default', attributes: { name: 'Entity 2' }}
+    ],
+    relationships: [
+      { source: 'entity1', target: 'entity2', type: 'related_to' }
+    ]
+  };
+  
+  // Use system-specific data if available, otherwise use default
+  const templateData = systemSpecificData[systemName] || defaultTemplate;
+  
+  // Create placeholder compressed data with system info
+  const placeholderData = {
+    metadata: metadata,
+    systemTemplate: templateData,
+    message: `This is a system-specific placeholder for compressed data for the ${systemName} system`
+  };
+  
+  // Convert to JSON and create a buffer
+  const jsonData = JSON.stringify(placeholderData, null, 2);
+  
+  // Create header and data buffers
+  const header = Buffer.from('ULTRALINK-COMPRESSED-PLACEHOLDER');
+  const systemNameBuffer = Buffer.from(systemName || 'unknown');
+  const data = Buffer.from(jsonData);
+  
+  // Combine the buffers with separators
+  return Buffer.concat([
+    header, 
+    Buffer.from([0x00]), 
+    systemNameBuffer,
+    Buffer.from([0x00]), 
+    data
+  ]);
 }
 
 /**
@@ -581,6 +992,26 @@ async function renderSystem(systemName, createDatasetFn) {
           // HTML Website output (multiple files)
           try {
             console.log(`    🌐 Generating HTML website for ${systemName}...`);
+            
+            // Ensure format statistics objects are initialized
+            if (!STATS.formatStats[target.name]) {
+              STATS.formatStats[target.name] = {
+                files: 0,
+                successful: 0,
+                warnings: 0,
+                errors: 0
+              };
+            }
+            
+            if (!STATS.systemStats[systemName].formats[target.name]) {
+              STATS.systemStats[systemName].formats[target.name] = {
+                files: 0,
+                successful: 0,
+                warnings: 0,
+                errors: 0
+              };
+            }
+            
             const websiteOutput = safeExecute(() => ultralink.toHTMLWebsite({
               title: `${systemName} - UltraLink Knowledge Graph`,
               description: `Interactive exploration of the ${systemName} knowledge graph`,
@@ -1056,7 +1487,7 @@ async function renderSystem(systemName, createDatasetFn) {
               } else if (blobFormat.format === 'compressed') {
                 try {
                   console.log(`      🔧 Using placeholder compressed blob for ${systemName}`);
-                  const compressedBlob = generatePlaceholderCompressedBlob();
+                  const compressedBlob = generatePlaceholderCompressedBlob(systemName);
                   
                   safeWriteFile(outputPath, compressedBlob);
                   console.log(`      ✅ Saved compressed blob to: ${outputPath}`);
@@ -1518,3 +1949,16 @@ renderAllSystems().catch(error => {
   console.error('❌ Error rendering systems:', error);
   process.exit(1);
 }); 
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    renderSystem,
+    renderAllSystems,
+    generatePlaceholderD3,
+    generatePlaceholderCytoscape,
+    generatePlaceholderBIF,
+    generatePlaceholderCompressedBlob,
+    SYSTEMS
+  };
+} 

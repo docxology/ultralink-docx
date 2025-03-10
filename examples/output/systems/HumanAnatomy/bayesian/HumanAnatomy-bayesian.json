@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "type": "Generic",
-    "timestamp": "2025-03-10T17:42:19.328Z"
+    "type": "HumanAnatomy",
+    "timestamp": "2025-03-10T19:33:25.133Z"
   },
   "nodes": [
     {
@@ -13,7 +13,59 @@
         "poor"
       ],
       "comment": "Overall system state"
+    },
+    {
+      "id": "organ_function",
+      "type": "condition",
+      "outcomes": [
+        "normal",
+        "impaired",
+        "critical"
+      ],
+      "comment": "Organ functionality"
+    },
+    {
+      "id": "system_health",
+      "type": "condition",
+      "outcomes": [
+        "healthy",
+        "stressed",
+        "failing"
+      ],
+      "comment": "Overall system health"
+    },
+    {
+      "id": "tissue_condition",
+      "type": "condition",
+      "outcomes": [
+        "normal",
+        "inflamed",
+        "damaged"
+      ],
+      "comment": "Tissue condition status"
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "system_health",
+      "target": "organ_function",
+      "probabilities": [
+        [
+          0.8,
+          0.15,
+          0.05
+        ],
+        [
+          0.8,
+          0.15,
+          0.05
+        ],
+        [
+          0.8,
+          0.15,
+          0.05
+        ]
+      ]
+    }
+  ]
 }

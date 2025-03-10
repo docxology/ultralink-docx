@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "type": "Generic",
-    "timestamp": "2025-03-10T17:42:22.275Z"
+    "type": "ActiveInferenceLab",
+    "timestamp": "2025-03-10T19:33:28.021Z"
   },
   "nodes": [
     {
@@ -13,7 +13,59 @@
         "poor"
       ],
       "comment": "Overall system state"
+    },
+    {
+      "id": "experiment_success",
+      "type": "performance",
+      "outcomes": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "comment": "Experiment success rate"
+    },
+    {
+      "id": "model_accuracy",
+      "type": "performance",
+      "outcomes": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "comment": "Model prediction accuracy"
+    },
+    {
+      "id": "data_quality",
+      "type": "condition",
+      "outcomes": [
+        "good",
+        "fair",
+        "poor"
+      ],
+      "comment": "Quality of collected data"
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "experiment_success",
+      "target": "data_quality",
+      "probabilities": [
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ],
+        [
+          0.6,
+          0.3,
+          0.1
+        ]
+      ]
+    }
+  ]
 }

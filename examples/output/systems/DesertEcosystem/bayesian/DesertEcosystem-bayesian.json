@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "type": "Generic",
-    "timestamp": "2025-03-10T17:42:20.332Z"
+    "type": "DesertEcosystem",
+    "timestamp": "2025-03-10T19:33:26.159Z"
   },
   "nodes": [
     {
@@ -13,6 +13,36 @@
         "poor"
       ],
       "comment": "Overall system state"
+    },
+    {
+      "id": "temperature",
+      "type": "condition",
+      "outcomes": [
+        "normal",
+        "high",
+        "extreme"
+      ],
+      "comment": "Desert temperature conditions"
+    },
+    {
+      "id": "rainfall",
+      "type": "condition",
+      "outcomes": [
+        "adequate",
+        "low",
+        "drought"
+      ],
+      "comment": "Rainfall levels"
+    },
+    {
+      "id": "soil_quality",
+      "type": "condition",
+      "outcomes": [
+        "good",
+        "fair",
+        "poor"
+      ],
+      "comment": "Soil quality status"
     }
   ],
   "edges": []
