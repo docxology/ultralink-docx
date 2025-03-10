@@ -85,15 +85,13 @@ async function enhancedSVGtoPNG(svgString, options = {}) {
       .resize({
         width: width,
         height: height,
-        fit: 'contain'
+        fit: 'contain',
+        density: density
       })
       .png({
         compressionLevel: 9,
         adaptiveFiltering: true,
         quality: 100
-      })
-      .withMetadata({
-        density: density
       })
       .toBuffer();
     

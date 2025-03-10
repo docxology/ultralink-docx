@@ -56,7 +56,16 @@ class BayesianNetworkExporter {
   _determineSystemType(entities) {
     if (entities.length === 0) return 'Generic';
 
-    // Try to determine system type from entity types and IDs
+    // First try to get the system type from the first entity's type
+    const firstEntity = entities[0];
+    if (firstEntity && firstEntity.type) {
+      const systemType = firstEntity.type.split('/')[0];
+      if (['Car', 'ResearchTeam', 'DesertEcosystem', 'ActiveInferenceLab', 'USAHistory', 'NeurofeedbackResearch', 'HumanAnatomy'].includes(systemType)) {
+        return systemType;
+      }
+    }
+
+    // Try to determine from entity types and IDs
     const types = entities.map(e => getEntityType(e).toLowerCase());
     const ids = entities.map(e => e.id.toLowerCase());
     const allText = [...types, ...ids].join(' ');
@@ -66,229 +75,229 @@ class BayesianNetworkExporter {
     const relTypes = relationships.map(r => r.type.toLowerCase());
     const relText = relTypes.join(' ');
 
-    // Check for Car system
-    if (allText.includes('car') || allText.includes('engine') || allText.includes('vehicle') ||
-        relText.includes('powers') || relText.includes('drives')) {
-      return 'Car';
-    }
-
-    // Check for ResearchTeam system
+    // Check for specific system types
     if (allText.includes('researcher') || allText.includes('research') || allText.includes('team') ||
         relText.includes('collaborates') || relText.includes('researches')) {
       return 'ResearchTeam';
     }
 
-    // Check for DesertEcosystem system
     if (allText.includes('ecosystem') || allText.includes('desert') || allText.includes('species') ||
         relText.includes('lives_in') || relText.includes('feeds_on')) {
       return 'DesertEcosystem';
     }
 
-    // Check for ActiveInferenceLab system
     if (allText.includes('inference') || allText.includes('lab') || allText.includes('experiment') ||
         relText.includes('experiments') || relText.includes('analyzes')) {
       return 'ActiveInferenceLab';
     }
 
-    // Check for USAHistory system
     if (allText.includes('history') || allText.includes('usa') || allText.includes('historical') ||
         relText.includes('precedes') || relText.includes('influences')) {
       return 'USAHistory';
     }
 
-    // Check for NeurofeedbackResearch system
     if (allText.includes('neurofeedback') || allText.includes('brain') || allText.includes('patient') ||
         relText.includes('monitors') || relText.includes('treats')) {
       return 'NeurofeedbackResearch';
     }
 
-    // Check for HumanAnatomy system
     if (allText.includes('anatomy') || allText.includes('organ') || allText.includes('tissue') ||
-        relText.includes('connects') || relText.includes('supplies')) {
+        relText.includes('connects') || relText.includes('functions')) {
       return 'HumanAnatomy';
     }
 
-    // Try to determine from system variables
-    const systemVariables = this._generateSystemVariables('Generic');
-    const variableNames = systemVariables.map(v => v.name.toLowerCase());
-    const variableText = variableNames.join(' ');
+    if (allText.includes('car') || allText.includes('engine') || allText.includes('vehicle') ||
+        relText.includes('powers') || relText.includes('drives')) {
+      return 'Car';
+    }
 
-    if (variableText.includes('car') || variableText.includes('engine')) return 'Car';
-    if (variableText.includes('researcher') || variableText.includes('team')) return 'ResearchTeam';
-    if (variableText.includes('ecosystem') || variableText.includes('desert')) return 'DesertEcosystem';
-    if (variableText.includes('inference') || variableText.includes('lab')) return 'ActiveInferenceLab';
-    if (variableText.includes('history') || variableText.includes('usa')) return 'USAHistory';
-    if (variableText.includes('neurofeedback') || variableText.includes('brain')) return 'NeurofeedbackResearch';
-    if (variableText.includes('anatomy') || variableText.includes('organ')) return 'HumanAnatomy';
-
-    // Try to determine from entity properties
-    const entityProps = entities.map(e => Object.values(e).join(' ').toLowerCase());
-    const propsText = entityProps.join(' ');
-
-    if (propsText.includes('car') || propsText.includes('engine')) return 'Car';
-    if (propsText.includes('researcher') || propsText.includes('team')) return 'ResearchTeam';
-    if (propsText.includes('ecosystem') || propsText.includes('desert')) return 'DesertEcosystem';
-    if (propsText.includes('inference') || propsText.includes('lab')) return 'ActiveInferenceLab';
-    if (propsText.includes('history') || propsText.includes('usa')) return 'USAHistory';
-    if (propsText.includes('neurofeedback') || propsText.includes('brain')) return 'NeurofeedbackResearch';
-    if (propsText.includes('anatomy') || propsText.includes('organ')) return 'HumanAnatomy';
+    // If no specific system type is found, try to determine from the first entity's type
+    if (firstEntity && firstEntity.type) {
+      const baseType = firstEntity.type.split('/')[0];
+      if (baseType && baseType !== 'entity') {
+        return baseType;
+      }
+    }
 
     return 'Generic';
   }
 
   _generateSystemVariables(systemType) {
-    const systemVariables = {
-      Car: [
-        {
-          name: 'engine_system',
-          type: 'discrete',
-          outcomes: ['operational', 'degraded', 'failed'],
-          comment: 'Overall engine system state'
-        },
-        {
-          name: 'electrical_system',
-          type: 'discrete',
-          outcomes: ['operational', 'degraded', 'failed'],
-          comment: 'Overall electrical system state'
-        },
-        {
-          name: 'hvac_system',
-          type: 'discrete',
-          outcomes: ['operational', 'degraded', 'failed'],
-          comment: 'Overall HVAC system state'
-        }
-      ],
-      ResearchTeam: [
-        {
-          name: 'researcher_productivity',
-          type: 'discrete',
-          outcomes: ['high', 'medium', 'low'],
-          comment: 'Individual researcher productivity level'
-        },
-        {
-          name: 'project_success',
-          type: 'discrete',
-          outcomes: ['successful', 'partial', 'unsuccessful'],
-          comment: 'Project outcome status'
-        },
-        {
-          name: 'team_collaboration',
-          type: 'discrete',
-          outcomes: ['strong', 'moderate', 'weak'],
-          comment: 'Team collaboration effectiveness'
-        }
-      ],
-      DesertEcosystem: [
-        {
-          name: 'temperature',
-          type: 'discrete',
-          outcomes: ['high', 'moderate', 'low'],
-          comment: 'Environmental temperature'
-        },
-        {
-          name: 'rainfall',
-          type: 'discrete',
-          outcomes: ['abundant', 'moderate', 'scarce'],
-          comment: 'Precipitation levels'
-        },
-        {
-          name: 'soil_quality',
-          type: 'discrete',
-          outcomes: ['fertile', 'moderate', 'poor'],
-          comment: 'Soil condition'
-        }
-      ],
-      ActiveInferenceLab: [
-        {
-          name: 'experiment_success',
-          type: 'discrete',
-          outcomes: ['successful', 'partial', 'unsuccessful'],
-          comment: 'Experiment outcome'
-        },
-        {
-          name: 'model_accuracy',
-          type: 'discrete',
-          outcomes: ['high', 'medium', 'low'],
-          comment: 'Model prediction accuracy'
-        },
-        {
-          name: 'data_quality',
-          type: 'discrete',
-          outcomes: ['high', 'medium', 'low'],
-          comment: 'Quality of collected data'
-        }
-      ],
-      USAHistory: [
-        {
-          name: 'political_climate',
-          type: 'discrete',
-          outcomes: ['favorable', 'neutral', 'unfavorable'],
-          comment: 'Political environment'
-        },
-        {
-          name: 'economic_conditions',
-          type: 'discrete',
-          outcomes: ['strong', 'moderate', 'weak'],
-          comment: 'Economic state'
-        },
-        {
-          name: 'social_change',
-          type: 'discrete',
-          outcomes: ['significant', 'moderate', 'minimal'],
-          comment: 'Social transformation'
-        }
-      ],
-      NeurofeedbackResearch: [
-        {
-          name: 'brain_activity',
-          type: 'discrete',
-          outcomes: ['high', 'normal', 'low'],
-          comment: 'Neural activity level'
-        },
-        {
-          name: 'feedback_effectiveness',
-          type: 'discrete',
-          outcomes: ['effective', 'moderate', 'ineffective'],
-          comment: 'Feedback response'
-        },
-        {
-          name: 'patient_progress',
-          type: 'discrete',
-          outcomes: ['significant', 'moderate', 'minimal'],
-          comment: 'Treatment progress'
-        }
-      ],
-      HumanAnatomy: [
-        {
-          name: 'organ_function',
-          type: 'discrete',
-          outcomes: ['normal', 'impaired', 'critical'],
-          comment: 'Organ functionality'
-        },
-        {
-          name: 'system_health',
-          type: 'discrete',
-          outcomes: ['good', 'fair', 'poor'],
-          comment: 'Overall system health'
-        },
-        {
-          name: 'tissue_condition',
-          type: 'discrete',
-          outcomes: ['healthy', 'damaged', 'diseased'],
-          comment: 'Tissue state'
-        }
-      ],
-      Generic: [
-        {
-          name: 'system_state',
-          type: 'discrete',
-          outcomes: ['good', 'fair', 'poor'],
-          comment: 'Overall system state'
-        }
-      ]
-    };
-
-    return systemVariables[systemType] || systemVariables.Generic;
+    const variables = [];
+    
+    // Common variables for all systems
+    variables.push({
+      name: 'system_state',
+      type: 'state',
+      outcomes: ['good', 'fair', 'poor'],
+      comment: 'Overall system state'
+    });
+    
+    // System-specific variables
+    switch (systemType) {
+      case 'Car':
+        variables.push(
+          {
+            name: 'engine_system',
+            type: 'condition',
+            outcomes: ['normal', 'warning', 'critical'],
+            comment: 'Engine system status'
+          },
+          {
+            name: 'electrical_system',
+            type: 'condition',
+            outcomes: ['normal', 'warning', 'critical'],
+            comment: 'Electrical system status'
+          },
+          {
+            name: 'hvac_system',
+            type: 'condition',
+            outcomes: ['normal', 'warning', 'critical'],
+            comment: 'HVAC system status'
+          }
+        );
+        break;
+        
+      case 'ResearchTeam':
+        variables.push(
+          {
+            name: 'researcher_productivity',
+            type: 'performance',
+            outcomes: ['high', 'medium', 'low'],
+            comment: 'Individual researcher productivity'
+          },
+          {
+            name: 'project_success',
+            type: 'performance',
+            outcomes: ['high', 'medium', 'low'],
+            comment: 'Project success rate'
+          },
+          {
+            name: 'team_collaboration',
+            type: 'performance',
+            outcomes: ['high', 'medium', 'low'],
+            comment: 'Team collaboration effectiveness'
+          }
+        );
+        break;
+        
+      case 'DesertEcosystem':
+        variables.push(
+          {
+            name: 'temperature',
+            type: 'condition',
+            outcomes: ['normal', 'high', 'extreme'],
+            comment: 'Desert temperature conditions'
+          },
+          {
+            name: 'rainfall',
+            type: 'condition',
+            outcomes: ['adequate', 'low', 'drought'],
+            comment: 'Rainfall levels'
+          },
+          {
+            name: 'soil_quality',
+            type: 'condition',
+            outcomes: ['good', 'fair', 'poor'],
+            comment: 'Soil quality status'
+          }
+        );
+        break;
+        
+      case 'ActiveInferenceLab':
+        variables.push(
+          {
+            name: 'experiment_success',
+            type: 'performance',
+            outcomes: ['high', 'medium', 'low'],
+            comment: 'Experiment success rate'
+          },
+          {
+            name: 'model_accuracy',
+            type: 'performance',
+            outcomes: ['high', 'medium', 'low'],
+            comment: 'Model prediction accuracy'
+          },
+          {
+            name: 'data_quality',
+            type: 'condition',
+            outcomes: ['good', 'fair', 'poor'],
+            comment: 'Quality of collected data'
+          }
+        );
+        break;
+        
+      case 'USAHistory':
+        variables.push(
+          {
+            name: 'political_climate',
+            type: 'state',
+            outcomes: ['stable', 'tense', 'volatile'],
+            comment: 'Political climate state'
+          },
+          {
+            name: 'economic_conditions',
+            type: 'state',
+            outcomes: ['growth', 'stable', 'recession'],
+            comment: 'Economic conditions'
+          },
+          {
+            name: 'social_change',
+            type: 'state',
+            outcomes: ['progressive', 'moderate', 'conservative'],
+            comment: 'Social change dynamics'
+          }
+        );
+        break;
+        
+      case 'NeurofeedbackResearch':
+        variables.push(
+          {
+            name: 'brain_activity',
+            type: 'condition',
+            outcomes: ['normal', 'elevated', 'suppressed'],
+            comment: 'Brain activity patterns'
+          },
+          {
+            name: 'feedback_effectiveness',
+            type: 'performance',
+            outcomes: ['high', 'medium', 'low'],
+            comment: 'Neurofeedback effectiveness'
+          },
+          {
+            name: 'patient_progress',
+            type: 'performance',
+            outcomes: ['good', 'moderate', 'limited'],
+            comment: 'Patient progress status'
+          }
+        );
+        break;
+        
+      case 'HumanAnatomy':
+        variables.push(
+          {
+            name: 'organ_function',
+            type: 'condition',
+            outcomes: ['normal', 'impaired', 'critical'],
+            comment: 'Organ functionality'
+          },
+          {
+            name: 'system_health',
+            type: 'condition',
+            outcomes: ['healthy', 'stressed', 'failing'],
+            comment: 'Overall system health'
+          },
+          {
+            name: 'tissue_condition',
+            type: 'condition',
+            outcomes: ['normal', 'inflamed', 'damaged'],
+            comment: 'Tissue condition status'
+          }
+        );
+        break;
+    }
+    
+    return variables;
   }
 
   _generateEntityVariables(entities) {
@@ -375,43 +384,57 @@ class BayesianNetworkExporter {
     );
   }
 
-  _generateProbabilityTable(variable, givenVariables) {
-    // Generate conditional probability table based on domain knowledge
-    const rows = this._calculateTableSize(givenVariables);
-    const cols = variable.outcomes.length;
-    const table = [];
-
-    for (let i = 0; i < rows; i++) {
-      const row = [];
-      let remaining = 1.0;
-      
-      // Generate probabilities that sum to 1
-      for (let j = 0; j < cols - 1; j++) {
-        const p = remaining * (0.5 + Math.random() * 0.5);
-        row.push(Number(p.toFixed(2)));
-        remaining -= p;
-      }
-      row.push(Number(remaining.toFixed(2)));
-      
-      table.push(row);
+  _generateProbabilityTable(variable, givenVariables = []) {
+    // Get base probabilities for the variable
+    const baseProbabilities = this._generateBaseProbabilities(variable);
+    
+    if (givenVariables.length === 0) {
+      // Normalize probabilities to sum to 1
+      const sum = baseProbabilities.reduce((a, b) => a + b, 0);
+      return baseProbabilities.map(p => p / sum);
     }
-
+    
+    // Calculate table size based on given variables
+    const tableSize = this._calculateTableSize(givenVariables);
+    const table = [];
+    
+    // Generate probability table for each combination of given variables
+    for (let i = 0; i < tableSize; i++) {
+      // Create a row of probabilities
+      const row = baseProbabilities.map(p => {
+        // Add some variation based on the combination index
+        const variation = (Math.sin(i * 0.5) * 0.1) + 1;
+        return p * variation;
+      });
+      
+      // Normalize row to sum to 1
+      const rowSum = row.reduce((a, b) => a + b, 0);
+      table.push(row.map(p => p / rowSum));
+    }
+    
     return table;
   }
 
   _generateBaseProbabilities(variable) {
-    // Generate base probabilities for root nodes
-    const probs = [];
-    let remaining = 1.0;
-
-    for (let i = 0; i < variable.outcomes.length - 1; i++) {
-      const p = remaining * (0.5 + Math.random() * 0.5);
-      probs.push(Number(p.toFixed(2)));
-      remaining -= p;
+    // Generate base probabilities based on variable type
+    const type = variable.type || 'default';
+    
+    switch (type.toLowerCase()) {
+      case 'state':
+        return [0.7, 0.2, 0.1]; // good, fair, poor
+      case 'performance':
+        return [0.6, 0.3, 0.1]; // high, medium, low
+      case 'condition':
+        return [0.8, 0.15, 0.05]; // normal, warning, critical
+      case 'binary':
+        return [0.8, 0.2]; // true, false
+      default:
+        // Generate random probabilities that sum to approximately 1
+        const outcomes = variable.outcomes || ['true', 'false'];
+        const rawProbs = outcomes.map(() => Math.random());
+        const sum = rawProbs.reduce((a, b) => a + b, 0);
+        return rawProbs.map(p => p / sum);
     }
-    probs.push(Number(remaining.toFixed(2)));
-
-    return probs;
   }
 
   _calculateTableSize(givenVariables) {
@@ -420,6 +443,7 @@ class BayesianNetworkExporter {
   }
 
   _generateBIF(systemType, variables, relationships) {
+    // Generate BIF XML format
     const lines = [
       '<?xml version="1.0"?>',
       '<BIF VERSION="0.3">',
@@ -428,56 +452,74 @@ class BayesianNetworkExporter {
       `<COMMENT>Bayesian Network representing ${systemType} system components and their dependencies</COMMENT>`,
       '',
       '<!-- Variables -->',
-      ...variables.map(v => this._formatVariable(v)),
-      '',
-      '<!-- Probability Distributions -->',
-      ...relationships.map(r => this._formatDefinition(r)),
-      '</NETWORK>',
-      '</BIF>'
     ];
-
+    
+    // Add variables
+    variables.forEach(variable => {
+      lines.push(this._formatVariable(variable));
+    });
+    
+    lines.push('');
+    lines.push('<!-- Probability Distributions -->');
+    
+    // Add probability distributions
+    relationships.forEach(relationship => {
+      lines.push(this._formatDefinition(relationship));
+    });
+    
+    lines.push('</NETWORK>');
+    lines.push('</BIF>');
+    
     return lines.join('\n');
   }
 
   _formatVariable(variable) {
-    return [
+    const lines = [
       '<VARIABLE TYPE="discrete">',
-      `    <NAME>${variable.name}</NAME>`,
-      ...variable.outcomes.map(o => `    <OUTCOME>${o}</OUTCOME>`),
-      `    <COMMENT>${variable.comment}</COMMENT>`,
-      '</VARIABLE>'
-    ].join('\n');
+      `    <NAME>${variable.name}</NAME>`
+    ];
+    
+    // Add outcomes
+    variable.outcomes.forEach(outcome => {
+      lines.push(`    <OUTCOME>${outcome}</OUTCOME>`);
+    });
+    
+    // Add comment if available
+    if (variable.comment) {
+      lines.push(`    <COMMENT>${variable.comment}</COMMENT>`);
+    }
+    
+    lines.push('</VARIABLE>');
+    return lines.join('\n');
   }
 
   _formatDefinition(relationship) {
-    const lines = ['<DEFINITION>'];
-    lines.push(`    <FOR>${relationship.for}</FOR>`);
+    const lines = [
+      '<DEFINITION>',
+      `    <FOR>${relationship.for}</FOR>`
+    ];
     
-    if (relationship.given) {
-      relationship.given.forEach(g => 
-        lines.push(`    <GIVEN>${g}</GIVEN>`)
-      );
+    // Add given variables if any
+    if (relationship.given && relationship.given.length > 0) {
+      relationship.given.forEach(given => {
+        lines.push(`    <GIVEN>${given}</GIVEN>`);
+      });
     }
-
-    // Normalize probability table to ensure rows sum to 1.0
-    const normalizedTable = Array.isArray(relationship.table[0])
-      ? relationship.table.map(row => {
-          const sum = row.reduce((a, b) => a + b, 0);
-          return row.map(p => (p / sum).toFixed(5));
-        })
-      : (() => {
-          const sum = relationship.table.reduce((a, b) => a + b, 0);
-          return relationship.table.map(p => (p / sum).toFixed(5));
-        })();
-
-    // Format probability table
-    const tableStr = Array.isArray(normalizedTable[0])
-      ? normalizedTable.map(row => row.join(' ')).join('\n        ')
-      : normalizedTable.join(' ');
-
-    lines.push(`    <TABLE>${tableStr}</TABLE>`);
+    
+    // Add probability table
+    if (Array.isArray(relationship.table[0])) {
+      // Multi-dimensional table
+      const tableLines = relationship.table.map(row => 
+        row.map(p => p.toFixed(5)).join(' ')
+      );
+      lines.push(`    <TABLE>${tableLines.join(' ')}</TABLE>`);
+    } else {
+      // One-dimensional table
+      const tableValues = relationship.table.map(p => p.toFixed(5)).join(' ');
+      lines.push(`    <TABLE>${tableValues}</TABLE>`);
+    }
+    
     lines.push('</DEFINITION>');
-
     return lines.join('\n');
   }
 }

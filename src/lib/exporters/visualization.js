@@ -205,144 +205,85 @@ async function toVisualization(ultralink, options = {}) {
  * @returns {string} SVG content
  */
 async function generateSVG(graphData, options) {
-  try {
-    const { layout = 'force', style = 'default', width = 800, height = 600 } = options;
+  const { layout = 'force', styleOption = 'default', width = 800, height = 600 } = options;
+  
+  // Create a new JSDOM instance for SVG generation
+  const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+  const document = dom.window.document;
+  
+  // Create SVG element
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  svg.setAttribute('width', width);
+  svg.setAttribute('height', height);
+  svg.setAttribute('viewBox', `0,0,${width},${height}`);
+  
+  // Add style definitions
+  const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+  styleElement.textContent = `
+    .node { cursor: pointer; }
+    .link { stroke: #999; stroke-opacity: 0.6; }
+    .label { font-family: sans-serif; font-size: 10px; }
+  `;
+  svg.appendChild(styleElement);
+  
+  // Add background
+  const background = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  background.setAttribute('width', width);
+  background.setAttribute('height', height);
+  background.setAttribute('fill', '#f8f9fa');
+  svg.appendChild(background);
+  
+  // Create groups for links, nodes, and labels
+  const linksGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  linksGroup.setAttribute('class', 'links');
+  svg.appendChild(linksGroup);
+  
+  const nodesGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  nodesGroup.setAttribute('class', 'nodes');
+  svg.appendChild(nodesGroup);
+  
+  const labelsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  labelsGroup.setAttribute('class', 'labels');
+  svg.appendChild(labelsGroup);
+  
+  // Create simulation for node positioning
+  const d3 = await getD3();
+  const simulation = await createSimulation(graphData, layout, width, height, d3);
+  
+  // Run simulation to get node positions
+  for (let i = 0; i < 300; ++i) simulation.tick();
+  
+  // Draw links
+  graphData.links.forEach(link => {
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', link.source.x);
+    line.setAttribute('y1', link.source.y);
+    line.setAttribute('x2', link.target.x);
+    line.setAttribute('y2', link.target.y);
+    line.setAttribute('stroke', '#999');
+    line.setAttribute('stroke-width', '1');
+    linksGroup.appendChild(line);
+  });
+  
+  // Draw nodes
+  graphData.nodes.forEach(node => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', node.x);
+    circle.setAttribute('cy', node.y);
+    circle.setAttribute('r', '5');
+    circle.setAttribute('fill', '#69b3a2');
+    nodesGroup.appendChild(circle);
     
-    // Get D3 instance
-    const d3 = await getD3();
-    
-    // Create SVG
-    const document = await import('jsdom').then(jsdom => {
-      const dom = new jsdom.JSDOM('<!DOCTYPE html><body></body>');
-      return dom.window.document;
-    }).catch(() => {
-      // Fallback if jsdom is not available
-      return {
-        createElementNS: () => ({
-          setAttribute: () => {},
-          appendChild: () => {}
-        }),
-        body: {
-          appendChild: () => {}
-        }
-      };
-    });
-    
-    const svg = d3.select(document.body)
-      .append('svg')
-      .attr('xmlns', 'http://www.w3.org/2000/svg')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', [0, 0, width, height]);
-    
-    // Add a style tag (this was missing before and causing test failures)
-    svg.append('style')
-      .text(`
-        .node { cursor: pointer; }
-        .link { stroke: #999; stroke-opacity: 0.6; }
-        .label { font-family: sans-serif; font-size: 10px; }
-      `);
-    
-    // Add background
-    svg.append('rect')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('fill', '#f8f9fa');
-    
-    // Create simulation
-    let simulation;
-    try {
-      simulation = await createSimulation(graphData, layout, width, height, d3);
-    } catch (error) {
-      console.error('Error creating simulation for SVG:', error);
-      // Return a fallback SVG with error message
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-        <style>
-          text { font-family: sans-serif; }
-        </style>
-        <rect width="100%" height="100%" fill="#f8f9fa"/>
-        <text x="50%" y="50%" text-anchor="middle" font-size="24" fill="#333">Visualization Error</text>
-        <text x="50%" y="52%" dy="1.2em" text-anchor="middle" font-size="14" fill="#666">Error creating simulation</text>
-      </svg>`;
-    }
-    
-    // Create a node lookup map to avoid using simulation.nodes.find
-    const nodeMap = new Map();
-    if (simulation.nodes && Array.isArray(simulation.nodes)) {
-      simulation.nodes.forEach(node => {
-        if (node && node.id) {
-          nodeMap.set(node.id, node);
-        }
-      });
-    }
-    
-    // Create links
-    const link = svg.append('g')
-      .attr('class', 'links')
-      .selectAll('line')
-      .data(graphData.links)
-      .enter().append('line')
-      .attr('class', 'link')
-      .attr('stroke', '#999')
-      .attr('stroke-opacity', 0.6)
-      .attr('x1', d => {
-        // Fixed the simulation.nodes.find issue by using the nodeMap
-        const source = typeof d.source === 'object' ? d.source : nodeMap.get(d.source);
-        return source ? source.x : width / 2;
-      })
-      .attr('y1', d => {
-        const source = typeof d.source === 'object' ? d.source : nodeMap.get(d.source);
-        return source ? source.y : height / 2;
-      })
-      .attr('x2', d => {
-        const target = typeof d.target === 'object' ? d.target : nodeMap.get(d.target);
-        return target ? target.x : width / 2;
-      })
-      .attr('y2', d => {
-        const target = typeof d.target === 'object' ? d.target : nodeMap.get(d.target);
-        return target ? target.y : height / 2;
-      });
-    
-    // Create nodes
-    const node = svg.append('g')
-      .attr('class', 'nodes')
-      .selectAll('circle')
-      .data(graphData.nodes)
-      .enter().append('circle')
-      .attr('class', 'node')
-      .attr('r', 8)
-      .attr('fill', '#69b3a2')
-      .attr('cx', d => d.x || width / 2)
-      .attr('cy', d => d.y || height / 2);
-    
-    // Add node labels
-    const label = svg.append('g')
-      .attr('class', 'labels')
-      .selectAll('text')
-      .data(graphData.nodes)
-      .enter().append('text')
-      .attr('class', 'label')
-      .attr('x', d => d.x || width / 2)
-      .attr('y', d => (d.y || height / 2) + 20)
-      .attr('text-anchor', 'middle')
-      .attr('font-family', 'sans-serif')
-      .attr('font-size', '10px')
-      .text(d => d.label || d.id);
-    
-    // Return SVG as string
-    return svg.node().outerHTML || `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-      <rect width="100%" height="100%" fill="#f8f9fa"/>
-      <text x="50%" y="50%" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#333">Fallback Visualization</text>
-    </svg>`;
-  } catch (error) {
-    console.error('Error generating SVG:', error);
-    // Return a fallback SVG with error message
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${options.width || 800}" height="${options.height || 600}">
-      <rect width="100%" height="100%" fill="#f8f9fa"/>
-      <text x="50%" y="50%" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#333">Visualization Error</text>
-      <text x="50%" y="52%" dy="1.2em" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#666">${error.message || 'Unknown error'}</text>
-    </svg>`;
-  }
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', node.x + 8);
+    text.setAttribute('y', node.y + 3);
+    text.setAttribute('class', 'label');
+    text.textContent = node.label;
+    labelsGroup.appendChild(text);
+  });
+  
+  return svg.outerHTML;
 }
 
 /**

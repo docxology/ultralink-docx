@@ -72,6 +72,12 @@ const RENDERING_TARGETS = [
   { name: 'full-blob', method: 'toFullBlob', outputDir: 'full-blob', outputFiles: [
     { format: 'uncompressed', filename: '{{system}}-full.json' },
     { format: 'compressed', filename: '{{system}}-full-compressed.blob' }
+  ]},
+  { name: 'manim', method: 'toManim', outputDir: 'manim', outputFiles: [
+    { format: 'python', filename: '{{system}}.py' },
+    { format: 'mp4', filename: '{{system}}.mp4', quality: 'medium', resolution: '1080p' },
+    { format: 'gif', filename: '{{system}}.gif', quality: 'medium', duration: 30 },
+    { format: 'png_sequence', filename: '{{system}}_frames/', quality: 'high' }
   ]}
 ];
 
@@ -293,6 +299,120 @@ function generatePlaceholderCompressedBlob() {
   
   // Combine the buffers
   return Buffer.concat([header, Buffer.from([0x00]), timestamp, Buffer.from([0x00]), data]);
+}
+
+/**
+ * Check if Manim is installed and available
+ * @returns {Promise<boolean>} True if Manim is available
+ */
+async function checkManimAvailable() {
+  try {
+    const { execSync } = require('child_process');
+    execSync('manim --version', { stdio: 'ignore' });
+    return true;
+  } catch (error) {
+    console.warn('⚠️ Manim not found. Please install Manim to generate animations.');
+    console.warn('   Installation guide: https://docs.manim.community/en/stable/installation.html');
+    return false;
+  }
+}
+
+/**
+ * Execute Manim command and handle output
+ * @param {string} pythonFile - Path to Python file
+ * @param {string} outputDir - Output directory for media files
+ * @param {Object} options - Manim options
+ * @returns {Promise<boolean>} True if successful
+ */
+async function executeManimCommand(pythonFile, outputDir, options = {}) {
+  const { execSync } = require('child_process');
+  const { quality = 'medium', resolution = '1080p' } = options;
+  
+  try {
+    // Ensure media directory exists
+    ensureDirectoryExists(path.join(outputDir, 'media'));
+    
+    // Build Manim command
+    const qualityFlag = quality === 'high' ? '-qh' : quality === 'low' ? '-ql' : '-qm';
+    const resolutionFlag = resolution ? `-r ${resolution}` : '';
+    const command = `manim ${qualityFlag} ${resolutionFlag} "${pythonFile}" UltraLinkGraph`;
+    
+    // Execute Manim
+    console.log(`      🎥 Executing: ${command}`);
+    execSync(command, {
+      stdio: ['ignore', 'pipe', 'pipe'],
+      cwd: outputDir
+    });
+    
+    return true;
+  } catch (error) {
+    console.error(`      ❌ Manim execution failed: ${error.message}`);
+    return false;
+  }
+}
+
+/**
+ * Generate Manim outputs for a system
+ * @param {string} pythonFile - Path to Python file
+ * @param {string} outputDir - Output directory
+ * @param {Object} format - Format configuration
+ * @returns {Promise<boolean>} True if successful
+ */
+async function generateManimOutputs(pythonFile, outputDir, format) {
+  try {
+    // Check if Manim is available
+    const manimAvailable = await checkManimAvailable();
+    if (!manimAvailable) {
+      return false;
+    }
+    
+    // Execute Manim with appropriate options
+    const success = await executeManimCommand(pythonFile, outputDir, {
+      quality: format.quality,
+      resolution: format.resolution
+    });
+    
+    if (success) {
+      // Handle different output formats
+      if (format.format === 'gif') {
+        // Convert MP4 to GIF using ffmpeg
+        try {
+          const { execSync } = require('child_process');
+          const mp4File = path.join(outputDir, 'media', 'videos', 'UltraLinkGraph.mp4');
+          const gifFile = path.join(outputDir, format.filename);
+          
+          execSync(`ffmpeg -i "${mp4File}" -vf "fps=10,scale=720:-1" "${gifFile}"`, {
+            stdio: ['ignore', 'pipe', 'pipe']
+          });
+          console.log(`      ✅ Generated GIF: ${gifFile}`);
+        } catch (error) {
+          console.warn(`      ⚠️ Failed to convert to GIF: ${error.message}`);
+        }
+      } else if (format.format === 'png_sequence') {
+        // Extract frames using ffmpeg
+        try {
+          const { execSync } = require('child_process');
+          const mp4File = path.join(outputDir, 'media', 'videos', 'UltraLinkGraph.mp4');
+          const framesDir = path.join(outputDir, format.filename);
+          
+          ensureDirectoryExists(framesDir);
+          execSync(`ffmpeg -i "${mp4File}" -vf fps=1 "${framesDir}/frame_%04d.png"`, {
+            stdio: ['ignore', 'pipe', 'pipe']
+          });
+          console.log(`      ✅ Generated frame sequence in: ${framesDir}`);
+        } catch (error) {
+          console.warn(`      ⚠️ Failed to extract frames: ${error.message}`);
+        }
+      }
+      
+      return true;
+    }
+    
+    return false;
+  } catch (error) {
+    console.error(`      ❌ Error generating Manim outputs: ${error.message}`);
+    return false;
+  }
 }
 
 /**
@@ -999,6 +1119,119 @@ async function renderSystem(systemName, createDatasetFn) {
             }
           }
           break;
+          
+        case 'manim':
+          // Manim animation outputs
+          console.log(`    🎬 Generating Manim animations in: ${targetDir}`);
+          for (const manimFormat of target.outputFiles) {
+            try {
+              console.log(`    🔄 Processing ${manimFormat.format} Manim format...`);
+              
+              const outputPath = path.join(targetDir, manimFormat.filename.replace('{{system}}', systemName));
+              
+              // Generate Manim Python script first
+              if (manimFormat.format === 'python') {
+                const manimCode = safeExecute(() => {
+                  return ultralink.toManim({
+                    animationStyle: 'explanatory',
+                    visualTheme: 'dark',
+                    includeNarrationText: true,
+                    highlightCentralEntities: true,
+                    systemName: systemName
+                  });
+                }, '');
+                
+                if (manimCode) {
+                  ensureDirectoryExists(targetDir);
+                  safeWriteFile(outputPath, manimCode);
+                  console.log(`      ✅ Saved Manim Python script to: ${outputPath}`);
+                  
+                  // Update statistics
+                  STATS.totalFiles++;
+                  STATS.successfulFiles++;
+                  STATS.formatStats[target.name].files++;
+                  STATS.formatStats[target.name].successful++;
+                  STATS.systemStats[systemName].files++;
+                  STATS.systemStats[systemName].successful++;
+                  STATS.systemStats[systemName].formats[target.name].files++;
+                  STATS.systemStats[systemName].formats[target.name].successful++;
+                  
+                  // Generate animations if this is not just the Python file
+                  if (manimFormat.format !== 'python') {
+                    const success = await generateManimOutputs(outputPath, targetDir, manimFormat);
+                    
+                    if (success) {
+                      // Update statistics for successful animation
+                      STATS.totalFiles++;
+                      STATS.successfulFiles++;
+                      STATS.formatStats[target.name].files++;
+                      STATS.formatStats[target.name].successful++;
+                      STATS.systemStats[systemName].files++;
+                      STATS.systemStats[systemName].successful++;
+                      STATS.systemStats[systemName].formats[target.name].files++;
+                      STATS.systemStats[systemName].formats[target.name].successful++;
+                    } else {
+                      // Create placeholder files if Manim generation failed
+                      if (manimFormat.format === 'mp4') {
+                        const placeholderMp4 = Buffer.from('Placeholder MP4 content');
+                        safeWriteFile(outputPath, placeholderMp4);
+                      } else if (manimFormat.format === 'gif') {
+                        const placeholderGif = Buffer.from('Placeholder GIF content');
+                        safeWriteFile(outputPath, placeholderGif);
+                      } else if (manimFormat.format === 'png_sequence') {
+                        ensureDirectoryExists(outputPath);
+                        for (let i = 0; i < 5; i++) {
+                          const framePath = path.join(outputPath, `frame_${i.toString().padStart(4, '0')}.png`);
+                          const placeholderPng = Buffer.from(`Placeholder PNG frame ${i}`);
+                          safeWriteFile(framePath, placeholderPng);
+                        }
+                      }
+                      
+                      console.log(`      ✅ Created placeholder ${manimFormat.format} output at: ${outputPath}`);
+                      
+                      // Update statistics for placeholder
+                      STATS.totalFiles++;
+                      STATS.warningFiles++;
+                      STATS.formatStats[target.name].files++;
+                      STATS.formatStats[target.name].warnings++;
+                      STATS.systemStats[systemName].files++;
+                      STATS.systemStats[systemName].warnings++;
+                      STATS.systemStats[systemName].formats[target.name].files++;
+                      STATS.systemStats[systemName].formats[target.name].warnings++;
+                    }
+                  }
+                } else {
+                  console.warn(`      ⚠️ Failed to generate Manim Python script`);
+                  
+                  // Update warning statistics
+                  STATS.warningFiles++;
+                  STATS.formatStats[target.name].warnings++;
+                  STATS.systemStats[systemName].warnings++;
+                  STATS.systemStats[systemName].formats[target.name].warnings++;
+                }
+              }
+            } catch (error) {
+              console.warn(`      ❌ Error processing ${manimFormat.format} Manim format: ${error.message}`);
+              
+              // Update error statistics
+              STATS.errorFiles++;
+              STATS.formatStats[target.name].errors++;
+              STATS.systemStats[systemName].errors++;
+              STATS.systemStats[systemName].formats[target.name].errors++;
+              
+              // Create a placeholder error file
+              const errorPath = path.join(targetDir, `ERROR-${manimFormat.format}.txt`);
+              safeWriteFile(errorPath, `Error processing ${manimFormat.format} Manim format: ${error.message}\n${error.stack}`);
+              console.log(`      ✅ Created error log at: ${errorPath}`);
+              
+              // Update statistics for error log file
+              STATS.totalFiles++;
+              STATS.formatStats[target.name].files++;
+              STATS.systemStats[systemName].files++;
+              STATS.systemStats[systemName].formats[target.name].files++;
+            }
+          }
+          break;
       }
     } catch (error) {
       console.error(`    Error rendering ${target.name} format: ${error.message}`);
@@ -1224,6 +1457,57 @@ function createAsciiTable(rows, headers, columnWidths) {
     separatorRow,
     ...dataRows
   ].join('\n');
+}
+
+/**
+ * Generate placeholder Manim Python code
+ * @param {string} systemName - Name of the system
+ * @returns {string} Placeholder Manim Python code
+ */
+function generatePlaceholderManim(systemName) {
+  return `#!/usr/bin/env python
+from manim import *
+
+class UltraLinkGraph(Scene):
+    def construct(self):
+        # Title
+        title = Text("${systemName} Knowledge Graph")
+        subtitle = Text("Placeholder Animation", font_size=36)
+        VGroup(title, subtitle).arrange(DOWN)
+        
+        self.play(
+            Write(title),
+            FadeIn(subtitle, shift=DOWN),
+        )
+        self.wait(2)
+        
+        # Placeholder message
+        message = Text("Manim rendering was not available", color=RED)
+        self.play(
+            FadeOut(title),
+            FadeOut(subtitle),
+            Write(message)
+        )
+        self.wait(2)
+        
+        # Placeholder graph
+        circle = Circle(color=BLUE)
+        square = Square(color=GREEN)
+        triangle = Triangle(color=RED)
+        
+        shapes = VGroup(circle, square, triangle).arrange(RIGHT)
+        self.play(Create(shapes))
+        self.wait(2)
+        
+        # Conclusion
+        self.play(FadeOut(shapes), FadeOut(message))
+        conclusion = Text("UltraLink Placeholder Animation")
+        self.play(Write(conclusion))
+        self.wait(2)
+        self.play(FadeOut(conclusion))
+
+# See many more examples at https://docs.manim.community/en/stable/examples.html
+`;
 }
 
 // Run the example

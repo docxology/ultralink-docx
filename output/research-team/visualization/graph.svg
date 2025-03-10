@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0,0,800,600"><style>
-        .node { cursor: pointer; }
-        .link { stroke: #999; stroke-opacity: 0.6; }
-        .label { font-family: sans-serif; font-size: 10px; }
-      </style><rect width="800" height="600" fill="#f8f9fa"></rect><g class="links"></g><g class="nodes"></g><g class="labels"></g></svg>
+    .node { cursor: pointer; }
+    .link { stroke: #999; stroke-opacity: 0.6; }
+    .label { font-family: sans-serif; font-size: 10px; }
+  </style><rect width="800" height="600" fill="#f8f9fa"></rect><g class="links"></g><g class="nodes"></g><g class="labels"></g></svg>

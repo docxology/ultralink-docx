@@ -57,6 +57,7 @@ UltraLink can export data to the following formats:
 7. **[Bayesian Network](./BAYESIAN_NETWORK_FORMAT.md)** - Probabilistic graphical models in BIF format
 8. **[KIF](./KIF_FORMAT.md)** - Knowledge Interchange Format for AI and knowledge-based systems
 9. **[Full Blob](./FULL_BLOB_FORMAT.md)** - Complete serialization of UltraLink data for backup and transfer
+10. **[Manim](./MANIM_FORMAT.md)** - 3Blue1Brown-style mathematical animations for dynamic visualization
 
 ## System-Specific Output Organization
 
@@ -89,6 +90,12 @@ output/
 │   │   │   ├── index.html
 │   │   │   ├── saguaro.html
 │   │   │   └── ...
+│   │   ├── manim/
+│   │   │   ├── DesertEcosystem.py
+│   │   │   ├── DesertEcosystem.mp4
+│   │   │   └── media/
+│   │   │       ├── videos/
+│   │   │       └── images/
 │   │   └── full-blob/
 │   │       ├── DesertEcosystem-full.json
 │   │       └── DesertEcosystem-full-compressed.blob
@@ -138,6 +145,7 @@ UltraLink's cross-rendering capabilities enable the transformation of the same k
 | [KIF](./KIF_FORMAT.md) | Formal logic | Automated reasoning, AI systems | Semantic, Logical |
 | [RxInfer.jl](./RXINFER_FORMAT.md) | Probabilistic programming | Bayesian inference, factor graphs, message passing | Semantic, Probabilistic, Vector |
 | [Full Blob](./FULL_BLOB_FORMAT.md) | Complete system state | Backup, system transfer | All dimensions |
+| [Manim](./MANIM_FORMAT.md) | Mathematical animation | Educational content, dynamic visualization, mathematical analysis | Visual, Temporal, Mathematical |
 
 ### Transformation Examples
 
@@ -307,7 +315,7 @@ UltraLink exports two CSV files:
 ```csv
 id,type,name,scientificName,height,lifespan,description,annualRainfall
 saguaro,organism,Saguaro Cactus,Carnegiea gigantea,15-50 feet,150-200 years,,
-kangaroo-rat,organism,Kangaroo Rat,Dipodomys,,,nocturnal desert rodent,
+kangaroo-rat,organism,Kangaroo Rat,Dipodomys,,,nocturnal desert rodent,3-15 inches
 aridity,environmental_factor,Aridity,,,,"Extremely dry conditions with minimal rainfall",3-15 inches
 ```
 

@@ -1,12 +1,12 @@
 {
   "metadata": {
     "type": "Generic",
-    "timestamp": "2025-03-10T15:26:00.474Z"
+    "timestamp": "2025-03-10T17:35:41.041Z"
   },
   "nodes": [
     {
       "id": "system_state",
-      "type": "discrete",
+      "type": "state",
       "outcomes": [
         "good",
         "fair",
