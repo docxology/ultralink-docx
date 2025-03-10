@@ -9,14 +9,18 @@ class BayesianNetworkExporter {
    * Generate a Bayesian network representation of the system
    * @param {Object} options - Export options
    * @param {string} options.outputFormat - Output format ('json' or 'bif')
+   * @param {string} options.systemName - System name
    * @returns {string|Object} The Bayesian network representation
    */
   export(options = {}) {
-    const { outputFormat = 'json' } = options;
+    const { 
+      outputFormat = 'json',
+      systemName  
+    } = options;
     
-    // Get system type from the first entity or use default
+    // Get system type from options or determine from entities if not provided
     const entities = Object.values(this.ultralink.store.entities || {});
-    const systemType = this._determineSystemType(entities);
+    const systemType = systemName || this._determineSystemType(entities);
     
     // Generate variables from both predefined system variables and actual entities
     const systemVariables = this._generateSystemVariables(systemType);

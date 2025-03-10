@@ -831,7 +831,10 @@ async function renderSystem(systemName, createDatasetFn) {
               try {
                 // Safely execute Bayesian network export with fallback
                 bayesOutput = safeExecute(() => {
-                  return ultralink.toBayesianNetwork({ outputFormat: format });
+                  return ultralink.toBayesianNetwork({ 
+                    outputFormat: format,
+                    systemName: systemName  // Pass systemName to ensure correct metadata
+                  });
                 }, format === 'json' ? {} : '');
                 
                 if (bayesOutput) {

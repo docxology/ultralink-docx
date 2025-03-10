@@ -288,6 +288,10 @@ class UltraLink {
    * @returns {string|Object} The Bayesian network representation
    */
   toBayesianNetwork(options = {}) {
+    // Include systemName in options if not already set
+    if (!options.systemName && this.config && this.config.systemName) {
+      options.systemName = this.config.systemName;
+    }
     const exporter = new BayesianNetworkExporter(this);
     return exporter.export(options);
   }
