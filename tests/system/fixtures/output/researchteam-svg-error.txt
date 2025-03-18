@@ -1,0 +1,6 @@
+Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+Expected value:  [32m"<svg"[39m
+Received object: [31m{"test-system-graph-cluster.png": {"data": [116, 101, 115, 116, 45, 99, 108, 117, 115, 116, …], "type": "Buffer"}, "test-system-graph-cluster.svg": "<svg>Test Cluster SVG</svg>", "test-system-graph-grid.png": {"data": [116, 101, 115, 116, 45, 103, 114, 105, 100, 45, …], "type": "Buffer"}, "test-system-graph-grid.svg": "<svg>Test Grid SVG</svg>", "test-system-graph.png": {"data": [116, 101, 115, 116, 45, 103, 114, 97, 112, 104, …], "type": "Buffer"}, "test-system-graph.svg": "<svg>Test Graph SVG</svg>", "test-system.png": {"data": [116, 101, 115, 116, 45, 112, 110, 103, 45, 100, …], "type": "Buffer"}, "test-system.svg": "<svg>Test SVG</svg>"}[39m
+    at toContain (/Users/tetra/Documents/GitHub/ultralink/tests/system/rendering.test.js:593:33)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)

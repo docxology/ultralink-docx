@@ -1,0 +1,15 @@
+{
+  "type": "d3",
+  "system": "ResearchTeam",
+  "properties": [
+    "test-system.svg",
+    "test-system.png",
+    "test-system-graph.svg",
+    "test-system-graph.png",
+    "test-system-graph-grid.svg",
+    "test-system-graph-grid.png",
+    "test-system-graph-cluster.svg",
+    "test-system-graph-cluster.png"
+  ],
+  "timestamp": "2025-03-18T18:07:29.881Z"
+}

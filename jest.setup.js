@@ -1,17 +1,76 @@
-const { JSDOM } = require('jsdom');
+// Create a simple DOM mock instead of using jsdom
+class MockElement {
+  constructor(tagName) {
+    this.tagName = tagName;
+    this.children = [];
+    this.style = {};
+    this.attributes = {};
+    this.innerHTML = '';
+    this.innerText = '';
+  }
 
-const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {
-  url: 'http://localhost',
-  pretendToBeVisual: true,
-  resources: 'usable'
-});
+  appendChild(element) {
+    this.children.push(element);
+    return element;
+  }
 
-global.window = dom.window;
-global.document = dom.window.document;
-global.navigator = dom.window.navigator;
-global.HTMLElement = dom.window.HTMLElement;
-global.Element = dom.window.Element;
-global.getComputedStyle = dom.window.getComputedStyle;
+  setAttribute(name, value) {
+    this.attributes[name] = value;
+  }
+
+  getAttribute(name) {
+    return this.attributes[name] || null;
+  }
+
+  getElementsByTagName(tagName) {
+    const result = [];
+    if (this.tagName === tagName) {
+      result.push(this);
+    }
+    this.children.forEach(child => {
+      if (child.getElementsByTagName) {
+        result.push(...child.getElementsByTagName(tagName));
+      }
+    });
+    return result;
+  }
+}
+
+class MockDocument {
+  constructor() {
+    this.body = new MockElement('body');
+  }
+
+  createElement(tagName) {
+    return new MockElement(tagName);
+  }
+
+  getElementsByTagName(tagName) {
+    return this.body.getElementsByTagName(tagName);
+  }
+}
+
+class MockWindow {
+  constructor() {
+    this.document = new MockDocument();
+    this.navigator = { userAgent: 'node' };
+    this.Element = MockElement;
+    this.HTMLElement = MockElement;
+  }
+
+  getComputedStyle() {
+    return {};
+  }
+}
+
+// Set up global DOM objects
+const mockWindow = new MockWindow();
+global.window = mockWindow;
+global.document = mockWindow.document;
+global.navigator = mockWindow.navigator;
+global.HTMLElement = mockWindow.HTMLElement;
+global.Element = mockWindow.Element;
+global.getComputedStyle = mockWindow.getComputedStyle.bind(mockWindow);
 
 // Mock canvas for Sharp - use a full mock instead of requiring the actual canvas module
 jest.mock('canvas', () => {
@@ -48,12 +107,21 @@ jest.mock('canvas', () => {
         restore: jest.fn(),
         closePath: jest.fn(),
         clip: jest.fn(),
+        rect: jest.fn(),
+        arc: jest.fn(),
+        textAlign: 'left',
+        font: '10px Arial',
+        fillText: jest.fn(),
       };
     }
 
     toBuffer() {
       // Return a 1x1 transparent PNG as a buffer
       return Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64');
+    }
+
+    toDataURL() {
+      return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==';
     }
   }
 
@@ -71,7 +139,7 @@ jest.mock('canvas', () => {
       }
     },
   };
-});
+}, { virtual: true }); // Add virtual: true to prevent actual module resolution
 
 // Create a more robust canvas mock
 const createMockContext = () => {
@@ -103,15 +171,17 @@ const createMockContext = () => {
   };
 };
 
-global.window.HTMLCanvasElement.prototype.getContext = function(contextType) {
-  if (contextType === '2d') {
-    return createMockContext();
-  }
-  return null;
-};
+if (global.window.HTMLCanvasElement) {
+  global.window.HTMLCanvasElement.prototype.getContext = function(contextType) {
+    if (contextType === '2d') {
+      return createMockContext();
+    }
+    return null;
+  };
+}
 
 // Mock SVG for D3.js
-class SVGElement extends dom.window.HTMLElement {}
+class SVGElement extends global.HTMLElement {}
 global.SVGElement = SVGElement;
 
 // Store active timeouts for cleanup
@@ -144,19 +214,11 @@ afterEach(() => {
   activeTimeouts.clear();
 
   // Reset any DOM modifications
-  dom.window.document.body.innerHTML = '';
-
-  // Clear any D3 event listeners
-  if (global.window.d3) {
-    global.window.d3.select('body').selectAll('*').remove();
-  }
+  global.document.body.innerHTML = '';
 });
 
 // Cleanup function to be called after all tests
 afterAll(() => {
-  // Close the JSDOM window
-  dom.window.close();
-  
   // Clean up canvas resources
   if (global.window && global.window.HTMLCanvasElement) {
     delete global.window.HTMLCanvasElement.prototype.getContext;
@@ -192,6 +254,106 @@ jest.mock('sharp', () => {
     };
   });
 });
+
+// Mock d3 library
+jest.mock('d3', () => {
+  return {
+    forceSimulation: jest.fn().mockReturnValue({
+      nodes: jest.fn().mockReturnThis(),
+      force: jest.fn().mockReturnThis(),
+      on: jest.fn().mockReturnThis(),
+      alpha: jest.fn().mockReturnThis(),
+      alphaTarget: jest.fn().mockReturnThis(),
+      restart: jest.fn(),
+      tick: jest.fn(),
+      stop: jest.fn()
+    }),
+    forceManyBody: jest.fn().mockReturnValue(jest.fn()),
+    forceCenter: jest.fn().mockReturnValue(jest.fn()),
+    forceCollide: jest.fn().mockReturnValue(jest.fn()),
+    forceX: jest.fn().mockReturnValue(jest.fn()),
+    forceY: jest.fn().mockReturnValue(jest.fn()),
+    forceLink: jest.fn().mockReturnValue({
+      id: jest.fn().mockReturnThis(),
+      distance: jest.fn().mockReturnThis(),
+      links: jest.fn().mockReturnThis()
+    }),
+    select: jest.fn().mockReturnValue({
+      append: jest.fn().mockReturnValue({
+        attr: jest.fn().mockReturnThis(),
+        style: jest.fn().mockReturnThis(),
+        append: jest.fn().mockReturnValue({
+          attr: jest.fn().mockReturnThis(),
+          style: jest.fn().mockReturnThis(),
+          text: jest.fn().mockReturnThis()
+        }),
+        selectAll: jest.fn().mockReturnValue({
+          data: jest.fn().mockReturnValue({
+            enter: jest.fn().mockReturnValue({
+              append: jest.fn().mockReturnValue({
+                attr: jest.fn().mockReturnThis(),
+                style: jest.fn().mockReturnThis(),
+                text: jest.fn().mockReturnThis()
+              })
+            }),
+            exit: jest.fn().mockReturnValue({
+              remove: jest.fn()
+            }),
+            attr: jest.fn().mockReturnThis(),
+            style: jest.fn().mockReturnThis()
+          })
+        })
+      }),
+      selectAll: jest.fn().mockReturnValue({
+        data: jest.fn().mockReturnValue({
+          enter: jest.fn().mockReturnValue({
+            append: jest.fn().mockReturnValue({
+              attr: jest.fn().mockReturnThis(),
+              style: jest.fn().mockReturnThis()
+            })
+          }),
+          exit: jest.fn().mockReturnValue({
+            remove: jest.fn()
+          }),
+          attr: jest.fn().mockReturnThis(),
+          style: jest.fn().mockReturnThis()
+        })
+      })
+    }),
+    drag: jest.fn().mockReturnValue({
+      on: jest.fn().mockReturnThis()
+    }),
+    zoom: jest.fn().mockReturnValue({
+      on: jest.fn().mockReturnThis(),
+      transform: jest.fn()
+    }),
+    zoomIdentity: {
+      translate: jest.fn().mockReturnValue({
+        scale: jest.fn()
+      })
+    }
+  };
+}, { virtual: true });
+
+// Mock cytoscape library
+jest.mock('cytoscape', () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      add: jest.fn(),
+      layout: jest.fn().mockReturnValue({
+        run: jest.fn()
+      }),
+      style: jest.fn(),
+      on: jest.fn(),
+      nodes: jest.fn().mockReturnValue({
+        style: jest.fn()
+      }),
+      edges: jest.fn().mockReturnValue({
+        style: jest.fn()
+      })
+    };
+  });
+}, { virtual: true });
 
 // Configure Jest to handle ES modules in node_modules
 module.exports = {

@@ -1,0 +1,97 @@
+No PNG content found in object: {
+  "test-system.svg": "<svg>Test SVG</svg>",
+  "test-system.png": {
+    "type": "Buffer",
+    "data": [
+      116,
+      101,
+      115,
+      116,
+      45,
+      112,
+      110,
+      103,
+      45,
+      100,
+      97,
+      116,
+      97
+    ]
+  },
+  "test-system-graph.svg": "<svg>Test Graph SVG</svg>",
+  "test-system-graph.png": {
+    "type": "Buffer",
+    "data": [
+      116,
+      101,
+      115,
+      116,
+      45,
+      103,
+      114,
+      97,
+      112,
+      104,
+      45,
+      112,
+      110,
+      103,
+      45,
+      100,
+      97,
+      116,
+      97
+    ]
+  },
+  "test-system-graph-grid.svg": "<svg>Test Grid SVG</svg>",
+  "test-system-graph-grid.png": {
+    "type": "Buffer",
+    "data": [
+      116,
+      101,
+      115,
+      116,
+      45,
+      103,
+      114,
+      105,
+      100,
+      45,
+      112,
+      110,
+      103,
+      45,
+      100,
+      97,
+      116,
+      97
+    ]
+  },
+  "test-system-graph-cluster.svg": "<svg>Test Cluster SVG</svg>",
+  "test-system-graph-cluster.png": {
+    "type": "Buffer",
+    "data": [
+      116,
+      101,
+      115,
+      116,
+      45,
+      99,
+      108,
+      117,
+      115,
+      116,
+      101,
+      114,
+      45,
+      112,
+      110,
+      103,
+      45,
+      100,
+      97,
+      116,
+      97
+    ]
+  }
+}
