@@ -704,7 +704,7 @@ Create a Markdown file for the new format:
 This document details the RDF Turtle rendering target for UltraLink, its structure, usage, and connection to the UltraLink data model.
 
 > **Related Documents**: 
-> - [Overview of Rendering Targets](./rendering_targets.md)
+> - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
 > - [Implementation in src/lib/exporters/rdf-turtle.js](../src/lib/exporters/rdf-turtle.js)
 
 ## Overview

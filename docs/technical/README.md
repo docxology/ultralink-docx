@@ -15,7 +15,7 @@ Welcome to the UltraLink technical documentation. This section provides in-depth
    - [Relationship Manager](./relationship-manager.md)
    - [Query Engine](./query-engine.md)
    - [Vector Store](./vector-store.md)
-   - [Event System](./event-system.md)
+   - [Event System](./architecture/event-system.md)
 
 3. [Export & Import System](#export--import-system)
    - [Format Conversion](./format-conversion.md)
@@ -30,9 +30,9 @@ Welcome to the UltraLink technical documentation. This section provides in-depth
    - [Profiling](../performance/profiling.md)
 
 5. [Development](#development)
-   - [Development Setup](./development-setup.md)
+   - [Development Setup](./contributing/development-setup.md)
    - [Testing Strategy](./testing-strategy.md)
-   - [Contributing Guidelines](./contributing.md)
+   - [Contributing Guidelines](./contributing/contributing.md)
    - [Code Style](./code-style.md)
 
 ## Architecture
@@ -137,7 +137,7 @@ Key performance considerations include:
 
 ## Development
 
-Contributing to UltraLink development requires an understanding of the codebase, development workflow, and coding standards. The [Development Setup](./development-setup.md) document provides instructions for setting up a development environment, while the [Contributing Guidelines](./contributing.md) outline the process for submitting changes.
+Contributing to UltraLink development requires an understanding of the codebase, development workflow, and coding standards. The [Development Setup](./contributing/development-setup.md) document provides instructions for setting up a development environment, while the [Contributing Guidelines](./contributing/contributing.md) outline the process for submitting changes.
 
 ```mermaid
 graph LR

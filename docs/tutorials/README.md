@@ -9,7 +9,7 @@ Welcome to the UltraLink tutorials section! This section provides step-by-step g
 ## Core Concepts
 
 - [Understanding UltraLink Data Models](./data-models.md) - Learn about the core data models in UltraLink, including entities, relationships, and attributes.
-- [Advanced Querying Techniques](./advanced-queries.md) - Master UltraLink's powerful query capabilities for complex knowledge graph operations.
+- [Advanced Querying Techniques](./guides/advanced-queries.md) - Master UltraLink's powerful query capabilities for complex knowledge graph operations.
 - [Working with Events](./events-system.md) - Harness UltraLink's event system for reactive applications.
 
 ## Format-Specific Tutorials
@@ -25,8 +25,8 @@ Welcome to the UltraLink tutorials section! This section provides step-by-step g
 
 - [Vector Embeddings and Semantic Search](./vector-embeddings.md) - Implement semantic search capabilities using vector embeddings.
 - [Large-Scale Knowledge Graphs](./large-scale-graphs.md) - Techniques for working with large knowledge graphs efficiently.
-- [Custom Exporters](./custom-exporters.md) - Build your own exporters to extend UltraLink's functionality.
-- [Plugin Development](./plugin-development.md) - Develop plugins to enhance UltraLink with new features.
+- [Custom Exporters](./guides/custom-exporters.md) - Build your own exporters to extend UltraLink's functionality.
+- [Plugin Development](./advanced/plugin-development.md) - Develop plugins to enhance UltraLink with new features.
 
 ## Integration Tutorials
 
@@ -43,9 +43,9 @@ Welcome to the UltraLink tutorials section! This section provides step-by-step g
 
 ## Video Tutorials
 
-- [UltraLink Quick Start (15 min)](./videos/quick-start.md) - Quick introduction to get up and running with UltraLink.
+- [UltraLink Quick Start (15 min)](./getting-started/quick-start.md) - Quick introduction to get up and running with UltraLink.
 - [Advanced Features (30 min)](./videos/advanced-features.md) - Detailed walkthrough of advanced UltraLink capabilities.
-- [Format Integration (20 min)](./videos/format-integration.md) - Learn how to leverage various export formats effectively.
+- [Format Integration (20 min)](./integration/format-integration.md) - Learn how to leverage various export formats effectively.
 
 ## Workshop Materials
 

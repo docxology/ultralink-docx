@@ -149,7 +149,7 @@ See our [Contributing Guide](./contributing/development.md) for more details.
 ### Where can I get help if I'm stuck?
 
 If you need assistance:
-- Check the [Troubleshooting Guide](./troubleshooting.md)
+- Check the [Troubleshooting Guide](./troubleshooting/troubleshooting.md)
 - Ask in our [Discord community](https://discord.gg/ultralink)
 - Post on [Stack Overflow](https://stackoverflow.com/questions/tagged/ultralink) with the `ultralink` tag
 - Open an issue on [GitHub](https://github.com/ultralink/ultralink/issues) for bugs or feature requests

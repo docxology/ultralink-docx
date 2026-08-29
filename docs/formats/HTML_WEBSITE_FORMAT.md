@@ -3,11 +3,11 @@
 This document details the HTML Website rendering target for UltraLink, its structure, usage, and connection to the UltraLink data model.
 
 > **Related Documentation**:
-> - [Overview of Rendering Targets](./rendering_targets.md)
+> - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
 > - [Format Selection Guide](../guides/choosing-format.md)
-> - [JSON Format](./json_format.md)
-> - [Visualization Format](./visualization_format.md)
-> - [Obsidian Format](./obsidian_format.md)
+> - [JSON Format](./JSON_FORMAT.md)
+> - [Visualization Format](./VISUALIZATION_FORMAT.md)
+> - [Obsidian Format](./OBSIDIAN_FORMAT.md)
 
 ## Overview
 
@@ -459,9 +459,9 @@ The HTML Website format is particularly useful for:
 
 ## Related Formats
 
-- **[Visualization](./visualization_format.md)**: Provides just the visualization component
-- **[Obsidian](./obsidian_format.md)**: Similar navigation but in a local knowledge management tool
-- **[JSON](./json_format.md)**: Source data format used by the website's interactive components
+- **[Visualization](./VISUALIZATION_FORMAT.md)**: Provides just the visualization component
+- **[Obsidian](./OBSIDIAN_FORMAT.md)**: Similar navigation but in a local knowledge management tool
+- **[JSON](./JSON_FORMAT.md)**: Source data format used by the website's interactive components
 
 ## Limitations
 

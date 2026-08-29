@@ -99,17 +99,17 @@ Comprehensive guides for various aspects of UltraLink:
 
 UltraLink supports numerous export formats, each suited for different use cases:
 
-- [JSON Format](./formats/json_format.md)
-- [GraphML Format](./formats/graphml_format.md)
-- [CSV Format](./formats/csv_format.md)
-- [Obsidian Format](./formats/obsidian_format.md)
-- [HTML Website Format](./formats/html_website_format.md)
-- [Bayesian Network Format](./formats/bayesian_network_format.md)
-- [Knowledge Interchange Format (KIF)](./formats/kif_format.md)
-- [Full Blob Format](./formats/full_blob_format.md)
-- [Visualization Format](./formats/visualization_format.md)
-- [Formats Overview](./formats/formats_overview.md)
-- [Rendering Targets Overview](./formats/rendering_targets.md)
+- [JSON Format](./formats/JSON_FORMAT.md)
+- [GraphML Format](./formats/GRAPHML_FORMAT.md)
+- [CSV Format](./formats/CSV_FORMAT.md)
+- [Obsidian Format](./formats/OBSIDIAN_FORMAT.md)
+- [HTML Website Format](./formats/HTML_WEBSITE_FORMAT.md)
+- [Bayesian Network Format](./formats/BAYESIAN_NETWORK_FORMAT.md)
+- [Knowledge Interchange Format (KIF)](./formats/KIF_FORMAT.md)
+- [Full Blob Format](./formats/FULL_BLOB_FORMAT.md)
+- [Visualization Format](./formats/VISUALIZATION_FORMAT.md)
+- [Formats Overview](./formats/FORMATS_OVERVIEW.md)
+- [Rendering Targets Overview](./formats/RENDERING_TARGETS.md)
 
 ### [Core Features](./core-features/README.md)
 
@@ -125,7 +125,7 @@ Understand UltraLink's core differentiating features:
 
 Understand UltraLink's architecture and design principles:
 
-- [System Overview](./architecture/overview.md)
+- [System Overview](./api/overview.md)
 - [Core Components](./architecture/components.md)
 - [Data Flow](./architecture/data-flow.md)
 
@@ -136,7 +136,7 @@ Dive into the technical details of UltraLink:
 - [Format Conversion](./technical/format-conversion.md)
 - [Entity Store](./technical/entity-store.md)
 - [Vector Store](./technical/vector-store.md)
-- [Event System](./technical/event-system.md)
+- [Event System](./architecture/event-system.md)
 
 ### [Tutorials](./tutorials/README.md)
 
@@ -166,7 +166,7 @@ Guides for integrating UltraLink with other tools and systems:
 - [Format Integration Guide](./integration/format-integration.md)
 - [Tool Integration](./integration/tool-integration.md)
 
-### [Performance](./performance/README.md)
+### [Performance](./README.md)
 
 Performance considerations and benchmarks:
 
@@ -181,7 +181,7 @@ Advanced features and use cases:
 - [Custom Rendering Formats](./advanced/custom-rendering-formats.md)
 - [Plugin Development](./advanced/plugin-development.md)
 - [Custom Transformations](./advanced/custom-transformations.md)
-- [Advanced Query Patterns](./advanced/advanced-query-patterns.md)
+- [Advanced Query Patterns](./guides/advanced-query-patterns.md)
 
 ### [For Agents](./for-agents/README.md)
 
@@ -189,9 +189,9 @@ Documentation for AI agent integration:
 
 - [Agent Integration Guide](./for-agents/agent-integration.md) 
 - [LLM Compatibility](./for-agents/llm-compatibility.md)
-- [Prompt Engineering](./for-agents/prompt-engineering.md)
+- [Prompt Engineering](./guides/prompt-engineering.md)
 
-### [Contributing](./contributing/README.md)
+### [Contributing](./README.md)
 
 Guidelines for contributing to UltraLink development:
 
@@ -201,16 +201,16 @@ Guidelines for contributing to UltraLink development:
 ## Additional Resources
 
 - [FAQ](./faq.md) - Frequently asked questions about UltraLink
-- [Troubleshooting](./troubleshooting.md) - Solutions to common issues
-- [Community Support](./community-support.md) - Where to get help from the community
+- [Troubleshooting](./troubleshooting/troubleshooting.md) - Solutions to common issues
+- [Community Support](./contributing/community-support.md) - Where to get help from the community
 
 ## Latest Updates
 
-UltraLink is continuously evolving. Check out the [latest updates](./updates/README.md) to see what's new.
+UltraLink is continuously evolving. Check out the [latest updates](./README.md) to see what's new.
 
 ## Version Information
 
-This documentation applies to UltraLink version 0.5.x. For documentation on other versions, please see the [version archive](./versions/README.md).
+This documentation applies to UltraLink version 0.5.x. For documentation on other versions, please see the [version archive](./README.md).
 
 ## Contributing to Documentation
 
@@ -251,3 +251,11 @@ We have the following improvements planned for our documentation:
 3. Translation to additional languages
 4. Improved searchability and cross-referencing
 5. User-contributed cookbook recipes ]
+
+## Known documentation gaps (docs-audit 2026-08-29)
+
+Intra-doc link audit: 73 distinct relative link targets referenced from
+`docs/*.md` do not exist yet (planned pages such as `series/part1-setup.md`,
+`api/core-api.md`, `guides/advanced-queries.md`, workshop/tutorial pages).
+Case/encoding errors were corrected in place; these remaining targets are
+aspirational content gaps, listed for owner follow-up rather than deleted.

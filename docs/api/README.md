@@ -67,7 +67,7 @@ const reduced = graph.reduceDimensions({
 });
 ```
 
-Learn more in the [Vector Operations API Reference](./vector-operations.md).
+Learn more in the [Vector Operations API Reference](./guides/vector-operations.md).
 
 ## Export API
 
@@ -292,5 +292,5 @@ Methods marked as **@experimental** may change between minor versions. Methods m
 
 - Explore the [Core API Reference](./core-api.md) to learn about essential methods
 - Check out the [Export API Reference](./export-api.md) for exporting your knowledge graphs
-- See the [Vector Operations API Reference](./vector-operations.md) for working with embeddings
+- See the [Vector Operations API Reference](./guides/vector-operations.md) for working with embeddings
 - Learn about [LLM Integration](./llm-api.md) for AI-enhanced knowledge graphs 

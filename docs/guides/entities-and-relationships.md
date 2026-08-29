@@ -754,6 +754,6 @@ Entities and relationships form the foundation of your UltraLink knowledge graph
 
 For more advanced topics, see:
 - [Vector-Based Search and Discovery](./vector-search.md)
-- [Temporal Analysis Guide](./temporal-analysis.md)
+- [Temporal Analysis Guide](./core-features/temporal-analysis.md)
 - [Custom Entity Types](../advanced/custom-entity-types.md)
 - [Advanced Query Patterns](../advanced/advanced-query-patterns.md) 

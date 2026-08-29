@@ -39,9 +39,9 @@ For technical questions, you can also use [Stack Overflow](https://stackoverflow
 Before asking for help, please check the comprehensive documentation:
 
 - [Getting Started Guide](./getting-started/introduction.md)
-- [API Reference](./api/README.md)
+- [API Reference](./README.md)
 - [Tutorials](./tutorials/)
-- [Troubleshooting Guide](./troubleshooting.md)
+- [Troubleshooting Guide](./troubleshooting/troubleshooting.md)
 - [FAQ](./faq.md)
 
 #### GitHub Issues

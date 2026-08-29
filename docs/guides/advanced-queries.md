@@ -761,4 +761,4 @@ const graphML = ultralink.export(graph, 'graphml');
 
 - [Vector Operations Guide](./vector-operations.md) - Advanced vector capabilities
 - [Core API Reference](../api/core.md) - Complete API details
-- [Query Optimization Guide](./query-optimization.md) - Performance tuning 
+- [Query Optimization Guide](./performance/query-optimization.md) - Performance tuning 

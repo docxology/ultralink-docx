@@ -844,7 +844,7 @@ if (integrityReport.hasIssues) {
 
 If you're still experiencing issues after trying the solutions in this guide:
 
-1. **Check Documentation**: Review the [API Reference](./api/README.md) for correct usage
+1. **Check Documentation**: Review the [API Reference](./README.md) for correct usage
 2. **Search Known Issues**: Check [GitHub Issues](https://github.com/docxology/ultralink/issues) for similar problems
 3. **Community Support**: Join the [Discord community](https://discord.gg/ultralink) for real-time help
 4. **Stack Overflow**: Post on [Stack Overflow](https://stackoverflow.com/questions/tagged/ultralink) with the `ultralink` tag
