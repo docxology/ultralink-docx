@@ -7,7 +7,7 @@ module.exports = {
   ],
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'json'],
-  setupFiles: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testTimeout: 30000,
   verbose: true,
   collectCoverage: true,

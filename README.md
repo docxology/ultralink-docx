@@ -65,6 +65,48 @@ graph TD
     class applications purple
 ```
 
+## ⚡ Agent Orientation (read this first)
+
+> Added 2026-08-31 by the agent-ergonomics docs pass. Verification path noted per claim.
+
+**What is this?** UltraLink is a Node/JS framework for relational content
+(entities, links, vector embeddings, temporal engine) with many export
+channels. Human overview: [docs/README.md](docs/README.md).
+
+**Current status (as of 2026-08-31, verified by commands below):**
+
+- `npm install` succeeds from a clean tree (verified 2026-08-31).
+- Test gate status: see the dated result in [TODO.md](TODO.md) Major section
+  and [REVIEW_LOG_2026-08-31.md](REVIEW_LOG_2026-08-31.md). `docs/PROJECT_STATUS.md`
+  historically claimed "all tests passing"; treat that file's older prose as
+  superseded by the dated results in TODO.md.
+- No CI configuration exists in this repo (no `.github/workflows/`) — verify locally.
+
+**Verify commands (run from repo root; ~2-8 min depending on cache):**
+
+```bash
+npm install          # once
+npx jest --ci --silent   # full suite; per-suite: npx jest tests/unit
+```
+
+**What to do next:** the canonical backlog is [TODO.md](TODO.md) (Minor /
+Medium / Major with file paths). Do not duplicate backlog items anywhere else;
+link here instead.
+
+**Agent docs hub:** [AGENTS.md](AGENTS.md) (root agent notes) →
+[docs/AGENTS.md](docs/AGENTS.md) (docs-tree hub) →
+[docs/for-agents/README.md](docs/for-agents/README.md) (integration guidance).
+`docs/AGENTS.md` is the single hub for agent-facing documentation; every other
+agent doc should link to it, not copy it.
+
+**Known local quirks (verified 2026-08-31):**
+
+- `test.js` at repo root is a 3-line smoke snippet, not a test — do not use it
+  as the verification gate.
+- `src/index.js.bak` is a stale backup; ignore, do not delete.
+- README badges above reference an external `ultralink` GitHub org — upstream
+  boilerplate, unverified, not this repo.
+
 ## 📋 API Usage Guide
 
 > **Important Notice**: Please refer to our comprehensive [API Usage Guide](docs/API_USAGE.md) for the correct method names and parameter orders. Some examples in the older documentation may use deprecated method names like `createEntity` and `createLink` instead of the current methods `addEntity` and `addLink`.
@@ -381,7 +423,7 @@ Each format serves different needs:
 - **Obsidian**: Markdown files with wiki-links for knowledge management
 - **HTML Website**: Self-contained interactive website for sharing and exploration
 
-For complete details on all export formats, examples, and best practices, see [RENDERING_TARGETS.md](RENDERING_TARGETS.md).
+For complete details on all export formats, examples, and best practices, see [docs/EXPORT_FORMATS.md](docs/EXPORT_FORMATS.md).
 
 ## 🧪 Testing & Rendering
 
@@ -535,7 +577,7 @@ UltraLink is licensed under the [MIT License](LICENSE).
 
 ## 🌟 Acknowledgements
 
-- Our amazing [contributors](CONTRIBUTORS.md)
+- Our amazing [contributors](https://github.com/docxology/ultralink-docx/graphs/contributors)
 - The incredible open-source community
 - Research foundations in vector embeddings, graph theory, and knowledge management
 - Open-source libraries that make UltraLink possible:
@@ -570,7 +612,7 @@ UltraLink is licensed under the [MIT License](LICENSE).
 
 ## 🌟 Acknowledgements
 
-- Our amazing [contributors](CONTRIBUTORS.md)
+- Our amazing [contributors](https://github.com/docxology/ultralink-docx/graphs/contributors)
 - The incredible open-source community
 - Research foundations in vector embeddings, graph theory, and knowledge management
 - Open-source libraries that make UltraLink possible:

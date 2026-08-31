@@ -1,3 +1,5 @@
+> Note (added 2026-08-31): this is a local research stream note, not current project documentation. INDEX.md marks it as under review.
+
 UltraLink -- InferAnt Stream 011.1
 
 Disclaimers: 

@@ -17,7 +17,7 @@ This document provides an overview of all top-level files in the UltraLink proje
 
 | File | Purpose | Relationship |
 |------|---------|--------------|
-| `README.md` | Project overview and introduction | Main entry point for users and developers |
+| `README.md` | Project overview and introduction; the Agent Orientation section (2026-08-31) is the cold-start entry | Main entry point for users and developers |
 | `CHANGELOG.md` | Version history and updates | Referenced by README for tracking changes |
 | `CODE_OF_CONDUCT.md` | Community guidelines | Referenced by CONTRIBUTING.md |
 | `CONTRIBUTING.md` | Contribution process | References CODE_OF_CONDUCT.md |
@@ -57,4 +57,4 @@ package.json (Project definition)
 
 | File | Status | Recommendation |
 |------|--------|---------------|
-| `InferAnt_Stream_011.md` | Working notes | Consider developing into proper documentation or removing from repository | 
+| `InferAnt_Stream_011.md` | Dated research stream note (2025-07-27); carries a local-note banner since 2026-08-31 | Keep under review; do not treat as current project documentation | 

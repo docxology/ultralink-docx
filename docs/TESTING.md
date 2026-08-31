@@ -1,5 +1,13 @@
 # UltraLink Testing Guide
 
+> **Freshness note (2026-08-31):** the "Continuous Integration" section below
+> describes CI that is NOT present in this repository (no `.github/workflows/`
+> exists as of 2026-08-31). Treat that section as aspirational/upstream
+> boilerplate. The authoritative local verify command is
+> `npm install && npx jest --ci --silent`; canonical backlog lives in
+> [TODO.md](../TODO.md).
+
+
 This guide provides detailed information on how to run, extend, and understand the UltraLink test suite.
 
 ## Table of Contents

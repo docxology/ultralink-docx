@@ -1,5 +1,13 @@
 # UltraLink Project Status
 
+> **Freshness note (2026-08-31):** the "Current Version Status" claim below
+> predates this note and is NOT verified by this docs pass. Actual observed
+> gate status on 2026-08-31 (`npm install` + `npx jest --ci --silent`) is
+> recorded in the root [TODO.md](../TODO.md) Major section and
+> [REVIEW_LOG_2026-08-31.md](../REVIEW_LOG_2026-08-31.md). Re-verify before
+> trusting any status claim here: `npx jest --ci --silent`.
+
+
 This document provides a summary of the current status of the UltraLink project, including recent enhancements, test status, and known limitations.
 
 ## Current Version Status
