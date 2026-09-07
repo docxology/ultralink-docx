@@ -19,7 +19,7 @@
     <section class="summary">
       <h2>Knowledge Base Summary</h2>
       <p>Total Entities: 3</p>
-      <p>Total Relationships: 2</p>
+      <p>Total Relationships: 3</p>
     </section>
     <section class="visualization">
       <div class="visualization-controls">
@@ -42,7 +42,20 @@
     <div class="entity-type-list">
       
         <div class="entity-type-group">
-          <h3>organism (2)</h3>
+          <h3>ecosystem (1)</h3>
+          <div class="entity-list">
+            
+              <div class="entity-item">
+                <a href="desert.html">
+                  Desert
+                </a>
+              </div>
+            
+          </div>
+        </div>
+      
+        <div class="entity-type-group">
+          <h3>plant (1)</h3>
           <div class="entity-list">
             
               <div class="entity-item">
@@ -51,22 +64,16 @@
                 </a>
               </div>
             
-              <div class="entity-item">
-                <a href="kangaroo-rat.html">
-                  Kangaroo Rat
-                </a>
-              </div>
-            
           </div>
         </div>
       
         <div class="entity-type-group">
-          <h3>environmental_factor (1)</h3>
+          <h3>animal (1)</h3>
           <div class="entity-list">
             
               <div class="entity-item">
-                <a href="aridity.html">
-                  Aridity
+                <a href="kangaroo-rat.html">
+                  Kangaroo Rat
                 </a>
               </div>
             
@@ -198,7 +205,7 @@
       updateFilters();
     });
     
-    initializeGraph({"nodes":[{"id":"saguaro","type":"organism","label":"Saguaro Cactus","attributes":{"name":"Saguaro Cactus","scientificName":"Carnegiea gigantea","type":"plant","height":"15-50 feet","lifespan":"150-200 years"}},{"id":"kangaroo-rat","type":"organism","label":"Kangaroo Rat","attributes":{"name":"Kangaroo Rat","scientificName":"Dipodomys","type":"mammal","weight":"100-150g","nocturnal":true}},{"id":"aridity","type":"environmental_factor","label":"Aridity","attributes":{"name":"Aridity","description":"Extremely dry conditions with minimal rainfall","annualRainfall":"3-15 inches"}}],"links":[{"source":"saguaro","target":"aridity","type":"adapts_to","attributes":{"mechanism":"Water storage in stem","efficiency":0.95}},{"source":"kangaroo-rat","target":"aridity","type":"adapts_to","attributes":{"mechanism":"Metabolic water production","efficiency":0.88}}]});
+    initializeGraph({"nodes":[{"id":"desert","type":"ecosystem","label":"Desert","attributes":{"name":"Desert","climate":"arid","averageRainfall":"< 250mm per year"}},{"id":"saguaro","type":"plant","label":"Saguaro Cactus","attributes":{"name":"Saguaro Cactus","scientificName":"Carnegiea gigantea","height":"up to 12m","lifespan":"150-200 years"}},{"id":"kangaroo-rat","type":"animal","label":"Kangaroo Rat","attributes":{"name":"Kangaroo Rat","scientificName":"Dipodomys","diet":"seeds, plants","adaptation":"can survive without drinking water"}}],"links":[{"source":"saguaro","target":"desert","type":"lives_in","attributes":{}},{"source":"kangaroo-rat","target":"desert","type":"lives_in","attributes":{}},{"source":"kangaroo-rat","target":"saguaro","type":"shelters_near","attributes":{}}]});
   </script>
 </body>
 </html>

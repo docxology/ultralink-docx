@@ -2,58 +2,56 @@
 const data = {
   "nodes": [
     {
+      "id": "desert",
+      "type": "ecosystem",
+      "label": "Desert",
+      "attributes": {
+        "name": "Desert",
+        "climate": "arid",
+        "averageRainfall": "< 250mm per year"
+      }
+    },
+    {
       "id": "saguaro",
-      "type": "organism",
+      "type": "plant",
       "label": "Saguaro Cactus",
       "attributes": {
         "name": "Saguaro Cactus",
         "scientificName": "Carnegiea gigantea",
-        "type": "plant",
-        "height": "15-50 feet",
+        "height": "up to 12m",
         "lifespan": "150-200 years"
       }
     },
     {
       "id": "kangaroo-rat",
-      "type": "organism",
+      "type": "animal",
       "label": "Kangaroo Rat",
       "attributes": {
         "name": "Kangaroo Rat",
         "scientificName": "Dipodomys",
-        "type": "mammal",
-        "weight": "100-150g",
-        "nocturnal": true
-      }
-    },
-    {
-      "id": "aridity",
-      "type": "environmental_factor",
-      "label": "Aridity",
-      "attributes": {
-        "name": "Aridity",
-        "description": "Extremely dry conditions with minimal rainfall",
-        "annualRainfall": "3-15 inches"
+        "diet": "seeds, plants",
+        "adaptation": "can survive without drinking water"
       }
     }
   ],
   "links": [
     {
       "source": "saguaro",
-      "target": "aridity",
-      "type": "adapts_to",
-      "attributes": {
-        "mechanism": "Water storage in stem",
-        "efficiency": 0.95
-      }
+      "target": "desert",
+      "type": "lives_in",
+      "attributes": {}
     },
     {
       "source": "kangaroo-rat",
-      "target": "aridity",
-      "type": "adapts_to",
-      "attributes": {
-        "mechanism": "Metabolic water production",
-        "efficiency": 0.88
-      }
+      "target": "desert",
+      "type": "lives_in",
+      "attributes": {}
+    },
+    {
+      "source": "kangaroo-rat",
+      "target": "saguaro",
+      "type": "shelters_near",
+      "attributes": {}
     }
   ]
 };

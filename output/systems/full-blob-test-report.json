@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-08-31T20:19:30.187Z",
+  "outputDirectory": "/Volumes/external_drive/Git/projects/ongoing/docxology/ultralink-docx/output/systems",
+  "results": [
+    {
+      "system": "DesertEcosystem",
+      "success": false
+    },
+    {
+      "system": "ResearchTeam",
+      "success": false
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "successful": 0,
+    "failed": 2
+  }
+}

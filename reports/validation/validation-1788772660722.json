@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-09-07T09:17:40.471Z",
+  "renderers": {
+    "html": {
+      "success": true,
+      "errors": [],
+      "details": {
+        "summary": {
+          "total": 6,
+          "passed": 0,
+          "failed": 6,
+          "successRate": "0.00%"
+        },
+        "tests": [
+          {
+            "name": "HTML Validation",
+            "passed": false,
+            "details": {
+              "error": "Should include LLM insights"
+            },
+            "timestamp": "2026-09-07T09:17:40.693Z"
+          },
+          {
+            "name": "JSON Validation",
+            "passed": false,
+            "details": {
+              "error": "Entities should be an array"
+            },
+            "timestamp": "2026-09-07T09:17:40.720Z"
+          },
+          {
+            "name": "GraphML Validation",
+            "passed": false,
+            "details": {
+              "error": "ENOENT: no such file or directory, open '/Volumes/external_drive/Git/projects/ongoing/docxology/ultralink-docx/output/research-team/graph/research-team.graphml'"
+            },
+            "timestamp": "2026-09-07T09:17:40.721Z"
+          },
+          {
+            "name": "CSV Validation",
+            "passed": false,
+            "details": {
+              "error": "ENOENT: no such file or directory, open '/Volumes/external_drive/Git/projects/ongoing/docxology/ultralink-docx/output/research-team/raw/research-team.csv'"
+            },
+            "timestamp": "2026-09-07T09:17:40.721Z"
+          },
+          {
+            "name": "Obsidian Validation",
+            "passed": false,
+            "details": {
+              "error": "ENOENT: no such file or directory, scandir '/Volumes/external_drive/Git/projects/ongoing/docxology/ultralink-docx/output/research-team/knowledge/obsidian'"
+            },
+            "timestamp": "2026-09-07T09:17:40.721Z"
+          },
+          {
+            "name": "Timeline Validation",
+            "passed": false,
+            "details": {
+              "error": "ENOENT: no such file or directory, open '/Volumes/external_drive/Git/projects/ongoing/docxology/ultralink-docx/output/research-team/temporal/timeline.json'"
+            },
+            "timestamp": "2026-09-07T09:17:40.721Z"
+          }
+        ]
+      }
+    }
+  },
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0
+  }
+}

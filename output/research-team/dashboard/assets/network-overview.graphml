@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <graph id="G" edgedefault="directed">
+    <!-- Node attribute keys -->
+    <key id="type" for="node" attr.name="type" attr.type="string"/>
+    <key id="name" for="node" attr.name="name" attr.type="string"/>
+    <key id="title" for="node" attr.name="title" attr.type="string"/>
+    <key id="expertise" for="node" attr.name="expertise" attr.type="string"/>
+    <key id="status" for="node" attr.name="status" attr.type="string"/>
+    <key id="collaboration_metrics" for="node" attr.name="collaboration_metrics" attr.type="string"/>
+    <key id="description" for="node" attr.name="description" attr.type="string"/>
+    <key id="vector" for="node" attr.name="vector" attr.type="string"/>
+    <key id="start_date" for="node" attr.name="start_date" attr.type="string"/>
+    <key id="llm_insights" for="node" attr.name="llm_insights" attr.type="string"/>
+    <key id="authors" for="node" attr.name="authors" attr.type="string"/>
+    <key id="publication_date" for="node" attr.name="publication_date" attr.type="string"/>
+    <key id="journal" for="node" attr.name="journal" attr.type="string"/>
+    <key id="impact_metrics" for="node" attr.name="impact_metrics" attr.type="string"/>
+    <key id="acquisition_date" for="node" attr.name="acquisition_date" attr.type="string"/>
+    <key id="utilization_analytics" for="node" attr.name="utilization_analytics" attr.type="string"/>
+    <!-- Edge attribute keys -->
+    <key id="relationship_type" for="edge" attr.name="type" attr.type="string"/>
+    <node id="alice-chen">
+      <data key="type">person</data>
+      <data key="name">Alice Chen</data>
+      <data key="title">Principal Investigator</data>
+      <data key="expertise">Machine Learning,Computer Vision,Research Management</data>
+      <data key="status">active</data>
+      <data key="collaboration_metrics">[object Object]</data>
+    </node>
+    <node id="bob-smith">
+      <data key="type">person</data>
+      <data key="name">Bob Smith</data>
+      <data key="title">Senior Researcher</data>
+      <data key="expertise">Natural Language Processing,Deep Learning</data>
+      <data key="status">active</data>
+    </node>
+    <node id="carol-jones">
+      <data key="type">person</data>
+      <data key="name">Carol Jones</data>
+      <data key="title">PhD Student</data>
+      <data key="expertise">Computer Vision,Image Processing</data>
+      <data key="status">active</data>
+    </node>
+    <node id="david-lee">
+      <data key="type">person</data>
+      <data key="name">David Lee</data>
+      <data key="title">Research Assistant</data>
+      <data key="expertise">Data Analysis,Statistical Methods</data>
+      <data key="status">active</data>
+    </node>
+    <node id="emma-wilson">
+      <data key="type">person</data>
+      <data key="name">Emma Wilson</data>
+      <data key="title">Lab Manager</data>
+      <data key="expertise">Project Management,Research Administration</data>
+      <data key="status">active</data>
+    </node>
+    <node id="frank-miller">
+      <data key="type">person</data>
+      <data key="name">Frank Miller</data>
+      <data key="title">Visiting Researcher</data>
+      <data key="expertise">Reinforcement Learning,Robotics</data>
+      <data key="status">active</data>
+    </node>
+    <node id="machine-learning-theory">
+      <data key="type">knowledge-area</data>
+      <data key="name">Machine Learning Theory</data>
+      <data key="description">Theoretical foundations of machine learning algorithms</data>
+      <data key="status">active</data>
+      <data key="vector">[object Object]</data>
+    </node>
+    <node id="computer-vision">
+      <data key="type">knowledge-area</data>
+      <data key="name">Computer Vision</data>
+      <data key="description">Processing and analyzing visual data</data>
+      <data key="status">active</data>
+      <data key="vector">[object Object]</data>
+    </node>
+    <node id="nlp">
+      <data key="type">knowledge-area</data>
+      <data key="name">Natural Language Processing</data>
+      <data key="description">Processing and analyzing natural language</data>
+      <data key="status">active</data>
+    </node>
+    <node id="computer-vision-project">
+      <data key="type">project</data>
+      <data key="name">Advanced Computer Vision Project</data>
+      <data key="description">Research on novel computer vision algorithms for low-light conditions</data>
+      <data key="start_date">2021-01-15</data>
+      <data key="status">active</data>
+      <data key="llm_insights">[object Object]</data>
+    </node>
+    <node id="nlp-project">
+      <data key="type">project</data>
+      <data key="name">NLP Understanding Project</data>
+      <data key="description">Research on contextual understanding in NLP models</data>
+      <data key="start_date">2021-03-10</data>
+      <data key="status">active</data>
+    </node>
+    <node id="ml-theory-project">
+      <data key="type">project</data>
+      <data key="name">ML Theory Advancement</data>
+      <data key="description">Theoretical research on convergence properties of ML algorithms</data>
+      <data key="start_date">2022-01-05</data>
+      <data key="status">planning</data>
+    </node>
+    <node id="vision-paper-2022">
+      <data key="type">publication</data>
+      <data key="title">Novel Approaches to Low-Light Computer Vision</data>
+      <data key="authors">Alice Chen,Carol Jones</data>
+      <data key="publication_date">2022-06-15</data>
+      <data key="journal">Journal of Computer Vision Research</data>
+      <data key="status">published</data>
+      <data key="impact_metrics">[object Object]</data>
+    </node>
+    <node id="nlp-paper-2022">
+      <data key="type">publication</data>
+      <data key="title">Contextual Understanding in Large Language Models</data>
+      <data key="authors">Bob Smith,David Lee</data>
+      <data key="publication_date">2022-08-22</data>
+      <data key="journal">Computational Linguistics Journal</data>
+      <data key="status">published</data>
+    </node>
+    <node id="gpu-cluster">
+      <data key="type">equipment</data>
+      <data key="name">GPU Computing Cluster</data>
+      <data key="description">High-performance GPU cluster for ML research</data>
+      <data key="acquisition_date">2020-11-30</data>
+      <data key="status">operational</data>
+      <data key="utilization_analytics">[object Object]</data>
+    </node>
+    <node id="dataset-server">
+      <data key="type">equipment</data>
+      <data key="name">Dataset Storage Server</data>
+      <data key="description">High-capacity storage for research datasets</data>
+      <data key="acquisition_date">2021-02-15</data>
+      <data key="status">operational</data>
+    </node>
+    <edge source="alice-chen" target="computer-vision-project">
+      <data key="relationship_type">leads</data>
+    </edge>
+    <edge source="bob-smith" target="nlp-project">
+      <data key="relationship_type">leads</data>
+    </edge>
+    <edge source="carol-jones" target="computer-vision-project">
+      <data key="relationship_type">contributes_to</data>
+    </edge>
+    <edge source="david-lee" target="nlp-project">
+      <data key="relationship_type">contributes_to</data>
+    </edge>
+    <edge source="emma-wilson" target="computer-vision-project">
+      <data key="relationship_type">manages</data>
+    </edge>
+    <edge source="emma-wilson" target="nlp-project">
+      <data key="relationship_type">manages</data>
+    </edge>
+    <edge source="frank-miller" target="computer-vision-project">
+      <data key="relationship_type">contributes_to</data>
+    </edge>
+    <edge source="alice-chen" target="carol-jones">
+      <data key="relationship_type">mentors</data>
+    </edge>
+    <edge source="bob-smith" target="david-lee">
+      <data key="relationship_type">mentors</data>
+    </edge>
+    <edge source="alice-chen" target="machine-learning-theory">
+      <data key="relationship_type">has_expertise_in</data>
+    </edge>
+    <edge source="alice-chen" target="computer-vision">
+      <data key="relationship_type">has_expertise_in</data>
+    </edge>
+    <edge source="bob-smith" target="machine-learning-theory">
+      <data key="relationship_type">has_expertise_in</data>
+    </edge>
+    <edge source="bob-smith" target="nlp">
+      <data key="relationship_type">has_expertise_in</data>
+    </edge>
+    <edge source="carol-jones" target="computer-vision">
+      <data key="relationship_type">has_expertise_in</data>
+    </edge>
+    <edge source="david-lee" target="nlp">
+      <data key="relationship_type">has_expertise_in</data>
+    </edge>
+    <edge source="frank-miller" target="machine-learning-theory">
+      <data key="relationship_type">has_expertise_in</data>
+    </edge>
+    <edge source="computer-vision-project" target="computer-vision">
+      <data key="relationship_type">focuses_on</data>
+    </edge>
+    <edge source="computer-vision-project" target="machine-learning-theory">
+      <data key="relationship_type">applies</data>
+    </edge>
+    <edge source="nlp-project" target="nlp">
+      <data key="relationship_type">focuses_on</data>
+    </edge>
+    <edge source="nlp-project" target="machine-learning-theory">
+      <data key="relationship_type">applies</data>
+    </edge>
+    <edge source="ml-theory-project" target="machine-learning-theory">
+      <data key="relationship_type">focuses_on</data>
+    </edge>
+    <edge source="vision-paper-2022" target="computer-vision-project">
+      <data key="relationship_type">resulted_from</data>
+    </edge>
+    <edge source="nlp-paper-2022" target="nlp-project">
+      <data key="relationship_type">resulted_from</data>
+    </edge>
+    <edge source="alice-chen" target="vision-paper-2022">
+      <data key="relationship_type">authored</data>
+    </edge>
+    <edge source="carol-jones" target="vision-paper-2022">
+      <data key="relationship_type">authored</data>
+    </edge>
+    <edge source="bob-smith" target="nlp-paper-2022">
+      <data key="relationship_type">authored</data>
+    </edge>
+    <edge source="david-lee" target="nlp-paper-2022">
+      <data key="relationship_type">authored</data>
+    </edge>
+    <edge source="computer-vision-project" target="gpu-cluster">
+      <data key="relationship_type">uses</data>
+    </edge>
+    <edge source="nlp-project" target="gpu-cluster">
+      <data key="relationship_type">uses</data>
+    </edge>
+    <edge source="computer-vision-project" target="dataset-server">
+      <data key="relationship_type">uses</data>
+    </edge>
+    <edge source="nlp-project" target="dataset-server">
+      <data key="relationship_type">uses</data>
+    </edge>
+  </graph>
+</graphml>

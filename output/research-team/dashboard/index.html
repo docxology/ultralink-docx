@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Team Analysis Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://d3.js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <h2>Research Team Analysis</h2>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#overview" class="active">Network Overview</a></li>
+      <li><a href="#vectors">Vector Space</a></li>
+      <li><a href="#temporal">Temporal Analysis</a></li>
+      <li><a href="#impact">Impact Analysis</a></li>
+      <li><a href="#clusters">Cluster Analysis</a></li>
+      <li><a href="#entities">Entity Explorer</a></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <section id="overview" class="section active">
+      <h2>Network Overview</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h3>Network Statistics</h3>
+          <div id="network-stats"></div>
+        </div>
+        <div class="metric-card">
+          <h3>Entity Distribution</h3>
+          <div id="entity-distribution"></div>
+        </div>
+      </div>
+      <div class="visualization-container">
+        <div id="network-viz"></div>
+      </div>
+    </section>
+
+    <section id="vectors" class="section">
+      <h2>Vector Space Analysis</h2>
+      <div class="controls">
+        <select id="vector-dimension">
+          <option value="2d">2D View</option>
+          <option value="3d">3D View</option>
+        </select>
+        <select id="vector-color">
+          <option value="cluster">Color by Cluster</option>
+          <option value="type">Color by Type</option>
+        </select>
+        <button id="reset-view">Reset View</button>
+      </div>
+      <div class="visualization-container">
+        <div id="vector-space-interactive" class="vector-viz"></div>
+      </div>
+      <div class="details-panel">
+        <h3>Selected Entity Details</h3>
+        <div id="vector-details"></div>
+      </div>
+      <div class="vector-legend">
+        <h3>Clusters</h3>
+        <div id="cluster-legend"></div>
+      </div>
+    </section>
+
+    <section id="temporal" class="section">
+      <h2>Temporal Evolution</h2>
+      <div class="controls">
+        <div class="timeline-controls">
+          <button id="play-timeline">Play Evolution</button>
+          <input type="range" id="timeline-slider" min="0" max="100" value="0">
+        </div>
+      </div>
+      <div class="visualization-container">
+        <div id="temporal-viz"></div>
+      </div>
+      <div class="timeline-events">
+        <h3>Key Developments</h3>
+        <div id="timeline-details"></div>
+      </div>
+    </section>
+
+    <section id="impact" class="section">
+      <h2>Research Impact</h2>
+      <div class="controls">
+        <select id="impact-metric">
+          <option value="citations">Citation Impact</option>
+          <option value="influence">Influence Score</option>
+          <option value="applications">Practical Applications</option>
+        </select>
+      </div>
+      <div class="visualization-container">
+        <div id="impact-viz"></div>
+      </div>
+      <div class="impact-details">
+        <h3>Impact Analysis</h3>
+        <div id="impact-details"></div>
+      </div>
+    </section>
+
+    <section id="clusters" class="section">
+      <h2>Research Clusters</h2>
+      <div class="cluster-grid">
+        <div class="cluster-viz">
+          <div id="cluster-network"></div>
+        </div>
+        <div class="cluster-details">
+          <h3>Cluster Information</h3>
+          <div id="cluster-info"></div>
+        </div>
+      </div>
+      <div class="cluster-members">
+        <h3>Cluster Members</h3>
+        <div id="cluster-members"></div>
+      </div>
+    </section>
+
+    <section id="entities" class="section">
+      <h2>Entity Explorer</h2>
+      <div class="explorer-grid">
+        <div class="entity-list">
+          <div class="search-box">
+            <input type="text" id="entity-search" placeholder="Search entities...">
+            <select id="entity-type-filter">
+              <option value="all">All Types</option>
+              <option value="person">People</option>
+              <option value="project">Projects</option>
+              <option value="publication">Publications</option>
+              <option value="equipment">Equipment</option>
+              <option value="knowledge-area">Knowledge Areas</option>
+            </select>
+          </div>
+          <div id="entity-list"></div>
+        </div>
+        <div class="entity-details">
+          <div id="entity-details"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.researchData = {"entities":[{"id":"alice-chen","type":"person","attributes":{"name":"Alice Chen","title":"Principal Investigator","expertise":["Machine Learning","Computer Vision","Research Management"],"status":"active","collaboration_metrics":{"expertise_vector":[0.89,0.76,0.45,0.23],"team_impact":{"mentorship_effectiveness":0.92,"project_contributions":[{"project_id":"computer-vision-project","role":"lead","impact_score":0.88,"key_contributions":["architecture_design","methodology_development"]}]},"knowledge_transfer":{"topics_taught":[{"topic":"Computer Vision","students":["carol-jones"],"effectiveness_score":0.85}]}}},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"bob-smith","type":"person","attributes":{"name":"Bob Smith","title":"Senior Researcher","expertise":["Natural Language Processing","Deep Learning"],"status":"active"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"carol-jones","type":"person","attributes":{"name":"Carol Jones","title":"PhD Student","expertise":["Computer Vision","Image Processing"],"status":"active"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"david-lee","type":"person","attributes":{"name":"David Lee","title":"Research Assistant","expertise":["Data Analysis","Statistical Methods"],"status":"active"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"emma-wilson","type":"person","attributes":{"name":"Emma Wilson","title":"Lab Manager","expertise":["Project Management","Research Administration"],"status":"active"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"frank-miller","type":"person","attributes":{"name":"Frank Miller","title":"Visiting Researcher","expertise":["Reinforcement Learning","Robotics"],"status":"active"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"machine-learning-theory","type":"knowledge-area","attributes":{"name":"Machine Learning Theory","description":"Theoretical foundations of machine learning algorithms","status":"active","vector":{"embedding":[0.23,0.45,-0.12,0.78],"cluster":"core-ml-concepts","centroid_distance":0.12,"similar_concepts":[{"id":"statistical-learning","similarity":0.92},{"id":"optimization-theory","similarity":0.85}]}},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"computer-vision","type":"knowledge-area","attributes":{"name":"Computer Vision","description":"Processing and analyzing visual data","status":"active","vector":{"embedding":[0.56,-0.23,0.67,0.11],"cluster":"applied-ml","centroid_distance":0.15,"similar_concepts":[{"id":"image-processing","similarity":0.88},{"id":"deep-learning","similarity":0.82}]}},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"nlp","type":"knowledge-area","attributes":{"name":"Natural Language Processing","description":"Processing and analyzing natural language","status":"active"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"computer-vision-project","type":"project","attributes":{"name":"Advanced Computer Vision Project","description":"Research on novel computer vision algorithms for low-light conditions","start_date":"2021-01-15","status":"active","llm_insights":{"key_findings":[{"statement":"Novel low-light detection algorithm outperforms SOTA by 15%","justification":"Based on comparative analysis of benchmark results","confidence":0.89,"supporting_evidence":["vision-paper-2022","benchmark-data-2023"]},{"statement":"Real-time processing achieved through innovative GPU optimization","justification":"Performance metrics from system logs and testing","confidence":0.92,"supporting_evidence":["gpu-cluster-logs","performance-report-q2"]}],"critical_parameters":{"learning_rate":{"value":0.001,"justification":"Optimal convergence in low-light conditions"},"batch_size":{"value":32,"justification":"Balance between memory usage and training stability"}},"risk_assessment":{"technical_risks":[{"risk":"GPU memory constraints","probability":0.4,"impact":0.7},{"risk":"Dataset bias in low-light conditions","probability":0.3,"impact":0.8}]}}},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"nlp-project","type":"project","attributes":{"name":"NLP Understanding Project","description":"Research on contextual understanding in NLP models","start_date":"2021-03-10","status":"active"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"ml-theory-project","type":"project","attributes":{"name":"ML Theory Advancement","description":"Theoretical research on convergence properties of ML algorithms","start_date":"2022-01-05","status":"planning"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"vision-paper-2022","type":"publication","attributes":{"title":"Novel Approaches to Low-Light Computer Vision","authors":["Alice Chen","Carol Jones"],"publication_date":"2022-06-15","journal":"Journal of Computer Vision Research","status":"published","impact_metrics":{"citation_network":{"vector":[0.34,0.67,-0.21,0.45],"influential_citations":[{"paper_id":"10.1234/vision2023.123","title":"Advances in Low-Light Computer Vision","impact_score":0.85}],"research_threads":[{"topic":"Low-light object detection","papers":["vision-paper-2022","vision2023.123","lowlight2023.456"],"coherence_score":0.78}]},"methodology_assessment":{"novelty_score":0.82,"reproducibility_score":0.75,"justification":"Novel approach with well-documented methodology and public code"}}},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"nlp-paper-2022","type":"publication","attributes":{"title":"Contextual Understanding in Large Language Models","authors":["Bob Smith","David Lee"],"publication_date":"2022-08-22","journal":"Computational Linguistics Journal","status":"published"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"gpu-cluster","type":"equipment","attributes":{"name":"GPU Computing Cluster","description":"High-performance GPU cluster for ML research","acquisition_date":"2020-11-30","status":"operational","utilization_analytics":{"usage_patterns":{"vector":[0.45,0.78,0.34,-0.12],"peak_times":[{"timeframe":"Mon-Fri 10:00-16:00","utilization":0.92},{"timeframe":"Weekends","utilization":0.45}],"project_allocation":[{"project_id":"computer-vision-project","gpu_hours":1200,"efficiency_score":0.88},{"project_id":"nlp-project","gpu_hours":800,"efficiency_score":0.82}]},"optimization_recommendations":[{"recommendation":"Implement job scheduling for better resource utilization","expected_impact":0.25,"justification":"Based on current usage patterns and peak time analysis"}]}},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}},{"id":"dataset-server","type":"equipment","attributes":{"name":"Dataset Storage Server","description":"High-capacity storage for research datasets","acquisition_date":"2021-02-15","status":"operational"},"metadata":{"created":"2026-09-07T09:17:40.473Z","modified":"2026-09-07T09:17:40.473Z"}}],"links":[],"metadata":{"graph_metrics":{"density":0.45,"clustering_coefficient":0.67,"average_path_length":2.3},"cluster_analysis":[{"name":"core-ml-concepts","centroid":[0.34,0.56,-0.23,0.89],"members":["machine-learning-theory","computer-vision","nlp"],"coherence":0.82},{"name":"applied-research","centroid":[0.67,-0.12,0.45,0.23],"members":["computer-vision-project","nlp-project"],"coherence":0.75}],"temporal_analysis":{"knowledge_evolution":[{"timeframe":"2021-Q1","key_developments":["computer-vision-project-start"],"impact_score":0.78},{"timeframe":"2022-Q2","key_developments":["vision-paper-publication"],"impact_score":0.85}]}}};
+  </script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,10 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const { generateDashboard } = require('./generate-research-team-dashboard');
-const OutputValidator = require('../tests/runners/research-team-output-validator');
+const { generateDashboard } = require('../src/research-team/dashboard');
+const { createEnhancedResearchTeamDataset } = require('../src/research-team/dataset-llm');
+const OutputValidator = require('../src/research-team/output-validator');
 
 const RENDERERS = {
-  html: generateDashboard,
+  html: async () => generateDashboard(
+    createEnhancedResearchTeamDataset(),
+    path.join(__dirname, '../output/research-team/dashboard'),
+    path.join(__dirname, 'dashboard.js')
+  ),
   // Add other renderers as they're implemented
   // bayesian: generateBayesianGraph,
   // ontology: generateOntologyNetwork,
