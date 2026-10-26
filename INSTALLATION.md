@@ -9,7 +9,6 @@ This guide provides detailed instructions for installing UltraLink in various en
 - [Environment-Specific Installation](#environment-specific-installation)
   - [Node.js](#nodejs)
   - [Browser](#browser)
-  - [Docker](#docker)
 - [Development Setup](#development-setup)
 - [Continuous Integration](#continuous-integration)
 - [Troubleshooting](#troubleshooting)
@@ -18,7 +17,7 @@ This guide provides detailed instructions for installing UltraLink in various en
 
 Before installing UltraLink, ensure you have the following:
 
-- **Node.js**: Version 14.0.0 or higher ([download](https://nodejs.org/))
+- **Node.js**: Version 18.17.0 or higher ([download](https://nodejs.org/)) — required by `sharp` 0.33 and `jsdom` 24
 - **npm**, **yarn**, or **pnpm**: For package management
 - **Git**: For version control (optional, but recommended)
 
@@ -68,22 +67,8 @@ node index.js
 
 ### Browser
 
-#### Via CDN
-
-```html
-<!-- Latest version -->
-<script src="https://cdn.jsdelivr.net/npm/ultralink@latest/dist/ultralink.min.js"></script>
-
-<!-- Specific version -->
-<script src="https://cdn.jsdelivr.net/npm/ultralink@0.1.0/dist/ultralink.min.js"></script>
-
-<script>
-  const ultralink = new UltraLink();
-  console.log("UltraLink initialized in browser!");
-</script>
-```
-
-#### Via npm and Bundlers
+The repository ships CommonJS source (`src/index.js`) and has no published
+browser bundle (`dist/`), so use a bundler to build it for the browser.
 
 If you're using a bundler like webpack, Rollup, or Parcel:
 
@@ -96,56 +81,20 @@ import { UltraLink } from 'ultralink';
 const ultralink = new UltraLink();
 ```
 
-### Docker
-
-UltraLink is available as a Docker image for containerized deployments:
-
-```bash
-# Pull the UltraLink image
-docker pull ultralink/ultralink:latest
-
-# Run with mounted volume
-docker run -v $(pwd):/data -p 3000:3000 ultralink/ultralink:latest
-```
-
-Create a `docker-compose.yml` file for more complex setups:
-
-```yaml
-version: '3'
-services:
-  ultralink:
-    image: ultralink/ultralink:latest
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./data:/data
-    environment:
-      - NODE_ENV=production
-```
-
-Then run:
-
-```bash
-docker-compose up -d
-```
-
 ## Development Setup
 
 For developers contributing to UltraLink or building extensions:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ultralink.git
-cd ultralink
+git clone https://github.com/docxology/ultralink-docx.git
+cd ultralink-docx
 
 # Install dependencies
 npm install
 
 # Run tests
 npm test
-
-# Build the project
-npm run build
 ```
 
 ## Continuous Integration
@@ -168,11 +117,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [20.x, 22.x]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
@@ -186,7 +135,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/node:16.13
+      - image: cimg/node:20.19
     steps:
       - checkout
       - restore_cache:
@@ -208,12 +157,12 @@ jobs:
 
 **Problem**: You see an error about Node.js version requirements.
 
-**Solution**: Update Node.js to version 14.0.0 or higher:
+**Solution**: Update Node.js to version 18.17.0 or higher:
 
 ```bash
 # Using nvm (Node Version Manager)
-nvm install 14
-nvm use 14
+nvm install 20
+nvm use 20
 
 # Or download from nodejs.org
 ```
@@ -238,4 +187,4 @@ npm install --save-dev @babel/core @babel/preset-env babel-loader
 NODE_OPTIONS=--max-old-space-size=4096 node your-script.js
 ```
 
-For more troubleshooting help, see our [Troubleshooting Guide](docs/troubleshooting.md) or [open an issue](https://github.com/yourusername/ultralink/issues). 
+For more troubleshooting help, see our [Troubleshooting Guide](docs/troubleshooting/troubleshooting.md) or [open an issue](https://github.com/docxology/ultralink-docx/issues).

@@ -2,13 +2,8 @@
 
 <div align="center">
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/ultralink.svg)](https://www.npmjs.com/package/ultralink)
-[![Build Status](https://img.shields.io/github/workflow/status/ultralink/ultralink/CI)](https://github.com/ultralink/ultralink/actions)
-[![Coverage Status](https://img.shields.io/codecov/c/github/ultralink/ultralink)](https://codecov.io/gh/ultralink/ultralink)
-[![Documentation](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://docs.ultralink.dev)
-[![Discord](https://img.shields.io/discord/1234567890?color=7289da&label=discord&logo=discord&logoColor=white)](https://discord.gg/ultralink)
-[![Twitter Follow](https://img.shields.io/twitter/follow/ultralinkjs?style=social)](https://twitter.com/ultralinkjs)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](License.md)
+[![Documentation](https://img.shields.io/badge/docs-local-brightgreen.svg)](docs/README.md)
 
 **Beyond Hypertext: The Next Generation of Relational Content**
 
@@ -76,8 +71,8 @@ channels. Human overview: [docs/README.md](docs/README.md).
 **Current status (as of 2026-08-31, verified by commands below):**
 
 - `npm install` succeeds from a clean tree (verified 2026-08-31).
-- Test gate status: see the dated result in [TODO.md](TODO.md) Major section
-  and [REVIEW_LOG_2026-08-31.md](REVIEW_LOG_2026-08-31.md). `docs/PROJECT_STATUS.md`
+- Test gate status: see the dated result in [TODO.md](TODO.md) Major section.
+  `docs/PROJECT_STATUS.md`
   historically claimed "all tests passing"; treat that file's older prose as
   superseded by the dated results in TODO.md.
 - No CI configuration exists in this repo (no `.github/workflows/`) — verify locally.
@@ -104,8 +99,9 @@ agent doc should link to it, not copy it.
 - `test.js` at repo root is a 3-line smoke snippet, not a test — do not use it
   as the verification gate.
 - `src/index.js.bak` is a stale backup; ignore, do not delete.
-- README badges above reference an external `ultralink` GitHub org — upstream
-  boilerplate, unverified, not this repo.
+- README badges were trimmed 2026-10-26: the CI/coverage/Discord/Twitter/docs
+  badges pointed at a nonexistent `ultralink/ultralink` org or dead domains.
+  Remaining badges: license (local `License.md`) and local docs.
 
 ## 📋 API Usage Guide
 
@@ -444,20 +440,13 @@ npm run test:performance
 # View all test command options
 npm run test:help
 
-# Run specific test categories
-npm run test:unit        # Unit tests only
-npm run test:integration # Integration tests only
-npm run test:e2e         # End-to-end tests only
+# Run specific test categories directly with Jest
+npx jest tests/unit          # Unit tests only
+npx jest tests/integration   # Integration tests only
+npx jest tests/e2e           # End-to-end tests only
 
-# Generate all system-specific renderings
-npm run test:systems
-
-# Generate specific export format renderings
-npm run test:html-website
-npm run test:full-blob
-
-# Generate all export formats for all systems
-npm run test:exports
+# Render system visualizations
+node scripts/generate-system-visualizations.js
 ```
 
 ### Output Structure
@@ -573,7 +562,7 @@ A: The visualization engine is highly customizable with options for layouts, col
 
 ## 📄 License
 
-UltraLink is licensed under the [MIT License](LICENSE).
+UltraLink is licensed under the [MIT License](License.md).
 
 ## 🌟 Acknowledgements
 
@@ -582,43 +571,9 @@ UltraLink is licensed under the [MIT License](LICENSE).
 - Research foundations in vector embeddings, graph theory, and knowledge management
 - Open-source libraries that make UltraLink possible:
   - [D3.js](https://d3js.org/) for visualization
-  - [TensorFlow.js](https://www.tensorflow.org/js) for vector operations
-  - [GraphLib](https://github.com/dagrejs/graphlib) for graph algorithms
-
-## 🤔 FAQ
-
-### General Questions
-
-**Q: What makes UltraLink different from traditional hypertext?**  
-A: UltraLink enhances traditional hypertext with semantic understanding, vector relationships, temporal evolution, and rich metadata. Instead of simple one-way links, UltraLink provides a comprehensive framework for modeling complex relationships with context and meaning.
-
-**Q: Is UltraLink suitable for large-scale applications?**  
-A: Yes, UltraLink is designed to scale through optimized data structures, flexible storage options, and integration with vector databases. Enterprise features for large-scale deployments are on our roadmap.
-
-### Technical Questions
-
-**Q: Does UltraLink require external services for vector embeddings?**  
-A: UltraLink includes built-in embedding capabilities with the option to connect to external services like OpenAI or Hugging Face for enhanced performance.
-
-**Q: Can I use UltraLink with existing data?**  
-A: Yes, UltraLink provides import capabilities for various formats including CSV, JSON, GraphML, and Markdown files with link structures.
-
-**Q: How customizable is the visualization engine?**  
-A: The visualization engine is highly customizable with options for layouts, colors, node sizing, filtering, and interaction modes. Custom visualization components can also be developed.
-
-## 📄 License
-
-UltraLink is licensed under the [MIT License](LICENSE).
-
-## 🌟 Acknowledgements
-
-- Our amazing [contributors](https://github.com/docxology/ultralink-docx/graphs/contributors)
-- The incredible open-source community
-- Research foundations in vector embeddings, graph theory, and knowledge management
-- Open-source libraries that make UltraLink possible:
-  - [D3.js](https://d3js.org/) for visualization
-  - [TensorFlow.js](https://www.tensorflow.org/js) for vector operations
-  - [GraphLib](https://github.com/dagrejs/graphlib) for graph algorithms
+  - [Cytoscape.js](https://js.cytoscape.org/) for graph rendering
+  - [jsdom](https://github.com/jsdom/jsdom) for HTML export
+  - [Sharp](https://sharp.pixelplumbing.com/) for image rendering
 
 ## Resources and Documentation
 

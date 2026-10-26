@@ -25,7 +25,7 @@ UltraLink follows a Code of Conduct that all contributors are expected to adhere
 ## Getting Started
 
 1. **Fork the repository**
-   - Click the "Fork" button on the [UltraLink repository](https://github.com/ultralink/ultralink).
+   - Click the "Fork" button on the [UltraLink repository](https://github.com/docxology/ultralink-docx).
 
 2. **Clone your fork**
    ```bash
@@ -35,7 +35,7 @@ UltraLink follows a Code of Conduct that all contributors are expected to adhere
 
 3. **Set up the upstream remote**
    ```bash
-   git remote add upstream https://github.com/ultralink/ultralink.git
+   git remote add upstream https://github.com/docxology/ultralink-docx.git
    ```
 
 4. **Install dependencies**
@@ -51,8 +51,8 @@ UltraLink follows a Code of Conduct that all contributors are expected to adhere
 ## Development Environment
 
 UltraLink requires:
-- Node.js 14 or higher
-- NPM 6 or higher
+- Node.js 18.17 or higher (required by `sharp` 0.33 and `jsdom` 24)
+- NPM 9 or higher
 
 Recommended tools:
 - VS Code with the following extensions:
@@ -114,11 +114,8 @@ Recommended tools:
 
 ### Code Style
 
-UltraLink follows a consistent code style enforced by ESLint and Prettier:
-
-- Run `npm run lint` to check code style
-- Run `npm run lint:fix` to automatically fix issues
-- Configure your editor to use ESLint and Prettier
+No linter or formatter is wired into this repository (there is no ESLint or
+Prettier dependency and no `lint` script). Match the surrounding code:
 
 Key style guidelines:
 - Use ES6+ features
@@ -141,18 +138,16 @@ All contributions should include appropriate tests:
 npm test
 
 # Run specific test suites
-npm run test:unit
-npm run test:integration
-npm run test:e2e
+npx jest tests/unit
+npx jest tests/integration
+npx jest tests/e2e
 
-# Run tests with coverage
-npm run test:coverage
+# Run tests with coverage (collected by default via jest.config.js)
+npx jest --coverage
 ```
 
-Test coverage thresholds:
-- 80% line coverage
-- 80% function coverage
-- 80% branch coverage
+There are no enforced coverage thresholds in `jest.config.js`; aim for tests
+that cover the changed behaviour.
 
 ### Documentation
 
@@ -163,21 +158,19 @@ Documentation is crucial for UltraLink:
 - Include examples for non-trivial features
 - Update the changelog for significant changes
 
-To build and review documentation locally:
-```bash
-npm run docs:build
-npm run docs:serve
-```
+Documentation lives as Markdown under `docs/`; there is no docs build script.
 
 ## Project Structure
 
 ```
-ultralink/
+ultralink-docx/
 ├── src/              # Source code
-│   ├── core/         # Core functionality
-│   ├── exporters/    # Export formats
-│   ├── types/        # Type definitions
+│   ├── core/         # Parser and type definitions
+│   ├── lib/          # Managers, visualizers
+│   │   └── exporters/# Export formats
+│   ├── research-team/# Research-team pipeline and dashboards
 │   ├── integrity/    # Integrity checking
+│   ├── types/        # Entity templates
 │   └── index.js      # Main entry point
 ├── tests/            # Test files
 │   ├── unit/         # Unit tests
@@ -215,12 +208,11 @@ Reviews typically happen within 1-3 business days.
 
 ## Community
 
-- Join our [Discord server](https://discord.gg/ultralink) for real-time discussion
-- Participate in [GitHub Discussions](https://github.com/ultralink/ultralink/discussions)
-- Follow us on [Twitter](https://twitter.com/ultralinkjs) for updates
+- Open an [issue](https://github.com/docxology/ultralink-docx/issues) for bugs or proposals
+- Send a pull request against `main`
 
 ## Recognition
 
-All contributors are recognized in our [CONTRIBUTORS.md](CONTRIBUTORS.md) file and on the project website.
+Contributors are recorded in the repository commit history.
 
 Thank you for contributing to UltraLink! 🎉 

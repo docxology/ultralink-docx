@@ -210,7 +210,7 @@ UltraLink is continuously evolving. Check out the [latest updates](./README.md) 
 
 ## Version Information
 
-This documentation applies to UltraLink version 0.5.x. For documentation on other versions, please see the [version archive](./README.md).
+This documentation applies to UltraLink version 0.1.x (the version in `package.json`).
 
 ## Contributing to Documentation
 
@@ -229,18 +229,9 @@ All documentation in this project follows these standards:
 
 ## Building the Documentation
 
-To build the documentation locally, run:
-
-```bash
-# Install documentation dependencies
-npm install --dev
-
-# Build the documentation
-npm run docs:build
-
-# Serve the documentation locally
-npm run docs:serve
-```
+The documentation is plain Markdown under `docs/` — there is no build step and
+no `docs:build`/`docs:serve` npm script. Read the files directly or render them
+with any Markdown viewer.
 
 ## Documentation Roadmap
 

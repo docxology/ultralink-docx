@@ -10,7 +10,7 @@ This document provides an overview of all top-level files in the UltraLink proje
 | `.gitattributes` | Git attributes configuration | Ensures consistent line endings across different environments |
 | `.gitignore` | Git ignored files list | Prevents unnecessary or sensitive files from being committed |
 | `package.json` | Project metadata and dependencies | Core configuration for Node.js/npm project |
-| `jest.setup.js` | Jest testing configuration | Referenced by Jest in package.json config |
+| `jest.setup.js` | Jest testing configuration | Referenced by `jest.config.js` (`setupFilesAfterEnv`) |
 | `jsdoc.json` | JSDoc documentation settings | Used to generate API documentation |
 
 ## Documentation

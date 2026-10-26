@@ -47,5 +47,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CSV export format
 - Basic documentation and examples
 
-[Unreleased]: https://github.com/yourusername/ultralink/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/yourusername/ultralink/releases/tag/v0.1.0 
+[Unreleased]: https://github.com/docxology/ultralink-docx/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/docxology/ultralink-docx/releases/tag/v0.1.0
