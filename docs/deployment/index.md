@@ -146,8 +146,7 @@ RUN npm ci --production
 # Copy application files
 COPY . .
 
-# Build TypeScript
-RUN npm run build
+# No build step: package.json defines no build script (the image runs src/index.js)
 
 # Set environment variables
 ENV NODE_ENV=production

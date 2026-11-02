@@ -107,7 +107,7 @@ async function createSystem(systemName) {
 To run tests for all systems:
 
 ```bash
-npm run test:systems
+npm test   # package.json defines no test:systems script; the default suite covers these fixtures
 ```
 
 The test runner will:

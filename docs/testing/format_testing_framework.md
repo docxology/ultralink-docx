@@ -807,20 +807,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Run format unit tests
-        run: npm run test:unit -- exporters
-      
-      - name: Run format integration tests
-        run: npm run test:integration -- exporters
-      
-      - name: Run format validation tests
-        run: npm run test:validation -- exporters
-      
-      - name: Run format performance tests
-        run: npm run test:performance -- exporters
+      # package.json defines test, test:all, test:performance and test:help only
+      - name: Run format tests
+        run: npx jest exporters
       
       - name: Check test coverage
-        run: npm run test:coverage
+        run: npx jest --coverage
       
       - name: Upload test results
         uses: actions/upload-artifact@v2

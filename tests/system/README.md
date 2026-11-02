@@ -30,7 +30,7 @@ Each system is rendered into the following formats:
 To run the system tests:
 
 ```bash
-npm run test:system
+npm test   # package.json defines no test:system script
 ```
 
 Or to run all tests including system tests:

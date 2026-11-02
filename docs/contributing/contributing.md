@@ -241,10 +241,10 @@ Fixes #456
 
 UltraLink follows specific code style guidelines to maintain consistency throughout the codebase:
 
-1. We use ESLint and Prettier for code formatting and style checking
-2. Run `npm run lint` to check for style issues
-3. Run `npm run lint:fix` to automatically fix style issues
-4. Configure your editor to use the project's ESLint and Prettier configs
+1. `package.json` defines no lint or format script and lists no ESLint or Prettier dependency
+2. Run `npm test` before opening a pull request
+3. Keep the style of the surrounding file
+4. The style rules below are the ones the existing sources follow
 
 Key style guidelines:
 
