@@ -9,9 +9,8 @@
   `output/` (generated export trees: systems/*, integration-tests, e2e-tests,
   html-website builds, visualization outputs), `report/`.
 - Docs tree `docs/` includes `for-agents/` — read that first when working here.
-- LOCAL-ONLY tree under `projects/ongoing/` (symlinked from
-  `projects/ongoing/File_Types/ultralink-docx`) — never commit. Parent
-  standard: `/Volumes/external_drive/Git/template/projects/ongoing/AGENTS.md`.
+- Independent public project (`docxology/ultralink-docx`); the parent standard
+  it was adapted from is the template workspace's root agent guide.
 
 ## Gotchas
 

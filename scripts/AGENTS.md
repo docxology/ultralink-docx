@@ -1,7 +1,6 @@
 # AGENTS.md — `ultralink-docx/scripts`
 
-- Local-only path under the `projects/ongoing/` tree — never commit.
-- Parent standard: [`../../../AGENTS.md`](../../../AGENTS.md).
+- Parent standard: [`../AGENTS.md`](../AGENTS.md).
 
 ## Thin-orchestrator contract
 

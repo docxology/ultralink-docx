@@ -5,7 +5,7 @@ Thin orchestrator scripts for UltraLink. Testable logic lives in `src/`
 `src/lib/`); scripts only bootstrap paths, set up logging, and make a single
 delegated call into a `src/` entrypoint.
 
-Part of the local-only `projects/ongoing/` tree (never committed).
+Part of the UltraLink project; see the root `AGENTS.md` for project conventions.
 
 ## Inventory
 
