@@ -11,6 +11,7 @@ Child folders (verified on disk):
 - `core/`
 - `integrity/`
 - `lib/`
+- `research-team/`
 - `types/`
 
 ## Files

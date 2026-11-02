@@ -10,9 +10,11 @@ Child folders (verified on disk):
 
 - `bayesian/`
 - `csv/`
+- `dashboard/`
 - `full-blob/`
 - `graphml/`
 - `html-website/`
 - `obsidian/`
+- `raw/`
 - `visualization/`
 

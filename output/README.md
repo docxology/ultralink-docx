@@ -13,6 +13,7 @@ Child folders (verified on disk):
 - `html-features-test/`
 - `integration-tests/`
 - `performance/`
+- `project-management/`
 - `research-team/`
 - `system-visualizations/`
 - `systems/`

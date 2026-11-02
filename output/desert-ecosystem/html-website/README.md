@@ -12,5 +12,5 @@ Child folders (verified on disk):
 
 ## Files
 
-4 HTML; 1 JavaScript; 1 CSS.
+5 HTML; 1 JavaScript; 1 CSS.
 
