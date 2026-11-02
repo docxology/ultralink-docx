@@ -133,23 +133,20 @@ LOG_LEVEL=debug
 UltraLink includes several npm scripts to assist with development:
 
 ```bash
-# Start development server with hot reloading
-npm run dev
+# Run the source directly (package.json defines `start`; there is no dev server with hot reloading)
+npm start
 
 # Run tests
 npm test
 
-# Run linting
-npm run lint
+# Run all tests including performance tests
+npm run test:all
 
-# Fix linting issues automatically
-npm run lint:fix
+# Run performance tests only
+npm run test:performance
 
-# Build the project
-npm run build
-
-# Generate documentation
-npm run docs
+# List the runner's options
+npm run test:help
 ```
 
 ### Branching Strategy
@@ -209,17 +206,14 @@ UltraLink uses Jest for testing. To run the tests:
 # Run all tests
 npm test
 
-# Run unit tests only
-npm run test:unit
-
-# Run integration tests only
-npm run test:integration
+# Run a category or file directly with Jest
+npx jest tests/unit
 
 # Run tests with coverage report
-npm run test:coverage
+npx jest --coverage
 
 # Run tests in watch mode (useful during development)
-npm run test:watch
+npx jest --watch
 ```
 
 ### Writing Tests
@@ -263,28 +257,21 @@ describe('JSONExporter', () => {
 UltraLink uses Markdown for documentation. When adding features or modifying existing ones, please update the relevant documentation:
 
 ```bash
-# Generate documentation
-npm run docs
-
-# Serve documentation locally
-npm run docs:serve
+# The documentation is Markdown under docs/; package.json defines no docs script
+# Browse it with any Markdown viewer
 ```
 
-The documentation is built using a static site generator and can be found in the `docs/` directory.
+The documentation is Markdown in the `docs/` directory.
 
 ## Build Process
 
-UltraLink uses a build process to transpile TypeScript (if applicable) and bundle the code for distribution:
+UltraLink runs from source: `package.json` defines no build script.
 
 ```bash
-# Build the project
-npm run build
-
-# Build in watch mode (rebuilds on file changes)
-npm run build:watch
+# No build script is defined; the package runs from src/ (main: src/index.js)
 ```
 
-The build process outputs files to the `dist/` directory, which is what gets published to npm.
+No `dist/` output is produced; `package.json` declares `main: src/index.js`.
 
 ## Common Issues
 

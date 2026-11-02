@@ -74,16 +74,15 @@ npm run test:performance
 # View all test command options
 npm run test:help
 
-# Run specific test types
-npm run test:unit
-npm run test:integration
-npm run test:e2e
+# Run specific test types directly with Jest
+npx jest tests/unit
+npx jest tests/integration
 
 # Run specific test file
 npm test -- tests/unit/entity.test.js
 
 # Run with coverage
-npm run test:coverage
+npx jest --coverage
 ```
 
 ### Performance Tests

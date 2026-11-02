@@ -702,7 +702,7 @@ Explore more examples in the [examples directory](./examples/):
 
 3. Run an example:
    ```bash
-   npm run example:research-knowledge-graph
+   node examples/visualization-example.js   # package.json defines no example:* script
    ```
 
 4. View the output:

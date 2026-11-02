@@ -52,7 +52,7 @@ Each system is contained in its own directory under `tests/fixtures/Systems/` an
 To run tests for all systems:
 
 ```bash
-npm run test:systems
+npm test   # package.json defines no test:systems script
 ```
 
 This command will:

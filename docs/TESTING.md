@@ -112,11 +112,8 @@ npm run test:all
 # Run only performance tests
 npm run test:performance
 
-# Run specific test categories
-npm run test:unit
-npm run test:integration
-npm run test:system
-npm run test:e2e
+# Run a test category or file directly with Jest
+npx jest tests/unit
 ```
 
 You can also run individual test files using Jest directly:
@@ -364,7 +361,7 @@ To run tests with coverage reporting:
 
 ```bash
 # Run tests with coverage report
-npm run test:coverage
+npx jest --coverage
 ```
 
 This will generate a coverage report in the `coverage` directory and display a summary in the terminal. The report includes coverage metrics for:
