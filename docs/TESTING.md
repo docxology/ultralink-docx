@@ -305,9 +305,9 @@ The `tests/utils` directory contains utilities for testing:
 The `tests/fixtures` directory contains test data:
 
 - `tests/fixtures/Systems/`: Complete system datasets for testing
-  - `tests/fixtures/Systems/DesertEcosystem/`: Desert ecosystem dataset
-  - `tests/fixtures/Systems/ResearchTeam/`: Research team dataset
-  - `tests/fixtures/Systems/POMDP/`: POMDP model dataset
+  - `DesertEcosystem/`: Desert ecosystem dataset
+  - `ResearchTeam/`: Research team dataset
+  - `POMDP/`: POMDP model dataset
   - ...and more
 
 ### Using Test Fixtures
