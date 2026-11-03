@@ -653,23 +653,16 @@ Effective test data management is crucial for comprehensive format testing.
 
 ```
 tests/
-├── fixtures/
-│   ├── test-systems/
-│   │   ├── index.js              # Main export for all test systems
-│   │   ├── simple-system.js      # Basic test system
-│   │   ├── complex-system.js     # Complex test system with various features
-│   │   ├── edge-case-system.js   # System with edge cases
-│   │   └── performance-system.js # System for performance testing
-│   │
-│   ├── test-entities/            # Reusable entity definitions
-│   ├── test-relationships/       # Reusable relationship definitions
-│   └── performance-data/         # Tools for generating performance test data
-│
-├── unit/                         # Unit tests
+├── fixtures/                     # Datasets and helpers shared by the suites
+│   ├── Systems/                  # Complete system datasets
+│   ├── research-team.js
+│   ├── research-team-llm.js
+│   └── sample-documents.js
+├── format-tests/                 # Format export and rendering tests
+├── formats/
 ├── integration/                  # Integration tests
-├── validation/                   # Validation tests
-├── performance/                  # Performance tests
-└── e2e/                          # End-to-end tests
+├── e2e/                          # End-to-end tests
+└── output/                       # Generated exports, per system
 ```
 
 ### Test System Factory
