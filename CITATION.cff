@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+type: software
+title: "ultralink-docx"
+authors:
+  - family-names: Friedman
+    given-names: Daniel Ari
+    orcid: "https://orcid.org/0000-0001-6232-9096"
+repository-code: "https://github.com/docxology/ultralink-docx"
+abstract: "UltraLink — JavaScript/Node knowledge-graph framework for entities, typed relationships, and temporal versioning, with vector embeddings for semantic similarity. Exports one graph to JSON, GraphML, CSV, Obsidian markdown, interactive D3.js sites, and a compressed full-blob format. MIT, on npm."
