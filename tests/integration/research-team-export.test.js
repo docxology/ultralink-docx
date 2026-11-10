@@ -138,7 +138,7 @@ describe('Research Team Export Tests', () => {
     expect(htmlFiles['index.html']).toContain('<!DOCTYPE html>');
     expect(htmlFiles['index.html']).toContain('<title>Research Team Portal</title>');
     expect(htmlFiles['index.html']).toContain('Interactive visualization of research team relationships');
-    expect(htmlFiles['index.html']).toContain('d3.v7.min.js');
+    expect(htmlFiles['index.html']).toContain('d3@7');
     
     // Check entity page content
     expect(htmlFiles['alice.html']).toContain('<title>Alice Chen - Research Team Portal</title>');
@@ -190,7 +190,7 @@ describe('Research Team Export Tests', () => {
     // Check index.html content
     expect(htmlFiles['index.html']).toContain('<title>Research Team Portal</title>');
     expect(htmlFiles['index.html']).toContain('Interactive visualization of research team relationships');
-    expect(htmlFiles['index.html']).toContain('d3.v7.min.js');
+    expect(htmlFiles['index.html']).toContain('d3@7');
     
     // Check entity page content
     expect(htmlFiles['alice.html']).toContain('<title>Alice Chen - Research Team Portal</title>');
