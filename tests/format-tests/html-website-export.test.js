@@ -99,7 +99,7 @@ describe('HTML Website Export', () => {
     // Check index.html content
     expect(htmlFiles['index.html']).toContain('<title>Desert Ecosystem</title>');
     expect(htmlFiles['index.html']).toContain('Interactive visualization of desert ecosystem relationships');
-    expect(htmlFiles['index.html']).toContain('d3.v7.min.js');
+    expect(htmlFiles['index.html']).toContain('d3@7');
     expect(htmlFiles['index.html']).toContain('const data =');
     
     // Check entity page content
