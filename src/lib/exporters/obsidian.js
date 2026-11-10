@@ -117,7 +117,7 @@ function formatYamlValue(value) {
   } else if (typeof value === 'string') {
     // Check if we need to quote the string
     if (value.includes(':') || value.includes('\n') || value.includes("'") || value.includes('"')) {
-      return `"${value.replace(/"/g, '\\"')}"`;
+      return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
     }
     return value;
   } else if (typeof value === 'object' && value !== null) {
