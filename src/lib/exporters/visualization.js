@@ -505,7 +505,7 @@ async function generateD3(graphData, options) {
 <head>
   <meta charset="utf-8">
   <title>D3.js Visualization</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity="sha384-LxfWGZyh6PaLjBRPf7NWiEYs9Mn0UQ6ZmqbLLZhxlOBBNWF2a2K0Pfc5efkrNnhQ" crossorigin="anonymous"></script>
   <style>
     html, body { margin: 0; height: 100%; overflow: hidden; }
     #graph { width: 100%; height: 100%; }
@@ -619,7 +619,7 @@ async function generateD3(graphData, options) {
 <head>
   <meta charset="utf-8">
   <title>D3.js Visualization Error</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity="sha384-LxfWGZyh6PaLjBRPf7NWiEYs9Mn0UQ6ZmqbLLZhxlOBBNWF2a2K0Pfc5efkrNnhQ" crossorigin="anonymous"></script>
 </head>
 <body>
   <div id="error" style="text-align: center; margin-top: 100px;">
@@ -678,7 +678,7 @@ function generateCytoscape(graphData, options) {
 <head>
   <meta charset="utf-8">
   <title>Cytoscape.js Visualization</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js" integrity="sha384-Q20qNhd/ak9c9XLRBwy3jG/XxBWAdfQNYkZ0bYCKxx/9iI9bUVYvLzOf7lviiPKW" crossorigin="anonymous"></script>
   <style>
     html, body { margin: 0; height: 100%; overflow: hidden; }
     #cy { width: 100%; height: 100%; }
@@ -717,7 +717,7 @@ function generateCytoscape(graphData, options) {
 <head>
   <meta charset="utf-8">
   <title>Cytoscape.js Visualization</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js" integrity="sha384-Q20qNhd/ak9c9XLRBwy3jG/XxBWAdfQNYkZ0bYCKxx/9iI9bUVYvLzOf7lviiPKW" crossorigin="anonymous"></script>
 </head>
 <body>
   <div id="cy"></div>
@@ -780,7 +780,7 @@ function generateFallbackVisualization(format, name, width, height) {
 <head>
   <meta charset="utf-8">
   <title>D3.js Visualization Fallback</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity="sha384-LxfWGZyh6PaLjBRPf7NWiEYs9Mn0UQ6ZmqbLLZhxlOBBNWF2a2K0Pfc5efkrNnhQ" crossorigin="anonymous"></script>
 </head>
 <body>
   <div style="text-align: center; margin-top: 100px;">
@@ -796,7 +796,7 @@ function generateFallbackVisualization(format, name, width, height) {
 <head>
   <meta charset="utf-8">
   <title>Cytoscape.js Visualization Fallback</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js" integrity="sha384-Q20qNhd/ak9c9XLRBwy3jG/XxBWAdfQNYkZ0bYCKxx/9iI9bUVYvLzOf7lviiPKW" crossorigin="anonymous"></script>
 </head>
 <body>
   <div style="text-align: center; margin-top: 100px;">
