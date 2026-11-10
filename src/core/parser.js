@@ -13,7 +13,7 @@ const { EntityStore } = require('../lib/entity-manager');
  * @returns {Array} - Array of extracted links
  */
 function extractObsidianLinks(content) {
-  const regex = /\[\[([^\]]+)\]\]/g;
+  const regex = /\[\[([^\[\]]+)\]\]/g;
   const matches = [];
   let match;
   
