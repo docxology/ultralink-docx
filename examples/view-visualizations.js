@@ -3,6 +3,21 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
+// Escape text placed into HTML (file and directory names come from disk).
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function viewLink(system, file, type, label) {
+  const href = `/view?file=${encodeURIComponent(`${system}/visualization/${file}`)}&type=${type}`;
+  return `<li><a href="${escapeHtml(href)}">${label}: ${escapeHtml(file)}</a></li>`;
+}
+
 // Create basic HTTP server
 const server = http.createServer((req, res) => {
   // Parse URL
@@ -30,16 +45,16 @@ const server = http.createServer((req, res) => {
       const vizDir = path.join(systemsDir, system, 'visualization');
       if (fs.existsSync(vizDir)) {
         html += `<div class="system">`;
-        html += `<h2>${system}</h2>`;
+        html += `<h2>${escapeHtml(system)}</h2>`;
         html += `<ul>`;
         
         // List visualizations for this system
         const files = fs.readdirSync(vizDir);
         files.forEach(file => {
           if (file.endsWith('.d3.js')) {
-            html += `<li><a href="/view?file=${system}/${file}&type=d3">View D3 Visualization: ${file}</a></li>`;
+            html += viewLink(system, file, 'd3', 'View D3 Visualization');
           } else if (file.endsWith('.cytoscape.js')) {
-            html += `<li><a href="/view?file=${system}/${file}&type=cytoscape">View Cytoscape Visualization: ${file}</a></li>`;
+            html += viewLink(system, file, 'cytoscape', 'View Cytoscape Visualization');
           }
         });
         
@@ -63,8 +78,13 @@ const server = http.createServer((req, res) => {
     }
     
     // Ensure the file path is safe (prevent directory traversal)
-    const safePath = path.normalize(file).replace(/^(\.\.(\/|\\|$))+/, '');
-    const filePath = path.join(__dirname, 'output', 'systems', safePath);
+    const systemsRoot = path.join(__dirname, 'output', 'systems');
+    const filePath = path.resolve(systemsRoot, String(file));
+    if (!filePath.startsWith(systemsRoot + path.sep)) {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      res.end('Invalid file parameter');
+      return;
+    }
     
     // Check if file exists
     if (!fs.existsSync(filePath)) {
@@ -94,7 +114,7 @@ const server = http.createServer((req, res) => {
 
 // Start server
 const PORT = 3000;
-server.listen(PORT, () => {
+server.listen(PORT, '127.0.0.1', () => {
   console.log(`Visualization server running at http://localhost:${PORT}/`);
   console.log('Press Ctrl+C to stop the server');
 }); 
