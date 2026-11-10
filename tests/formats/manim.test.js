@@ -3,7 +3,7 @@ const UltraLink = require('../../src/ultralink');
 const { createDesertEcosystemDataset } = require('../fixtures/Systems/DesertEcosystem/desert-ecosystem');
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 
 describe('Manim Format', () => {
   let ultralink;
@@ -132,7 +132,7 @@ describe('Manim Format', () => {
       
       // Run Manim
       try {
-        execSync(`manim -ql "${pythonFile}" UltraLinkGraph`, {
+        execFileSync('manim', ['-ql', pythonFile, 'UltraLinkGraph'], {
           stdio: ['ignore', 'pipe', 'pipe'],
           cwd: testOutputDir
         });
@@ -151,7 +151,7 @@ describe('Manim Format', () => {
         // Try to generate GIF
         try {
           const gifFile = path.join(testOutputDir, 'test_animation.gif');
-          execSync(`ffmpeg -i "${mp4File}" -vf "fps=10,scale=720:-1" "${gifFile}"`, {
+          execFileSync('ffmpeg', ['-i', mp4File, '-vf', 'fps=10,scale=720:-1', gifFile], {
             stdio: ['ignore', 'pipe', 'pipe']
           });
           
@@ -167,7 +167,7 @@ describe('Manim Format', () => {
           const framesDir = path.join(testOutputDir, 'frames');
           fs.mkdirSync(framesDir, { recursive: true });
           
-          execSync(`ffmpeg -i "${mp4File}" -vf fps=1 "${framesDir}/frame_%04d.png"`, {
+          execFileSync('ffmpeg', ['-i', mp4File, '-vf', 'fps=1', path.join(framesDir, 'frame_%04d.png')], {
             stdio: ['ignore', 'pipe', 'pipe']
           });
           
