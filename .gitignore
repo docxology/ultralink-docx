@@ -128,3 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# OS, editor and Python cache files
+__pycache__/
+*.py[cod]
+.DS_Store
