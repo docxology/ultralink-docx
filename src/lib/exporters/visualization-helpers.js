@@ -672,11 +672,16 @@ function applyStylingToSVG(svgString, style) {
     
     // Insert style tag into SVG
     if (hasStyleTag) {
-      // Replace existing style tag
-      return svgString.replace(/<style[^>]*>([\s\S]*?)<\/style>/, styleTag);
+      // Replace the first existing style element (index-based, no backtracking regex)
+      const open = svgString.indexOf('<style');
+      const close = svgString.indexOf('</style>', open);
+      if (close === -1) {
+        return svgString;
+      }
+      return svgString.slice(0, open) + styleTag + svgString.slice(close + '</style>'.length);
     } else {
       // Add style tag after svg opening tag
-      return svgString.replace(/<svg([^>]*)>/, `<svg$1>${styleTag}`);
+      return svgString.replace(/<svg([^<>]*)>/, `<svg$1>${styleTag}`);
     }
   } catch (error) {
     console.error('Error applying styling to SVG:', error);
