@@ -158,7 +158,7 @@ function generatePlaceholderD3(systemName) {
 <head>
   <title>${systemName} Knowledge Graph - D3 Visualization</title>
   <meta charset="UTF-8">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity="sha384-LxfWGZyh6PaLjBRPf7NWiEYs9Mn0UQ6ZmqbLLZhxlOBBNWF2a2K0Pfc5efkrNnhQ" crossorigin="anonymous"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
     #graph { width: 100%; height: 600px; border: 1px solid #ccc; }
@@ -203,7 +203,7 @@ function generatePlaceholderCytoscape(systemName) {
 <head>
   <title>${systemName} Knowledge Graph - Cytoscape Visualization</title>
   <meta charset="UTF-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js" integrity="sha384-Q20qNhd/ak9c9XLRBwy3jG/XxBWAdfQNYkZ0bYCKxx/9iI9bUVYvLzOf7lviiPKW" crossorigin="anonymous"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
     #cy { width: 100%; height: 600px; border: 1px solid #ccc; }
