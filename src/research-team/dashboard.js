@@ -59,8 +59,8 @@ function generateDashboardHTML(data) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Research Team Analysis Dashboard</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://d3.js.org/d3.v7.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity="sha384-LxfWGZyh6PaLjBRPf7NWiEYs9Mn0UQ6ZmqbLLZhxlOBBNWF2a2K0Pfc5efkrNnhQ" crossorigin="anonymous"></script>
+  <script src="https://cdn.plot.ly/plotly-1.58.5.min.js" integrity="sha384-W7FXNbEY44RgDK8MunBe4gETSKi3Qo2bJAXX3PH8v5l3hdabFb9dbCIn3X69OFjX" crossorigin="anonymous"></script>
 </head>
 <body>
   <nav class="sidebar">
