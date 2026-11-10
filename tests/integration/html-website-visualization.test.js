@@ -122,7 +122,7 @@ describe('HTML Website Visualization Tests', () => {
     const indexHtml = websiteOutput['index.html'];
     
     // Verify that index.html loads D3.js
-    expect(indexHtml).toContain('<script src="https://d3js.org/d3.v7.min.js"></script>');
+    expect(indexHtml).toContain('<script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity=');
     
     // Verify that index.html has the graph container
     expect(indexHtml).toContain('<div id="graph"></div>');
