@@ -70,7 +70,7 @@ function toKIF(ultralink, options = {}) {
         // Format the value based on its type
         let formattedValue;
         if (typeof value === 'string') {
-          formattedValue = `"${value.replace(/"/g, '\\"')}"`;
+          formattedValue = `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
         } else if (typeof value === 'number') {
           formattedValue = value;
         } else if (typeof value === 'boolean') {
@@ -97,7 +97,7 @@ function toKIF(ultralink, options = {}) {
         // Format the value based on its type
         let formattedValue;
         if (typeof value === 'string') {
-          formattedValue = `"${value.replace(/"/g, '\\"')}"`;
+          formattedValue = `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
         } else if (typeof value === 'number') {
           formattedValue = value;
         } else if (typeof value === 'boolean') {
@@ -133,7 +133,7 @@ function formatKIFString(str) {
       str.includes(',') || 
       str.includes('.') || 
       !isNaN(Number(str))) {
-    return `"${str.replace(/"/g, '\\"')}"`;
+    return `"${str.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
   }
   return str;
 }
