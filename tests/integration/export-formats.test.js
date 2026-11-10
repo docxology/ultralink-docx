@@ -97,7 +97,7 @@ describe('Export Formats Integration', () => {
     // Check index.html content
     expect(htmlFiles['index.html']).toContain('<title>Desert Ecosystem</title>');
     expect(htmlFiles['index.html']).toContain('Interactive visualization of desert ecosystem relationships');
-    expect(htmlFiles['index.html']).toContain('d3.v7.min.js');
+    expect(htmlFiles['index.html']).toContain('d3@7');
     
     // Check entity page content
     expect(htmlFiles['saguaro.html']).toContain('<title>Saguaro Cactus - Desert Ecosystem</title>');
@@ -333,7 +333,7 @@ describe('Export Formats Integration', () => {
       
       // Check content
       expect(website['index.html']).toContain('<title>Desert Ecosystem</title>');
-      expect(website['index.html']).toContain('d3.v7.min.js');
+      expect(website['index.html']).toContain('d3@7');
       expect(website['saguaro.html']).toContain('scientificName');
       expect(website['saguaro.html']).toContain('Carnegiea gigantea');
     });
@@ -684,7 +684,7 @@ describe('Visualization Export', () => {
     
     // Check HTML structure
     expect(html).toContain('<!DOCTYPE html>');
-    expect(html).toContain('<script src="https://d3js.org/d3.v7.min.js"></script>');
+    expect(html).toContain('<script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity=');
     expect(html).toContain('const data =');
   });
   
