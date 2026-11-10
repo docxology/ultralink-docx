@@ -736,7 +736,7 @@ async function checkManimAvailable() {
  * @returns {Promise<boolean>} True if successful
  */
 async function executeManimCommand(pythonFile, outputDir, options = {}) {
-  const { execSync } = require('child_process');
+  const { execFileSync } = require('child_process');
   const { quality = 'medium', resolution = '1080p' } = options;
   
   try {
@@ -745,12 +745,11 @@ async function executeManimCommand(pythonFile, outputDir, options = {}) {
     
     // Build Manim command
     const qualityFlag = quality === 'high' ? '-qh' : quality === 'low' ? '-ql' : '-qm';
-    const resolutionFlag = resolution ? `-r ${resolution}` : '';
-    const command = `manim ${qualityFlag} ${resolutionFlag} "${pythonFile}" UltraLinkGraph`;
+    const args = [qualityFlag, ...(resolution ? ['-r', String(resolution)] : []), pythonFile, 'UltraLinkGraph'];
     
-    // Execute Manim
-    console.log(`      🎥 Executing: ${command}`);
-    execSync(command, {
+    // Execute Manim (argument array, no shell)
+    console.log(`      🎥 Executing: manim ${args.join(' ')}`);
+    execFileSync('manim', args, {
       stdio: ['ignore', 'pipe', 'pipe'],
       cwd: outputDir
     });
@@ -788,11 +787,11 @@ async function generateManimOutputs(pythonFile, outputDir, format) {
       if (format.format === 'gif') {
         // Convert MP4 to GIF using ffmpeg
         try {
-          const { execSync } = require('child_process');
+          const { execFileSync } = require('child_process');
           const mp4File = path.join(outputDir, 'media', 'videos', 'UltraLinkGraph.mp4');
           const gifFile = path.join(outputDir, format.filename);
           
-          execSync(`ffmpeg -i "${mp4File}" -vf "fps=10,scale=720:-1" "${gifFile}"`, {
+          execFileSync('ffmpeg', ['-i', mp4File, '-vf', 'fps=10,scale=720:-1', gifFile], {
             stdio: ['ignore', 'pipe', 'pipe']
           });
           console.log(`      ✅ Generated GIF: ${gifFile}`);
@@ -802,12 +801,12 @@ async function generateManimOutputs(pythonFile, outputDir, format) {
       } else if (format.format === 'png_sequence') {
         // Extract frames using ffmpeg
         try {
-          const { execSync } = require('child_process');
+          const { execFileSync } = require('child_process');
           const mp4File = path.join(outputDir, 'media', 'videos', 'UltraLinkGraph.mp4');
           const framesDir = path.join(outputDir, format.filename);
           
           ensureDirectoryExists(framesDir);
-          execSync(`ffmpeg -i "${mp4File}" -vf fps=1 "${framesDir}/frame_%04d.png"`, {
+          execFileSync('ffmpeg', ['-i', mp4File, '-vf', 'fps=1', path.join(framesDir, 'frame_%04d.png')], {
             stdio: ['ignore', 'pipe', 'pipe']
           });
           console.log(`      ✅ Generated frame sequence in: ${framesDir}`);
