@@ -801,6 +801,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
       STATS.formatStats[stage].errors++;
     }
     console.error(`❌ ${systemName} [${stage}]: ${message}`);
+    return message;
   }
   const result = () => ({ systemName, ok: failures.length === 0, stats: systemStats, failures });
   
@@ -862,10 +863,11 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
       return true;
     }
     function reportExportFailure(error, diagnostic = `ERROR-${target.name}.txt`) {
-      recordFailure(target.name, error);
+      const message = recordFailure(target.name, error);
+      const stack = error instanceof Error && error.stack;
       const errorFilePath = path.join(targetDir, diagnostic);
       try {
-        writeOutput(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${error.message}\n${error.stack}`);
+        writeOutput(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
         recordWrittenFile(true);
       } catch (diagnosticError) {
         console.warn(`    Could not write diagnostic ${errorFilePath}: ${diagnosticError.message}`);
@@ -1116,7 +1118,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             try {
               if (format === 'uncompressed') {
                 const blob = ultralink.toFullBlob({ compress: false });
-                if (saveFile(outputPath, blob, { json: true })) {
+                if (saveFile(outputPath, JSON.stringify(blob, null, 2))) {
                   console.log(`      ✅ Saved uncompressed blob to: ${outputPath}`);
                 }
               } else {

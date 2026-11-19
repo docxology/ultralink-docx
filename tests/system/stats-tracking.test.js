@@ -130,7 +130,7 @@ describe('Statistics Tracking in Render Examples', () => {
       files: [['kif/{system}.kif', 'ERROR-kif.txt']]
     },
     {
-      scenario: 'Bayesian entity named constructor', stage: 'bayesian', message: 'includes is not a function',
+      scenario: 'Bayesian entity named constructor', stage: 'bayesian', message: 'includes is not a function', optionalWarnings: 1,
       files: [['bayesian/{system}-bayesian.json', 'ERROR-bayesian.txt']]
     },
     {
@@ -139,7 +139,7 @@ describe('Statistics Tracking in Render Examples', () => {
         .map(format => [`rxinfer/{system}-${format}.jl`, `ERROR-${format}.txt`])
     },
     {
-      scenario: 'unprintable Full Blob node label', stage: 'full-blob', message: 'Cannot convert object to primitive value',
+      scenario: 'unprintable Full Blob node label', stage: 'full-blob', message: 'Cannot convert object to primitive value', optionalWarnings: 1,
       files: [['full-blob/{system}-full.json', 'ERROR-uncompressed.txt']]
     },
     {
@@ -148,19 +148,33 @@ describe('Statistics Tracking in Render Examples', () => {
         .map(ext => [`visualization/{lower}-graph${ext}`, `ERROR-{lower}-graph${ext}.txt`])
     },
     {
-      scenario: 'unserializable interactive visualization label', stage: 'visualization', message: 'BigInt',
+      scenario: 'BigInt interactive visualization label', stage: 'visualization', message: 'BigInt', successful: 5,
       files: ['d3', 'cytoscape']
         .map(format => [`visualization/{lower}-graph.${format}.js`, `ERROR-{lower}-graph.${format}.js.txt`])
+    },
+    {
+      scenario: 'BigInt in Full Blob JSON', stage: 'full-blob', message: 'BigInt', optionalWarnings: 1,
+      files: [['full-blob/{system}-full.json', 'ERROR-uncompressed.txt']]
+    },
+    {
+      scenario: 'non-Error thrown by visualization label serialization', stage: 'visualization', message: 'label JSON rejected', successful: 5,
+      files: ['d3', 'cytoscape']
+        .map(format => [`visualization/{lower}-graph.${format}.js`, `ERROR-{lower}-graph.${format}.js.txt`])
+    },
+    {
+      scenario: 'invalid XML character during PNG conversion', stage: 'visualization', message: 'invalid Char value 1', successful: 3,
+      files: ['', '-radial', '-grid', '-cluster']
+        .map(layout => [`visualization/{lower}-graph${layout}.png`, `ERROR-{lower}-graph${layout}.png.txt`])
     }
-  ])('preserves output after a $scenario generation error', async spec => {
-    await withNativeRenderer(async (root, runNode) => {
+  ])('preserves output on generation failure: $scenario', async spec => {
+    await withNativeRenderer(async (_, runNode) => {
       await runNode('-e', `
         const assert = require('node:assert/strict');
         const fs = require('node:fs');
         const path = require('node:path');
         const { UltraLink } = require('./src');
         const { renderSystem } = require('./examples/render-examples.js');
-        const { scenario, stage, message, files } = JSON.parse(process.argv[1]);
+        const { scenario, stage, message, files, successful = 0, optionalWarnings = 0 } = JSON.parse(process.argv[1]);
 
         const factory = (id, fail = false) => () => {
           const graph = new UltraLink({ systemName: 'Car' });
@@ -172,7 +186,12 @@ describe('Statistics Tracking in Render Examples', () => {
               case 'Bayesian entity named constructor': id = 'constructor'; break;
               case 'Symbol-valued RxInfer entity type': type = Symbol('unrenderable'); break;
               case 'unprintable Full Blob node label': attributes.name = { toString: null }; break;
-              case 'unserializable interactive visualization label': attributes.name = 1n; break;
+              case 'BigInt interactive visualization label':
+              case 'BigInt in Full Blob JSON': attributes.name = 1n; break;
+              case 'non-Error thrown by visualization label serialization':
+                attributes.name = { toJSON() { throw 'label JSON rejected'; } };
+                break;
+              case 'invalid XML character during PNG conversion': attributes.name = String.fromCharCode(1); break;
             }
           }
           const entity = graph.addEntity(id, type, attributes);
@@ -200,8 +219,10 @@ describe('Statistics Tracking in Render Examples', () => {
           const failures = result.failures.filter(failure => failure.stage === stage);
           assert.equal(failures.length, files.length);
           assert.ok(failures.every(failure => failure.message.includes(message)), JSON.stringify(failures));
-          assert.equal(result.stats.formats[stage].errors, files.length);
-          assert.ok(result.stats.formats[stage].warnings >= files.length);
+          const warnings = files.length + optionalWarnings;
+          assert.deepEqual(result.stats.formats[stage], {
+            files: successful + warnings, successful, warnings, errors: files.length
+          });
         };
 
         (async () => {
@@ -220,6 +241,13 @@ describe('Statistics Tracking in Render Examples', () => {
           for (const [file, diagnostic] of paths('Fresh')) {
             assert.equal(fs.existsSync(file), false, file);
             assert.ok(fs.readFileSync(diagnostic, 'utf8').includes(message), diagnostic);
+          }
+          if (scenario === 'invalid XML character during PNG conversion') {
+            const graph = factory('proposed', true)();
+            const fallback = (await graph.toVisualization({ format: 'png' }))['graph.png'];
+            assert.ok(Buffer.isBuffer(fallback));
+            assert.ok(fallback.toString().startsWith('<svg '));
+            assert.ok(fallback.toString().includes('UltraLink Graph Visualization'));
           }
 
           const recovered = await renderSystem('Rerender', factory('recovered'));
