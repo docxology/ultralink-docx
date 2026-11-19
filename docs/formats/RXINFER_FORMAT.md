@@ -224,7 +224,7 @@ Relationships between entities are translated into factor relationships:
 | `depends_on`, `requires`, `needs` | Bernoulli with probability `1 / (1 + exp(-2 * source))` | At source value 1, probability ≈ 0.881 |
 | Unmapped relationship type | `Normal(mean = 0.1 * source, variance = 1.0)` | Fallback with a scaled mean and unit variance |
 
-Both Bernoulli families use the logistic function, with probability 0.5 at source value 0. The emitted expression resolves `Base.exp` in the module defining the model and needs no additional Julia package.
+Both Bernoulli families use the logistic function, with probability 0.5 at source value 0. For logit `z`, the exporter evaluates the equivalent form `exp(min(z, 0)) / (1 + exp(-abs(z)))` to keep both exponential arguments nonpositive and preserve representable probabilities in the negative tail. Julia resolves the helpers in the module defining the model; no additional package is needed.
 
 ## Advanced Usage
 

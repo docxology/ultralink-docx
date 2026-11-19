@@ -425,6 +425,13 @@ class RxInferExporter {
     // Resolve helpers in the defining module rather than the model's variable scope.
     return `MvNormal(mean = (@__MODULE__).Base.zeros(${dimension}), covariance = (@__MODULE__).RxInfer.diageye(${dimension}))`;
   }
+
+  _getBernoulliConditional(sourceVar, targetVar, scale) {
+    const logit = scale === 1 ? sourceVar : `${scale}.0 * ${sourceVar}`;
+    const base = '(@__MODULE__).Base';
+    // Keep both exp arguments nonpositive so the negative tail does not overflow.
+    return `${targetVar} ~ Bernoulli(${base}.exp(${base}.min(${logit}, 0.0)) / (1.0 + ${base}.exp(-1.0 * ${base}.abs(${logit}))))`;
+  }
   
   /**
    * Get conditional expression for relationship
@@ -447,7 +454,7 @@ class RxInferExporter {
       case 'contains':
       case 'includes':
       case 'has_part':
-        return `${targetVar} ~ Bernoulli(1.0 / (1.0 + (@__MODULE__).Base.exp(-1.0 * ${sourceVar})))`;
+        return this._getBernoulliConditional(sourceVar, targetVar, 1);
         
       case 'related_to':
       case 'connected_to':
@@ -458,7 +465,7 @@ class RxInferExporter {
       case 'depends_on':
       case 'requires':
       case 'needs':
-        return `${targetVar} ~ Bernoulli(1.0 / (1.0 + (@__MODULE__).Base.exp(-2.0 * ${sourceVar})))`;
+        return this._getBernoulliConditional(sourceVar, targetVar, 2);
         
       case 'precedes':
       case 'follows':
