@@ -48,8 +48,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   prior Full Blob files intact if serialization or writing fails.
 - Keep the example renderer's Obsidian note filenames as returned by the exporter
   so wiki links resolve without an extra `.md` suffix.
-- Keep system-name casing in KIF samples and rendering tests so checkouts no
-  longer contain duplicate filenames on case-insensitive filesystems.
+- Remove duplicate lowercase KIF samples and render KIF test outputs outside
+  the checkout. If updating a case-insensitive checkout leaves a retained
+  `output/systems/<SystemName>/kif/<SystemName>.kif` marked as deleted,
+  restore the missing path with `git checkout-index -- <path>` (without `-f`),
+  or use a fresh clone.
 - Resolved issues with GraphML attribute serialization
 - Fixed relationship counting in Full Blob exports
 - Corrected theme handling in HTML Website exports

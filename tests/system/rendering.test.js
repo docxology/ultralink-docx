@@ -7,6 +7,7 @@
  */
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { createDesertEcosystemDataset } = require('../fixtures/Systems/DesertEcosystem/desert-ecosystem');
 const { createResearchTeamDataset } = require('../fixtures/Systems/ResearchTeam/research-team');
@@ -78,6 +79,12 @@ function ensureValidStore(ultralink) {
 
 // Configure paths
 const OUTPUT_DIR = path.join(process.cwd(), 'output/systems');
+let kifOutputDir;
+
+function getOutputPath(systemName, format) {
+  const root = format === 'kif' ? kifOutputDir : OUTPUT_DIR;
+  return path.join(root, systemName, format);
+}
 
 // Define the systems and their dataset creators
 const SYSTEMS = {
@@ -135,14 +142,12 @@ function ensureDirectoryExists(dirPath) {
 
 // Create system output directories
 beforeAll(() => {
+  kifOutputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ultralink-kif-'));
   ensureDirectoryExists(OUTPUT_DIR);
   
   Object.keys(SYSTEMS).forEach(systemName => {
-    const systemDir = path.join(OUTPUT_DIR, systemName);
-    ensureDirectoryExists(systemDir);
-    
     FORMATS.forEach(format => {
-      const formatDir = path.join(systemDir, format);
+      const formatDir = getOutputPath(systemName, format);
       ensureDirectoryExists(formatDir);
       
       // Create visualization subdirectories
@@ -160,6 +165,10 @@ beforeAll(() => {
       }
     });
   });
+});
+
+afterAll(() => {
+  if (kifOutputDir) fs.rmSync(kifOutputDir, { recursive: true, force: true });
 });
 
 // Mock visualization helpers
@@ -207,7 +216,10 @@ describe('System Rendering Tests', () => {
       // Test each format
       FORMATS.forEach(format => {
         describe(`${format} format`, () => {
-          const outputPath = path.join(OUTPUT_DIR, systemName, format);
+          let outputPath;
+          beforeAll(() => {
+            outputPath = getOutputPath(systemName, format);
+          });
           
           it(`should render ${systemName} to ${format} format`, () => {
             let outputFiles = [];

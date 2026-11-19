@@ -41,7 +41,9 @@ npm test
 
 ## Output Directory Structure
 
-All system test outputs are saved to the `output/systems/` directory with the following structure:
+KIF outputs are written and validated in a temporary directory so the tests
+don't overwrite the tracked sample files. Other rendering outputs are saved
+to `output/systems/`:
 
 ```
 output/
