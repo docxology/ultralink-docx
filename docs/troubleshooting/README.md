@@ -49,15 +49,16 @@ Specific guidance for resolving issues with HTML website exports:
 
 ## Format-Specific Troubleshooting
 
-If you're experiencing issues with specific formats, refer to the format documentation:
+For HTML export problems, use the [HTML Website Export Troubleshooting guide](./html-website-export.md).
+For data layout and export behavior, see the format references:
 
-- [JSON Format](../formats/json_format.md#troubleshooting)
-- [GraphML Format](../formats/graphml_format.md#troubleshooting)
-- [CSV Format](../formats/csv_format.md#troubleshooting)
-- [Obsidian Format](../formats/obsidian_format.md#troubleshooting)
-- [HTML Website Format](../formats/html_website_format.md#troubleshooting)
-- [Bayesian Network Format](../formats/bayesian_network_format.md#troubleshooting)
-- [KIF Format](../formats/kif_format.md#troubleshooting)
+- [JSON Format](../formats/JSON_FORMAT.md)
+- [GraphML Format](../formats/GRAPHML_FORMAT.md)
+- [CSV Format](../formats/CSV_FORMAT.md)
+- [Obsidian Format](../formats/OBSIDIAN_FORMAT.md)
+- [HTML Website Format](../formats/HTML_WEBSITE_FORMAT.md)
+- [Bayesian Network Format](../formats/BAYESIAN_NETWORK_FORMAT.md)
+- [KIF Format](../formats/KIF_FORMAT.md)
 
 ## Get Help from the Community
 
@@ -65,4 +66,4 @@ If you can't find a solution to your problem in the documentation:
 
 - Check the [FAQ](../faq.md) for answers to common questions
 - Get help from the [Community Support](../contributing/community-support.md) resources
-- Report issues on our [GitHub repository](https://github.com/docxology/ultralink/issues) 
+- Report issues on the [UltraLink issue tracker](https://github.com/docxology/ultralink-docx/issues)
