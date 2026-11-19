@@ -180,7 +180,8 @@ Feel free to use these examples as templates for your own UltraLink implementati
 
 If you encounter issues with the examples:
 
-- Ensure you're using a compatible Node.js version (v14+)
+- Use Node.js 22.23.5 for the tested setup; see the
+  [installation prerequisites](../INSTALLATION.md#prerequisites).
 - Check that all dependencies are properly installed
 - Verify that the UltraLink module is correctly imported
 - For visualization issues, ensure required modules like JSDOM are available

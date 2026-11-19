@@ -4,7 +4,7 @@ This document details the KIF (Knowledge Interchange Format) rendering target fo
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/kif.js](../src/lib/exporters/kif.js)
+> - [Implementation in src/lib/exporters/kif.js](../../src/lib/exporters/kif.js)
 > - [JSON Format](./JSON_FORMAT.md)
 > - [Bayesian Network Format](./BAYESIAN_NETWORK_FORMAT.md)
 
@@ -67,35 +67,25 @@ UltraLink relationships become binary relations in KIF with:
 
 ## Usage
 
-The KIF exporter is implemented in [src/lib/exporters/kif.js](../src/lib/exporters/kif.js) and can be used as follows:
+The [KIF exporter](../../src/lib/exporters/kif.js) returns KIF text from
+`ultralink.toKIF()`. UltraLink does not import KIF. Use single KIF symbols
+for IDs and types; keep display names with spaces in string attributes.
 
 ```javascript
-// Basic export to KIF
-const kifRepresentation = ultralink.toKIF();
+const fs = require('node:fs');
 
-// Export with specific options
-const customKIF = ultralink.toKIF({
-  includeComments: true,
-  includeMetadata: true,
-  indentationSpaces: 2,
-  includeOntology: true,
-  relationPrefix: 'has-',
-  onlySelected: false
-});
+// Export without the optional function or rule definitions.
+const kif = ultralink.toKIF({ includeFunctions: false, includeRules: false });
+fs.writeFileSync('knowledge.kif', kif, 'utf8');
 ```
 
 ### Export Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `includeComments` | Boolean | `true` | Include comments in the KIF output |
-| `includeMetadata` | Boolean | `true` | Include metadata about the UltraLink source |
-| `indentationSpaces` | Number | `2` | Number of spaces for indentation |
-| `includeOntology` | Boolean | `true` | Include ontology definitions |
-| `relationPrefix` | String | `''` | Prefix for relation names |
-| `onlySelected` | Boolean | `false` | Export only selected entities and relationships |
-| `includeInferenceRules` | Boolean | `true` | Include inference rules for transitive relationships |
-| `useClassHierarchy` | Boolean | `true` | Use class hierarchy for entity types |
+| `includeMeta` | Boolean | `true` | Include the export creation date and graph counts |
+| `includeFunctions` | Boolean | `true` | Include the generated function definition |
+| `includeRules` | Boolean | `true` | Include the generated example rules |
 
 ## KIF Syntax
 
@@ -288,29 +278,20 @@ The KIF format preserves UltraLink semantics in the following ways:
 
 ## Technical Implementation
 
-The KIF export functionality is implemented in [src/lib/exporters/kif.js](../src/lib/exporters/kif.js). The exporter follows these steps:
+The [KIF exporter](../../src/lib/exporters/kif.js) follows these steps:
 
-1. Extract entities, relationships, and type information from UltraLink graph
-2. Generate ontology definitions if requested
-3. Convert entities to KIF constants with instance-of relations
-4. Convert attributes to predicates or functions
-5. Convert relationships to binary relations
-6. Add additional axioms and inference rules
-7. Format and output the KIF document
+1. Write the header and any enabled meta-knowledge, function, and rule sections
+2. Emit each entity as an `instance` form, followed by its attribute predicates
+3. Emit each relationship with source and target in that order, followed by its attribute predicates
+4. Return the resulting KIF text
 
 ```mermaid
 flowchart TD
-    A[Start] --> B[Extract graph elements]
-    B --> C{Include ontology?}
-    C -->|Yes| D[Generate ontology]
-    C -->|No| E[Skip ontology]
-    D --> F[Convert entities]
-    E --> F
-    F --> G[Convert attributes]
-    G --> H[Convert relationships]
-    H --> I[Add axioms and rules]
-    I --> J[Format KIF document]
-    J --> K[Return result]
+    A[Start] --> B[Write export header]
+    B --> C[Write enabled optional sections]
+    C --> D[Write entities and their attributes]
+    D --> E[Write relationships and their attributes]
+    E --> F[Return KIF text]
 ```
 
 ## Logical Inference with KIF

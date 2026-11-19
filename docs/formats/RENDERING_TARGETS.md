@@ -61,12 +61,15 @@ UltraLink can export data to the following formats:
 
 ## System-Specific Output Organization
 
-All rendering outputs are organized by system and format in the `output/` directory:
+These are selected checked-in samples under `output/systems/`. System
+directory names use the exact system IDs. The
+[example renderer](../../examples/README.md#rendering-examples) writes fresh
+artifacts under `examples/output/systems/`.
 
 ```
 output/
 ├── systems/
-│   ├── desert-ecosystem/
+│   ├── DesertEcosystem/
 │   │   ├── DesertEcosystem.json
 │   │   ├── DesertEcosystem.graphml
 │   │   ├── csv/
@@ -74,7 +77,7 @@ output/
 │   │   │   └── relationships.csv
 │   │   ├── obsidian/
 │   │   │   ├── saguaro.md
-│   │   │   ├── kangaroo-rat.md
+│   │   │   ├── kangaroo_rat.md
 │   │   │   └── ...
 │   │   ├── bayesian/
 │   │   │   ├── DesertEcosystem-bayesian.json
@@ -84,31 +87,25 @@ output/
 │   │   ├── visualization/
 │   │   │   ├── graph.svg
 │   │   │   ├── graph.png
-│   │   │   ├── graph.d3
-│   │   │   └── graph.cytoscape
+│   │   │   ├── graph.d3.js
+│   │   │   └── graph.cytoscape.js
 │   │   ├── website/
 │   │   │   ├── index.html
 │   │   │   ├── saguaro.html
 │   │   │   └── ...
-│   │   ├── manim/
-│   │   │   ├── DesertEcosystem.py
-│   │   │   ├── DesertEcosystem.mp4
-│   │   │   └── media/
-│   │   │       ├── videos/
-│   │   │       └── images/
 │   │   └── full-blob/
 │   │       ├── DesertEcosystem-full.json
 │   │       └── DesertEcosystem-full-compressed.blob
 │   │
-│   └── research-team/
+│   └── ResearchTeam/
 │       ├── ResearchTeam.json
 │       ├── ResearchTeam.graphml
 │       ├── csv/
 │       │   ├── entities.csv
 │       │   └── relationships.csv
 │       ├── obsidian/
-│       │   ├── alice.md
-│       │   ├── bob.md
+│       │   ├── alice-chen.md
+│       │   ├── bob-smith.md
 │       │   └── ...
 │       ├── bayesian/
 │       │   ├── ResearchTeam-bayesian.json
@@ -118,11 +115,11 @@ output/
 │       ├── visualization/
 │       │   ├── graph.svg
 │       │   ├── graph.png
-│       │   ├── graph.d3
-│       │   └── graph.cytoscape
+│       │   ├── graph.d3.js
+│       │   └── graph.cytoscape.js
 │       ├── website/
 │       │   ├── index.html
-│       │   ├── alice.html
+│       │   ├── alice-chen.html
 │       │   └── ...
 │       └── full-blob/
 │           ├── ResearchTeam-full.json
@@ -582,13 +579,8 @@ The Knowledge Interchange Format (KIF) exports UltraLink data as a formal logica
 // Export to KIF format
 const kif = ultralink.toKIF();
 
-// Export with specific options
-const customKIF = ultralink.toKIF({
-  includeMetaKnowledge: true,
-  includeFunctions: true,
-  includeRules: true,
-  prettyPrint: true
-});
+// Omit the optional example rules.
+const customKIF = ultralink.toKIF({ includeRules: false });
 ```
 
 ### Output Structure
@@ -751,8 +743,8 @@ async function exportKnowledgeGraph(ultralink, outputPath) {
   
   const csvFiles = ultralink.toCSV();
   fs.mkdirSync(`${outputPath}/csv`, { recursive: true });
-  fs.writeFileSync(`${outputPath}/csv/entities.csv`, csvFiles.entities);
-  fs.writeFileSync(`${outputPath}/csv/relationships.csv`, csvFiles.relationships);
+  fs.writeFileSync(`${outputPath}/csv/entities.csv`, csvFiles['entities.csv']);
+  fs.writeFileSync(`${outputPath}/csv/relationships.csv`, csvFiles['relationships.csv']);
   
   const obsidianFiles = ultralink.toObsidian({ backlinks: true });
   fs.mkdirSync(`${outputPath}/obsidian`, { recursive: true });
@@ -760,11 +752,7 @@ async function exportKnowledgeGraph(ultralink, outputPath) {
     fs.writeFileSync(`${outputPath}/obsidian/${filename}`, content);
   }
   
-  const kifOutput = ultralink.toKIF({ 
-    includeMetaKnowledge: true,
-    includeFunctions: true,
-    includeRules: true
-  });
+  const kifOutput = ultralink.toKIF();
   fs.writeFileSync(`${outputPath}/graph.kif`, kifOutput);
   
   const vizFiles = ultralink.toVisualization({ format: 'svg' });

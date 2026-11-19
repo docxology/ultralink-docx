@@ -4,7 +4,7 @@ This document details the Obsidian rendering target for UltraLink, its structure
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/obsidian.js](../src/lib/exporters/obsidian.js)
+> - [Implementation in src/lib/exporters/obsidian.js](../../src/lib/exporters/obsidian.js)
 > - [JSON Format](./JSON_FORMAT.md)
 > - [HTML Website Format](./HTML_WEBSITE_FORMAT.md)
 
@@ -50,11 +50,10 @@ graph TD
 
 Each UltraLink entity becomes a Markdown file with:
 
-1. YAML frontmatter with entity metadata
-2. Main heading with entity name
-3. Entity attributes section
-4. Entity relationships section (outgoing links)
-5. Optional backlinks section (incoming links)
+1. YAML frontmatter with the entity `type` and `id`, plus timestamps when metadata is enabled
+2. Main heading using the entity's `name`, `title`, or ID
+3. Optional Metadata, Attributes, and Relationships sections
+4. An optional Backlinks section when there are incoming relationships
 
 ### Relationship to Wiki-Link Mapping
 
@@ -66,32 +65,59 @@ UltraLink relationships are represented as wiki-links between notes, with:
 
 ## Usage
 
-The Obsidian exporter is implemented in [src/lib/exporters/obsidian.js](../src/lib/exporters/obsidian.js) and can be used as follows:
+The [Obsidian exporter](../../src/lib/exporters/obsidian.js) returns an object
+keyed by filename: entity notes named `<entity-id>.md` and the generated
+`index.md`. Reserve the entity ID `index` in any case (`Index`, `INDEX`, and
+so on). The exporter does not write files.
 
 ```javascript
 // Basic export to Obsidian
 const obsidian = ultralink.toObsidian();
 
-// Export with specific options
-const obsidianWithBacklinks = ultralink.toObsidian({
-  backlinks: true,
-  includeMetadata: true,
-  includeAttributes: true,
-  includeRelationships: true
-});
+// Keep outgoing links and omit backlinks.
+const outgoingOnly = ultralink.toObsidian({ backlinks: false });
+```
+
+To save the default export, use the returned filenames as-is; they already
+end in `.md`. Use trusted, filesystem-safe entity IDs with no path separators,
+and write into a fresh vault directory you control.
+
+The save step checks IDs before creating the vault: their normalized lowercase
+forms must be distinct, and none may be `index`. Each file is created
+exclusively, so a filesystem-level alias cannot replace an existing note.
+
+```javascript
+const fs = require('node:fs');
+const path = require('node:path');
+
+const noteIds = new Set(['index']);
+for (const { id } of ultralink.findEntities()) {
+  const key = String(id).normalize('NFC').toLowerCase();
+  if (noteIds.has(key)) {
+    throw new Error(`Cannot save Obsidian note "${id}": choose an ID distinct from "index" and other note IDs, ignoring case.`);
+  }
+  noteIds.add(key);
+}
+
+const vault = './obsidian-vault';
+fs.mkdirSync(vault, { recursive: true });
+for (const [filename, markdown] of Object.entries(obsidian)) {
+  fs.writeFileSync(path.join(vault, filename), markdown, { encoding: 'utf8', flag: 'wx' });
+}
 ```
 
 ### Export Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `backlinks` | Boolean | `true` | Include backlinks section for incoming relationships |
-| `includeMetadata` | Boolean | `true` | Include creation and modification timestamps |
-| `includeAttributes` | Boolean | `true` | Include entity attributes |
-| `includeRelationships` | Boolean | `true` | Include relationships as wiki-links |
-| `templatePath` | String | `null` | Custom Markdown template path |
-| `attributeFilter` | Function | `null` | Custom function to filter attributes |
-| `relationshipFilter` | Function | `null` | Custom function to filter relationships |
+| `backlinks` | Boolean | `true` | Include a Backlinks section on notes with incoming relationships |
+| `includeMetadata` | Boolean | `true` | Include creation and modification timestamps in frontmatter and a Metadata section in the note |
+| `includeAttributes` | Boolean | `true` | Include the Attributes section. The note title still uses `name`, `title`, or the ID |
+| `includeRelationships` | Boolean | `true` | Include the Relationships section for outgoing links |
+
+The `type` and `id` fields always appear in frontmatter. `index.md` is
+included regardless of options. Outgoing links and backlinks can be toggled
+independently.
 
 ## Complete Example
 
@@ -107,8 +133,10 @@ modified: 2023-06-15T10:30:00Z
 
 # Saguaro Cactus
 
-**Type**: organism
-**ID**: saguaro
+## Metadata
+
+- **Type**: organism
+- **ID**: saguaro
 
 ## Attributes
 
@@ -124,7 +152,7 @@ modified: 2023-06-15T10:30:00Z
 
 ## Backlinks
 
-- [[kangaroo-rat|Kangaroo Rat]] (shares_habitat)
+- [[kangaroo_rat|Kangaroo Rat]] (shares_habitat)
 ```
 
 And here's a second example showing different entity types:
@@ -139,18 +167,22 @@ modified: 2023-06-15T10:32:00Z
 
 # Aridity
 
-**Type**: environmental_factor
-**ID**: aridity
+## Metadata
+
+- **Type**: environmental_factor
+- **ID**: aridity
 
 ## Attributes
 
 - **description**: Extremely dry conditions with minimal rainfall
 - **annualRainfall**: 3-15 inches
 
+## Relationships
+
 ## Backlinks
 
-- [[saguaro|Saguaro Cactus]] (adapts_to: Water storage in stem, efficiency: 0.95)
-- [[kangaroo-rat|Kangaroo Rat]] (adapts_to: Metabolic water production, efficiency: 0.88)
+- [[saguaro|Saguaro Cactus]] (adapts_to: mechanism: Water storage in stem, efficiency: 0.95)
+- [[kangaroo_rat|Kangaroo Rat]] (adapts_to: mechanism: Metabolic water production, efficiency: 0.88)
 ```
 
 ## Semantic Preservation
@@ -171,16 +203,15 @@ The Obsidian format preserves UltraLink semantics in the following way:
 
 ## Technical Implementation
 
-The Obsidian export functionality is implemented in [src/lib/exporters/obsidian.js](../src/lib/exporters/obsidian.js). The exporter follows these steps:
+The [Obsidian exporter](../../src/lib/exporters/obsidian.js) follows these steps:
 
 1. Extract all entities from the UltraLink data model
 2. Create a Markdown file for each entity with:
    - YAML frontmatter
    - Entity name as heading
-   - Entity attributes section
-   - Entity relationships section
-3. If backlinks are enabled, add a backlinks section to each file
-4. Return an object with filenames as keys and Markdown content as values
+   - Metadata, attributes, and outgoing relationships as enabled by the export options
+3. If backlinks are enabled, add them to notes with incoming relationships
+4. Add `index.md` and return the map of filenames to Markdown content
 
 ```mermaid
 flowchart TD
@@ -252,9 +283,9 @@ The export is designed to work seamlessly with Obsidian:
 
 ### Setup Instructions
 
-1. Export your UltraLink data to Obsidian format
-2. Create a new Obsidian vault or use an existing one
-3. Copy the exported Markdown files into the vault folder
+1. [Export and save the Markdown files](#usage).
+2. Create a new Obsidian vault or use an existing one.
+3. Put the Markdown files in the vault folder without renaming them.
 4. Open the vault in Obsidian
 5. Navigate through entities using wiki-links
 6. View the graph representation in Obsidian's Graph View
@@ -273,43 +304,9 @@ The Obsidian export can be customized in several ways:
 
 ### Custom Templates
 
-```javascript
-// Using a custom template
-const obsidianWithTemplate = ultralink.toObsidian({
-  templatePath: './templates/entity-template.md'
-});
-```
-
-Example template file:
-
-```markdown
----
-type: {{ type }}
-id: {{ id }}
-created: {{ created }}
-modified: {{ modified }}
----
-
-# {{ name }}
-
-{{ description }}
-
-## Key Attributes
-
-{% for attr in attributes %}
-- **{{ attr.key }}**: {{ attr.value }}
-{% endfor %}
-
-## Connections
-
-{% for rel in relationships %}
-### {{ rel.type }}
-
-{% for target in rel.targets %}
-- [[{{ target.id }}|{{ target.name }}]] {{ target.attributes }}
-{% endfor %}
-{% endfor %}
-```
+`toObsidian()` does not accept templates or attribute or relationship filter
+callbacks. Apply a template to the returned Markdown in your application,
+or export a graph containing only the records and attributes you want.
 
 ### Custom Styling
 

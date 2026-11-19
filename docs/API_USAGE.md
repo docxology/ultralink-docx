@@ -15,21 +15,28 @@ This document provides detailed examples and usage patterns for the UltraLink kn
 
 ## Getting Started
 
-Follow the [source checkout setup](./README.md#getting-started). Put this setup block at the top of a `.cjs` file in the repository root, append the example you want to run, and run the file with `node`:
+Follow the [source checkout setup](./README.md#getting-started). In a `.cjs`
+file at the repository root, copy this block and the next four blocks (through
+[Exporting Data](#exporting-data)) in order. Run the file with `node`.
 
 ```javascript
 const { UltraLink } = require('.');
 
-// Create a new UltraLink instance with default config
+// Graph used for the rest of the walkthrough
 const ultralink = new UltraLink();
 
-// Or with custom configuration
+// Separate example with custom configuration
 const ultralinkWithConfig = new UltraLink({
-  preventOverwrite: false,
-  timestampEntities: true,
-  defaultRelationshipType: 'related_to'
+  allowOverwrite: true,
+  defaultRelationshipType: 'connected_to'
 });
 ```
+
+`addEntity` rejects a duplicate ID by default. With `allowOverwrite: true`,
+it replaces the entity record rather than merging its attributes. Entities
+receive `metadata.created` and `metadata.modified` when added; `updateEntity`
+merges attributes and refreshes `modified`. The default relationship type
+is `related_to` when no type is passed to `addLink` or `addRelationship`.
 
 ## Creating Entities
 
@@ -41,13 +48,22 @@ Start with the [setup block](#getting-started) above.
 ultralink.addEntity('alan-turing', 'person', {
   name: 'Alan Turing',
   birthDate: '1912-06-23',
-  occupation: 'Mathematician'
+  occupation: 'Mathematician',
+  nationality: 'British',
+  ageAtDeath: 41
 });
 
-// You can use any string as the ID
-ultralink.addEntity('Cambridge University', 'institution', {
+// Use a single-symbol ID for KIF; keep the display name in an attribute.
+ultralink.addEntity('cambridge-university', 'institution', {
+  name: 'Cambridge University',
   founded: 1209,
   location: 'Cambridge, UK'
+});
+
+ultralink.addEntity('john-von-neumann', 'person', {
+  name: 'John von Neumann',
+  nationality: 'American',
+  ageAtDeath: 53
 });
 
 // Retrieve an entity by ID
@@ -60,7 +76,8 @@ ultralink.updateEntity('alan-turing', {
   awards: ['OBE']
 });
 
-// Delete an entity
+// Delete a temporary entity
+ultralink.addEntity('some-entity-id', 'note', { name: 'Temporary note' });
 ultralink.deleteEntity('some-entity-id');
 ```
 
@@ -70,17 +87,17 @@ Relationships (links) connect entities in your knowledge graph.
 
 ```javascript
 // Create a relationship between two entities
-ultralink.addLink('alan-turing', 'Cambridge University', 'studied_at', {
+ultralink.addLink('alan-turing', 'cambridge-university', 'studied_at', {
   years: '1931-1934',
   degree: 'Mathematics'
 });
 
-// The addRelationship method is identical to addLink
-ultralink.addRelationship('alan-turing', 'Cambridge University', 'studied_at', {
-  years: '1931-1934'
+// addLink delegates to addRelationship. A different type gives a separate edge.
+ultralink.addRelationship('alan-turing', 'cambridge-university', 'worked_at', {
+  role: 'Research fellow'
 });
 
-// Creating bidirectional relationships (two separate links)
+// Create reciprocal links between the two people.
 ultralink.addLink('alan-turing', 'john-von-neumann', 'collaborated_with');
 ultralink.addLink('john-von-neumann', 'alan-turing', 'collaborated_with');
 
@@ -88,7 +105,7 @@ ultralink.addLink('john-von-neumann', 'alan-turing', 'collaborated_with');
 const turingRelationships = ultralink.getEntityRelationships('alan-turing');
 
 // Delete a relationship
-ultralink.deleteLink('alan-turing', 'Cambridge University', 'studied_at');
+ultralink.deleteLink('alan-turing', 'cambridge-university', 'studied_at');
 ```
 
 Combined relationship lookups return a self-loop once; it still appears in
@@ -162,26 +179,26 @@ UltraLink provides methods to search and filter entities and relationships.
 // Find entities by type
 const allPeople = ultralink.findEntities({ type: 'person' });
 
-// Find entities by attribute value
+// Find entities by attribute value (Alan Turing)
 const britishPeople = ultralink.findEntities({
   type: 'person',
   attributes: { nationality: 'British' }
 });
 
-// Find entities with a custom filter function
+// Find people whose recorded age at death was over 30 (both people)
 const peopleOver30 = ultralink.findEntities({
-  filter: entity => 
-    entity.type === 'person' && 
-    entity.attributes.age > 30
+  filter: entity =>
+    entity.type === 'person' &&
+    entity.attributes.ageAtDeath > 30
 });
 
-// Find relationships
-const studiedAtRelationships = ultralink.findRelationships({
-  type: 'studied_at'
+// Find the worked_at edge, which was not deleted above.
+const workedAtRelationships = ultralink.findRelationships({
+  type: 'worked_at'
 });
 
-// Get backlinks (relationships where the entity is the target)
-const backlinks = ultralink.getBacklinks('Cambridge University');
+// Cambridge's backlink comes from the remaining worked_at edge.
+const backlinks = ultralink.getBacklinks('cambridge-university');
 ```
 
 ## Exporting Data

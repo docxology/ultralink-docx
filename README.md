@@ -448,12 +448,14 @@ node scripts/generate-system-visualizations.js
 
 ### Output Structure
 
-When you run the tests, all rendering outputs are organized by system and format in the `output/` directory:
+Selected checked-in samples are organized by system and format under
+`output/systems/`. The [example renderer](examples/README.md#rendering-examples)
+writes new exports under `examples/output/systems/`.
 
 ```
 output/
 ├── systems/
-│   ├── desert-ecosystem/
+│   ├── DesertEcosystem/
 │   │   ├── DesertEcosystem.json
 │   │   ├── DesertEcosystem.graphml
 │   │   ├── csv/
@@ -461,7 +463,7 @@ output/
 │   │   │   └── relationships.csv
 │   │   ├── obsidian/
 │   │   │   ├── saguaro.md
-│   │   │   ├── kangaroo-rat.md
+│   │   │   ├── kangaroo_rat.md
 │   │   │   └── ...
 │   │   ├── website/
 │   │   │   ├── index.html
@@ -470,19 +472,19 @@ output/
 │   │   └── full-blob/
 │   │       ├── DesertEcosystem-full.json
 │   │       └── DesertEcosystem-full-compressed.blob
-│   └── research-team/
+│   └── ResearchTeam/
 │       ├── ResearchTeam.json
 │       ├── ResearchTeam.graphml
 │       ├── csv/
 │       │   ├── entities.csv
 │       │   └── relationships.csv
 │       ├── obsidian/
-│       │   ├── alice.md
-│       │   ├── bob.md
+│       │   ├── alice-chen.md
+│       │   ├── bob-smith.md
 │       │   └── ...
 │       ├── website/
 │       │   ├── index.html
-│       │   ├── alice.html
+│       │   ├── alice-chen.html
 │       │   └── ...
 │       └── full-blob/
 │           ├── ResearchTeam-full.json
@@ -491,16 +493,19 @@ output/
 
 ### Custom Rendering
 
-You can also render systems programmatically using the UltraLink API:
+After [setting up the source checkout](INSTALLATION.md#development-setup),
+save this as a `.cjs` file in the repository root and run it with `node`:
 
 ```javascript
-const { UltraLink } = require('ultralink');
+const { UltraLink } = require('.');
 const fs = require('fs');
 const path = require('path');
 
 // Create a dataset
 const ultralink = new UltraLink();
-// Add entities and relationships...
+ultralink.addEntity('alice', 'person', { name: 'Alice' });
+ultralink.addEntity('project', 'project', { name: 'Project' });
+ultralink.addLink('alice', 'project', 'works_on');
 
 // Generate all formats
 const json = ultralink.toJSON({ pretty: true });
@@ -519,14 +524,14 @@ fs.mkdirSync(outputDir, { recursive: true });
 
 fs.writeFileSync(path.join(outputDir, 'data.json'), JSON.stringify(json, null, 2));
 fs.writeFileSync(path.join(outputDir, 'data.graphml'), graphml);
-fs.writeFileSync(path.join(outputDir, 'entities.csv'), csv.entities);
-fs.writeFileSync(path.join(outputDir, 'relationships.csv'), csv.relationships);
+fs.writeFileSync(path.join(outputDir, 'entities.csv'), csv['entities.csv']);
+fs.writeFileSync(path.join(outputDir, 'relationships.csv'), csv['relationships.csv']);
 
 // Save multi-file outputs
 const obsidianDir = path.join(outputDir, 'obsidian');
 fs.mkdirSync(obsidianDir, { recursive: true });
 Object.entries(obsidian).forEach(([filename, content]) => {
-  fs.writeFileSync(path.join(obsidianDir, `${filename}.md`), content);
+  fs.writeFileSync(path.join(obsidianDir, filename), content);
 });
 
 const websiteDir = path.join(outputDir, 'website');

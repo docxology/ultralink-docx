@@ -17,8 +17,11 @@ This guide provides detailed instructions for installing UltraLink in various en
 
 Before installing UltraLink, ensure you have the following:
 
-- **Node.js**: Version 18.17.0 or higher ([download](https://nodejs.org/)) — required by `sharp` 0.33 and `jsdom` 24
-- **npm**, **yarn**, or **pnpm**: For package management
+- **Node.js**: Use Node.js 22.23.5 for the tested source setup. The locked
+  `sharp` 0.35.5 dependency declares Node.js 20.9.0 as the minimum engine
+  version; that floor is not a tested setup. [Download Node.js](https://nodejs.org/).
+- **npm**: The tested source setup uses npm 11.20.0, which leaves the
+  checked-in lockfile unchanged.
 - **Git**: For version control (optional, but recommended)
 
 ## Basic Installation
@@ -85,10 +88,17 @@ const ultralink = new UltraLink();
 
 For developers contributing to UltraLink or building extensions:
 
+Check that the version commands print the tested versions before running
+`npm install`.
+
 ```bash
 # Clone the repository
 git clone https://github.com/docxology/ultralink-docx.git
 cd ultralink-docx
+
+# Check the active runtime and package manager
+node --version  # v22.23.5
+npm --version   # 11.20.0
 
 # Install dependencies
 npm install
@@ -157,14 +167,12 @@ jobs:
 
 **Problem**: You see an error about Node.js version requirements.
 
-**Solution**: Update Node.js to version 18.17.0 or higher:
+**Solution**: Use Node.js 22.23.5 for this checkout:
 
 ```bash
-# Using nvm (Node Version Manager)
-nvm install 20
-nvm use 20
-
-# Or download from nodejs.org
+nvm install 22.23.5
+nvm use 22.23.5
+node --version
 ```
 
 #### Browser Version Compatibility

@@ -182,15 +182,9 @@ LIMIT 10;
 
 ### Obsidian Integration
 
-1. Export your UltraLink data to Obsidian format:
-   ```javascript
-   await ultralink.toObsidian({
-     directory: './obsidian-vault',
-     includeBacklinks: true,
-     includeTags: true,
-     frontmatterFormat: 'yaml'
-   });
-   ```
+1. [Export and save the Markdown files](../formats/OBSIDIAN_FORMAT.md#usage).
+   The exporter returns file contents, not a directory. Use its returned
+   filenames unchanged so the wiki-links still point to the right notes.
 
 2. In Obsidian:
    - Open the exported directory as a vault
@@ -221,12 +215,8 @@ const markdownFiles = await ultralink.toMarkdown({
 For integrating with knowledge-based and formal reasoning systems:
 
 ```javascript
-// Export to KIF format
-const kifOutput = await ultralink.toKIF({
-  includeMetaKnowledge: true,
-  includeRules: true,
-  prettyPrint: true
-});
+const fs = require('node:fs');
+const kifOutput = ultralink.toKIF({ includeRules: false });
 
 // Write to file for import into reasoning systems
 fs.writeFileSync('knowledge_base.kif', kifOutput);
@@ -504,88 +494,39 @@ fs.writeFileSync('visualization.html', htmlContent);
 
 ## Batch Processing
 
-For large-scale batch processing of UltraLink data:
+Use the graph built through [Managing Relationships](../API_USAGE.md#managing-relationships)
+to save the Markdown map and KIF text together. For another graph, use trusted,
+filesystem-safe entity IDs with no path separators. Reserve `index` in any
+case and use a fresh output directory you control. Before writing anything,
+the example rejects IDs whose normalized lowercase forms collide with each
+other or `index`. KIF IDs and types also need to be single symbols. Pass the
+resulting files to your pipeline.
 
 ```javascript
-const { spawn } = require('child_process');
-const fs = require('fs');
+const fs = require('node:fs');
+const path = require('node:path');
 
-async function batchExport(ultralink, outputDir) {
-  // Create output directory
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+function batchExport(ultralink, outputDir) {
+  const noteIds = new Set(['index']);
+  for (const { id } of ultralink.findEntities()) {
+    const key = String(id).normalize('NFC').toLowerCase();
+    if (noteIds.has(key)) {
+      throw new Error(`Cannot save Obsidian note "${id}": choose an ID distinct from "index" and other note IDs, ignoring case.`);
+    }
+    noteIds.add(key);
   }
-  
-  console.log('Starting batch export...');
-  
-  // Export in multiple formats
-  await Promise.all([
-    // JSON for data processing
-    ultralink.toJSON({ 
-      filename: `${outputDir}/data.json` 
-    }),
-    
-    // CSV for data analysis
-    ultralink.toCSV({ 
-      directory: `${outputDir}/csv` 
-    }),
-    
-    // GraphML for visualization
-    ultralink.toGraphML({ 
-      filename: `${outputDir}/graph.graphml` 
-    }),
-    
-    // Obsidian for knowledge management
-    ultralink.toObsidian({ 
-      directory: `${outputDir}/obsidian` 
-    }),
-    
-    // BIF for probabilistic modeling
-    ultralink.toBayesianNetwork({
-      outputFormat: 'bif',
-      filename: `${outputDir}/model.bif`
-    }),
-    
-    // KIF for knowledge representation
-    ultralink.toKIF({
-      filename: `${outputDir}/knowledge.kif`
-    }),
-    
-    // Full Blob for backup
-    ultralink.toFullBlob({
-      filename: `${outputDir}/backup.blob`,
-      compress: true
-    })
-  ]);
-  
-  console.log('Export complete. Processing data...');
-  
-  // Process the exports with external tools
-  const processes = [
-    // Run analysis script on CSV data
-    spawn('python', ['analyze_data.py', `${outputDir}/csv`]),
-    
-    // Import into Neo4j
-    spawn('neo4j-admin', ['import', '--nodes', `${outputDir}/csv/entities.csv`, '--relationships', `${outputDir}/csv/relationships.csv`]),
-    
-    // Run Gephi layout algorithm
-    spawn('gephi', ['-run', 'ForceAtlas2', '-in', `${outputDir}/graph.graphml`, '-out', `${outputDir}/graph_layout.pdf`])
-  ];
-  
-  // Wait for all processes to complete
-  await Promise.all(processes.map(proc => 
-    new Promise((resolve, reject) => {
-      proc.on('close', code => code === 0 ? resolve() : reject(new Error(`Process exited with code ${code}`)));
-    })
-  ));
-  
-  console.log('Batch processing complete!');
+
+  const vault = path.join(outputDir, 'obsidian');
+  fs.mkdirSync(vault, { recursive: true });
+
+  for (const [filename, markdown] of Object.entries(ultralink.toObsidian())) {
+    fs.writeFileSync(path.join(vault, filename), markdown, { encoding: 'utf8', flag: 'wx' });
+  }
+
+  fs.writeFileSync(path.join(outputDir, 'knowledge.kif'), ultralink.toKIF(), 'utf8');
 }
 
-// Usage
-batchExport(myUltraLink, './output/batch-job-123')
-  .then(() => console.log('Batch job finished successfully'))
-  .catch(err => console.error('Batch job failed:', err));
+batchExport(ultralink, './output/batch-job-123');
 ```
 
 ## Best Practices for Format Integration

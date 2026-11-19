@@ -105,10 +105,9 @@ function importRecords(records, name) {
 class UltraLink {
   /**
    * Create a new UltraLink instance
-   * @param {Object} config - Configuration options
-   * @param {boolean} config.preventOverwrite - Whether to prevent overwriting entities with same ID (default: true)
-   * @param {boolean} config.timestampEntities - Whether to add timestamps to entities (default: true)
-   * @param {string} config.defaultRelationshipType - Default type for relationships (default: 'related_to')
+   * @param {Object} [config={}] - Configuration options
+   * @param {boolean} [config.allowOverwrite=false] - Let addEntity replace an existing entity with the same ID
+   * @param {string} [config.defaultRelationshipType='related_to'] - Type used by addLink and addRelationship when omitted
    */
   constructor(config = {}) {
     this.config = {

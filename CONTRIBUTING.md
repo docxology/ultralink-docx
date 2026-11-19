@@ -53,7 +53,11 @@ UltraLink follows a Code of Conduct that all contributors are expected to adhere
    ```
 
 4. **Install dependencies**
+   Check that the versions match the tested [development environment](#development-environment)
+   before running `npm install`.
    ```bash
+   node --version  # v22.23.5
+   npm --version   # 11.20.0
    npm install
    ```
 
@@ -68,9 +72,9 @@ directly.
 
 ## Development Environment
 
-UltraLink requires:
-- Node.js 18.17 or higher (required by `sharp` 0.33 and `jsdom` 24)
-- NPM 9 or higher
+- The tested fork setup uses Node.js 22.23.5 and npm 11.20.0. See
+  [Prerequisites](INSTALLATION.md#prerequisites) for the locked dependency's
+  Node.js engine floor.
 
 Recommended tools:
 - VS Code with the following extensions:
