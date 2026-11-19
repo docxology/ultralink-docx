@@ -68,7 +68,7 @@ directly.
 
 ## Development Environment
 
-- Use Node.js 22.23.5 with npm for the tested fork setup. See
+- The tested fork setup uses Node.js 22.23.5 and npm 11.20.0. See
   [Prerequisites](INSTALLATION.md#prerequisites) for the locked dependency's
   Node.js engine floor.
 

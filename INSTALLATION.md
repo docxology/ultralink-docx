@@ -20,7 +20,8 @@ Before installing UltraLink, ensure you have the following:
 - **Node.js**: Use Node.js 22.23.5 for the tested source setup. The locked
   `sharp` 0.35.5 dependency declares Node.js 20.9.0 as the minimum engine
   version; that floor is not a tested setup. [Download Node.js](https://nodejs.org/).
-- **npm**, **yarn**, or **pnpm**: For package management
+- **npm**: The tested source setup uses npm 11.20.0, which leaves the
+  checked-in lockfile unchanged.
 - **Git**: For version control (optional, but recommended)
 
 ## Basic Installation
