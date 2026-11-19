@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bind archive fields only to identifiable receiver-accepted edges, preserving independent receiver writes and their overwrite behavior.
 - Preserve the receiver on decode or built-in insertion validation failure; keep entity metadata and tuple deletion compatible with existing overrides.
 - Read archive text without a recursive reviver and preserve receiver overwrite semantics when distinct tuples share a recovered compound ID.
+- Keep a replaced receiver edge deleted even when the import hook also deletes its replacement.
 - Count each self-loop once in combined lookups. Preserve retry-safe deletion by insertion tuple after retyping.
 - Restore surviving edges behind colliding legacy link keys and export both edges with their actual endpoints in RxInfer.
 - Keep recovered edges under their original legacy keys and emit RxInfer self-loop attribute factors.

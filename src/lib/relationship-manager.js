@@ -252,23 +252,25 @@ function bindArchiveId(graph, edge, row, state) {
 function settleReceiverWrites(graph, state, accepted) {
   // Archive identity can occupy the canonical compound ID while a receiver
   // write sits at a recovery ID. Overwrite by the original compound ID,
-  // including when a later writer derives it from different endpoints.
+  // including when the hook deletes the replacement before returning.
   for (const edge of state.inserted) {
-    if (edge === accepted || graph.relationships.get(edge.id) !== edge) continue;
+    if (edge === accepted) continue;
+    const live = graph.relationships.get(edge.id) === edge;
     const recovered = isRecoveredId(edge.id);
-    const type = recoveredLegacyTypes.get(edge);
-    const compoundId = recovered ? `${edge.source}_${type}_${edge.target}` : edge.id;
+    const compoundId = recovered ? `${edge.source}_${recoveredLegacyTypes.get(edge)}_${edge.target}` : edge.id;
     const previous = state.recoveredEffects.get(compoundId);
     if (previous && graph.relationships.get(previous.id) === previous) {
-      trackImportedOrder(graph, state);
-      const slot = state.slots.get(edge);
-      if (state.slots.get(previous) < slot) {
-        state.order[slot] = previous; // The replaced edge is skipped during replay.
-        rememberImportedSlot(state, edge, previous);
+      if (live) {
+        trackImportedOrder(graph, state);
+        const slot = state.slots.get(edge);
+        if (state.slots.get(previous) < slot) {
+          state.order[slot] = previous; // The replaced edge is skipped during replay.
+          rememberImportedSlot(state, edge, previous);
+        }
       }
       deleteRelationship.call(graph, previous.id);
     }
-    if (recovered) state.recoveredEffects.set(compoundId, edge);
+    if (live && recovered) state.recoveredEffects.set(compoundId, edge);
     else state.recoveredEffects.delete(compoundId);
   }
 }

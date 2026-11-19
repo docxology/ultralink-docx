@@ -1120,7 +1120,7 @@ describe('UltraLink', () => {
       }
     });
 
-    it('replaces a recovered receiver write when another tuple derives the same compound ID', () => {
+    it.each([false, true])('replaces a recovered receiver write across endpoints (delete replacement: %s)', removeReplacement => {
       for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
       const stored = ultralink.addLink('a', 'd', 'b_c', { revision: 1 });
       ultralink.updateRelationship(stored.id, { type: 'reviewed' });
@@ -1128,17 +1128,31 @@ describe('UltraLink', () => {
       class Audited extends UltraLink {
         addLink(source, target, type, attributes) {
           if (type === 'reviewed') super.addRelationship('a_b', 'd', 'c', { audit: 'old' });
-          else super.addRelationship('a', 'c_d', 'b', { audit: 'latest' });
+          else {
+            const replacement = super.addRelationship('a', 'c_d', 'b', { audit: 'latest' });
+            if (removeReplacement) expect(this.deleteRelationship(replacement.id)).toBe(true);
+          }
           return super.addLink(source, target, type, attributes);
         }
       }
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [
+        ultralink.toJSON({ lossless: true }), JSON.stringify(ultralink.toFullBlob()),
+        ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })
+      ]) {
         const restored = new Audited().fromFullBlob(input);
         expect(restored.getRelationship(stored.id)).toEqual(stored);
         expect(restored.getBacklinks('d')).toEqual([stored, citation]);
         expect(restored.getRelationships('a_b', { direction: 'outgoing' })).toEqual([]);
         expect(restored.links.get('a_b').size).toBe(0);
         const [audit] = restored.getBacklinks('c_d');
+        if (removeReplacement) {
+          expect(audit).toBeUndefined();
+          expect(restored.links.get('a').has('c_d-b')).toBe(false);
+          expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([stored, citation]);
+          expect(restored.toJSON({ asString: false, lossless: true }).relationships.map(({ id }) => id))
+            .toEqual([stored.id, citation.id]);
+          continue;
+        }
         expect(audit).toMatchObject({ source: 'a', target: 'c_d', type: 'b', attributes: { audit: 'latest' } });
         expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([audit, stored, citation]);
         expect(restored.links.get('a').get('c_d-b')).toBe(audit);

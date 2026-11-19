@@ -139,7 +139,8 @@ hook gives no result; return the accepted edge for ambiguous hooks, or return
 If an accepted archive row needs an ID occupied by a receiver-created edge,
 the archive row takes the stored ID and the other edge stays reachable under
 a recovery ID. Later receiver writes that derive the same compound ID replace
-the previous receiver write, even if their endpoints differ.
+the previous receiver write, even if their endpoints differ or the hook
+deletes the replacement before returning.
 Imported authored graph metadata replaces matching top-level keys and leaves
 other receiver keys intact. The automatic export summary is ignored.
 
