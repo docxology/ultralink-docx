@@ -86,41 +86,67 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId, metad
   return relationship;
 }
 
-function restoreRelationships(rows) {
+function restoreRelationships(rows, legacyLinkOrder) {
   const entries = [];
   const explicit = new Set();
-  const reserved = new Set();
   for (const row of rows) {
     const { source, target } = row;
     const type = row.type === undefined ? this.config.defaultRelationshipType : row.type;
     const generatedId = `${source}_${type}_${target}`;
     const prefix = `${source}_`;
     const suffix = `_${target}`;
-    // Older formats may contain unrelated IDs. Only accept stored IDs whose
-    // endpoints can be verified without splitting on underscores.
-    const id = typeof row.id === 'string' && row.id.length >= prefix.length + suffix.length &&
-      row.id.startsWith(prefix) && row.id.endsWith(suffix) ? row.id : undefined;
+    // Old formats may contain unrelated IDs. Accept recovered IDs or
+    // compound IDs whose endpoints can be verified without splitting.
+    const id = typeof row.id === 'string' && (isRecoveredId(row.id) ||
+      (row.id.length >= prefix.length + suffix.length &&
+        row.id.startsWith(prefix) && row.id.endsWith(suffix))) ? row.id : undefined;
     if (id !== undefined) explicit.add(id);
-    reserved.add(id ?? generatedId);
     entries.push({ row, type, generatedId, id });
   }
 
-  const nextSuffix = new Map();
+  let nextRecoveredId = 1;
   for (const { row, type, generatedId, id: storedId } of entries) {
     const { source, target, attributes, metadata } = row;
     let id = storedId ?? generatedId;
     if (storedId === undefined && (explicit.has(id) || this.relationships.has(id))) {
-      // Legacy rows without IDs can still describe independent live edges.
-      // Reserve all known IDs first so a generated suffix cannot steal one.
-      let suffix = nextSuffix.get(generatedId) ?? 2;
+      // Compound IDs always contain at least two underscores. Recovered IDs
+      // cannot alias a later addLink or deleteLink insertion tuple.
       do {
-        id = `${source}_${type}~${suffix++}_${target}`;
-      } while (reserved.has(id));
-      nextSuffix.set(generatedId, suffix);
-      reserved.add(id);
+        id = `legacy:${nextRecoveredId++}`;
+      } while (explicit.has(id));
     }
     storeRelationship.call(this, source, target, type, attributes, id, metadata);
   }
+
+  if (Array.isArray(legacyLinkOrder)) {
+    for (const id of legacyLinkOrder) {
+      const relationship = this.relationships.get(id);
+      if (!relationship) continue;
+      const outgoing = this.links.get(relationship.source);
+      const key = legacyLinkKey(id, relationship);
+      if (shadowedLegacyLinks.get(outgoing)?.has(key)) {
+        setLegacyLink(outgoing, key, relationship, relationship);
+      }
+    }
+  }
+}
+
+function getLegacyLinkOrder() {
+  let order;
+  for (const outgoing of this.links?.values() ?? []) {
+    const byKey = shadowedLegacyLinks.get(outgoing);
+    if (!byKey) continue;
+    order ??= [];
+    for (const [key, shadowed] of byKey) {
+      for (const relationship of shadowed) order.push(relationship.id);
+      order.push(outgoing.get(key).id);
+    }
+  }
+  return order;
+}
+
+function isRecoveredId(id) {
+  return /^legacy:[1-9]\d*$/.test(id);
 }
 
 /**
@@ -220,6 +246,7 @@ function removeShadowedLink(shadowed, relationship) {
 function legacyLinkKey(id, { source, target }) {
   // Type updates keep the ID and the legacy key from insertion. The stored
   // endpoints fix both boundaries even when they contain underscores.
+  if (isRecoveredId(id)) return `${target}-${id}`;
   const typeAtInsertion = id.slice(String(source).length + 1, -String(target).length - 1);
   return `${target}-${typeAtInsertion}`;
 }
@@ -350,6 +377,7 @@ function getEntityRelationships(entityId, options = {}) {
 module.exports = {
   addRelationship,
   restoreRelationships,
+  getLegacyLinkOrder,
   getRelationship,
   updateRelationship,
   deleteRelationship,

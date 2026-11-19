@@ -4,6 +4,8 @@
  * Export UltraLink data to JSON format.
  */
 
+const { getLegacyLinkOrder } = require('../relationship-manager');
+
 /**
  * Converts knowledge base to JSON format
  * @param {Object} ultralink - The UltraLink instance
@@ -11,10 +13,11 @@
  * @param {boolean} options.pretty - Whether to pretty-print the JSON (default: false)
  * @param {boolean} options.asString - Whether to return a string or object (default: true)
  * @param {boolean} options.includeVectors - Whether to include vector embeddings (default: false)
+ * @param {boolean} options.includeMetadata - Include entity and relationship metadata (default: true)
  * @returns {string|Object} JSON string or object
  */
 function toJSON(ultralink, options = {}) {
-  const { pretty = false, asString = true, includeVectors = false } = options;
+  const { pretty = false, asString = true, includeVectors = false, includeMetadata = true } = options;
   
   // Extract entities
   const entities = [];
@@ -22,9 +25,9 @@ function toJSON(ultralink, options = {}) {
     const entityObj = {
       id: entity.id,
       type: entity.type,
-      attributes: entity.attributes || {},
-      metadata: entity.metadata
+      attributes: entity.attributes || {}
     };
+    if (includeMetadata) entityObj.metadata = entity.metadata;
     
     if (includeVectors && entity.vector) {
       entityObj.vector = Array.isArray(entity.vector) ? entity.vector : Array.from(entity.vector);
@@ -36,14 +39,15 @@ function toJSON(ultralink, options = {}) {
   // Extract relationships
   const relationships = [];
   for (const rel of ultralink.relationships.values()) {
-    relationships.push({
+    const record = {
       id: rel.id,
       source: rel.source,
       target: rel.target,
       type: rel.type,
-      attributes: rel.attributes || {},
-      metadata: rel.metadata
-    });
+      attributes: rel.attributes || {}
+    };
+    if (includeMetadata) record.metadata = rel.metadata;
+    relationships.push(record);
   }
   
   // Create the result object
@@ -57,6 +61,8 @@ function toJSON(ultralink, options = {}) {
     entities,
     relationships
   };
+  const legacyLinkOrder = getLegacyLinkOrder.call(ultralink);
+  if (legacyLinkOrder) result.legacyLinkOrder = legacyLinkOrder;
   
   // Return as string or object based on options
   if (asString) {

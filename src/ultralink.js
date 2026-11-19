@@ -689,7 +689,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
         const entity = this.addEntity(id, type, attributes);
         entity.metadata = { ...entity.metadata, ...metadata };
       }
-      RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships));
+      RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships), data.legacyLinkOrder);
     }
     
     return this;

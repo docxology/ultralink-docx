@@ -90,12 +90,17 @@ Each relationship is represented as:
 `id` is the stored relationship ID, not an encoding of the current `type`.
 It remains stable after `updateRelationship(id, { type })`. `fromFullBlob()`
 accepts either this JSON graph directly or the JSON component of a Full Blob,
-including legacy object maps of records. It restores matching compound IDs,
-attributes, and supplied graph, entity, and relationship metadata. Legacy
-relationship rows without a usable ID derive one from the current tuple;
-if that ID is reserved or already used, import assigns a distinct compound ID
-with a numeric `~` suffix in its type segment without changing the current
-type. The original IDs are not recoverable from ID-less exports.
+including legacy object maps of records. It restores stored IDs, attributes,
+and supplied graph, entity, and relationship metadata. Legacy relationship
+rows without a usable ID derive one from the current tuple; a collision gets
+an opaque `legacy:<number>` ID instead of overwriting another edge. These
+recovery IDs do not match insertion tuples, so use `deleteRelationship(id)`
+to select a recovered edge by ID. The original IDs are not recoverable from
+ID-less exports.
+
+For a shared legacy link key, the optional `legacyLinkOrder` array stores
+IDs in write order from oldest to newest. Import uses it to restore each
+key's visible value and fallback order without reordering relationship rows.
 
 ## Usage
 
@@ -122,7 +127,7 @@ const jsonString = JSON.stringify(json, null, 2);
 |--------|------|---------|-------------|
 | `includeVectors` | Boolean | `false` | Include entity vector embeddings |
 | `includeHistory` | Boolean | `false` | Include entity and relationship change history |
-| `includeMetadata` | Boolean | `true` | Include creation and modification metadata |
+| `includeMetadata` | Boolean | `true` | Include entity and relationship metadata; the graph summary is unchanged |
 | `prettyPrint` | Boolean | `false` | Format JSON with indentation for readability |
 
 ## Complete Example

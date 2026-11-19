@@ -421,14 +421,18 @@ describe('UltraLink', () => {
       expect(ultralink.getBacklinks('y-x_y')).toEqual([]);
     });
 
-    it('round-trips legacy-key colliders with distinct IDs and actual endpoints', () => {
+    it('round-trips legacy-key colliders without changing their lookup or write order', () => {
       for (const id of ['anchor', 'station_north', 'station_north-old']) ultralink.addEntity(id, 'location');
-      const a = ultralink.addLink('anchor', 'station_north', 'old-route', { weight: 1 });
+      ultralink.addLink('anchor', 'station_north', 'old-route');
       const b = ultralink.addLink('anchor', 'station_north-old', 'route', { weight: 2 });
+      const a = ultralink.addLink('anchor', 'station_north', 'old-route', { weight: 1 });
+      ultralink.updateRelationship(b.id, { type: 'express' });
+      const key = 'station_north-old-route';
+      expect(ultralink.links.get('anchor').get(key)).toBe(a);
       const json = ultralink.toJSON();
       const relationships = [
         { id: a.id, source: 'anchor', target: 'station_north', type: 'old-route', attributes: { weight: 1 }, metadata: a.metadata },
-        { id: b.id, source: 'anchor', target: 'station_north-old', type: 'route', attributes: { weight: 2 }, metadata: b.metadata }
+        { id: b.id, source: 'anchor', target: 'station_north-old', type: 'express', attributes: { weight: 2 }, metadata: b.metadata }
       ];
       expect(JSON.parse(json).relationships).toEqual(relationships);
 
@@ -436,10 +440,13 @@ describe('UltraLink', () => {
       expect(imported.toJSON({ asString: false }).relationships).toEqual(relationships);
       expect(imported.getBacklinks('station_north')[0].id).toBe(a.id);
       expect(imported.getBacklinks('station_north-old')[0].id).toBe(b.id);
+      expect(imported.links.get('anchor').get(key).id).toBe(a.id);
       expect(imported.toRxInfer().split('\n').filter(line => line.includes('# Relationship:'))).toEqual([
         '    # Relationship: anchor (old-route) station_north',
-        '    # Relationship: anchor (route) station_north-old'
+        '    # Relationship: anchor (express) station_north-old'
       ]);
+      expect(imported.deleteRelationship(a.id)).toBe(true);
+      expect(imported.links.get('anchor').get(key).id).toBe(b.id);
     });
   });
   
@@ -529,6 +536,12 @@ describe('UltraLink', () => {
 
       const restored = new UltraLink().fromFullBlob(blob);
       expect(restored.toJSON({ asString: false }).metadata).toMatchObject(ultralink.metadata);
+
+      const compact = JSON.parse(ultralink.toJSON({ includeMetadata: false }));
+      expect(compact.entities[0]).not.toHaveProperty('metadata');
+      expect(compact.relationships[0]).not.toHaveProperty('metadata');
+      expect(new UltraLink().fromFullBlob(compact).getBacklinks('paper_v1').map(({ id }) => id))
+        .toEqual([drafted.id, reviewed.id]);
     });
 
     it('preserves ID-less legacy collisions without stealing explicit or tuple-derived IDs', () => {
@@ -543,19 +556,24 @@ describe('UltraLink', () => {
           first: { ...common, attributes: { weight: 1 }, metadata: { created: '2019-08-01T00:00:00.000Z', origin: 'legacy' } },
           second: { ...common, attributes: { weight: 2 } },
           explicit: { ...common, id: explicitId, attributes: { weight: 3 } },
-          ordinary: { ...common, type: 'reviewed~2', id: 'legacy-label', attributes: { weight: 4 } }
+          ordinary: { ...common, type: 'reviewed~2', id: 'legacy-label', attributes: { weight: 4 } },
+          recovered: { ...common, id: 'legacy:1', attributes: { weight: 5 } }
         }
       };
       const restored = new UltraLink().fromFullBlob({ json: JSON.stringify(payload) });
       const edges = restored.getBacklinks(target);
-      expect(edges.map(edge => edge.attributes.weight)).toEqual([1, 2, 3, 4]);
-      expect(new Set(edges.map(edge => edge.id)).size).toBe(4);
+      expect(edges.map(edge => edge.attributes.weight)).toEqual([1, 2, 3, 4, 5]);
+      expect(new Set(edges.map(edge => edge.id)).size).toBe(5);
       expect(restored.getRelationship(explicitId).attributes.weight).toBe(3);
       expect(restored.getRelationship(ordinaryId).attributes.weight).toBe(4);
+      expect(restored.getRelationship('legacy:1').attributes.weight).toBe(5);
       expect(edges[0].metadata).toMatchObject({ created: '2019-08-01T00:00:00.000Z', origin: 'legacy' });
       expect(new UltraLink().fromFullBlob(restored.toJSON()).getBacklinks(target)).toEqual(edges);
+      expect(restored.deleteLink(source, target, edges[0].id)).toBe(false);
+      const independent = restored.addLink(source, target, edges[0].id, { weight: 6 });
+      expect(restored.getBacklinks(target)).toEqual([...edges, independent]);
       expect(restored.deleteRelationship(edges[0].id)).toBe(true);
-      expect(restored.getBacklinks(target)).toEqual(edges.slice(1));
+      expect(restored.getBacklinks(target)).toEqual([...edges.slice(1), independent]);
     });
     
     it('should export and import a full blob', () => {
