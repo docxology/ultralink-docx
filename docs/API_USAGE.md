@@ -53,8 +53,9 @@ ultralink.addEntity('alan-turing', 'person', {
   ageAtDeath: 41
 });
 
-// You can use any string as the ID
-ultralink.addEntity('Cambridge University', 'institution', {
+// Use a single-symbol ID for KIF; keep the display name in an attribute.
+ultralink.addEntity('cambridge-university', 'institution', {
+  name: 'Cambridge University',
   founded: 1209,
   location: 'Cambridge, UK'
 });
@@ -86,13 +87,13 @@ Relationships (links) connect entities in your knowledge graph.
 
 ```javascript
 // Create a relationship between two entities
-ultralink.addLink('alan-turing', 'Cambridge University', 'studied_at', {
+ultralink.addLink('alan-turing', 'cambridge-university', 'studied_at', {
   years: '1931-1934',
   degree: 'Mathematics'
 });
 
 // addLink delegates to addRelationship. A different type gives a separate edge.
-ultralink.addRelationship('alan-turing', 'Cambridge University', 'worked_at', {
+ultralink.addRelationship('alan-turing', 'cambridge-university', 'worked_at', {
   role: 'Research fellow'
 });
 
@@ -104,7 +105,7 @@ ultralink.addLink('john-von-neumann', 'alan-turing', 'collaborated_with');
 const turingRelationships = ultralink.getEntityRelationships('alan-turing');
 
 // Delete a relationship
-ultralink.deleteLink('alan-turing', 'Cambridge University', 'studied_at');
+ultralink.deleteLink('alan-turing', 'cambridge-university', 'studied_at');
 ```
 
 ## Querying the Knowledge Graph
@@ -134,7 +135,7 @@ const workedAtRelationships = ultralink.findRelationships({
 });
 
 // Cambridge's backlink comes from the remaining worked_at edge.
-const backlinks = ultralink.getBacklinks('Cambridge University');
+const backlinks = ultralink.getBacklinks('cambridge-university');
 ```
 
 ## Exporting Data

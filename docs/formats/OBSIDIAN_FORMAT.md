@@ -66,8 +66,9 @@ UltraLink relationships are represented as wiki-links between notes, with:
 ## Usage
 
 The [Obsidian exporter](../../src/lib/exporters/obsidian.js) returns an object
-keyed by filename, including `index.md` and one `<entity-id>.md` per entity.
-It does not write files.
+keyed by filename: entity notes named `<entity-id>.md` and the generated
+`index.md`. Reserve the entity ID `index` for the index file. The exporter
+does not write files.
 
 ```javascript
 // Basic export to Obsidian

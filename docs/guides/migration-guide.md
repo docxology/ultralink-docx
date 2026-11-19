@@ -91,20 +91,10 @@ await fs.writeFile('relationships.csv', csvData.relationships);
 
 #### JSON to Obsidian
 
-```javascript
-// Load JSON data
-const jsonData = await fs.readFile('data.json', 'utf8');
-const ultralink = new UltraLink();
-
-// Import JSON
-await ultralink.fromJSON(JSON.parse(jsonData));
-
-// Export to Obsidian
-await ultralink.toObsidian({
-  directory: './obsidian-vault',
-  includeBacklinks: true
-});
-```
+Map your application's JSON records to entities and relationships first
+using the [graph-building walkthrough](../API_USAGE.md#creating-entities).
+Then [export and save the Obsidian notes](../formats/OBSIDIAN_FORMAT.md#usage).
+Use the returned filenames as-is so the wiki-links resolve.
 
 #### JSON to Bayesian Network
 
@@ -134,20 +124,10 @@ if (bayesianNet.format === 'json') {
 
 #### JSON to KIF
 
-```javascript
-// Load JSON data
-const jsonData = await fs.readFile('data.json', 'utf8');
-const ultralink = new UltraLink();
-
-// Import JSON
-await ultralink.fromJSON(JSON.parse(jsonData));
-
-// Export to KIF
-const kif = await ultralink.toKIF({
-  includeMetaKnowledge: true
-});
-await fs.writeFile('knowledge.kif', kif);
-```
+After mapping your application's JSON records to
+[entities and relationships](../API_USAGE.md#creating-entities), follow the
+[KIF usage example](../formats/KIF_FORMAT.md#usage) to write the returned text
+to a `.kif` file.
 
 ### Migrating from CSV to Other Formats
 

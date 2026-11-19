@@ -579,13 +579,8 @@ The Knowledge Interchange Format (KIF) exports UltraLink data as a formal logica
 // Export to KIF format
 const kif = ultralink.toKIF();
 
-// Export with specific options
-const customKIF = ultralink.toKIF({
-  includeMetaKnowledge: true,
-  includeFunctions: true,
-  includeRules: true,
-  prettyPrint: true
-});
+// Omit the optional example rules.
+const customKIF = ultralink.toKIF({ includeRules: false });
 ```
 
 ### Output Structure
@@ -748,8 +743,8 @@ async function exportKnowledgeGraph(ultralink, outputPath) {
   
   const csvFiles = ultralink.toCSV();
   fs.mkdirSync(`${outputPath}/csv`, { recursive: true });
-  fs.writeFileSync(`${outputPath}/csv/entities.csv`, csvFiles.entities);
-  fs.writeFileSync(`${outputPath}/csv/relationships.csv`, csvFiles.relationships);
+  fs.writeFileSync(`${outputPath}/csv/entities.csv`, csvFiles['entities.csv']);
+  fs.writeFileSync(`${outputPath}/csv/relationships.csv`, csvFiles['relationships.csv']);
   
   const obsidianFiles = ultralink.toObsidian({ backlinks: true });
   fs.mkdirSync(`${outputPath}/obsidian`, { recursive: true });
@@ -757,11 +752,7 @@ async function exportKnowledgeGraph(ultralink, outputPath) {
     fs.writeFileSync(`${outputPath}/obsidian/${filename}`, content);
   }
   
-  const kifOutput = ultralink.toKIF({ 
-    includeMetaKnowledge: true,
-    includeFunctions: true,
-    includeRules: true
-  });
+  const kifOutput = ultralink.toKIF();
   fs.writeFileSync(`${outputPath}/graph.kif`, kifOutput);
   
   const vizFiles = ultralink.toVisualization({ format: 'svg' });

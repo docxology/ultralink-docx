@@ -521,14 +521,14 @@ fs.mkdirSync(outputDir, { recursive: true });
 
 fs.writeFileSync(path.join(outputDir, 'data.json'), JSON.stringify(json, null, 2));
 fs.writeFileSync(path.join(outputDir, 'data.graphml'), graphml);
-fs.writeFileSync(path.join(outputDir, 'entities.csv'), csv.entities);
-fs.writeFileSync(path.join(outputDir, 'relationships.csv'), csv.relationships);
+fs.writeFileSync(path.join(outputDir, 'entities.csv'), csv['entities.csv']);
+fs.writeFileSync(path.join(outputDir, 'relationships.csv'), csv['relationships.csv']);
 
 // Save multi-file outputs
 const obsidianDir = path.join(outputDir, 'obsidian');
 fs.mkdirSync(obsidianDir, { recursive: true });
 Object.entries(obsidian).forEach(([filename, content]) => {
-  fs.writeFileSync(path.join(obsidianDir, `${filename}.md`), content);
+  fs.writeFileSync(path.join(obsidianDir, filename), content);
 });
 
 const websiteDir = path.join(outputDir, 'website');

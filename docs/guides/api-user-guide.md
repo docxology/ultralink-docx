@@ -516,19 +516,8 @@ if (bayesianNetwork.format === 'json') {
 
 ### KIF Export
 
-```javascript
-// Export to KIF (Knowledge Interchange Format)
-const kif = await ultralink.toKIF({
-  includeMetaKnowledge: true,
-  commentsForEntities: true,
-  relationMapping: {
-    'knows': 'knows-person'
-  }
-});
-
-// Save to file
-await fs.writeFile('knowledge.kif', kif);
-```
+Use [`toKIF()` and write the returned text to a file](../formats/KIF_FORMAT.md#usage).
+The format guide lists the supported export options.
 
 ### Full Blob Export
 

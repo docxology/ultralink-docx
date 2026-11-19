@@ -88,10 +88,17 @@ const ultralink = new UltraLink();
 
 For developers contributing to UltraLink or building extensions:
 
+Check that the version commands print the tested versions before running
+`npm install`.
+
 ```bash
 # Clone the repository
 git clone https://github.com/docxology/ultralink-docx.git
 cd ultralink-docx
+
+# Check the active runtime and package manager
+node --version  # v22.23.5
+npm --version   # 11.20.0
 
 # Install dependencies
 npm install

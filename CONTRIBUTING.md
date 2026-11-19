@@ -53,7 +53,11 @@ UltraLink follows a Code of Conduct that all contributors are expected to adhere
    ```
 
 4. **Install dependencies**
+   Check that the versions match the tested [development environment](#development-environment)
+   before running `npm install`.
    ```bash
+   node --version  # v22.23.5
+   npm --version   # 11.20.0
    npm install
    ```
 
