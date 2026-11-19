@@ -128,7 +128,8 @@ UltraLink supports multiple export formats for your knowledge graph.
 // Export to JSON
 const jsonOutput = ultralink.toJSON({ pretty: true });
 
-// Export to CSV (creates two files: entities.csv and relationships.csv)
+// Return CSV strings keyed by filename, including entities.csv and relationships.csv.
+// This does not write files to disk.
 const csvOutput = ultralink.toCSV();
 
 // Export to GraphML (for graph visualization tools)
