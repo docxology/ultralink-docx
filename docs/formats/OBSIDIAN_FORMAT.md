@@ -79,7 +79,8 @@ const outgoingOnly = ultralink.toObsidian({ backlinks: false });
 ```
 
 To save the default export, use the returned filenames as-is; they already
-end in `.md`. Use filesystem-safe entity IDs when exporting a vault.
+end in `.md`. Use trusted, filesystem-safe entity IDs with no path separators,
+and write into a fresh vault directory you control.
 
 ```javascript
 const fs = require('node:fs');

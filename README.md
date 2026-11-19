@@ -493,16 +493,19 @@ output/
 
 ### Custom Rendering
 
-You can also render systems programmatically using the UltraLink API:
+After [setting up the source checkout](INSTALLATION.md#development-setup),
+save this as a `.cjs` file in the repository root and run it with `node`:
 
 ```javascript
-const { UltraLink } = require('ultralink');
+const { UltraLink } = require('.');
 const fs = require('fs');
 const path = require('path');
 
 // Create a dataset
 const ultralink = new UltraLink();
-// Add entities and relationships...
+ultralink.addEntity('alice', 'person', { name: 'Alice' });
+ultralink.addEntity('project', 'project', { name: 'Project' });
+ultralink.addLink('alice', 'project', 'works_on');
 
 // Generate all formats
 const json = ultralink.toJSON({ pretty: true });

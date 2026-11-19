@@ -494,8 +494,11 @@ fs.writeFileSync('visualization.html', htmlContent);
 
 ## Batch Processing
 
-To write both formats from an existing graph, save the Markdown map and KIF
-text explicitly. Pass the resulting files to the tools in your pipeline.
+Use the graph built through [Managing Relationships](../API_USAGE.md#managing-relationships)
+to save the Markdown map and KIF text together. For another graph, use trusted,
+filesystem-safe entity IDs with no path separators, reserve `index` for the
+vault index, and use a fresh output directory you control. KIF IDs and types
+also need to be single symbols. Pass the resulting files to your pipeline.
 
 ```javascript
 const fs = require('node:fs');
