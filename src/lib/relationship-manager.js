@@ -65,7 +65,9 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
   state.inserted.push(relationship);
   if (state.order) rememberImportedSlot(state, relationship, replaced);
-  if (id !== compoundId) recordProvisionalWrite(this, state, compoundId, relationship);
+  if (id !== compoundId || state.recoveredEffects.has(compoundId) || state.provisional.has(compoundId)) {
+    recordReceiverWrite(this, state, compoundId, relationship);
+  }
   return relationship;
 }
 
@@ -276,9 +278,9 @@ function bindArchiveId(graph, edge, row, state) {
   if (!recovered) recoveredLegacyTypes.delete(edge);
 }
 
-function recordProvisionalWrite(graph, state, compoundId, edge) {
-  // The archive owns the actual compound ID, but receiver writes must still
-  // replace each other at that ID before the hook's next operation.
+function recordReceiverWrite(graph, state, compoundId, edge) {
+  // Track writes by compound ID even if an accepted archive edge temporarily
+  // owns it, so a receiver overwrite is visible to the rest of the hook.
   state.compoundIds.set(edge, compoundId);
   const priorWrite = state.provisional.get(compoundId);
   const previous = priorWrite?.edge ?? state.recoveredEffects.get(compoundId);
@@ -311,7 +313,7 @@ function settleReceiverWrites(graph, state, accepted) {
       effect = edge;
       if (replaces) restoreReceiverSlot(state, edge, replaces);
     }
-    if (effect) state.recoveredEffects.set(compoundId, effect);
+    if (effect && effect.id !== compoundId) state.recoveredEffects.set(compoundId, effect);
     else state.recoveredEffects.delete(compoundId);
   }
 }

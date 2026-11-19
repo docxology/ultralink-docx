@@ -1139,7 +1139,9 @@ describe('UltraLink', () => {
       }
     });
 
-    it.each([false, true])('replaces a recovered receiver write across endpoints (delete replacement: %s)', removeReplacement => {
+    it.each([
+      [false, false], [true, false], [false, true], [true, true]
+    ])('replaces a recovered receiver write (delete replacement: %s, free archive ID: %s)', (removeReplacement, freeArchiveId) => {
       for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
       const stored = ultralink.addLink('a', 'd', 'b_c', { revision: 1 });
       ultralink.updateRelationship(stored.id, { type: 'reviewed' });
@@ -1148,6 +1150,7 @@ describe('UltraLink', () => {
         addLink(source, target, type, attributes) {
           if (type === 'reviewed') super.addRelationship('a_b', 'd', 'c', { audit: 'old' });
           else {
+            if (freeArchiveId) expect(this.deleteLink('a', 'd', 'b_c')).toBe(true);
             if (removeReplacement) super.addRelationship('a', 'c_d', 'b', { audit: 'intermediate' });
             const replacement = super.addRelationship('a', 'c_d', 'b', { audit: 'latest' });
             if (removeReplacement) {
@@ -1165,21 +1168,24 @@ describe('UltraLink', () => {
       ]) {
         const restored = new Audited().fromFullBlob(input);
         expect(restored.staleOutgoingDuringImport).toEqual([]);
-        expect(restored.getRelationship(stored.id)).toEqual(stored);
-        expect(restored.getBacklinks('d')).toEqual([stored, citation]);
+        if (!freeArchiveId) expect(restored.getRelationship(stored.id)).toEqual(stored);
+        const accepted = freeArchiveId ? [citation] : [stored, citation];
+        expect(restored.getBacklinks('d')).toEqual(accepted);
         expect(restored.getRelationships('a_b', { direction: 'outgoing' })).toEqual([]);
         expect(restored.links.get('a_b').size).toBe(0);
         const [audit] = restored.getBacklinks('c_d');
         if (removeReplacement) {
+          if (freeArchiveId) expect(restored.getRelationship(stored.id)).toBeNull();
           expect(audit).toBeUndefined();
           expect(restored.links.get('a').has('c_d-b')).toBe(false);
-          expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([stored, citation]);
+          expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual(accepted);
           expect(restored.toJSON({ asString: false, lossless: true }).relationships.map(({ id }) => id))
-            .toEqual([stored.id, citation.id]);
+            .toEqual(accepted.map(({ id }) => id));
           continue;
         }
         expect(audit).toMatchObject({ source: 'a', target: 'c_d', type: 'b', attributes: { audit: 'latest' } });
-        expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([audit, stored, citation]);
+        expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([audit, ...accepted]);
+        if (freeArchiveId) expect(restored.getRelationship(stored.id)).toBe(audit);
         expect(restored.links.get('a').get('c_d-b')).toBe(audit);
         expect(restored.deleteRelationship(audit.id)).toBe(true);
         expect(restored.getBacklinks('c_d')).toEqual([]);
