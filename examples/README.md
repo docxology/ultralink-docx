@@ -113,6 +113,21 @@ Requiring `examples/render-examples.js` does not start rendering. Programmatic
 callers can await `renderAllSystems()` for all bundled systems or
 `renderSystem(name, createDataset)` for a single system.
 
+`renderSystem` resolves to `{ systemName, ok, stats, failures }`. Each failure
+names the stage or format and includes the error message. `stats.files` counts
+outputs written, including existing optional placeholders reported as warnings.
+Failed writes are not counted as saved files, and other successful files are
+kept.
+
+`renderAllSystems` attempts every bundled system and resolves to
+`{ ok, systems }`, where `systems` lists the per-system results. It rejects if
+the shared output directory cannot be initialized. The CLI exits nonzero for
+an incomplete run and identifies the affected systems; optional warning-only
+placeholders do not make a run fail.
+The PNG exporter's 1×1 placeholder is a warning, not a successful graph PNG.
+SVG or text returned in place of a PNG is a format failure and is not saved
+under a PNG filename.
+
 ## Documentation
 
 ### Visualization Guide

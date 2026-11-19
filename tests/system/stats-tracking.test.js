@@ -1,238 +1,133 @@
-const { describe, test, expect, beforeAll, afterAll } = require('@jest/globals');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
+const { withNativeRenderer } = require('../utils/native-example-renderer');
 
-// Mock the necessary functions to avoid actual file writes
-jest.mock('fs', () => ({
-  ...jest.requireActual('fs'),
-  writeFileSync: jest.fn(),
-  mkdirSync: jest.fn(),
-  existsSync: jest.fn().mockReturnValue(true),
-}));
+function countFiles(directory) {
+  return fs.readdirSync(directory, { recursive: true, withFileTypes: true })
+    .filter(entry => entry.isFile()).length;
+}
 
-// Mock d3 to avoid the d3.forceSimulation not a function error
-jest.mock('d3', () => ({
-  forceSimulation: jest.fn().mockReturnValue({
-    nodes: jest.fn().mockReturnThis(),
-    force: jest.fn().mockReturnThis(),
-    tick: jest.fn(),
-    alpha: jest.fn().mockReturnThis(),
-    restart: jest.fn().mockReturnThis(),
-    stop: jest.fn().mockReturnThis()
-  }),
-  forceManyBody: jest.fn().mockReturnValue({}),
-  forceCenter: jest.fn().mockReturnValue({}),
-  forceLink: jest.fn().mockReturnValue({
-    links: jest.fn().mockReturnThis()
-  })
-}));
-
-// Mock visualization helpers
-jest.mock('../../src/lib/exporters/visualization-helpers', () => ({
-  ...jest.requireActual('../../src/lib/exporters/visualization-helpers'),
-  svgToPng: jest.fn().mockResolvedValue(Buffer.from('mocked-png-data')),
-  convertSvgToPng: jest.fn().mockResolvedValue(Buffer.from('mocked-png-data'))
-}));
-
-// Mock the visualization module
-jest.mock('../../src/lib/exporters/visualization', () => {
-  return {
-    toVisualization: jest.fn().mockImplementation(async (ultralink, options = {}) => {
-      const systemName = ultralink?.name || 'test-system';
-      return {
-        [`${systemName}.svg`]: '<svg>Test SVG</svg>',
-        [`${systemName}.png`]: Buffer.from('test-png-data'),
-        [`${systemName}-graph.svg`]: '<svg>Test Graph SVG</svg>',
-        [`${systemName}-graph.png`]: Buffer.from('test-graph-png-data'),
-        [`${systemName}-graph-grid.svg`]: '<svg>Test Grid SVG</svg>',
-        [`${systemName}-graph-grid.png`]: Buffer.from('test-grid-png-data'),
-        [`${systemName}-graph-cluster.svg`]: '<svg>Test Cluster SVG</svg>',
-        [`${systemName}-graph-cluster.png`]: Buffer.from('test-cluster-png-data')
-      };
-    })
-  };
-});
-
-// Mock the rendering so it doesn't try to run things after test completion
-jest.mock('../../examples/render-examples.js', () => {
-  const originalModule = jest.requireActual('../../examples/render-examples.js');
-  
-  return {
-    ...originalModule,
-    renderAllSystems: jest.fn().mockResolvedValue(true),
-  };
-});
+function websiteFiles(directory) {
+  return fs.readdirSync(directory, { recursive: true })
+    .filter(name => fs.statSync(path.join(directory, name)).isFile())
+    .sort();
+}
 
 describe('Statistics Tracking in Render Examples', () => {
-  // Import the render-examples.js module
-  let renderExamples;
-  let originalConsoleLog;
-  let originalConsoleError;
-  let originalConsoleWarn;
-  
-  beforeAll(() => {
-    // Save original console methods
-    originalConsoleLog = console.log;
-    originalConsoleError = console.error;
-    originalConsoleWarn = console.warn;
-    
-    // Mock console methods to prevent test output pollution
-    console.log = jest.fn();
-    console.error = jest.fn();
-    console.warn = jest.fn();
-    
-    // Path to the script
-    const scriptPath = path.join(__dirname, '../../examples/render-examples.js');
-    
-    // Save the original module.exports
-    const originalExports = require.cache[require.resolve(scriptPath)]?.exports;
-    
-    // Clear the require cache to ensure we get a fresh load
-    if (require.cache[require.resolve(scriptPath)]) {
-      delete require.cache[require.resolve(scriptPath)];
-    }
-    
-    // Mock ultralink toHTMLWebsite function to return mock data
-    jest.mock('../../src/ultralink', () => {
-      return {
-        UltraLink: jest.fn().mockImplementation(() => ({
-          toHTMLWebsite: jest.fn().mockReturnValue({
-            'index.html': '<html>Test</html>',
-            'styles.css': 'body { color: black; }',
-            'graph.js': 'console.log("Test");'
-          }),
-          store: {
-            entities: {},
-            relationships: {}
-          }
-        }))
-      };
+  test.each([
+    { label: 'successful render', blocked: [] },
+    { label: 'partial render', blocked: ['POMDP.json', 'website/index.html'] }
+  ])('reports files actually written for a $label', async ({ blocked }) => {
+    await withNativeRenderer(async (root, runNode) => {
+      const output = path.join(root, 'examples', 'output', 'systems', 'POMDP');
+
+      await runNode('-e', `
+        const fs = require('node:fs');
+        const path = require('node:path');
+        const { renderSystem, SYSTEMS } = require('./examples/render-examples.js');
+        const [output, blockedFiles] = process.argv.slice(1);
+        const blocked = JSON.parse(blockedFiles);
+        (async () => {
+          const complete = await renderSystem('POMDP', SYSTEMS.POMDP);
+          if (blocked.length === 0) return complete;
+
+          fs.renameSync(output, 'complete-output');
+          // Real directory/file collisions, without making permission or
+          // elevated-user assumptions.
+          for (const name of blocked) fs.mkdirSync(path.join(output, name), { recursive: true });
+          return await renderSystem('POMDP', SYSTEMS.POMDP);
+        })().then(result => {
+          fs.writeFileSync('result.json', JSON.stringify(result));
+        }).catch(error => {
+          console.error(error);
+          process.exitCode = 1;
+        });
+      `, output, JSON.stringify(blocked));
+      const { systemName, ok, stats, failures } =
+        JSON.parse(fs.readFileSync(path.join(root, 'result.json'), 'utf8'));
+      const website = path.join(output, 'website');
+      const files = websiteFiles(website);
+      expect(systemName).toBe('POMDP');
+      expect(stats.files).toBe(countFiles(output));
+      expect(stats.formats['html-website']).toEqual({
+        files: files.length,
+        successful: files.length,
+        warnings: 0,
+        errors: blocked.length ? 1 : 0
+      });
+      expect(fs.readFileSync(path.join(website, 'graph.js'), 'utf8')).toContain('POMDP');
+      expect(stats.formats.bayesian).toEqual({ files: 2, successful: 1, warnings: 1, errors: 0 });
+      expect(fs.readFileSync(path.join(output, 'bayesian', 'POMDP.bif'), 'utf8')).toContain('<n>POMDP</n>');
+
+      if (blocked.length) {
+        const original = websiteFiles(path.join(root, 'complete-output', 'website'));
+        expect(original).toContain('index.html');
+        expect(files).toEqual(original.filter(name => name !== 'index.html'));
+        expect(ok).toBe(false);
+        expect(stats.errors).toBe(2);
+        expect(stats.formats.json).toEqual({ files: 0, successful: 0, warnings: 0, errors: 1 });
+        expect(failures).toEqual([
+          { stage: 'json', message: expect.stringContaining('POMDP.json') },
+          { stage: 'html-website', message: expect.stringContaining('index.html') }
+        ]);
+        expect(fs.readFileSync(path.join(output, 'POMDP.graphml'), 'utf8')).toContain('<edge ');
+      } else {
+        expect(ok).toBe(true);
+        expect(failures).toEqual([]);
+        expect(stats.errors).toBe(0);
+        expect(fs.readFileSync(path.join(website, 'index.html'), 'utf8')).toContain('POMDP');
+      }
     });
-    
-    // Attempt to load the script
-    try {
-      renderExamples = require(scriptPath);
-    } catch (error) {
-      console.error('Error loading render-examples.js:', error);
-    }
-    
-    // Restore original exports if they existed
-    if (originalExports) {
-      require.cache[require.resolve(scriptPath)].exports = originalExports;
-    }
   });
-  
-  afterAll(() => {
-    // Restore original console methods
-    console.log = originalConsoleLog;
-    console.error = originalConsoleError;
-    console.warn = originalConsoleWarn;
-    jest.resetModules();
-    jest.restoreAllMocks();
-  });
-  
-  test('Stats are properly initialized and updated for html-website output', () => {
-    // Mock the STATS object to inspect
-    const STATS = {
-      systemStats: {
-        'TestSystem': {
-          files: 0,
-          successful: 0,
-          warnings: 0,
-          errors: 0,
-          formats: {}
-        }
-      },
-      formatStats: {},
-      totalFiles: 0,
-      successfulFiles: 0,
-      warningFiles: 0,
-      errorFiles: 0
-    };
-    
-    // Create mock ultralink instance
-    const ultralink = {
-      toHTMLWebsite: jest.fn().mockReturnValue({
-        'index.html': '<html>Test</html>',
-        'styles.css': 'body { color: black; }',
-        'graph.js': 'console.log("Test");'
-      })
-    };
-    
-    // Mock necessary functions
-    const ensureDirectoryExists = jest.fn();
-    const safeWriteFile = jest.fn();
-    const safeExecute = (fn) => fn();
-    
-    // Setup target information
-    const systemName = 'TestSystem';
-    const target = { name: 'html-website' };
-    const targetDir = '/fake/path';
-    
-    // Run the html-website case (simplified version of what would happen in renderSystem)
-    try {
-      console.log(`    🌐 Generating HTML website for ${systemName}...`);
-      
-      // Ensure format statistics objects are initialized
-      if (!STATS.formatStats[target.name]) {
-        STATS.formatStats[target.name] = {
-          files: 0,
-          successful: 0,
-          warnings: 0,
-          errors: 0
+
+  test('counts real diagnostics but rejects SVG bytes from the PNG exporter', async () => {
+    await withNativeRenderer(async (root, runNode) => {
+      await runNode('-e', `
+        const fs = require('node:fs');
+        const { renderSystem, SYSTEMS } = require('./examples/render-examples.js');
+        const graph = SYSTEMS.POMDP();
+        const json = graph.toJSON;
+        graph.toJSON = function () {
+          this.toJSON = json;
+          throw new Error('fixture JSON export failed');
         };
-      }
-      
-      if (!STATS.systemStats[systemName].formats[target.name]) {
-        STATS.systemStats[systemName].formats[target.name] = {
-          files: 0,
-          successful: 0,
-          warnings: 0,
-          errors: 0
+        const visualize = graph.toVisualization.bind(graph);
+        graph.toVisualization = async options => {
+          if (options.format === 'png' && options.layout === 'force') {
+            const svg = await visualize({ ...options, format: 'svg' });
+            return { 'graph.png': Buffer.from(svg['graph.svg']) };
+          }
+          if (options.format === 'png' && options.layout === 'radial') {
+            return { 'graph-radial.png': Buffer.from(
+              'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64'
+            ) };
+          }
+          return visualize(options);
         };
-      }
-      
-      const websiteOutput = safeExecute(() => ultralink.toHTMLWebsite({
-        title: `${systemName} - UltraLink Knowledge Graph`,
-        description: `Interactive exploration of the ${systemName} knowledge graph`,
-        includeSearch: true,
-        includeDownloadButtons: true
-      }));
-      
-      // Ensure output directory exists
-      ensureDirectoryExists(targetDir);
-      
-      // Write all website files
-      let fileCount = 0;
-      for (const [filename, content] of Object.entries(websiteOutput)) {
-        const filePath = path.join(targetDir, filename);
-        safeWriteFile(filePath, content);
-        fileCount++;
-        
-        // Update file statistics
-        STATS.totalFiles++;
-        STATS.successfulFiles++;
-        STATS.formatStats[target.name].files++;
-        STATS.formatStats[target.name].successful++;
-        STATS.systemStats[systemName].files++;
-        STATS.systemStats[systemName].successful++;
-        STATS.systemStats[systemName].formats[target.name].files++;
-        STATS.systemStats[systemName].formats[target.name].successful++;
-      }
-    } catch (error) {
-      console.error('Error in test:', error);
-    }
-    
-    // Verify stats are correctly updated
-    expect(STATS.formatStats['html-website']).toBeDefined();
-    expect(STATS.formatStats['html-website'].files).toBe(3);
-    expect(STATS.formatStats['html-website'].successful).toBe(3);
-    
-    expect(STATS.systemStats['TestSystem'].formats['html-website']).toBeDefined();
-    expect(STATS.systemStats['TestSystem'].formats['html-website'].files).toBe(3);
-    expect(STATS.systemStats['TestSystem'].formats['html-website'].successful).toBe(3);
-    
-    expect(STATS.totalFiles).toBe(3);
-    expect(STATS.successfulFiles).toBe(3);
+        renderSystem('POMDP', () => graph).then(result => {
+          fs.writeFileSync('result.json', JSON.stringify(result));
+        }).catch(error => {
+          console.error(error);
+          process.exitCode = 1;
+        });
+      `);
+
+      const output = path.join(root, 'examples', 'output', 'systems', 'POMDP');
+      const { ok, stats, failures } = JSON.parse(fs.readFileSync(path.join(root, 'result.json'), 'utf8'));
+      expect(ok).toBe(false);
+      expect(failures).toEqual([
+        { stage: 'json', message: 'fixture JSON export failed' },
+        { stage: 'visualization', message: expect.stringContaining('pomdp-graph.png') }
+      ]);
+      expect(stats.formats.json).toEqual({ files: 1, successful: 0, warnings: 1, errors: 1 });
+      expect(stats.formats.visualization).toEqual({ files: 6, successful: 5, warnings: 1, errors: 1 });
+      expect(stats.files).toBe(countFiles(output));
+      expect(fs.readFileSync(path.join(output, 'ERROR-json.txt'), 'utf8')).toContain('fixture JSON export failed');
+      expect(fs.existsSync(path.join(output, 'POMDP.json'))).toBe(false);
+      expect(fs.existsSync(path.join(output, 'visualization', 'pomdp-graph.png'))).toBe(false);
+      const placeholder = fs.readFileSync(path.join(output, 'visualization', 'pomdp-graph-radial.png'));
+      expect([placeholder.readUInt32BE(16), placeholder.readUInt32BE(20)]).toEqual([1, 1]);
+      expect(fs.readFileSync(path.join(output, 'visualization', 'pomdp-graph.svg'), 'utf8')).toContain('<line ');
+    });
   });
-}); 
+});

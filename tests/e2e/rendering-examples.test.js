@@ -5,39 +5,14 @@
  * by testing its key functions with real UltraLink instances.
  */
 
-const { execFile } = require('child_process');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
-const { promisify } = require('util');
-
-const execFileAsync = promisify(execFile);
-const renderExamplesPath = require.resolve('../../examples/render-examples.js');
-const sourcePath = require.resolve('../../src');
-
-async function withNativeRenderer(check) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ultralink-render-'));
-  try {
-    // The renderer writes relative to __dirname. Copy it, but use the real
-    // fixture modules and their installed dependencies from the project.
-    fs.mkdirSync(path.join(root, 'examples'));
-    fs.copyFileSync(renderExamplesPath, path.join(root, 'examples', 'render-examples.js'));
-    fs.symlinkSync(path.join(__dirname, '..'), path.join(root, 'tests'), 'junction');
-
-    const runNode = (script, ...args) => execFileAsync(process.execPath, ['-e', script, ...args], {
-      cwd: root,
-      timeout: 20000
-    });
-    await check(root, runNode);
-  } finally {
-    fs.rmSync(root, { recursive: true, force: true });
-  }
-}
+const { withNativeRenderer } = require('../utils/native-example-renderer');
 
 describe('E2E: Render Examples Script', () => {
   test('importing the renderer in native Node does not start rendering', async () => {
     await withNativeRenderer(async (root, runNode) => {
-      const { stdout, stderr } = await runNode("require('./examples/render-examples.js')");
+      const { stdout, stderr } = await runNode('-e', "require('./examples/render-examples.js')");
       expect(stdout).toBe('');
       expect(stderr).toBe('');
       expect(fs.existsSync(path.join(root, 'examples', 'output'))).toBe(false);
@@ -46,8 +21,8 @@ describe('E2E: Render Examples Script', () => {
 
   test('should correctly create and render a test system', async () => {
     await withNativeRenderer(async (root, runNode) => {
-      await runNode(`
-        const { UltraLink } = require(process.argv[1]);
+      await runNode('-e', `
+        const { UltraLink } = require('./src');
         const { renderSystem } = require('./examples/render-examples.js');
 
         (async () => {
@@ -62,7 +37,7 @@ describe('E2E: Render Examples Script', () => {
           console.error(error);
           process.exitCode = 1;
         });
-      `, sourcePath);
+      `);
 
       const systems = path.join(root, 'examples', 'output', 'systems');
       expect(fs.readdirSync(systems)).toEqual(['TestSystem']);
@@ -78,10 +53,33 @@ describe('E2E: Render Examples Script', () => {
       expect(svg).toContain('<line ');
     });
   });
+
+  test('the CLI reports one blocked system without discarding the other seven graphs', async () => {
+    await withNativeRenderer(async (root, runNode) => {
+      const systems = path.join(root, 'examples', 'output', 'systems');
+      const blocker = path.join(systems, 'HumanAnatomy');
+      fs.mkdirSync(systems, { recursive: true });
+      fs.writeFileSync(blocker, 'not a directory');
+
+      await expect(runNode('examples/render-examples.js')).rejects.toMatchObject({
+        code: 1,
+        stderr: expect.stringMatching(/HumanAnatomy \[output-directory\]:.*HumanAnatomy/),
+        stdout: expect.not.stringContaining('RENDERING COMPLETE')
+      });
+      expect(fs.readFileSync(blocker, 'utf8')).toBe('not a directory');
+      const rendered = ['ActiveInferenceLab', 'Car', 'DesertEcosystem', 'NeurofeedbackResearch', 'POMDP',
+        'ResearchTeam', 'USAHistory'];
+      expect(fs.readdirSync(systems).sort()).toEqual([...rendered, 'HumanAnatomy'].sort());
+      for (const system of rendered) {
+        const graph = JSON.parse(fs.readFileSync(path.join(systems, system, `${system}.json`), 'utf8'));
+        expect(graph.relationships.length).toBeGreaterThan(0);
+      }
+    });
+  });
   
   test('should generate placeholder content for visualization formats', () => {
     // Test the generatePlaceholderD3 function
-    const renderExamples = require(renderExamplesPath);
+    const renderExamples = require('../../examples/render-examples.js');
     const d3Content = renderExamples.generatePlaceholderD3('TestSystem');
     
     // Verify the D3 placeholder content was generated with system-specific info
