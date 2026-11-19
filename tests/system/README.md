@@ -39,6 +39,13 @@ Or to run all tests including system tests:
 npm test
 ```
 
+To generate and validate only the KIF fixtures without running the separate
+rendering tests:
+
+```bash
+npx jest --runTestsByPath tests/system/rendering.test.js -t 'should validate kif output structure'
+```
+
 ## Output Directory Structure
 
 KIF outputs are written and validated in a temporary directory so the tests

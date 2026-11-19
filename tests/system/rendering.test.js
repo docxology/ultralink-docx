@@ -217,8 +217,18 @@ describe('System Rendering Tests', () => {
       FORMATS.forEach(format => {
         describe(`${format} format`, () => {
           let outputPath;
+          let kifFilePath;
           beforeAll(() => {
             outputPath = getOutputPath(systemName, format);
+            if (format === 'kif') {
+              kifFilePath = path.join(outputPath, `${systemName}.kif`);
+              fs.writeFileSync(kifFilePath, system.toKIF({
+                includeMetaKnowledge: true,
+                includeFunctions: true,
+                includeRules: true,
+                prettyPrint: true
+              }));
+            }
           });
           
           it(`should render ${systemName} to ${format} format`, () => {
@@ -265,14 +275,7 @@ describe('System Rendering Tests', () => {
                 break;
                 
               case 'kif':
-                const kifOutputPath = path.join(outputPath, `${systemName}.kif`);
-                fs.writeFileSync(kifOutputPath, system.toKIF({
-                  includeMetaKnowledge: true,
-                  includeFunctions: true,
-                  includeRules: true,
-                  prettyPrint: true
-                }));
-                outputFiles.push(kifOutputPath);
+                outputFiles.push(kifFilePath);
                 break;
                 
               case 'html-website':
@@ -471,7 +474,6 @@ describe('System Rendering Tests', () => {
                 break;
 
               case 'kif':
-                const kifFilePath = path.join(outputPath, `${systemName}.kif`);
                 expect(fs.existsSync(kifFilePath)).toBe(true);
                 const kifContent = fs.readFileSync(kifFilePath, 'utf8');
                 
