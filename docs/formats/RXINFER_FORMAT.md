@@ -4,11 +4,17 @@ This document details the RxInfer.jl rendering target for UltraLink, its structu
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/rxinfer.js](../src/lib/exporters/rxinfer.js)
+> - [Exporter implementation](../../src/lib/exporters/rxinfer.js)
 
 ## Overview
 
 The RxInfer.jl format transforms UltraLink knowledge graphs into probabilistic model definitions compatible with the [RxInfer.jl](https://github.com/biaslab/RxInfer.jl) package for Julia. This enables users to perform advanced probabilistic inference, leveraging their existing knowledge graphs for Bayesian inference and factor graph modeling.
+
+Model construction is verified with Julia 1.13.4, RxInfer 6.1.3, GraphPPL 4.9.0, and Distributions 0.25.134. RxInfer 6.1.3 declares compatibility with Julia 1.10 and later 1.x releases, GraphPPL 4.7 and later 4.x releases, and Distributions 0.25 in its [`Project.toml`](https://github.com/ReactiveBayes/RxInfer.jl/blob/v6.1.3/Project.toml).
+
+Inside `@model`, RxInfer requires [named Gaussian parameters](https://github.com/ReactiveBayes/RxInfer.jl/blob/v6.1.3/docs/src/manuals/model-specification.md#relationships-between-variables): `Normal(mean = μ, variance = σ²)` and `MvNormal(mean = μ, covariance = Σ)`. Variance is the square of the standard deviation used by the positional `Distributions.Normal(μ, σ)` constructor. Ordinary Julia sampling code outside `@model`, such as `rand(Normal(0.0, 1.0))`, still uses the positional constructor.
+
+Location and vector factors use Julia's [`@__MODULE__`](https://docs.julialang.org/en/v1/base/base/#Base.@__MODULE__) to resolve `Base.zeros` and `RxInfer.diageye` in the module defining the model, not from model variables. Entity names such as `RxInfer` and `diageye` do not need to be reserved or renamed.
 
 ### Key Features
 
@@ -56,7 +62,7 @@ graph TD
 
 ## Usage
 
-The RxInfer.jl exporter is implemented in [src/lib/exporters/rxinfer.js](../src/lib/exporters/rxinfer.js) and can be used as follows:
+Use the public `toRxInfer()` method to export a model:
 
 ```javascript
 // Basic export to RxInfer.jl model
@@ -71,7 +77,7 @@ const customRxinferModel = ultralink.toRxInfer({
   includeTestScript: true,
   distributionMapping: {
     person: 'Categorical([0.3, 0.3, 0.4])',
-    concept: 'Normal(0.0, 2.0)'
+    concept: 'Normal(mean = 0.0, variance = 4.0)'
   }
 });
 ```
@@ -114,14 +120,14 @@ using RxInfer, Distributions
     # Entity: concept1 (type: concept)
     concept1 ~ Dirichlet([1.0, 1.0, 1.0])
     concept1_relevance ~ Beta(0.7, 0.3)
-    concept1_vec ~ MvNormal(zeros(3), I)
+    concept1_vec ~ MvNormal(mean = (@__MODULE__).Base.zeros(3), covariance = (@__MODULE__).RxInfer.diageye(3))
 
     # Define relationships between variables
     # Relationship: person1 (knows) person2
     person2_knows ~ Bernoulli(sigmoid(person1))
     
     # Relationship: person1 (interested_in) concept1
-    concept1_interested_in ~ Normal(0.1 * person1, 1.0)
+    concept1_interested_in ~ Normal(mean = 0.1 * person1, variance = 1.0)
 
     # Return variables of interest
     return (person1, person2, concept1)
@@ -179,10 +185,11 @@ The RxInfer.jl exporter maps UltraLink entity types to probability distributions
 |-------------|---------------------|-----------|
 | `person` | `Categorical([0.3, 0.3, 0.4])` | Categorical distribution for discrete entity types |
 | `concept` | `Dirichlet([1.0, 1.0, 1.0])` | Dirichlet for concept variables with multiple components |
-| `location` | `Normal(0.0, 1.0)` | Normal distribution for location entities |
+| `location` | `MvNormal(mean = (@__MODULE__).Base.zeros(2), covariance = (@__MODULE__).RxInfer.diageye(2))` | Two-dimensional location |
 | `event` | `Poisson(5.0)` | Poisson for event count modeling |
 | `document` | `Categorical([0.25, 0.25, 0.25, 0.25])` | Categorical for document type classification |
-| `*` (default) | `Normal(0.0, 1.0)` | Normal distribution as the default choice |
+| `measurement`, `observation`, `reading`, `score` | `Normal(mean = 0.0, variance = 1.0)` | Continuous value |
+| Unmapped type with numeric attributes | `Normal(mean = 0.0, variance = 1.0)` | Continuous fallback |
 
 ### Attribute Mapping
 
@@ -192,7 +199,7 @@ Attributes are also converted to appropriate distributions:
 |----------------|--------------|---------|
 | Boolean | `Bernoulli(value ? 0.8 : 0.2)` | `entity_active ~ Bernoulli(0.8)` |
 | Integer | `Poisson(value)` | `entity_count ~ Poisson(42)` |
-| Float | `Normal(value, 1.0)` | `entity_score ~ Normal(4.5, 1.0)` |
+| Non-integer number outside [0, 1], or negative integer | `Normal(mean = 0.0, variance = 1.0)` | `entity_score ~ Normal(mean = 0.0, variance = 1.0)` |
 | String (enum) | `Categorical([...])` | `entity_category ~ Categorical([0.2, 0.3, 0.5])` |
 | Array | `Dirichlet([...])` | `entity_props ~ Dirichlet([1.0, 1.0, 1.0])` |
 
@@ -202,7 +209,7 @@ When `includeVectors` is enabled, entity vectors are mapped to multivariate norm
 
 ```julia
 # Entity: concept1 (with vector embedding)
-concept1_vec ~ MvNormal(zeros(3), I)
+concept1_vec ~ MvNormal(mean = (@__MODULE__).Base.zeros(3), covariance = (@__MODULE__).RxInfer.diageye(3))
 ```
 
 ## Relationship Factors
@@ -211,20 +218,20 @@ Relationships between entities are translated into factor relationships:
 
 | Relationship Type | Factor | Example |
 |------------------|--------|---------|
-| Generic | `Bernoulli(sigmoid(source))` | `target_reltype ~ Bernoulli(sigmoid(source))` |
-| Directed weighted | `Normal(weight * source, 1.0)` | `target_reltype ~ Normal(0.2 * source, 1.0)` |
-| Bidirectional | `Normal(0.1 * source, 1.0)` | `target_reltype ~ Normal(0.1 * source, 1.0)` |
+| `causes`, `influences`, `affects`, `impacts` | `Normal(mean = source, variance = exp(-2.0 * source))` | Source-dependent standard deviation `exp(-source)` |
+| `related_to`, `connected_to`, `associated_with`, `linked_to` | `Normal(mean = 0.5 * source, variance = 1.0)` | Relationship with a scaled mean and unit variance |
+| Unmapped relationship type | `Normal(mean = 0.1 * source, variance = 1.0)` | Fallback with a scaled mean and unit variance |
 
 ## Advanced Usage
 
 ### Custom Distribution Mapping
 
-You can provide a custom mapping of entity types to distributions:
+You can provide a custom mapping of entity types to distribution expressions. UltraLink inserts each expression verbatim inside `@model`; use factor syntax accepted by your RxInfer version.
 
 ```javascript
 const rxinferModel = ultralink.toRxInfer({
   distributionMapping: {
-    person: 'Normal(0.0, 2.0)',
+    person: 'Normal(mean = 0.0, variance = 4.0)',
     concept: 'Beta(0.5, 0.5)',
     location: 'Gamma(2.0, 2.0)',
     custom_type: 'TruncatedNormal(0.0, 1.0, -1.0, 1.0)'

@@ -556,7 +556,7 @@ using RxInfer, Distributions
 @model function knowledge_graph_model()
     # Define variables for entities
     # Entity: alan_turing (type: person)
-    alan_turing ~ Normal(0.0, 1.0)
+    alan_turing ~ Normal(mean = 0.0, variance = 1.0)
     alan_turing_name ~ Categorical([0.5, 0.5])
     alan_turing_birth_date ~ Beta(1.0, 1.0)
     

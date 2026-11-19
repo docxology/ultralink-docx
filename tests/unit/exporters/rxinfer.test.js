@@ -1,5 +1,4 @@
-const UltraLink = require('../../../src/ultralink');
-const RxInferExporter = require('../../../src/lib/exporters/rxinfer');
+const { UltraLink } = require('../../..');
 
 describe('RxInferExporter', () => {
   // Test basic functionality
@@ -39,6 +38,52 @@ describe('RxInferExporter', () => {
     
     // Check for attribute representation
     expect(rxinfer).toContain('person1_expertise ~');
+  });
+
+  test('uses RxInfer Gaussian factor keywords without changing the test sampler', () => {
+    const ultralink = new UltraLink();
+    ultralink.addEntity('sample', 'measurement');
+
+    const model = ultralink.toRxInfer({ includeTestScript: true });
+
+    expect(model).toContain('sample ~ Normal(mean = 0.0, variance = 1.0)');
+    expect(model).toContain('sample = rand(Normal(0.0, 1.0))');
+  });
+
+  test('preserves the mean and scale of Gaussian relationship factors', () => {
+    const ultralink = new UltraLink();
+    ultralink.addEntity('signal', 'measurement');
+    ultralink.addEntity('next', 'measurement');
+    ultralink.addLink('signal', 'next', 'causes', { offset: -2.5 });
+    ultralink.addLink('signal', 'next', 'related_to');
+    ultralink.addLink('signal', 'next', 'tracks');
+
+    const model = ultralink.toRxInfer({ includeComments: false });
+    expect(model).toContain(' ~ Normal(mean = signal, variance = exp(-2.0 * signal))');
+    expect(model).toContain(' ~ Normal(mean = 0.5 * signal, variance = 1.0)');
+    expect(model).toContain(' ~ Normal(mean = 0.1 * signal, variance = 1.0)');
+    expect(model).toMatch(/^\s*\w+_offset ~ Normal\(mean = 0\.0, variance = 1\.0\)$/m);
+  });
+
+  test('resolves multivariate Gaussian helpers outside the model variable scope', () => {
+    const ultralink = new UltraLink();
+    ultralink.addEntity('diageye', 'event').vector = [0.1, 0.2, 0.3];
+    ultralink.addEntity('RxInfer', 'event').vector = [0.1, 0.2, 0.3, 0.4];
+    ultralink.addEntity('Base', 'event');
+    ultralink.addEntity('zeros', 'event');
+    ultralink.addEntity('station', 'place');
+
+    const model = ultralink.toRxInfer({ includeVectors: true });
+
+    for (const name of ['diageye', 'RxInfer', 'Base', 'zeros']) {
+      expect(model).toContain(`${name} ~ Bernoulli(0.5)`);
+    }
+    for (const [name, dimension] of [['station', 2], ['diageye_vec', 3], ['RxInfer_vec', 4]]) {
+      expect(model).toContain(
+        `${name} ~ MvNormal(mean = (@__MODULE__).Base.zeros(${dimension}), covariance = (@__MODULE__).RxInfer.diageye(${dimension}))`
+      );
+    }
+    expect(model).toContain('return (diageye, RxInfer, Base, zeros, station)');
   });
   
   // Test options handling
@@ -102,11 +147,11 @@ describe('RxInferExporter', () => {
     
     const customMapping = ultralink.toRxInfer({
       distributionMapping: {
-        'person': 'MvNormal(zeros(3), I)'
+        person: 'Normal(mean = 2.0, precision = 0.5)'
       }
     });
     
-    expect(customMapping).toContain('person1 ~ MvNormal(zeros(3), I)');
+    expect(customMapping).toContain('person1 ~ Normal(mean = 2.0, precision = 0.5)');
   });
   
   // Test error handling
@@ -149,8 +194,9 @@ describe('RxInferExporter', () => {
     // Integer attributes should be mapped to Poisson or similar
     expect(rxinfer).toMatch(/entity1_numberAttr ~ (Poisson|Normal)/);
     
-    // Float attributes should be mapped to Normal or similar
-    expect(rxinfer).toMatch(/entity1_floatAttr ~ (Normal|Beta)/);
+    // Numeric fallback and continuous attributes both use the model factor syntax.
+    expect(rxinfer).toContain('entity1 ~ Normal(mean = 0.0, variance = 1.0)');
+    expect(rxinfer).toContain('entity1_floatAttr ~ Normal(mean = 0.0, variance = 1.0)');
     
     // Array attributes should be mapped to Dirichlet or similar
     expect(rxinfer).toMatch(/entity1_arrayAttr ~ (Dirichlet|MvNormal)/);
