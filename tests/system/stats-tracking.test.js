@@ -124,6 +124,11 @@ describe('Statistics Tracking in Render Examples', () => {
     });
   });
 
+  const fullBlobFiles = [
+    ['full-blob/{system}-full.json', 'ERROR-uncompressed.txt'],
+    ['full-blob/{system}-full-compressed.blob', 'ERROR-compressed.txt']
+  ];
+
   test.each([
     {
       scenario: 'Symbol-valued KIF attribute', stage: 'kif', message: 'replace',
@@ -131,8 +136,8 @@ describe('Statistics Tracking in Render Examples', () => {
     },
     {
       scenario: 'Symbol-valued attribute in embedded KIF', stage: 'full-blob',
-      message: 'embedded KIF export', optionalWarnings: 1,
-      files: [['full-blob/{system}-full.json', 'ERROR-uncompressed.txt']]
+      message: 'embedded KIF export',
+      files: fullBlobFiles
     },
     {
       scenario: 'Bayesian entity named constructor', stage: 'bayesian', message: 'includes is not a function', optionalWarnings: 1,
@@ -144,8 +149,8 @@ describe('Statistics Tracking in Render Examples', () => {
         .map(format => [`rxinfer/{system}-${format}.jl`, `ERROR-${format}.txt`])
     },
     {
-      scenario: 'unprintable Full Blob node label', stage: 'full-blob', message: 'Cannot convert object to primitive value', optionalWarnings: 1,
-      files: [['full-blob/{system}-full.json', 'ERROR-uncompressed.txt']]
+      scenario: 'unprintable Full Blob node label', stage: 'full-blob', message: 'Cannot convert object to primitive value',
+      files: fullBlobFiles
     },
     {
       scenario: 'missing visualization node attributes', stage: 'visualization', message: "reading 'name'",
@@ -158,8 +163,8 @@ describe('Statistics Tracking in Render Examples', () => {
         .map(format => [`visualization/{lower}-graph.${format}.js`, `ERROR-{lower}-graph.${format}.js.txt`])
     },
     {
-      scenario: 'BigInt in Full Blob JSON', stage: 'full-blob', message: 'BigInt', optionalWarnings: 1,
-      files: [['full-blob/{system}-full.json', 'ERROR-uncompressed.txt']]
+      scenario: 'BigInt in Full Blob JSON', stage: 'full-blob', message: 'BigInt',
+      files: fullBlobFiles
     },
     {
       scenario: 'non-Error thrown by visualization label serialization', stage: 'visualization', message: 'label JSON rejected', successful: 5,

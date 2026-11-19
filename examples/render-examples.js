@@ -98,6 +98,79 @@ function writeOutput(filePath, content, isJson = false) {
   fs.writeFileSync(filePath, content);
 }
 
+function resolveFullBlobOutput(filePath) {
+  // Resolve directory components on disk; the final leaf may not exist yet.
+  for (let hops = 0; hops < 40; hops++) {
+    filePath = path.join(fs.realpathSync.native(path.dirname(filePath)), path.basename(filePath));
+    const previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
+    if (!previous?.isSymbolicLink()) return { filePath, previous, redirected: hops > 0 };
+    const link = fs.readlinkSync(filePath);
+    if (link.endsWith(path.sep)) throw new Error(`Expected a regular file at ${filePath}`);
+    filePath = path.isAbsolute(link) ? link : `${path.dirname(filePath)}${path.sep}${link}`;
+  }
+  throw new Error(`Too many symbolic links resolving ${filePath}`);
+}
+
+function shareFullBlobDestination(first, second) {
+  if (!first || !second) return false;
+  if (first.filePath === second.filePath) return true;
+  if (first.previous || second.previous) {
+    return Boolean(first.previous && second.previous &&
+      first.previous.dev === second.previous.dev && first.previous.ino === second.previous.ino);
+  }
+  // The standard pretty and compact filenames are distinct. Redirects can give
+  // their missing leaves different spellings that the filesystem treats as one.
+  if (!first.redirected && !second.redirected) return false;
+  const firstDir = path.dirname(first.filePath);
+  const secondDir = path.dirname(second.filePath);
+  if (firstDir !== secondDir) {
+    const a = fs.statSync(firstDir);
+    const b = fs.statSync(secondDir);
+    if (a.dev !== b.dev || a.ino !== b.ino) return false;
+  }
+  return withFullBlobStaging(firstDir, stagingDir => {
+    fs.writeFileSync(path.join(stagingDir, path.basename(first.filePath)), '', { flag: 'wx' });
+    return Boolean(fs.lstatSync(path.join(stagingDir, path.basename(second.filePath)), { throwIfNoEntry: false }));
+  });
+}
+
+function withFullBlobStaging(directory, use) {
+  const stagingDir = fs.mkdtempSync(path.join(directory, '.full-blob-'));
+  try {
+    return use(stagingDir);
+  } finally {
+    try {
+      fs.rmSync(stagingDir, { recursive: true, force: true });
+    } catch (error) {
+      // Cleanup cannot change the outcome of the operation.
+      console.warn(`    Could not remove Full Blob staging directory ${stagingDir}: ${getErrorMessage(error)}`);
+    }
+  }
+}
+
+function writeFullBlobOutput(filePath, content, previous = fs.lstatSync(filePath, { throwIfNoEntry: false })) {
+  // Only diagnostics are written to unresolved paths: replace links, not their targets.
+  if (previous?.isSymbolicLink()) previous = undefined;
+  if (previous) {
+    if (!previous.isFile()) throw new Error(`Expected a regular file at ${filePath}`);
+    fs.accessSync(filePath, fs.constants.W_OK);
+  }
+
+  // Stage beside the destination so a failed write cannot truncate a prior blob.
+  withFullBlobStaging(path.dirname(filePath), stagingDir => {
+    const stagedPath = path.join(stagingDir, path.basename(filePath));
+    writeOutput(stagedPath, content);
+    if (previous) {
+      const staged = fs.statSync(stagedPath);
+      if (staged.uid !== previous.uid || staged.gid !== previous.gid) {
+        fs.chownSync(stagedPath, previous.uid, previous.gid);
+      }
+      fs.chmodSync(stagedPath, previous.mode & 0o777);
+    }
+    fs.renameSync(stagedPath, filePath);
+  });
+}
+
 /**
  * Generate a placeholder D3.js visualization
  * @param {string} systemName - Name of the system
@@ -488,7 +561,7 @@ function generatePlaceholderBIF(systemName) {
 }
 
 /**
- * Generate placeholder binary content for compressed blobs
+ * Generate legacy placeholder content for programmatic callers, not renderer output.
  * @returns {Buffer} Placeholder binary content
  */
 function generatePlaceholderCompressedBlob(systemName) {
@@ -874,7 +947,20 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
       }
       const errorFilePath = path.join(targetDir, diagnostic);
       try {
-        writeOutput(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
+        if (target.name === 'full-blob') {
+          const existing = fs.statSync(errorFilePath, { throwIfNoEntry: false });
+          // Replacing a diagnostic can also clobber an archive that points to it.
+          if (existing && target.outputFiles.some(({ filename }) => {
+            const archive = path.join(targetDir, filename.replace('{{system}}', systemName));
+            if (!fs.lstatSync(archive, { throwIfNoEntry: false })?.isSymbolicLink()) return false;
+            const destination = fs.statSync(archive, { throwIfNoEntry: false });
+            return destination?.ino === existing.ino && destination.dev === existing.dev;
+          })) {
+            throw new Error('Diagnostic path is the target of a Full Blob archive');
+          }
+        }
+        const writeDiagnostic = target.name === 'full-blob' ? writeFullBlobOutput : writeOutput;
+        writeDiagnostic(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
         recordWrittenFile(true);
       } catch (diagnosticError) {
         console.warn(`    Could not write diagnostic ${errorFilePath}: ${diagnosticError.message}`);
@@ -1116,29 +1202,36 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
           }
           break;
           
-        case 'full-blob':
-          // Full blob outputs
+        case 'full-blob': {
           console.log(`    💾 Generating full-blob formats in: ${targetDir}`);
-          for (const { format, filename } of target.outputFiles) {
-            console.log(`    🔄 Processing ${format} full-blob format...`);
+          const outputs = target.outputFiles.map(({ format, filename }) => {
             const outputPath = path.join(targetDir, filename.replace('{{system}}', systemName));
             try {
-              if (format === 'uncompressed') {
-                const blob = ultralink.toFullBlob({ compress: false, throwOnError: true });
-                if (saveFile(outputPath, JSON.stringify(blob, null, 2))) {
-                  console.log(`      ✅ Saved uncompressed blob to: ${outputPath}`);
-                }
-              } else {
-                console.log(`      🔧 Using placeholder compressed blob for ${systemName}`);
-                if (saveFile(outputPath, generatePlaceholderCompressedBlob(systemName), { warning: true })) {
-                  console.log(`      ✅ Saved compressed blob to: ${outputPath}`);
-                }
-              }
+              return { format, outputPath, destination: resolveFullBlobOutput(outputPath) };
+            } catch (error) {
+              return { format, outputPath, error };
+            }
+          });
+          const [{ destination: pretty }, { destination: compact }] = outputs;
+          const sharedDestination = shareFullBlobDestination(pretty, compact);
+          for (const { format, outputPath, destination, error } of outputs) {
+            console.log(`    🔄 Processing ${format} full-blob format...`);
+            try {
+              if (!destination) throw error;
+              const compressed = format === 'compressed';
+              const blob = ultralink.toFullBlob({ compressed, throwOnError: true });
+              const content = compressed ? blob : JSON.stringify(blob, null, 2);
+              // Two encodings cannot safely be published through one destination.
+              if (sharedDestination) throw new Error('Full Blob outputs must have distinct destinations');
+              writeFullBlobOutput(destination.filePath, content, destination.previous ?? null);
+              recordWrittenFile(false);
+              console.log(`      ✅ Saved ${format} blob to: ${outputPath}`);
             } catch (error) {
               reportExportFailure(error, `ERROR-${format}.txt`);
             }
           }
           break;
+        }
           
         case 'manim':
           // Manim animation outputs
