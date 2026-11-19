@@ -58,15 +58,15 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   let overwritten;
   if (replaced) {
     const differentEndpoints = replaced.source !== sourceId || replaced.target !== targetId;
-    if (differentEndpoints && state.inserted.includes(replaced)) {
+    const distinctArchiveId = hasDistinctArchiveId(state.row, sourceId, targetId, compoundId);
+    if ((differentEndpoints || distinctArchiveId) && state.inserted.includes(replaced)) {
       // A hook can explicitly accept a write displaced by a later write.
       (state.displaced ??= new Set()).add(replaced);
       trackImportedOrder(this, state);
     }
-    const differentArchiveId = state.row.id !== undefined && state.row.id !== compoundId;
-    if ((differentEndpoints || differentArchiveId) && state.reserved.has(compoundId) && !state.accepted.has(replaced)) {
-      // The hook freed an archive ID and a receiver edge now owns it.
-      // Preserve normal overwrite visibility until we know which row it accepted.
+    if (!state.accepted.has(replaced) && (distinctArchiveId || (differentEndpoints && state.reserved.has(compoundId)))) {
+      // Keep the previous receiver write if this write is accepted under a
+      // distinct archive ID. Until then, the hook observes a normal overwrite.
       trackImportedOrder(this, state);
       overwritten = snapshotReceiverWrite(this, replaced);
       overwritten.acceptedSlot = state.order.length;
@@ -175,6 +175,8 @@ function restoreRelationships(rows, archive) {
     nextId: 1, inserted: [], delegated: new Set(), provisional: new Map(), compoundIds: new WeakMap()
   };
   const entries = reserveArchiveIds(rows, state.reserved);
+  const archivedLinks = Array.isArray(archive.legacyLinkOrder)
+    ? new Map(archive.legacyLinkOrder.map(id => [id, undefined])) : undefined;
   const previous = activeRestore.get(this);
   activeRestore.set(this, state);
   try {
@@ -195,7 +197,13 @@ function restoreRelationships(rows, archive) {
       }
       if (!accepted) continue;
       state.accepted.add(accepted);
-      if (row.id !== undefined) bindArchiveId(this, accepted, row, state);
+      if (row.id !== undefined) {
+        bindArchiveId(this, accepted, row, state);
+        if (archivedLinks?.has(row.id) && accepted.id === row.id &&
+            accepted.source === row.source && accepted.target === row.target) {
+          archivedLinks.set(row.id, accepted);
+        }
+      }
       restoreRowMetadata(accepted, row.metadata);
     }
   } finally {
@@ -204,27 +212,41 @@ function restoreRelationships(rows, archive) {
     if (state.order) restoreImportedRowOrder(this, state.order);
   }
 
-  const { legacyLinkOrder, relationshipOrder } = archive;
+  const { relationshipOrder } = archive;
   restoreIndexOrder(this.relationshipsBySource, this.relationships, 'source', relationshipOrder?.outgoing);
   restoreIndexOrder(this.relationshipsByTarget, this.relationships, 'target', relationshipOrder?.incoming);
 
-  if (Array.isArray(legacyLinkOrder)) {
-    for (const id of legacyLinkOrder) {
-      const relationship = this.relationships.get(id);
-      if (!relationship) continue;
-      const outgoing = this.links.get(relationship.source);
-      const key = legacyLinkKey(id, relationship);
-      if (shadowedLegacyLinks.get(outgoing)?.has(key)) {
-        setLegacyLink(outgoing, key, relationship, relationship);
-      }
-    }
-  }
+  if (archivedLinks) restoreLegacyLinkOrder(this, archive.legacyLinkOrder, archivedLinks);
   restoreLegacyMapOrder(this.links, this.entities, archive.legacyMapOrder);
+}
+
+function restoreLegacyLinkOrder(graph, order, archivedLinks) {
+  const groups = new Map();
+  for (const id of order) {
+    const edge = archivedLinks.get(id);
+    if (!edge || graph.relationships.get(id) !== edge) continue;
+    const outgoing = graph.links.get(edge.source);
+    const key = legacyLinkKey(id, edge);
+    const shadowed = shadowedLegacyLinks.get(outgoing)?.get(key);
+    if (!shadowed) continue;
+    let group = groups.get(shadowed);
+    if (!group) groups.set(shadowed, group = { outgoing, key, ordered: new Set() });
+    group.ordered.add(edge);
+  }
+  for (const [shadowed, { outgoing, key, ordered }] of groups) {
+    if (ordered.size < 2) continue;
+    // Restore the archived subsequence, not the position of receiver writes.
+    const next = ordered.values();
+    for (let i = 0; i < shadowed.length; i++) {
+      if (ordered.has(shadowed[i])) shadowed[i] = next.next().value;
+    }
+    if (ordered.has(outgoing.get(key))) outgoing.set(key, next.next().value);
+  }
 }
 
 function acceptedRelationship(graph, state, result) {
   if (result !== undefined) {
-    return state.inserted.includes(result) && retainableWrite(graph, state, result)
+    return state.inserted.includes(result) && retainableWrite(graph, state, result, true)
       ? reviveAcceptedWrite(graph, state, result) : undefined;
   }
 
@@ -240,11 +262,12 @@ function acceptedRelationship(graph, state, result) {
   if (accepted) return reviveAcceptedWrite(graph, state, accepted);
 }
 
-function retainableWrite(graph, state, edge) {
+function retainableWrite(graph, state, edge, explicit = false) {
   if (graph.relationships.get(edge.id) === edge) return true;
   if (!state.displaced?.has(edge) || !graph.entities.has(edge.source) || !graph.entities.has(edge.target)) return false;
   const { inserted } = state;
   const compoundId = state.compoundIds.get(edge) ?? edge.id;
+  if (explicit && hasDistinctArchiveId(state.row, edge.source, edge.target, compoundId)) return true;
   for (let i = inserted.indexOf(edge) + 1; i < inserted.length; i++) {
     const later = inserted[i];
     if (later.source === edge.source && later.target === edge.target &&
@@ -263,6 +286,11 @@ function reviveAcceptedWrite(graph, state, edge) {
   indexRelationship.call(graph, edge);
   insertImportedSlot(state, edge, state.slots.get(edge));
   return edge;
+}
+
+function hasDistinctArchiveId(row, source, target, compoundId) {
+  return row.id !== undefined && row.id !== compoundId &&
+    (isRecoveredId(row.id) || (row.source === source && row.target === target));
 }
 
 function bindArchiveId(graph, edge, row, state) {
@@ -297,7 +325,8 @@ function recordReceiverWrite(graph, state, compoundId, edge, overwritten) {
   if (!previous || (!overwritten && graph.relationships.get(previous.id) !== previous)) return;
   write.displaced = overwritten ?? snapshotReceiverWrite(graph, previous);
   write.replaces = priorWrite?.replaces ?? previous;
-  if (priorWrite && (previous.source !== edge.source || previous.target !== edge.target)) {
+  if (priorWrite && (previous.source !== edge.source || previous.target !== edge.target ||
+      hasDistinctArchiveId(state.row, previous.source, previous.target, compoundId))) {
     (state.displaced ??= new Set()).add(previous);
   }
   if (!overwritten) deleteRelationship.call(graph, previous.id);
@@ -332,7 +361,7 @@ function settleReceiverWrites(graph, state, accepted) {
       }
     } else if (graph.relationships.get(edge.id) === edge) {
       effect = edge;
-      if (replaces) restoreReceiverSlot(state, edge, replaces);
+      if (replaces !== accepted) restoreReceiverSlot(state, edge, replaces);
     }
     if (effect && effect.id !== compoundId) state.recoveredEffects.set(compoundId, effect);
     else state.recoveredEffects.delete(compoundId);

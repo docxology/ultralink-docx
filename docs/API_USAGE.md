@@ -141,10 +141,11 @@ the archive row takes the stored ID and the other edge stays reachable under
 a recovery ID. Later receiver writes that derive the same compound ID replace
 the previous receiver write before the hook continues, even if their endpoints
 differ or the hook deletes the replacement before returning. If the hook
-accepts the new write as a distinct archive row, the independent receiver edge
-is retained, including after reuse of a freed archive ID. Deleting either
-endpoint discards that edge, even if the hook recreates the entity with the
-same ID.
+explicitly returns an overwritten write with a distinct stored archive ID,
+that write is restored under its archive ID and the receiver's replacement
+remains live. The same distinction applies if the receiver writes its edge
+first, or if the two writes have equal tuples. Deleting either endpoint
+discards a detached edge, even if the hook recreates the entity with the same ID.
 Versioned imports merge authored graph metadata by top-level key and leave
 other receiver keys intact. The automatic export summary is ignored.
 

@@ -110,7 +110,9 @@ key's type across retyping. Use `deleteRelationship(id)` for recovered rows.
 In lossless JSON, the optional `legacyLinkOrder` array stores canonical IDs
 sharing a legacy link key in write order from oldest to newest. It omits
 legacy-only slots from unversioned replay. Import uses it to restore the
-visible value and fallback order without reordering rows.
+visible value and fallback order of surviving archived edges without
+reordering rows or moving receiver-only writes. Reusing an archived ID
+does not transfer its ordering hint to a new receiver edge.
 The optional `legacyMapOrder` stores `sources` in legacy map order, including
 sources with empty maps, and `keys` as `[source, orderedKeys]` pairs. It
 omits orders that can already be inferred from the relationship rows.
