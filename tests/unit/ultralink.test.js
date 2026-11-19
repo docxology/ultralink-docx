@@ -798,6 +798,74 @@ describe('UltraLink', () => {
       }
     });
 
+    it('restores row metadata after a receiver adds entities without returning them', () => {
+      ultralink.addEntity('a', 'node').metadata.origin = 'producer';
+      ultralink.addEntity('b', 'node');
+      const link = ultralink.addLink('a', 'b', 'reviewed');
+      class VoidEntity extends UltraLink {
+        addEntity(id, type, attributes) {
+          const entity = super.addEntity(id, type, { ...attributes, normalized: true });
+          entity.metadata.local = 'receiver';
+        }
+      }
+      const legacy = ultralink.toJSON({ asString: false });
+      legacy.entities[0].metadata = { origin: 'legacy' };
+      for (const input of [legacy, ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new VoidEntity().fromFullBlob(input);
+        const entity = restored.getEntity('a');
+        expect(entity.attributes.normalized).toBe(true);
+        expect(entity.metadata.origin).toBe(input === legacy ? 'legacy' : 'producer');
+        if (input === legacy) expect(entity.metadata.local).toBe('receiver');
+        expect(restored.getBacklinks('b').map(({ id }) => id)).toEqual([link.id]);
+      }
+    });
+
+    it('overwrites repeated audit writes without recovering them as archive rows', () => {
+      for (const id of ['a', 'b']) ultralink.addEntity(id, 'node');
+      const edited = ultralink.addLink('a', 'b', 'draft', { weight: 1 });
+      ultralink.updateRelationship(edited.id, { type: 'reviewed' });
+      ultralink.addLink('a', 'b', 'cited', { weight: 2 });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          super.addRelationship(source, target, 'audit', { lastAttempt: type });
+          return super.addLink(source, target, type, attributes);
+        }
+      }
+      for (const input of [ultralink.toJSON(), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new Audited().fromFullBlob(input);
+        expect(restored.getBacklinks('b').map(({ type, attributes }) => [type, attributes]))
+          .toEqual([['audit', { lastAttempt: 'cited' }], ['reviewed', { weight: 1 }], ['cited', { weight: 2 }]]);
+        expect(restored.deleteLink('a', 'b', 'audit')).toBe(true);
+        expect(restored.deleteLink('a', 'b', 'audit')).toBe(false);
+        expect(restored.links.get('a').has('b-audit')).toBe(false);
+        expect(restored.getBacklinks('b').map(({ type }) => type)).toEqual(['reviewed', 'cited']);
+      }
+    });
+
+    it('binds archive fields to a single normalized write from a void relationship override', () => {
+      for (const id of ['a', 'b']) ultralink.addEntity(id, 'node');
+      const edited = ultralink.addLink('a', 'b', 'draft', { weight: 1 });
+      ultralink.updateRelationship(edited.id, { type: 'REVIEWED' });
+      edited.metadata.origin = 'archive';
+      const reviewed = ultralink.addLink('a', 'b', 'reviewed', { weight: 2 });
+      class VoidNormalizer extends UltraLink {
+        addRelationship(source, target, type, attributes) {
+          super.addRelationship(source, target, type.toLowerCase(), { ...attributes, normalized: true });
+        }
+      }
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new VoidNormalizer().fromFullBlob(input);
+        expect(restored.getRelationship(edited.id)).toMatchObject({
+          type: 'reviewed', attributes: { weight: 1, normalized: true }, metadata: { origin: 'archive' }
+        });
+        expect(restored.getBacklinks('b').map(({ id, type }) => [id, type]))
+          .toEqual([[edited.id, 'reviewed'], [reviewed.id, 'reviewed']]);
+        expect(restored.deleteLink('a', 'b', 'draft')).toBe(true);
+        expect(restored.deleteLink('a', 'b', 'draft')).toBe(false);
+        expect(restored.getBacklinks('b').map(({ id }) => id)).toEqual([reviewed.id]);
+      }
+    });
+
     it('preserves directional index order and canonical order after live compound ID reuse', () => {
       for (const id of ['a', 'c_d', 'q', 'd', 'a_b', 'other']) ultralink.addEntity(id, 'node');
       ultralink.addLink('a', 'c_d', 'b');

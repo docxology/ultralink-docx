@@ -28,13 +28,15 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
 
   let id = `${sourceId}_${type}_${targetId}`;
   const previous = this.relationships.get(id);
-  if (previous && this.entities.has(sourceId) && this.entities.has(targetId)) {
+  // Preserve colliding input rows, not receiver-owned side effects.
+  if (state.accepted.has(previous) && this.entities.has(sourceId) && this.entities.has(targetId)) {
     if (state.reserved.has(id)) id = nextRecoveryId(this.relationships, state);
     else recoverDisplacedEdge(this, previous, state);
   }
+  const replaced = previous?.id === id ? previous : undefined;
   const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
   state.inserted.push(relationship);
-  state.order?.add(relationship);
+  if (state.order) rememberImportedSlot(state, relationship, replaced);
   return relationship;
 }
 
@@ -103,7 +105,7 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId) {
 }
 
 function restoreRelationships(rows, archive) {
-  const state = { reserved: new Set(), nextId: 1, inserted: [] };
+  const state = { accepted: new WeakSet(), reserved: new Set(), nextId: 1, inserted: [] };
   const entries = archive ? reserveArchiveIds(rows, state.reserved) : rows;
   const previous = activeRestore.get(this);
   activeRestore.set(this, state);
@@ -113,8 +115,9 @@ function restoreRelationships(rows, archive) {
       // Hooks may write other edges before returning or rejecting the row.
       // Do not attach the wire ID or metadata to those writes.
       const result = this.addLink(row.source, row.target, row.type, row.attributes);
-      const accepted = acceptedRelationship(this, state.inserted, row, result);
+      const accepted = acceptedRelationship(this.relationships, state.inserted, result);
       if (!accepted) continue;
+      state.accepted.add(accepted);
       if (archive && row.id !== undefined) bindArchiveId(this, accepted, row, state);
       restoreRowMetadata(accepted, row.metadata, archive !== undefined);
     }
@@ -143,21 +146,10 @@ function restoreRelationships(rows, archive) {
   restoreLegacyMapOrder(this.links, this.entities, archive.legacyMapOrder);
 }
 
-function acceptedRelationship(graph, inserted, row, result) {
-  const live = edge => graph.relationships.get(edge.id) === edge;
-  if (inserted.includes(result) && live(result)) return result;
-  if (result !== undefined) return;
-
-  // Some published overrides delegated without returning. Only use an
-  // unambiguous matching insertion in that case, never an audit edge.
-  const type = row.type === undefined ? graph.config.defaultRelationshipType : row.type;
-  let match;
-  for (const edge of inserted) {
-    if (edge.source !== row.source || edge.target !== row.target || edge.type !== type || !live(edge)) continue;
-    if (match) return;
-    match = edge;
-  }
-  return match;
+function acceptedRelationship(relationships, inserted, result) {
+  // A single delegated write is unambiguous, even if the override normalized it.
+  const edge = result === undefined && inserted.length === 1 ? inserted[0] : result;
+  if (inserted.includes(edge) && relationships.get(edge.id) === edge) return edge;
 }
 
 function bindArchiveId(graph, edge, row, state) {
@@ -166,7 +158,10 @@ function bindArchiveId(graph, edge, row, state) {
   if (!recovered && (edge.source !== row.source || edge.target !== row.target)) return;
 
   const previous = graph.relationships.get(id);
-  if (previous && previous !== edge) recoverDisplacedEdge(graph, previous, state);
+  if (previous && previous !== edge) {
+    if (state.accepted.has(previous)) recoverDisplacedEdge(graph, previous, state);
+    else deleteRelationship.call(graph, id);
+  }
   const oldKey = legacyLinkKey(edge.id, edge);
   if (recovered) recoveredLegacyTypes.set(edge, row.legacyType ?? oldKey.slice(String(edge.target).length + 1));
   const newKey = legacyLinkKey(id, edge);
@@ -210,7 +205,11 @@ function recoverDisplacedEdge(graph, edge, state) {
 }
 
 function rekeyRelationship(graph, edge, id, state) {
-  state.order ??= new Set(graph.relationships.values());
+  if (!state.order) {
+    state.order = [];
+    state.slots = new WeakMap();
+    for (const entry of graph.relationships.values()) rememberImportedSlot(state, entry);
+  }
   const previousId = edge.id;
   edge.id = id;
   graph.relationships.delete(previousId);
@@ -219,6 +218,13 @@ function rekeyRelationship(graph, edge, id, state) {
     ids.delete(previousId);
     ids.add(id);
   }
+}
+
+function rememberImportedSlot(state, edge, replaced) {
+  // An ordinary overwrite does not move a relationship's canonical Map slot.
+  const index = state.slots.get(replaced) ?? state.order.length;
+  state.order[index] = edge;
+  state.slots.set(edge, index);
 }
 
 function restoreImportedRowOrder(graph, order) {

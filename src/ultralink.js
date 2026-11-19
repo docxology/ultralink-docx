@@ -730,8 +730,8 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
         data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
       for (const { id, type, attributes, metadata } of recordValues(data.entities)) {
-        const entity = this.addEntity(id, type, attributes);
-        Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
+        const entity = this.addEntity(id, type, attributes) ?? this.entities.get(id);
+        if (entity) Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
       }
       RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships), archive);
     }

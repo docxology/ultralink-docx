@@ -114,14 +114,15 @@ For an archive with stored relationship IDs and row metadata, use
 `new UltraLink().fromFullBlob(ultralink.toJSON({ lossless: true }))` or pass
 the result of `ultralink.toFullBlob()`. Both preserve distinct relationships
 whose current tuples are identical after retyping, including lookup order.
-Both imports load relationships through the receiver's public `addLink` and
+Both imports use the receiver's public `addEntity`, `addLink`, and
 `addRelationship` methods. Unversioned graphs ignore row IDs and derive IDs
 from the tuples accepted by the receiver. The last row owns each compound ID;
 earlier rows get distinct recovery IDs but keep their `target-type` legacy keys.
-Overrides that insert more than one edge should return the accepted edge so
-the importer can attach its archive ID and metadata without modifying the
-other edges. If an override throws, the error is propagated without binding
-that row's archive fields.
+An override that stores an entity under the requested ID or delegates a
+single relationship insertion need not return it. If a relationship override
+inserts multiple edges, it must return the accepted edge to bind archive ID
+and metadata. Other writes keep their ordinary overwrite behavior. If an
+override throws, the error propagates without binding that row's archive fields.
 Imported authored graph metadata replaces matching top-level keys and leaves
 other receiver keys intact. The automatic export summary is ignored.
 
