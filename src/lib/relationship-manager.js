@@ -111,6 +111,26 @@ function indexRelationship(relationship) {
     }
   }
 
+  const key = `${targetId}-${type}`;
+  const previous = this.relationships.get(id);
+  if (previous && (previous.source !== sourceId || previous.target !== targetId)) {
+    if (previous.source !== sourceId) removeIndexEntry(this.relationshipsBySource, previous.source, id);
+    if (previous.target !== targetId) removeIndexEntry(this.relationshipsByTarget, previous.target, id);
+    const oldKey = legacyKey(previous);
+    if (previous.source !== sourceId || oldKey !== key) {
+      const outgoing = this.links.get(previous.source);
+      if (replaying.has(this) && outgoing?.get(oldKey) === previous) {
+        // Old imports exposed both distinct legacy keys, but only the last
+        // accepted tuple owned the compound ID. Keep the old slot off the indexes.
+        let replayed = replayedLegacyLinks.get(this.links);
+        if (!replayed) replayedLegacyLinks.set(this.links, replayed = new Set());
+        replayed.add(previous);
+      } else {
+        removeLegacyLink(outgoing, oldKey, previous);
+      }
+    }
+  }
+
   // Store the relationship
   this.relationships.set(id, relationship);
   
@@ -641,37 +661,27 @@ function getEntityRelationships(entityId, options = {}) {
   const { direction = 'both', type = null } = options;
   const results = [];
   
-  // If entityId is null, return all relationships that match the type
   if (entityId === null) {
-    // Return all relationships, filtered by type if specified
     for (const relationship of this.relationships.values()) {
-      if ((type && relationship.type === type) || 
-          (options.type && relationship.type === options.type) || 
-          (!type && !options.type)) {
-        results.push(relationship);
-      }
+      if (!type || relationship.type === type) results.push(relationship);
     }
     return results;
   }
-  
-  // Get outgoing relationships (where entity is source)
+
   if (direction === 'outgoing' || direction === 'both') {
-    if (this.relationshipsBySource.has(entityId)) {
-      for (const id of this.relationshipsBySource.get(entityId)) {
+    const outgoing = this.relationshipsBySource.get(entityId);
+    if (outgoing) {
+      for (const id of outgoing) {
         const relationship = this.relationships.get(id);
-        if ((type && relationship.type === type) || 
-            (options.type && relationship.type === options.type) || 
-            (!type && !options.type)) {
-          results.push(relationship);
-        }
+        if (!type || relationship.type === type) results.push(relationship);
       }
     }
   }
-  
-  // Get incoming relationships (where entity is target)
+
   if (direction === 'incoming' || direction === 'both') {
-    if (this.relationshipsByTarget.has(entityId)) {
-      for (const id of this.relationshipsByTarget.get(entityId)) {
+    const incoming = this.relationshipsByTarget.get(entityId);
+    if (incoming) {
+      for (const id of incoming) {
         const relationship = this.relationships.get(id);
         // A self-loop has already been considered in the outgoing pass.
         if (direction === 'both' && relationship.source === entityId) continue;
@@ -683,7 +693,7 @@ function getEntityRelationships(entityId, options = {}) {
       }
     }
   }
-  
+
   return results;
 }
 
@@ -698,6 +708,9 @@ module.exports = {
   getRelationship,
   updateRelationship,
   deleteRelationship,
+  deleteLink,
+  removeEntityRelationships,
+  replayLinks,
   findRelationships,
   getEntityRelationships
 }; 

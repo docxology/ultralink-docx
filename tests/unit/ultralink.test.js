@@ -1432,6 +1432,43 @@ describe('UltraLink', () => {
       const document = newUltralink.getEntity('document1');
       expect(document.attributes.title).toBe('Report');
     });
+
+    it('keeps distinct legacy slots after receiver normalization without a wrong endpoint lookup', () => {
+      class Normalizing extends UltraLink {
+        addEntity(id, type, attributes) {
+          super.addEntity(id, type, attributes);
+          return this;
+        }
+
+        addRelationship(source, target, type, attributes) {
+          super.addRelationship(source, target, type.toLowerCase(), attributes);
+        }
+      }
+      for (const id of ['a', 'c_d', 'a_b', 'd']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b_M', { weight: 1 });
+      const later = ultralink.addLink('a_b', 'd', 'draft', { weight: 2 });
+      ultralink.updateRelationship(later.id, { type: 'M_c' });
+
+      for (const input of [ultralink.toJSON(), ultralink.toFullBlob()]) {
+        const receiver = new Normalizing();
+        receiver.metadata = { provenance: 'receiver' };
+        expect(receiver.fromFullBlob(input)).toBe(receiver);
+        expect(receiver.metadata).toEqual({ provenance: 'receiver' });
+        expect(receiver.links.get('a').get('c_d-b_m').attributes.weight).toBe(1);
+        const winner = receiver.links.get('a_b').get('d-m_c');
+        expect(receiver.getRelationship('a_b_m_c_d')).toBe(winner);
+        expect(winner.attributes.weight).toBe(2);
+        expect(receiver.getRelationships('a')).toEqual([]);
+        expect(receiver.getBacklinks('c_d')).toEqual([]);
+        expect(receiver.getBacklinks('d')).toEqual([winner]);
+        expect(receiver.deleteLink('a', 'c_d', 'b_m')).toBe(false);
+        expect(receiver.deleteLink('a_b', 'd', 'm_c')).toBe(true);
+        expect(receiver.deleteLink('a_b', 'd', 'm_c')).toBe(false);
+        expect(receiver.links.get('a').get('c_d-b_m').attributes.weight).toBe(1);
+        expect(receiver.deleteEntity('c_d')).toBe(true);
+        expect([...receiver.links.get('a')]).toEqual([]);
+      }
+    });
     
     it('should export a compressed full blob', () => {
       // Add test data
