@@ -59,6 +59,9 @@ test('an interrupted compressed write preserves the archive and reports the writ
     const directory = path.join(root, blobDir);
     const output = path.join(directory, blobName);
     const previous = fs.readFileSync(output);
+    const diagnostic = path.join(directory, 'ERROR-compressed.txt');
+    // Replacing a diagnostic must not write through an alias to the prior archive.
+    fs.linkSync(output, diagnostic);
 
     const preload = path.join(root, 'partial-blob-write.cjs');
     fs.writeFileSync(preload, `
@@ -86,7 +89,7 @@ test('an interrupted compressed write preserves the archive and reports the writ
     });
     expect(fs.readFileSync(output)).toEqual(previous);
     expect(fs.readdirSync(directory).sort()).toEqual(['ERROR-compressed.txt', blobName, 'POMDP-full.json']);
-    expect(fs.readFileSync(path.join(directory, 'ERROR-compressed.txt'), 'utf8'))
+    expect(fs.readFileSync(diagnostic, 'utf8'))
       .toContain('simulated incomplete archive write');
   });
 });

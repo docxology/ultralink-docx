@@ -98,7 +98,7 @@ function writeOutput(filePath, content, isJson = false) {
   fs.writeFileSync(filePath, content);
 }
 
-function writeFullBlob(filePath, content) {
+function writeFullBlobOutput(filePath, content) {
   const previous = fs.statSync(filePath, { throwIfNoEntry: false });
   if (previous) fs.accessSync(filePath, fs.constants.W_OK);
 
@@ -895,7 +895,8 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
       }
       const errorFilePath = path.join(targetDir, diagnostic);
       try {
-        writeOutput(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
+        const writeDiagnostic = target.name === 'full-blob' ? writeFullBlobOutput : writeOutput;
+        writeDiagnostic(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
         recordWrittenFile(true);
       } catch (diagnosticError) {
         console.warn(`    Could not write diagnostic ${errorFilePath}: ${diagnosticError.message}`);
@@ -1146,7 +1147,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             try {
               const compressed = format === 'compressed';
               const blob = ultralink.toFullBlob({ compressed, throwOnError: true });
-              writeFullBlob(outputPath, compressed ? blob : JSON.stringify(blob, null, 2));
+              writeFullBlobOutput(outputPath, compressed ? blob : JSON.stringify(blob, null, 2));
               recordWrittenFile(false);
               console.log(`      ✅ Saved ${format} blob to: ${outputPath}`);
             } catch (error) {
