@@ -5,7 +5,7 @@
  */
 
 const { types: { isBigIntObject, isBooleanObject, isNumberObject, isStringObject } } = require('node:util');
-const { getLegacyLinkOrder, getLegacyMapOrder, getRelationshipOrder } = require('../relationship-manager');
+const { getLegacyLinkOrder, getLegacyMapOrder, getRecoveredLegacyType, getRelationshipOrder } = require('../relationship-manager');
 
 const ARCHIVE_VERSION = 1;
 
@@ -97,7 +97,11 @@ function toJSON(ultralink, options = {}) {
       type: rel.type,
       attributes: rel.attributes || {}
     };
-    if (lossless) record.id = rel.id;
+    if (lossless) {
+      record.id = rel.id;
+      const legacyType = getRecoveredLegacyType(rel);
+      if (legacyType !== undefined && legacyType !== String(rel.type)) record.legacyType = legacyType;
+    }
     if (includeMetadata) record.metadata = jsonMetadata(rel);
     relationships.push(record);
   }

@@ -202,6 +202,24 @@ function getErrorMessage(error) {
   }
 }
 
+function restoreRowMetadata(row, metadata, archive) {
+  if (metadata === undefined) return;
+  if (isMetadataRecord(metadata)) {
+    row.metadata = archive ? { ...metadata } : { ...row.metadata, ...metadata };
+  } else {
+    row.metadata = Array.isArray(metadata) ? metadata.slice() : metadata;
+  }
+}
+
+function stampRowModified(row) {
+  if (isMetadataRecord(row.metadata)) row.metadata.modified = new Date().toISOString();
+}
+
+function isMetadataRecord(metadata) {
+  return metadata !== null && typeof metadata === 'object' &&
+    !Array.isArray(metadata) && !JSON.isRawJSON?.(metadata);
+}
+
 module.exports = {
   flattenObject,
   flattenKeys,
@@ -210,5 +228,7 @@ module.exports = {
   convertToBIF,
   generateId,
   parseValue,
+  restoreRowMetadata,
+  stampRowModified,
   getErrorMessage
 }; 

@@ -689,12 +689,12 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
     const { exportDate, entityCount, relationshipCount, ...metadata } = data?.metadata ?? {};
     if (Object.keys(metadata).length > 0) this.metadata = { ...this.metadata, ...metadata };
     if (data?.entities) {
-      for (const { id, type, attributes, metadata } of recordValues(data.entities)) {
-        const entity = this.addEntity(id, type, attributes);
-        entity.metadata = { ...entity.metadata, ...metadata };
-      }
       const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
         data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
+      for (const { id, type, attributes, metadata } of recordValues(data.entities)) {
+        const entity = this.addEntity(id, type, attributes);
+        Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
+      }
       RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships), archive);
     }
     

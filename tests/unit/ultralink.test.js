@@ -697,6 +697,42 @@ describe('UltraLink', () => {
       expect(ultralink.getRelationships('a', { direction: 'outgoing' })).toEqual([replacement]);
     });
 
+    it('loads unversioned colliders through public overrides and keeps both original legacy keys', () => {
+      const calls = [];
+      class Normalizing extends UltraLink {
+        addLink(source, target, type, attributes) {
+          calls.push(['link', source, target, type]);
+          return super.addLink(source, target, type, attributes);
+        }
+        addRelationship(source, target, type, attributes) {
+          calls.push(['relationship', source, target, type]);
+          return super.addRelationship(source, target, type, { ...attributes, normalized: true });
+        }
+      }
+      for (const id of ['a', 'c_d', 'a_b', 'd']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b', { weight: 1 });
+      const later = ultralink.addLink('a_b', 'd', 'original', { weight: 2 });
+      ultralink.updateRelationship(later.id, { type: 'c' });
+      const restored = new Normalizing().fromFullBlob(ultralink.toJSON());
+      expect(calls).toEqual([
+        ['link', 'a', 'c_d', 'b'], ['relationship', 'a', 'c_d', 'b'],
+        ['link', 'a_b', 'd', 'c'], ['relationship', 'a_b', 'd', 'c']
+      ]);
+      const [earlier] = restored.getRelationships('a', { direction: 'outgoing' });
+      expect(earlier.attributes).toEqual({ weight: 1, normalized: true });
+      expect(restored.links.get('a').get('c_d-b')).toBe(earlier);
+      expect(restored.getRelationship('a_b_c_d').attributes).toEqual({ weight: 2, normalized: true });
+      expect(restored.links.get('a_b').get('d-c')).toBe(restored.getRelationship('a_b_c_d'));
+
+      restored.updateRelationship(earlier.id, { type: 'edited' });
+      const archived = new UltraLink().fromFullBlob(restored.toFullBlob());
+      expect(archived.links.get('a').get('c_d-b')).toEqual(earlier);
+      expect(archived.getBacklinks('c_d')).toEqual([earlier]);
+      expect(archived.deleteRelationship(earlier.id)).toBe(true);
+      expect(archived.links.get('a').size).toBe(0);
+      expect(archived.getRelationship('a_b_c_d').attributes.weight).toBe(2);
+    });
+
     it('preserves directional index order and canonical order after live compound ID reuse', () => {
       for (const id of ['a', 'c_d', 'q', 'd', 'a_b', 'other']) ultralink.addEntity(id, 'node');
       ultralink.addLink('a', 'c_d', 'b');
@@ -833,6 +869,35 @@ describe('UltraLink', () => {
         ultralink.toFullBlob({ compressed: true, throwOnError: true })
       ]) {
         expect(fields(text)).toEqual([...expected, ...expected]);
+      }
+    });
+
+    it.each([
+      ['string and number', 'catalog-v2', 37],
+      ['null and boolean', null, false],
+      ['array and record', ['catalog', 2], { note: 'reviewed' }]
+    ])('restores row metadata hook values as a %s without spreading them', (_label, entityValue, edgeValue) => {
+      ultralink.addEntity('a', 'node').metadata = { toJSON: () => entityValue };
+      ultralink.addEntity('b', 'node');
+      ultralink.addLink('a', 'b', 'reviewed').metadata = { toJSON: () => edgeValue };
+
+      for (const input of [
+        ultralink.toJSON({ lossless: true }),
+        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+      ]) {
+        const restored = new UltraLink().fromFullBlob(input);
+        const archived = restored.toJSON({ asString: false, lossless: true });
+        expect([archived.entities[0].metadata, archived.relationships[0].metadata]).toEqual([entityValue, edgeValue]);
+        restored.updateEntity('a', { title: 'Updated' });
+        const edge = restored.updateRelationship('a_reviewed_b', { attributes: { weight: 2 } });
+        expect(restored.getEntity('a').attributes.title).toBe('Updated');
+        expect(edge.attributes.weight).toBe(2);
+        if (entityValue === null || typeof entityValue !== 'object' || Array.isArray(entityValue)) {
+          expect(restored.getEntity('a').metadata).toEqual(entityValue);
+        }
+        if (edgeValue === null || typeof edgeValue !== 'object' || Array.isArray(edgeValue)) {
+          expect(edge.metadata).toEqual(edgeValue);
+        }
       }
     });
 

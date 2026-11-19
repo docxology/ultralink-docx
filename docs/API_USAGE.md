@@ -114,8 +114,9 @@ For an archive with stored relationship IDs and row metadata, use
 `new UltraLink().fromFullBlob(ultralink.toJSON({ lossless: true }))` or pass
 the result of `ultralink.toFullBlob()`. Both preserve distinct relationships
 whose current tuples are identical after retyping, including lookup order.
-Unversioned graphs derive IDs from the current tuples, ignoring row IDs.
-The last row owns each compound ID; earlier rows get distinct recovery IDs.
+Unversioned graphs ignore row IDs and load relationships through `addLink`.
+The last row owns each compound ID. Earlier rows get distinct recovery IDs
+but keep their original `target-type` legacy keys.
 Imported authored graph metadata replaces matching top-level keys and leaves
 other receiver keys intact. The automatic export summary is ignored.
 

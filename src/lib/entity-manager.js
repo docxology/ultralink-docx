@@ -6,6 +6,7 @@
  */
 
 const { deleteRelationship } = require('./relationship-manager');
+const { stampRowModified } = require('./utils');
 
 /**
  * Add a new entity to the knowledge graph
@@ -56,7 +57,7 @@ function updateEntity(id, attributes) {
   
   const entity = this.entities.get(id);
   entity.attributes = { ...entity.attributes, ...attributes };
-  entity.metadata.modified = new Date().toISOString();
+  stampRowModified(entity);
   
   return entity;
 }

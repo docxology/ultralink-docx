@@ -190,20 +190,18 @@ class RxInferExporter {
     
     // Add relationship dependencies
     for (const rel of relationships) {
-      const sourceVar = this._sanitizeVariableName(rel.source);
-      const targetVar = this._sanitizeVariableName(rel.target);
-      const relType = rel.type;
-      
-      // Skip self-relations
-      if (rel.source === rel.target) continue;
-      
       if (includeComments) {
-        code += `    # Relationship: ${rel.source} (${relType}) ${rel.target}\n`;
+        code += `    # Relationship: ${rel.source} (${rel.type}) ${rel.target}\n`;
       }
-      
-      // Create conditional dependency based on relationship type
-      const conditional = this._getConditionalForRelationship(relType, sourceVar, targetVar);
-      code += `    ${conditional}\n`;
+
+      // Self-loops do not define a conditional on the same variable, but
+      // their attributes still contribute independent factors.
+      if (rel.source !== rel.target) {
+        const sourceVar = this._sanitizeVariableName(rel.source);
+        const targetVar = this._sanitizeVariableName(rel.target);
+        const conditional = this._getConditionalForRelationship(rel.type, sourceVar, targetVar);
+        code += `    ${conditional}\n`;
+      }
       
       // Add relationship attributes if useful
       if (rel.attributes && Object.keys(rel.attributes).length > 0) {

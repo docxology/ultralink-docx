@@ -77,6 +77,22 @@ describe('RxInferExporter', () => {
       '    a_authored_b_vec_2 ~ Normal(0.0, 1.0)'
     ]);
   });
+
+  test('emits self-loop attribute factors without a self conditional', () => {
+    const graph = new UltraLink();
+    graph.addEntity('a', 'node');
+    graph.addEntity('b', 'node');
+    graph.addLink('a', 'a', 'loop', { weight: 0.25 });
+    graph.addLink('a', 'b', 'route', { weight: 2 });
+
+    const model = graph.toRxInfer({ includeComments: false });
+    expect(model.match(/^    .*_weight ~ .*$/gm)).toEqual([
+      '    a_loop_a_weight ~ Beta(1.0, 1.0)',
+      '    a_route_b_weight ~ Poisson(1.0)'
+    ]);
+    expect(model.match(/^    a ~ .*$/gm)).toHaveLength(1);
+    expect(model).toMatch(/^    b ~ .*\* a/m);
+  });
   
   // Test options handling
   test('should respect export options', () => {

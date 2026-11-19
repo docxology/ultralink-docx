@@ -5,9 +5,13 @@
  * between entities in the knowledge graph.
  */
 
+const { restoreRowMetadata, stampRowModified } = require('./utils');
+
 // The legacy map exposes only its latest write for a key. Keep displaced
 // live records in write order so deleting that entry can restore its predecessor.
 const shadowedLegacyLinks = new WeakMap();
+const recoveredLegacyTypes = new WeakMap();
+const pendingLegacyRestore = new WeakMap();
 
 /**
  * Add a relationship between two entities
@@ -19,10 +23,15 @@ const shadowedLegacyLinks = new WeakMap();
  * @returns {Object} The created relationship
  */
 function addRelationship(sourceId, targetId, type, attributes = {}, options = {}) {
+  const pending = pendingLegacyRestore.get(this);
+  if (pending && pending.source === sourceId && pending.target === targetId && pending.type === type) {
+    pendingLegacyRestore.delete(this);
+    return storeRelationship.call(this, sourceId, targetId, type, attributes, pending);
+  }
   return storeRelationship.call(this, sourceId, targetId, type, attributes);
 }
 
-function storeRelationship(sourceId, targetId, type, attributes, storedId, metadata) {
+function storeRelationship(sourceId, targetId, type, attributes, restored) {
   // Validate entities exist
   if (!this.entities.has(sourceId)) {
     throw new Error(`Source entity not found: ${sourceId}`);
@@ -32,7 +41,7 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId, metad
   }
 
   // Create relationship object
-  const id = storedId ?? `${sourceId}_${type}_${targetId}`;
+  const id = restored?.id ?? `${sourceId}_${type}_${targetId}`;
   
   const relationship = {
     id,
@@ -42,11 +51,12 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId, metad
     attributes: { ...attributes },
     metadata: {
       created: new Date().toISOString(),
-      modified: new Date().toISOString(),
-      ...metadata
+      modified: new Date().toISOString()
     }
   };
-  const key = storedId === undefined ? `${targetId}-${type}` : legacyLinkKey(id, relationship);
+  if (isRecoveredId(id)) recoveredLegacyTypes.set(relationship, restored.legacyType ?? String(type));
+  if (restored) restoreRowMetadata(relationship, restored.metadata, restored.archive);
+  const key = legacyLinkKey(id, relationship);
 
   // A compound ID can be reused by a different endpoint tuple.
   const previous = this.relationships.get(id);
@@ -128,7 +138,22 @@ function restoreRelationships(rows, archive) {
         } while (explicit.has(id));
       }
     }
-    storeRelationship.call(this, source, target, type, attributes, id, metadata);
+    if (archive) {
+      const legacyType = storedId === id && typeof row.legacyType === 'string' ? row.legacyType : undefined;
+      storeRelationship.call(this, source, target, type, attributes, { id, metadata, archive: true, legacyType });
+    } else {
+      // Keep the published four-argument dispatch, including overrides that
+      // forward only those arguments. The normal insertion consumes this
+      // context before storing the edge so it never overwrites a collider.
+      const previous = pendingLegacyRestore.get(this);
+      pendingLegacyRestore.set(this, { source, target, type, id, metadata });
+      try {
+        this.addLink(source, target, row.type, attributes);
+      } finally {
+        if (previous) pendingLegacyRestore.set(this, previous);
+        else pendingLegacyRestore.delete(this);
+      }
+    }
   }
 
   if (!archive) return;
@@ -296,7 +321,7 @@ function updateRelationship(id, updates = {}, options = {}) {
   }
 
   // Update metadata
-  relationship.metadata.modified = new Date().toISOString();
+  stampRowModified(relationship);
   
   // Save changes
   this.relationships.set(id, relationship);
@@ -354,12 +379,17 @@ function removeShadowedLink(shadowed, relationship) {
   if (index !== -1) shadowed.splice(index, 1);
 }
 
-function legacyLinkKey(id, { source, target }) {
+function legacyLinkKey(id, relationship) {
+  const { source, target } = relationship;
   // Type updates keep the ID and the legacy key from insertion. The stored
   // endpoints fix both boundaries even when they contain underscores.
-  if (isRecoveredId(id)) return `${target}-${id}`;
+  if (isRecoveredId(id)) return `${target}-${recoveredLegacyTypes.get(relationship) ?? relationship.type}`;
   const typeAtInsertion = id.slice(String(source).length + 1, -String(target).length - 1);
   return `${target}-${typeAtInsertion}`;
+}
+
+function getRecoveredLegacyType(relationship) {
+  return recoveredLegacyTypes.get(relationship);
 }
 
 function removeLegacyLink(links, key, relationship) {
@@ -489,6 +519,7 @@ module.exports = {
   restoreRelationships,
   getLegacyLinkOrder,
   getLegacyMapOrder,
+  getRecoveredLegacyType,
   getRelationshipOrder,
   getRelationship,
   updateRelationship,
