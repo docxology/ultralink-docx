@@ -694,16 +694,26 @@ function generateRelationshipsSection(entity, ultralink) {
     </section>`;
 }
 
+function entityPageHref(id) {
+  return `${String(id).split('/').map(encodeURIComponent).join('/')}.html`;
+}
+
+function escapeAttribute(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function generateRelationshipItem(rel, ultralink, direction) {
   const otherEntityId = direction === 'outgoing' ? rel.target : rel.source;
   const otherEntity = ultralink.entities.get(otherEntityId);
   const otherName = otherEntity?.attributes?.name || otherEntity?.attributes?.title || otherEntityId;
+  const otherHref = entityPageHref(otherEntityId);
   
   return `
     <div class="relationship-item">
       ${direction === 'outgoing' ? 
-        `<strong>${rel.type}</strong> → <a href="${otherEntityId}.html">${otherName}</a>` :
-        `<a href="${otherEntityId}.html">${otherName}</a> → <strong>${rel.type}</strong>`}
+        `<strong>${rel.type}</strong> → <a href="${otherHref}">${otherName}</a>` :
+        `<a href="${otherHref}">${otherName}</a> → <strong>${rel.type}</strong>`}
       
       ${Object.keys(rel.attributes || {}).length > 0 ? `
         <div class="relationship-attributes">
@@ -756,7 +766,7 @@ function generateIndexPage(ultralink, options, assets) {
     </section>
     <section class="visualization">
       <div class="visualization-controls">
-        ${includeSearch ? '<label>Search entities <input id="search-box" type="search"></label>' : ''}
+        ${includeSearch ? '<label>Search entities and relationships <input id="search-box" type="search"></label>' : ''}
         ${includeFilters ? `
         <div class="control-panel filters">
           <h3>Filter by Type</h3>
@@ -802,8 +812,8 @@ function generateEntityTypesList(ultralink) {
           <h3>${type} (${entities.length})</h3>
           <div class="entity-list">
             ${entities.map(entity => `
-              <div class="entity-item">
-                <a href="${entity.id}.html">
+              <div class="entity-item" data-entity-id="${escapeAttribute(entity.id)}">
+                <a href="${entityPageHref(entity.id)}">
                   ${entity.attributes.name || entity.attributes.title || entity.id}
                 </a>
               </div>
@@ -844,6 +854,36 @@ function getColorByType(type) {
   return colors[type] || colors.default;
 }
 
+function appendSearchFields(value, fields) {
+  if (Array.isArray(value)) {
+    for (const item of value) appendSearchFields(item, fields);
+  } else if (value !== null && typeof value === 'object') {
+    for (const [key, item] of Object.entries(value)) {
+      fields.push(key);
+      appendSearchFields(item, fields);
+    }
+  } else {
+    fields.push(String(value));
+  }
+}
+
+function buildSearchIndex({ nodes, links }) {
+  const index = new Map();
+  for (const { id, label, type, attributes } of nodes) {
+    const fields = [id, label, type];
+    appendSearchFields(attributes, fields);
+    index.set(id, [fields.join('\\n').toLowerCase()]);
+  }
+  for (const { source, target, type, attributes } of links) {
+    const fields = [type];
+    appendSearchFields(attributes, fields);
+    const text = fields.join('\\n').toLowerCase();
+    index.get(source).push(text);
+    if (target !== source) index.get(target).push(text);
+  }
+  return index;
+}
+
 // Initialize graph with data
 function initializeGraph(data) {
   const container = document.getElementById('graph');
@@ -875,6 +915,7 @@ function initializeGraph(data) {
   // Set up zoom behavior
   const zoom = d3.zoom()
     .scaleExtent([0.1, 4])
+    .extent([[0, 0], [width, height]])
     .on('zoom', (event) => {
       g.attr('transform', event.transform);
     });
@@ -898,6 +939,10 @@ function initializeGraph(data) {
     .attr('d', 'M0,-5L10,0L0,5')
     .attr('fill', '#999');
   
+  const searchBox = document.getElementById('search-box');
+  // Index the original endpoint IDs before D3 replaces them with node objects.
+  const searchIndex = searchBox && buildSearchIndex(data);
+
   // Create force simulation
   const simulation = d3.forceSimulation(data.nodes)
     .force('link', d3.forceLink(data.links).id(d => d.id).distance(100))
@@ -958,6 +1003,7 @@ function initializeGraph(data) {
   
   // Add filter controls
   const typeFilters = document.getElementById('type-filters');
+  const typeCheckboxes = new Map();
   if (typeFilters) {
     const entityTypes = [...new Set(data.nodes.map(d => d.type))];
     entityTypes.forEach(type => {
@@ -968,6 +1014,7 @@ function initializeGraph(data) {
       checkbox.type = 'checkbox';
       checkbox.id = \`filter-\${type}\`;
       checkbox.checked = true;
+      typeCheckboxes.set(type, checkbox);
       checkbox.addEventListener('change', updateFilters);
       
       const label = document.createElement('label');
@@ -982,25 +1029,9 @@ function initializeGraph(data) {
   }
   
   function updateFilters() {
-    const typeFilters = document.getElementById('type-filters');
-    if (!typeFilters) return;
-    
-    const visibleTypes = [];
-    Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
-      if (input.checked) {
-        const type = input.id.replace('filter-', '');
-        visibleTypes.push(type);
-      }
-    });
-    
-    node.classed('hidden', d => !visibleTypes.includes(d.type));
-    link.classed('hidden', d => {
-      const sourceNode = data.nodes.find(node => node.id === (d.source.id || d.source));
-      const targetNode = data.nodes.find(node => node.id === (d.target.id || d.target));
-      return !sourceNode || !targetNode || 
-             !visibleTypes.includes(sourceNode.type) || 
-             !visibleTypes.includes(targetNode.type);
-    });
+    const visible = entity => typeCheckboxes.get(entity.type).checked;
+    node.classed('hidden', d => !visible(d));
+    link.classed('hidden', d => !visible(d.source) || !visible(d.target));
   }
   
   // Setup zoom controls
@@ -1029,13 +1060,8 @@ function initializeGraph(data) {
   
   if (clearFiltersBtn) {
     clearFiltersBtn.addEventListener('click', () => {
-      const typeFilters = document.getElementById('type-filters');
-      if (typeFilters) {
-        Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
-          input.checked = true;
-        });
-        updateFilters();
-      }
+      for (const input of typeCheckboxes.values()) input.checked = true;
+      updateFilters();
     });
   }
   
@@ -1043,6 +1069,11 @@ function initializeGraph(data) {
     const selected = node.filter(d => d.id === id);
     if (selected.empty()) return;
     const entity = selected.datum();
+    const checkbox = typeCheckboxes.get(entity.type);
+    if (checkbox && !checkbox.checked) {
+      checkbox.checked = true;
+      updateFilters();
+    }
 
     node.classed('selected', d => d.id === id);
     const neighbors = new Set();
@@ -1059,30 +1090,33 @@ function initializeGraph(data) {
 
   node.on('click', (event, d) => selectEntityById(d.id));
 
-  const searchBox = document.getElementById('search-box');
-  const entries = searchBox && new Map(data.nodes.map(d => [d.id, d]));
   const searchItems = [];
+  const entityHrefs = new Map();
   for (const item of document.querySelectorAll('.entity-item')) {
-    const id = item.querySelector('a').getAttribute('href').slice(0, -5);
+    const id = item.dataset.entityId;
+    entityHrefs.set(id, item.querySelector('a').href);
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'select-entity';
     button.textContent = 'Find in graph';
     button.addEventListener('click', () => selectEntityById(id));
     item.appendChild(button);
-    if (searchBox) searchItems.push({ item, text: JSON.stringify(entries.get(id)).toLowerCase() });
+    if (searchIndex) searchItems.push({ item, texts: searchIndex.get(id) ?? [] });
   }
 
   if (searchBox) {
     searchBox.addEventListener('input', () => {
       const query = searchBox.value.trim().toLowerCase();
-      for (const { item, text } of searchItems) item.hidden = !text.includes(query);
+      for (const { item, texts } of searchItems) {
+        item.hidden = query !== '' && !texts.some(text => text.includes(query));
+      }
     });
   }
   
   // Double-click to open entity page
   node.on('dblclick', (event, d) => {
-    window.location.href = d.id + '.html';
+    const href = entityHrefs.get(d.id);
+    if (href) window.location.href = href;
   });
   
   // Drag functions

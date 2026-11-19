@@ -8,7 +8,36 @@ const { UltraLink } = require('../../src');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const rimraf = require('rimraf');
+const { fileURLToPath } = require('node:url');
+const { JSDOM, VirtualConsole } = require('jsdom');
+
+async function openExport(directory, graph) {
+  for (const [filename, content] of Object.entries(graph.toHTMLWebsite())) {
+    const destination = path.join(directory, filename);
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, content);
+  }
+
+  const errors = [];
+  const virtualConsole = new VirtualConsole().on('jsdomError', error => errors.push(error.message));
+  const dom = await JSDOM.fromFile(path.join(directory, 'index.html'), {
+    runScripts: 'dangerously',
+    resources: 'usable',
+    pretendToBeVisual: true,
+    virtualConsole
+  });
+  if (dom.window.document.readyState !== 'complete') {
+    await new Promise(resolve => dom.window.addEventListener('load', resolve, { once: true }));
+  }
+  return { dom, errors };
+}
+
+function search(window, query) {
+  const input = window.document.querySelector('#search-box');
+  input.value = query;
+  input.dispatchEvent(new window.Event('input', { bubbles: true }));
+  return [...window.document.querySelectorAll('.entity-item:not([hidden]) a')];
+}
 
 describe('HTML Website Visualization Tests', () => {
   let tempDir;
@@ -53,7 +82,7 @@ describe('HTML Website Visualization Tests', () => {
   
   afterEach(() => {
     // Clean up the temporary directory after tests
-    rimraf.sync(tempDir);
+    fs.rmSync(tempDir, { recursive: true });
   });
   
   test('HTML website should include graph.js with proper graph data', async () => {
@@ -134,5 +163,80 @@ describe('HTML Website Visualization Tests', () => {
     const graphScriptPosition = indexHtml.indexOf('<script src="graph.js"></script>');
     const graphContainerPosition = indexHtml.indexOf('<div id="graph"></div>');
     expect(graphScriptPosition).toBeGreaterThan(graphContainerPosition);
+  });
+
+  test('search matches relationship types and nested attributes on both endpoints', async () => {
+    ultralink.addRelationship('Alice', 'Bob', 'approves_design', {
+      records: [{ folder: 'blue binder' }]
+    });
+    const { dom, errors } = await openExport(tempDir, ultralink);
+    try {
+      const names = query => search(dom.window, query).map(link => link.textContent.trim());
+      expect(names(' Blue Binder ')).toEqual(['Alice', 'Bob']);
+      expect(names('approves_design')).toEqual(['Alice', 'Bob']);
+      expect(names('data scientist')).toEqual(['Alice']);
+      expect(names('NOT IN GRAPH')).toEqual([]);
+      expect(names('')).toEqual(['Alice', 'Bob', 'Charlie', 'Project X']);
+      expect(errors).toEqual([]);
+    } finally {
+      dom.window.close();
+    }
+  });
+
+  test('a quoted entity ID preserves search and links to the actual detail page', async () => {
+    const id = 'design "draft"';
+    ultralink.addEntity(id, 'task', { name: 'Design Draft' });
+    ultralink.addRelationship('Alice', id, 'reviews');
+    const { dom, errors } = await openExport(tempDir, ultralink);
+    try {
+      const [result, unexpected] = search(dom.window, id);
+      expect(unexpected).toBeUndefined();
+      expect(result.textContent.trim()).toBe('Design Draft');
+      const detailPath = path.join(tempDir, `${id}.html`);
+      expect(fileURLToPath(result.href)).toBe(detailPath);
+      expect(fs.readFileSync(detailPath, 'utf8')).toContain('<h1>Design Draft</h1>');
+      expect(search(dom.window, 'NOT IN GRAPH')).toEqual([]);
+
+      const details = await JSDOM.fromFile(path.join(tempDir, 'Alice.html'));
+      try {
+        const relationship = [...details.window.document.querySelectorAll('.relationships a')]
+          .find(link => link.textContent.trim() === 'Design Draft');
+        expect(fileURLToPath(relationship.href)).toBe(detailPath);
+      } finally {
+        details.window.close();
+      }
+      expect(errors).toEqual([]);
+    } finally {
+      dom.window.close();
+    }
+  });
+
+  test('find in graph reveals the selected type without clearing other filters', async () => {
+    ultralink.addEntity('Reference', 'document');
+    const { dom, errors } = await openExport(tempDir, ultralink);
+    try {
+      const { document, getComputedStyle } = dom.window;
+      const projectFilter = document.querySelector('#filter-project');
+      const documentFilter = document.querySelector('#filter-document');
+      const project = document.querySelector('.node[data-id="ProjectX"]');
+      const reference = document.querySelector('.node[data-id="Reference"]');
+      projectFilter.click();
+      documentFilter.click();
+      expect(getComputedStyle(project).display).toBe('none');
+
+      search(dom.window, 'secret project')[0].parentElement.querySelector('button').click();
+
+      expect(projectFilter.checked).toBe(true);
+      expect(documentFilter.checked).toBe(false);
+      expect(document.querySelector('.node.selected')).toBe(project);
+      expect(getComputedStyle(project).display).not.toBe('none');
+      expect(getComputedStyle(reference).display).toBe('none');
+      const highlighted = [...document.querySelectorAll('.link.highlighted')];
+      expect(highlighted).toHaveLength(3);
+      expect(highlighted.map(edge => getComputedStyle(edge).display)).not.toContain('none');
+      expect(errors).toEqual([]);
+    } finally {
+      dom.window.close();
+    }
   });
 }); 
