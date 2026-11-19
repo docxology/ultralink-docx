@@ -248,6 +248,91 @@ describe('UltraLink', () => {
       
       expect(result).toBe(false);
     });
+
+    it('keeps live endpoint lookups correct after an entity is deleted and its link IDs are reused', () => {
+      for (const id of ['north', 'north_east', 'east_north', 'depot_hub', 'annex']) {
+        ultralink.addEntity(id, 'location');
+      }
+      const outgoing = ultralink.addLink('north', 'annex', 'supports');
+      const incoming = ultralink.addLink('annex', 'north', 'supports');
+      const removedOut = ultralink.addLink('north', 'depot_hub', 'east_route');
+      const removedIn = ultralink.addLink('depot_hub', 'north', 'route_east');
+      expect(ultralink.deleteEntity('depot_hub')).toBe(true);
+      expect(ultralink.getBacklinks('north', { type: 'route_east' })).toEqual([]);
+      expect(ultralink.getRelationships('north')).toEqual([outgoing, incoming]);
+
+      ultralink.addEntity('depot_hub', 'location');
+      const routeIn = ultralink.addLink('north_east', 'depot_hub', 'route');
+      const routeOut = ultralink.addLink('depot_hub', 'east_north', 'route');
+      expect(routeIn.id).toBe(removedOut.id);
+      expect(routeOut.id).toBe(removedIn.id);
+      expect(ultralink.getRelationships('north', { direction: 'outgoing' })).toEqual([outgoing]);
+      expect(ultralink.getBacklinks('north')).toEqual([incoming]);
+      expect(ultralink.getRelationships('north')).toEqual([outgoing, incoming]);
+      expect(ultralink.getRelationships('depot_hub')).toEqual([routeOut, routeIn]);
+      expect([...ultralink.links.get('north').values()]).toEqual([outgoing]);
+    });
+
+    it('returns a self-loop once in combined reads without collapsing reciprocal edges', () => {
+      const outgoing = ultralink.addLink('person1', 'person2', 'knows');
+      const loop = ultralink.addLink('person1', 'person1', 'knows');
+      const incoming = ultralink.addLink('person2', 'person1', 'knows');
+      expect(ultralink.getRelationships('person1', { direction: 'outgoing' })).toEqual([outgoing, loop]);
+      expect(ultralink.getBacklinks('person1')).toEqual([loop, incoming]);
+      expect(ultralink.getRelationships('person1', { type: 'knows' })).toEqual([outgoing, loop, incoming]);
+      expect(ultralink.deleteRelationship(loop.id)).toBe(true);
+      expect(ultralink.getRelationships('person1')).toEqual([outgoing, incoming]);
+    });
+
+    it('can delegate to insertion-tuple deletion without redispatching or deleting a peer on retry', () => {
+      class DeletesByTuple extends UltraLink {
+        deleteRelationship(id) {
+          const edge = this.getRelationship(id);
+          return edge ? this.deleteLink(edge.source, edge.target, 'drafted') : false;
+        }
+      }
+      const graph = new DeletesByTuple();
+      graph.addEntity('author', 'person');
+      graph.addEntity('paper', 'document');
+      const first = graph.addLink('author', 'paper', 'drafted', { weight: 1 });
+      const peer = graph.addLink('author', 'paper', 'reviewed', { weight: 2 });
+      graph.updateRelationship(first.id, { type: 'edited' });
+      graph.updateRelationship(peer.id, { type: 'drafted' });
+
+      expect(graph.deleteRelationship(first.id)).toBe(true);
+      expect(graph.deleteLink('author', 'paper', 'drafted')).toBe(false);
+      expect(graph.getRelationships('author')).toEqual([peer]);
+      expect(graph.getBacklinks('paper')).toEqual([peer]);
+    });
+
+    it('replaces a shared ID in place when the legacy key also matches', () => {
+      for (const id of ['a', 'y', 'y-x_y', 'other']) ultralink.addEntity(id, 'node');
+      const earlier = ultralink.addLink('a', 'y', 'x_y-x');
+      const neighbor = ultralink.addLink('a', 'other', 'route');
+      const legacy = ultralink.links.get('a');
+      const latest = ultralink.addLink('a', 'y-x_y', 'x');
+      expect(latest.id).toBe(earlier.id);
+      expect(ultralink.deleteLink('a', 'y', 'x_y-x')).toBe(false);
+      expect(ultralink.links.get('a')).toBe(legacy);
+      expect([...legacy]).toEqual([['y-x_y-x', latest], ['other-route', neighbor]]);
+      expect(ultralink.getBacklinks('y')).toEqual([]);
+      expect(ultralink.getRelationships('a')).toEqual([latest, neighbor]);
+    });
+
+    it('reveals a live shadow in the same legacy slot and keeps the empty source map', () => {
+      for (const id of ['a', 'station', 'station-north', 'other']) ultralink.addEntity(id, 'node');
+      const earlier = ultralink.addLink('a', 'station', 'north-route');
+      const neighbor = ultralink.addLink('a', 'other', 'route');
+      const latest = ultralink.addLink('a', 'station-north', 'route');
+      const legacy = ultralink.links.get('a');
+      expect([...legacy.values()]).toEqual([latest, neighbor]);
+      expect(ultralink.deleteEntity('station-north')).toBe(true);
+      expect([...legacy.values()]).toEqual([earlier, neighbor]);
+      expect(ultralink.deleteRelationship(earlier.id)).toBe(true);
+      expect(ultralink.deleteLink('a', 'other', 'route')).toBe(true);
+      expect(ultralink.links.get('a')).toBe(legacy);
+      expect([...legacy]).toEqual([]);
+    });
   });
   
   // Data export
@@ -329,6 +414,43 @@ describe('UltraLink', () => {
       
       const document = newUltralink.getEntity('document1');
       expect(document.attributes.title).toBe('Report');
+    });
+
+    it('keeps distinct legacy slots after receiver normalization without a wrong endpoint lookup', () => {
+      class Normalizing extends UltraLink {
+        addEntity(id, type, attributes) {
+          super.addEntity(id, type, attributes);
+          return this;
+        }
+
+        addRelationship(source, target, type, attributes) {
+          super.addRelationship(source, target, type.toLowerCase(), attributes);
+        }
+      }
+      for (const id of ['a', 'c_d', 'a_b', 'd']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b_M', { weight: 1 });
+      const later = ultralink.addLink('a_b', 'd', 'draft', { weight: 2 });
+      ultralink.updateRelationship(later.id, { type: 'M_c' });
+
+      for (const input of [ultralink.toJSON(), ultralink.toFullBlob()]) {
+        const receiver = new Normalizing();
+        receiver.metadata = { provenance: 'receiver' };
+        expect(receiver.fromFullBlob(input)).toBe(receiver);
+        expect(receiver.metadata).toEqual({ provenance: 'receiver' });
+        expect(receiver.links.get('a').get('c_d-b_m').attributes.weight).toBe(1);
+        const winner = receiver.links.get('a_b').get('d-m_c');
+        expect(receiver.getRelationship('a_b_m_c_d')).toBe(winner);
+        expect(winner.attributes.weight).toBe(2);
+        expect(receiver.getRelationships('a')).toEqual([]);
+        expect(receiver.getBacklinks('c_d')).toEqual([]);
+        expect(receiver.getBacklinks('d')).toEqual([winner]);
+        expect(receiver.deleteLink('a', 'c_d', 'b_m')).toBe(false);
+        expect(receiver.deleteLink('a_b', 'd', 'm_c')).toBe(true);
+        expect(receiver.deleteLink('a_b', 'd', 'm_c')).toBe(false);
+        expect(receiver.links.get('a').get('c_d-b_m').attributes.weight).toBe(1);
+        expect(receiver.deleteEntity('c_d')).toBe(true);
+        expect([...receiver.links.get('a')]).toEqual([]);
+      }
     });
     
     it('should export a compressed full blob', () => {
