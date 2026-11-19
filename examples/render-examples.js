@@ -916,43 +916,25 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
           break;
           
         case 'html-website':
-          // HTML Website output (multiple files)
-          try {
-            console.log(`    🌐 Generating HTML website for ${systemName}...`);
-            const websiteOutput = ultralink.toHTMLWebsite({
-              title: `${systemName} - UltraLink Knowledge Graph`,
-              description: `Interactive exploration of the ${systemName} knowledge graph`,
-              includeSearch: true,
-              includeDownloadButtons: true
-            });
-            console.log(`    📁 Writing website files to: ${targetDir}`);
-            for (const [filename, content] of Object.entries(websiteOutput)) {
-              const filePath = path.join(targetDir, filename);
-              if (saveFile(filePath, content)) console.log(`      ✅ ${filePath}`);
-            }
-            
-            // Verify that graph.js was generated
-            if (!websiteOutput['graph.js']) {
-              console.warn(`    ⚠️ Warning: graph.js was not generated for ${systemName}`);
-              const graphJsPath = path.join(targetDir, 'graph.js');
-              if (saveFile(graphJsPath, generatePlaceholderD3(systemName), { warning: true })) {
-                console.log(`    ✅ Created fallback graph.js at: ${graphJsPath}`);
-              }
-            }
-          } catch (error) {
-            recordFailure(target.name, error);
-            const fallbackIndexPath = path.join(targetDir, 'index.html');
-            const fallbackGraphJsPath = path.join(targetDir, 'graph.js');
-            const indexSaved = saveFile(fallbackIndexPath, `<!DOCTYPE html>
-<html>
-<head><title>${systemName} - Error</title></head>
-<body><h1>Error generating website for ${systemName}</h1><p>${error.message}</p></body>
-</html>`, { warning: true });
-            const graphSaved = saveFile(fallbackGraphJsPath, `console.error("Failed to generate graph visualization");`, { warning: true });
-            if (indexSaved && graphSaved) {
-              console.log(`    📄 Created fallback website files:`);
-              console.log(`      ✅ ${fallbackIndexPath}`);
-              console.log(`      ✅ ${fallbackGraphJsPath}`);
+          // Generate the complete website before writing any of its files.
+          console.log(`    🌐 Generating HTML website for ${systemName}...`);
+          const websiteOutput = ultralink.toHTMLWebsite({
+            title: `${systemName} - UltraLink Knowledge Graph`,
+            description: `Interactive exploration of the ${systemName} knowledge graph`,
+            includeSearch: true,
+            includeDownloadButtons: true
+          });
+          console.log(`    📁 Writing website files to: ${targetDir}`);
+          for (const [filename, content] of Object.entries(websiteOutput)) {
+            const filePath = path.join(targetDir, filename);
+            if (saveFile(filePath, content)) console.log(`      ✅ ${filePath}`);
+          }
+
+          if (!websiteOutput['graph.js']) {
+            console.warn(`    ⚠️ Warning: graph.js was not generated for ${systemName}`);
+            const graphJsPath = path.join(targetDir, 'graph.js');
+            if (saveFile(graphJsPath, generatePlaceholderD3(systemName), { warning: true })) {
+              console.log(`    ✅ Created fallback graph.js at: ${graphJsPath}`);
             }
           }
           break;

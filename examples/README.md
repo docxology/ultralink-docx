@@ -118,6 +118,8 @@ names the stage or format and includes the error message. `stats.files` counts
 outputs written, including existing optional placeholders reported as warnings.
 Failed writes are not counted as saved files, and other successful files are
 kept.
+If website generation throws on a rerender, it leaves the prior pages and
+assets intact and writes a separate `ERROR-html-website.txt` diagnostic.
 
 `renderAllSystems` attempts every bundled system and resolves to
 `{ ok, systems }`, where `systems` lists the per-system results. It rejects if

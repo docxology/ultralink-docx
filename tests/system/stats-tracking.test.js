@@ -80,6 +80,50 @@ describe('Statistics Tracking in Render Examples', () => {
     });
   });
 
+  test('a failed website rerender preserves the previous website byte-for-byte', async () => {
+    await withNativeRenderer(async (root, runNode) => {
+      const { stdout, stderr } = await runNode('-e', `
+        const assert = require('node:assert/strict');
+        const fs = require('node:fs');
+        const { UltraLink } = require('./src');
+        const { renderSystem } = require('./examples/render-examples.js');
+        const factory = detail => () => {
+          const graph = new UltraLink();
+          graph.addEntity('fixture', 'node', { name: 'Fixture', detail });
+          return graph;
+        };
+        (async () => {
+          const complete = await renderSystem('Rerender', factory('usable'));
+          assert.equal(complete.ok, true);
+          fs.cpSync('examples/output/systems/Rerender/website', 'previous-website', { recursive: true });
+          const failed = await renderSystem('Rerender', factory(Symbol('unrenderable')));
+          fs.writeFileSync('result.json', JSON.stringify(failed));
+        })().catch(error => {
+          console.error(error);
+          process.exitCode = 1;
+        });
+      `);
+
+      const website = path.join(root, 'examples', 'output', 'systems', 'Rerender', 'website');
+      const previous = path.join(root, 'previous-website');
+      const diagnostic = 'ERROR-html-website.txt';
+      const files = websiteFiles(previous);
+      expect(files).toEqual(expect.arrayContaining(['index.html', 'graph.js', 'fixture.html']));
+      for (const name of files) {
+        expect(fs.readFileSync(path.join(website, name))).toEqual(fs.readFileSync(path.join(previous, name)));
+      }
+      expect(websiteFiles(website)).toEqual([...files, diagnostic].sort());
+
+      const { ok, stats, failures } = JSON.parse(fs.readFileSync(path.join(root, 'result.json'), 'utf8'));
+      expect(ok).toBe(false);
+      expect(failures).toContainEqual({ stage: 'html-website', message: expect.stringContaining('Symbol') });
+      expect(stats.formats['html-website']).toEqual({ files: 1, successful: 0, warnings: 1, errors: 1 });
+      expect(fs.readFileSync(path.join(website, diagnostic), 'utf8')).toContain('Symbol');
+      expect(stderr).toMatch(/Rerender \[html-website\]:.*Symbol/);
+      expect(stdout.match(/Completed rendering Rerender/g)).toHaveLength(1);
+    });
+  });
+
   test('counts real diagnostics but rejects SVG bytes from the PNG exporter', async () => {
     await withNativeRenderer(async (root, runNode) => {
       await runNode('-e', `
