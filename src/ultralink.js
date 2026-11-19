@@ -702,23 +702,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
         }
         
         // Process relationships
-        if (jsonData.relationships) {
-          const relationships = jsonData.relationships;
-          if (typeof relationships[Symbol.iterator] !== 'function') {
-            // Convert to array if it's an object with entries
-            if (typeof relationships === 'object') {
-              const relationshipsArray = Object.values(relationships);
-              for (const rel of relationshipsArray) {
-                this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-              }
-            }
-          } else {
-            // It's already iterable (array)
-            for (const rel of relationships) {
-              this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-            }
-          }
-        }
+        if (jsonData.relationships) RelationshipManager.replayLinks.call(this, jsonData.relationships);
       }
     } else if (data.entities) {
       // Handle legacy format where entities are directly in the data object
@@ -739,22 +723,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       }
       
       // Process relationships from legacy format
-      if (data.relationships) {
-        if (typeof data.relationships[Symbol.iterator] !== 'function') {
-          // Convert to array if it's an object with entries
-          if (typeof data.relationships === 'object') {
-            const relationshipsArray = Object.values(data.relationships);
-            for (const rel of relationshipsArray) {
-              this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-            }
-          }
-        } else {
-          // It's already iterable (array)
-          for (const rel of data.relationships) {
-            this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-          }
-        }
-      }
+      if (data.relationships) RelationshipManager.replayLinks.call(this, data.relationships);
     }
     
     return this;
@@ -768,31 +737,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
    * @returns {boolean} True if the relationship was deleted, false if it didn't exist
    */
   deleteLink(sourceId, targetId, type) {
-    // Generate relationship ID
-    const id = `${sourceId}_${type}_${targetId}`;
-    
-    // Delete from relationships map
-    const deleted = this.relationships.delete(id);
-    
-    // Clean up relationship indices
-    if (deleted) {
-      // Clean up relationshipsBySource
-      if (this.relationshipsBySource.has(sourceId)) {
-        this.relationshipsBySource.get(sourceId).delete(id);
-      }
-      
-      // Clean up relationshipsByTarget
-      if (this.relationshipsByTarget.has(targetId)) {
-        this.relationshipsByTarget.get(targetId).delete(id);
-      }
-      
-      // Clean up links map
-      if (this.links.has(sourceId)) {
-        this.links.get(sourceId).delete(`${targetId}-${type}`);
-      }
-    }
-    
-    return deleted;
+    return RelationshipManager.deleteLink.call(this, sourceId, targetId, type);
   }
 
   /**
