@@ -5,21 +5,29 @@
  */
 
 const { toGridSVG } = require('./visualization');
+const { getErrorMessage } = require('../utils');
 
 /**
  * Exports UltraLink data to a comprehensive JSON blob containing all export formats
  * @param {UltraLink} ultralink - The UltraLink instance to export
  * @param {Object} options - Export options
+ * @param {boolean} [options.throwOnError=false] - Reject the bundle if an embedded export throws
  * @returns {Object} - Object containing all export formats
  */
 function toFullBlob(ultralink, options = {}) {
   const blob = {};
+  function componentFailed(format, error) {
+    if (options?.throwOnError) {
+      throw new Error(`Failed to generate embedded ${format} export: ${getErrorMessage(error)}`, { cause: error });
+    }
+    console.warn(`Error generating ${format} export:`, error);
+  }
   
   // JSON export
   try {
     blob.json = ultralink.toJSON({ asString: false });
   } catch (error) {
-    console.warn('Error generating JSON export:', error);
+    componentFailed('JSON', error);
     blob.json = { entities: [], relationships: [] };
   }
   
@@ -27,7 +35,7 @@ function toFullBlob(ultralink, options = {}) {
   try {
     blob.csv = ultralink.toCSV();
   } catch (error) {
-    console.warn('Error generating CSV export:', error);
+    componentFailed('CSV', error);
     blob.csv = '';
   }
   
@@ -35,7 +43,7 @@ function toFullBlob(ultralink, options = {}) {
   try {
     blob.graphml = ultralink.toGraphML();
   } catch (error) {
-    console.warn('Error generating GraphML export:', error);
+    componentFailed('GraphML', error);
     blob.graphml = '';
   }
   
@@ -43,7 +51,7 @@ function toFullBlob(ultralink, options = {}) {
   try {
     blob.kif = ultralink.toKIF();
   } catch (error) {
-    console.warn('Error generating KIF export:', error);
+    componentFailed('KIF', error);
     blob.kif = '';
   }
   
@@ -52,7 +60,7 @@ function toFullBlob(ultralink, options = {}) {
     const bayesianExport = ultralink.toBayesianNetwork();
     blob.bayesian = { json: typeof bayesianExport === 'string' ? bayesianExport : JSON.stringify(bayesianExport) };
   } catch (error) {
-    console.warn('Error generating Bayesian Network export:', error);
+    componentFailed('Bayesian Network', error);
     blob.bayesian = { json: JSON.stringify({ nodes: [], edges: [] }) };
   }
   

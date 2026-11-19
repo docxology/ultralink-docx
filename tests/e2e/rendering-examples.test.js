@@ -77,6 +77,44 @@ describe('E2E: Render Examples Script', () => {
       }
     });
   });
+
+  test('the CLI fails when only the embedded Bayesian export fails and preserves the prior bundle', async () => {
+    await withNativeRenderer(async (root, runNode) => {
+      const renderer = './examples/render-examples.js';
+      await runNode('-e', `
+        const { renderSystem, SYSTEMS } = require('${renderer}');
+        renderSystem('POMDP', SYSTEMS.POMDP).then(({ ok }) => { if (!ok) process.exitCode = 1; });
+      `);
+      const output = path.join(root, 'examples', 'output', 'systems', 'POMDP');
+      const blobPath = path.join(output, 'full-blob', 'POMDP-full.json');
+      const before = fs.readFileSync(blobPath);
+      expect(JSON.parse(JSON.parse(before).bayesian.json).nodes).not.toHaveLength(0);
+
+      const preload = path.join(root, 'malformed-bayesian-input.cjs');
+      fs.writeFileSync(preload, `
+        const fixture = require('./tests/fixtures/Systems/POMDP/pomdp.js');
+        const create = fixture.createPOMDPDataset;
+        fixture.createPOMDPDataset = () => {
+          const graph = create();
+          // The standalone renderer supplies a system name; only the embedded export
+          // autodetects it from the legacy store and reads the malformed type.
+          graph.store.entities.pomdp_model = { id: 'pomdp_model', type: 42 };
+          return graph;
+        };
+      `);
+      await expect(runNode('--require', preload, renderer)).rejects.toMatchObject({
+        code: 1,
+        stderr: expect.stringMatching(/POMDP \[full-blob\]:.*embedded Bayesian Network export.*split.*\n.*Rendering incomplete for POMDP/),
+        stdout: expect.not.stringContaining('RENDERING COMPLETE')
+      });
+      expect(fs.readFileSync(blobPath)).toEqual(before);
+      expect(fs.readFileSync(path.join(output, 'full-blob', 'ERROR-uncompressed.txt'), 'utf8'))
+        .toContain('embedded Bayesian Network export');
+      expect(fs.readdirSync(path.join(output, 'bayesian')).sort()).toEqual(['POMDP-bayesian.json', 'POMDP.bif']);
+      const standalone = JSON.parse(fs.readFileSync(path.join(output, 'bayesian', 'POMDP-bayesian.json')));
+      expect(standalone.nodes).toContainEqual(expect.objectContaining({ id: 'pomdp_model' }));
+    });
+  });
   
   test('should generate placeholder content for visualization formats', () => {
     // Test the generatePlaceholderD3 function

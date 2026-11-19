@@ -8,6 +8,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { getErrorMessage } = require('../src/lib/utils');
 
 const PNG_SIGNATURE = 0x89504e470d0a1a0an;
 
@@ -792,7 +793,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
   STATS.systemStats[systemName] = systemStats;
   const failures = [];
   function recordFailure(stage, error) {
-    const message = error instanceof Error ? error.message : String(error);
+    const message = getErrorMessage(error);
     failures.push({ stage, message });
     systemStats.errors++;
     STATS.errorFiles++;
@@ -801,6 +802,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
       STATS.formatStats[stage].errors++;
     }
     console.error(`❌ ${systemName} [${stage}]: ${message}`);
+    return message;
   }
   const result = () => ({ systemName, ok: failures.length === 0, stats: systemStats, failures });
   
@@ -860,6 +862,23 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
       }
       recordWrittenFile(warning);
       return true;
+    }
+    function reportExportFailure(error, diagnostic = `ERROR-${target.name}.txt`) {
+      const message = recordFailure(target.name, error);
+      let stack;
+      try {
+        const value = error instanceof Error ? error.stack : undefined;
+        if (typeof value === 'string') stack = value;
+      } catch {
+        // The stack is optional; a thrown value must not stop the render.
+      }
+      const errorFilePath = path.join(targetDir, diagnostic);
+      try {
+        writeOutput(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
+        recordWrittenFile(true);
+      } catch (diagnosticError) {
+        console.warn(`    Could not write diagnostic ${errorFilePath}: ${diagnosticError.message}`);
+      }
     }
 
     try {
@@ -943,6 +962,8 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
           // Visualization outputs (multiple formats)
           console.log(`    🎨 Generating visualizations in: ${targetDir}`);
           for (const vizFormat of target.outputFiles) {
+            const filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
+            const outputPath = path.join(targetDir, filename);
             try {
               console.log(`    🔄 Processing ${vizFormat.format}${vizFormat.layout ? ` (${vizFormat.layout})` : ''} visualization...`);
               
@@ -954,17 +975,11 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
                 width: 1200,  // Increased resolution for better quality
                 height: 900,
                 systemName: systemName,  // Pass the system name to the visualization functions
-                useSystemTemplate: vizFormat.useSystemTemplate || false  // Enable system-specific templates if specified
+                useSystemTemplate: vizFormat.useSystemTemplate || false,  // Enable system-specific templates if specified
+                throwOnError: true
               };
               
-              let vizOutputObj;
-              let failure;
-              try {
-                vizOutputObj = await ultralink.toVisualization(vizOptions);
-              } catch (error) {
-                failure = { error };
-              }
-              vizOutputObj ??= {};
+              const vizOutputObj = await ultralink.toVisualization(vizOptions) ?? {};
               
               // Extract the content from the visualization output based on format
               let content;
@@ -988,10 +1003,6 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
                 content = vizOutputObj['graph-cytoscape.html'] || vizOutputObj;
               }
               
-              // Get the appropriate filename with system name replacement
-              const filename = vizFormat.filename.replace('{{system}}', systemName.toLowerCase());
-              const outputPath = path.join(targetDir, filename);
-
               const isPng = vizFormat.format === 'png';
               if (isPng) {
                 const hasPngHeader = Buffer.isBuffer(content) && content.length >= 33 &&
@@ -1002,12 +1013,10 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
                   continue;
                 }
                 if (!hasPngHeader || content.length <= 100) {
-                  const detail = failure ? `: ${String(failure.error)}` : '';
-                  recordFailure(target.name, new Error(`PNG exporter returned no graph PNG for ${outputPath}${detail}`));
+                  recordFailure(target.name, new Error(`PNG exporter returned no graph PNG for ${outputPath}`));
                   continue;
                 }
               }
-              if (failure) recordFailure(target.name, failure.error);
               if (isPng || (typeof content === 'string' ? content.length > 0 : Buffer.isBuffer(content) && content.length > 100)) {
                 if (saveFile(outputPath, content)) {
                   console.log(`      ✅ Saved ${vizFormat.format}${vizFormat.layout ? ` (${vizFormat.layout})` : ''} visualization to: ${outputPath}`);
@@ -1035,7 +1044,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
                 }
               }
             } catch (error) {
-              recordFailure(target.name, error);
+              reportExportFailure(error, `ERROR-${filename}.txt`);
             }
           }
           break;
@@ -1058,10 +1067,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             try {
               bayesOutput = ultralink.toBayesianNetwork({ outputFormat: format, systemName });
             } catch (error) {
-              recordFailure(target.name, error);
-              if (saveFile(outputPath, { error: `Failed to generate Bayesian network: ${error.message}` }, { json: true, warning: true })) {
-                console.log(`      ✅ Created error placeholder at: ${outputPath}`);
-              }
+              reportExportFailure(error);
               continue;
             }
             if (bayesOutput) {
@@ -1081,17 +1087,12 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
           // KIF output
           console.log(`    📜 Generating KIF format...`);
           const kifPath = path.join(targetDir, target.outputFile.replace('{{system}}', systemName));
-          try {
-            const kifOutput = ultralink.toKIF({
-              includeMetaKnowledge: true,
-              includeFunctions: true,
-              includeRules: true
-            });
-            if (saveFile(kifPath, kifOutput)) console.log(`    ✅ KIF output saved to: ${kifPath}`);
-          } catch (error) {
-            recordFailure(target.name, error);
-            saveFile(kifPath, `; Failed to generate KIF for ${systemName}`, { warning: true });
-          }
+          const kifOutput = ultralink.toKIF({
+            includeMetaKnowledge: true,
+            includeFunctions: true,
+            includeRules: true
+          });
+          if (saveFile(kifPath, kifOutput)) console.log(`    ✅ KIF output saved to: ${kifPath}`);
           break;
           
         case 'rxinfer':
@@ -1110,15 +1111,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
                 console.log(`      ✅ Saved ${format} model${detail} to: ${outputPath}`);
               }
             } catch (error) {
-              recordFailure(target.name, error);
-              const diagnostic = JSON.stringify({
-                error: `Failed during ${format} RxInfer processing: ${error.message}`,
-                timestamp: new Date().toISOString(),
-                system: systemName
-              });
-              if (saveFile(outputPath, diagnostic, { warning: true })) {
-                console.log(`      ✅ Created error placeholder at: ${outputPath}`);
-              }
+              reportExportFailure(error, `ERROR-${format}.txt`);
             }
           }
           break;
@@ -1131,8 +1124,8 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             const outputPath = path.join(targetDir, filename.replace('{{system}}', systemName));
             try {
               if (format === 'uncompressed') {
-                const blob = ultralink.toFullBlob({ compress: false });
-                if (saveFile(outputPath, blob, { json: true })) {
+                const blob = ultralink.toFullBlob({ compress: false, throwOnError: true });
+                if (saveFile(outputPath, JSON.stringify(blob, null, 2))) {
                   console.log(`      ✅ Saved uncompressed blob to: ${outputPath}`);
                 }
               } else {
@@ -1142,15 +1135,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
                 }
               }
             } catch (error) {
-              recordFailure(target.name, error);
-              const diagnostic = JSON.stringify({
-                error: `Failed during ${format} full-blob processing: ${error.message}`,
-                timestamp: new Date().toISOString(),
-                system: systemName
-              });
-              if (saveFile(outputPath, diagnostic, { warning: true })) {
-                console.log(`      ✅ Created error placeholder at: ${outputPath}`);
-              }
+              reportExportFailure(error, `ERROR-${format}.txt`);
             }
           }
           break;
@@ -1234,14 +1219,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
           break;
       }
     } catch (error) {
-      recordFailure(target.name, error);
-      const errorFilePath = path.join(targetDir, `ERROR-${target.name}.txt`);
-      try {
-        writeOutput(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${error.message}\n${error.stack}`);
-        recordWrittenFile(true);
-      } catch (diagnosticError) {
-        console.warn(`    Could not write diagnostic ${errorFilePath}: ${diagnosticError.message}`);
-      }
+      reportExportFailure(error);
     }
   }
   

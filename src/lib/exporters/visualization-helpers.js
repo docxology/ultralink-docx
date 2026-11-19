@@ -20,6 +20,7 @@ const path = require('path');
  * @param {number} options.height - Height of the output PNG (defaults to source SVG height)
  * @param {number} options.density - Pixel density for conversion (higher values = sharper images)
  * @param {string} options.style - Visual style to apply ('default', 'colorful', 'grayscale', 'minimal')
+ * @param {boolean} options.throwOnError - Reject instead of returning fallback content (default: false)
  * @returns {Promise<Buffer>} Promise resolving to PNG buffer
  */
 async function enhancedSVGtoPNG(svgString, options = {}) {
@@ -107,6 +108,7 @@ async function enhancedSVGtoPNG(svgString, options = {}) {
     
     return pngBuffer;
   } catch (error) {
+    if (options.throwOnError) throw error;
     console.error('Error in enhancedSVGtoPNG:', error);
     // Return a proper fallback PNG
     return createFallbackPNG(options.width || 1200, options.height || 900, 
