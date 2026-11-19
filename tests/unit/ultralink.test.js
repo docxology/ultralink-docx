@@ -762,6 +762,42 @@ describe('UltraLink', () => {
       }
     });
 
+    it('binds archive fields to the edge returned by a receiver that also writes audit edges', () => {
+      ultralink.addEntity('a', 'node');
+      ultralink.addEntity('b', 'node');
+      const draft = ultralink.addLink('a', 'b', 'draft', { weight: 1 });
+      draft.metadata.origin = 'producer';
+      class Audited extends UltraLink {
+        addRelationship(source, target, type, attributes) {
+          super.addRelationship(source, target, 'audit', { attemptedType: type });
+          if (type === 'denied') throw new Error('denied by receiver');
+          return super.addRelationship(source, target, type.toLowerCase(), attributes);
+        }
+      }
+
+      for (const options of [{}, { compressed: true }]) {
+        ultralink.updateRelationship(draft.id, { type: 'denied' });
+        const receiver = new Audited();
+        expect(() => receiver.fromFullBlob(ultralink.toFullBlob(options))).toThrow('denied by receiver');
+        const audit = receiver.getRelationship('a_audit_b');
+        expect(audit.attributes).toEqual({ attemptedType: 'denied' });
+        expect(audit.metadata).not.toHaveProperty('origin');
+        expect(receiver.getRelationship(draft.id)).toBeNull();
+        expect(receiver.getBacklinks('b')).toEqual([audit]);
+
+        ultralink.updateRelationship(draft.id, { type: 'REVIEWED' });
+        const loaded = new Audited().fromFullBlob(ultralink.toFullBlob(options));
+        const accepted = loaded.getRelationship(draft.id);
+        const acceptedAudit = loaded.getRelationship('a_audit_b');
+        expect(acceptedAudit.metadata).not.toHaveProperty('origin');
+        expect(accepted).toMatchObject({ type: 'reviewed', attributes: { weight: 1 }, metadata: { origin: 'producer' } });
+        expect(loaded.getBacklinks('b')).toEqual([acceptedAudit, accepted]);
+        expect(loaded.links.get('a').get('b-draft')).toBe(accepted);
+        expect(loaded.deleteLink('a', 'b', 'draft')).toBe(true);
+        expect(loaded.getBacklinks('b')).toEqual([acceptedAudit]);
+      }
+    });
+
     it('preserves directional index order and canonical order after live compound ID reuse', () => {
       for (const id of ['a', 'c_d', 'q', 'd', 'a_b', 'other']) ultralink.addEntity(id, 'node');
       ultralink.addLink('a', 'c_d', 'b');

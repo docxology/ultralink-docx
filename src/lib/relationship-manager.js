@@ -24,34 +24,21 @@ const activeRestore = new WeakMap();
  */
 function addRelationship(sourceId, targetId, type, attributes = {}, options = {}) {
   const state = activeRestore.get(this);
-  const row = state?.row;
-  if (!row || row.source !== sourceId || row.target !== targetId) {
-    const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes);
-    state?.order?.add(relationship);
-    return relationship;
-  }
-  state.row = undefined;
+  if (!state) return storeRelationship.call(this, sourceId, targetId, type, attributes);
 
-  // Use the tuple accepted by the public override unless the archive supplied
-  // a stored ID. Never let a derived ID displace a reserved archive ID.
-  let id = state.archive ? row.id : undefined;
-  if (id === undefined) {
-    id = `${sourceId}_${type}_${targetId}`;
-    if (state.reserved.has(id)) {
-      id = nextRecoveryId(this.relationships, state);
-    } else {
-      const previous = this.relationships.get(id);
-      if (previous) recoverDisplacedEdge(this, previous, state);
-    }
+  let id = `${sourceId}_${type}_${targetId}`;
+  const previous = this.relationships.get(id);
+  if (previous && this.entities.has(sourceId) && this.entities.has(targetId)) {
+    if (state.reserved.has(id)) id = nextRecoveryId(this.relationships, state);
+    else recoverDisplacedEdge(this, previous, state);
   }
-  const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, {
-    id, metadata: row.metadata, archive: state.archive, legacyType: state.archive ? row.legacyType : undefined
-  });
+  const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
+  state.inserted.push(relationship);
   state.order?.add(relationship);
   return relationship;
 }
 
-function storeRelationship(sourceId, targetId, type, attributes, restored) {
+function storeRelationship(sourceId, targetId, type, attributes, storedId) {
   // Validate entities exist
   if (!this.entities.has(sourceId)) {
     throw new Error(`Source entity not found: ${sourceId}`);
@@ -61,7 +48,7 @@ function storeRelationship(sourceId, targetId, type, attributes, restored) {
   }
 
   // Create relationship object
-  const id = restored?.id ?? `${sourceId}_${type}_${targetId}`;
+  const id = storedId ?? `${sourceId}_${type}_${targetId}`;
   
   const relationship = {
     id,
@@ -74,8 +61,7 @@ function storeRelationship(sourceId, targetId, type, attributes, restored) {
       modified: new Date().toISOString()
     }
   };
-  if (isRecoveredId(id)) recoveredLegacyTypes.set(relationship, restored?.legacyType ?? String(type));
-  if (restored) restoreRowMetadata(relationship, restored.metadata, restored.archive);
+  if (isRecoveredId(id)) recoveredLegacyTypes.set(relationship, String(type));
   const key = legacyLinkKey(id, relationship);
 
   // A compound ID can be reused by a different endpoint tuple.
@@ -117,16 +103,20 @@ function storeRelationship(sourceId, targetId, type, attributes, restored) {
 }
 
 function restoreRelationships(rows, archive) {
-  const state = { archive: archive !== undefined, reserved: new Set(), nextId: 1 };
+  const state = { reserved: new Set(), nextId: 1, inserted: [] };
   const entries = archive ? reserveArchiveIds(rows, state.reserved) : rows;
   const previous = activeRestore.get(this);
   activeRestore.set(this, state);
   try {
     for (const row of entries) {
-      state.row = row;
-      // Published imports call both public hooks and pass the original four
-      // arguments. The store binds the ID only after any normalization.
-      this.addLink(row.source, row.target, row.type, row.attributes);
+      state.inserted.length = 0;
+      // Hooks may write other edges before returning or rejecting the row.
+      // Do not attach the wire ID or metadata to those writes.
+      const result = this.addLink(row.source, row.target, row.type, row.attributes);
+      const accepted = acceptedRelationship(this, state.inserted, row, result);
+      if (!accepted) continue;
+      if (archive && row.id !== undefined) bindArchiveId(this, accepted, row, state);
+      restoreRowMetadata(accepted, row.metadata, archive !== undefined);
     }
   } finally {
     if (previous) activeRestore.set(this, previous);
@@ -151,6 +141,40 @@ function restoreRelationships(rows, archive) {
     }
   }
   restoreLegacyMapOrder(this.links, this.entities, archive.legacyMapOrder);
+}
+
+function acceptedRelationship(graph, inserted, row, result) {
+  const live = edge => graph.relationships.get(edge.id) === edge;
+  if (inserted.includes(result) && live(result)) return result;
+  if (result !== undefined) return;
+
+  // Some published overrides delegated without returning. Only use an
+  // unambiguous matching insertion in that case, never an audit edge.
+  const type = row.type === undefined ? graph.config.defaultRelationshipType : row.type;
+  let match;
+  for (const edge of inserted) {
+    if (edge.source !== row.source || edge.target !== row.target || edge.type !== type || !live(edge)) continue;
+    if (match) return;
+    match = edge;
+  }
+  return match;
+}
+
+function bindArchiveId(graph, edge, row, state) {
+  const { id } = row;
+  const recovered = isRecoveredId(id);
+  if (!recovered && (edge.source !== row.source || edge.target !== row.target)) return;
+
+  const previous = graph.relationships.get(id);
+  if (previous && previous !== edge) recoverDisplacedEdge(graph, previous, state);
+  const oldKey = legacyLinkKey(edge.id, edge);
+  if (recovered) recoveredLegacyTypes.set(edge, row.legacyType ?? oldKey.slice(String(edge.target).length + 1));
+  const newKey = legacyLinkKey(id, edge);
+  if (oldKey !== newKey) {
+    removeLegacyLink(graph.links, oldKey, edge);
+    setLegacyLink(graph.links.get(edge.source), newKey, edge);
+  }
+  if (edge.id !== id) rekeyRelationship(graph, edge, id, state);
 }
 
 function reserveArchiveIds(rows, reserved) {
@@ -180,17 +204,20 @@ function nextRecoveryId(relationships, state) {
 }
 
 function recoverDisplacedEdge(graph, edge, state) {
-  state.order ??= new Set(graph.relationships.values());
-  const id = edge.id;
-  const recovered = nextRecoveryId(graph.relationships, state);
-  const key = legacyLinkKey(id, edge);
+  const key = legacyLinkKey(edge.id, edge);
   recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
-  edge.id = recovered;
-  graph.relationships.delete(id);
-  graph.relationships.set(recovered, edge);
+  rekeyRelationship(graph, edge, nextRecoveryId(graph.relationships, state), state);
+}
+
+function rekeyRelationship(graph, edge, id, state) {
+  state.order ??= new Set(graph.relationships.values());
+  const previousId = edge.id;
+  edge.id = id;
+  graph.relationships.delete(previousId);
+  graph.relationships.set(id, edge);
   for (const ids of [graph.relationshipsBySource.get(edge.source), graph.relationshipsByTarget.get(edge.target)]) {
-    ids.delete(id);
-    ids.add(recovered);
+    ids.delete(previousId);
+    ids.add(id);
   }
 }
 
