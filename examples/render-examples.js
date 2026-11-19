@@ -103,11 +103,14 @@ function writeFullBlobOutput(filePath, content, { followSymlink = false } = {}) 
   if (previous?.isSymbolicLink()) {
     if (followSymlink) {
       try {
-        filePath = fs.realpathSync(filePath);
+        filePath = fs.realpathSync.native(filePath);
       } catch (error) {
         if (error.code !== 'ENOENT') throw error;
-        // Preserve an existing link when its destination has not been written yet.
-        filePath = path.resolve(fs.realpathSync(path.dirname(filePath)), fs.readlinkSync(filePath));
+        // Resolve the parent on disk before adding the missing leaf.
+        const link = fs.readlinkSync(filePath);
+        if (link.endsWith(path.sep)) throw error;
+        const destination = path.isAbsolute(link) ? link : `${path.dirname(filePath)}${path.sep}${link}`;
+        filePath = path.join(fs.realpathSync.native(path.dirname(destination)), path.basename(destination));
       }
       previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
     } else {
