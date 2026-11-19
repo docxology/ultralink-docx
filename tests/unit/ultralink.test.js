@@ -729,6 +729,12 @@ describe('UltraLink', () => {
       const expected = {
         date: dt.toISOString(), projected: { key: 'projected', present: true }, items: [null, dt.toISOString()]
       };
+      if (typeof JSON.rawJSON === 'function') {
+        details.raw = JSON.rawJSON('21');
+        details.rawFromHook = { toJSON() { return JSON.rawJSON('42'); } };
+        details.rawLookalike = { rawJSON: '7' };
+        Object.assign(expected, { raw: 21, rawFromHook: 42, rawLookalike: { rawJSON: '7' } });
+      }
 
       const plain = ultralink.toJSON({ asString: false });
       expect(plain.entities[0]).not.toHaveProperty('metadata');

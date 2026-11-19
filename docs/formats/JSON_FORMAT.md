@@ -110,7 +110,8 @@ When directional lookup order differs from row order, `relationshipOrder`
 stores the affected groups of IDs under `outgoing` and `incoming`. A group
 contains all relationship IDs for one endpoint in lookup order.
 
-Row metadata follows JSON conversion rules, including `Date` and `toJSON()`.
+Row metadata follows JSON conversion rules, including `Date`, `toJSON()`,
+and `JSON.rawJSON()` on runtimes that provide it.
 Unsupported values and values that throw during conversion are omitted from
 objects and become `null` in arrays. Other metadata fields survive; the
 live graph is not changed. This applies only to optional entity and

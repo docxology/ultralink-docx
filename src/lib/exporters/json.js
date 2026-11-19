@@ -33,6 +33,7 @@ function jsonValue(value, ancestors) {
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
   if (typeof value === 'number') return Number.isFinite(value) ? value || 0 : null;
   if (typeof value !== 'object' || isBigIntObject(value) || ancestors.has(value)) return undefined;
+  if (JSON.isRawJSON?.(value)) return JSON.parse(value.rawJSON);
   if (isNumberObject(value)) return jsonValue(+value, ancestors);
   if (isStringObject(value)) return String(value);
   if (isBooleanObject(value)) return Boolean.prototype.valueOf.call(value);
