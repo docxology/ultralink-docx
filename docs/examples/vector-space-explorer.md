@@ -455,15 +455,13 @@ await vectorExplorer.toHtmlVectorViewer({
 
 ### 2D Vector Space Visualization
 
-This visualization shows the AI concepts and related entities projected into 2D space:
-
-![2D Vector Space](../assets/images/vector-space-2d.png)
+A 2D projection would place related concepts near one another. This guide
+does not include a generated plot.
 
 ### 3D Vector Space
 
-The 3D visualization provides another perspective on the relationships:
-
-![3D Vector Space](../assets/images/vector-space-3d.png)
+A 3D projection adds another dimension to the same comparison. No interactive
+explorer is published here.
 
 ### Similarity Heatmap
 
