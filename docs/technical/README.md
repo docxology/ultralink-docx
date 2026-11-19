@@ -2,38 +2,40 @@
 
 Welcome to the UltraLink technical documentation. This section provides in-depth information about the internals, architecture, and implementation details of UltraLink, designed for developers who want to understand how UltraLink works under the hood or contribute to its development.
 
+The architecture diagrams and linked design sections describe the system design, not a list of features implemented by the current checkout.
+
 ## Table of Contents
 
 1. [Architecture](#architecture)
-   - [System Overview](../architecture/overview.md)
-   - [Core Components](../architecture/components.md)
-   - [Data Flow](../architecture/data-flow.md)
-   - [Extension Points](../architecture/extensions.md)
+   - [System Overview](./architecture-details.md#system-overview)
+   - [Core Components](./architecture-details.md#component-breakdown)
+   - [Data Flow](./architecture-details.md#data-flow-diagrams)
+   - [Extension Points](./architecture-details.md#extensibility-architecture)
 
 2. [Core Systems](#core-systems)
-   - [Entity Store](./entity-store.md)
-   - [Relationship Manager](./relationship-manager.md)
-   - [Query Engine](./query-engine.md)
-   - [Vector Store](./vector-store.md)
-   - [Event System](./architecture/event-system.md)
+   - [Entity Store](#entity-store)
+   - [Relationship Manager](#relationship-manager)
+   - [Query Engine](#query-engine)
+   - [Vector Store](#vector-store)
+   - [Event System](#event-system)
 
 3. [Export & Import System](#export--import-system)
    - [Format Conversion](./format-conversion.md)
-   - [Exporter Architecture](./exporter-architecture.md)
-   - [Importer Architecture](./importer-architecture.md)
-   - [Validation System](./validation-system.md)
+   - [Exporter Architecture](./architecture-details.md#export-system-architecture)
+   - [Importer Architecture](../concepts/architecture.md#import-system)
+   - [Validation System](./architecture-details.md#validation-system)
 
 4. [Performance](#performance)
    - [Benchmarks](../performance/format-benchmarks.md)
-   - [Optimization Strategies](../performance/optimization.md)
-   - [Memory Management](../performance/memory-management.md)
-   - [Profiling](../performance/profiling.md)
+   - [Optimization Strategies](./architecture-details.md#performance-optimization)
+   - [Memory Management](./architecture-details.md#memory-management)
+   - [Profiling and Performance Tests](./testing-documentation.md#performance-tests)
 
 5. [Development](#development)
-   - [Development Setup](./contributing/development-setup.md)
-   - [Testing Strategy](./testing-strategy.md)
-   - [Contributing Guidelines](./contributing/contributing.md)
-   - [Code Style](./code-style.md)
+   - [Development Setup](../../INSTALLATION.md#development-setup)
+   - [Testing Strategy](./testing-documentation.md#testing-philosophy)
+   - [Contributing Guidelines](../../CONTRIBUTING.md)
+   - [Code Style](../../CONTRIBUTING.md#code-style)
 
 ## Architecture
 
@@ -64,7 +66,7 @@ graph TD
     Core --> Extensions
 ```
 
-For a detailed overview of UltraLink's architecture, see the [System Overview](../architecture/overview.md) document.
+For a detailed overview of UltraLink's architecture, see the [System Overview](./architecture-details.md#system-overview) section.
 
 ## Core Systems
 
@@ -137,7 +139,7 @@ Key performance considerations include:
 
 ## Development
 
-Contributing to UltraLink development requires an understanding of the codebase, development workflow, and coding standards. The [Development Setup](./contributing/development-setup.md) document provides instructions for setting up a development environment, while the [Contributing Guidelines](./contributing/contributing.md) outline the process for submitting changes.
+Contributing to UltraLink development requires an understanding of the codebase, development workflow, and coding standards. The [Development Setup](../../INSTALLATION.md#development-setup) section provides instructions for setting up a development environment, while the [Contributing Guidelines](../../CONTRIBUTING.md) outline the process for submitting changes.
 
 ```mermaid
 graph LR
