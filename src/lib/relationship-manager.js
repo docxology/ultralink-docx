@@ -11,7 +11,7 @@ const { restoreRowMetadata, stampRowModified } = require('./utils');
 // live records in write order so deleting that entry can restore its predecessor.
 const shadowedLegacyLinks = new WeakMap();
 const recoveredLegacyTypes = new WeakMap();
-const pendingLegacyRestore = new WeakMap();
+const activeRestore = new WeakMap();
 
 /**
  * Add a relationship between two entities
@@ -23,12 +23,32 @@ const pendingLegacyRestore = new WeakMap();
  * @returns {Object} The created relationship
  */
 function addRelationship(sourceId, targetId, type, attributes = {}, options = {}) {
-  const pending = pendingLegacyRestore.get(this);
-  if (pending && pending.source === sourceId && pending.target === targetId && pending.type === type) {
-    pendingLegacyRestore.delete(this);
-    return storeRelationship.call(this, sourceId, targetId, type, attributes, pending);
+  const state = activeRestore.get(this);
+  const row = state?.row;
+  if (!row || row.source !== sourceId || row.target !== targetId) {
+    const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes);
+    state?.order?.add(relationship);
+    return relationship;
   }
-  return storeRelationship.call(this, sourceId, targetId, type, attributes);
+  state.row = undefined;
+
+  // Use the tuple accepted by the public override unless the archive supplied
+  // a stored ID. Never let a derived ID displace a reserved archive ID.
+  let id = state.archive ? row.id : undefined;
+  if (id === undefined) {
+    id = `${sourceId}_${type}_${targetId}`;
+    if (state.reserved.has(id)) {
+      id = nextRecoveryId(this.relationships, state);
+    } else {
+      const previous = this.relationships.get(id);
+      if (previous) recoverDisplacedEdge(this, previous, state);
+    }
+  }
+  const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, {
+    id, metadata: row.metadata, archive: state.archive, legacyType: state.archive ? row.legacyType : undefined
+  });
+  state.order?.add(relationship);
+  return relationship;
 }
 
 function storeRelationship(sourceId, targetId, type, attributes, restored) {
@@ -54,7 +74,7 @@ function storeRelationship(sourceId, targetId, type, attributes, restored) {
       modified: new Date().toISOString()
     }
   };
-  if (isRecoveredId(id)) recoveredLegacyTypes.set(relationship, restored.legacyType ?? String(type));
+  if (isRecoveredId(id)) recoveredLegacyTypes.set(relationship, restored?.legacyType ?? String(type));
   if (restored) restoreRowMetadata(relationship, restored.metadata, restored.archive);
   const key = legacyLinkKey(id, relationship);
 
@@ -97,63 +117,21 @@ function storeRelationship(sourceId, targetId, type, attributes, restored) {
 }
 
 function restoreRelationships(rows, archive) {
-  const entries = [];
-  const explicit = new Set();
-  const lastImplicitById = new Map();
-  for (const row of rows) {
-    const { source, target } = row;
-    const type = row.type === undefined ? this.config.defaultRelationshipType : row.type;
-    const generatedId = `${source}_${type}_${target}`;
-    let id;
-    if (archive && typeof row.id === 'string') {
-      const prefix = `${source}_`;
-      const suffix = `_${target}`;
-      if (isRecoveredId(row.id) || (row.id.length >= prefix.length + suffix.length &&
-        row.id.startsWith(prefix) && row.id.endsWith(suffix))) id = row.id;
+  const state = { archive: archive !== undefined, reserved: new Set(), nextId: 1 };
+  const entries = archive ? reserveArchiveIds(rows, state.reserved) : rows;
+  const previous = activeRestore.get(this);
+  activeRestore.set(this, state);
+  try {
+    for (const row of entries) {
+      state.row = row;
+      // Published imports call both public hooks and pass the original four
+      // arguments. The store binds the ID only after any normalization.
+      this.addLink(row.source, row.target, row.type, row.attributes);
     }
-    if (id !== undefined && explicit.has(id)) id = undefined;
-    const entry = { row, type, generatedId, id };
-    if (id === undefined) {
-      // The published importer overwrote this ID on each write. Keep its last
-      // owner and recover the earlier rows without changing their order.
-      lastImplicitById.set(generatedId, entry);
-    } else {
-      explicit.add(id);
-    }
-    entries.push(entry);
-  }
-
-  let nextRecoveredId = 1;
-  for (const entry of entries) {
-    const { row, type, generatedId, id: storedId } = entry;
-    const { source, target, attributes, metadata } = row;
-    let id = storedId;
-    if (id === undefined) {
-      if (!explicit.has(generatedId) && lastImplicitById.get(generatedId) === entry) {
-        id = generatedId;
-      } else {
-        // Recovered IDs cannot alias a later addLink or deleteLink insertion tuple.
-        do {
-          id = `legacy:${nextRecoveredId++}`;
-        } while (explicit.has(id));
-      }
-    }
-    if (archive) {
-      const legacyType = storedId === id && typeof row.legacyType === 'string' ? row.legacyType : undefined;
-      storeRelationship.call(this, source, target, type, attributes, { id, metadata, archive: true, legacyType });
-    } else {
-      // Keep the published four-argument dispatch, including overrides that
-      // forward only those arguments. The normal insertion consumes this
-      // context before storing the edge so it never overwrites a collider.
-      const previous = pendingLegacyRestore.get(this);
-      pendingLegacyRestore.set(this, { source, target, type, id, metadata });
-      try {
-        this.addLink(source, target, row.type, attributes);
-      } finally {
-        if (previous) pendingLegacyRestore.set(this, previous);
-        else pendingLegacyRestore.delete(this);
-      }
-    }
+  } finally {
+    if (previous) activeRestore.set(this, previous);
+    else activeRestore.delete(this);
+    if (state.order) restoreImportedRowOrder(this, state.order);
   }
 
   if (!archive) return;
@@ -173,6 +151,62 @@ function restoreRelationships(rows, archive) {
     }
   }
   restoreLegacyMapOrder(this.links, this.entities, archive.legacyMapOrder);
+}
+
+function reserveArchiveIds(rows, reserved) {
+  const entries = [];
+  for (const row of rows) {
+    const { source, target } = row;
+    const prefix = `${source}_`;
+    const suffix = `_${target}`;
+    const id = row.id;
+    if (typeof id === 'string' && !reserved.has(id) &&
+        (isRecoveredId(id) || (id.length >= prefix.length + suffix.length &&
+          id.startsWith(prefix) && id.endsWith(suffix)))) {
+      reserved.add(id);
+      entries.push({ ...row, legacyType: typeof row.legacyType === 'string' ? row.legacyType : undefined });
+    } else {
+      entries.push({ ...row, id: undefined, legacyType: undefined });
+    }
+  }
+  return entries;
+}
+
+function nextRecoveryId(relationships, state) {
+  let id;
+  do id = `legacy:${state.nextId++}`;
+  while (state.reserved.has(id) || relationships.has(id));
+  return id;
+}
+
+function recoverDisplacedEdge(graph, edge, state) {
+  state.order ??= new Set(graph.relationships.values());
+  const id = edge.id;
+  const recovered = nextRecoveryId(graph.relationships, state);
+  const key = legacyLinkKey(id, edge);
+  recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
+  edge.id = recovered;
+  graph.relationships.delete(id);
+  graph.relationships.set(recovered, edge);
+  for (const ids of [graph.relationshipsBySource.get(edge.source), graph.relationshipsByTarget.get(edge.target)]) {
+    ids.delete(id);
+    ids.add(recovered);
+  }
+}
+
+function restoreImportedRowOrder(graph, order) {
+  // Rekeying the earlier row changes its Map/Set slot, not its row order.
+  // Reinsert the live imported records in their original order once.
+  for (const edge of order) {
+    const { id, source, target } = edge;
+    if (graph.relationships.get(id) !== edge) continue;
+    graph.relationships.delete(id);
+    graph.relationships.set(id, edge);
+    for (const ids of [graph.relationshipsBySource.get(source), graph.relationshipsByTarget.get(target)]) {
+      ids.delete(id);
+      ids.add(id);
+    }
+  }
 }
 
 function getLegacyLinkOrder() {

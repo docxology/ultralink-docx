@@ -706,31 +706,60 @@ describe('UltraLink', () => {
         }
         addRelationship(source, target, type, attributes) {
           calls.push(['relationship', source, target, type]);
-          return super.addRelationship(source, target, type, { ...attributes, normalized: true });
+          return super.addRelationship(source, target, type.toLowerCase(), { ...attributes, normalized: true });
         }
       }
       for (const id of ['a', 'c_d', 'a_b', 'd']) ultralink.addEntity(id, 'node');
-      ultralink.addLink('a', 'c_d', 'b', { weight: 1 });
+      ultralink.addLink('a', 'c_d', 'b_M', { weight: 1 });
       const later = ultralink.addLink('a_b', 'd', 'original', { weight: 2 });
-      ultralink.updateRelationship(later.id, { type: 'c' });
+      ultralink.updateRelationship(later.id, { type: 'M_c' });
       const restored = new Normalizing().fromFullBlob(ultralink.toJSON());
       expect(calls).toEqual([
-        ['link', 'a', 'c_d', 'b'], ['relationship', 'a', 'c_d', 'b'],
-        ['link', 'a_b', 'd', 'c'], ['relationship', 'a_b', 'd', 'c']
+        ['link', 'a', 'c_d', 'b_M'], ['relationship', 'a', 'c_d', 'b_M'],
+        ['link', 'a_b', 'd', 'M_c'], ['relationship', 'a_b', 'd', 'M_c']
       ]);
       const [earlier] = restored.getRelationships('a', { direction: 'outgoing' });
       expect(earlier.attributes).toEqual({ weight: 1, normalized: true });
-      expect(restored.links.get('a').get('c_d-b')).toBe(earlier);
-      expect(restored.getRelationship('a_b_c_d').attributes).toEqual({ weight: 2, normalized: true });
-      expect(restored.links.get('a_b').get('d-c')).toBe(restored.getRelationship('a_b_c_d'));
+      expect(restored.links.get('a').get('c_d-b_m')).toBe(earlier);
+      expect(restored.getRelationship('a_b_m_c_d').attributes).toEqual({ weight: 2, normalized: true });
+      expect(restored.links.get('a_b').get('d-m_c')).toBe(restored.getRelationship('a_b_m_c_d'));
 
       restored.updateRelationship(earlier.id, { type: 'edited' });
       const archived = new UltraLink().fromFullBlob(restored.toFullBlob());
-      expect(archived.links.get('a').get('c_d-b')).toEqual(earlier);
+      expect(archived.links.get('a').get('c_d-b_m')).toEqual(earlier);
       expect(archived.getBacklinks('c_d')).toEqual([earlier]);
       expect(archived.deleteRelationship(earlier.id)).toBe(true);
       expect(archived.links.get('a').size).toBe(0);
-      expect(archived.getRelationship('a_b_c_d').attributes.weight).toBe(2);
+      expect(archived.getRelationship('a_b_m_c_d').attributes.weight).toBe(2);
+    });
+
+    it('applies the receiver’s validation and normalization to producer Full Blobs', () => {
+      for (const id of ['a', 'b']) ultralink.addEntity(id, 'node');
+      const accepted = ultralink.addLink('a', 'b', 'ALLOWED', { weight: 2 });
+      const denied = ultralink.addLink('b', 'a', 'denied');
+      const calls = [];
+      class Guarded extends UltraLink {
+        addLink(source, target, type, attributes) {
+          calls.push(`link:${type}`);
+          return super.addLink(source, target, type, attributes);
+        }
+        addRelationship(source, target, type, attributes) {
+          calls.push(`relationship:${type}`);
+          if (type === 'denied') throw new Error('denied by receiver');
+          return super.addRelationship(source, target, type.toLowerCase(), { ...attributes, approved: true });
+        }
+      }
+      for (const input of [ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        calls.length = 0;
+        const receiver = new Guarded();
+        expect(() => receiver.fromFullBlob(input)).toThrow('denied by receiver');
+        expect(calls).toEqual(['link:ALLOWED', 'relationship:ALLOWED', 'link:denied', 'relationship:denied']);
+        expect(receiver.getRelationship(accepted.id)).toMatchObject({
+          type: 'allowed', attributes: { weight: 2, approved: true }
+        });
+        expect(receiver.getBacklinks('b')).toEqual([receiver.getRelationship(accepted.id)]);
+        expect(receiver.getRelationship(denied.id)).toBeNull();
+      }
     });
 
     it('preserves directional index order and canonical order after live compound ID reuse', () => {
@@ -871,6 +900,32 @@ describe('UltraLink', () => {
         expect(fields(text)).toEqual([...expected, ...expected]);
       }
     });
+
+    if (typeof JSON.rawJSON === 'function') {
+      it('re-exports exact versioned row metadata tokens after reading archive text', () => {
+        ultralink.addEntity('x', 'node').metadata = { toJSON: () => JSON.rawJSON('9007199254740993') };
+        ultralink.addEntity('y', 'node');
+        const edge = ultralink.addLink('x', 'y', 'reviewed', { regularNumber: 17 });
+        edge.metadata = { toJSON: () => ({ overflow: JSON.rawJSON('1e400'), nested: [JSON.rawJSON('1e-4000'), 19] }) };
+        const json = ultralink.toJSON({ lossless: true });
+        const full = ultralink.toFullBlob({ compressed: true });
+        const fields = text => {
+          const tokens = {};
+          JSON.parse(text, (key, value, context) => {
+            if (typeof value === 'number' && ['metadata', 'overflow', '0', '1'].includes(key)) tokens[key] = context.source;
+            return value;
+          });
+          return tokens;
+        };
+        for (const input of [json, full, { json }, { 'full-export.json': full }]) {
+          const receiver = new UltraLink().fromFullBlob(input);
+          expect(fields(receiver.toJSON({ lossless: true }))).toEqual({
+            metadata: '9007199254740993', overflow: '1e400', 0: '1e-4000', 1: '19'
+          });
+          expect(receiver.getRelationship(edge.id).attributes.regularNumber).toBe(17);
+        }
+      });
+    }
 
     it.each([
       ['string and number', 'catalog-v2', 37],

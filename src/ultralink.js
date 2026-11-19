@@ -28,6 +28,44 @@ function recordValues(records) {
   return records && typeof records === 'object' ? Object.values(records) : [];
 }
 
+function parseArchiveText(text) {
+  if (typeof JSON.rawJSON !== 'function') return JSON.parse(text);
+
+  // Record only numbers whose original spelling would change on stringify.
+  // Do not replace numbers in ordinary imports, graph attributes or summaries.
+  let tokens;
+  const parsed = JSON.parse(text, function (key, value, context) {
+    if (typeof value === 'number' && context?.source && context.source !== String(value)) {
+      tokens ??= new WeakMap();
+      let fields = tokens.get(this);
+      if (!fields) tokens.set(this, fields = new Map());
+      fields.set(key, context.source);
+    }
+    return value;
+  });
+  const graph = parsed?.json ?? parsed;
+  if (tokens && graph?.ultralinkArchiveVersion === ARCHIVE_VERSION) {
+    for (const collection of [graph.entities, graph.relationships]) {
+      for (const row of recordValues(collection)) {
+        if (row && Object.hasOwn(row, 'metadata')) restoreNumericTokens(row, 'metadata', tokens);
+      }
+    }
+  }
+  return parsed;
+}
+
+function restoreNumericTokens(holder, key, tokens) {
+  const token = tokens.get(holder)?.get(key);
+  if (token !== undefined) {
+    holder[key] = JSON.rawJSON(token);
+    return;
+  }
+  const value = holder[key];
+  if (value && typeof value === 'object') {
+    for (const child of Object.keys(value)) restoreNumericTokens(value, child, tokens);
+  }
+}
+
 /**
  * UltraLink class for knowledge graph management
  */
@@ -650,15 +688,15 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       if (options.compressed) {
         // Decompress the blob (in a real implementation)
         // For now, just parse it
-        data = JSON.parse(blob);
+        data = parseArchiveText(blob);
       } 
       // Handle string blobs
       else if (typeof blob === 'string') {
-        data = JSON.parse(blob);
+        data = parseArchiveText(blob);
       }
       // Handle the case where blob is a files object with 'full-export.json' key
       else if (blob['full-export.json']) {
-        data = JSON.parse(blob['full-export.json']);
+        data = parseArchiveText(blob['full-export.json']);
       } else {
         // Use object directly
         data = blob;
@@ -677,7 +715,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       data = data.json;
       if (typeof data === 'string') {
         try {
-          data = JSON.parse(data);
+          data = parseArchiveText(data);
         } catch (error) {
           console.warn('Error parsing JSON data in blob:', error);
           data = null;

@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Preserve the last legacy compound-ID owner's lookup and deletion behavior while retaining earlier rows.
 - Retain live legacy link maps after the last edge is removed and preserve their iteration order in archives.
 - Keep receiver graph metadata keys that JSON or Full Blob imports do not supply.
-- Preserve scalar and structured row metadata in versioned archives and route unversioned imports through public link overrides.
+- Restore row metadata values and exact numeric tokens in versioned archives; honor public link overrides for all imports.
 - Count each self-loop once in combined lookups. Preserve retry-safe deletion by insertion tuple after retyping.
 - Restore surviving edges behind colliding legacy link keys and export both edges with their actual endpoints in RxInfer.
 - Keep recovered edges under their original legacy keys and emit RxInfer self-loop attribute factors.

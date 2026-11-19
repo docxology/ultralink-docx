@@ -98,10 +98,10 @@ keys take precedence; omitted keys keep their receiver values. The automatic
 `exportDate`, `entityCount`, and `relationshipCount` fields are ignored.
 
 Only graphs marked with `"ultralinkArchiveVersion": 1` restore stored
-relationship IDs. Unversioned graphs derive IDs from the current tuples
-even if a row includes an `id`. The last row deriving a compound ID owns it,
-as in the published importer. Earlier rows are kept under opaque
-`legacy:<number>` IDs and keep the legacy key for the imported tuple.
+relationship IDs. Both import paths invoke the receiver's public relationship
+insertion methods. Unversioned rows ignore stored IDs and derive them from
+the accepted tuples. The last row deriving a compound ID owns it; earlier
+rows are kept under opaque `legacy:<number>` IDs and keep their legacy keys.
 `legacyType`, when present on a recovered row, stores its original legacy
 key's type across retyping. Use `deleteRelationship(id)` for recovered rows.
 
@@ -118,6 +118,9 @@ contains all relationship IDs for one endpoint in lookup order.
 Row metadata follows JSON conversion rules. A row-level `toJSON()` receives
 the key `"metadata"`. On runtimes supporting `JSON.rawJSON()`, archives keep
 branded values until serialization, preserving their exact JSON tokens.
+When reading archive text, runtimes with `JSON.parse` source tokens restore
+noncanonical row metadata numbers as raw JSON values so re-export cannot
+round or overflow them. Other graph fields retain native parsing behavior.
 Versioned imports restore supplied metadata values as-is, including
 scalars, `null`, arrays, and records, instead of merging in fresh timestamps.
 Unsupported values and values that throw during conversion are omitted from
