@@ -98,6 +98,18 @@ function writeOutput(filePath, content, isJson = false) {
   fs.writeFileSync(filePath, content);
 }
 
+function writeFullBlob(filePath, content) {
+  // Stage beside the destination so a failed write cannot truncate a prior blob.
+  const stagingDir = fs.mkdtempSync(path.join(path.dirname(filePath), '.full-blob-'));
+  try {
+    const stagedPath = path.join(stagingDir, path.basename(filePath));
+    writeOutput(stagedPath, content);
+    fs.renameSync(stagedPath, filePath);
+  } finally {
+    fs.rmSync(stagingDir, { recursive: true, force: true });
+  }
+}
+
 /**
  * Generate a placeholder D3.js visualization
  * @param {string} systemName - Name of the system
@@ -488,7 +500,7 @@ function generatePlaceholderBIF(systemName) {
 }
 
 /**
- * Generate placeholder binary content for compressed blobs
+ * Generate legacy placeholder content for programmatic callers, not renderer output.
  * @returns {Buffer} Placeholder binary content
  */
 function generatePlaceholderCompressedBlob(systemName) {
@@ -1123,17 +1135,11 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             console.log(`    🔄 Processing ${format} full-blob format...`);
             const outputPath = path.join(targetDir, filename.replace('{{system}}', systemName));
             try {
-              if (format === 'uncompressed') {
-                const blob = ultralink.toFullBlob({ compress: false, throwOnError: true });
-                if (saveFile(outputPath, JSON.stringify(blob, null, 2))) {
-                  console.log(`      ✅ Saved uncompressed blob to: ${outputPath}`);
-                }
-              } else {
-                console.log(`      🔧 Using placeholder compressed blob for ${systemName}`);
-                if (saveFile(outputPath, generatePlaceholderCompressedBlob(systemName), { warning: true })) {
-                  console.log(`      ✅ Saved compressed blob to: ${outputPath}`);
-                }
-              }
+              const compressed = format === 'compressed';
+              const blob = ultralink.toFullBlob({ compressed, throwOnError: true });
+              writeFullBlob(outputPath, compressed ? blob : JSON.stringify(blob, null, 2));
+              recordWrittenFile(false);
+              console.log(`      ✅ Saved ${format} blob to: ${outputPath}`);
             } catch (error) {
               reportExportFailure(error, `ERROR-${format}.txt`);
             }

@@ -130,6 +130,13 @@ The PNG exporter's 1×1 placeholder is a warning, not a successful graph PNG.
 SVG or text returned in place of a PNG is a format failure and is not saved
 under a PNG filename.
 
+Each system's `full-blob` directory contains `<system>-full.json` (pretty JSON)
+and `<system>-full-compressed.blob` (the library's compact JSON Full Blob, not
+a binary archive). To restore the compact file, pass its UTF-8 text to
+`new UltraLink().fromFullBlob(text, { compressed: true })`. A failed Full Blob
+serialization or write leaves the prior file in place and reports a separate
+`ERROR-uncompressed.txt` or `ERROR-compressed.txt` diagnostic.
+
 ## Documentation
 
 ### Visualization Guide
