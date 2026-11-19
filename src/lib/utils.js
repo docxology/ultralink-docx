@@ -202,6 +202,9 @@ function getErrorMessage(error) {
   }
 }
 
+// Distinguish built-in graph validation from errors deliberately thrown by hooks.
+class GraphValidationError extends Error {}
+
 function restoreRowMetadata(row, metadata, archive) {
   if (metadata === undefined) return;
   if (isMetadataRecord(metadata)) {
@@ -230,5 +233,6 @@ module.exports = {
   parseValue,
   restoreRowMetadata,
   stampRowModified,
+  GraphValidationError,
   getErrorMessage
 }; 

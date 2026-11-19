@@ -716,21 +716,39 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       return this;
     }
 
+    const previous = {
+      entities: this.entities,
+      relationships: this.relationships,
+      relationshipsBySource: this.relationshipsBySource,
+      relationshipsByTarget: this.relationshipsByTarget,
+      links: this.links
+    };
+    const previousMetadata = Object.getOwnPropertyDescriptor(this, 'metadata');
     this.clear();
 
-    // Export summaries describe the wire payload, not authored graph metadata.
-    const { exportDate, entityCount, relationshipCount, ...metadata } = data?.metadata ?? {};
-    if (Object.keys(metadata).length > 0) this.metadata = { ...this.metadata, ...metadata };
-    const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
-      data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
-    for (const { id, type, attributes, metadata } of entities) {
-      const result = this.addEntity(id, type, attributes);
-      // Overrides may return nothing or the receiver for chaining.
-      const entity = this.entities.get(id) ??
-        (this.entities.get(result?.id) === result ? result : undefined);
-      if (entity) Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
+    try {
+      // Export summaries describe the wire payload, not authored graph metadata.
+      const { exportDate, entityCount, relationshipCount, ...metadata } = data.metadata ?? {};
+      if (Object.keys(metadata).length > 0) this.metadata = { ...this.metadata, ...metadata };
+      const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
+        data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
+      for (const { id, type, attributes, metadata } of entities) {
+        const result = this.addEntity(id, type, attributes);
+        // Overrides may return nothing or the receiver for chaining.
+        const entity = this.entities.get(id) ??
+          (this.entities.get(result?.id) === result ? result : undefined);
+        if (entity) Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
+      }
+      RelationshipManager.restoreRelationships.call(this, relationships, archive);
+    } catch (error) {
+      // Validate the graph the hooks actually insert, not the raw wire tuples.
+      if (error instanceof Utils.GraphValidationError) {
+        Object.assign(this, previous);
+        if (previousMetadata) Object.defineProperty(this, 'metadata', previousMetadata);
+        else delete this.metadata;
+      }
+      throw error;
     }
-    RelationshipManager.restoreRelationships.call(this, relationships, archive);
     
     return this;
   }

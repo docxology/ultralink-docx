@@ -5,7 +5,7 @@
  * between entities in the knowledge graph.
  */
 
-const { restoreRowMetadata, stampRowModified } = require('./utils');
+const { GraphValidationError, restoreRowMetadata, stampRowModified } = require('./utils');
 
 // The legacy map exposes only its latest write for a key. Keep displaced
 // live records in write order so deleting that entry can restore its predecessor.
@@ -66,10 +66,10 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
 function storeRelationship(sourceId, targetId, type, attributes, storedId) {
   // Validate entities exist
   if (!this.entities.has(sourceId)) {
-    throw new Error(`Source entity not found: ${sourceId}`);
+    throw new GraphValidationError(`Source entity not found: ${sourceId}`);
   }
   if (!this.entities.has(targetId)) {
-    throw new Error(`Target entity not found: ${targetId}`);
+    throw new GraphValidationError(`Target entity not found: ${targetId}`);
   }
 
   // Create relationship object

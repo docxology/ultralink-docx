@@ -122,6 +122,10 @@ from the tuples accepted by the receiver. The last row owns each compound ID;
 earlier rows get distinct recovery IDs but keep their `target-type` legacy keys.
 `fromFullBlob` decodes and checks the graph records before replacing the
 receiver. A decoding or record-shape error leaves its contents unchanged.
+If built-in insertion validation rejects a duplicate entity or an unresolved
+endpoint, the original graph is restored and the error is thrown. Endpoint
+validation applies to the values passed by the receiver's hooks, not the raw
+record. This does not roll back custom hook side effects.
 Entity-row metadata is attached to the stored entity, even when an override
 returns the receiver for chaining or returns nothing. For relationships, the
 importer uses the edge the hook returns.

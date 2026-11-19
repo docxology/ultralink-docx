@@ -594,6 +594,52 @@ describe('UltraLink', () => {
       }
     });
 
+    it('keeps the original graph when stock insertion rejects an import', () => {
+      const author = ultralink.addEntity('author', 'person');
+      ultralink.addEntity('paper', 'document');
+      const original = ultralink.addLink('author', 'paper', 'reviewed');
+      const legacyLinks = ultralink.links.get('author');
+      const metadata = { provenance: 'receiver' };
+      ultralink.metadata = metadata;
+      const replacement = { id: 'replacement', type: 'person' };
+
+      for (const [records, message] of [
+        [{ entities: [replacement, replacement] }, 'Entity with ID "replacement" already exists'],
+        [{
+          entities: [replacement],
+          relationships: [{ source: 'replacement', target: 'missing', type: 'reviewed' }]
+        }, 'Target entity not found: missing']
+      ]) {
+        const input = JSON.stringify({ ...records, metadata: { provenance: 'archive' } });
+        expect(() => ultralink.fromFullBlob(input)).toThrow(message);
+        expect(ultralink.metadata).toBe(metadata);
+        expect(ultralink.getEntity('author')).toBe(author);
+        expect(ultralink.getEntity('replacement')).toBeNull();
+        expect(ultralink.getBacklinks('paper')).toEqual([original]);
+        expect(ultralink.getRelationships('author', { direction: 'outgoing' })).toEqual([original]);
+        expect(ultralink.links.get('author')).toBe(legacyLinks);
+        expect(legacyLinks.get('paper-reviewed')).toBe(original);
+      }
+    });
+
+    it('validates imported endpoints after the receiver normalizes them', () => {
+      class NormalizesEndpoints extends UltraLink {
+        addLink(source, target, type, attributes) {
+          return super.addLink(source, target.toLowerCase(), type, attributes);
+        }
+      }
+      const graph = new NormalizesEndpoints();
+      graph.addEntity('previous', 'node');
+      graph.fromFullBlob({
+        entities: [{ id: 'author', type: 'person' }, { id: 'paper', type: 'document' }],
+        relationships: [{ source: 'author', target: 'PAPER', type: 'reviewed', attributes: { weight: 2 } }]
+      });
+      const edge = graph.getRelationship('author_reviewed_paper');
+      expect(edge.attributes.weight).toBe(2);
+      expect(graph.getBacklinks('paper')).toEqual([edge]);
+      expect(graph.getEntity('previous')).toBeNull();
+    });
+
     it('imports nested stock JSON from root text and Full Blob envelopes', () => {
       const details = { contributors: [{ name: 'Author', roles: ['writer'] }], metrics: { score: 2 } };
       ultralink.addEntity('author_team', 'person', { details });
