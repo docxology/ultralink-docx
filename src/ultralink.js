@@ -685,7 +685,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       }
     }
 
-    this.metadata = { ...data?.metadata };
+    if (data?.metadata != null) this.metadata = { ...data.metadata };
     if (data?.entities) {
       for (const { id, type, attributes, metadata } of recordValues(data.entities)) {
         const entity = this.addEntity(id, type, attributes);
@@ -698,11 +698,11 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
   }
 
   /**
-   * Delete by the insertion tuple, or by an unambiguous current tuple
+   * Delete by the insertion tuple, which remains unchanged after retyping
    * @param {string} sourceId - Source entity ID
    * @param {string} targetId - Target entity ID
-   * @param {string} type - Relationship type
-   * @returns {boolean} True if deleted; false if missing or ambiguous
+   * @param {string} type - Relationship type at insertion
+   * @returns {boolean} True if the insertion tuple matched a live edge
    */
   deleteLink(sourceId, targetId, type) {
     const id = `${sourceId}_${type}_${targetId}`;
@@ -712,19 +712,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
     if (relationship && relationship.source === sourceId && relationship.target === targetId) {
       return this.deleteRelationship(id);
     }
-
-    // Without an insertion match, delete only a unique current-tuple match.
-    const outgoing = this.relationshipsBySource.get(sourceId);
-    if (!outgoing) return false;
-    let match;
-    for (const candidateId of outgoing) {
-      const candidate = this.relationships.get(candidateId);
-      if (candidate.target === targetId && candidate.type === type) {
-        if (match !== undefined) return false;
-        match = candidateId;
-      }
-    }
-    return match !== undefined && this.deleteRelationship(match);
+    return false;
   }
 
   /**

@@ -95,11 +95,10 @@ Combined relationship lookups return a self-loop once; it still appears in
 both the outgoing and incoming directional lookups.
 
 `updateRelationship(id, { type })` keeps the relationship ID. `deleteLink`
-first matches the source, target, and type used to insert the edge, even if
-another edge now has that type. If no insertion tuple matches, it deletes a
-single match by current source, target, and type. It returns `false` if the
-current tuple has zero or multiple matches. Use `deleteRelationship(id)` to
-select an edge directly.
+matches the source, target, and type used to insert the edge, not its current
+type. It returns `false` when that insertion tuple no longer exists, even if
+another edge now has that type. To select by current type, first query the
+relationships, then pass the selected edge's ID to `deleteRelationship(id)`.
 
 The legacy `ultralink.links` map retains one entry per `target-insertionType`
 key. If distinct edges share that key, it shows the latest write and restores
@@ -115,6 +114,8 @@ including relationships whose current tuples are identical after retyping.
 Legacy rows without IDs still import. If two legacy rows would get the same
 compound ID, import assigns a distinct ID rather than dropping an edge; it
 cannot recover an original ID that the old export did not store.
+If the imported graph omits graph-level metadata, the receiver keeps its
+existing metadata.
 
 ## Querying the Knowledge Graph
 

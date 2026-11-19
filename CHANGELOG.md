@@ -36,7 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keep Obsidian links and backlinks on the correct notes after relationship ID reuse.
 - Keep outgoing relationships and backlinks on the correct entities after deletion and reuse of compound relationship IDs.
 - Keep distinct retyped edges, their stored IDs, and metadata when importing JSON or Full Blob exports.
-- Count each self-loop once in combined lookups. Preserve deletion by insertion tuple after retyping, with unambiguous current-type fallback.
+- Preserve existing graph metadata when a legacy import omits it.
+- Count each self-loop once in combined lookups. Preserve retry-safe deletion by insertion tuple after retyping.
 - Restore surviving edges behind colliding legacy link keys and export both edges with their actual endpoints in RxInfer.
 - Generate real graph SVG in synchronous Full Blob exports and runnable Python scenes for Manim.
 - Restore discovered export test entrypoints and include all non-performance suites in `npm test`.

@@ -334,7 +334,7 @@ describe('UltraLink', () => {
       expect(ultralink.getRelationships('person1')).toEqual([secondLoop, outward, inward]);
     });
 
-    it('deletes by current type after retyping without changing the relationship ID', () => {
+    it('finds a retyped edge by current type and deletes it by its stable ID', () => {
       const original = ultralink.addLink('person1', 'document1', 'authored', { contribution: 'draft' });
       const id = original.id;
       const other = ultralink.addLink('person1', 'document1', 'reviewed');
@@ -342,12 +342,13 @@ describe('UltraLink', () => {
         id, type: 'edited', attributes: { contribution: 'draft' }
       });
       expect(ultralink.getBacklinks('document1', { type: 'edited' })).toEqual([original]);
-      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(true);
+      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(false);
+      expect(ultralink.deleteRelationship(id)).toBe(true);
       expect(ultralink.getRelationship(id)).toBeNull();
       expect(ultralink.getBacklinks('document1')).toEqual([other]);
     });
 
-    it('deletes the insertion edge when another edge has acquired its original type', () => {
+    it('retries an insertion-tuple deletion without deleting a retyped parallel edge', () => {
       const drafted = ultralink.addLink('person1', 'document1', 'drafted', { weight: 1 });
       const reviewed = ultralink.addLink('person1', 'document1', 'reviewed', { weight: 2 });
       ultralink.updateRelationship(drafted.id, { type: 'edited' });
@@ -355,6 +356,7 @@ describe('UltraLink', () => {
 
       expect(ultralink.deleteLink('person1', 'document1', 'drafted')).toBe(true);
       expect(ultralink.getRelationship(drafted.id)).toBeNull();
+      expect(ultralink.deleteLink('person1', 'document1', 'drafted')).toBe(false);
       expect(ultralink.getRelationship(reviewed.id)).toMatchObject({
         id: reviewed.id, type: 'drafted', attributes: { weight: 2 }
       });
@@ -362,7 +364,7 @@ describe('UltraLink', () => {
       expect(ultralink.getRelationships('person1', { direction: 'outgoing' })).toEqual([reviewed]);
     });
 
-    it('prefers the matching canonical ID and refuses an otherwise ambiguous current tuple', () => {
+    it('never uses the current type to select a different edge for tuple deletion', () => {
       const a = ultralink.addLink('person1', 'document1', 'authored');
       const b = ultralink.addLink('person1', 'document1', 'reviewed');
       const exact = ultralink.addLink('person1', 'document1', 'edited');
@@ -375,7 +377,9 @@ describe('UltraLink', () => {
       expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(false);
       expect(ultralink.getBacklinks('document1')).toEqual([a, b]);
       expect(ultralink.deleteRelationship(a.id)).toBe(true);
-      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(true);
+      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(false);
+      expect(ultralink.getBacklinks('document1')).toEqual([b]);
+      expect(ultralink.deleteLink('person1', 'document1', 'reviewed')).toBe(true);
       expect(ultralink.getBacklinks('document1')).toEqual([]);
     });
 
@@ -505,6 +509,26 @@ describe('UltraLink', () => {
     
     beforeEach(() => {
       ultralink = new UltraLink({ preventOverwrite: true });
+    });
+
+    it('retains receiver metadata when a legacy mapped graph omits it', () => {
+      ultralink.metadata = { name: 'Existing graph catalog', provenance: { source: 'local catalog' } };
+      ultralink.addEntity('stale', 'person');
+      const legacy = {
+        entities: { author: { id: 'author_team', type: 'person' }, paper: { id: 'paper_v1', type: 'document' } },
+        relationships: { link: { source: 'author_team', target: 'paper_v1', type: 'reviewed', attributes: { weight: 2 } } }
+      };
+
+      ultralink.fromFullBlob(legacy);
+      expect(ultralink.getEntity('stale')).toBeNull();
+      expect(ultralink.getBacklinks('paper_v1')).toMatchObject([{ type: 'reviewed', attributes: { weight: 2 } }]);
+      expect(ultralink.toJSON({ asString: false }).metadata).toMatchObject({
+        name: 'Existing graph catalog', provenance: { source: 'local catalog' }
+      });
+
+      const metadata = { name: 'Imported graph', provenance: { source: 'archive' } };
+      ultralink.fromFullBlob({ json: JSON.stringify({ ...legacy, metadata }) });
+      expect(ultralink.toJSON({ asString: false }).metadata).toMatchObject(metadata);
     });
 
     it('restores independent retyped edges with stable IDs, metadata and deletion indexes', () => {
