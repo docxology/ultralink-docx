@@ -198,7 +198,7 @@ class RxInferExporter {
       // Add vector if requested and available
       if (includeVectors && entity.vector && entity.vector.length > 0) {
         const vecVarName = this._sanitizeVariableName(`${entity.id}_vec`);
-        const vecDist = this._getDistributionForVector(entity.vector);
+        const vecDist = this._getMultivariateNormal(entity.vector.length);
         code += `    ${vecVarName} ~ ${vecDist}\n`;
       }
     }
@@ -360,13 +360,13 @@ class RxInferExporter {
         
       case 'location':
       case 'place':
-        return 'MvNormal(zeros(2), I)'; // 2D location
+        return this._getMultivariateNormal(2);
         
       case 'measurement':
       case 'observation':
       case 'reading':
       case 'score':
-        return 'Normal(0.0, 1.0)'; // Continuous value
+        return 'Normal(mean = 0.0, variance = 1.0)'; // Continuous value
         
       case 'probability':
       case 'rate':
@@ -380,7 +380,7 @@ class RxInferExporter {
       default:
         // For unknown types, try to infer from attributes
         if (this._hasNumericAttributes(entity)) {
-          return 'Normal(0.0, 1.0)';
+          return 'Normal(mean = 0.0, variance = 1.0)';
         } else if (this._hasBooleanAttributes(entity)) {
           return 'Bernoulli(0.5)';
         } else {
@@ -404,7 +404,7 @@ class RxInferExporter {
       } else if (Number.isInteger(value) && value >= 0) {
         return 'Poisson(1.0)';
       } else {
-        return 'Normal(0.0, 1.0)';
+        return 'Normal(mean = 0.0, variance = 1.0)';
       }
     } else if (typeof value === 'boolean') {
       return 'Bernoulli(0.5)';
@@ -416,14 +416,14 @@ class RxInferExporter {
   }
   
   /**
-   * Get appropriate distribution for a vector
+   * Emit a zero-mean Gaussian with identity covariance for the given dimension.
    * @private
-   * @param {Array} vector - Vector array
+   * @param {number} dimension - Location or vector dimension
    * @returns {string} Distribution code
    */
-  _getDistributionForVector(vector) {
-    const dim = vector.length;
-    return `MvNormal(zeros(${dim}), I)`;
+  _getMultivariateNormal(dimension) {
+    // Resolve helpers in the defining module rather than the model's variable scope.
+    return `MvNormal(mean = (@__MODULE__).Base.zeros(${dimension}), covariance = (@__MODULE__).RxInfer.diageye(${dimension}))`;
   }
   
   /**
@@ -441,7 +441,8 @@ class RxInferExporter {
       case 'influences':
       case 'affects':
       case 'impacts':
-        return `${targetVar} ~ Normal(${sourceVar}, exp(-${sourceVar}))`;
+        // The old positional second argument was standard deviation, not variance.
+        return `${targetVar} ~ Normal(mean = ${sourceVar}, variance = exp(-2.0 * ${sourceVar}))`;
         
       case 'contains':
       case 'includes':
@@ -452,7 +453,7 @@ class RxInferExporter {
       case 'connected_to':
       case 'associated_with':
       case 'linked_to':
-        return `${targetVar} ~ Normal(0.5 * ${sourceVar}, 1.0)`;
+        return `${targetVar} ~ Normal(mean = 0.5 * ${sourceVar}, variance = 1.0)`;
         
       case 'depends_on':
       case 'requires':
@@ -469,7 +470,7 @@ class RxInferExporter {
         
       default:
         // Default to simple normal relationship
-        return `${targetVar} ~ Normal(0.1 * ${sourceVar}, 1.0)`;
+        return `${targetVar} ~ Normal(mean = 0.1 * ${sourceVar}, variance = 1.0)`;
     }
   }
   

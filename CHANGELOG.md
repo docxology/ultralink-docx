@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved visualization robustness across all supported systems
 
 ### Fixed
+- Emit keyword-parameterized Gaussian factors for RxInfer 6.1.3 and resolve multivariate Gaussian helpers in the defining module so model variables cannot shadow them.
 - Preserve research graph metadata in JSON and round-trip nested CSV and GraphML attributes.
 - Export an offline HTML website with working graph controls, theme assets, and custom CSS and JavaScript files.
 - Search exported websites by relationship type or attributes, preserve links for quoted IDs,
