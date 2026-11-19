@@ -7,6 +7,7 @@
  */
 
 const { UltraLink } = require('../../src');
+const { createEnhancedResearchTeamDataset } = require('../fixtures/research-team-llm');
 const fs = require('fs');
 const path = require('path');
 
@@ -552,6 +553,23 @@ describe('UltraLink', () => {
       ultralink.fromFullBlob(exportGraph(source));
       expect(ultralink.getBacklinks('paper_v1')).toEqual([edge]);
       expect(ultralink.metadata).toEqual(source.metadata);
+    });
+
+    it.each([
+      ['JSON', graph => graph.toJSON()],
+      ['Full Blob', graph => graph.toFullBlob()]
+    ])('merges bundled Research Team metadata by key when importing %s', (_format, exportGraph) => {
+      const source = createEnhancedResearchTeamDataset();
+      const catalog = { name: 'Local catalog', provenance: { source: 'local registry' } };
+      ultralink.metadata = { ...catalog, graph_metrics: { stale: true } };
+
+      ultralink.fromFullBlob(exportGraph(source));
+
+      const { entities, relationships } = ultralink.toJSON({ asString: false });
+      const exported = source.toJSON({ asString: false });
+      expect(entities).toEqual(exported.entities);
+      expect(relationships).toEqual(exported.relationships);
+      expect(ultralink.metadata).toEqual({ ...catalog, ...source.metadata });
     });
 
     it('restores independent retyped edges with stable IDs, metadata and deletion indexes', () => {

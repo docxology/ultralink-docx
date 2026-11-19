@@ -114,8 +114,8 @@ including relationships whose current tuples are identical after retyping.
 Legacy rows without IDs still import. If two legacy rows would get the same
 compound ID, import assigns a distinct ID rather than dropping an edge; it
 cannot recover an original ID that the old export did not store.
-If the imported graph omits authored graph metadata or includes only the
-automatic export summary, the receiver keeps its existing metadata.
+Imported authored graph metadata replaces matching top-level keys and leaves
+other receiver keys intact. The automatic export summary is ignored.
 
 ## Querying the Knowledge Graph
 
