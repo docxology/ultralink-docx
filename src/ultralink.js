@@ -22,6 +22,12 @@ const zlib = require('zlib');
 const BayesianNetworkExporter = require('./lib/exporters/bayesian-network');
 const RxInferExporter = require('./lib/exporters/rxinfer');
 
+function recordValues(records) {
+  if (records instanceof Map) return records.values();
+  if (records && typeof records[Symbol.iterator] === 'function') return records;
+  return records && typeof records === 'object' ? Object.values(records) : [];
+}
+
 /**
  * UltraLink class for knowledge graph management
  */
@@ -664,95 +670,26 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
     // Clear existing data
     this.clear();
     
-    // Extract entities from the JSON data
-    if (data.json) {
-      let jsonData;
-      
-      // Handle case where data.json is a string that needs to be parsed
-      if (typeof data.json === 'string') {
+    // Full Blob wraps the graph in `json`; legacy exports store it at the root.
+    if (data?.json) {
+      data = data.json;
+      if (typeof data === 'string') {
         try {
-          jsonData = JSON.parse(data.json);
-        } catch (e) {
-          console.warn('Error parsing JSON data in blob:', e);
-          jsonData = { entities: [], relationships: [] };
-        }
-      } else {
-        jsonData = data.json;
-      }
-      
-      // Process entities
-      if (jsonData.entities) {
-        // Handle case where entities is a Map or object
-        const entities = jsonData.entities;
-        if (typeof entities[Symbol.iterator] !== 'function') {
-          // Convert to array if it's an object with entries
-          if (typeof entities === 'object') {
-            const entitiesArray = Object.values(entities);
-            for (const entity of entitiesArray) {
-              this.addEntity(entity.id, entity.type, entity.attributes);
-            }
-          }
-        } else {
-          // It's already iterable (array)
-          for (const entity of entities) {
-            this.addEntity(entity.id, entity.type, entity.attributes);
-          }
-        }
-        
-        // Process relationships
-        if (jsonData.relationships) {
-          const relationships = jsonData.relationships;
-          if (typeof relationships[Symbol.iterator] !== 'function') {
-            // Convert to array if it's an object with entries
-            if (typeof relationships === 'object') {
-              const relationshipsArray = Object.values(relationships);
-              for (const rel of relationshipsArray) {
-                this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-              }
-            }
-          } else {
-            // It's already iterable (array)
-            for (const rel of relationships) {
-              this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-            }
-          }
+          data = JSON.parse(data);
+        } catch (error) {
+          console.warn('Error parsing JSON data in blob:', error);
+          data = null;
         }
       }
-    } else if (data.entities) {
-      // Handle legacy format where entities are directly in the data object
-      // Handle case where entities is a Map or object
-      if (typeof data.entities[Symbol.iterator] !== 'function') {
-        // Convert to array if it's an object with entries
-        if (typeof data.entities === 'object') {
-          const entitiesArray = Object.values(data.entities);
-          for (const entity of entitiesArray) {
-            this.addEntity(entity.id, entity.type, entity.attributes);
-          }
-        }
-      } else {
-        // It's already iterable (array)
-        for (const entity of data.entities) {
-          this.addEntity(entity.id, entity.type, entity.attributes);
-        }
+    }
+
+    this.metadata = { ...data?.metadata };
+    if (data?.entities) {
+      for (const { id, type, attributes, metadata } of recordValues(data.entities)) {
+        const entity = this.addEntity(id, type, attributes);
+        entity.metadata = { ...entity.metadata, ...metadata };
       }
-      
-      // Process relationships from legacy format
-      if (data.relationships) {
-        if (typeof data.relationships[Symbol.iterator] !== 'function') {
-          // Convert to array if it's an object with entries
-          if (typeof data.relationships === 'object') {
-            const relationshipsArray = Object.values(data.relationships);
-            for (const rel of relationshipsArray) {
-              this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-            }
-          }
-        } else {
-          // It's already iterable (array)
-          for (const rel of data.relationships) {
-            this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-          }
-        }
-      }
+      RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships));
     }
     
     return this;

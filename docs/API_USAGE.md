@@ -108,12 +108,12 @@ every outgoing edge. `createSubset(...).links` also uses a flattened legacy
 key, so it cannot represent both edges with the same key. Making either map
 lossless would require a new key or value contract.
 
-JSON and Full Blob relationship rows still omit IDs. Import reconstructs each
-ID from the current source, type, and target. If retyping makes two live
-records produce the same reconstructed ID (for example, when their current
-tuples become identical), import cannot recover their separate identities.
-A lossless round trip for this case would require a versioned format or an
-explicit import policy.
+JSON and Full Blob exports include the stored relationship IDs and metadata.
+Use `new UltraLink().fromFullBlob(ultralink.toJSON())` to restore graph data,
+including relationships whose current tuples are identical after retyping.
+Legacy rows without IDs still import. If two legacy rows would get the same
+compound ID, import assigns a distinct ID rather than dropping an edge; it
+cannot recover an original ID that the old export did not store.
 
 ## Querying the Knowledge Graph
 

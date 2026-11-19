@@ -421,14 +421,14 @@ describe('UltraLink', () => {
       expect(ultralink.getBacklinks('y-x_y')).toEqual([]);
     });
 
-    it('exports both legacy-key colliders by actual endpoints and round-trips their unchanged JSON shape', () => {
+    it('round-trips legacy-key colliders with distinct IDs and actual endpoints', () => {
       for (const id of ['anchor', 'station_north', 'station_north-old']) ultralink.addEntity(id, 'location');
       const a = ultralink.addLink('anchor', 'station_north', 'old-route', { weight: 1 });
       const b = ultralink.addLink('anchor', 'station_north-old', 'route', { weight: 2 });
       const json = ultralink.toJSON();
       const relationships = [
-        { source: 'anchor', target: 'station_north', type: 'old-route', attributes: { weight: 1 } },
-        { source: 'anchor', target: 'station_north-old', type: 'route', attributes: { weight: 2 } }
+        { id: a.id, source: 'anchor', target: 'station_north', type: 'old-route', attributes: { weight: 1 }, metadata: a.metadata },
+        { id: b.id, source: 'anchor', target: 'station_north-old', type: 'route', attributes: { weight: 2 }, metadata: b.metadata }
       ];
       expect(JSON.parse(json).relationships).toEqual(relationships);
 
@@ -498,6 +498,64 @@ describe('UltraLink', () => {
     
     beforeEach(() => {
       ultralink = new UltraLink({ preventOverwrite: true });
+    });
+
+    it('restores independent retyped edges with stable IDs, metadata and deletion indexes', () => {
+      ultralink.metadata = { name: 'Round trip', provenance: { source: 'review' } };
+      const author = ultralink.addEntity('author_team', 'person', { name: 'Author' });
+      Object.assign(author.metadata, { created: '2020-01-01T00:00:00.000Z', locale: 'en' });
+      ultralink.addEntity('paper_v1', 'document');
+      const drafted = ultralink.addLink(author.id, 'paper_v1', 'first_draft', { weight: 1, notes: ['edit'] });
+      Object.assign(drafted.metadata, { created: '2020-01-02T00:00:00.000Z', provenance: { batch: 1 } });
+      const reviewed = ultralink.addLink(author.id, 'paper_v1', 'reviewed', { weight: 2 });
+      ultralink.updateRelationship(drafted.id, { type: 'reviewed' });
+      const json = ultralink.toJSON();
+      const blob = ultralink.toFullBlob();
+      const rows = JSON.parse(json);
+      expect(rows.relationships).toEqual([drafted, reviewed]);
+      expect(rows.entities.find(entity => entity.id === author.id)).toEqual(author);
+
+      for (const input of [json, blob, { json }, { 'full-export.json': JSON.stringify(blob) },
+        { entities: { author: rows.entities[0], paper: rows.entities[1] },
+          relationships: { draft: rows.relationships[0], review: rows.relationships[1] } }]) {
+        const restored = new UltraLink().fromFullBlob(input);
+        expect(restored.getEntity(author.id)).toEqual(author);
+        expect(restored.getBacklinks('paper_v1', { type: 'reviewed' })).toEqual([drafted, reviewed]);
+        expect(restored.getRelationship(drafted.id)).toEqual(drafted);
+        expect(restored.deleteLink(author.id, 'paper_v1', 'first_draft')).toBe(true);
+        expect(restored.getRelationships(author.id, { direction: 'outgoing' })).toEqual([reviewed]);
+        expect(restored.getBacklinks('paper_v1')).toEqual([reviewed]);
+      }
+
+      const restored = new UltraLink().fromFullBlob(blob);
+      expect(restored.toJSON({ asString: false }).metadata).toMatchObject(ultralink.metadata);
+    });
+
+    it('preserves ID-less legacy collisions without stealing explicit or tuple-derived IDs', () => {
+      const source = 'author_team';
+      const target = 'paper_v1';
+      const common = { source, target, type: 'reviewed' };
+      const explicitId = `${source}_reviewed_${target}`;
+      const ordinaryId = `${source}_reviewed~2_${target}`;
+      const payload = {
+        entities: { person: { id: source, type: 'person' }, paper: { id: target, type: 'document' } },
+        relationships: {
+          first: { ...common, attributes: { weight: 1 }, metadata: { created: '2019-08-01T00:00:00.000Z', origin: 'legacy' } },
+          second: { ...common, attributes: { weight: 2 } },
+          explicit: { ...common, id: explicitId, attributes: { weight: 3 } },
+          ordinary: { ...common, type: 'reviewed~2', id: 'legacy-label', attributes: { weight: 4 } }
+        }
+      };
+      const restored = new UltraLink().fromFullBlob({ json: JSON.stringify(payload) });
+      const edges = restored.getBacklinks(target);
+      expect(edges.map(edge => edge.attributes.weight)).toEqual([1, 2, 3, 4]);
+      expect(new Set(edges.map(edge => edge.id)).size).toBe(4);
+      expect(restored.getRelationship(explicitId).attributes.weight).toBe(3);
+      expect(restored.getRelationship(ordinaryId).attributes.weight).toBe(4);
+      expect(edges[0].metadata).toMatchObject({ created: '2019-08-01T00:00:00.000Z', origin: 'legacy' });
+      expect(new UltraLink().fromFullBlob(restored.toJSON()).getBacklinks(target)).toEqual(edges);
+      expect(restored.deleteRelationship(edges[0].id)).toBe(true);
+      expect(restored.getBacklinks(target)).toEqual(edges.slice(1));
     });
     
     it('should export and import a full blob', () => {

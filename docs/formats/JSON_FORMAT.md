@@ -41,6 +41,7 @@ graph TD
     F --> F3[type]
     F --> F4[attributes]
     F --> F5[metadata]
+    F --> F6[id]
 ```
 
 ### Entity Representation
@@ -71,6 +72,7 @@ Each relationship is represented as:
 
 ```json
 {
+  "id": "source-entity-id_relationship-type_target-entity-id",
   "source": "source-entity-id",
   "target": "target-entity-id",
   "type": "relationship-type",
@@ -84,6 +86,16 @@ Each relationship is represented as:
   }
 }
 ```
+
+`id` is the stored relationship ID, not an encoding of the current `type`.
+It remains stable after `updateRelationship(id, { type })`. `fromFullBlob()`
+accepts either this JSON graph directly or the JSON component of a Full Blob,
+including legacy object maps of records. It restores matching compound IDs,
+attributes, and supplied graph, entity, and relationship metadata. Legacy
+relationship rows without a usable ID derive one from the current tuple;
+if that ID is reserved or already used, import assigns a distinct compound ID
+with a numeric `~` suffix in its type segment without changing the current
+type. The original IDs are not recoverable from ID-less exports.
 
 ## Usage
 

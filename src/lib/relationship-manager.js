@@ -19,6 +19,10 @@ const shadowedLegacyLinks = new WeakMap();
  * @returns {Object} The created relationship
  */
 function addRelationship(sourceId, targetId, type, attributes = {}, options = {}) {
+  return storeRelationship.call(this, sourceId, targetId, type, attributes);
+}
+
+function storeRelationship(sourceId, targetId, type, attributes, storedId, metadata) {
   // Validate entities exist
   if (!this.entities.has(sourceId)) {
     throw new Error(`Source entity not found: ${sourceId}`);
@@ -28,7 +32,7 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   }
 
   // Create relationship object
-  const id = `${sourceId}_${type}_${targetId}`;
+  const id = storedId ?? `${sourceId}_${type}_${targetId}`;
   
   const relationship = {
     id,
@@ -38,10 +42,11 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
     attributes: { ...attributes },
     metadata: {
       created: new Date().toISOString(),
-      modified: new Date().toISOString()
+      modified: new Date().toISOString(),
+      ...metadata
     }
   };
-  const key = `${targetId}-${type}`;
+  const key = storedId === undefined ? `${targetId}-${type}` : legacyLinkKey(id, relationship);
 
   // A compound ID can be reused by a different endpoint tuple.
   const previous = this.relationships.get(id);
@@ -79,6 +84,43 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   setLegacyLink(this.links.get(sourceId), key, relationship, previous);
 
   return relationship;
+}
+
+function restoreRelationships(rows) {
+  const entries = [];
+  const explicit = new Set();
+  const reserved = new Set();
+  for (const row of rows) {
+    const { source, target } = row;
+    const type = row.type === undefined ? this.config.defaultRelationshipType : row.type;
+    const generatedId = `${source}_${type}_${target}`;
+    const prefix = `${source}_`;
+    const suffix = `_${target}`;
+    // Older formats may contain unrelated IDs. Only accept stored IDs whose
+    // endpoints can be verified without splitting on underscores.
+    const id = typeof row.id === 'string' && row.id.length >= prefix.length + suffix.length &&
+      row.id.startsWith(prefix) && row.id.endsWith(suffix) ? row.id : undefined;
+    if (id !== undefined) explicit.add(id);
+    reserved.add(id ?? generatedId);
+    entries.push({ row, type, generatedId, id });
+  }
+
+  const nextSuffix = new Map();
+  for (const { row, type, generatedId, id: storedId } of entries) {
+    const { source, target, attributes, metadata } = row;
+    let id = storedId ?? generatedId;
+    if (storedId === undefined && (explicit.has(id) || this.relationships.has(id))) {
+      // Legacy rows without IDs can still describe independent live edges.
+      // Reserve all known IDs first so a generated suffix cannot steal one.
+      let suffix = nextSuffix.get(generatedId) ?? 2;
+      do {
+        id = `${source}_${type}~${suffix++}_${target}`;
+      } while (reserved.has(id));
+      nextSuffix.set(generatedId, suffix);
+      reserved.add(id);
+    }
+    storeRelationship.call(this, source, target, type, attributes, id, metadata);
+  }
 }
 
 /**
@@ -307,6 +349,7 @@ function getEntityRelationships(entityId, options = {}) {
 
 module.exports = {
   addRelationship,
+  restoreRelationships,
   getRelationship,
   updateRelationship,
   deleteRelationship,

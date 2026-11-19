@@ -22,7 +22,8 @@ function toJSON(ultralink, options = {}) {
     const entityObj = {
       id: entity.id,
       type: entity.type,
-      attributes: entity.attributes || {}
+      attributes: entity.attributes || {},
+      metadata: entity.metadata
     };
     
     if (includeVectors && entity.vector) {
@@ -36,10 +37,12 @@ function toJSON(ultralink, options = {}) {
   const relationships = [];
   for (const rel of ultralink.relationships.values()) {
     relationships.push({
+      id: rel.id,
       source: rel.source,
       target: rel.target,
       type: rel.type,
-      attributes: rel.attributes || {}
+      attributes: rel.attributes || {},
+      metadata: rel.metadata
     });
   }
   
