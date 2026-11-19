@@ -555,15 +555,13 @@ await researchTeam.toHtmlWebsite({
 
 ### Team Network
 
-This visualization shows the team collaboration network:
-
-![Team Network](../assets/images/research-team-network.png)
+The team network represents collaborations. To generate a local graph from the
+bundled dataset, see [Rendering Examples](../../examples/README.md#rendering-examples).
 
 ### Project Assignments
 
-This visualization shows how team members are assigned to projects:
-
-![Project Assignments](../assets/images/project-assignments.png)
+A project assignments view would show which members contribute to each project.
+This guide does not include that visualization.
 
 ### Expertise Coverage
 

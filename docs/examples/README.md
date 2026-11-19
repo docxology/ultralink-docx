@@ -1,6 +1,8 @@
 # UltraLink Examples
 
-This directory contains comprehensive examples of how to use UltraLink in various scenarios. Each example includes detailed code samples, explanations, and visualizations.
+These written examples illustrate how to model different domains. Some snippets
+use proposed or older interfaces and are not runnable as-is. For executable
+examples from this checkout, see [Getting Started with Examples](#getting-started-with-examples).
 
 ```mermaid
 mindmap
@@ -35,8 +37,6 @@ This example demonstrates how to use UltraLink to model a complex natural ecosys
 - Relationships between organisms and their environment
 - Temporal changes in the ecosystem
 
-![Desert Ecosystem Model](../assets/images/desert-ecosystem.png)
-
 ### [Active Inference Lab](active-inference-lab.md)
 
 This example shows how to model a scientific research laboratory, including:
@@ -46,8 +46,6 @@ This example shows how to model a scientific research laboratory, including:
 - Publications and their connections to researchers
 - Experiments and their data
 - Conceptual relationships in the research domain
-
-![Active Inference Lab Model](../assets/images/active-inference-lab-network.png)
 
 ## Team & Organization Examples
 
@@ -61,13 +59,11 @@ This example demonstrates how to model and analyze a research team's structure:
 - Collaboration networks and mentorship
 - Expertise gaps and team optimization
 
-![Research Team Expertise](../assets/images/project-assignments.png)
-
 ## Analysis & Exploration Examples
 
 ### [Vector Space Explorer](vector-space-explorer.md)
 
-This example shows how to create an interactive vector space explorer:
+This modeling overview sketches a vector space explorer:
 
 - Vector embeddings for semantic analysis
 - Dimensionality reduction techniques (t-SNE, UMAP, PCA)
@@ -75,34 +71,21 @@ This example shows how to create an interactive vector space explorer:
 - Interactive 2D and 3D visualizations
 - Semantic relationship discovery
 
-![Vector Space Explorer](../assets/images/vector-space-2d.png)
-
 ## Getting Started with Examples
 
-To run any of these examples, you'll need to:
+Follow [Development Setup](../../INSTALLATION.md#development-setup) to clone
+this repository and install its dependencies. From the repository root, use
+[Rendering Examples](../../examples/README.md#rendering-examples) to run the
+bundled renderer for the Desert Ecosystem, Active Inference Lab, Research Team,
+and other included datasets. It saves files locally; this index does not host
+the rendered outputs.
 
-1. Install UltraLink following the [installation instructions](../../INSTALLATION.md)
-2. Download the example code from the GitHub repository
-3. Install any additional dependencies listed in each example
-4. Run the example code using Node.js
-
-For example:
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/ultralink.git
-cd ultralink
-
-# Install dependencies
-npm install
-
-# Run an example
-node examples/desert-ecosystem.js
-```
+To build a small graph yourself, start with
+[Build your first graph](../README.md#getting-started).
 
 ## Extending the Examples
 
-Each example is designed to be modular and extensible. You can:
+You can use these modeling overviews to plan your own graph. For example, you can:
 
 - Add new entity types to model additional aspects
 - Modify the relationships to reflect different domain knowledge

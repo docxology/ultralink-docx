@@ -124,31 +124,26 @@ UltraLink comes with comprehensive documentation to help you get the most out of
 - [Visualization Guide](docs/VISUALIZATION_GUIDE.md) - How to create and customize visualizations
 - [Export Formats](docs/EXPORT_FORMATS.md) - Detailed information about all export formats
 - [Testing Guide](docs/TESTING.md) - How to run and extend the test suite
-- [Project Status](docs/PROJECT_STATUS.md) - Current status, recent enhancements, and known limitations
+- [Dated Project Status](docs/PROJECT_STATUS.md) - Historical progress and limitations
 
-For installation instructions, see the [Installation Guide](INSTALLATION.md).
+To install and run UltraLink from this repository, see [Development Setup](INSTALLATION.md#development-setup).
 
 ## 📄 Table of Contents
 
 - [🌟 Overview](#-overview)
 - [🚀 Key Features](#-key-features)
-- [🏁 Getting Started](#-getting-started)
-- [🏗️ Architecture](#-architecture)
-- [🌈 Use Cases](#-use-cases)
-- [📊 Interactive Dashboard](#-interactive-dashboard)
-- [📲 Installation Methods](#-installation-methods)
-- [💻 API Examples](#-api-examples)
-- [⚙️ Configuration](#-configuration)
-- [🧩 Integrations](#-integrations)
-- [🔍 Advanced Features](#-advanced-features)
-- [📚 Documentation](#-documentation)
-- [🤝 Community & Support](#-community--support)
-- [🛣️ Roadmap](#-roadmap)
+- [Build your first graph](docs/README.md#getting-started)
+- [Architecture: System Overview](docs/technical/architecture-details.md#system-overview)
+- [🎨 Interactive Exploration](#-interactive-exploration)
+- [📋 API Usage Guide](#-api-usage-guide)
+- [📚 Documentation Resources](#-documentation-resources)
+- [Community Support](docs/contributing/community-support.md)
+- [Historical development roadmap](docs/contributing/roadmap.md#developer-experience-ongoing)
 - [📄 Export Formats](#-export-formats)
 - [🧪 Testing & Rendering](#-testing--rendering)
 - [📝 Changelog](CHANGELOG.md)
 - [🔒 Security](docs/security/security.md)
-- [⚙️ Installation](INSTALLATION.md)
+- [Installation guide (includes older registry examples)](INSTALLATION.md)
 - [🤔 FAQ](#-faq)
 - [📄 License](#-license)
 - [🌟 Acknowledgements](#-acknowledgements)
@@ -303,7 +298,8 @@ timeline
 ```
 
 ### 🎨 Interactive Exploration
-Explore and understand complex relationships through interactive dashboards:
+Export a graph as an HTML website to explore it locally. The diagram below
+illustrates dashboard design ideas, not a hosted demo or a list of supported views.
 
 ```mermaid
 graph TB
@@ -582,7 +578,7 @@ UltraLink is licensed under the [MIT License](License.md).
 - [📖 API Reference](docs/api/README.md)
 - [🔗 Syntax & Semantics](docs/core-features/syntax-and-semantics.md)
 - [📊 Examples](docs/examples/README.md)
-- [🚀 Getting Started](docs/getting-started/README.md)
+- [Older Getting Started guides](docs/getting-started/README.md) — background material; use the first-graph walkthrough above for setup
 - [🔒 Security](docs/security/security.md)
 
 ## 📝 Recent Updates
