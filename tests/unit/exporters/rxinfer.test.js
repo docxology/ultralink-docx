@@ -64,6 +64,19 @@ describe('RxInferExporter', () => {
     expect(model).toContain(' ~ Normal(mean = 0.1 * signal, variance = 1.0)');
     expect(model).toMatch(/^\s*\w+_offset ~ Normal\(mean = 0\.0, variance = 1\.0\)$/m);
   });
+
+  test('keeps identity covariance callable when an entity is named diageye', () => {
+    const ultralink = new UltraLink();
+    const event = ultralink.addEntity('diageye', 'event');
+    event.vector = [0.1, 0.2, 0.3];
+    ultralink.addEntity('site', 'location');
+
+    const model = ultralink.toRxInfer({ includeVectors: true });
+
+    expect(model).toContain('diageye ~ Bernoulli(0.5)');
+    expect(model).toContain('site ~ MvNormal(mean = zeros(2), covariance = RxInfer.diageye(2))');
+    expect(model).toContain('diageye_vec ~ MvNormal(mean = zeros(3), covariance = RxInfer.diageye(3))');
+  });
   
   // Test options handling
   test('should respect export options', () => {
@@ -73,7 +86,6 @@ describe('RxInferExporter', () => {
     const entity = ultralink.addEntity('concept1', 'concept', {
       name: 'Deep Learning'
     });
-    ultralink.addEntity('site', 'location');
     
     // Manually add vector to the entity
     entity.vector = [0.1, 0.2, 0.3];
@@ -92,8 +104,7 @@ describe('RxInferExporter', () => {
     console.log("Vector test output:", rxinferWithVectors);
     
     expect(rxinferWithoutVectors).not.toContain('concept1_vec');
-    expect(rxinferWithVectors).toContain('concept1_vec ~ MvNormal(mean = zeros(3), covariance = diageye(3))');
-    expect(rxinferWithVectors).toContain('site ~ MvNormal(mean = zeros(2), covariance = diageye(2))');
+    expect(rxinferWithVectors).toContain('concept1_vec ~');
     
     // Test model name option
     const customName = ultralink.toRxInfer({

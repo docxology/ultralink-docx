@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved visualization robustness across all supported systems
 
 ### Fixed
-- Emit keyword-parameterized Gaussian factors so RxInfer 6.1.3 can construct generated models without changing their means, variances, or graph structure.
+- Emit keyword-parameterized Gaussian factors and qualify the identity covariance helper so RxInfer 6.1.3 can construct generated models without changing their means, variances, or graph structure.
 - Preserve research graph metadata in JSON and round-trip nested CSV and GraphML attributes.
 - Export an offline HTML website with working graph controls, theme assets, and custom CSS and JavaScript files.
 - Search exported websites by relationship type or attributes, preserve links for quoted IDs,

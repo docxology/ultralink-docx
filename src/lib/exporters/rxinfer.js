@@ -360,7 +360,7 @@ class RxInferExporter {
         
       case 'location':
       case 'place':
-        return 'MvNormal(mean = zeros(2), covariance = diageye(2))'; // 2D location
+        return 'MvNormal(mean = zeros(2), covariance = RxInfer.diageye(2))'; // 2D location
         
       case 'measurement':
       case 'observation':
@@ -423,7 +423,7 @@ class RxInferExporter {
    */
   _getDistributionForVector(vector) {
     const dim = vector.length;
-    return `MvNormal(mean = zeros(${dim}), covariance = diageye(${dim}))`;
+    return `MvNormal(mean = zeros(${dim}), covariance = RxInfer.diageye(${dim}))`;
   }
   
   /**
