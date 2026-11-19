@@ -80,7 +80,9 @@ mindmap
 
 ### Getting Started
 
-[Clone the repository and install its dependencies](../INSTALLATION.md#development-setup). From the repository root, run this example to create two entities, link them, and print the graph as JSON:
+Use Node.js 22.23.5, the version tested for this setup. [Clone the repository and install its dependencies](../INSTALLATION.md#development-setup).
+
+From the repository root, run this example to create two entities, link them, and print the graph as JSON:
 
 ```bash
 node <<'JS'
