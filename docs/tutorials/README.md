@@ -22,8 +22,8 @@ below to build on your first graph.
 - [Exporting data](../API_USAGE.md#exporting-data) — call the export methods on a
   populated graph. Start with JSON for structured data or CSV for separate
   entity and relationship tables.
-- [GraphML reference](../formats/GRAPHML_FORMAT.md#data-model-mapping) — see how
-  entities and relationships map to XML nodes and edges.
+- `toGraphML()` returns XML. Node types use the `type` data key;
+  relationship types use `relationship_type`.
 - [Obsidian reference](../formats/OBSIDIAN_FORMAT.md#data-model-mapping) — see
   how entities and relationships map to Markdown notes and wiki-links.
 
@@ -41,12 +41,14 @@ analysis tool. Dedicated Neo4j, Python, and React tutorials are not published he
 
 ## Applied Examples
 
+Use these overviews for modeling ideas, not as runnable walkthroughs. Both
+guides' Setup sections call `defineEntityType`, which the shipped API does
+not provide. Use the first-graph walkthrough above for runnable code.
+
 - [Research team](../examples/research-team.md#overview) — model team members,
   projects, expertise, and collaborations.
 - [Desert ecosystem](../examples/desert-ecosystem.md#overview) — model organisms,
   environmental factors, and their relationships.
-
-These sections are written modeling examples, not setup or run instructions.
 
 ## Video Tutorials
 
