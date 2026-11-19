@@ -262,6 +262,7 @@ class UltraLink {
    * @param {number} options.height - Height of the visualization in pixels
    * @param {boolean} options.useSystemTemplate - Whether to use system-specific templated visualizations 
    * @param {string} options.systemName - Name of the system for system-specific visualizations
+   * @param {boolean} options.throwOnError - Surface visualization generation errors instead of returning fallbacks (default: false)
    * @returns {Promise<Object>} Visualization output (format depends on options.format)
    */
   async toVisualization(options = {}) {

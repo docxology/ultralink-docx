@@ -124,6 +124,115 @@ describe('Statistics Tracking in Render Examples', () => {
     });
   });
 
+  test.each([
+    {
+      scenario: 'Symbol-valued KIF attribute', stage: 'kif', message: 'replace',
+      files: [['kif/{system}.kif', 'ERROR-kif.txt']]
+    },
+    {
+      scenario: 'Bayesian entity named constructor', stage: 'bayesian', message: 'includes is not a function',
+      files: [['bayesian/{system}-bayesian.json', 'ERROR-bayesian.txt']]
+    },
+    {
+      scenario: 'Symbol-valued RxInfer entity type', stage: 'rxinfer', message: 'RxInfer.jl export failed',
+      files: ['model', 'model-with-constraints', 'model-with-test']
+        .map(format => [`rxinfer/{system}-${format}.jl`, `ERROR-${format}.txt`])
+    },
+    {
+      scenario: 'unprintable Full Blob node label', stage: 'full-blob', message: 'Cannot convert object to primitive value',
+      files: [['full-blob/{system}-full.json', 'ERROR-uncompressed.txt']]
+    },
+    {
+      scenario: 'missing visualization node attributes', stage: 'visualization', message: "reading 'name'",
+      files: ['.svg', '.png', '-radial.png', '-grid.png', '-cluster.png', '.d3.js', '.cytoscape.js']
+        .map(ext => [`visualization/{lower}-graph${ext}`, `ERROR-{lower}-graph${ext}.txt`])
+    },
+    {
+      scenario: 'unserializable interactive visualization label', stage: 'visualization', message: 'BigInt',
+      files: ['d3', 'cytoscape']
+        .map(format => [`visualization/{lower}-graph.${format}.js`, `ERROR-{lower}-graph.${format}.js.txt`])
+    }
+  ])('preserves output after a $scenario generation error', async spec => {
+    await withNativeRenderer(async (root, runNode) => {
+      await runNode('-e', `
+        const assert = require('node:assert/strict');
+        const fs = require('node:fs');
+        const path = require('node:path');
+        const { UltraLink } = require('./src');
+        const { renderSystem } = require('./examples/render-examples.js');
+        const { scenario, stage, message, files } = JSON.parse(process.argv[1]);
+
+        const factory = (id, fail = false) => () => {
+          const graph = new UltraLink({ systemName: 'Car' });
+          const attributes = { name: id, detail: 'native fixture' };
+          let type = 'node';
+          if (fail) {
+            switch (scenario) {
+              case 'Symbol-valued KIF attribute': attributes.detail = Symbol('unrenderable'); break;
+              case 'Bayesian entity named constructor': id = 'constructor'; break;
+              case 'Symbol-valued RxInfer entity type': type = Symbol('unrenderable'); break;
+              case 'unprintable Full Blob node label': attributes.name = { toString: null }; break;
+              case 'unserializable interactive visualization label': attributes.name = 1n; break;
+            }
+          }
+          const entity = graph.addEntity(id, type, attributes);
+          graph.store.entities[id] = entity;
+          if (fail && scenario === 'missing visualization node attributes') entity.attributes = null;
+          return graph;
+        };
+        const paths = system => files.map(([name, diagnostic]) => {
+          const expand = value => value.replace('{system}', system).replace('{lower}', system.toLowerCase());
+          const output = path.join('examples', 'output', 'systems', system, expand(name));
+          return [output, path.join(path.dirname(output), expand(diagnostic))];
+        });
+        const readValid = (file, entity) => {
+          const content = fs.readFileSync(file);
+          if (file.endsWith('.png')) {
+            assert.equal(content.readBigUInt64BE(0), 0x89504e470d0a1a0an);
+            assert.deepEqual([content.readUInt32BE(16), content.readUInt32BE(20)], [1200, 900]);
+          } else {
+            assert.ok(content.includes(entity), file + ' does not describe ' + entity);
+          }
+          return content;
+        };
+        const checkFailure = result => {
+          assert.equal(result.ok, false);
+          const failures = result.failures.filter(failure => failure.stage === stage);
+          assert.equal(failures.length, files.length);
+          assert.ok(failures.every(failure => failure.message.includes(message)), JSON.stringify(failures));
+          assert.equal(result.stats.formats[stage].errors, files.length);
+          assert.ok(result.stats.formats[stage].warnings >= files.length);
+        };
+
+        (async () => {
+          const outputs = paths('Rerender');
+          const good = await renderSystem('Rerender', factory('baseline'));
+          assert.equal(good.ok, true);
+          const before = outputs.map(([file]) => readValid(file, 'baseline'));
+
+          checkFailure(await renderSystem('Rerender', factory('proposed', true)));
+          outputs.forEach(([file, diagnostic], i) => {
+            assert.deepEqual(fs.readFileSync(file), before[i], file);
+            assert.ok(fs.readFileSync(diagnostic, 'utf8').includes(message), diagnostic);
+          });
+
+          checkFailure(await renderSystem('Fresh', factory('proposed', true)));
+          for (const [file, diagnostic] of paths('Fresh')) {
+            assert.equal(fs.existsSync(file), false, file);
+            assert.ok(fs.readFileSync(diagnostic, 'utf8').includes(message), diagnostic);
+          }
+
+          const recovered = await renderSystem('Rerender', factory('recovered'));
+          assert.equal(recovered.ok, true);
+          outputs.forEach(([file], i) => assert.notDeepEqual(readValid(file, 'recovered'), before[i], file));
+        })().catch(error => {
+          console.error(error);
+          process.exitCode = 1;
+        });
+      `, JSON.stringify(spec));
+    });
+  });
+
   test('counts real diagnostics but rejects SVG bytes from the PNG exporter', async () => {
     await withNativeRenderer(async (root, runNode) => {
       await runNode('-e', `
