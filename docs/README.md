@@ -1,6 +1,6 @@
 # UltraLink Documentation
 
-Welcome to the official documentation for UltraLink, a powerful JavaScript library for creating, managing, and exporting knowledge graphs with advanced vector integration and LLM capabilities. This comprehensive documentation will guide you through all aspects of UltraLink, from basic installation to advanced use cases.
+Welcome to the official documentation for UltraLink, a JavaScript library for creating, managing, and exporting knowledge graphs. Start with installation and basic usage, or explore the available export formats.
 
 > **Documentation Standard**: All diagrams in the UltraLink documentation use Mermaid syntax for consistency, clarity, and maintainability. This ensures diagrams are both visually appealing and can be properly rendered in various documentation formats.
 
@@ -9,8 +9,6 @@ Welcome to the official documentation for UltraLink, a powerful JavaScript libra
 UltraLink is a meta-linking paradigm for managing and analyzing relational content with:
 
 - **Flexible rendering system** that transforms knowledge into multiple target formats
-- **Vector embeddings** for semantic similarity
-- **LLM-generated insights** for advanced content analysis
 - **Deterministic deployment** capabilities
 - **Temporal analysis** to track knowledge evolution
 
@@ -69,10 +67,8 @@ mindmap
     API Reference
       Core API
       Export API
-      Working with Events
     Integration
       Format Integration
-      Database Integration
     Performance
       Benchmarks
       Optimization
@@ -117,8 +113,6 @@ Understand UltraLink's core differentiating features:
 
 - [Syntax and Semantics](./core-features/syntax-and-semantics.md) - The fundamental model and syntax of UltraLink
 - [Rendering Flexibility](./core-features/rendering-flexibility.md) - The power of UltraLink's format-agnostic approach
-- [Vector Integration](./core-features/vector-integration.md) - Working with semantic vector embeddings
-- [LLM Capabilities](./core-features/llm-capabilities.md) - Enhancing knowledge graphs with AI
 - [Temporal Analysis](./core-features/temporal-analysis.md) - Tracking knowledge evolution over time
 
 ### [Architecture](./architecture/README.md)
@@ -136,33 +130,24 @@ Dive into the technical details of UltraLink:
 - [Format Conversion](./technical/format-conversion.md)
 - [Entity Store](./technical/README.md#entity-store)
 - [Vector Store](./technical/README.md#vector-store)
-- [Event System](./architecture/event-system.md)
 
 ### [Tutorials](./tutorials/README.md)
 
-Step-by-step tutorials to help you master UltraLink:
+Create, query, and export your first knowledge graph:
 
 - [Getting Started with UltraLink](./tutorials/getting-started.md)
-- [Vector Embeddings and Semantic Search](./tutorials/vector-embeddings.md)
-- [LLM Integration](./tutorials/llm-integration.md)
 
-### [API Reference](./api/README.md)
+### API Reference
 
-Detailed API reference documentation:
-
-- [UltraLink Core API](./api/ultralink-core.md)
+- [Creating Entities](./API_USAGE.md#creating-entities)
 - [Data Export Methods](./API_USAGE.md#exporting-data)
 - [Temporal API](./api/temporal-api.md)
-- [Vector Operations API](./api/README.md#vector-operations-api)
-- [LLM Integration API](./api/README.md#llm-integration-api)
-- [Working with Events](./architecture/event-system.md#working-with-events)
 
 ### [Integration](./integration/README.md)
 
 Guides for integrating UltraLink with other tools and systems:
 
 - [Format Integration Guide](./integration/format-integration.md)
-- [Database Integration](./integration/database-integration.md)
 
 ### Performance
 
@@ -175,10 +160,6 @@ Performance considerations and benchmarks:
 
 Advanced features and use cases:
 
-- [Entity Schema Validation](./API_USAGE.md#schema-validation)
-- [Creating Custom Exporters](./guides/custom-exporters.md)
-- [Plugin Development](./advanced/plugin-development.md)
-- [Format Transformation Patterns](./formats/transformation_patterns.md)
 - [Advanced Query Patterns](./guides/advanced-query-patterns.md)
 
 ### [For Agents](./for-agents/README.md)
@@ -193,7 +174,7 @@ Documentation for AI agent integration:
 
 Guidelines for contributing to UltraLink development:
 
-- [Development Setup](./contributing/development-setup.md)
+- [Install from Source](../INSTALLATION.md#development-setup)
 - [Code Style](../CONTRIBUTING.md#code-style)
 
 ## Additional Resources

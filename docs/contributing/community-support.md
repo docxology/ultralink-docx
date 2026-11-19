@@ -7,7 +7,7 @@ Start with the project documentation. Use the issue tracker to report bugs or pr
 ### Documentation
 
 - [Getting Started Guide](../getting-started/README.md)
-- [API Reference](../api/README.md)
+- [Creating Entities](../API_USAGE.md#creating-entities)
 - [Getting Started Tutorial](../tutorials/getting-started.md)
 - [Troubleshooting Guide](../troubleshooting/troubleshooting.md)
 - [FAQ](../faq.md)
@@ -26,6 +26,6 @@ When reporting bugs, please include:
 ## Contributing to the Community
 
 - [Contributing Guide](../../CONTRIBUTING.md) — reporting issues and submitting pull requests
-- [Development Setup](./development-setup.md) — preparing a local development environment
+- [Install from Source](../../INSTALLATION.md#development-setup) — clone this repository and install dependencies
 - [Documentation Contributions](../../CONTRIBUTING.md#documentation) — what to include when improving the docs
 - [Code of Conduct](../../CODE_OF_CONDUCT.md) — expectations for participating in the project
