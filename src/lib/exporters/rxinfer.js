@@ -50,7 +50,7 @@ class RxInferExporter {
 
       // Get entities and relationships
       const entities = Array.from(this.ultralink.entities.values());
-      const relationships = this._extractRelationships();
+      const relationships = Array.from(this.ultralink.relationships.values());
 
       // Generate the model code
       const modelCode = this._generateModelCode(
@@ -89,29 +89,6 @@ class RxInferExporter {
     } catch (error) {
       throw new Error(`RxInfer.jl export failed: ${error.message}`);
     }
-  }
-
-  /**
-   * Extract relationships from UltraLink
-   * @private
-   * @returns {Array} Relationship objects
-   */
-  _extractRelationships() {
-    const relationships = [];
-    
-    for (const [sourceId, targets] of this.ultralink.links.entries()) {
-      for (const [targetId, rel] of targets.entries()) {
-        relationships.push({
-          source: sourceId,
-          target: targetId,
-          type: rel.type,
-          attributes: rel.attributes || {},
-          metadata: rel.metadata || {}
-        });
-      }
-    }
-    
-    return relationships;
   }
 
   /**

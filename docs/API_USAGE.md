@@ -90,6 +90,30 @@ const turingRelationships = ultralink.getEntityRelationships('alan-turing');
 ultralink.deleteLink('alan-turing', 'Cambridge University', 'studied_at');
 ```
 
+Combined relationship lookups return a self-loop once; it still appears in
+both the outgoing and incoming directional lookups.
+
+`updateRelationship(id, { type })` keeps the relationship ID. `deleteLink`
+matches the endpoints and **current** type. If multiple live relationships
+match, it prefers the one whose stored ID matches the requested tuple's
+generated ID. If there is no such ID and several records still match,
+`deleteLink` returns `false`; use `deleteRelationship(id)` to choose one.
+
+The legacy `ultralink.links` map retains one entry per `target-insertionType`
+key. If distinct edges share that key, it shows the latest write and restores
+the latest surviving edge when that entry is removed. Use
+`getEntityRelationships(sourceId, { direction: 'outgoing' })` to enumerate
+every outgoing edge. `createSubset(...).links` also uses a flattened legacy
+key, so it cannot represent both edges with the same key. Making either map
+lossless would require a new key or value contract.
+
+JSON and Full Blob relationship rows still omit IDs. Import reconstructs each
+ID from the current source, type, and target. If retyping makes two live
+records produce the same reconstructed ID (for example, when their current
+tuples become identical), import cannot recover their separate identities.
+A lossless round trip for this case would require a versioned format or an
+explicit import policy.
+
 ## Querying the Knowledge Graph
 
 UltraLink provides methods to search and filter entities and relationships.

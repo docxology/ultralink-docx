@@ -759,19 +759,33 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
   }
 
   /**
-   * Delete a relationship between entities
+   * Delete a relationship by its endpoints and current type
    * @param {string} sourceId - Source entity ID
    * @param {string} targetId - Target entity ID
    * @param {string} type - Relationship type
-   * @returns {boolean} True if the relationship was deleted, false if it didn't exist
+   * @returns {boolean} True if deleted; false if missing or ambiguous
    */
   deleteLink(sourceId, targetId, type) {
     const id = `${sourceId}_${type}_${targetId}`;
     const relationship = this.getRelationship(id);
-    if (!relationship || relationship.source !== sourceId || relationship.target !== targetId) {
-      return false;
+    if (relationship && relationship.source === sourceId &&
+        relationship.target === targetId && relationship.type === type) {
+      return this.deleteRelationship(id);
     }
-    return this.deleteRelationship(id);
+
+    // Retyping preserves IDs. Without an exact current-tuple ID match, delete
+    // only when the live tuple selects one record.
+    const outgoing = this.relationshipsBySource.get(sourceId);
+    if (!outgoing) return false;
+    let match;
+    for (const candidateId of outgoing) {
+      const candidate = this.relationships.get(candidateId);
+      if (candidate.target === targetId && candidate.type === type) {
+        if (match !== undefined) return false;
+        match = candidateId;
+      }
+    }
+    return match !== undefined && this.deleteRelationship(match);
   }
 
   /**

@@ -319,6 +319,97 @@ describe('UltraLink', () => {
       expect(ultralink.getBacklinks('document1')).toEqual([reviewed]);
       expect([...ultralink.links.get('person1').values()]).toEqual([reviewed]);
     });
+
+    it('returns each self-loop once in combined lookups without dropping other incident edges', () => {
+      const firstLoop = ultralink.addLink('person1', 'person1', 'knows');
+      const secondLoop = ultralink.addLink('person1', 'person1', 'follows');
+      const outward = ultralink.addLink('person1', 'person2', 'knows');
+      const inward = ultralink.addLink('person2', 'person1', 'knows');
+
+      expect(ultralink.getRelationships('person1')).toEqual([firstLoop, secondLoop, outward, inward]);
+      expect(ultralink.getEntityRelationships('person1', { type: 'knows' })).toEqual([firstLoop, outward, inward]);
+      expect(ultralink.getEntityRelationships('person1', { direction: 'outgoing' })).toEqual([firstLoop, secondLoop, outward]);
+      expect(ultralink.getBacklinks('person1')).toEqual([firstLoop, secondLoop, inward]);
+      expect(ultralink.deleteRelationship(firstLoop.id)).toBe(true);
+      expect(ultralink.getRelationships('person1')).toEqual([secondLoop, outward, inward]);
+    });
+
+    it('deletes by current type after retyping without changing the relationship ID', () => {
+      const original = ultralink.addLink('person1', 'document1', 'authored', { contribution: 'draft' });
+      const id = original.id;
+      const other = ultralink.addLink('person1', 'document1', 'reviewed');
+      expect(ultralink.updateRelationship(id, { type: 'edited' })).toMatchObject({
+        id, type: 'edited', attributes: { contribution: 'draft' }
+      });
+      expect(ultralink.deleteLink('person1', 'document1', 'authored')).toBe(false);
+      expect(ultralink.getBacklinks('document1', { type: 'edited' })).toEqual([original]);
+      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(true);
+      expect(ultralink.getRelationship(id)).toBeNull();
+      expect(ultralink.getBacklinks('document1')).toEqual([other]);
+    });
+
+    it('prefers the matching canonical ID and refuses an otherwise ambiguous current tuple', () => {
+      const a = ultralink.addLink('person1', 'document1', 'authored');
+      const b = ultralink.addLink('person1', 'document1', 'reviewed');
+      const exact = ultralink.addLink('person1', 'document1', 'edited');
+      ultralink.updateRelationship(a.id, { type: 'edited' });
+      ultralink.updateRelationship(b.id, { type: 'edited' });
+
+      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(true);
+      expect(ultralink.getRelationship(exact.id)).toBeNull();
+      expect(ultralink.getBacklinks('document1')).toEqual([a, b]);
+      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(false);
+      expect(ultralink.getBacklinks('document1')).toEqual([a, b]);
+      expect(ultralink.deleteRelationship(a.id)).toBe(true);
+      expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(true);
+      expect(ultralink.getBacklinks('document1')).toEqual([]);
+    });
+
+    it('keeps both legacy-key colliders live and restores the surviving legacy entry', () => {
+      for (const id of ['anchor', 'station_north', 'station_north-old']) ultralink.addEntity(id, 'location');
+      const key = 'station_north-old-route';
+      const legacy = () => ultralink.links.get('anchor')?.get(key);
+      const a = ultralink.addLink('anchor', 'station_north', 'old-route', { weight: 1 });
+      const b = ultralink.addLink('anchor', 'station_north-old', 'route', { weight: 2 });
+      expect(a.id).not.toBe(b.id);
+      expect(legacy()).toBe(b);
+      expect(ultralink.getRelationships('anchor')).toEqual([a, b]);
+
+      const replacement = ultralink.addLink('anchor', 'station_north', 'old-route', { weight: 3 });
+      expect(legacy()).toBe(replacement);
+      expect(ultralink.deleteRelationship(b.id)).toBe(true);
+      expect(legacy()).toBe(replacement);
+      expect(ultralink.getRelationships('anchor')).toEqual([replacement]);
+      const restoredWinner = ultralink.addLink('anchor', 'station_north-old', 'route');
+      expect(legacy()).toBe(restoredWinner);
+      expect(ultralink.deleteLink('anchor', 'station_north-old', 'route')).toBe(true);
+      expect(legacy()).toBe(replacement);
+      expect(ultralink.getBacklinks('station_north')).toEqual([replacement]);
+      expect(ultralink.deleteEntity('station_north')).toBe(true);
+      expect(legacy()).toBeUndefined();
+      expect(ultralink.getRelationships('anchor')).toEqual([]);
+    });
+
+    it('exports both legacy-key colliders by actual endpoints and round-trips their unchanged JSON shape', () => {
+      for (const id of ['anchor', 'station_north', 'station_north-old']) ultralink.addEntity(id, 'location');
+      const a = ultralink.addLink('anchor', 'station_north', 'old-route', { weight: 1 });
+      const b = ultralink.addLink('anchor', 'station_north-old', 'route', { weight: 2 });
+      const json = ultralink.toJSON();
+      const relationships = [
+        { source: 'anchor', target: 'station_north', type: 'old-route', attributes: { weight: 1 } },
+        { source: 'anchor', target: 'station_north-old', type: 'route', attributes: { weight: 2 } }
+      ];
+      expect(JSON.parse(json).relationships).toEqual(relationships);
+
+      const imported = new UltraLink().fromFullBlob(json);
+      expect(imported.toJSON({ asString: false }).relationships).toEqual(relationships);
+      expect(imported.getBacklinks('station_north')[0].id).toBe(a.id);
+      expect(imported.getBacklinks('station_north-old')[0].id).toBe(b.id);
+      expect(imported.toRxInfer().split('\n').filter(line => line.includes('# Relationship:'))).toEqual([
+        '    # Relationship: anchor (old-route) station_north',
+        '    # Relationship: anchor (route) station_north-old'
+      ]);
+    });
   });
   
   // Data export

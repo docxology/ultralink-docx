@@ -5,6 +5,10 @@
  * between entities in the knowledge graph.
  */
 
+// The legacy map exposes only its latest write for a key. Keep displaced
+// live records in write order so deleting that entry can restore its predecessor.
+const shadowedLegacyLinks = new WeakMap();
+
 /**
  * Add a relationship between two entities
  * @param {string} sourceId - ID of the source entity
@@ -68,7 +72,7 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   if (!this.links.has(sourceId)) {
     this.links.set(sourceId, new Map());
   }
-  this.links.get(sourceId).set(`${targetId}-${type}`, relationship);
+  setLegacyLink(this.links.get(sourceId), `${targetId}-${type}`, relationship, previous);
 
   return relationship;
 }
@@ -143,6 +147,30 @@ function removeIndexEntry(index, endpoint, id) {
   if (ids?.delete(id) && ids.size === 0) index.delete(endpoint);
 }
 
+function setLegacyLink(outgoing, key, relationship, previous) {
+  const current = outgoing.get(key);
+  if (current && current !== previous) {
+    let byKey = shadowedLegacyLinks.get(outgoing);
+    if (!byKey) {
+      byKey = new Map();
+      shadowedLegacyLinks.set(outgoing, byKey);
+    }
+    let shadowed = byKey.get(key);
+    if (shadowed) removeShadowedLink(shadowed, previous);
+    else {
+      shadowed = [];
+      byKey.set(key, shadowed);
+    }
+    shadowed.push(current);
+  }
+  outgoing.set(key, relationship);
+}
+
+function removeShadowedLink(shadowed, relationship) {
+  const index = shadowed.indexOf(relationship);
+  if (index !== -1) shadowed.splice(index, 1);
+}
+
 function removeLegacyLink(links, id, relationship) {
   const { source, target } = relationship;
   const outgoing = links?.get(source);
@@ -152,7 +180,20 @@ function removeLegacyLink(links, id, relationship) {
   // endpoints fix both boundaries even when they contain underscores.
   const typeAtInsertion = id.slice(String(source).length + 1, -String(target).length - 1);
   const key = `${target}-${typeAtInsertion}`;
-  if (outgoing.get(key) === relationship) {
+  const current = outgoing.get(key);
+  if (!current) return;
+
+  const byKey = shadowedLegacyLinks.get(outgoing);
+  const shadowed = byKey?.get(key);
+  if (shadowed) {
+    if (current === relationship) outgoing.set(key, shadowed.pop());
+    else removeShadowedLink(shadowed, relationship);
+
+    if (shadowed.length === 0) {
+      byKey.delete(key);
+      if (byKey.size === 0) shadowedLegacyLinks.delete(outgoing);
+    }
+  } else if (current === relationship) {
     outgoing.delete(key);
     if (outgoing.size === 0) links.delete(source);
   }
@@ -244,6 +285,8 @@ function getEntityRelationships(entityId, options = {}) {
     if (this.relationshipsByTarget.has(entityId)) {
       for (const id of this.relationshipsByTarget.get(entityId)) {
         const relationship = this.relationships.get(id);
+        // A self-loop has already been considered in the outgoing pass.
+        if (direction === 'both' && relationship.source === entityId) continue;
         if ((type && relationship.type === type) || 
             (options.type && relationship.type === options.type) || 
             (!type && !options.type)) {
