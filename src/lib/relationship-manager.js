@@ -44,7 +44,8 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   const state = activeRestore.get(this);
   if (!state) return storeRelationship.call(this, sourceId, targetId, type, attributes);
 
-  let id = `${sourceId}_${type}_${targetId}`;
+  const compoundId = `${sourceId}_${type}_${targetId}`;
+  let id = compoundId;
   const previous = this.relationships.get(id);
   // Preserve colliding input rows, not receiver-owned side effects.
   if (state.accepted.has(previous) && this.entities.has(sourceId) && this.entities.has(targetId)) {
@@ -62,6 +63,7 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
   state.inserted.push(relationship);
   if (state.order) rememberImportedSlot(state, relationship, replaced);
+  suspendReceiverWrite(this, state, compoundId);
   return relationship;
 }
 
@@ -156,7 +158,7 @@ function restoreRelationships(rows, archive) {
 
   const state = {
     accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new Map(),
-    nextId: 1, inserted: [], delegated: new Set()
+    nextId: 1, inserted: [], delegated: new Set(), suspended: new Map()
   };
   const entries = reserveArchiveIds(rows, state.reserved);
   const previous = activeRestore.get(this);
@@ -167,6 +169,7 @@ function restoreRelationships(rows, archive) {
       state.inserted.length = 0;
       state.delegated.clear();
       state.displaced = undefined;
+      state.suspended.clear();
       // Hooks may write other edges before returning or rejecting the row.
       // Do not attach the wire ID or metadata to those writes.
       let accepted;
@@ -269,29 +272,51 @@ function bindArchiveId(graph, edge, row, state) {
   if (!recovered) recoveredLegacyTypes.delete(edge);
 }
 
+function suspendReceiverWrite(graph, state, compoundId) {
+  const edge = state.recoveredEffects.get(compoundId);
+  if (!edge || graph.relationships.get(edge.id) !== edge) return;
+  // Hide the overwritten effect before the hook resumes. If the new write
+  // turns out to be an archive row, the independent receiver effect survives.
+  const map = graph.links.get(edge.source);
+  const key = legacyLinkKey(edge.id, edge);
+  const keys = [...map.keys()];
+  const visible = map.get(key) === edge;
+  state.suspended.set(compoundId, { edge, keys, visible });
+  deleteRelationship.call(graph, edge.id);
+}
+
 function settleReceiverWrites(graph, state, accepted) {
-  // Archive identity can occupy the canonical compound ID while a receiver
-  // write sits at a recovery ID. Overwrite by the original compound ID,
-  // including when the hook deletes the replacement before returning.
   for (const edge of state.inserted) {
     if (edge === accepted) continue;
     const live = graph.relationships.get(edge.id) === edge;
     const recovered = isRecoveredId(edge.id);
     const compoundId = recovered ? `${edge.source}_${recoveredLegacyTypes.get(edge)}_${edge.target}` : edge.id;
-    const previous = state.recoveredEffects.get(compoundId);
-    if (previous && graph.relationships.get(previous.id) === previous) {
+    const suspended = state.suspended.get(compoundId);
+    const previous = suspended?.edge ?? state.recoveredEffects.get(compoundId);
+    state.suspended.delete(compoundId);
+    if (previous && (suspended || graph.relationships.get(previous.id) === previous)) {
       if (live) {
-        trackImportedOrder(graph, state);
         const slot = state.slots.get(edge);
         if (state.slots.get(previous) < slot) {
           state.order[slot] = previous; // The replaced edge is skipped during replay.
           rememberImportedSlot(state, edge, previous);
         }
       }
-      deleteRelationship.call(graph, previous.id);
+      if (!suspended) deleteRelationship.call(graph, previous.id);
     }
     if (live && recovered) state.recoveredEffects.set(compoundId, edge);
     else state.recoveredEffects.delete(compoundId);
+  }
+  for (const { edge, keys, visible } of state.suspended.values()) {
+    if (!graph.entities.has(edge.source) || !graph.entities.has(edge.target)) continue;
+    const map = graph.links.get(edge.source);
+    const key = legacyLinkKey(edge.id, edge);
+    const current = map.get(key);
+    indexRelationship.call(graph, edge);
+    if (!visible && current) setLegacyLink(map, key, current, current);
+    const existing = keys.filter(key => map.has(key));
+    const remembered = new Set(existing);
+    restoreMapOrder(map, [...existing, ...[...map.keys()].filter(key => !remembered.has(key))]);
   }
 }
 
@@ -418,7 +443,8 @@ function restoreLegacyMapOrder(links, entities, order) {
   for (const entry of order.keys) {
     if (!Array.isArray(entry)) continue;
     const outgoing = links.get(entry[0]);
-    if (outgoing) restoreMapOrder(outgoing, entry[1]);
+    const keys = entry[1];
+    if (outgoing && Array.isArray(keys)) restoreMapOrder(outgoing, keys.filter(key => outgoing.has(key)));
   }
 }
 

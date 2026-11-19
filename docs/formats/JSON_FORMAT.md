@@ -113,6 +113,8 @@ restore the visible value and fallback order without reordering rows.
 The optional `legacyMapOrder` stores `sources` in legacy map order, including
 sources with empty maps, and `keys` as `[source, orderedKeys]` pairs. It
 omits orders that can already be inferred from the relationship rows.
+When a key names a legacy-only slot omitted from the archive, import skips it
+without changing the relative order of the remaining live keys.
 When directional lookup order differs from row order, `relationshipOrder`
 stores the affected groups of IDs under `outgoing` and `incoming`. A group
 contains all relationship IDs for one endpoint in lookup order.

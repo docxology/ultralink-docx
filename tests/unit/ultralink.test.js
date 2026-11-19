@@ -1121,6 +1121,24 @@ describe('UltraLink', () => {
       }
     });
 
+    it('restores the order of live legacy keys when a stock replay also has a legacy-only key', () => {
+      for (const id of ['a', 'c_d', 'd', 'other']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b');
+      ultralink.addLink('a', 'other', 'route');
+      const edited = ultralink.addLink('a', 'd', 'draft');
+      ultralink.updateRelationship(edited.id, { type: 'b_c' });
+      const replayed = new UltraLink().fromFullBlob(ultralink.toJSON());
+      expect([...replayed.links.get('a').keys()]).toEqual(['c_d-b', 'other-route', 'd-b_c']);
+      expect(replayed.getBacklinks('c_d')).toEqual([]);
+      for (const input of [replayed.toJSON({ lossless: true }), replayed.toFullBlob({ lossless: true })]) {
+        const restored = new UltraLink().fromFullBlob(input);
+        expect([...restored.links.get('a').keys()]).toEqual(['other-route', 'd-b_c']);
+        expect(restored.getBacklinks('c_d')).toEqual([]);
+        expect(restored.getRelationships('a', { direction: 'outgoing' }))
+          .toEqual(replayed.getRelationships('a', { direction: 'outgoing' }));
+      }
+    });
+
     it.each([false, true])('replaces a recovered receiver write across endpoints (delete replacement: %s)', removeReplacement => {
       for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
       const stored = ultralink.addLink('a', 'd', 'b_c', { revision: 1 });
@@ -1132,6 +1150,7 @@ describe('UltraLink', () => {
           else {
             const replacement = super.addRelationship('a', 'c_d', 'b', { audit: 'latest' });
             if (removeReplacement) expect(this.deleteRelationship(replacement.id)).toBe(true);
+            this.staleOutgoingDuringImport = this.getRelationships('a_b', { direction: 'outgoing' });
           }
           return super.addLink(source, target, type, attributes);
         }
@@ -1141,6 +1160,7 @@ describe('UltraLink', () => {
         ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })
       ]) {
         const restored = new Audited().fromFullBlob(input);
+        expect(restored.staleOutgoingDuringImport).toEqual([]);
         expect(restored.getRelationship(stored.id)).toEqual(stored);
         expect(restored.getBacklinks('d')).toEqual([stored, citation]);
         expect(restored.getRelationships('a_b', { direction: 'outgoing' })).toEqual([]);
@@ -1160,6 +1180,28 @@ describe('UltraLink', () => {
         expect(restored.deleteRelationship(audit.id)).toBe(true);
         expect(restored.getBacklinks('c_d')).toEqual([]);
       }
+    });
+
+    it('keeps the separate receiver effect if the provisional replacement is the accepted archive row', () => {
+      for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
+      const first = ultralink.addLink('a', 'd', 'b_c', { revision: 1 });
+      ultralink.updateRelationship(first.id, { type: 'reviewed' });
+      const second = ultralink.addLink('a', 'c_d', 'draft', { revision: 2 });
+      ultralink.updateRelationship(second.id, { type: 'b' });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          if (type === 'reviewed') super.addRelationship('a_b', 'd', 'c', { trace: 'first' });
+          return super.addLink(source, target, type, attributes);
+        }
+      }
+      const restored = new Audited().fromFullBlob(ultralink.toJSON({ lossless: true }));
+      const [trace, reviewed] = restored.getBacklinks('d');
+      expect(trace.attributes).toEqual({ trace: 'first' });
+      expect(reviewed).toEqual(first);
+      expect(restored.getBacklinks('c_d')).toEqual([second]);
+      expect(restored.links.get('a_b').get('d-c')).toBe(trace);
+      expect(restored.deleteRelationship(trace.id)).toBe(true);
+      expect(restored.getBacklinks('d')).toEqual([first]);
     });
 
     it('restores text archive numeric tokens only from row metadata beside nested attributes', () => {
