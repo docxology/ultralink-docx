@@ -6,6 +6,7 @@
  */
 
 const { removeEntityRelationships } = require('./relationship-manager');
+const { GraphValidationError, stampRowModified } = require('./utils');
 
 /**
  * Add a new entity to the knowledge graph
@@ -17,7 +18,7 @@ const { removeEntityRelationships } = require('./relationship-manager');
 function addEntity(id, type, attributes = {}) {
   // Prevent overwriting existing entities unless explicitly allowed
   if (this.entities.has(id) && !this.config.allowOverwrite) {
-    throw new Error(`Entity with ID "${id}" already exists. Set allowOverwrite: true in config to override.`);
+    throw new GraphValidationError(`Entity with ID "${id}" already exists. Set allowOverwrite: true in config to override.`);
   }
 
   const entity = {
@@ -56,7 +57,7 @@ function updateEntity(id, attributes) {
   
   const entity = this.entities.get(id);
   entity.attributes = { ...entity.attributes, ...attributes };
-  entity.metadata.modified = new Date().toISOString();
+  stampRowModified(entity);
   
   return entity;
 }

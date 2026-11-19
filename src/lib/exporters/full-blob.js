@@ -12,6 +12,7 @@ const { getErrorMessage } = require('../utils');
  * @param {UltraLink} ultralink - The UltraLink instance to export
  * @param {Object} options - Export options
  * @param {boolean} [options.throwOnError=false] - Reject the bundle if an embedded export throws
+ * @param {boolean} [options.lossless=false] - Store relationship identities and row metadata
  * @returns {Object} - Object containing all export formats
  */
 function toFullBlob(ultralink, options = {}) {
@@ -25,7 +26,7 @@ function toFullBlob(ultralink, options = {}) {
   
   // JSON export
   try {
-    blob.json = ultralink.toJSON({ asString: false });
+    blob.json = ultralink.toJSON(options?.lossless ? { asString: false, lossless: true } : { asString: false });
   } catch (error) {
     componentFailed('JSON', error);
     blob.json = { entities: [], relationships: [] };

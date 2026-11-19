@@ -91,6 +91,69 @@ const turingRelationships = ultralink.getEntityRelationships('alan-turing');
 ultralink.deleteLink('alan-turing', 'Cambridge University', 'studied_at');
 ```
 
+Combined relationship lookups return a self-loop once; it still appears in
+both the outgoing and incoming directional lookups.
+
+`updateRelationship(id, { type })` keeps the relationship ID. `deleteLink`
+matches the source, target, and type used to insert the edge, not its current
+type. It returns `false` when that insertion tuple no longer exists, even if
+another edge now has that type. To select by current type, first query the
+relationships, then pass the selected edge's ID to `deleteRelationship(id)`.
+`deleteLink` updates the relationship indexes directly; it does not call
+receiver overrides of `deleteRelationship`.
+
+The legacy `ultralink.links` map retains one entry per `target-insertionType`
+key. If distinct edges share that key, it shows the latest write and restores
+the latest surviving edge when that entry is removed. Deleting the last
+outgoing edge leaves the source's map empty until the source is deleted. Use
+`getEntityRelationships(sourceId, { direction: 'outgoing' })` to enumerate
+every outgoing edge. `createSubset(...).links` also uses a flattened legacy
+key, so it cannot represent both edges with the same key. Making either map
+lossless would require a new key or value contract.
+
+Default `toJSON()` and `toFullBlob()` keep the released wire format.
+For an archive with stored IDs and row metadata, import the result of
+`ultralink.toJSON({ lossless: true })` or `ultralink.toFullBlob({ lossless: true })`
+with `fromFullBlob`. Both preserve distinct relationships that share a current
+tuple after retyping, including lookup order.
+Both modes use the receiver's public `addEntity`, `addLink`, and
+`addRelationship` methods. Unversioned graphs ignore stored IDs and metadata.
+The last tuple owns each compound ID. An earlier distinct legacy slot can
+remain readable through `links` but is not a live relationship or backlink.
+`RelationshipManager.replayLinks.call(graph, rows)` replays an iterable or
+object map into an existing graph through its public `addLink` method without
+clearing it.
+`fromFullBlob` decodes and checks the graph records before replacing the
+receiver. A decoding or record-shape error leaves its contents unchanged.
+If built-in insertion validation rejects a duplicate entity or an unresolved
+endpoint, the original graph is restored and the error is thrown. Endpoint
+validation applies to the values passed by the receiver's hooks, not the raw
+record. This does not roll back custom hook side effects.
+Entity-row metadata is attached to the live entity returned by `addEntity`,
+even when it has a different ID from the archived row. If the hook does not
+return a live entity (for example, it returns the receiver for chaining),
+import uses the entity stored under the row's ID. For relationships, the
+importer uses the edge the hook returns.
+If the hook returns nothing, it binds a unique write of the requested tuple,
+or a unique write made by passing that tuple through `super.addLink` to an
+`addRelationship` override that normalizes it. Other writes are not assumed to
+accept the input. An exact write is indistinguishable from acceptance when the
+hook gives no result; return the accepted edge for ambiguous hooks, or return
+`false` or throw to reject explicitly.
+
+If an accepted archive row needs an ID occupied by a receiver-created edge,
+the archive row takes the stored ID and the other edge stays reachable under
+a recovery ID. Later receiver writes that derive the same compound ID replace
+the previous receiver write before the hook continues, even if their endpoints
+differ or the hook deletes the replacement before returning. If the hook
+explicitly returns an overwritten write with a distinct stored archive ID,
+that write is restored under its archive ID and the receiver's replacement
+remains live. The same distinction applies if the receiver writes its edge
+first, or if the two writes have equal tuples. Deleting either endpoint
+discards a detached edge, even if the hook recreates the entity with the same ID.
+Versioned imports merge authored graph metadata by top-level key and leave
+other receiver keys intact. The automatic export summary is ignored.
+
 ## Querying the Knowledge Graph
 
 UltraLink provides methods to search and filter entities and relationships.

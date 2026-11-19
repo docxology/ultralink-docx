@@ -9,7 +9,7 @@
 const EntityManager = require('./lib/entity-manager');
 const RelationshipManager = require('./lib/relationship-manager');
 const Utils = require('./lib/utils');
-const { toJSON } = require('./lib/exporters/json');
+const { toJSON, ARCHIVE_VERSION } = require('./lib/exporters/json');
 const { toCSV } = require('./lib/exporters/csv');
 const { toGraphML } = require('./lib/exporters/graphml');
 const { toObsidian } = require('./lib/exporters/obsidian');
@@ -21,6 +21,83 @@ const { toFullBlob } = require('./lib/exporters/full-blob');
 const zlib = require('zlib');
 const BayesianNetworkExporter = require('./lib/exporters/bayesian-network');
 const RxInferExporter = require('./lib/exporters/rxinfer');
+
+function recordValues(records) {
+  if (records instanceof Map) return records.values();
+  if (records && typeof records[Symbol.iterator] === 'function') return records;
+  return records && typeof records === 'object' ? Object.values(records) : [];
+}
+
+function parseArchiveText(text) {
+  const parsed = JSON.parse(text);
+  const graph = parsed?.json ?? parsed;
+  if (graph?.ultralinkArchiveVersion !== ARCHIVE_VERSION || typeof JSON.rawJSON !== 'function') {
+    return parsed;
+  }
+
+  // Native parsing validates the document and handles nesting without a
+  // reviver. A second native parse shadows only noncanonical number tokens
+  // with their spellings; quoted strings in the input are left alone.
+  const shadow = annotateNumericTokens(String(text));
+  if (shadow !== undefined) {
+    const annotated = JSON.parse(shadow);
+    const annotatedGraph = annotated.json ?? annotated;
+    for (const collection of ['entities', 'relationships']) {
+      const rows = graph[collection];
+      if (!rows || typeof rows !== 'object') continue;
+      for (const key of Object.keys(rows)) {
+        const row = rows[key];
+        if (row && Object.hasOwn(row, 'metadata')) {
+          restoreNumericTokens(row, annotatedGraph[collection][key]);
+        }
+      }
+    }
+  }
+  return parsed;
+}
+
+function annotateNumericTokens(text) {
+  const chunks = [];
+  let quoted = false;
+  let start = 0;
+  for (const { 0: token, index } of text.matchAll(/"|\\[\s\S]|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g)) {
+    if (token === '"') quoted = !quoted;
+    else if (!quoted && String(Number(token)) !== token) {
+      chunks.push(text.slice(start, index), `"${token}"`);
+      start = index + token.length;
+    }
+  }
+  if (start) {
+    chunks.push(text.slice(start));
+    return chunks.join('');
+  }
+}
+
+function restoreNumericTokens(row, annotated) {
+  const pending = [[row, annotated, 'metadata']];
+  while (pending.length) {
+    const [holder, shadow, key] = pending.pop();
+    const value = holder[key];
+    if (typeof value === 'number' && typeof shadow[key] === 'string') {
+      // A preexisting string also parses as a string in the original graph.
+      holder[key] = JSON.rawJSON(shadow[key]);
+    } else if (value && typeof value === 'object') {
+      for (const child of Object.keys(value)) pending.push([value, shadow[key], child]);
+    }
+  }
+}
+
+function importRecords(records, name) {
+  if (typeof records !== 'object' || records === null) {
+    throw new TypeError(`Expected ${name} records`);
+  }
+  const values = recordValues(records);
+  const rows = Array.isArray(values) ? values : Array.from(values);
+  for (const row of rows) {
+    if (!row || typeof row !== 'object') throw new TypeError(`Invalid ${name} record`);
+  }
+  return rows;
+}
 
 /**
  * UltraLink class for knowledge graph management
@@ -127,7 +204,7 @@ class UltraLink {
    * @returns {Object} The created relationship
    */
   addLink(sourceId, targetId, type = this.config.defaultRelationshipType, attributes = {}, options = {}) {
-    return this.addRelationship(sourceId, targetId, type, attributes, options);
+    return RelationshipManager.delegateLink.call(this, sourceId, targetId, type, attributes, options);
   }
 
   /**
@@ -637,104 +714,72 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
    * @returns {UltraLink} The UltraLink instance for chaining
    */
   fromFullBlob(blob, options = {}) {
-    let data;
-    
+    let data, entities, relationships;
     try {
-      // Handle compressed blobs
-      if (options.compressed) {
-        // Decompress the blob (in a real implementation)
-        // For now, just parse it
-        data = JSON.parse(blob);
-      } 
-      // Handle string blobs
-      else if (typeof blob === 'string') {
-        data = JSON.parse(blob);
-      }
-      // Handle the case where blob is a files object with 'full-export.json' key
-      else if (blob['full-export.json']) {
-        data = JSON.parse(blob['full-export.json']);
+      if (typeof blob === 'string' || (options.compressed && Buffer.isBuffer(blob))) {
+        data = parseArchiveText(blob);
+      } else if (blob?.['full-export.json']) {
+        data = parseArchiveText(blob['full-export.json']);
       } else {
-        // Use object directly
         data = blob;
       }
+      if (data?.json) {
+        data = typeof data.json === 'string' ? parseArchiveText(data.json) : data.json;
+      }
+      entities = importRecords(data?.entities, 'entity');
+      relationships = importRecords(data.relationships ?? [], 'relationship');
     } catch (error) {
       console.warn('Error parsing full blob:', error);
-      // For backward compatibility, try to use the blob directly
-      data = blob;
+      return this;
     }
-    
-    // Clear existing data
+
+    const previous = {
+      entities: this.entities,
+      relationships: this.relationships,
+      relationshipsBySource: this.relationshipsBySource,
+      relationshipsByTarget: this.relationshipsByTarget,
+      links: this.links
+    };
+    const previousMetadata = Object.getOwnPropertyDescriptor(this, 'metadata');
     this.clear();
-    
-    // Extract entities from the JSON data
-    if (data.json) {
-      let jsonData;
-      
-      // Handle case where data.json is a string that needs to be parsed
-      if (typeof data.json === 'string') {
-        try {
-          jsonData = JSON.parse(data.json);
-        } catch (e) {
-          console.warn('Error parsing JSON data in blob:', e);
-          jsonData = { entities: [], relationships: [] };
-        }
-      } else {
-        jsonData = data.json;
+
+    try {
+      const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
+        data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
+      if (archive) {
+        // Export summaries describe the wire payload, not authored graph metadata.
+        const { exportDate, entityCount, relationshipCount, ...metadata } = archive.metadata ?? {};
+        if (Object.keys(metadata).length > 0) this.metadata = { ...this.metadata, ...metadata };
       }
-      
-      // Process entities
-      if (jsonData.entities) {
-        // Handle case where entities is a Map or object
-        const entities = jsonData.entities;
-        if (typeof entities[Symbol.iterator] !== 'function') {
-          // Convert to array if it's an object with entries
-          if (typeof entities === 'object') {
-            const entitiesArray = Object.values(entities);
-            for (const entity of entitiesArray) {
-              this.addEntity(entity.id, entity.type, entity.attributes);
-            }
-          }
-        } else {
-          // It's already iterable (array)
-          for (const entity of entities) {
-            this.addEntity(entity.id, entity.type, entity.attributes);
-          }
-        }
-        
-        // Process relationships
-        if (jsonData.relationships) RelationshipManager.replayLinks.call(this, jsonData.relationships);
+      for (const { id, type, attributes, metadata } of entities) {
+        const result = this.addEntity(id, type, attributes);
+        if (!archive || metadata === undefined) continue;
+        // An explicitly returned live entity can differ from the input ID.
+        // Fall back to that ID for overrides that return nothing or chain.
+        const entity = result && result !== this && this.entities.get(result.id) === result
+          ? result : this.entities.get(id);
+        if (entity) Utils.restoreRowMetadata(entity, metadata);
       }
-    } else if (data.entities) {
-      // Handle legacy format where entities are directly in the data object
-      // Handle case where entities is a Map or object
-      if (typeof data.entities[Symbol.iterator] !== 'function') {
-        // Convert to array if it's an object with entries
-        if (typeof data.entities === 'object') {
-          const entitiesArray = Object.values(data.entities);
-          for (const entity of entitiesArray) {
-            this.addEntity(entity.id, entity.type, entity.attributes);
-          }
-        }
-      } else {
-        // It's already iterable (array)
-        for (const entity of data.entities) {
-          this.addEntity(entity.id, entity.type, entity.attributes);
-        }
+      RelationshipManager.restoreRelationships.call(this, relationships, archive);
+    } catch (error) {
+      // Validate the graph the hooks actually insert, not the raw wire tuples.
+      if (error instanceof Utils.GraphValidationError) {
+        Object.assign(this, previous);
+        if (previousMetadata) Object.defineProperty(this, 'metadata', previousMetadata);
+        else delete this.metadata;
       }
-      
-      // Process relationships from legacy format
-      if (data.relationships) RelationshipManager.replayLinks.call(this, data.relationships);
+      throw error;
     }
     
     return this;
   }
 
   /**
-   * Delete a relationship between entities
+   * Delete by the insertion tuple, which remains unchanged after retyping
    * @param {string} sourceId - Source entity ID
    * @param {string} targetId - Target entity ID
-   * @param {string} type - Relationship type
-   * @returns {boolean} True if the relationship was deleted, false if it didn't exist
+   * @param {string} type - Relationship type at insertion
+   * @returns {boolean} True if the insertion tuple matched a live edge
    */
   deleteLink(sourceId, targetId, type) {
     return RelationshipManager.deleteLink.call(this, sourceId, targetId, type);

@@ -5,73 +5,30 @@
  * between entities in the knowledge graph.
  */
 
-// Legacy slots keep their insertion key and newest live value. Only collisions
-// need extra bookkeeping; none of it is part of the exported graph.
+const { GraphValidationError, restoreRowMetadata, stampRowModified } = require('./utils');
+
+// The legacy map exposes only its latest write for a key. Keep displaced
+// live records in write order so deleting that entry can restore its predecessor.
 const shadowedLegacyLinks = new WeakMap();
+const recoveredLegacyTypes = new WeakMap();
+const activeRestore = new WeakMap();
+const replayingLegacy = new WeakSet();
 const replayedLegacyLinks = new WeakMap();
-const replaying = new WeakSet();
 
-function legacyKey({ id, source, target }) {
-  const insertionType = id.slice(String(source).length + 1, -String(target).length - 1);
-  return `${target}-${insertionType}`;
-}
-
-function removeIndexEntry(index, endpoint, id) {
-  const ids = index.get(endpoint);
-  if (ids?.delete(id) && ids.size === 0) index.delete(endpoint);
-}
-
-function removeShadow(shadows, relationship) {
-  const index = shadows.indexOf(relationship);
-  if (index !== -1) shadows.splice(index, 1);
-}
-
-function removeLegacyLink(outgoing, key, relationship) {
-  if (!outgoing) return;
-  const byKey = shadowedLegacyLinks.get(outgoing);
-  const shadows = byKey?.get(key);
-  if (outgoing.get(key) === relationship) {
-    if (shadows?.length) outgoing.set(key, shadows.pop());
-    else outgoing.delete(key);
-  } else if (shadows) {
-    removeShadow(shadows, relationship);
+function delegateLink(source, target, type, attributes, options) {
+  const state = activeRestore.get(this);
+  const start = state?.inserted.length;
+  const result = this.addRelationship(source, target, type, attributes, options);
+  if (state && matchesImportTuple(this, state.row, source, target, type)) {
+    const edge = result === undefined && state.inserted.length === start + 1 ? state.inserted[start] : result;
+    if (state.inserted.includes(edge, start)) state.delegated.add(edge);
   }
-  if (shadows?.length === 0) byKey.delete(key);
+  return result;
 }
 
-function setLegacyLink(links, source, key, relationship, previous) {
-  let outgoing = links.get(source);
-  if (!outgoing) links.set(source, outgoing = new Map());
-  const current = outgoing.get(key);
-  if (current && current !== previous) {
-    let byKey = shadowedLegacyLinks.get(outgoing);
-    let shadows = byKey?.get(key);
-    if (shadows && previous) removeShadow(shadows, previous);
-    if (!replayedLegacyLinks.get(links)?.delete(current)) {
-      if (!byKey) shadowedLegacyLinks.set(outgoing, byKey = new Map());
-      if (!shadows) byKey.set(key, shadows = []);
-      shadows.push(current);
-    } else if (shadows?.length === 0) {
-      byKey.delete(key);
-    }
-  }
-  outgoing.set(key, relationship);
-}
-
-function replayLinks(rows) {
-  if (typeof rows[Symbol.iterator] !== 'function') {
-    if (typeof rows !== 'object') return;
-    rows = Object.values(rows);
-  }
-  const alreadyReplaying = replaying.has(this);
-  replaying.add(this);
-  try {
-    for (const rel of rows) {
-      this.addLink(rel.source, rel.target, rel.type, rel.attributes);
-    }
-  } finally {
-    if (!alreadyReplaying) replaying.delete(this);
-  }
+function matchesImportTuple(graph, row, source, target, type) {
+  const inputType = row.type === undefined ? graph.config.defaultRelationshipType : row.type;
+  return source === row.source && target === row.target && type === inputType;
 }
 
 /**
@@ -84,16 +41,63 @@ function replayLinks(rows) {
  * @returns {Object} The created relationship
  */
 function addRelationship(sourceId, targetId, type, attributes = {}, options = {}) {
+  const state = activeRestore.get(this);
+  if (!state) return storeRelationship.call(this, sourceId, targetId, type, attributes);
+
+  const compoundId = `${sourceId}_${type}_${targetId}`;
+  let id = compoundId;
+  const previous = this.relationships.get(id);
+  // Preserve colliding input rows, not receiver-owned side effects.
+  if (state.accepted.has(previous) && this.entities.has(sourceId) && this.entities.has(targetId)) {
+    if (state.reserved.has(id)) {
+      id = nextRecoveryId(this.relationships, state);
+      trackImportedOrder(this, state);
+    } else recoverDisplacedEdge(this, previous, state);
+  }
+  const replaced = previous?.id === id ? previous : undefined;
+  let overwritten;
+  if (replaced) {
+    const differentEndpoints = replaced.source !== sourceId || replaced.target !== targetId;
+    const distinctArchiveId = hasDistinctArchiveId(state.row, sourceId, targetId, compoundId);
+    if ((differentEndpoints || distinctArchiveId) && state.inserted.includes(replaced)) {
+      // A hook can explicitly accept a write displaced by a later write.
+      (state.displaced ??= new Set()).add(replaced);
+      trackImportedOrder(this, state);
+    }
+    if (!state.accepted.has(replaced) && (distinctArchiveId || (differentEndpoints && state.reserved.has(compoundId)))) {
+      // Keep the previous receiver write if this write is accepted under a
+      // distinct archive ID. Until then, the hook observes a normal overwrite.
+      trackImportedOrder(this, state);
+      overwritten = snapshotReceiverWrite(this, replaced);
+    }
+  }
+  const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
+  state.inserted.push(relationship);
+  state.writeOrder.set(relationship, state.nextWrite++);
+  // A temporary overwrite borrows the receiver's slot. If accepted as a
+  // separate row, the write belongs at its own chronological position.
+  if (replaced && state.order) {
+    state.overwriteSlots.set(relationship, state.order.length);
+    state.order.push(undefined);
+  }
+  if (state.order) rememberImportedSlot(state, relationship, replaced);
+  if (overwritten || id !== compoundId || state.recoveredEffects.has(compoundId) || state.provisional.has(compoundId)) {
+    recordReceiverWrite(this, state, compoundId, relationship, overwritten);
+  }
+  return relationship;
+}
+
+function storeRelationship(sourceId, targetId, type, attributes, storedId) {
   // Validate entities exist
   if (!this.entities.has(sourceId)) {
-    throw new Error(`Source entity not found: ${sourceId}`);
+    throw new GraphValidationError(`Source entity not found: ${sourceId}`);
   }
   if (!this.entities.has(targetId)) {
-    throw new Error(`Target entity not found: ${targetId}`);
+    throw new GraphValidationError(`Target entity not found: ${targetId}`);
   }
 
   // Create relationship object
-  const id = `${sourceId}_${type}_${targetId}`;
+  const id = storedId ?? `${sourceId}_${type}_${targetId}`;
   
   const relationship = {
     id,
@@ -106,23 +110,35 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
       modified: new Date().toISOString()
     }
   };
+  if (isRecoveredId(id)) recoveredLegacyTypes.set(relationship, String(type));
 
-  const key = `${targetId}-${type}`;
+  indexRelationship.call(this, relationship);
+  return relationship;
+}
+
+function indexRelationship(relationship, writeOrder) {
+  const { id, source: sourceId, target: targetId } = relationship;
+  const key = legacyLinkKey(id, relationship);
+
+  // A compound ID can be reused by a different endpoint tuple.
   const previous = this.relationships.get(id);
   if (previous && (previous.source !== sourceId || previous.target !== targetId)) {
-    if (previous.source !== sourceId) removeIndexEntry(this.relationshipsBySource, previous.source, id);
-    if (previous.target !== targetId) removeIndexEntry(this.relationshipsByTarget, previous.target, id);
-    const oldKey = legacyKey(previous);
-    if (previous.source !== sourceId || oldKey !== key) {
-      const outgoing = this.links.get(previous.source);
-      if (replaying.has(this) && outgoing?.get(oldKey) === previous) {
-        // Old imports exposed both distinct legacy keys, but only the last
-        // accepted tuple owned the compound ID. Keep the old slot off the indexes.
+    if (previous.source !== sourceId) {
+      removeIndexEntry(this.relationshipsBySource, previous.source, id);
+    }
+    if (previous.target !== targetId) {
+      removeIndexEntry(this.relationshipsByTarget, previous.target, id);
+    }
+    const previousKey = legacyLinkKey(id, previous);
+    if (previous.source !== sourceId || previousKey !== key) {
+      if (replayingLegacy.has(this) && this.links.get(previous.source)?.get(previousKey) === previous) {
+        // Released unversioned replay preserves a distinct legacy slot, not
+        // a second canonical relationship or directional index entry.
         let replayed = replayedLegacyLinks.get(this.links);
         if (!replayed) replayedLegacyLinks.set(this.links, replayed = new Set());
         replayed.add(previous);
       } else {
-        removeLegacyLink(outgoing, oldKey, previous);
+        removeLegacyLink(this.links, previousKey, previous);
       }
     }
   }
@@ -141,9 +157,467 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   }
   this.relationshipsByTarget.get(targetId).add(id);
 
-  setLegacyLink(this.links, sourceId, key, relationship, previous);
+  // Initialize and update links map for backward compatibility
+  if (!this.links.has(sourceId)) {
+    this.links.set(sourceId, new Map());
+  }
+  const outgoing = this.links.get(sourceId);
+  if (writeOrder) insertLegacyWrite(outgoing, key, relationship, writeOrder);
+  else setLegacyLink(outgoing, key, relationship, previous, replayedLegacyLinks.get(this.links));
+}
 
-  return relationship;
+function replayLinks(rows) {
+  if (typeof rows[Symbol.iterator] !== 'function') {
+    if (typeof rows !== 'object') return;
+    rows = Object.values(rows);
+  }
+  const wasReplaying = replayingLegacy.has(this);
+  replayingLegacy.add(this);
+  try {
+    for (const row of rows) this.addLink(row.source, row.target, row.type, row.attributes);
+  } finally {
+    if (!wasReplaying) replayingLegacy.delete(this);
+  }
+}
+
+function restoreRelationships(rows, archive) {
+  if (!archive) return replayLinks.call(this, rows);
+
+  const state = {
+    accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new Map(),
+    nextId: 1, inserted: [], delegated: new Set(), provisional: new Map(), compoundIds: new WeakMap(),
+    nextWrite: 0, writeOrder: new WeakMap(), overwriteSlots: new WeakMap()
+  };
+  const entries = reserveArchiveIds(rows, state.reserved);
+  const { legacyLinkOrder, relationshipOrder } = archive;
+  const archivedLinks = Array.isArray(legacyLinkOrder) || relationshipOrder ? new Map() : undefined;
+  const previous = activeRestore.get(this);
+  activeRestore.set(this, state);
+  try {
+    for (const row of entries) {
+      state.row = row;
+      state.inserted.length = 0;
+      state.delegated.clear();
+      state.displaced = undefined;
+      state.provisional.clear();
+      // Hooks may write other edges before returning or rejecting the row.
+      // Do not attach the wire ID or metadata to those writes.
+      let accepted;
+      try {
+        const result = this.addLink(row.source, row.target, row.type, row.attributes);
+        accepted = acceptedRelationship(this, state, result);
+      } finally {
+        settleReceiverWrites(this, state, accepted);
+      }
+      if (!accepted) continue;
+      state.accepted.add(accepted);
+      if (row.id !== undefined) {
+        bindArchiveId(this, accepted, row, state);
+        if (archivedLinks && accepted.id === row.id) {
+          archivedLinks.set(row.id, { edge: accepted, source: row.source, target: row.target });
+        }
+      }
+      restoreRowMetadata(accepted, row.metadata);
+    }
+  } finally {
+    if (previous) activeRestore.set(this, previous);
+    else activeRestore.delete(this);
+    if (state.order) restoreImportedRowOrder(this, state.order);
+  }
+
+  restoreIndexOrder(this.relationshipsBySource, this.relationships, 'source', relationshipOrder?.outgoing, archivedLinks);
+  restoreIndexOrder(this.relationshipsByTarget, this.relationships, 'target', relationshipOrder?.incoming, archivedLinks);
+
+  if (Array.isArray(legacyLinkOrder)) restoreLegacyLinkOrder(this, legacyLinkOrder, archivedLinks);
+  restoreLegacyMapOrder(this.links, this.entities, archive.legacyMapOrder);
+}
+
+function restoreLegacyLinkOrder(graph, order, archivedLinks) {
+  const groups = new Map();
+  for (const id of order) {
+    const entry = archivedLinks.get(id);
+    if (!entry) continue;
+    const { edge, source, target } = entry;
+    if (graph.relationships.get(id) !== edge || edge.source !== source || edge.target !== target) continue;
+    const outgoing = graph.links.get(edge.source);
+    const key = legacyLinkKey(id, edge);
+    const shadowed = shadowedLegacyLinks.get(outgoing)?.get(key);
+    if (!shadowed) continue;
+    let group = groups.get(shadowed);
+    if (!group) groups.set(shadowed, group = { outgoing, key, ordered: new Set() });
+    group.ordered.add(edge);
+  }
+  for (const [shadowed, { outgoing, key, ordered }] of groups) {
+    if (ordered.size < 2) continue;
+    // Restore the archived subsequence, not the position of receiver writes.
+    const next = ordered.values();
+    for (let i = 0; i < shadowed.length; i++) {
+      if (ordered.has(shadowed[i])) shadowed[i] = next.next().value;
+    }
+    if (ordered.has(outgoing.get(key))) outgoing.set(key, next.next().value);
+  }
+}
+
+function acceptedRelationship(graph, state, result) {
+  if (result !== undefined) {
+    return state.inserted.includes(result) && retainableWrite(graph, state, result, true)
+      ? reviveAcceptedWrite(graph, state, result) : undefined;
+  }
+
+  // A void hook can accept one exact write, or a normalized write made by
+  // delegating the input tuple through the public addLink implementation.
+  let accepted;
+  for (const edge of state.inserted) {
+    if (!state.delegated.has(edge) && !matchesImportTuple(graph, state.row, edge.source, edge.target, edge.type)) continue;
+    if (!retainableWrite(graph, state, edge)) continue;
+    if (accepted) return;
+    accepted = edge;
+  }
+  if (accepted) return reviveAcceptedWrite(graph, state, accepted);
+}
+
+function retainableWrite(graph, state, edge, explicit = false) {
+  if (graph.relationships.get(edge.id) === edge) return true;
+  if (!state.displaced?.has(edge) || !graph.entities.has(edge.source) || !graph.entities.has(edge.target)) return false;
+  const { inserted } = state;
+  const compoundId = state.compoundIds.get(edge) ?? edge.id;
+  if (explicit && hasDistinctArchiveId(state.row, edge.source, edge.target, compoundId)) return true;
+  for (let i = inserted.indexOf(edge) + 1; i < inserted.length; i++) {
+    const later = inserted[i];
+    if (later.source === edge.source && later.target === edge.target &&
+        (state.compoundIds.get(later) ?? later.id) === compoundId) return false;
+  }
+  return true;
+}
+
+function reviveAcceptedWrite(graph, state, edge) {
+  if (graph.relationships.get(edge.id) === edge) return edge;
+  // Revive only the identified input write. Rejection and unrelated effects
+  // retain ordinary compound-ID replacement semantics.
+  const key = legacyLinkKey(edge.id, edge);
+  recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
+  edge.id = nextRecoveryId(graph.relationships, state);
+  indexRelationship.call(graph, edge, state.writeOrder);
+  const index = state.overwriteSlots.get(edge) ?? state.slots.get(edge);
+  const replacement = state.order[index];
+  if (replacement && state.overwriteSlots.has(replacement)) {
+    moveImportedSlot(state, replacement, state.overwriteSlots.get(replacement));
+  }
+  moveImportedSlot(state, edge, index);
+  return edge;
+}
+
+function hasDistinctArchiveId(row, source, target, compoundId) {
+  return row.id !== undefined && row.id !== compoundId &&
+    (isRecoveredId(row.id) || (row.source === source && row.target === target));
+}
+
+function bindArchiveId(graph, edge, row, state) {
+  const { id } = row;
+  const recovered = isRecoveredId(id);
+  if (!recovered && (edge.source !== row.source || edge.target !== row.target)) return;
+
+  const previous = graph.relationships.get(id);
+  if (previous && previous !== edge) {
+    recoverDisplacedEdge(graph, previous, state);
+    if (!state.accepted.has(previous)) state.recoveredEffects.set(id, previous);
+  }
+  const oldKey = legacyLinkKey(edge.id, edge);
+  if (recovered) recoveredLegacyTypes.set(edge, row.legacyType ?? oldKey.slice(String(edge.target).length + 1));
+  const newKey = legacyLinkKey(id, edge);
+  if (oldKey !== newKey) {
+    removeLegacyLink(graph.links, oldKey, edge);
+    insertLegacyWrite(graph.links.get(edge.source), newKey, edge, state.writeOrder);
+  }
+  if (edge.id !== id) rekeyRelationship(graph, edge, id, state);
+  if (!recovered) recoveredLegacyTypes.delete(edge);
+}
+
+function recordReceiverWrite(graph, state, compoundId, edge, overwritten) {
+  // Track writes by compound ID even if an accepted archive edge temporarily
+  // owns it, so a receiver overwrite is visible to the rest of the hook.
+  state.compoundIds.set(edge, compoundId);
+  const priorWrite = state.provisional.get(compoundId);
+  const previous = overwritten?.edge ?? priorWrite?.edge ?? state.recoveredEffects.get(compoundId);
+  const write = { edge };
+  state.provisional.set(compoundId, write);
+  if (!previous || (!overwritten && graph.relationships.get(previous.id) !== previous)) return;
+  write.displaced = overwritten ?? snapshotReceiverWrite(graph, previous);
+  write.replaces = priorWrite?.replaces ?? previous;
+  if (priorWrite && (previous.source !== edge.source || previous.target !== edge.target ||
+      hasDistinctArchiveId(state.row, previous.source, previous.target, compoundId))) {
+    (state.displaced ??= new Set()).add(previous);
+  }
+  if (!overwritten) deleteRelationship.call(graph, previous.id);
+}
+
+function snapshotReceiverWrite(graph, edge) {
+  return { edge, keys: [...graph.links.get(edge.source).keys()] };
+}
+
+function settleReceiverWrites(graph, state, accepted) {
+  for (const [compoundId, { edge, displaced, replaces }] of state.provisional) {
+    let effect;
+    if (edge === accepted) {
+      // An accepted archive row does not consume the receiver's prior write.
+      if (displaced && graph.entities.has(displaced.edge.source) && graph.entities.has(displaced.edge.target)) {
+        effect = displaced.edge;
+        if (effect.id === edge.id) {
+          // The hook previously observed this write at the freed compound ID.
+          // Only move the accepted row now, leaving the receiver edge at that ID.
+          recoverDisplacedEdge(graph, edge, state);
+          rememberImportedSlot(state, effect, edge);
+          restoreReceiverSlot(state, effect, replaces);
+          moveImportedSlot(state, edge, state.overwriteSlots.get(edge));
+        } else {
+          restoreReceiverSlot(state, effect, replaces);
+        }
+        restoreReceiverWrite(graph, displaced, state.writeOrder);
+      }
+    } else if (graph.relationships.get(edge.id) === edge) {
+      effect = edge;
+      if (replaces === accepted) {
+        if (state.overwriteSlots.has(edge)) moveImportedSlot(state, edge, state.overwriteSlots.get(edge));
+      } else if (replaces) {
+        restoreReceiverSlot(state, edge, replaces);
+      }
+    }
+    if (effect && effect.id !== compoundId) state.recoveredEffects.set(compoundId, effect);
+    else state.recoveredEffects.delete(compoundId);
+  }
+}
+
+function restoreReceiverSlot(state, edge, previous) {
+  if (!previous) return;
+  const earlier = state.slots.get(previous);
+  if (earlier < state.slots.get(edge)) moveImportedSlot(state, edge, earlier);
+}
+
+function restoreReceiverWrite(graph, { edge, keys }, writeOrder) {
+  const map = graph.links.get(edge.source);
+  indexRelationship.call(graph, edge, writeOrder);
+  const existing = keys.filter(key => map.has(key));
+  const remembered = new Set(existing);
+  restoreMapOrder(map, [...existing, ...[...map.keys()].filter(key => !remembered.has(key))]);
+}
+
+function reserveArchiveIds(rows, reserved) {
+  const entries = [];
+  for (const row of rows) {
+    const { source, target } = row;
+    const prefix = `${source}_`;
+    const suffix = `_${target}`;
+    const id = row.id;
+    if (typeof id === 'string' && !reserved.has(id) &&
+        (isRecoveredId(id) || (id.length >= prefix.length + suffix.length &&
+          id.startsWith(prefix) && id.endsWith(suffix)))) {
+      reserved.add(id);
+      entries.push({ ...row, legacyType: typeof row.legacyType === 'string' ? row.legacyType : undefined });
+    } else {
+      entries.push({ ...row, id: undefined, legacyType: undefined });
+    }
+  }
+  return entries;
+}
+
+function nextRecoveryId(relationships, state) {
+  let id;
+  do id = `legacy:${state.nextId++}`;
+  while (state.reserved.has(id) || relationships.has(id));
+  return id;
+}
+
+function recoverDisplacedEdge(graph, edge, state) {
+  const key = legacyLinkKey(edge.id, edge);
+  recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
+  rekeyRelationship(graph, edge, nextRecoveryId(graph.relationships, state), state);
+}
+
+function rekeyRelationship(graph, edge, id, state) {
+  trackImportedOrder(graph, state);
+  const previousId = edge.id;
+  edge.id = id;
+  graph.relationships.delete(previousId);
+  graph.relationships.set(id, edge);
+  for (const ids of [graph.relationshipsBySource.get(edge.source), graph.relationshipsByTarget.get(edge.target)]) {
+    ids.delete(previousId);
+    ids.add(id);
+  }
+}
+
+function trackImportedOrder(graph, state) {
+  if (state.order) return;
+  state.order = [];
+  state.slots = new WeakMap();
+  for (const edge of graph.relationships.values()) rememberImportedSlot(state, edge);
+}
+
+function rememberImportedSlot(state, edge, replaced) {
+  // An ordinary overwrite does not move a relationship's canonical Map slot.
+  const index = state.slots.get(replaced) ?? state.order.length;
+  state.order[index] = edge;
+  state.slots.set(edge, index);
+}
+
+function moveImportedSlot(state, edge, index) {
+  const previous = state.slots.get(edge);
+  if (state.order[previous] === edge) state.order[previous] = undefined;
+  state.order[index] = edge;
+  state.slots.set(edge, index);
+}
+
+function restoreImportedRowOrder(graph, order) {
+  // Rekeying the earlier row changes its Map/Set slot, not its row order.
+  // Reinsert the live imported records in their original order once.
+  for (const edge of order) {
+    if (!edge) continue;
+    const { id, source, target } = edge;
+    if (graph.relationships.get(id) !== edge) continue;
+    graph.relationships.delete(id);
+    graph.relationships.set(id, edge);
+    for (const ids of [graph.relationshipsBySource.get(source), graph.relationshipsByTarget.get(target)]) {
+      ids.delete(id);
+      ids.add(id);
+    }
+  }
+}
+
+function getLegacyLinkOrder() {
+  let order;
+  for (const outgoing of this.links?.values() ?? []) {
+    const byKey = shadowedLegacyLinks.get(outgoing);
+    if (!byKey) continue;
+    order ??= [];
+    for (const [key, shadowed] of byKey) {
+      const start = order.length;
+      for (const relationship of shadowed) {
+        if (this.relationships.get(relationship.id) === relationship) order.push(relationship.id);
+      }
+      const visible = outgoing.get(key);
+      if (this.relationships.get(visible.id) === visible) order.push(visible.id);
+      if (order.length < start + 2) order.length = start;
+    }
+  }
+  if (order?.length) return order;
+}
+
+function getLegacyMapOrder() {
+  // Canonical rows recreate the first occurrence of each source and key.
+  const canonical = new Map();
+  for (const relationship of this.relationships.values()) {
+    const { source, id } = relationship;
+    if (!canonical.has(source)) canonical.set(source, new Set());
+    canonical.get(source).add(legacyLinkKey(id, relationship));
+  }
+
+  const order = {};
+  const initialSources = canonical.keys();
+  for (const [source, outgoing] of this.links) {
+    if (!order.sources && initialSources.next().value !== source) order.sources = [...this.links.keys()];
+    const initialKeys = canonical.get(source)?.values();
+    for (const key of outgoing.keys()) {
+      if (initialKeys?.next().value !== key) {
+        (order.keys ??= []).push([source, [...outgoing.keys()]]);
+        break;
+      }
+    }
+  }
+  if (order.sources || order.keys) return order;
+}
+
+function restoreLegacyMapOrder(links, entities, order) {
+  if (Array.isArray(order?.sources)) {
+    // A previously used, still-live source can have an empty outgoing map.
+    for (const source of order.sources) {
+      if (!links.has(source) && entities.has(source)) links.set(source, new Map());
+    }
+    restoreArchivedMapOrder(links, order.sources);
+  }
+  if (!Array.isArray(order?.keys)) return;
+  for (const entry of order.keys) {
+    if (!Array.isArray(entry)) continue;
+    const outgoing = links.get(entry[0]);
+    const keys = entry[1];
+    if (outgoing) restoreArchivedMapOrder(outgoing, keys);
+  }
+}
+
+function restoreArchivedMapOrder(map, keys) {
+  if (!Array.isArray(keys)) return;
+  const present = keys.filter(key => map.has(key));
+  const archived = new Set(present);
+  if (present.length < 2 || archived.size !== present.length) return;
+  restoreMapOrder(map, reorderSubsequence(map.keys(), archived));
+}
+
+function reorderSubsequence(entries, order) {
+  // Keep unmatched receiver entries at the positions the hook established.
+  const next = order.values();
+  return Array.from(entries, entry => order.has(entry) ? next.next().value : entry);
+}
+
+function restoreMapOrder(map, keys) {
+  if (!Array.isArray(keys) || map.size !== keys.length ||
+      new Set(keys).size !== keys.length || !keys.every(key => map.has(key))) return;
+  for (const key of keys) {
+    const value = map.get(key);
+    map.delete(key);
+    map.set(key, value);
+  }
+}
+
+function getRelationshipOrder() {
+  // A replacement retains its canonical Map slot but joins a changed
+  // endpoint at the end of that endpoint's index.
+  const positions = new Map();
+  for (const id of this.relationships.keys()) positions.set(id, positions.size);
+  const outgoing = nonCanonicalOrder(this.relationshipsBySource, positions);
+  const incoming = nonCanonicalOrder(this.relationshipsByTarget, positions);
+  if (outgoing && incoming) return { outgoing, incoming };
+  if (outgoing) return { outgoing };
+  if (incoming) return { incoming };
+}
+
+function nonCanonicalOrder(index, positions) {
+  let groups;
+  for (const ids of index.values()) {
+    let previous = -1;
+    for (const id of ids) {
+      const position = positions.get(id);
+      if (position < previous) {
+        (groups ??= []).push([...ids]);
+        break;
+      }
+      previous = position;
+    }
+  }
+  return groups;
+}
+
+function restoreIndexOrder(index, relationships, endpoint, groups, archivedLinks) {
+  if (!Array.isArray(groups)) return;
+  for (const order of groups) {
+    if (!Array.isArray(order) || order.length < 2) continue;
+    let current;
+    let id;
+    const surviving = new Set();
+    for (const edgeId of order) {
+      const entry = archivedLinks.get(edgeId);
+      if (!entry) continue;
+      const { edge } = entry;
+      if (relationships.get(edgeId) !== edge || edge[endpoint] !== entry[endpoint]) continue;
+      if (!current) {
+        id = edge[endpoint];
+        current = index.get(id);
+      }
+      if (current.has(edgeId)) surviving.add(edgeId);
+    }
+    if (surviving.size >= 2) index.set(id, new Set(reorderSubsequence(current, surviving)));
+  }
+}
+
+function isRecoveredId(id) {
+  return /^legacy:[1-9]\d*$/.test(id);
 }
 
 /**
@@ -182,7 +656,7 @@ function updateRelationship(id, updates = {}, options = {}) {
   }
 
   // Update metadata
-  relationship.metadata.modified = new Date().toISOString();
+  stampRowModified(relationship);
   
   // Save changes
   this.relationships.set(id, relationship);
@@ -214,10 +688,23 @@ function removeRelationship(graph, relationship) {
   graph.relationships.delete(id);
   removeIndexEntry(graph.relationshipsBySource, source, id);
   removeIndexEntry(graph.relationshipsByTarget, target, id);
-  removeLegacyLink(graph.links.get(source), legacyKey(relationship), relationship);
+  removeLegacyLink(graph.links, legacyLinkKey(id, relationship), relationship);
 }
 
 function removeEntityRelationships(entityId) {
+  const state = activeRestore.get(this);
+  if (state) {
+    // Detached edges are absent from the indexes below but must not outlive
+    // the endpoint either, even if the hook recreates the same entity ID.
+    const touches = edge => edge?.source === entityId || edge?.target === entityId;
+    for (const edge of state.displaced ?? []) {
+      if (touches(edge)) state.displaced.delete(edge);
+    }
+    for (const write of state.provisional.values()) {
+      if (touches(write.displaced?.edge)) write.displaced = undefined;
+      if (touches(write.replaces)) write.replaces = undefined;
+    }
+  }
   const outgoing = this.relationshipsBySource.get(entityId);
   if (outgoing) for (const id of outgoing) deleteRelationship.call(this, id);
   const incoming = this.relationshipsByTarget.get(entityId);
@@ -226,13 +713,90 @@ function removeEntityRelationships(entityId) {
   const replayed = replayedLegacyLinks.get(this.links);
   if (replayed) {
     for (const relationship of replayed) {
-      const { source, target } = relationship;
-      if (source !== entityId && target !== entityId) continue;
-      removeLegacyLink(this.links.get(source), legacyKey(relationship), relationship);
+      if (relationship.source !== entityId && relationship.target !== entityId) continue;
+      removeLegacyLink(this.links, legacyLinkKey(relationship.id, relationship), relationship);
       replayed.delete(relationship);
     }
   }
   this.links.delete(entityId);
+}
+
+function removeIndexEntry(index, endpoint, id) {
+  const ids = index?.get(endpoint);
+  if (ids?.delete(id) && ids.size === 0) index.delete(endpoint);
+}
+
+function setLegacyLink(outgoing, key, relationship, previous, replayed) {
+  const current = outgoing.get(key);
+  if (current && current !== previous) {
+    let byKey = shadowedLegacyLinks.get(outgoing);
+    let shadowed = byKey?.get(key);
+    if (shadowed && previous) removeShadowedLink(shadowed, previous);
+    if (!replayed?.delete(current)) {
+      if (!byKey) shadowedLegacyLinks.set(outgoing, byKey = new Map());
+      if (!shadowed) byKey.set(key, shadowed = []);
+      shadowed.push(current);
+    } else if (shadowed?.length === 0) {
+      byKey.delete(key);
+    }
+  }
+  outgoing.set(key, relationship);
+}
+
+function insertLegacyWrite(outgoing, key, edge, writeOrder) {
+  const current = outgoing.get(key);
+  const position = writeOrder.get(edge);
+  if (!current || (writeOrder.get(current) ?? -1) <= position) {
+    setLegacyLink(outgoing, key, edge);
+    return;
+  }
+  let byKey = shadowedLegacyLinks.get(outgoing);
+  if (!byKey) shadowedLegacyLinks.set(outgoing, byKey = new Map());
+  let shadowed = byKey.get(key);
+  if (!shadowed) byKey.set(key, shadowed = []);
+  const next = shadowed.findIndex(peer => writeOrder.get(peer) > position);
+  if (next === -1) shadowed.push(edge);
+  else shadowed.splice(next, 0, edge);
+}
+
+function removeShadowedLink(shadowed, relationship) {
+  const index = shadowed.indexOf(relationship);
+  if (index !== -1) shadowed.splice(index, 1);
+}
+
+function legacyLinkKey(id, relationship) {
+  const { source, target } = relationship;
+  // Type updates keep the ID and the legacy key from insertion. The stored
+  // endpoints fix both boundaries even when they contain underscores.
+  if (isRecoveredId(id)) return `${target}-${recoveredLegacyTypes.get(relationship) ?? relationship.type}`;
+  const typeAtInsertion = id.slice(String(source).length + 1, -String(target).length - 1);
+  return `${target}-${typeAtInsertion}`;
+}
+
+function getRecoveredLegacyType(relationship) {
+  return recoveredLegacyTypes.get(relationship);
+}
+
+function removeLegacyLink(links, key, relationship) {
+  const { source } = relationship;
+  const outgoing = links?.get(source);
+  if (!outgoing) return;
+  const current = outgoing.get(key);
+  if (!current) return;
+
+  const byKey = shadowedLegacyLinks.get(outgoing);
+  const shadowed = byKey?.get(key);
+  if (shadowed) {
+    if (current === relationship) outgoing.set(key, shadowed.pop());
+    else removeShadowedLink(shadowed, relationship);
+
+    if (shadowed.length === 0) {
+      byKey.delete(key);
+      if (byKey.size === 0) shadowedLegacyLinks.delete(outgoing);
+    }
+  } else if (current === relationship) {
+    outgoing.delete(key);
+  }
 }
 
 /**
@@ -322,12 +886,18 @@ function getEntityRelationships(entityId, options = {}) {
 
 module.exports = {
   addRelationship,
+  delegateLink,
+  replayLinks,
+  restoreRelationships,
+  getLegacyLinkOrder,
+  getLegacyMapOrder,
+  getRecoveredLegacyType,
+  getRelationshipOrder,
   getRelationship,
   updateRelationship,
   deleteRelationship,
   deleteLink,
   removeEntityRelationships,
-  replayLinks,
   findRelationships,
   getEntityRelationships
 }; 

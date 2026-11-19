@@ -30,7 +30,8 @@ const jsonOutput = ultralink.toJSON(options);
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `pretty` | boolean | `false` | Whether to format the JSON with indentation |
-| `includeMetadata` | boolean | `true` | Whether to include metadata like timestamps |
+| `lossless` | boolean | `false` | Include the archive version, stable relationship IDs, and lookup order |
+| `includeMetadata` | boolean | value of `lossless` | Include metadata on entity and relationship rows |
 | `includeVectors` | boolean | `false` | Whether to include vector embeddings |
 
 ### Example
@@ -596,6 +597,7 @@ const fullBlobOutput = ultralink.toFullBlob(options);
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `compress` | boolean | `false` | Whether to compress the output |
+| `lossless` | boolean | `false` | Version the embedded graph and retain stored IDs, lookup order, and row metadata |
 | `includeVectors` | boolean | `true` | Whether to include vector embeddings |
 | `includeTemporal` | boolean | `true` | Whether to include temporal data |
 | `includeVisualization` | boolean | `true` | Whether to include visualization data |

@@ -40,6 +40,59 @@ describe('RxInferExporter', () => {
     expect(rxinfer).toContain('person1_expertise ~');
   });
 
+  test('keeps attribute declarations distinct for retyped parallel edges', () => {
+    const graph = new UltraLink();
+    graph.addEntity('a', 'person');
+    graph.addEntity('b', 'concept');
+    const authored = graph.addLink('a', 'b', 'authored', { weight: 0.5 });
+    graph.addLink('a', 'b', 'reviewed', { weight: 2 });
+    graph.addLink('a', 'b', 'peer-review', { weight: true });
+    graph.addLink('a', 'b', 'peer_review', { weight: -1 });
+    graph.updateRelationship(authored.id, { type: 'reviewed' });
+
+    const model = graph.toRxInfer();
+    expect(model.match(/^    .*_weight(?:_2)? ~ .*$/gm)).toEqual([
+      '    a_authored_b_weight ~ Beta(1.0, 1.0)',
+      '    a_reviewed_b_weight ~ Poisson(1.0)',
+      '    a_peer_review_b_weight ~ Bernoulli(0.5)',
+      '    a_peer_review_b_weight_2 ~ Normal(mean = 0.0, variance = 1.0)'
+    ]);
+  });
+
+  test('does not reuse an entity, attribute, or vector name for retyped edge attributes', () => {
+    const graph = new UltraLink();
+    for (const id of ['a', 'b', 'a_authored_b_weight']) graph.addEntity(id, 'measurement');
+    graph.addEntity('a_authored_b', 'measurement', { affinity: 0.4 }).vector = [0.1, 0.2];
+    const authored = graph.addLink('a', 'b', 'authored', { weight: true, affinity: 2, vec: -1 });
+    graph.updateRelationship(authored.id, { type: 'reviewed' });
+
+    const model = graph.toRxInfer({ includeVectors: true });
+    expect(model.match(/^    a_authored_b_(?:weight|affinity|vec)(?:_2)? ~ .*$/gm)).toEqual([
+      '    a_authored_b_weight ~ Normal(mean = 0.0, variance = 1.0)',
+      '    a_authored_b_affinity ~ Beta(1.0, 1.0)',
+      '    a_authored_b_vec ~ MvNormal(mean = (@__MODULE__).Base.zeros(2), covariance = (@__MODULE__).RxInfer.diageye(2))',
+      '    a_authored_b_weight_2 ~ Bernoulli(0.5)',
+      '    a_authored_b_affinity_2 ~ Poisson(1.0)',
+      '    a_authored_b_vec_2 ~ Normal(mean = 0.0, variance = 1.0)'
+    ]);
+  });
+
+  test('emits self-loop attribute factors without a self conditional', () => {
+    const graph = new UltraLink();
+    graph.addEntity('a', 'node');
+    graph.addEntity('b', 'node');
+    graph.addLink('a', 'a', 'loop', { weight: 0.25 });
+    graph.addLink('a', 'b', 'route', { weight: 2 });
+
+    const model = graph.toRxInfer({ includeComments: false });
+    expect(model.match(/^    .*_weight ~ .*$/gm)).toEqual([
+      '    a_loop_a_weight ~ Beta(1.0, 1.0)',
+      '    a_route_b_weight ~ Poisson(1.0)'
+    ]);
+    expect(model.match(/^    a ~ .*$/gm)).toHaveLength(1);
+    expect(model).toMatch(/^    b ~ .*\* a/m);
+  });
+
   test('uses RxInfer Gaussian factor keywords without changing the test sampler', () => {
     const ultralink = new UltraLink();
     ultralink.addEntity('sample', 'measurement');

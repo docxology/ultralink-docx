@@ -41,11 +41,13 @@ graph TD
     F --> F3[type]
     F --> F4[attributes]
     F --> F5[metadata]
+    F --> F6[id]
 ```
 
 ### Entity Representation
 
-Each entity in UltraLink is represented as a JSON object with the following structure:
+Default entity rows contain `id`, `type`, and `attributes`. `includeVectors`
+adds `vector` when present; `includeMetadata` adds `metadata`. For example:
 
 ```json
 {
@@ -67,10 +69,12 @@ Each entity in UltraLink is represented as a JSON object with the following stru
 
 ### Relationship Representation
 
-Each relationship is represented as:
+Default relationship rows contain `source`, `target`, `type`, and `attributes`.
+`lossless: true` adds the stored `id` and, by default, metadata:
 
 ```json
 {
+  "id": "source-entity-id_relationship-type_target-entity-id",
   "source": "source-entity-id",
   "target": "target-entity-id",
   "type": "relationship-type",
@@ -85,6 +89,57 @@ Each relationship is represented as:
 }
 ```
 
+`id` is the stored relationship ID, not an encoding of the current `type`.
+It remains stable after `updateRelationship(id, { type })`. `fromFullBlob()`
+accepts either this JSON graph directly or the JSON component of a Full Blob,
+including legacy object maps of records. It restores attributes in both modes.
+Only graphs marked with `"ultralinkArchiveVersion": 1` restore stored
+relationship IDs or graph and row metadata. In versioned archives, supplied
+top-level metadata keys take precedence; omitted keys keep their receiver
+values. The automatic `exportDate`, `entityCount`, and `relationshipCount`
+fields are ignored.
+
+Both modes invoke the receiver's public relationship insertion methods.
+Unversioned rows derive IDs from the accepted tuples; the last such row owns
+the compound ID. Earlier distinct legacy slots remain readable through
+`links`, but are not canonical rows. Only versioned import recovers separately
+stored relationships under opaque `legacy:<number>` IDs.
+`legacyType`, when present on a recovered row, stores its original legacy
+key's type across retyping. Use `deleteRelationship(id)` for recovered rows.
+
+In lossless JSON, the optional `legacyLinkOrder` array stores canonical IDs
+sharing a legacy link key in write order from oldest to newest. It omits
+legacy-only slots from unversioned replay. Import uses it to restore the
+visible value and fallback order of surviving archived edges without
+reordering rows or moving receiver-only writes. Reusing an archived ID
+does not transfer its ordering hint to a new receiver edge.
+Binding a restored edge to its insertion key does not make it newer than a
+receiver edge written later in the hook.
+The optional `legacyMapOrder` stores `sources` in legacy map order, including
+sources with empty maps, and `keys` as `[source, orderedKeys]` pairs. It
+omits orders that can already be inferred from the relationship rows.
+Import skips omitted legacy-only keys and restores the relative order of
+archived entries even when receiver hooks add other entries to the same map.
+When directional lookup order differs from row order, `relationshipOrder`
+stores the affected groups of IDs under `outgoing` and `incoming`. A group
+contains the archived relationship IDs for one endpoint in lookup order.
+Import applies the saved order to surviving archived edges only, without
+moving receiver-added entries or changing canonical row order.
+
+Row metadata follows JSON conversion rules. A row-level `toJSON()` receives
+the key `"metadata"`. On runtimes supporting `JSON.rawJSON()`, archives keep
+branded values until serialization, preserving their exact JSON tokens.
+When reading archive text on those runtimes, noncanonical row metadata
+numbers are restored from the original tokens so re-export cannot round or
+overflow them. Other graph fields retain native parsing behavior, and archive
+import does not run a recursive JSON reviver over graph attributes.
+Versioned imports restore supplied metadata values as-is, including
+scalars, `null`, arrays, and records, instead of merging in fresh timestamps.
+Unsupported values and values that throw during conversion are omitted from
+objects and become `null` in arrays. Other metadata fields survive; the
+live graph is not changed. This applies only to optional entity and
+relationship metadata, not graph attributes or graph-level metadata.
+
 ## Usage
 
 The JSON exporter is implemented in [src/lib/exporters/json.js](../src/lib/exporters/json.js) and can be used as follows:
@@ -93,15 +148,12 @@ The JSON exporter is implemented in [src/lib/exporters/json.js](../src/lib/expor
 // Basic export to JSON
 const json = ultralink.toJSON();
 
-// Export with specific options
-const jsonWithVectors = ultralink.toJSON({
-  includeVectors: true,
-  includeHistory: true,
-  prettyPrint: true
-});
+// Archive stored relationship IDs and row metadata
+const archive = ultralink.toJSON({ lossless: true });
+const restored = new UltraLink().fromFullBlob(archive);
 
-// Convert to string for storage
-const jsonString = JSON.stringify(json, null, 2);
+// Export vector embeddings with indentation
+const jsonWithVectors = ultralink.toJSON({ includeVectors: true, pretty: true });
 ```
 
 ### Export Options
@@ -109,16 +161,23 @@ const jsonString = JSON.stringify(json, null, 2);
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `includeVectors` | Boolean | `false` | Include entity vector embeddings |
-| `includeHistory` | Boolean | `false` | Include entity and relationship change history |
-| `includeMetadata` | Boolean | `true` | Include creation and modification metadata |
-| `prettyPrint` | Boolean | `false` | Format JSON with indentation for readability |
+| `lossless` | Boolean | `false` | Include the archive version, stable relationship IDs, and lookup order |
+| `includeMetadata` | Boolean | value of `lossless` | Include entity and relationship metadata; the graph summary is unchanged |
+| `pretty` | Boolean | `false` | Format JSON with indentation for readability |
+| `asString` | Boolean | `true` | Return serialized JSON; `false` returns the object |
 
 ## Complete Example
 
-An example of a complete UltraLink JSON export:
+An example of lossless UltraLink JSON with vector export enabled:
 
 ```json
 {
+  "ultralinkArchiveVersion": 1,
+  "metadata": {
+    "exportDate": "2023-06-15T10:38:00Z",
+    "entityCount": 3,
+    "relationshipCount": 3
+  },
   "entities": [
     {
       "id": "saguaro",
@@ -166,6 +225,7 @@ An example of a complete UltraLink JSON export:
   ],
   "relationships": [
     {
+      "id": "saguaro_adapts_to_aridity",
       "source": "saguaro",
       "target": "aridity",
       "type": "adapts_to",
@@ -179,6 +239,7 @@ An example of a complete UltraLink JSON export:
       }
     },
     {
+      "id": "kangaroo-rat_adapts_to_aridity",
       "source": "kangaroo-rat",
       "target": "aridity",
       "type": "adapts_to",
@@ -192,6 +253,7 @@ An example of a complete UltraLink JSON export:
       }
     },
     {
+      "id": "kangaroo-rat_shares_habitat_saguaro",
       "source": "kangaroo-rat",
       "target": "saguaro",
       "type": "shares_habitat",

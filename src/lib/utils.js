@@ -202,6 +202,27 @@ function getErrorMessage(error) {
   }
 }
 
+// Distinguish built-in graph validation from errors deliberately thrown by hooks.
+class GraphValidationError extends Error {}
+
+function restoreRowMetadata(row, metadata) {
+  if (metadata === undefined) return;
+  if (isMetadataRecord(metadata)) {
+    row.metadata = { ...metadata };
+  } else {
+    row.metadata = Array.isArray(metadata) ? metadata.slice() : metadata;
+  }
+}
+
+function stampRowModified(row) {
+  if (isMetadataRecord(row.metadata)) row.metadata.modified = new Date().toISOString();
+}
+
+function isMetadataRecord(metadata) {
+  return metadata !== null && typeof metadata === 'object' &&
+    !Array.isArray(metadata) && !JSON.isRawJSON?.(metadata);
+}
+
 module.exports = {
   flattenObject,
   flattenKeys,
@@ -210,5 +231,8 @@ module.exports = {
   convertToBIF,
   generateId,
   parseValue,
+  restoreRowMetadata,
+  stampRowModified,
+  GraphValidationError,
   getErrorMessage
 }; 

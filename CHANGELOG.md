@@ -37,6 +37,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Render actual graph nodes and edges in SVG and documented wiki-links and backlinks in Obsidian.
 - Keep Obsidian links and backlinks on the correct notes after relationship ID reuse.
 - Keep outgoing, incoming, and combined relationship lookups on the correct endpoints after IDs are reused, without changing shipped JSON or Full Blob imports.
+- Add opt-in `lossless: true` to JSON and Full Blob to store stable IDs, lookup order, and JSON-compatible row metadata.
+- Keep graph archives intact when optional row metadata contains unsupported values or throws during JSON conversion.
+- Preserve exact raw JSON metadata tokens and native `toJSON` hook keys.
+- Preserve the last unversioned compound-ID owner's lookup and deletion behavior, including distinct legacy-only slots.
+- Retain live legacy link maps after the last edge is removed and preserve their iteration order in archives.
+- Keep receiver graph metadata keys that JSON or Full Blob imports do not supply.
+- Restore row metadata values and exact numeric tokens in versioned archives; honor public link overrides for all imports.
+- Bind archive fields only to identifiable receiver-accepted edges, preserving independent receiver writes and their overwrite behavior.
+- Preserve the receiver on decode or built-in insertion validation failure; keep entity metadata and tuple deletion compatible with existing overrides.
+- Restore archive metadata to the canonical entity returned by the receiver and retain the public `RelationshipManager.replayLinks` entry point.
+- Read archive text without a recursive reviver and preserve receiver overwrite semantics when distinct tuples share a recovered compound ID.
+- Hide superseded receiver writes during import hooks and preserve live legacy key order even when legacy-only slots are not archived.
+- Retain independent receiver writes when archived IDs are reused, discard detached edges when an endpoint is deleted, and apply archived legacy order to live entries only.
+- Preserve explicitly accepted archive rows alongside equal-tuple receiver writes in either write order; do not apply legacy shadow order to a reused ID.
+- Preserve receiver write order when rebinding historical legacy keys or reviving an archive edge, and apply directional archive order around receiver additions.
+- Count each self-loop once in combined lookups. Preserve retry-safe deletion by insertion tuple after retyping.
+- Restore surviving edges behind colliding legacy link keys and export both edges with their actual endpoints in RxInfer.
+- Keep recovered edges under their original legacy keys and emit RxInfer self-loop attribute factors.
 - Generate real graph SVG in synchronous Full Blob exports and runnable Python scenes for Manim.
 - Restore discovered export test entrypoints and include all non-performance suites in `npm test`.
 - Importing the example renderer no longer starts rendering; its CLI still renders all bundled systems.

@@ -50,7 +50,7 @@ class RxInferExporter {
 
       // Get entities and relationships
       const entities = Array.from(this.ultralink.entities.values());
-      const relationships = this._extractRelationships();
+      const relationships = Array.from(this.ultralink.relationships.values());
 
       // Generate the model code
       const modelCode = this._generateModelCode(
@@ -89,29 +89,6 @@ class RxInferExporter {
     } catch (error) {
       throw new Error(`RxInfer.jl export failed: ${error.message}`);
     }
-  }
-
-  /**
-   * Extract relationships from UltraLink
-   * @private
-   * @returns {Array} Relationship objects
-   */
-  _extractRelationships() {
-    const relationships = [];
-    
-    for (const [sourceId, targets] of this.ultralink.links.entries()) {
-      for (const [targetId, rel] of targets.entries()) {
-        relationships.push({
-          source: sourceId,
-          target: targetId,
-          type: rel.type,
-          attributes: rel.attributes || {},
-          metadata: rel.metadata || {}
-        });
-      }
-    }
-    
-    return relationships;
   }
 
   /**
@@ -166,9 +143,11 @@ class RxInferExporter {
     }
 
     // Add entity variable declarations
+    const occupiedNames = new Set();
     for (const entity of entities) {
       const distribution = this._getDistributionForEntity(entity, distributionMapping);
       const varName = this._sanitizeVariableName(entity.id);
+      occupiedNames.add(varName);
       
       if (includeComments) {
         code += `    # Entity: ${entity.id} (type: ${entity.type})\n`;
@@ -189,6 +168,7 @@ class RxInferExporter {
           // Create variable for meaningful attributes
           if (this._isUsefulAttribute(key, value)) {
             const attrVarName = this._sanitizeVariableName(`${entity.id}_${key}`);
+            occupiedNames.add(attrVarName);
             const attrDist = this._getDistributionForAttribute(key, value);
             code += `    ${attrVarName} ~ ${attrDist}\n`;
           }
@@ -198,6 +178,7 @@ class RxInferExporter {
       // Add vector if requested and available
       if (includeVectors && entity.vector && entity.vector.length > 0) {
         const vecVarName = this._sanitizeVariableName(`${entity.id}_vec`);
+        occupiedNames.add(vecVarName);
         const vecDist = this._getMultivariateNormal(entity.vector.length);
         code += `    ${vecVarName} ~ ${vecDist}\n`;
       }
@@ -209,26 +190,31 @@ class RxInferExporter {
     
     // Add relationship dependencies
     for (const rel of relationships) {
-      const sourceVar = this._sanitizeVariableName(rel.source);
-      const targetVar = this._sanitizeVariableName(rel.target);
-      const relType = rel.type;
-      
-      // Skip self-relations
-      if (rel.source === rel.target) continue;
-      
       if (includeComments) {
-        code += `    # Relationship: ${rel.source} (${relType}) ${rel.target}\n`;
+        code += `    # Relationship: ${rel.source} (${rel.type}) ${rel.target}\n`;
       }
-      
-      // Create conditional dependency based on relationship type
-      const conditional = this._getConditionalForRelationship(relType, sourceVar, targetVar);
-      code += `    ${conditional}\n`;
+
+      // Self-loops do not define a conditional on the same variable, but
+      // their attributes still contribute independent factors.
+      if (rel.source !== rel.target) {
+        const sourceVar = this._sanitizeVariableName(rel.source);
+        const targetVar = this._sanitizeVariableName(rel.target);
+        const conditional = this._getConditionalForRelationship(rel.type, sourceVar, targetVar);
+        code += `    ${conditional}\n`;
+      }
       
       // Add relationship attributes if useful
       if (rel.attributes && Object.keys(rel.attributes).length > 0) {
         for (const [key, value] of Object.entries(rel.attributes)) {
           if (this._isUsefulAttribute(key, value)) {
-            const relAttrVar = this._sanitizeVariableName(`${rel.source}_${relType}_${rel.target}_${key}`);
+            // The stored ID remains distinct when two edges acquire the same
+            // current type. Sanitization can still collapse different IDs.
+            const baseName = this._sanitizeVariableName(`${rel.id}_${key}`);
+            let relAttrVar = baseName;
+            for (let suffix = 2; occupiedNames.has(relAttrVar); suffix++) {
+              relAttrVar = `${baseName}_${suffix}`;
+            }
+            occupiedNames.add(relAttrVar);
             const attrDist = this._getDistributionForAttribute(key, value);
             code += `    ${relAttrVar} ~ ${attrDist}\n`;
           }
