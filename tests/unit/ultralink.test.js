@@ -1120,6 +1120,61 @@ describe('UltraLink', () => {
       }
     });
 
+    it('replaces a recovered receiver write when another tuple derives the same compound ID', () => {
+      for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
+      const stored = ultralink.addLink('a', 'd', 'b_c', { revision: 1 });
+      ultralink.updateRelationship(stored.id, { type: 'reviewed' });
+      const citation = ultralink.addLink('a', 'd', 'cited', { revision: 2 });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          if (type === 'reviewed') super.addRelationship('a_b', 'd', 'c', { audit: 'old' });
+          else super.addRelationship('a', 'c_d', 'b', { audit: 'latest' });
+          return super.addLink(source, target, type, attributes);
+        }
+      }
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new Audited().fromFullBlob(input);
+        expect(restored.getRelationship(stored.id)).toEqual(stored);
+        expect(restored.getBacklinks('d')).toEqual([stored, citation]);
+        expect(restored.getRelationships('a_b', { direction: 'outgoing' })).toEqual([]);
+        expect(restored.links.get('a_b').size).toBe(0);
+        const [audit] = restored.getBacklinks('c_d');
+        expect(audit).toMatchObject({ source: 'a', target: 'c_d', type: 'b', attributes: { audit: 'latest' } });
+        expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([audit, stored, citation]);
+        expect(restored.links.get('a').get('c_d-b')).toBe(audit);
+        expect(restored.deleteRelationship(audit.id)).toBe(true);
+        expect(restored.getBacklinks('c_d')).toEqual([]);
+      }
+    });
+
+    it('restores text archive numeric tokens only from row metadata beside nested attributes', () => {
+      const label = 'the string "1e400" and the literal \\9007199254740993';
+      const profile = { author: { traits: [{ description: label, rank: 2 }] } };
+      const author = ultralink.addEntity('a', 'person', { profile });
+      ultralink.addEntity('b', 'paper');
+      const link = ultralink.addLink('a', 'b', 'reviewed');
+      if (typeof JSON.rawJSON === 'function') {
+        const exact = JSON.rawJSON('9007199254740993');
+        author.metadata.measurement = [exact, { label, limit: JSON.rawJSON('1e400') }];
+        author.attributes.measurement = exact;
+        link.metadata.measurement = exact;
+      }
+      for (const input of [ultralink.toJSON({ lossless: true }), JSON.stringify(ultralink.toFullBlob(), null, 2),
+        ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new UltraLink().fromFullBlob(input);
+        const stored = restored.getEntity('a');
+        const [edge] = restored.getBacklinks('b');
+        expect(edge.id).toBe(link.id);
+        expect(stored.attributes.profile).toEqual(profile);
+        if (typeof JSON.rawJSON === 'function') {
+          expect(stored.attributes.measurement).toBe(9007199254740992);
+          expect(JSON.stringify(stored.metadata.measurement))
+            .toBe(`[9007199254740993,{"label":${JSON.stringify(label)},"limit":1e400}]`);
+          expect(JSON.stringify(edge.metadata.measurement)).toBe('9007199254740993');
+        }
+      }
+    });
+
     it('archives JSON-safe row metadata beside same- and cross-realm BigInts and cycles', () => {
       const author = ultralink.addEntity('a', 'node');
       ultralink.addEntity('b', 'node');

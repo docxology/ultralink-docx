@@ -134,7 +134,7 @@ function indexRelationship(relationship) {
 
 function restoreRelationships(rows, archive) {
   const state = {
-    accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new WeakSet(),
+    accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new Map(),
     nextId: 1, inserted: [], delegated: new Set()
   };
   const entries = archive ? reserveArchiveIds(rows, state.reserved) : rows;
@@ -236,7 +236,7 @@ function bindArchiveId(graph, edge, row, state) {
   const previous = graph.relationships.get(id);
   if (previous && previous !== edge) {
     recoverDisplacedEdge(graph, previous, state);
-    if (!state.accepted.has(previous)) state.recoveredEffects.add(previous);
+    if (!state.accepted.has(previous)) state.recoveredEffects.set(id, previous);
   }
   const oldKey = legacyLinkKey(edge.id, edge);
   if (recovered) recoveredLegacyTypes.set(edge, row.legacyType ?? oldKey.slice(String(edge.target).length + 1));
@@ -250,16 +250,16 @@ function bindArchiveId(graph, edge, row, state) {
 }
 
 function settleReceiverWrites(graph, state, accepted) {
-  // If binding reserved an audit tuple's ID, later audit writes have a
-  // temporary ID. They still replace the prior write of that exact tuple.
+  // Archive identity can occupy the canonical compound ID while a receiver
+  // write sits at a recovery ID. Overwrite by the original compound ID,
+  // including when a later writer derives it from different endpoints.
   for (const edge of state.inserted) {
     if (edge === accepted || graph.relationships.get(edge.id) !== edge) continue;
-    const outgoing = graph.links.get(edge.source);
-    const key = legacyLinkKey(edge.id, edge);
-    const matches = other => other !== edge && state.recoveredEffects.has(other) && other.target === edge.target;
-    const visible = outgoing.get(key);
-    const previous = matches(visible) ? visible : shadowedLegacyLinks.get(outgoing)?.get(key)?.find(matches);
-    if (previous) {
+    const recovered = isRecoveredId(edge.id);
+    const type = recoveredLegacyTypes.get(edge);
+    const compoundId = recovered ? `${edge.source}_${type}_${edge.target}` : edge.id;
+    const previous = state.recoveredEffects.get(compoundId);
+    if (previous && graph.relationships.get(previous.id) === previous) {
       trackImportedOrder(graph, state);
       const slot = state.slots.get(edge);
       if (state.slots.get(previous) < slot) {
@@ -268,7 +268,8 @@ function settleReceiverWrites(graph, state, accepted) {
       }
       deleteRelationship.call(graph, previous.id);
     }
-    if (isRecoveredId(edge.id)) state.recoveredEffects.add(edge);
+    if (recovered) state.recoveredEffects.set(compoundId, edge);
+    else state.recoveredEffects.delete(compoundId);
   }
 }
 

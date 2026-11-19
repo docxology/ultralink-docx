@@ -138,7 +138,8 @@ hook gives no result; return the accepted edge for ambiguous hooks, or return
 
 If an accepted archive row needs an ID occupied by a receiver-created edge,
 the archive row takes the stored ID and the other edge stays reachable under
-a recovery ID. Repeated writes to the receiver's same tuple still replace it.
+a recovery ID. Later receiver writes that derive the same compound ID replace
+the previous receiver write, even if their endpoints differ.
 Imported authored graph metadata replaces matching top-level keys and leaves
 other receiver keys intact. The automatic export summary is ignored.
 

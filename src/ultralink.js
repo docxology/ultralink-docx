@@ -35,38 +35,55 @@ function parseArchiveText(text) {
     return parsed;
   }
 
-  // Only versioned archives need source tokens. In particular, a reviver's
-  // recursive walk has a lower depth limit than native JSON parsing.
-  let tokens;
-  const archive = JSON.parse(text, function (key, value, context) {
-    if (typeof value === 'number' && context?.source && context.source !== String(value)) {
-      tokens ??= new WeakMap();
-      let fields = tokens.get(this);
-      if (!fields) tokens.set(this, fields = new Map());
-      fields.set(key, context.source);
-    }
-    return value;
-  });
-  if (tokens) {
-    const archiveGraph = archive.json ?? archive;
-    for (const collection of [archiveGraph.entities, archiveGraph.relationships]) {
-      for (const row of recordValues(collection)) {
-        if (row && Object.hasOwn(row, 'metadata')) restoreNumericTokens(row, 'metadata', tokens);
+  // Native parsing validates the document and handles nesting without a
+  // reviver. A second native parse shadows only noncanonical number tokens
+  // with their spellings; quoted strings in the input are left alone.
+  const shadow = annotateNumericTokens(String(text));
+  if (shadow !== undefined) {
+    const annotated = JSON.parse(shadow);
+    const annotatedGraph = annotated.json ?? annotated;
+    for (const collection of ['entities', 'relationships']) {
+      const rows = graph[collection];
+      if (!rows || typeof rows !== 'object') continue;
+      for (const key of Object.keys(rows)) {
+        const row = rows[key];
+        if (row && Object.hasOwn(row, 'metadata')) {
+          restoreNumericTokens(row, annotatedGraph[collection][key]);
+        }
       }
     }
   }
-  return archive;
+  return parsed;
 }
 
-function restoreNumericTokens(holder, key, tokens) {
-  const token = tokens.get(holder)?.get(key);
-  if (token !== undefined) {
-    holder[key] = JSON.rawJSON(token);
-    return;
+function annotateNumericTokens(text) {
+  const chunks = [];
+  let quoted = false;
+  let start = 0;
+  for (const { 0: token, index } of text.matchAll(/"|\\[\s\S]|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g)) {
+    if (token === '"') quoted = !quoted;
+    else if (!quoted && String(Number(token)) !== token) {
+      chunks.push(text.slice(start, index), `"${token}"`);
+      start = index + token.length;
+    }
   }
-  const value = holder[key];
-  if (value && typeof value === 'object') {
-    for (const child of Object.keys(value)) restoreNumericTokens(value, child, tokens);
+  if (start) {
+    chunks.push(text.slice(start));
+    return chunks.join('');
+  }
+}
+
+function restoreNumericTokens(row, annotated) {
+  const pending = [[row, annotated, 'metadata']];
+  while (pending.length) {
+    const [holder, shadow, key] = pending.pop();
+    const value = holder[key];
+    if (typeof value === 'number' && typeof shadow[key] === 'string') {
+      // A preexisting string also parses as a string in the original graph.
+      holder[key] = JSON.rawJSON(shadow[key]);
+    } else if (value && typeof value === 'object') {
+      for (const child of Object.keys(value)) pending.push([value, shadow[key], child]);
+    }
   }
 }
 

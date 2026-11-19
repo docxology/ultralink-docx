@@ -118,9 +118,10 @@ contains all relationship IDs for one endpoint in lookup order.
 Row metadata follows JSON conversion rules. A row-level `toJSON()` receives
 the key `"metadata"`. On runtimes supporting `JSON.rawJSON()`, archives keep
 branded values until serialization, preserving their exact JSON tokens.
-When reading archive text, runtimes with `JSON.parse` source tokens restore
-noncanonical row metadata numbers as raw JSON values so re-export cannot
-round or overflow them. Other graph fields retain native parsing behavior.
+When reading archive text on those runtimes, noncanonical row metadata
+numbers are restored from the original tokens so re-export cannot round or
+overflow them. Other graph fields retain native parsing behavior, and archive
+import does not run a recursive JSON reviver over graph attributes.
 Versioned imports restore supplied metadata values as-is, including
 scalars, `null`, arrays, and records, instead of merging in fresh timestamps.
 Unsupported values and values that throw during conversion are omitted from
