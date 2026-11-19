@@ -193,6 +193,15 @@ function parseValue(value) {
   return value;
 }
 
+// Export callbacks can throw values that cannot be converted to strings.
+function getErrorMessage(error) {
+  try {
+    return String(error instanceof Error ? error.message : error);
+  } catch {
+    return 'Unprintable thrown value';
+  }
+}
+
 module.exports = {
   flattenObject,
   flattenKeys,
@@ -200,5 +209,6 @@ module.exports = {
   escapeXML,
   convertToBIF,
   generateId,
-  parseValue
+  parseValue,
+  getErrorMessage
 }; 
