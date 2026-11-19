@@ -390,6 +390,23 @@ describe('UltraLink', () => {
       expect(ultralink.getRelationships('anchor')).toEqual([]);
     });
 
+    it('replaces a reused compound ID in place when it retains the legacy key', () => {
+      for (const id of ['a', 'y', 'y-x_y']) ultralink.addEntity(id, 'location');
+      const first = ultralink.addLink('a', 'y', 'x_y-x');
+      const legacy = ultralink.links.get('a');
+      const replacement = ultralink.addLink('a', 'y-x_y', 'x');
+      expect(replacement.id).toBe(first.id);
+      expect(legacy.get('y-x_y-x')).toBe(replacement);
+      expect(ultralink.getBacklinks('y')).toEqual([]);
+      expect(ultralink.getBacklinks('y-x_y')).toEqual([replacement]);
+
+      const independent = ultralink.addLink('a', 'document1', 'route');
+      const restored = ultralink.addLink('a', 'y', 'x_y-x');
+      expect([...ultralink.links.get('a').values()]).toEqual([restored, independent]);
+      expect(ultralink.getBacklinks('y')).toEqual([restored]);
+      expect(ultralink.getBacklinks('y-x_y')).toEqual([]);
+    });
+
     it('exports both legacy-key colliders by actual endpoints and round-trips their unchanged JSON shape', () => {
       for (const id of ['anchor', 'station_north', 'station_north-old']) ultralink.addEntity(id, 'location');
       const a = ultralink.addLink('anchor', 'station_north', 'old-route', { weight: 1 });

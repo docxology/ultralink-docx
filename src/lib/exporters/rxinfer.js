@@ -185,6 +185,7 @@ class RxInferExporter {
     }
     
     // Add relationship dependencies
+    const relationshipAttributeNames = new Set();
     for (const rel of relationships) {
       const sourceVar = this._sanitizeVariableName(rel.source);
       const targetVar = this._sanitizeVariableName(rel.target);
@@ -205,7 +206,14 @@ class RxInferExporter {
       if (rel.attributes && Object.keys(rel.attributes).length > 0) {
         for (const [key, value] of Object.entries(rel.attributes)) {
           if (this._isUsefulAttribute(key, value)) {
-            const relAttrVar = this._sanitizeVariableName(`${rel.source}_${relType}_${rel.target}_${key}`);
+            // The stored ID remains distinct when two edges acquire the same
+            // current type. Sanitization can still collapse different IDs.
+            const baseName = this._sanitizeVariableName(`${rel.id}_${key}`);
+            let relAttrVar = baseName;
+            for (let suffix = 2; relationshipAttributeNames.has(relAttrVar); suffix++) {
+              relAttrVar = `${baseName}_${suffix}`;
+            }
+            relationshipAttributeNames.add(relAttrVar);
             const attrDist = this._getDistributionForAttribute(key, value);
             code += `    ${relAttrVar} ~ ${attrDist}\n`;
           }

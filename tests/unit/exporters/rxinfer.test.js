@@ -40,6 +40,25 @@ describe('RxInferExporter', () => {
     // Check for attribute representation
     expect(rxinfer).toContain('person1_expertise ~');
   });
+
+  test('keeps attribute declarations distinct for retyped parallel edges', () => {
+    const graph = new UltraLink();
+    graph.addEntity('a', 'person');
+    graph.addEntity('b', 'concept');
+    const authored = graph.addLink('a', 'b', 'authored', { weight: 0.5 });
+    graph.addLink('a', 'b', 'reviewed', { weight: 2 });
+    graph.addLink('a', 'b', 'peer-review', { weight: true });
+    graph.addLink('a', 'b', 'peer_review', { weight: -1 });
+    graph.updateRelationship(authored.id, { type: 'reviewed' });
+
+    const model = graph.toRxInfer();
+    expect(model.match(/^    .*_weight(?:_2)? ~ .*$/gm)).toEqual([
+      '    a_authored_b_weight ~ Beta(1.0, 1.0)',
+      '    a_reviewed_b_weight ~ Poisson(1.0)',
+      '    a_peer_review_b_weight ~ Bernoulli(0.5)',
+      '    a_peer_review_b_weight_2 ~ Normal(0.0, 1.0)'
+    ]);
+  });
   
   // Test options handling
   test('should respect export options', () => {

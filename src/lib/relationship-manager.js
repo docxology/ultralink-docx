@@ -41,6 +41,7 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
       modified: new Date().toISOString()
     }
   };
+  const key = `${targetId}-${type}`;
 
   // A compound ID can be reused by a different endpoint tuple.
   const previous = this.relationships.get(id);
@@ -51,7 +52,10 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
     if (previous.target !== targetId) {
       removeIndexEntry(this.relationshipsByTarget, previous.target, id);
     }
-    removeLegacyLink(this.links, id, previous);
+    const previousKey = legacyLinkKey(id, previous);
+    if (previous.source !== sourceId || previousKey !== key) {
+      removeLegacyLink(this.links, previousKey, previous);
+    }
   }
 
   // Store the relationship
@@ -72,7 +76,7 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   if (!this.links.has(sourceId)) {
     this.links.set(sourceId, new Map());
   }
-  setLegacyLink(this.links.get(sourceId), `${targetId}-${type}`, relationship, previous);
+  setLegacyLink(this.links.get(sourceId), key, relationship, previous);
 
   return relationship;
 }
@@ -137,7 +141,7 @@ function deleteRelationship(id) {
   
   removeIndexEntry(this.relationshipsBySource, relationship.source, id);
   removeIndexEntry(this.relationshipsByTarget, relationship.target, id);
-  removeLegacyLink(this.links, id, relationship);
+  removeLegacyLink(this.links, legacyLinkKey(id, relationship), relationship);
   
   return true;
 }
@@ -171,15 +175,17 @@ function removeShadowedLink(shadowed, relationship) {
   if (index !== -1) shadowed.splice(index, 1);
 }
 
-function removeLegacyLink(links, id, relationship) {
-  const { source, target } = relationship;
-  const outgoing = links?.get(source);
-  if (!outgoing) return;
-
+function legacyLinkKey(id, { source, target }) {
   // Type updates keep the ID and the legacy key from insertion. The stored
   // endpoints fix both boundaries even when they contain underscores.
   const typeAtInsertion = id.slice(String(source).length + 1, -String(target).length - 1);
-  const key = `${target}-${typeAtInsertion}`;
+  return `${target}-${typeAtInsertion}`;
+}
+
+function removeLegacyLink(links, key, relationship) {
+  const { source } = relationship;
+  const outgoing = links?.get(source);
+  if (!outgoing) return;
   const current = outgoing.get(key);
   if (!current) return;
 
