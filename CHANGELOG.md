@@ -56,6 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   when the example renderer cannot regenerate them; report failures in separate diagnostics.
 - Reject example Full Blobs with failed embedded exports and keep rendering later
   formats when a generator throws an unprintable value.
+- Write restorable compact Full Blob archives in the example renderer and keep
+  prior Full Blob files intact if serialization or writing fails.
 - Resolved issues with GraphML attribute serialization
 - Fixed relationship counting in Full Blob exports
 - Corrected theme handling in HTML Website exports
