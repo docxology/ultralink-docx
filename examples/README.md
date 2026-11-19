@@ -130,6 +130,11 @@ The PNG exporter's 1×1 placeholder is a warning, not a successful graph PNG.
 SVG or text returned in place of a PNG is a format failure and is not saved
 under a PNG filename.
 
+Each system's `obsidian` directory uses the filenames returned by `toObsidian`,
+including `index.md` and one `<entity-id>.md` per entity, so links such as
+`[[saguaro]]` resolve to `saguaro.md`. Use a fresh output tree when regenerating
+a vault that contains old `.md.md` files; the renderer does not remove them.
+
 Each system's `full-blob` directory contains `<system>-full.json` (pretty JSON)
 and `<system>-full-compressed.blob` (the library's compact JSON Full Blob, not
 a binary archive). To restore the compact file, pass its UTF-8 text to

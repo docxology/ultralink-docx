@@ -57,6 +57,29 @@ describe('E2E: Render Examples Script', () => {
     });
   });
 
+  test('writes Obsidian notes at the filenames targeted by the fixture wiki links', async () => {
+    await withNativeRenderer(async (root, runNode) => {
+      await runNode('-e', `
+        const assert = require('node:assert/strict');
+        const fs = require('node:fs');
+        const path = require('node:path');
+        const { renderSystem, SYSTEMS } = require('./examples/render-examples.js');
+        const fixture = SYSTEMS.POMDP();
+        const notes = fixture.toObsidian({ backlinks: true });
+        renderSystem('POMDP', () => fixture).then(result => {
+          assert.equal(result.ok, true, JSON.stringify(result.failures));
+          const dir = 'examples/output/systems/POMDP/obsidian';
+          assert.deepEqual(fs.readdirSync(dir).sort(), Object.keys(notes).sort());
+          for (const [filename, content] of Object.entries(notes)) {
+            assert.deepEqual(fs.readFileSync(path.join(dir, filename)), Buffer.from(content), filename);
+          }
+          assert.match(fs.readFileSync(path.join(dir, 'index.md'), 'utf8'), /\\[\\[pomdp_model\\]\\]/);
+          assert.match(fs.readFileSync(path.join(dir, 'pomdp_model.md'), 'utf8'), /^id: pomdp_model$/m);
+        });
+      `);
+    });
+  });
+
   test('the CLI reports one blocked system without discarding the other seven graphs', async () => {
     await withNativeRenderer(async (root, runNode) => {
       const systems = path.join(root, 'examples', 'output', 'systems');
