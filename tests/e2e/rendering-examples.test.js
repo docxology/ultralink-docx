@@ -47,9 +47,9 @@ describe('E2E: Render Examples Script', () => {
       const edge = { source: 'entity1', target: 'entity2', type: 'related_to', attributes: {} };
       expect(graph.relationships).toEqual([edge]);
       const blob = JSON.parse(fs.readFileSync(path.join(output, 'full-blob', 'TestSystem-full.json'), 'utf8'));
-      expect(blob.json.relationships).toEqual([
-        { ...edge, id: 'entity1_related_to_entity2', metadata: { created: expect.any(String), modified: expect.any(String) } }
-      ]);
+      expect(blob.json).not.toHaveProperty('ultralinkArchiveVersion');
+      expect(blob.json.entities).toEqual(graph.entities);
+      expect(blob.json.relationships).toEqual([edge]);
       const svg = fs.readFileSync(path.join(output, 'visualization', 'testsystem-graph.svg'), 'utf8');
       expect(svg).toContain('>Test Entity 1</text>');
       expect(svg).toContain('>Test Entity 2</text>');
