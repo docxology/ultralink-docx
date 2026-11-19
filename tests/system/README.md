@@ -39,9 +39,18 @@ Or to run all tests including system tests:
 npm test
 ```
 
+To generate and validate only the KIF fixtures without running the separate
+rendering tests:
+
+```bash
+npx jest --runTestsByPath tests/system/rendering.test.js -t 'should validate kif output structure'
+```
+
 ## Output Directory Structure
 
-All system test outputs are saved to the `output/systems/` directory with the following structure:
+KIF outputs are written and validated in a temporary directory so the tests
+don't overwrite the tracked sample files. Other rendering outputs are saved
+to `output/systems/`:
 
 ```
 output/
