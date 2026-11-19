@@ -427,6 +427,44 @@ describe('UltraLink', () => {
       expect(ultralink.getBacklinks('y-x_y')).toEqual([]);
     });
 
+    it('keeps the live source map after deleting its last link, until the source is deleted', () => {
+      ultralink.addEntity('s', 'node');
+      ultralink.addEntity('t', 'node');
+      ultralink.addLink('s', 't', 'route');
+      ultralink.addLink('t', 'document1', 'route');
+      const legacy = ultralink.links.get('s');
+
+      expect(ultralink.deleteLink('s', 't', 'route')).toBe(true);
+      expect(ultralink.getEntity('s').id).toBe('s');
+      expect(ultralink.links.get('s')).toBe(legacy);
+      expect(legacy.size).toBe(0);
+      expect(ultralink.getBacklinks('t')).toEqual([]);
+      const archived = new UltraLink().fromFullBlob(ultralink.toJSON({ lossless: true }));
+      expect(archived.links.get('s').size).toBe(0);
+      expect([...archived.links.keys()]).toEqual(['s', 't']);
+      const replacement = ultralink.addLink('s', 't', 'route');
+      expect(legacy.get('t-route')).toBe(replacement);
+      expect(ultralink.deleteEntity('s')).toBe(true);
+      expect(ultralink.links.has('s')).toBe(false);
+    });
+
+    it('preserves legacy map key iteration when a reused ID moves to a different key', () => {
+      for (const id of ['a', 'c_d', 'other', 'd']) ultralink.addEntity(id, 'node');
+      const old = ultralink.addLink('a', 'c_d', 'b');
+      const other = ultralink.addLink('a', 'other', 'route');
+      const replacement = ultralink.addLink('a', 'd', 'b_c');
+      expect(replacement.id).toBe(old.id);
+
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob()]) {
+        const restored = new UltraLink().fromFullBlob(input);
+        const legacy = restored.links.get('a');
+        expect([...legacy]).toEqual([['other-route', other], ['d-b_c', replacement]]);
+        expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([replacement, other]);
+        expect(restored.deleteLink('a', 'd', 'b_c')).toBe(true);
+        expect([...legacy]).toEqual([['other-route', other]]);
+      }
+    });
+
     it('round-trips legacy-key colliders without changing their lookup or write order', () => {
       for (const id of ['anchor', 'station_north', 'station_north-old']) ultralink.addEntity(id, 'location');
       ultralink.addLink('anchor', 'station_north', 'old-route');
@@ -739,7 +777,8 @@ describe('UltraLink', () => {
       const plain = ultralink.toJSON({ asString: false });
       expect(plain.entities[0]).not.toHaveProperty('metadata');
       expect(plain.relationships[0]).toEqual({ source: 'a', target: 'b', type: 'reviewed', attributes: { revision: 1 } });
-      expect(ultralink.toJSON({ asString: false, includeMetadata: true }).entities[0].metadata.details).toEqual(expected);
+      const optional = ultralink.toJSON({ asString: false, includeMetadata: true });
+      expect(JSON.parse(JSON.stringify(optional.entities[0].metadata.details))).toEqual(expected);
 
       for (const archive of [
         ultralink.toJSON({ lossless: true, asString: false }),
@@ -750,15 +789,51 @@ describe('UltraLink', () => {
       ]) {
         const restored = new UltraLink().fromFullBlob(archive);
         expect(restored.getEntity('a').attributes).toEqual({ name: 'Author' });
-        expect(restored.getEntity('a').metadata.details).toEqual(expected);
+        expect(JSON.parse(JSON.stringify(restored.getEntity('a').metadata.details))).toEqual(expected);
         expect(restored.getEntity('b').type).toBe('paper');
         const restoredEdge = restored.getRelationship(edge.id);
         expect(restoredEdge.attributes).toEqual({ revision: 1 });
-        expect(restoredEdge.metadata.details).toEqual(expected);
+        expect(JSON.parse(JSON.stringify(restoredEdge.metadata.details))).toEqual(expected);
         expect(restored.getBacklinks('b')).toEqual([restoredEdge]);
         expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([restoredEdge]);
       }
       expect(details.invalid).toBe(unreadable);
+    });
+
+    it('uses the row property key for metadata hooks and retains exact raw JSON numeric tokens', () => {
+      const metadata = {
+        toJSON(key) {
+          const result = { calledAs: key };
+          if (typeof JSON.rawJSON === 'function') {
+            result.large = JSON.rawJSON('9007199254740993');
+            result.fromHook = { toJSON() { return JSON.rawJSON('1e400'); } };
+          }
+          return result;
+        }
+      };
+      ultralink.addEntity('a', 'node').metadata = metadata;
+      ultralink.addEntity('b', 'node');
+      ultralink.addLink('a', 'b', 'reviewed').metadata = metadata;
+      function fields(text) {
+        const values = [];
+        JSON.parse(text, (key, value, context) => {
+          if (key === 'calledAs') values.push(value);
+          if (key === 'large' || key === 'fromHook') values.push(context.source);
+          return value;
+        });
+        return values;
+      }
+      const expected = fields(JSON.stringify({ metadata }));
+      expect(expected[0]).toBe('metadata');
+      for (const text of [
+        ultralink.toJSON({ includeMetadata: true }),
+        ultralink.toJSON({ lossless: true }),
+        JSON.stringify(ultralink.toJSON({ lossless: true, asString: false })),
+        JSON.stringify(ultralink.toFullBlob()),
+        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+      ]) {
+        expect(fields(text)).toEqual([...expected, ...expected]);
+      }
     });
 
     it('still reports serialization errors from graph attributes', () => {

@@ -77,6 +77,7 @@ function deleteEntity(id) {
       deleteRelationship.call(this, key);
     }
   }
+  this.links?.delete(id);
   
   return this.entities.delete(id);
 }

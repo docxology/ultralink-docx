@@ -147,6 +147,7 @@ function restoreRelationships(rows, archive) {
       }
     }
   }
+  restoreLegacyMapOrder(this.links, this.entities, archive.legacyMapOrder);
 }
 
 function getLegacyLinkOrder() {
@@ -161,6 +162,56 @@ function getLegacyLinkOrder() {
     }
   }
   return order;
+}
+
+function getLegacyMapOrder() {
+  // Canonical rows recreate the first occurrence of each source and key.
+  const canonical = new Map();
+  for (const relationship of this.relationships.values()) {
+    const { source, id } = relationship;
+    if (!canonical.has(source)) canonical.set(source, new Set());
+    canonical.get(source).add(legacyLinkKey(id, relationship));
+  }
+
+  const order = {};
+  const initialSources = canonical.keys();
+  for (const [source, outgoing] of this.links) {
+    if (!order.sources && initialSources.next().value !== source) order.sources = [...this.links.keys()];
+    const initialKeys = canonical.get(source)?.values();
+    for (const key of outgoing.keys()) {
+      if (initialKeys?.next().value !== key) {
+        (order.keys ??= []).push([source, [...outgoing.keys()]]);
+        break;
+      }
+    }
+  }
+  if (order.sources || order.keys) return order;
+}
+
+function restoreLegacyMapOrder(links, entities, order) {
+  if (Array.isArray(order?.sources)) {
+    // A previously used, still-live source can have an empty outgoing map.
+    for (const source of order.sources) {
+      if (!links.has(source) && entities.has(source)) links.set(source, new Map());
+    }
+    restoreMapOrder(links, order.sources);
+  }
+  if (!Array.isArray(order?.keys)) return;
+  for (const entry of order.keys) {
+    if (!Array.isArray(entry)) continue;
+    const outgoing = links.get(entry[0]);
+    if (outgoing) restoreMapOrder(outgoing, entry[1]);
+  }
+}
+
+function restoreMapOrder(map, keys) {
+  if (!Array.isArray(keys) || map.size !== keys.length ||
+      new Set(keys).size !== keys.length || !keys.every(key => map.has(key))) return;
+  for (const key of keys) {
+    const value = map.get(key);
+    map.delete(key);
+    map.set(key, value);
+  }
 }
 
 function getRelationshipOrder() {
@@ -330,7 +381,6 @@ function removeLegacyLink(links, key, relationship) {
     }
   } else if (current === relationship) {
     outgoing.delete(key);
-    if (outgoing.size === 0) links.delete(source);
   }
 }
 
@@ -438,6 +488,7 @@ module.exports = {
   addRelationship,
   restoreRelationships,
   getLegacyLinkOrder,
+  getLegacyMapOrder,
   getRelationshipOrder,
   getRelationship,
   updateRelationship,

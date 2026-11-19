@@ -37,7 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keep outgoing relationships and backlinks on the correct entities after deletion and reuse of compound relationship IDs.
 - Keep default JSON rows compatible; use versioned lossless JSON or Full Blob to store stable IDs, lookup order, and JSON-compatible row metadata.
 - Keep graph archives intact when optional row metadata contains unsupported values or throws during JSON conversion.
+- Preserve exact raw JSON metadata tokens and native `toJSON` hook keys.
 - Preserve the last legacy compound-ID owner's lookup and deletion behavior while retaining earlier rows.
+- Retain live legacy link maps after the last edge is removed and preserve their iteration order in archives.
 - Keep receiver graph metadata keys that JSON or Full Blob imports do not supply.
 - Count each self-loop once in combined lookups. Preserve retry-safe deletion by insertion tuple after retyping.
 - Restore surviving edges behind colliding legacy link keys and export both edges with their actual endpoints in RxInfer.

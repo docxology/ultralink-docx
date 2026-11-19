@@ -102,7 +102,8 @@ relationships, then pass the selected edge's ID to `deleteRelationship(id)`.
 
 The legacy `ultralink.links` map retains one entry per `target-insertionType`
 key. If distinct edges share that key, it shows the latest write and restores
-the latest surviving edge when that entry is removed. Use
+the latest surviving edge when that entry is removed. Deleting the last
+outgoing edge leaves the source's map empty until the source is deleted. Use
 `getEntityRelationships(sourceId, { direction: 'outgoing' })` to enumerate
 every outgoing edge. `createSubset(...).links` also uses a flattened legacy
 key, so it cannot represent both edges with the same key. Making either map

@@ -5,23 +5,23 @@
  */
 
 const { types: { isBigIntObject, isBooleanObject, isNumberObject, isStringObject } } = require('node:util');
-const { getLegacyLinkOrder, getRelationshipOrder } = require('../relationship-manager');
+const { getLegacyLinkOrder, getLegacyMapOrder, getRelationshipOrder } = require('../relationship-manager');
 
 const ARCHIVE_VERSION = 1;
 
 // Snapshot only optional row metadata. An unreadable property or a failed
 // toJSON hook makes that value unavailable, not the containing graph row.
 function jsonMetadata(row) {
-  return jsonProperty(row, 'metadata', new Set(), '');
+  return jsonProperty(row, 'metadata', new Set());
 }
 
-function jsonProperty(holder, key, ancestors, jsonKey = key) {
+function jsonProperty(holder, key, ancestors) {
   try {
     let value = holder[key];
     const type = typeof value;
     if (value !== null && (type === 'object' || type === 'function' || type === 'bigint')) {
       const toJSON = value.toJSON;
-      if (typeof toJSON === 'function') value = Reflect.apply(toJSON, value, [jsonKey]);
+      if (typeof toJSON === 'function') value = Reflect.apply(toJSON, value, [key]);
     }
     return jsonValue(value, ancestors);
   } catch {
@@ -33,7 +33,8 @@ function jsonValue(value, ancestors) {
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
   if (typeof value === 'number') return Number.isFinite(value) ? value || 0 : null;
   if (typeof value !== 'object' || isBigIntObject(value) || ancestors.has(value)) return undefined;
-  if (JSON.isRawJSON?.(value)) return JSON.parse(value.rawJSON);
+  // Keep the native token until the final stringify; parsing here can round it.
+  if (JSON.isRawJSON?.(value)) return value;
   if (isNumberObject(value)) return jsonValue(+value, ancestors);
   if (isStringObject(value)) return String(value);
   if (isBooleanObject(value)) return Boolean.prototype.valueOf.call(value);
@@ -116,6 +117,8 @@ function toJSON(ultralink, options = {}) {
     result.ultralinkArchiveVersion = ARCHIVE_VERSION;
     const legacyLinkOrder = getLegacyLinkOrder.call(ultralink);
     if (legacyLinkOrder) result.legacyLinkOrder = legacyLinkOrder;
+    const legacyMapOrder = getLegacyMapOrder.call(ultralink);
+    if (legacyMapOrder) result.legacyMapOrder = legacyMapOrder;
     const relationshipOrder = getRelationshipOrder.call(ultralink);
     if (relationshipOrder) result.relationshipOrder = relationshipOrder;
   }

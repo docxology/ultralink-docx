@@ -106,12 +106,16 @@ as in the published importer. Earlier rows are kept under opaque
 In lossless JSON, the optional `legacyLinkOrder` array stores IDs sharing a
 legacy link key in write order from oldest to newest. Import uses it to
 restore the visible value and fallback order without reordering rows.
+The optional `legacyMapOrder` stores `sources` in legacy map order, including
+sources with empty maps, and `keys` as `[source, orderedKeys]` pairs. It
+omits orders that can already be inferred from the relationship rows.
 When directional lookup order differs from row order, `relationshipOrder`
 stores the affected groups of IDs under `outgoing` and `incoming`. A group
 contains all relationship IDs for one endpoint in lookup order.
 
-Row metadata follows JSON conversion rules, including `Date`, `toJSON()`,
-and `JSON.rawJSON()` on runtimes that provide it.
+Row metadata follows JSON conversion rules. A row-level `toJSON()` receives
+the key `"metadata"`. On runtimes supporting `JSON.rawJSON()`, archives keep
+branded values until serialization, preserving their exact JSON tokens.
 Unsupported values and values that throw during conversion are omitted from
 objects and become `null` in arrays. Other metadata fields survive; the
 live graph is not changed. This applies only to optional entity and
