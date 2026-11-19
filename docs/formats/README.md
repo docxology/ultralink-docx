@@ -73,12 +73,14 @@ For a complete overview of all formats and guidance on when to use each, see the
 
 ## Output Organization
 
-All rendering outputs are organized by system and format in the `output/` directory:
+The checked-in samples under `output/systems/` use the exact system IDs as
+directory names. To generate fresh artifacts under `examples/output/systems/`,
+run the [example renderer](../../examples/README.md#rendering-examples).
 
 ```
 output/
 ├── systems/
-│   ├── desert-ecosystem/
+│   ├── DesertEcosystem/
 │   │   ├── DesertEcosystem.json
 │   │   ├── DesertEcosystem.graphml
 │   │   ├── csv/
@@ -86,7 +88,7 @@ output/
 │   │   │   └── relationships.csv
 │   │   ├── obsidian/
 │   │   │   ├── saguaro.md
-│   │   │   ├── kangaroo-rat.md
+│   │   │   ├── kangaroo_rat.md
 │   │   │   └── ...
 │   │   ├── bayesian/
 │   │   │   ├── DesertEcosystem-bayesian.json
@@ -96,8 +98,8 @@ output/
 │   │   ├── visualization/
 │   │   │   ├── graph.svg
 │   │   │   ├── graph.png
-│   │   │   ├── graph.d3
-│   │   │   └── graph.cytoscape
+│   │   │   ├── graph.d3.js
+│   │   │   └── graph.cytoscape.js
 │   │   ├── website/
 │   │   │   ├── index.html
 │   │   │   ├── saguaro.html
@@ -109,7 +111,8 @@ output/
 
 ## Implementation Details
 
-Each format is implemented in the UltraLink codebase in the [src/lib/exporters/](../src/lib/exporters/) directory. These exporters transform the UltraLink data model into the target format while preserving the semantics of the knowledge graph.
+The [exporter modules](../../src/lib/exporters/) transform the UltraLink data
+model into target formats.
 
 For more details on the UltraLink rendering system and how it preserves semantics across formats, see the [Rendering Targets Overview](./RENDERING_TARGETS.md).
 

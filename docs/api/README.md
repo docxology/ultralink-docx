@@ -31,9 +31,9 @@ Pass `{ allowOverwrite: true }` to `new UltraLink(...)` to let `addEntity`
 replace an existing entity with the same ID. Set `defaultRelationshipType` to
 choose the type used when `addLink` or `addRelationship` is called without one.
 
-The `preventOverwrite` and `timestampEntities` keys shown in the API Usage
-Guide do not control entity creation. Newly added entities always receive
-`metadata.created` and `metadata.modified` timestamps.
+`preventOverwrite` and `timestampEntities` do not control entity creation.
+Newly added entities always receive `metadata.created` and
+`metadata.modified`. See the [setup example](../API_USAGE.md#getting-started).
 
 ## Design Notes
 

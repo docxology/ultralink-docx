@@ -4,7 +4,7 @@ This document details the KIF (Knowledge Interchange Format) rendering target fo
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/kif.js](../src/lib/exporters/kif.js)
+> - [Implementation in src/lib/exporters/kif.js](../../src/lib/exporters/kif.js)
 > - [JSON Format](./JSON_FORMAT.md)
 > - [Bayesian Network Format](./BAYESIAN_NETWORK_FORMAT.md)
 
@@ -67,7 +67,8 @@ UltraLink relationships become binary relations in KIF with:
 
 ## Usage
 
-The KIF exporter is implemented in [src/lib/exporters/kif.js](../src/lib/exporters/kif.js) and can be used as follows:
+The [KIF exporter](../../src/lib/exporters/kif.js) returns KIF text from
+`ultralink.toKIF()`. UltraLink does not import KIF.
 
 ```javascript
 // Basic export to KIF
@@ -288,7 +289,7 @@ The KIF format preserves UltraLink semantics in the following ways:
 
 ## Technical Implementation
 
-The KIF export functionality is implemented in [src/lib/exporters/kif.js](../src/lib/exporters/kif.js). The exporter follows these steps:
+The [KIF exporter](../../src/lib/exporters/kif.js) follows these steps:
 
 1. Extract entities, relationships, and type information from UltraLink graph
 2. Generate ontology definitions if requested

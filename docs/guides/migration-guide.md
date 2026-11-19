@@ -233,18 +233,12 @@ const json = await ultralink.toJSON();
 
 ### Migrating from KIF to Other Formats
 
-KIF imports preserve logical structure and relationships.
-
-```javascript
-const ultralink = new UltraLink();
-
-// Import from KIF
-const kifData = await fs.readFile('knowledge.kif', 'utf8');
-await ultralink.fromKIF(kifData);
-
-// Now you can export to any format
-const json = await ultralink.toJSON();
-```
+KIF is [an export target](../formats/KIF_FORMAT.md#usage), not an UltraLink
+import format. If KIF is your only source, map the facts you need to
+UltraLink entities and directed relationships in your application. Add
+the entities first and then the relationships using the
+[graph-building walkthrough](../API_USAGE.md#creating-entities). Once the
+graph is populated, call the exporter for the desired format.
 
 ## Version Migration
 

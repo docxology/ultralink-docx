@@ -467,17 +467,14 @@ await fs.writeFile('relationships.csv', csv.relationships);
 
 ### Obsidian Export
 
+`toObsidian()` returns Markdown keyed by filename; it does not write to disk.
+
 ```javascript
-// Export to Obsidian Markdown
-await ultralink.toObsidian({
-  directory: './obsidian-vault',
-  frontmatter: true,
-  wikiLinks: true,
-  linkDirection: 'outgoing',
-  includeBacklinks: true,
-  includeTags: true
-});
+const notes = ultralink.toObsidian({ backlinks: false });
 ```
+
+See the [Obsidian format guide](../formats/OBSIDIAN_FORMAT.md#usage) for
+supported options and how to save the files.
 
 ### HTML Website Export
 
@@ -637,15 +634,11 @@ await ultralink.fromBayesianNetwork({
 
 ### KIF Import
 
-```javascript
-// Import from KIF
-const kifData = await fs.readFile('knowledge.kif', 'utf8');
-await ultralink.fromKIF(kifData, {
-  relationMapping: {
-    'knows-person': 'knows'
-  }
-});
-```
+UltraLink exports KIF text with
+[`toKIF()`](../formats/KIF_FORMAT.md#usage), but does not provide a KIF
+import method. To bring KIF data into a graph, parse and map it in your
+application, then [add the entities](../API_USAGE.md#creating-entities)
+before [adding the relationships](../API_USAGE.md#managing-relationships).
 
 ### Full Blob Import
 
@@ -933,7 +926,6 @@ await ultralink.fromGraphML(data, options);
 await ultralink.fromCSV(data, options);
 await ultralink.fromObsidian(options);
 await ultralink.fromBayesianNetwork(data, options);
-await ultralink.fromKIF(data, options);
 await ultralink.fromFullBlob(data, options);
 ```
 

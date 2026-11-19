@@ -68,9 +68,9 @@ directly.
 
 ## Development Environment
 
-UltraLink requires:
-- Node.js 18.17 or higher (required by `sharp` 0.33 and `jsdom` 24)
-- NPM 9 or higher
+- Use Node.js 22.23.5 with npm for the tested fork setup. See
+  [Prerequisites](INSTALLATION.md#prerequisites) for the locked dependency's
+  Node.js engine floor.
 
 Recommended tools:
 - VS Code with the following extensions:

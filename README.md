@@ -448,12 +448,14 @@ node scripts/generate-system-visualizations.js
 
 ### Output Structure
 
-When you run the tests, all rendering outputs are organized by system and format in the `output/` directory:
+Selected checked-in samples are organized by system and format under
+`output/systems/`. The [example renderer](examples/README.md#rendering-examples)
+writes new exports under `examples/output/systems/`.
 
 ```
 output/
 ├── systems/
-│   ├── desert-ecosystem/
+│   ├── DesertEcosystem/
 │   │   ├── DesertEcosystem.json
 │   │   ├── DesertEcosystem.graphml
 │   │   ├── csv/
@@ -461,7 +463,7 @@ output/
 │   │   │   └── relationships.csv
 │   │   ├── obsidian/
 │   │   │   ├── saguaro.md
-│   │   │   ├── kangaroo-rat.md
+│   │   │   ├── kangaroo_rat.md
 │   │   │   └── ...
 │   │   ├── website/
 │   │   │   ├── index.html
@@ -470,19 +472,19 @@ output/
 │   │   └── full-blob/
 │   │       ├── DesertEcosystem-full.json
 │   │       └── DesertEcosystem-full-compressed.blob
-│   └── research-team/
+│   └── ResearchTeam/
 │       ├── ResearchTeam.json
 │       ├── ResearchTeam.graphml
 │       ├── csv/
 │       │   ├── entities.csv
 │       │   └── relationships.csv
 │       ├── obsidian/
-│       │   ├── alice.md
-│       │   ├── bob.md
+│       │   ├── alice-chen.md
+│       │   ├── bob-smith.md
 │       │   └── ...
 │       ├── website/
 │       │   ├── index.html
-│       │   ├── alice.html
+│       │   ├── alice-chen.html
 │       │   └── ...
 │       └── full-blob/
 │           ├── ResearchTeam-full.json

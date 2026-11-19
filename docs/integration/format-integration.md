@@ -182,15 +182,9 @@ LIMIT 10;
 
 ### Obsidian Integration
 
-1. Export your UltraLink data to Obsidian format:
-   ```javascript
-   await ultralink.toObsidian({
-     directory: './obsidian-vault',
-     includeBacklinks: true,
-     includeTags: true,
-     frontmatterFormat: 'yaml'
-   });
-   ```
+1. [Export and save the Markdown files](../formats/OBSIDIAN_FORMAT.md#usage).
+   The exporter returns file contents, not a directory. Use its returned
+   filenames unchanged so the wiki-links still point to the right notes.
 
 2. In Obsidian:
    - Open the exported directory as a vault
