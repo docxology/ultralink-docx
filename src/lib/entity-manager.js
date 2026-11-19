@@ -5,6 +5,8 @@
  * in the knowledge graph. It also includes entity search functionality.
  */
 
+const { removeEntityRelationships } = require('./relationship-manager');
+
 /**
  * Add a new entity to the knowledge graph
  * @param {string} id - Unique identifier for the entity
@@ -69,26 +71,7 @@ function deleteEntity(id) {
     return false;
   }
   
-  // Remove all relationships involving this entity
-  for (const [key, rel] of this.relationships.entries()) {
-    if (rel.source === id || rel.target === id) {
-      this.relationships.delete(key);
-    }
-  }
-  
-  // Clean up links map
-  if (this.links && this.links.has(id)) {
-    this.links.delete(id);
-  }
-  
-  // Clean up relationshipsBySource and relationshipsByTarget
-  if (this.relationshipsBySource && this.relationshipsBySource.has(id)) {
-    this.relationshipsBySource.delete(id);
-  }
-  
-  if (this.relationshipsByTarget && this.relationshipsByTarget.has(id)) {
-    this.relationshipsByTarget.delete(id);
-  }
+  removeEntityRelationships.call(this, id);
   
   return this.entities.delete(id);
 }
