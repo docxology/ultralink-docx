@@ -29,27 +29,27 @@ const colors = {
 const testSuites = [
   { 
     name: 'Performance Tests',
-    args: ['tests/performance'],
+    args: ['/tests/performance/'],
     required: false
   },
   { 
     name: 'Unit Tests',
-    args: ['tests/unit'],
+    args: ['/tests/unit/'],
     required: true
   },
   { 
     name: 'Integration Tests',
-    args: ['tests/integration'],
+    args: ['/tests/integration/'],
     required: true
   },
   { 
     name: 'System Export Tests',
-    args: ['tests/system'],
+    args: ['/tests/system/'],
     required: true
   },
   { 
     name: 'End-to-End Tests',
-    args: ['tests/e2e'],
+    args: ['/tests/e2e/'],
     required: true
   },
   {
