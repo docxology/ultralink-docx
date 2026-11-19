@@ -107,13 +107,16 @@ function restoreRelationships(rows, legacyLinkOrder) {
   let nextRecoveredId = 1;
   for (const { row, type, generatedId, id: storedId } of entries) {
     const { source, target, attributes, metadata } = row;
-    let id = storedId ?? generatedId;
-    if (storedId === undefined && (explicit.has(id) || this.relationships.has(id))) {
-      // Compound IDs always contain at least two underscores. Recovered IDs
-      // cannot alias a later addLink or deleteLink insertion tuple.
-      do {
-        id = `legacy:${nextRecoveredId++}`;
-      } while (explicit.has(id));
+    let id = storedId;
+    if (id === undefined || this.relationships.has(id)) {
+      id = generatedId;
+      if (explicit.has(id) || this.relationships.has(id)) {
+        // Compound IDs always contain at least two underscores. Recovered IDs
+        // cannot alias a later addLink or deleteLink insertion tuple.
+        do {
+          id = `legacy:${nextRecoveredId++}`;
+        } while (explicit.has(id));
+      }
     }
     storeRelationship.call(this, source, target, type, attributes, id, metadata);
   }

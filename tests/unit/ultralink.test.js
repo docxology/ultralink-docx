@@ -557,20 +557,22 @@ describe('UltraLink', () => {
           second: { ...common, attributes: { weight: 2 } },
           explicit: { ...common, id: explicitId, attributes: { weight: 3 } },
           ordinary: { ...common, type: 'reviewed~2', id: 'legacy-label', attributes: { weight: 4 } },
-          recovered: { ...common, id: 'legacy:1', attributes: { weight: 5 } }
+          recovered: { ...common, id: 'legacy:1', attributes: { weight: 5 } },
+          duplicate: { ...common, type: 'edited', id: 'legacy:1', attributes: { weight: 6 } }
         }
       };
       const restored = new UltraLink().fromFullBlob({ json: JSON.stringify(payload) });
       const edges = restored.getBacklinks(target);
-      expect(edges.map(edge => edge.attributes.weight)).toEqual([1, 2, 3, 4, 5]);
-      expect(new Set(edges.map(edge => edge.id)).size).toBe(5);
+      expect(edges.map(edge => edge.attributes.weight)).toEqual([1, 2, 3, 4, 5, 6]);
+      expect(new Set(edges.map(edge => edge.id)).size).toBe(6);
       expect(restored.getRelationship(explicitId).attributes.weight).toBe(3);
       expect(restored.getRelationship(ordinaryId).attributes.weight).toBe(4);
       expect(restored.getRelationship('legacy:1').attributes.weight).toBe(5);
+      expect(restored.getRelationship(`${source}_edited_${target}`).attributes.weight).toBe(6);
       expect(edges[0].metadata).toMatchObject({ created: '2019-08-01T00:00:00.000Z', origin: 'legacy' });
       expect(new UltraLink().fromFullBlob(restored.toJSON()).getBacklinks(target)).toEqual(edges);
       expect(restored.deleteLink(source, target, edges[0].id)).toBe(false);
-      const independent = restored.addLink(source, target, edges[0].id, { weight: 6 });
+      const independent = restored.addLink(source, target, edges[0].id, { weight: 7 });
       expect(restored.getBacklinks(target)).toEqual([...edges, independent]);
       expect(restored.deleteRelationship(edges[0].id)).toBe(true);
       expect(restored.getBacklinks(target)).toEqual([...edges.slice(1), independent]);

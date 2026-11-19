@@ -65,9 +65,10 @@ test.each([
   expect(script).toContain('d3.forceSimulation');
   const [ , data ] = /^const data = ({[\s\S]*?^});$/m.exec(script);
   const { nodes, links } = JSON.parse(data);
-  expect(nodes).toEqual(entities.map(entity => ({
-    ...entity,
-    label: entity.attributes.name || entity.attributes.title || entity.id
+  expect(nodes).toEqual(entities.map(({ id, type, attributes }) => ({
+    id, type, attributes, label: attributes.name || attributes.title || id
   })));
-  expect(links).toEqual(relationships);
+  expect(links).toEqual(relationships.map(({ source, target, type, attributes }) => ({
+    source, target, type, attributes
+  })));
 });

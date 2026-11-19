@@ -91,9 +91,10 @@ Each relationship is represented as:
 It remains stable after `updateRelationship(id, { type })`. `fromFullBlob()`
 accepts either this JSON graph directly or the JSON component of a Full Blob,
 including legacy object maps of records. It restores stored IDs, attributes,
-and supplied graph, entity, and relationship metadata. Legacy relationship
-rows without a usable ID derive one from the current tuple; a collision gets
-an opaque `legacy:<number>` ID instead of overwriting another edge. These
+and supplied graph, entity, and relationship metadata. A legacy relationship
+with no usable ID, or whose ID another row already claimed, derives its ID
+from the current tuple. If that also collides, import assigns an opaque
+`legacy:<number>` ID instead of overwriting another edge. These
 recovery IDs do not match insertion tuples, so use `deleteRelationship(id)`
 to select a recovered edge by ID. The original IDs are not recoverable from
 ID-less exports.
