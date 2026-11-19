@@ -94,10 +94,11 @@ Combined relationship lookups return a self-loop once; it still appears in
 both the outgoing and incoming directional lookups.
 
 `updateRelationship(id, { type })` keeps the relationship ID. `deleteLink`
-matches the endpoints and **current** type. If multiple live relationships
-match, it prefers the one whose stored ID matches the requested tuple's
-generated ID. If there is no such ID and several records still match,
-`deleteLink` returns `false`; use `deleteRelationship(id)` to choose one.
+first matches the source, target, and type used to insert the edge, even if
+another edge now has that type. If no insertion tuple matches, it deletes a
+single match by current source, target, and type. It returns `false` if the
+current tuple has zero or multiple matches. Use `deleteRelationship(id)` to
+select an edge directly.
 
 The legacy `ultralink.links` map retains one entry per `target-insertionType`
 key. If distinct edges share that key, it shows the latest write and restores

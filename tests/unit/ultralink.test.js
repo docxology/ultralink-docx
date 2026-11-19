@@ -341,11 +341,25 @@ describe('UltraLink', () => {
       expect(ultralink.updateRelationship(id, { type: 'edited' })).toMatchObject({
         id, type: 'edited', attributes: { contribution: 'draft' }
       });
-      expect(ultralink.deleteLink('person1', 'document1', 'authored')).toBe(false);
       expect(ultralink.getBacklinks('document1', { type: 'edited' })).toEqual([original]);
       expect(ultralink.deleteLink('person1', 'document1', 'edited')).toBe(true);
       expect(ultralink.getRelationship(id)).toBeNull();
       expect(ultralink.getBacklinks('document1')).toEqual([other]);
+    });
+
+    it('deletes the insertion edge when another edge has acquired its original type', () => {
+      const drafted = ultralink.addLink('person1', 'document1', 'drafted', { weight: 1 });
+      const reviewed = ultralink.addLink('person1', 'document1', 'reviewed', { weight: 2 });
+      ultralink.updateRelationship(drafted.id, { type: 'edited' });
+      ultralink.updateRelationship(reviewed.id, { type: 'drafted' });
+
+      expect(ultralink.deleteLink('person1', 'document1', 'drafted')).toBe(true);
+      expect(ultralink.getRelationship(drafted.id)).toBeNull();
+      expect(ultralink.getRelationship(reviewed.id)).toMatchObject({
+        id: reviewed.id, type: 'drafted', attributes: { weight: 2 }
+      });
+      expect(ultralink.getBacklinks('document1', { type: 'drafted' })).toEqual([reviewed]);
+      expect(ultralink.getRelationships('person1', { direction: 'outgoing' })).toEqual([reviewed]);
     });
 
     it('prefers the matching canonical ID and refuses an otherwise ambiguous current tuple', () => {

@@ -759,7 +759,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
   }
 
   /**
-   * Delete a relationship by its endpoints and current type
+   * Delete by the insertion tuple, or by an unambiguous current tuple
    * @param {string} sourceId - Source entity ID
    * @param {string} targetId - Target entity ID
    * @param {string} type - Relationship type
@@ -768,13 +768,13 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
   deleteLink(sourceId, targetId, type) {
     const id = `${sourceId}_${type}_${targetId}`;
     const relationship = this.getRelationship(id);
-    if (relationship && relationship.source === sourceId &&
-        relationship.target === targetId && relationship.type === type) {
+    // Retyping preserves IDs: the insertion tuple still names its original
+    // edge, even when another edge now has the requested type.
+    if (relationship && relationship.source === sourceId && relationship.target === targetId) {
       return this.deleteRelationship(id);
     }
 
-    // Retyping preserves IDs. Without an exact current-tuple ID match, delete
-    // only when the live tuple selects one record.
+    // Without an insertion match, delete only a unique current-tuple match.
     const outgoing = this.relationshipsBySource.get(sourceId);
     if (!outgoing) return false;
     let match;
