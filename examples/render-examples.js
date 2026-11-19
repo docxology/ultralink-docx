@@ -98,16 +98,34 @@ function writeOutput(filePath, content, isJson = false) {
   fs.writeFileSync(filePath, content);
 }
 
-function writeFullBlobOutput(filePath, content) {
-  const previous = fs.statSync(filePath, { throwIfNoEntry: false });
-  if (previous) fs.accessSync(filePath, fs.constants.W_OK);
+function writeFullBlobOutput(filePath, content, { followSymlink = false } = {}) {
+  let previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
+  if (previous?.isSymbolicLink()) {
+    if (followSymlink) {
+      filePath = fs.realpathSync(filePath);
+      previous = fs.statSync(filePath);
+    } else {
+      // Replace a diagnostic link without reading or modifying the target.
+      previous = undefined;
+    }
+  }
+  if (previous) {
+    if (!previous.isFile()) throw new Error(`Expected a regular file at ${filePath}`);
+    fs.accessSync(filePath, fs.constants.W_OK);
+  }
 
   // Stage beside the destination so a failed write cannot truncate a prior blob.
   const stagingDir = fs.mkdtempSync(path.join(path.dirname(filePath), '.full-blob-'));
   try {
     const stagedPath = path.join(stagingDir, path.basename(filePath));
     writeOutput(stagedPath, content);
-    if (previous) fs.chmodSync(stagedPath, previous.mode & 0o777);
+    if (previous) {
+      const staged = fs.statSync(stagedPath);
+      if (staged.uid !== previous.uid || staged.gid !== previous.gid) {
+        fs.chownSync(stagedPath, previous.uid, previous.gid);
+      }
+      fs.chmodSync(stagedPath, previous.mode & 0o777);
+    }
     fs.renameSync(stagedPath, filePath);
   } finally {
     try {
@@ -1147,7 +1165,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             try {
               const compressed = format === 'compressed';
               const blob = ultralink.toFullBlob({ compressed, throwOnError: true });
-              writeFullBlobOutput(outputPath, compressed ? blob : JSON.stringify(blob, null, 2));
+              writeFullBlobOutput(outputPath, compressed ? blob : JSON.stringify(blob, null, 2), { followSymlink: true });
               recordWrittenFile(false);
               console.log(`      ✅ Saved ${format} blob to: ${outputPath}`);
             } catch (error) {
