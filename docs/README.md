@@ -58,7 +58,6 @@ mindmap
     Technical
       Format Conversion
       Entity Store
-      Vector Store
     Tutorials
       Basic Tutorials
       Advanced Tutorials
@@ -70,7 +69,6 @@ mindmap
       Format Integration
     Performance
       Benchmarks
-      Optimization
     Contributing
       Development Setup
       Code Style
@@ -141,7 +139,6 @@ Dive into the technical details of UltraLink:
 
 - [Format Conversion](./technical/format-conversion.md)
 - [Entity Store](./technical/README.md#entity-store)
-- [Vector Store](./technical/README.md#vector-store)
 
 ### [Tutorials](./tutorials/README.md)
 
@@ -161,10 +158,7 @@ Guides for integrating UltraLink with other tools and systems:
 
 ### Performance
 
-Performance considerations and benchmarks:
-
 - [Format Benchmarks](./performance/format-benchmarks.md)
-- [Performance Optimization](./advanced/performance.md)
 
 ### [Advanced Topics](./advanced/README.md)
 

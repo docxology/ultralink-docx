@@ -147,8 +147,8 @@ const htmlOutput = ultralink.toHTMLWebsite({
 // Export to KIF (Knowledge Interchange Format)
 const kifOutput = ultralink.toKIF();
 
-// Export to full blob (complete data export)
-const fullBlobOutput = ultralink.toFullBlob({ compress: true });
+// Export the full blob as a JSON string
+const fullBlobOutput = ultralink.toFullBlob({ compressed: true });
 ```
 
 ## Visualization
