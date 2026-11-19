@@ -106,7 +106,12 @@ function writeFullBlob(filePath, content) {
     writeOutput(stagedPath, content);
     fs.renameSync(stagedPath, filePath);
   } finally {
-    fs.rmSync(stagingDir, { recursive: true, force: true });
+    try {
+      fs.rmSync(stagingDir, { recursive: true, force: true });
+    } catch (error) {
+      // Cleanup cannot change the outcome of the write and rename.
+      console.warn(`    Could not remove Full Blob staging directory ${stagingDir}: ${getErrorMessage(error)}`);
+    }
   }
 }
 
