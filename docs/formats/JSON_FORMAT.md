@@ -113,6 +113,8 @@ legacy-only slots from unversioned replay. Import uses it to restore the
 visible value and fallback order of surviving archived edges without
 reordering rows or moving receiver-only writes. Reusing an archived ID
 does not transfer its ordering hint to a new receiver edge.
+Binding a restored edge to its insertion key does not make it newer than a
+receiver edge written later in the hook.
 The optional `legacyMapOrder` stores `sources` in legacy map order, including
 sources with empty maps, and `keys` as `[source, orderedKeys]` pairs. It
 omits orders that can already be inferred from the relationship rows.
@@ -120,7 +122,9 @@ Import skips omitted legacy-only keys and restores the relative order of
 archived entries even when receiver hooks add other entries to the same map.
 When directional lookup order differs from row order, `relationshipOrder`
 stores the affected groups of IDs under `outgoing` and `incoming`. A group
-contains all relationship IDs for one endpoint in lookup order.
+contains the archived relationship IDs for one endpoint in lookup order.
+Import applies the saved order to surviving archived edges only, without
+moving receiver-added entries or changing canonical row order.
 
 Row metadata follows JSON conversion rules. A row-level `toJSON()` receives
 the key `"metadata"`. On runtimes supporting `JSON.rawJSON()`, archives keep

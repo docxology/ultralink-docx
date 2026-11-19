@@ -1198,6 +1198,81 @@ describe('UltraLink', () => {
       graph.toFullBlob({ lossless: true, compressed: true })
     ];
 
+    it.each([false, true])('binds an archive edge to its insertion key in original write order (receiver last: %s)', receiverLast => {
+      for (const id of ['author', 'paper', 'paper-rev']) ultralink.addEntity(id, 'node');
+      const archived = ultralink.addLink('author', 'paper', 'rev-old');
+      ultralink.updateRelationship(archived.id, { type: 'reviewed' });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          if (!receiverLast) this.receiverEdge = super.addRelationship(source, 'paper-rev', 'old');
+          this.archiveEdge = super.addLink(source, target, type, attributes);
+          if (receiverLast) this.receiverEdge = super.addRelationship(source, 'paper-rev', 'old');
+          expect(this.links.get(source).get('paper-rev-old')).toBe(this.receiverEdge);
+          return this.archiveEdge;
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        const { archiveEdge, receiverEdge } = restored;
+        const [visible, hidden] = receiverLast ? [receiverEdge, archiveEdge] : [archiveEdge, receiverEdge];
+        expect(restored.getBacklinks('paper')).toEqual([archiveEdge]);
+        expect(restored.getBacklinks('paper-rev')).toEqual([receiverEdge]);
+        expect(restored.links.get('author').get('paper-rev-old')).toBe(visible);
+        expect(restored.deleteRelationship(visible.id)).toBe(true);
+        expect(restored.links.get('author').get('paper-rev-old')).toBe(hidden);
+      }
+    });
+
+    it('leaves an independent trace between an accepted archive write and a later audit', () => {
+      for (const id of ['author', 'paper']) ultralink.addEntity(id, 'node');
+      const archived = ultralink.addLink('author', 'paper', 'draft', { revision: 2 });
+      ultralink.updateRelationship(archived.id, { type: 'reviewed' });
+      archived.metadata.provenance = 'archive';
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          this.archiveEdge = super.addLink(source, target, type, attributes);
+          this.traceEdge = super.addRelationship(source, target, 'trace');
+          this.auditEdge = super.addRelationship(source, target, type, { audit: true });
+          return this.archiveEdge;
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        const { archiveEdge, traceEdge, auditEdge } = restored;
+        expect(archiveEdge).toEqual(archived);
+        const order = [archiveEdge, traceEdge, auditEdge];
+        expect(restored.getRelationships(null)).toEqual(order);
+        expect(restored.getBacklinks('paper')).toEqual(order);
+        expect(restored.toJSON({ asString: false, lossless: true }).relationships.map(({ id }) => id))
+          .toEqual(order.map(({ id }) => id));
+      }
+    });
+
+    it('restores archived directional subsequences around receiver-only edges', () => {
+      for (const id of ['a', 'c_d', 'q', 'd', 'a_b', 'other', 'audit']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b');
+      const incoming = ultralink.addLink('q', 'd', 'route');
+      const outgoing = ultralink.addLink('a_b', 'other', 'route');
+      const replacement = ultralink.addLink('a_b', 'd', 'c');
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          const accepted = super.addLink(source, target, type, attributes);
+          if (type === 'c') {
+            this.auditIn = super.addRelationship('audit', target, 'trace');
+            this.auditOut = super.addRelationship(source, 'audit', 'trace');
+          }
+          return accepted;
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        expect(restored.getBacklinks('d')).toEqual([incoming, restored.auditIn, replacement]);
+        expect(restored.getRelationships('a_b', { direction: 'outgoing' }))
+          .toEqual([outgoing, restored.auditOut, replacement]);
+        expect([...restored.relationships.values()]).toEqual([replacement, restored.auditIn, restored.auditOut, incoming, outgoing]);
+      }
+    });
+
     it('keeps an independent receiver edge at a freed ID when accepting a colliding archive row', () => {
       for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
       const first = ultralink.addLink('a', 'd', 'b_c');

@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hide superseded receiver writes during import hooks and preserve live legacy key order even when legacy-only slots are not archived.
 - Retain independent receiver writes when archived IDs are reused, discard detached edges when an endpoint is deleted, and apply archived legacy order to live entries only.
 - Preserve explicitly accepted archive rows alongside equal-tuple receiver writes in either write order; do not apply legacy shadow order to a reused ID.
+- Preserve receiver write order when rebinding historical legacy keys or reviving an archive edge, and apply directional archive order around receiver additions.
 - Count each self-loop once in combined lookups. Preserve retry-safe deletion by insertion tuple after retyping.
 - Restore surviving edges behind colliding legacy link keys and export both edges with their actual endpoints in RxInfer.
 - Keep recovered edges under their original legacy keys and emit RxInfer self-loop attribute factors.

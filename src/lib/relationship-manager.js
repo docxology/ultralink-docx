@@ -73,9 +73,13 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   }
   const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
   state.inserted.push(relationship);
+  state.writeOrder.set(relationship, state.nextWrite++);
   // A temporary overwrite borrows the receiver's slot. If accepted as a
   // separate row, the write belongs at its own chronological position.
-  if (overwritten) (state.overwriteSlots ??= new WeakMap()).set(relationship, state.order.length);
+  if (replaced && state.order) {
+    state.overwriteSlots.set(relationship, state.order.length);
+    state.order.push(undefined);
+  }
   if (state.order) rememberImportedSlot(state, relationship, replaced);
   if (overwritten || id !== compoundId || state.recoveredEffects.has(compoundId) || state.provisional.has(compoundId)) {
     recordReceiverWrite(this, state, compoundId, relationship, overwritten);
@@ -112,7 +116,7 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId) {
   return relationship;
 }
 
-function indexRelationship(relationship) {
+function indexRelationship(relationship, writeOrder) {
   const { id, source: sourceId, target: targetId } = relationship;
   const key = legacyLinkKey(id, relationship);
 
@@ -157,7 +161,9 @@ function indexRelationship(relationship) {
   if (!this.links.has(sourceId)) {
     this.links.set(sourceId, new Map());
   }
-  setLegacyLink(this.links.get(sourceId), key, relationship, previous, replayedLegacyLinks.get(this.links));
+  const outgoing = this.links.get(sourceId);
+  if (writeOrder) insertLegacyWrite(outgoing, key, relationship, writeOrder);
+  else setLegacyLink(outgoing, key, relationship, previous, replayedLegacyLinks.get(this.links));
 }
 
 function restoreRelationships(rows, archive) {
@@ -174,11 +180,12 @@ function restoreRelationships(rows, archive) {
 
   const state = {
     accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new Map(),
-    nextId: 1, inserted: [], delegated: new Set(), provisional: new Map(), compoundIds: new WeakMap()
+    nextId: 1, inserted: [], delegated: new Set(), provisional: new Map(), compoundIds: new WeakMap(),
+    nextWrite: 0, writeOrder: new WeakMap(), overwriteSlots: new WeakMap()
   };
   const entries = reserveArchiveIds(rows, state.reserved);
-  const archivedLinks = Array.isArray(archive.legacyLinkOrder)
-    ? new Map(archive.legacyLinkOrder.map(id => [id, undefined])) : undefined;
+  const { legacyLinkOrder, relationshipOrder } = archive;
+  const archivedLinks = Array.isArray(legacyLinkOrder) || relationshipOrder ? new Map() : undefined;
   const previous = activeRestore.get(this);
   activeRestore.set(this, state);
   try {
@@ -201,8 +208,7 @@ function restoreRelationships(rows, archive) {
       state.accepted.add(accepted);
       if (row.id !== undefined) {
         bindArchiveId(this, accepted, row, state);
-        if (archivedLinks?.has(row.id) && accepted.id === row.id &&
-            accepted.source === row.source && accepted.target === row.target) {
+        if (archivedLinks && accepted.id === row.id && accepted.source === row.source && accepted.target === row.target) {
           archivedLinks.set(row.id, accepted);
         }
       }
@@ -214,11 +220,10 @@ function restoreRelationships(rows, archive) {
     if (state.order) restoreImportedRowOrder(this, state.order);
   }
 
-  const { relationshipOrder } = archive;
-  restoreIndexOrder(this.relationshipsBySource, this.relationships, 'source', relationshipOrder?.outgoing);
-  restoreIndexOrder(this.relationshipsByTarget, this.relationships, 'target', relationshipOrder?.incoming);
+  restoreIndexOrder(this.relationshipsBySource, this.relationships, 'source', relationshipOrder?.outgoing, archivedLinks);
+  restoreIndexOrder(this.relationshipsByTarget, this.relationships, 'target', relationshipOrder?.incoming, archivedLinks);
 
-  if (archivedLinks) restoreLegacyLinkOrder(this, archive.legacyLinkOrder, archivedLinks);
+  if (Array.isArray(legacyLinkOrder)) restoreLegacyLinkOrder(this, legacyLinkOrder, archivedLinks);
   restoreLegacyMapOrder(this.links, this.entities, archive.legacyMapOrder);
 }
 
@@ -285,8 +290,13 @@ function reviveAcceptedWrite(graph, state, edge) {
   const key = legacyLinkKey(edge.id, edge);
   recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
   edge.id = nextRecoveryId(graph.relationships, state);
-  indexRelationship.call(graph, edge);
-  insertImportedSlot(state, edge, state.overwriteSlots?.get(edge) ?? state.slots.get(edge));
+  indexRelationship.call(graph, edge, state.writeOrder);
+  const index = state.overwriteSlots.get(edge) ?? state.slots.get(edge);
+  const replacement = state.order[index];
+  if (replacement && state.overwriteSlots.has(replacement)) {
+    moveImportedSlot(state, replacement, state.overwriteSlots.get(replacement));
+  }
+  moveImportedSlot(state, edge, index);
   return edge;
 }
 
@@ -310,7 +320,7 @@ function bindArchiveId(graph, edge, row, state) {
   const newKey = legacyLinkKey(id, edge);
   if (oldKey !== newKey) {
     removeLegacyLink(graph.links, oldKey, edge);
-    setLegacyLink(graph.links.get(edge.source), newKey, edge);
+    insertLegacyWrite(graph.links.get(edge.source), newKey, edge, state.writeOrder);
   }
   if (edge.id !== id) rekeyRelationship(graph, edge, id, state);
   if (!recovered) recoveredLegacyTypes.delete(edge);
@@ -335,11 +345,7 @@ function recordReceiverWrite(graph, state, compoundId, edge, overwritten) {
 }
 
 function snapshotReceiverWrite(graph, edge) {
-  const map = graph.links.get(edge.source);
-  const key = legacyLinkKey(edge.id, edge);
-  const shadowed = shadowedLegacyLinks.get(map)?.get(key);
-  const older = shadowed?.slice(0, map.get(key) === edge ? shadowed.length : shadowed.indexOf(edge));
-  return { edge, keys: [...map.keys()], older };
+  return { edge, keys: [...graph.links.get(edge.source).keys()] };
 }
 
 function settleReceiverWrites(graph, state, accepted) {
@@ -355,15 +361,19 @@ function settleReceiverWrites(graph, state, accepted) {
           recoverDisplacedEdge(graph, edge, state);
           rememberImportedSlot(state, effect, edge);
           restoreReceiverSlot(state, effect, replaces);
-          insertImportedSlot(state, edge, state.overwriteSlots.get(edge));
+          moveImportedSlot(state, edge, state.overwriteSlots.get(edge));
         } else {
           restoreReceiverSlot(state, effect, replaces);
         }
-        restoreReceiverWrite(graph, displaced);
+        restoreReceiverWrite(graph, displaced, state.writeOrder);
       }
     } else if (graph.relationships.get(edge.id) === edge) {
       effect = edge;
-      if (replaces !== accepted) restoreReceiverSlot(state, edge, replaces);
+      if (replaces === accepted) {
+        if (state.overwriteSlots.has(edge)) moveImportedSlot(state, edge, state.overwriteSlots.get(edge));
+      } else if (replaces) {
+        restoreReceiverSlot(state, edge, replaces);
+      }
     }
     if (effect && effect.id !== compoundId) state.recoveredEffects.set(compoundId, effect);
     else state.recoveredEffects.delete(compoundId);
@@ -371,25 +381,14 @@ function settleReceiverWrites(graph, state, accepted) {
 }
 
 function restoreReceiverSlot(state, edge, previous) {
-  const slot = state.slots.get(edge);
-  if (!previous || state.slots.get(previous) >= slot) return;
-  state.order[slot] = previous; // The replaced edge is skipped during replay.
-  rememberImportedSlot(state, edge, previous);
+  if (!previous) return;
+  const earlier = state.slots.get(previous);
+  if (earlier < state.slots.get(edge)) moveImportedSlot(state, edge, earlier);
 }
 
-function restoreReceiverWrite(graph, { edge, keys, older }) {
+function restoreReceiverWrite(graph, { edge, keys }, writeOrder) {
   const map = graph.links.get(edge.source);
-  const key = legacyLinkKey(edge.id, edge);
-  const current = map.get(key);
-  indexRelationship.call(graph, edge);
-  if (current) {
-    const shadowed = shadowedLegacyLinks.get(map).get(key);
-    const next = shadowed.findIndex(peer => !older?.includes(peer));
-    if (next !== -1) {
-      shadowed.splice(next, 0, edge);
-      map.set(key, shadowed.pop());
-    }
-  }
+  indexRelationship.call(graph, edge, writeOrder);
   const existing = keys.filter(key => map.has(key));
   const remembered = new Set(existing);
   restoreMapOrder(map, [...existing, ...[...map.keys()].filter(key => !remembered.has(key))]);
@@ -453,15 +452,18 @@ function rememberImportedSlot(state, edge, replaced) {
   state.slots.set(edge, index);
 }
 
-function insertImportedSlot(state, edge, index) {
-  state.order.splice(index, 0, edge);
-  for (let i = index; i < state.order.length; i++) state.slots.set(state.order[i], i);
+function moveImportedSlot(state, edge, index) {
+  const previous = state.slots.get(edge);
+  if (state.order[previous] === edge) state.order[previous] = undefined;
+  state.order[index] = edge;
+  state.slots.set(edge, index);
 }
 
 function restoreImportedRowOrder(graph, order) {
   // Rekeying the earlier row changes its Map/Set slot, not its row order.
   // Reinsert the live imported records in their original order once.
   for (const edge of order) {
+    if (!edge) continue;
     const { id, source, target } = edge;
     if (graph.relationships.get(id) !== edge) continue;
     graph.relationships.delete(id);
@@ -538,9 +540,13 @@ function restoreArchivedMapOrder(map, keys) {
   const present = keys.filter(key => map.has(key));
   const archived = new Set(present);
   if (present.length < 2 || archived.size !== present.length) return;
-  // Reorder only the archived subsequence; leave receiver-only entries in place.
-  let index = 0;
-  restoreMapOrder(map, [...map.keys()].map(key => archived.has(key) ? present[index++] : key));
+  restoreMapOrder(map, reorderSubsequence(map.keys(), archived));
+}
+
+function reorderSubsequence(entries, order) {
+  // Keep unmatched receiver entries at the positions the hook established.
+  const next = order.values();
+  return Array.from(entries, entry => order.has(entry) ? next.next().value : entry);
 }
 
 function restoreMapOrder(map, keys) {
@@ -581,17 +587,23 @@ function nonCanonicalOrder(index, positions) {
   return groups;
 }
 
-function restoreIndexOrder(index, relationships, endpoint, groups) {
+function restoreIndexOrder(index, relationships, endpoint, groups, archivedLinks) {
   if (!Array.isArray(groups)) return;
   for (const order of groups) {
     if (!Array.isArray(order) || order.length < 2) continue;
-    const relationship = relationships.get(order[0]);
-    if (!relationship) continue;
-    const id = relationship[endpoint];
-    const current = index.get(id);
-    if (current.size !== order.length || !order.every(edgeId => current.has(edgeId))) continue;
-    const restored = new Set(order);
-    if (restored.size === current.size) index.set(id, restored);
+    let current;
+    let id;
+    const surviving = new Set();
+    for (const edgeId of order) {
+      const edge = archivedLinks.get(edgeId);
+      if (!edge || relationships.get(edgeId) !== edge) continue;
+      if (!current) {
+        id = edge[endpoint];
+        current = index.get(id);
+      }
+      if (current.has(edgeId)) surviving.add(edgeId);
+    }
+    if (surviving.size >= 2) index.set(id, new Set(reorderSubsequence(current, surviving)));
   }
 }
 
@@ -720,6 +732,22 @@ function setLegacyLink(outgoing, key, relationship, previous, replayed) {
     }
   }
   outgoing.set(key, relationship);
+}
+
+function insertLegacyWrite(outgoing, key, edge, writeOrder) {
+  const current = outgoing.get(key);
+  const position = writeOrder.get(edge);
+  if (!current || (writeOrder.get(current) ?? -1) <= position) {
+    setLegacyLink(outgoing, key, edge);
+    return;
+  }
+  let byKey = shadowedLegacyLinks.get(outgoing);
+  if (!byKey) shadowedLegacyLinks.set(outgoing, byKey = new Map());
+  let shadowed = byKey.get(key);
+  if (!shadowed) byKey.set(key, shadowed = []);
+  const next = shadowed.findIndex(peer => writeOrder.get(peer) > position);
+  if (next === -1) shadowed.push(edge);
+  else shadowed.splice(next, 0, edge);
 }
 
 function removeShadowedLink(shadowed, relationship) {
