@@ -1,69 +1,72 @@
 # UltraLink Tutorials
 
-Welcome to the UltraLink tutorials section! This section provides step-by-step guides to help you learn how to use UltraLink effectively for various knowledge graph tasks.
+Start with a short written walkthrough, then use the examples and format references
+below to build on your first graph.
 
 ## Getting Started
 
-- [Getting Started with UltraLink](./getting-started.md) - A comprehensive introduction to UltraLink basics, covering entity and relationship creation, querying, and exporting to various formats.
+- [Build your first graph](../README.md#getting-started). Set up a source checkout,
+  then run a self-contained Node.js example that creates two entities, connects
+  them with a `works_on` relationship, and prints JSON. No API keys or sample data
+  are required.
 
 ## Core Concepts
 
-- [Understanding UltraLink Data Models](./data-models.md) - Learn about the core data models in UltraLink, including entities, relationships, and attributes.
-- [Advanced Querying Techniques](./guides/advanced-queries.md) - Master UltraLink's powerful query capabilities for complex knowledge graph operations.
-- [Working with Events](./events-system.md) - Harness UltraLink's event system for reactive applications.
+- [Relationship direction](../concepts/core-concepts.md#relationship-direction) —
+  understand why a link from one entity to another is not a link in both directions.
+- [Creating entities](../API_USAGE.md#creating-entities) — use the guide's setup
+  block to add, retrieve, and update entities.
 
 ## Format-Specific Tutorials
 
-- [Working with JSON](./json-format.md) - Detailed guide on importing, manipulating, and exporting JSON data.
-- [GraphML Integration](./graphml-integration.md) - Learn how to work with GraphML and integrate with graph visualization tools.
-- [Obsidian Knowledge Management](./obsidian-export.md) - Create Obsidian vaults from your knowledge graphs.
-- [Building Interactive Websites](./html-website.md) - Generate interactive HTML websites to visualize and explore your knowledge.
-- [Bayesian Networks for Probabilistic Reasoning](./bayesian-networks.md) - Use UltraLink for probabilistic knowledge representation and reasoning.
-- [Knowledge Interchange Format (KIF)](./kif-tutorial.md) - Work with logic-based knowledge representation using KIF.
+- [Exporting data](../API_USAGE.md#exporting-data) — call the export methods on a
+  populated graph. Start with JSON for structured data or CSV for separate
+  entity and relationship tables.
+- `toGraphML()` returns XML. Node types use the `type` data key;
+  relationship types use `relationship_type`.
+- [Obsidian reference](../formats/OBSIDIAN_FORMAT.md#data-model-mapping) — see
+  how entities and relationships map to Markdown notes and wiki-links.
 
 ## Advanced Topics
 
-- [Vector Embeddings and Semantic Search](./vector-embeddings.md) - Implement semantic search capabilities using vector embeddings.
-- [Large-Scale Knowledge Graphs](./large-scale-graphs.md) - Techniques for working with large knowledge graphs efficiently.
-- [Custom Exporters](./guides/custom-exporters.md) - Build your own exporters to extend UltraLink's functionality.
-- [Plugin Development](./advanced/plugin-development.md) - Develop plugins to enhance UltraLink with new features.
+The older vector, LLM, and plugin walkthroughs describe extension interfaces
+that are not shipped. See the [API design notes](../api/README.md#design-notes)
+for the distinction between proposed interfaces and the shipped API.
 
 ## Integration Tutorials
 
-- [UltraLink with Neo4j](./neo4j-integration.md) - Connect UltraLink to the Neo4j graph database.
-- [UltraLink with Python Data Science](./python-integration.md) - Use UltraLink with Python for data science workflows.
-- [UltraLink in React Applications](./react-integration.md) - Implement UltraLink in React-based web applications.
+For file-based workflows, see the [CSV layout](../formats/CSV_FORMAT.md#data-model-mapping)
+for the entity and relationship tables you can take into a spreadsheet or data
+analysis tool. Dedicated Neo4j, Python, and React tutorials are not published here.
 
 ## Applied Examples
 
-- [Building a Research Knowledge Base](./research-knowledge-base.md) - Create a comprehensive research knowledge base with citations and relationships.
-- [Enterprise Knowledge Management](./enterprise-knowledge.md) - Implement organizational knowledge management with UltraLink.
-- [Educational Systems Modeling](./educational-systems.md) - Model educational systems and curriculum relationships.
-- [Environmental Data Modeling](./environmental-modeling.md) - Represent environmental systems and ecological relationships.
+Use these overviews for modeling ideas, not as runnable walkthroughs. Both
+guides' Setup sections call `defineEntityType`, which the shipped API does
+not provide. Use the first-graph walkthrough above for runnable code.
+
+- [Research team](../examples/research-team.md#overview) — model team members,
+  projects, expertise, and collaborations.
+- [Desert ecosystem](../examples/desert-ecosystem.md#overview) — model organisms,
+  environmental factors, and their relationships.
 
 ## Video Tutorials
 
-- [UltraLink Quick Start (15 min)](./getting-started/quick-start.md) - Quick introduction to get up and running with UltraLink.
-- [Advanced Features (30 min)](./videos/advanced-features.md) - Detailed walkthrough of advanced UltraLink capabilities.
-- [Format Integration (20 min)](./integration/format-integration.md) - Learn how to leverage various export formats effectively.
+No tutorial videos are published here. Use the [written first-graph walkthrough](#getting-started)
+or the [written export material](#format-specific-tutorials) instead.
 
 ## Workshop Materials
 
-- [Knowledge Graph Workshop](./workshop/knowledge-graph.md) - Complete materials for running a knowledge graph workshop with UltraLink.
-- [Data Visualization Workshop](./workshop/data-visualization.md) - Workshop materials for data visualization techniques with UltraLink.
+The knowledge graph and data visualization workshops are not published.
 
 ## Tutorial Series: Building a Complete Knowledge Management System
 
-Follow this series to build a complete knowledge management system step by step:
-
-1. [Part 1: Setting Up the Project](./series/part1-setup.md)
-2. [Part 2: Designing the Data Model](./series/part2-data-model.md)
-3. [Part 3: Building the Core System](./series/part3-core-system.md)
-4. [Part 4: Adding Search Capabilities](./series/part4-search.md)
-5. [Part 5: Export and Visualization](./series/part5-visualization.md)
-6. [Part 6: Building the User Interface](./series/part6-ui.md)
-7. [Part 7: Deployment and Scaling](./series/part7-deployment.md)
+The complete knowledge management series is not published. The
+[historical development roadmap](../contributing/roadmap.md#developer-experience-ongoing)
+lists interactive tutorials and example applications as proposals, not available
+lessons or current release commitments.
 
 ## Contributing Tutorials
 
-Interested in contributing a tutorial? Check out the [Tutorial Contribution Guide](../contributing/tutorial-contributions.md) for guidelines on how to submit your own tutorials. 
+See the [documentation contribution guidelines](../../CONTRIBUTING.md#documentation)
+to improve an existing walkthrough or contribute a new one.
