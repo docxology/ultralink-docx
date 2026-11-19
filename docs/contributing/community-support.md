@@ -6,9 +6,8 @@ Start with the project documentation. Use the issue tracker to report bugs or pr
 
 ### Documentation
 
-- [Getting Started Guide](../getting-started/README.md)
+- [Getting Started from Source](../README.md#getting-started) — install from the checkout and build a first graph
 - [Creating Entities](../API_USAGE.md#creating-entities)
-- [Getting Started Tutorial](../tutorials/getting-started.md)
 - [Troubleshooting Guide](../troubleshooting/troubleshooting.md)
 - [FAQ](../faq.md)
 

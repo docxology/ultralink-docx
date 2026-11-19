@@ -36,9 +36,8 @@ The documentation is organized into the following sections:
 mindmap
   root((UltraLink Docs))
     Getting Started
-      Installation
-      First Steps
-      Quick Tutorial
+      Install from Source
+      First Graph
     Guides
       API User Guide
       Format Selection
@@ -79,9 +78,20 @@ mindmap
 
 ## Main Documentation Sections
 
-### [Getting Started](./getting-started/README.md)
+### Getting Started
 
-Begin your journey with UltraLink by following our getting started guides. Learn the basics of installation, configuration, and creating your first knowledge graph.
+[Clone the repository and install its dependencies](../INSTALLATION.md#development-setup). From the repository root, run this example to create two entities, link them, and print the graph as JSON:
+
+```bash
+node <<'JS'
+const { UltraLink } = require('.');
+const graph = new UltraLink();
+graph.addEntity('alice', 'person', { name: 'Alice' });
+graph.addEntity('project', 'project', { name: 'First Graph' });
+graph.addLink('alice', 'project', 'works_on');
+console.log(graph.toJSON({ pretty: true }));
+JS
+```
 
 ### [Guides](./guides/README.md)
 
@@ -133,9 +143,7 @@ Dive into the technical details of UltraLink:
 
 ### [Tutorials](./tutorials/README.md)
 
-Create, query, and export your first knowledge graph:
-
-- [Getting Started with UltraLink](./tutorials/getting-started.md)
+For a runnable first example, start with [Getting Started](#getting-started) above.
 
 ### API Reference
 
