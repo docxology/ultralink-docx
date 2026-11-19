@@ -50,47 +50,16 @@ storage backend for `new UltraLink(...)`.
 
 ### Missing Required Configuration
 
-```
-Error: Missing required configuration: storage.database.url
-```
-
-**Problem**: A required configuration property is missing.
-
-**Solution**: Add the missing configuration:
-
-```javascript
-const ultralink = new UltraLink({
-  storage: {
-    type: 'database',
-    database: {
-      type: 'mongodb',
-      url: 'mongodb://localhost:27017/ultralink',
-      // Other options...
-    }
-  }
-});
-```
+`new UltraLink()` starts with an in-memory graph and does not require a
+database URL. If your application reports a missing database URL, check the
+component that raised the error. Adding `storage.database.url` to the
+UltraLink constructor will not configure a database connection.
 
 ### Environment Variables Not Applied
 
-**Problem**: Environment variables don't seem to be affecting configuration.
-
-**Solutions**:
-1. Make sure environment variables are set before application startup:
-   ```bash
-   export ULTRALINK_STORAGE_TYPE=file
-   node your-app.js
-   ```
-
-2. Verify environment variables are being loaded:
-   ```javascript
-   console.log(process.env.ULTRALINK_STORAGE_TYPE);
-   ```
-
-3. If using dotenv, ensure it's configured correctly:
-   ```javascript
-   require('dotenv').config();
-   ```
+UltraLink does not use `ULTRALINK_STORAGE_TYPE` to choose a storage backend.
+If your application reads its own environment variables, check that it loads
+them before initializing the component that uses them.
 
 ## Performance Issues
 
