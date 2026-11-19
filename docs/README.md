@@ -52,9 +52,6 @@ mindmap
       KIF
       Format Overview
     Architecture
-      System Overview
-      Core Components
-      Data Flow
     Technical
       Format Conversion
       Entity Store
@@ -127,11 +124,7 @@ Understand UltraLink's core differentiating features:
 
 ### [Architecture](./architecture/README.md)
 
-Understand UltraLink's architecture and design principles:
-
-- [Architecture Overview](./architecture/architecture_overview.md)
-- [Core Components](./architecture/README.md#core-components)
-- [Data Flow Models](./technical/data-flow-models.md)
+Understand UltraLink's architecture and design principles.
 
 ### [Technical Documentation](./technical/README.md)
 

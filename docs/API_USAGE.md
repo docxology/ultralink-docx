@@ -15,10 +15,10 @@ This document provides detailed examples and usage patterns for the UltraLink kn
 
 ## Getting Started
 
-First, import the UltraLink class and instantiate it:
+Follow the [source checkout setup](./README.md#getting-started). Put this setup block at the top of a `.cjs` file in the repository root, append the example you want to run, and run the file with `node`:
 
 ```javascript
-const { UltraLink } = require('ultralink');
+const { UltraLink } = require('.');
 
 // Create a new UltraLink instance with default config
 const ultralink = new UltraLink();
@@ -34,6 +34,7 @@ const ultralinkWithConfig = new UltraLink({
 ## Creating Entities
 
 Entities are the nodes in your knowledge graph. Each entity has an ID, type, and attributes.
+Start with the [setup block](#getting-started) above.
 
 ```javascript
 // Basic entity creation
@@ -122,7 +123,7 @@ const backlinks = ultralink.getBacklinks('Cambridge University');
 
 ## Exporting Data
 
-UltraLink supports multiple export formats for your knowledge graph.
+Use the `ultralink` instance from [Getting Started](#getting-started) after [adding entities](#creating-entities). The methods below return data in different formats.
 
 ```javascript
 // Export to JSON
