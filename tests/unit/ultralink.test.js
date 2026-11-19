@@ -434,7 +434,7 @@ describe('UltraLink', () => {
       ultralink.updateRelationship(b.id, { type: 'express' });
       const key = 'station_north-old-route';
       expect(ultralink.links.get('anchor').get(key)).toBe(a);
-      const json = ultralink.toJSON();
+      const json = ultralink.toJSON({ lossless: true });
       const relationships = [
         { id: a.id, source: 'anchor', target: 'station_north', type: 'old-route', attributes: { weight: 1 }, metadata: a.metadata },
         { id: b.id, source: 'anchor', target: 'station_north-old', type: 'express', attributes: { weight: 2 }, metadata: b.metadata }
@@ -442,7 +442,7 @@ describe('UltraLink', () => {
       expect(JSON.parse(json).relationships).toEqual(relationships);
 
       const imported = new UltraLink().fromFullBlob(json);
-      expect(imported.toJSON({ asString: false }).relationships).toEqual(relationships);
+      expect(imported.toJSON({ asString: false, lossless: true }).relationships).toEqual(relationships);
       expect(imported.getBacklinks('station_north')[0].id).toBe(a.id);
       expect(imported.getBacklinks('station_north-old')[0].id).toBe(b.id);
       expect(imported.links.get('anchor').get(key).id).toBe(a.id);

@@ -44,9 +44,11 @@ describe('E2E: Render Examples Script', () => {
       const output = path.join(systems, 'TestSystem');
       const graph = JSON.parse(fs.readFileSync(path.join(output, 'TestSystem.json'), 'utf8'));
       expect(graph.entities.map(entity => entity.id)).toEqual(['entity1', 'entity2']);
-      expect(graph.relationships).toEqual([
-        { id: 'entity1_related_to_entity2', source: 'entity1', target: 'entity2', type: 'related_to',
-          attributes: {}, metadata: { created: expect.any(String), modified: expect.any(String) } }
+      const edge = { source: 'entity1', target: 'entity2', type: 'related_to', attributes: {} };
+      expect(graph.relationships).toEqual([edge]);
+      const blob = JSON.parse(fs.readFileSync(path.join(output, 'full-blob', 'TestSystem-full.json'), 'utf8'));
+      expect(blob.json.relationships).toEqual([
+        { ...edge, id: 'entity1_related_to_entity2', metadata: { created: expect.any(String), modified: expect.any(String) } }
       ]);
       const svg = fs.readFileSync(path.join(output, 'visualization', 'testsystem-graph.svg'), 'utf8');
       expect(svg).toContain('>Test Entity 1</text>');
