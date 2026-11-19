@@ -130,6 +130,11 @@ describe('Statistics Tracking in Render Examples', () => {
       files: [['kif/{system}.kif', 'ERROR-kif.txt']]
     },
     {
+      scenario: 'Symbol-valued attribute in embedded KIF', stage: 'full-blob',
+      message: 'embedded KIF export', optionalWarnings: 1,
+      files: [['full-blob/{system}-full.json', 'ERROR-uncompressed.txt']]
+    },
+    {
       scenario: 'Bayesian entity named constructor', stage: 'bayesian', message: 'includes is not a function', optionalWarnings: 1,
       files: [['bayesian/{system}-bayesian.json', 'ERROR-bayesian.txt']]
     },
@@ -162,6 +167,12 @@ describe('Statistics Tracking in Render Examples', () => {
         .map(format => [`visualization/{lower}-graph.${format}.js`, `ERROR-{lower}-graph.${format}.js.txt`])
     },
     {
+      scenario: 'unprintable values thrown by both interactive generators', stage: 'visualization',
+      message: 'Unprintable thrown value', successful: 5,
+      files: ['d3', 'cytoscape']
+        .map(format => [`visualization/{lower}-graph.${format}.js`, `ERROR-{lower}-graph.${format}.js.txt`])
+    },
+    {
       scenario: 'invalid XML character during PNG conversion', stage: 'visualization', message: 'invalid Char value 1', successful: 3,
       files: ['', '-radial', '-grid', '-cluster']
         .map(layout => [`visualization/{lower}-graph${layout}.png`, `ERROR-{lower}-graph${layout}.png.txt`])
@@ -182,7 +193,8 @@ describe('Statistics Tracking in Render Examples', () => {
           let type = 'node';
           if (fail) {
             switch (scenario) {
-              case 'Symbol-valued KIF attribute': attributes.detail = Symbol('unrenderable'); break;
+              case 'Symbol-valued KIF attribute':
+              case 'Symbol-valued attribute in embedded KIF': attributes.detail = Symbol('unrenderable'); break;
               case 'Bayesian entity named constructor': id = 'constructor'; break;
               case 'Symbol-valued RxInfer entity type': type = Symbol('unrenderable'); break;
               case 'unprintable Full Blob node label': attributes.name = { toString: null }; break;
@@ -191,6 +203,15 @@ describe('Statistics Tracking in Render Examples', () => {
               case 'non-Error thrown by visualization label serialization':
                 attributes.name = { toJSON() { throw 'label JSON rejected'; } };
                 break;
+              case 'unprintable values thrown by both interactive generators': {
+                let labelWrites = 0;
+                attributes.name = { toJSON(key) {
+                  // The website serializes the first label. D3 and Cytoscape each serialize it again.
+                  if (key === 'label' && ++labelWrites > 1) throw Object.create(null);
+                  return id;
+                } };
+                break;
+              }
               case 'invalid XML character during PNG conversion': attributes.name = String.fromCharCode(1); break;
             }
           }
@@ -241,6 +262,11 @@ describe('Statistics Tracking in Render Examples', () => {
           for (const [file, diagnostic] of paths('Fresh')) {
             assert.equal(fs.existsSync(file), false, file);
             assert.ok(fs.readFileSync(diagnostic, 'utf8').includes(message), diagnostic);
+          }
+          if (scenario === 'Symbol-valued attribute in embedded KIF') {
+            const graph = factory('proposed', true)();
+            assert.equal(graph.toFullBlob().kif, '');
+            assert.throws(() => graph.toFullBlob({ throwOnError: true }), /embedded KIF export.*replace/);
           }
           if (scenario === 'invalid XML character during PNG conversion') {
             const graph = factory('proposed', true)();

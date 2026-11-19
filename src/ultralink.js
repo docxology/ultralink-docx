@@ -469,6 +469,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
    * Export UltraLink data to a comprehensive blob containing all formats
    * @param {Object} options - Export options
    * @param {boolean} options.compressed - Whether to return a compressed (JSON string) version
+   * @param {boolean} [options.throwOnError=false] - Reject the bundle if an embedded export throws
    * @returns {Object|string} Object containing data in multiple formats, or a JSON string if compressed
    */
   toFullBlob(options = {}) {

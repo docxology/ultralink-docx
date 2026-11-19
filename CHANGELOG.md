@@ -41,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keep existing website pages and assets intact when an example rerender fails to generate a website.
 - Keep KIF, Bayesian JSON, RxInfer, Full Blob, and graph visualization files intact
   when the example renderer cannot regenerate them; report failures in separate diagnostics.
+- Reject example Full Blobs with failed embedded exports and keep rendering later
+  formats when a generator throws an unprintable value.
 - Resolved issues with GraphML attribute serialization
 - Fixed relationship counting in Full Blob exports
 - Corrected theme handling in HTML Website exports

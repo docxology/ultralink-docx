@@ -8,6 +8,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { getErrorMessage } = require('../src/lib/utils');
 
 const PNG_SIGNATURE = 0x89504e470d0a1a0an;
 
@@ -792,7 +793,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
   STATS.systemStats[systemName] = systemStats;
   const failures = [];
   function recordFailure(stage, error) {
-    const message = error instanceof Error ? error.message : String(error);
+    const message = getErrorMessage(error);
     failures.push({ stage, message });
     systemStats.errors++;
     STATS.errorFiles++;
@@ -864,7 +865,13 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
     }
     function reportExportFailure(error, diagnostic = `ERROR-${target.name}.txt`) {
       const message = recordFailure(target.name, error);
-      const stack = error instanceof Error && error.stack;
+      let stack;
+      try {
+        const value = error instanceof Error ? error.stack : undefined;
+        if (typeof value === 'string') stack = value;
+      } catch {
+        // The stack is optional; a thrown value must not stop the render.
+      }
       const errorFilePath = path.join(targetDir, diagnostic);
       try {
         writeOutput(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
@@ -1117,7 +1124,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             const outputPath = path.join(targetDir, filename.replace('{{system}}', systemName));
             try {
               if (format === 'uncompressed') {
-                const blob = ultralink.toFullBlob({ compress: false });
+                const blob = ultralink.toFullBlob({ compress: false, throwOnError: true });
                 if (saveFile(outputPath, JSON.stringify(blob, null, 2))) {
                   console.log(`      ✅ Saved uncompressed blob to: ${outputPath}`);
                 }
