@@ -1015,7 +1015,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
           console.log(`    📝 Generating Obsidian markdown files in: ${targetDir}`);
           const obsidianOutput = ultralink.toObsidian({ backlinks: true });
           for (const [filename, content] of Object.entries(obsidianOutput)) {
-            const filePath = path.join(targetDir, `${filename}.md`);
+            const filePath = path.join(targetDir, filename);
             if (saveFile(filePath, content)) console.log(`      ✅ ${filePath}`);
           }
           break;
