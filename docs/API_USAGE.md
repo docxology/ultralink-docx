@@ -111,15 +111,15 @@ every outgoing edge. `createSubset(...).links` also uses a flattened legacy
 key, so it cannot represent both edges with the same key. Making either map
 lossless would require a new key or value contract.
 
-Default `toJSON()` keeps the published entity and relationship row fields.
-For an archive with stored relationship IDs and row metadata, use
-`new UltraLink().fromFullBlob(ultralink.toJSON({ lossless: true }))` or pass
-the result of `ultralink.toFullBlob()`. Both preserve distinct relationships
-whose current tuples are identical after retyping, including lookup order.
-Both imports use the receiver's public `addEntity`, `addLink`, and
-`addRelationship` methods. Unversioned graphs ignore row IDs and derive IDs
-from the tuples accepted by the receiver. The last row owns each compound ID;
-earlier rows get distinct recovery IDs but keep their `target-type` legacy keys.
+Default `toJSON()` and `toFullBlob()` keep the released wire format.
+For an archive with stored IDs and row metadata, import the result of
+`ultralink.toJSON({ lossless: true })` or `ultralink.toFullBlob({ lossless: true })`
+with `fromFullBlob`. Both preserve distinct relationships that share a current
+tuple after retyping, including lookup order.
+Both modes use the receiver's public `addEntity`, `addLink`, and
+`addRelationship` methods. Unversioned graphs ignore stored IDs and metadata.
+The last tuple owns each compound ID. An earlier distinct legacy slot can
+remain readable through `links` but is not a live relationship or backlink.
 `fromFullBlob` decodes and checks the graph records before replacing the
 receiver. A decoding or record-shape error leaves its contents unchanged.
 If built-in insertion validation rejects a duplicate entity or an unresolved
@@ -141,7 +141,7 @@ the archive row takes the stored ID and the other edge stays reachable under
 a recovery ID. Later receiver writes that derive the same compound ID replace
 the previous receiver write, even if their endpoints differ or the hook
 deletes the replacement before returning.
-Imported authored graph metadata replaces matching top-level keys and leaves
+Versioned imports merge authored graph metadata by top-level key and leave
 other receiver keys intact. The automatic export summary is ignored.
 
 ## Querying the Knowledge Graph

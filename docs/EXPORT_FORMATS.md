@@ -597,6 +597,7 @@ const fullBlobOutput = ultralink.toFullBlob(options);
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `compress` | boolean | `false` | Whether to compress the output |
+| `lossless` | boolean | `false` | Version the embedded graph and retain stored IDs, lookup order, and row metadata |
 | `includeVectors` | boolean | `true` | Whether to include vector embeddings |
 | `includeTemporal` | boolean | `true` | Whether to include temporal data |
 | `includeVisualization` | boolean | `true` | Whether to include visualization data |

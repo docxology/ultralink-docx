@@ -476,7 +476,7 @@ describe('UltraLink', () => {
       const replacement = ultralink.addLink('a', 'd', 'b_c');
       expect(replacement.id).toBe(old.id);
 
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob()]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob({ lossless: true })]) {
         const restored = new UltraLink().fromFullBlob(input);
         const legacy = restored.links.get('a');
         expect([...legacy]).toEqual([['other-route', other], ['d-b_c', replacement]]);
@@ -594,7 +594,7 @@ describe('UltraLink', () => {
       }
     });
 
-    it('keeps the original graph when stock insertion rejects an import', () => {
+    it.each([false, true])('keeps the original graph when insertion rejects an import (versioned: %s)', lossless => {
       const author = ultralink.addEntity('author', 'person');
       ultralink.addEntity('paper', 'document');
       const original = ultralink.addLink('author', 'paper', 'reviewed');
@@ -610,7 +610,9 @@ describe('UltraLink', () => {
           relationships: [{ source: 'replacement', target: 'missing', type: 'reviewed' }]
         }, 'Target entity not found: missing']
       ]) {
-        const input = JSON.stringify({ ...records, metadata: { provenance: 'archive' } });
+        const input = JSON.stringify({
+          ...records, ultralinkArchiveVersion: lossless ? 1 : undefined, metadata: { provenance: 'archive' }
+        });
         expect(() => ultralink.fromFullBlob(input)).toThrow(message);
         expect(ultralink.metadata).toBe(metadata);
         expect(ultralink.getEntity('author')).toBe(author);
@@ -664,7 +666,7 @@ describe('UltraLink', () => {
       ultralink.addEntity('author_team', 'person').metadata.origin = 'archive row';
       ultralink.addEntity('paper_v1', 'document');
       const edge = ultralink.addLink('author_team', 'paper_v1', 'reviewed');
-      for (const input of [ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const receiver = new Chainable();
         receiver.metadata = { provenance: 'receiver catalog' };
         expect(receiver.fromFullBlob(input)).toBe(receiver);
@@ -692,20 +694,19 @@ describe('UltraLink', () => {
 
       const metadata = { name: 'Imported graph', provenance: { source: 'archive' } };
       ultralink.fromFullBlob({ json: JSON.stringify({ ...legacy, metadata }) });
-      expect(ultralink.toJSON({ asString: false }).metadata).toMatchObject(metadata);
+      expect(ultralink.metadata).toEqual({ name: 'Existing graph catalog', provenance: { source: 'local catalog' } });
     });
 
     it.each([
       ['JSON', graph => graph.toJSON()],
       ['Full Blob', graph => graph.toFullBlob()]
-    ])('keeps receiver metadata when a stock %s has only the export summary', (_format, exportGraph) => {
+    ])('keeps receiver metadata when a stock %s has only the export summary or authored metadata', (_format, exportGraph) => {
       const source = new UltraLink();
       source.addEntity('author_team', 'person');
       source.addEntity('paper_v1', 'document');
       const edge = source.addLink('author_team', 'paper_v1', 'reviewed', { weight: 2 });
       edge.metadata.created = '2000-01-01T00:00:00.000Z';
-      const { metadata: rowMetadata, ...row } = edge;
-      const expected = _format === 'JSON' ? row : { ...row, metadata: rowMetadata };
+      const expected = { source: edge.source, target: edge.target, type: edge.type, attributes: edge.attributes };
       const catalog = { name: 'Existing graph catalog', provenance: { source: 'local catalog' } };
       ultralink.metadata = catalog;
       ultralink.addEntity('stale', 'person');
@@ -718,12 +719,12 @@ describe('UltraLink', () => {
       source.metadata = { name: 'Imported catalog', provenance: { source: 'archive' } };
       ultralink.fromFullBlob(exportGraph(source));
       expect(ultralink.getBacklinks('paper_v1')).toMatchObject([expected]);
-      expect(ultralink.metadata).toEqual(source.metadata);
+      expect(ultralink.metadata).toEqual(catalog);
     });
 
     it.each([
-      ['JSON', graph => graph.toJSON()],
-      ['Full Blob', graph => graph.toFullBlob()]
+      ['JSON', graph => graph.toJSON({ lossless: true })],
+      ['Full Blob', graph => graph.toFullBlob({ lossless: true })]
     ])('merges bundled Research Team metadata by key when importing %s', (_format, exportGraph) => {
       const source = createEnhancedResearchTeamDataset();
       const catalog = { name: 'Local catalog', provenance: { source: 'local registry' } };
@@ -748,7 +749,7 @@ describe('UltraLink', () => {
       const reviewed = ultralink.addLink(author.id, 'paper_v1', 'reviewed', { weight: 2 });
       ultralink.updateRelationship(drafted.id, { type: 'reviewed' });
       const json = ultralink.toJSON({ lossless: true });
-      const blob = ultralink.toFullBlob();
+      const blob = ultralink.toFullBlob({ lossless: true });
       const rows = JSON.parse(json);
       expect(rows.relationships).toEqual([drafted, reviewed]);
       expect(rows.entities.find(entity => entity.id === author.id)).toEqual(author);
@@ -793,13 +794,13 @@ describe('UltraLink', () => {
 
           const restored = new UltraLink().fromFullBlob(exportGraph(ultralink));
           const edges = restored.getBacklinks(target);
-          expect(edges.map(edge => edge.attributes.weight)).toEqual([first, last].map(type => inserted[type].attributes.weight));
+          expect(edges.map(edge => edge.attributes.weight)).toEqual([inserted[last].attributes.weight]);
           expect(restored.getRelationships(source, { direction: 'outgoing' })).toEqual(edges);
-          expect(restored.getRelationship(inserted.reviewed.id)).toEqual(edges[1]);
+          expect(restored.getRelationship(inserted.reviewed.id)).toEqual(edges[0]);
           expect(restored.deleteLink(source, target, 'reviewed')).toBe(true);
           expect(restored.deleteLink(source, target, 'reviewed')).toBe(false);
-          expect(restored.getRelationships(source, { direction: 'outgoing' })).toEqual([edges[0]]);
-          expect(restored.getBacklinks(target)).toEqual([edges[0]]);
+          expect(restored.getRelationships(source, { direction: 'outgoing' })).toEqual([]);
+          expect(restored.getBacklinks(target)).toEqual([]);
         }
       );
     });
@@ -821,7 +822,7 @@ describe('UltraLink', () => {
       expect(ultralink.getRelationships('a', { direction: 'outgoing' })).toEqual([replacement]);
     });
 
-    it('loads unversioned colliders through public overrides and keeps both original legacy keys', () => {
+    it('loads colliding archived rows through public overrides and keeps both original legacy keys', () => {
       const calls = [];
       class Normalizing extends UltraLink {
         addLink(source, target, type, attributes) {
@@ -837,24 +838,24 @@ describe('UltraLink', () => {
       ultralink.addLink('a', 'c_d', 'b_M', { weight: 1 });
       const later = ultralink.addLink('a_b', 'd', 'original', { weight: 2 });
       ultralink.updateRelationship(later.id, { type: 'M_c' });
-      const restored = new Normalizing().fromFullBlob(ultralink.toJSON());
+      const restored = new Normalizing().fromFullBlob(ultralink.toJSON({ lossless: true }));
       expect(calls).toEqual([
         ['link', 'a', 'c_d', 'b_M'], ['relationship', 'a', 'c_d', 'b_M'],
         ['link', 'a_b', 'd', 'M_c'], ['relationship', 'a_b', 'd', 'M_c']
       ]);
       const [earlier] = restored.getRelationships('a', { direction: 'outgoing' });
       expect(earlier.attributes).toEqual({ weight: 1, normalized: true });
-      expect(restored.links.get('a').get('c_d-b_m')).toBe(earlier);
-      expect(restored.getRelationship('a_b_m_c_d').attributes).toEqual({ weight: 2, normalized: true });
-      expect(restored.links.get('a_b').get('d-m_c')).toBe(restored.getRelationship('a_b_m_c_d'));
+      expect(restored.links.get('a').get('c_d-b_M')).toBe(earlier);
+      expect(restored.getRelationship(later.id).attributes).toEqual({ weight: 2, normalized: true });
+      expect(restored.links.get('a_b').get('d-original')).toBe(restored.getRelationship(later.id));
 
       restored.updateRelationship(earlier.id, { type: 'edited' });
-      const archived = new UltraLink().fromFullBlob(restored.toFullBlob());
-      expect(archived.links.get('a').get('c_d-b_m')).toEqual(earlier);
+      const archived = new UltraLink().fromFullBlob(restored.toFullBlob({ lossless: true }));
+      expect(archived.links.get('a').get('c_d-b_M')).toEqual(earlier);
       expect(archived.getBacklinks('c_d')).toEqual([earlier]);
       expect(archived.deleteRelationship(earlier.id)).toBe(true);
       expect(archived.links.get('a').size).toBe(0);
-      expect(archived.getRelationship('a_b_m_c_d').attributes.weight).toBe(2);
+      expect(archived.getRelationship(later.id).attributes.weight).toBe(2);
     });
 
     it('applies the receiver’s validation and normalization to producer Full Blobs', () => {
@@ -873,7 +874,7 @@ describe('UltraLink', () => {
           return super.addRelationship(source, target, type.toLowerCase(), { ...attributes, approved: true });
         }
       }
-      for (const input of [ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         calls.length = 0;
         const receiver = new Guarded();
         expect(() => receiver.fromFullBlob(input)).toThrow('denied by receiver');
@@ -899,7 +900,7 @@ describe('UltraLink', () => {
         }
       }
 
-      for (const options of [{}, { compressed: true }]) {
+      for (const options of [{ lossless: true }, { lossless: true, compressed: true }]) {
         ultralink.updateRelationship(draft.id, { type: 'denied' });
         const receiver = new Audited();
         expect(() => receiver.fromFullBlob(ultralink.toFullBlob(options))).toThrow('denied by receiver');
@@ -934,11 +935,11 @@ describe('UltraLink', () => {
       }
       const legacy = ultralink.toJSON({ asString: false });
       legacy.entities[0].metadata = { origin: 'legacy' };
-      for (const input of [legacy, ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [legacy, ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new VoidEntity().fromFullBlob(input);
         const entity = restored.getEntity('a');
         expect(entity.attributes.normalized).toBe(true);
-        expect(entity.metadata.origin).toBe(input === legacy ? 'legacy' : 'producer');
+        expect(entity.metadata.origin).toBe(input === legacy ? undefined : 'producer');
         if (input === legacy) expect(entity.metadata.local).toBe('receiver');
         expect(restored.getBacklinks('b').map(({ id }) => id)).toEqual([link.id]);
       }
@@ -955,7 +956,7 @@ describe('UltraLink', () => {
           return super.addLink(source, target, type, attributes);
         }
       }
-      for (const input of [ultralink.toJSON(), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toJSON(), ultralink.toFullBlob(), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new Audited().fromFullBlob(input);
         expect(restored.getBacklinks('b').map(({ type, attributes }) => [type, attributes]))
           .toEqual([['audit', { lastAttempt: 'cited' }], ['reviewed', { weight: 1 }], ['cited', { weight: 2 }]]);
@@ -977,7 +978,7 @@ describe('UltraLink', () => {
           super.addRelationship(source, target, type.toLowerCase(), { ...attributes, normalized: true });
         }
       }
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new VoidNormalizer().fromFullBlob(input);
         expect(restored.getRelationship(edited.id)).toMatchObject({
           type: 'reviewed', attributes: { weight: 1, normalized: true }, metadata: { origin: 'archive' }
@@ -1004,7 +1005,7 @@ describe('UltraLink', () => {
           return edge;
         }
       }
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new Audited().fromFullBlob(input);
         const accepted = restored.getRelationship(draft.id);
         const audit = restored.getRelationship('a_b_c_d');
@@ -1036,7 +1037,7 @@ describe('UltraLink', () => {
           super.addRelationship(source, target, 'audit', { rejected: true });
         }
       }
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new AuditsOnly().fromFullBlob(input);
         expect(restored.getRelationship(denied.id)).toBeNull();
         const audit = restored.getRelationship('author_team_audit_paper_v1');
@@ -1060,7 +1061,7 @@ describe('UltraLink', () => {
           return super.addLink(source, target, type, attributes);
         }
       }
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new Audited().fromFullBlob(input);
         const [audit, reviewed, citation] = restored.getBacklinks('b');
         expect(audit).toMatchObject({ type: 'audit', attributes: { lastAttempt: 'cited' } });
@@ -1089,7 +1090,7 @@ describe('UltraLink', () => {
           super.addRelationship(source, target, type, attributes);
         }
       }
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new Traced().fromFullBlob(input);
         expect(restored.getBacklinks('paper_v1')).toEqual([draft, review]);
         const [trace] = restored.getBacklinks('trace_v1');
@@ -1109,7 +1110,7 @@ describe('UltraLink', () => {
       const outgoing = ultralink.addLink('a_b', 'other', 'route');
       const reused = ultralink.addLink('a_b', 'd', 'c');
 
-      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob()]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob({ lossless: true })]) {
         const restored = new UltraLink().fromFullBlob(input);
         expect([...restored.relationships.values()]).toEqual([reused, incoming, outgoing]);
         expect(restored.getBacklinks('d')).toEqual([incoming, reused]);
@@ -1136,8 +1137,8 @@ describe('UltraLink', () => {
         }
       }
       for (const input of [
-        ultralink.toJSON({ lossless: true }), JSON.stringify(ultralink.toFullBlob()),
-        ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })
+        ultralink.toJSON({ lossless: true }), JSON.stringify(ultralink.toFullBlob({ lossless: true })),
+        ultralink.toFullBlob({ lossless: true }), ultralink.toFullBlob({ lossless: true, compressed: true })
       ]) {
         const restored = new Audited().fromFullBlob(input);
         expect(restored.getRelationship(stored.id)).toEqual(stored);
@@ -1173,8 +1174,8 @@ describe('UltraLink', () => {
         author.attributes.measurement = exact;
         link.metadata.measurement = exact;
       }
-      for (const input of [ultralink.toJSON({ lossless: true }), JSON.stringify(ultralink.toFullBlob(), null, 2),
-        ultralink.toFullBlob({ compressed: true })]) {
+      for (const input of [ultralink.toJSON({ lossless: true }), JSON.stringify(ultralink.toFullBlob({ lossless: true }), null, 2),
+        ultralink.toFullBlob({ lossless: true, compressed: true })]) {
         const restored = new UltraLink().fromFullBlob(input);
         const stored = restored.getEntity('a');
         const [edge] = restored.getBacklinks('b');
@@ -1204,9 +1205,9 @@ describe('UltraLink', () => {
 
       for (const archive of [
         ultralink.toJSON({ lossless: true }),
-        ultralink.toFullBlob(),
-        ultralink.toFullBlob({ compressed: true }),
-        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+        ultralink.toFullBlob({ lossless: true }),
+        ultralink.toFullBlob({ lossless: true, compressed: true }),
+        ultralink.toFullBlob({ lossless: true, compressed: true, throwOnError: true })
       ]) {
         const restored = new UltraLink().fromFullBlob(archive);
         expect(restored.getEntity('a').metadata).toMatchObject({ locale: 'en' });
@@ -1257,9 +1258,9 @@ describe('UltraLink', () => {
       for (const archive of [
         ultralink.toJSON({ lossless: true, asString: false }),
         ultralink.toJSON({ lossless: true }),
-        ultralink.toFullBlob(),
-        ultralink.toFullBlob({ compressed: true }),
-        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+        ultralink.toFullBlob({ lossless: true }),
+        ultralink.toFullBlob({ lossless: true, compressed: true }),
+        ultralink.toFullBlob({ lossless: true, compressed: true, throwOnError: true })
       ]) {
         const restored = new UltraLink().fromFullBlob(archive);
         expect(restored.getEntity('a').attributes).toEqual({ name: 'Author' });
@@ -1303,8 +1304,8 @@ describe('UltraLink', () => {
         ultralink.toJSON({ includeMetadata: true }),
         ultralink.toJSON({ lossless: true }),
         JSON.stringify(ultralink.toJSON({ lossless: true, asString: false })),
-        JSON.stringify(ultralink.toFullBlob()),
-        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+        JSON.stringify(ultralink.toFullBlob({ lossless: true })),
+        ultralink.toFullBlob({ lossless: true, compressed: true, throwOnError: true })
       ]) {
         expect(fields(text)).toEqual([...expected, ...expected]);
       }
@@ -1317,7 +1318,7 @@ describe('UltraLink', () => {
         const edge = ultralink.addLink('x', 'y', 'reviewed', { regularNumber: 17 });
         edge.metadata = { toJSON: () => ({ overflow: JSON.rawJSON('1e400'), nested: [JSON.rawJSON('1e-4000'), 19] }) };
         const json = ultralink.toJSON({ lossless: true });
-        const full = ultralink.toFullBlob({ compressed: true });
+        const full = ultralink.toFullBlob({ lossless: true, compressed: true });
         const fields = text => {
           const tokens = {};
           JSON.parse(text, (key, value, context) => {
@@ -1347,7 +1348,7 @@ describe('UltraLink', () => {
 
       for (const input of [
         ultralink.toJSON({ lossless: true }),
-        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+        ultralink.toFullBlob({ lossless: true, compressed: true, throwOnError: true })
       ]) {
         const restored = new UltraLink().fromFullBlob(input);
         const archived = restored.toJSON({ asString: false, lossless: true });
@@ -1417,6 +1418,9 @@ describe('UltraLink', () => {
       
       // Export to blob
       const blob = ultralink.toFullBlob();
+      expect(blob.json).not.toHaveProperty('ultralinkArchiveVersion');
+      expect(blob.json.entities).toEqual(ultralink.toJSON({ asString: false }).entities);
+      expect(blob.json.relationships).toEqual(ultralink.toJSON({ asString: false }).relationships);
       
       // Create new instance and import
       const newUltralink = new UltraLink();

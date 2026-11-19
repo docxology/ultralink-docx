@@ -12,6 +12,8 @@ const { GraphValidationError, restoreRowMetadata, stampRowModified } = require('
 const shadowedLegacyLinks = new WeakMap();
 const recoveredLegacyTypes = new WeakMap();
 const activeRestore = new WeakMap();
+const replayingLegacy = new WeakSet();
+const replayedLegacyLinks = new WeakMap();
 
 function delegateLink(source, target, type, attributes, options) {
   const state = activeRestore.get(this);
@@ -107,26 +109,14 @@ function indexRelationship(relationship) {
     }
     const previousKey = legacyLinkKey(id, previous);
     if (previous.source !== sourceId || previousKey !== key) {
-      removeLegacyLink(this.links, previousKey, previous);
-    }
-  }
-
-  const key = `${targetId}-${type}`;
-  const previous = this.relationships.get(id);
-  if (previous && (previous.source !== sourceId || previous.target !== targetId)) {
-    if (previous.source !== sourceId) removeIndexEntry(this.relationshipsBySource, previous.source, id);
-    if (previous.target !== targetId) removeIndexEntry(this.relationshipsByTarget, previous.target, id);
-    const oldKey = legacyKey(previous);
-    if (previous.source !== sourceId || oldKey !== key) {
-      const outgoing = this.links.get(previous.source);
-      if (replaying.has(this) && outgoing?.get(oldKey) === previous) {
-        // Old imports exposed both distinct legacy keys, but only the last
-        // accepted tuple owned the compound ID. Keep the old slot off the indexes.
+      if (replayingLegacy.has(this) && this.links.get(previous.source)?.get(previousKey) === previous) {
+        // Released unversioned replay preserves a distinct legacy slot, not
+        // a second canonical relationship or directional index entry.
         let replayed = replayedLegacyLinks.get(this.links);
         if (!replayed) replayedLegacyLinks.set(this.links, replayed = new Set());
         replayed.add(previous);
       } else {
-        removeLegacyLink(outgoing, oldKey, previous);
+        removeLegacyLink(this.links, previousKey, previous);
       }
     }
   }
@@ -149,15 +139,26 @@ function indexRelationship(relationship) {
   if (!this.links.has(sourceId)) {
     this.links.set(sourceId, new Map());
   }
-  setLegacyLink(this.links.get(sourceId), key, relationship, previous);
+  setLegacyLink(this.links.get(sourceId), key, relationship, previous, replayedLegacyLinks.get(this.links));
 }
 
 function restoreRelationships(rows, archive) {
+  if (!archive) {
+    const wasReplaying = replayingLegacy.has(this);
+    replayingLegacy.add(this);
+    try {
+      for (const row of rows) this.addLink(row.source, row.target, row.type, row.attributes);
+    } finally {
+      if (!wasReplaying) replayingLegacy.delete(this);
+    }
+    return;
+  }
+
   const state = {
     accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new Map(),
     nextId: 1, inserted: [], delegated: new Set()
   };
-  const entries = archive ? reserveArchiveIds(rows, state.reserved) : rows;
+  const entries = reserveArchiveIds(rows, state.reserved);
   const previous = activeRestore.get(this);
   activeRestore.set(this, state);
   try {
@@ -177,8 +178,8 @@ function restoreRelationships(rows, archive) {
       }
       if (!accepted) continue;
       state.accepted.add(accepted);
-      if (archive && row.id !== undefined) bindArchiveId(this, accepted, row, state);
-      restoreRowMetadata(accepted, row.metadata, archive !== undefined);
+      if (row.id !== undefined) bindArchiveId(this, accepted, row, state);
+      restoreRowMetadata(accepted, row.metadata);
     }
   } finally {
     if (previous) activeRestore.set(this, previous);
@@ -186,7 +187,6 @@ function restoreRelationships(rows, archive) {
     if (state.order) restoreImportedRowOrder(this, state.order);
   }
 
-  if (!archive) return;
   const { legacyLinkOrder, relationshipOrder } = archive;
   restoreIndexOrder(this.relationshipsBySource, this.relationships, 'source', relationshipOrder?.outgoing);
   restoreIndexOrder(this.relationshipsByTarget, this.relationships, 'target', relationshipOrder?.incoming);
@@ -529,18 +529,41 @@ function updateRelationship(id, updates = {}, options = {}) {
  */
 function deleteRelationship(id) {
   const relationship = this.relationships.get(id);
-  if (!relationship) {
-    return false;
-  }
-  
-  // Remove from the main relationships map
-  this.relationships.delete(id);
-  
-  removeIndexEntry(this.relationshipsBySource, relationship.source, id);
-  removeIndexEntry(this.relationshipsByTarget, relationship.target, id);
-  removeLegacyLink(this.links, legacyLinkKey(id, relationship), relationship);
-  
+  if (!relationship) return false;
+  removeRelationship(this, relationship);
   return true;
+}
+
+function deleteLink(source, target, type) {
+  const relationship = this.relationships.get(`${source}_${type}_${target}`);
+  if (!relationship || relationship.source !== source || relationship.target !== target) return false;
+  removeRelationship(this, relationship);
+  return true;
+}
+
+function removeRelationship(graph, relationship) {
+  const { id, source, target } = relationship;
+  graph.relationships.delete(id);
+  removeIndexEntry(graph.relationshipsBySource, source, id);
+  removeIndexEntry(graph.relationshipsByTarget, target, id);
+  removeLegacyLink(graph.links, legacyLinkKey(id, relationship), relationship);
+}
+
+function removeEntityRelationships(entityId) {
+  const outgoing = this.relationshipsBySource.get(entityId);
+  if (outgoing) for (const id of outgoing) deleteRelationship.call(this, id);
+  const incoming = this.relationshipsByTarget.get(entityId);
+  if (incoming) for (const id of incoming) deleteRelationship.call(this, id);
+
+  const replayed = replayedLegacyLinks.get(this.links);
+  if (replayed) {
+    for (const relationship of replayed) {
+      if (relationship.source !== entityId && relationship.target !== entityId) continue;
+      removeLegacyLink(this.links, legacyLinkKey(relationship.id, relationship), relationship);
+      replayed.delete(relationship);
+    }
+  }
+  this.links.delete(entityId);
 }
 
 function removeIndexEntry(index, endpoint, id) {
@@ -548,21 +571,19 @@ function removeIndexEntry(index, endpoint, id) {
   if (ids?.delete(id) && ids.size === 0) index.delete(endpoint);
 }
 
-function setLegacyLink(outgoing, key, relationship, previous) {
+function setLegacyLink(outgoing, key, relationship, previous, replayed) {
   const current = outgoing.get(key);
   if (current && current !== previous) {
     let byKey = shadowedLegacyLinks.get(outgoing);
-    if (!byKey) {
-      byKey = new Map();
-      shadowedLegacyLinks.set(outgoing, byKey);
+    let shadowed = byKey?.get(key);
+    if (shadowed && previous) removeShadowedLink(shadowed, previous);
+    if (!replayed?.delete(current)) {
+      if (!byKey) shadowedLegacyLinks.set(outgoing, byKey = new Map());
+      if (!shadowed) byKey.set(key, shadowed = []);
+      shadowed.push(current);
+    } else if (shadowed?.length === 0) {
+      byKey.delete(key);
     }
-    let shadowed = byKey.get(key);
-    if (shadowed) removeShadowedLink(shadowed, previous);
-    else {
-      shadowed = [];
-      byKey.set(key, shadowed);
-    }
-    shadowed.push(current);
   }
   outgoing.set(key, relationship);
 }
@@ -683,13 +704,8 @@ function getEntityRelationships(entityId, options = {}) {
     if (incoming) {
       for (const id of incoming) {
         const relationship = this.relationships.get(id);
-        // A self-loop has already been considered in the outgoing pass.
         if (direction === 'both' && relationship.source === entityId) continue;
-        if ((type && relationship.type === type) || 
-            (options.type && relationship.type === options.type) || 
-            (!type && !options.type)) {
-          results.push(relationship);
-        }
+        if (!type || relationship.type === type) results.push(relationship);
       }
     }
   }
@@ -710,7 +726,6 @@ module.exports = {
   deleteRelationship,
   deleteLink,
   removeEntityRelationships,
-  replayLinks,
   findRelationships,
   getEntityRelationships
 }; 

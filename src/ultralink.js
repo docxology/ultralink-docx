@@ -744,17 +744,20 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
     this.clear();
 
     try {
-      // Export summaries describe the wire payload, not authored graph metadata.
-      const { exportDate, entityCount, relationshipCount, ...metadata } = data.metadata ?? {};
-      if (Object.keys(metadata).length > 0) this.metadata = { ...this.metadata, ...metadata };
       const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
         data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
+      if (archive) {
+        // Export summaries describe the wire payload, not authored graph metadata.
+        const { exportDate, entityCount, relationshipCount, ...metadata } = archive.metadata ?? {};
+        if (Object.keys(metadata).length > 0) this.metadata = { ...this.metadata, ...metadata };
+      }
       for (const { id, type, attributes, metadata } of entities) {
         const result = this.addEntity(id, type, attributes);
+        if (!archive || metadata === undefined) continue;
         // Overrides may return nothing or the receiver for chaining.
         const entity = this.entities.get(id) ??
           (this.entities.get(result?.id) === result ? result : undefined);
-        if (entity) Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
+        if (entity) Utils.restoreRowMetadata(entity, metadata);
       }
       RelationshipManager.restoreRelationships.call(this, relationships, archive);
     } catch (error) {
@@ -778,14 +781,7 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
    * @returns {boolean} True if the insertion tuple matched a live edge
    */
   deleteLink(sourceId, targetId, type) {
-    const id = `${sourceId}_${type}_${targetId}`;
-    const relationship = this.relationships.get(id);
-    // Retyping preserves IDs: the insertion tuple still names its original
-    // edge, even when another edge now has the requested type.
-    if (relationship && relationship.source === sourceId && relationship.target === targetId) {
-      return RelationshipManager.deleteRelationship.call(this, id);
-    }
-    return false;
+    return RelationshipManager.deleteLink.call(this, sourceId, targetId, type);
   }
 
   /**

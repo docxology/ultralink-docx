@@ -34,11 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and reveal filtered entities when finding them in the graph.
 - Render actual graph nodes and edges in SVG and documented wiki-links and backlinks in Obsidian.
 - Keep Obsidian links and backlinks on the correct notes after relationship ID reuse.
-- Keep outgoing relationships and backlinks on the correct entities after deletion and reuse of compound relationship IDs.
-- Keep default JSON rows compatible; use versioned lossless JSON or Full Blob to store stable IDs, lookup order, and JSON-compatible row metadata.
+- Keep outgoing, incoming, and combined relationship lookups on the correct endpoints after IDs are reused, without changing shipped JSON or Full Blob imports.
+- Add opt-in `lossless: true` to JSON and Full Blob to store stable IDs, lookup order, and JSON-compatible row metadata.
 - Keep graph archives intact when optional row metadata contains unsupported values or throws during JSON conversion.
 - Preserve exact raw JSON metadata tokens and native `toJSON` hook keys.
-- Preserve the last legacy compound-ID owner's lookup and deletion behavior while retaining earlier rows.
+- Preserve the last unversioned compound-ID owner's lookup and deletion behavior, including distinct legacy-only slots.
 - Retain live legacy link maps after the last edge is removed and preserve their iteration order in archives.
 - Keep receiver graph metadata keys that JSON or Full Blob imports do not supply.
 - Restore row metadata values and exact numeric tokens in versioned archives; honor public link overrides for all imports.

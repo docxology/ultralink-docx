@@ -5,7 +5,7 @@
  * in the knowledge graph. It also includes entity search functionality.
  */
 
-const { deleteRelationship } = require('./relationship-manager');
+const { removeEntityRelationships } = require('./relationship-manager');
 const { GraphValidationError, stampRowModified } = require('./utils');
 
 /**
@@ -72,13 +72,7 @@ function deleteEntity(id) {
     return false;
   }
   
-  // Remove all relationships involving this entity
-  for (const [key, rel] of this.relationships) {
-    if (rel.source === id || rel.target === id) {
-      deleteRelationship.call(this, key);
-    }
-  }
-  this.links?.delete(id);
+  removeEntityRelationships.call(this, id);
   
   return this.entities.delete(id);
 }

@@ -205,10 +205,10 @@ function getErrorMessage(error) {
 // Distinguish built-in graph validation from errors deliberately thrown by hooks.
 class GraphValidationError extends Error {}
 
-function restoreRowMetadata(row, metadata, archive) {
+function restoreRowMetadata(row, metadata) {
   if (metadata === undefined) return;
   if (isMetadataRecord(metadata)) {
-    row.metadata = archive ? { ...metadata } : { ...row.metadata, ...metadata };
+    row.metadata = { ...metadata };
   } else {
     row.metadata = Array.isArray(metadata) ? metadata.slice() : metadata;
   }

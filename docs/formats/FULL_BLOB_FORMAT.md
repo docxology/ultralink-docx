@@ -11,10 +11,11 @@ This document details the Full Blob rendering target for UltraLink, its structur
 
 The Full Blob format serves as the comprehensive serialization format for UltraLink, preserving the complete state of a knowledge graph including all metadata, revision history, comments, user annotations, styling information, and extended properties. This format is designed for full-fidelity storage and migration between UltraLink instances, ensuring no information is lost during transfer or archiving.
 
-The embedded `json` component uses the [lossless JSON mode](./JSON_FORMAT.md)
-to store relationship IDs, directional lookup order, legacy map iteration
-order, and JSON-compatible row metadata. Standalone `toJSON()` keeps its
-default row shape.
+By default the embedded `json` component uses the same rows as `toJSON()`.
+Use `toFullBlob({ lossless: true })` to store relationship IDs, directional
+lookup order, legacy map iteration order, and JSON-compatible row metadata
+using the [lossless JSON mode](./JSON_FORMAT.md). This also works with
+`compressed: true`.
 
 ### Key Features
 

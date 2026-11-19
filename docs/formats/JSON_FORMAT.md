@@ -92,16 +92,18 @@ Default relationship rows contain `source`, `target`, `type`, and `attributes`.
 `id` is the stored relationship ID, not an encoding of the current `type`.
 It remains stable after `updateRelationship(id, { type })`. `fromFullBlob()`
 accepts either this JSON graph directly or the JSON component of a Full Blob,
-including legacy object maps of records. It restores attributes and supplied
-graph, entity, and relationship metadata. Supplied top-level graph metadata
-keys take precedence; omitted keys keep their receiver values. The automatic
-`exportDate`, `entityCount`, and `relationshipCount` fields are ignored.
-
+including legacy object maps of records. It restores attributes in both modes.
 Only graphs marked with `"ultralinkArchiveVersion": 1` restore stored
-relationship IDs. Both import paths invoke the receiver's public relationship
-insertion methods. Unversioned rows ignore stored IDs and derive them from
-the accepted tuples. The last row deriving a compound ID owns it; earlier
-rows are kept under opaque `legacy:<number>` IDs and keep their legacy keys.
+relationship IDs or graph and row metadata. In versioned archives, supplied
+top-level metadata keys take precedence; omitted keys keep their receiver
+values. The automatic `exportDate`, `entityCount`, and `relationshipCount`
+fields are ignored.
+
+Both modes invoke the receiver's public relationship insertion methods.
+Unversioned rows derive IDs from the accepted tuples; the last such row owns
+the compound ID. Earlier distinct legacy slots remain readable through
+`links`, but are not canonical rows. Only versioned import recovers separately
+stored relationships under opaque `legacy:<number>` IDs.
 `legacyType`, when present on a recovered row, stores its original legacy
 key's type across retyping. Use `deleteRelationship(id)` for recovered rows.
 
