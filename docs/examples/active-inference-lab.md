@@ -516,15 +516,14 @@ await activeLab.toHtmlWebsite({
 
 ### Network Visualization
 
-This visualization shows the complete research network with researchers, projects, publications, concepts, and experiments:
-
-![Active Inference Lab Network](../assets/images/active-inference-lab-network.png)
+The network view represents researchers, projects, publications, concepts, and
+experiments. For a locally generated network from the bundled dataset, see
+[Rendering Examples](../../examples/README.md#rendering-examples).
 
 ### Timeline Visualization
 
-This timeline shows the temporal progression of projects, publications, and experiments:
-
-![Active Inference Lab Timeline](../assets/images/active-inference-lab-timeline.png)
+A timeline view would show the progression of projects, publications, and
+experiments. This guide does not include a generated timeline.
 
 ### Concept Relationships
 
