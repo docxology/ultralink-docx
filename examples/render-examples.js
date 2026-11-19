@@ -98,26 +98,22 @@ function writeOutput(filePath, content, isJson = false) {
   fs.writeFileSync(filePath, content);
 }
 
-function writeFullBlobOutput(filePath, content, { followSymlink = false } = {}) {
-  let previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
-  if (previous?.isSymbolicLink()) {
-    if (followSymlink) {
-      try {
-        filePath = fs.realpathSync.native(filePath);
-      } catch (error) {
-        if (error.code !== 'ENOENT') throw error;
-        // Resolve the parent on disk before adding the missing leaf.
-        const link = fs.readlinkSync(filePath);
-        if (link.endsWith(path.sep)) throw error;
-        const destination = path.isAbsolute(link) ? link : `${path.dirname(filePath)}${path.sep}${link}`;
-        filePath = path.join(fs.realpathSync.native(path.dirname(destination)), path.basename(destination));
-      }
-      previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
-    } else {
-      // Replace a diagnostic link without reading or modifying the target.
-      previous = undefined;
-    }
+function resolveFullBlobOutput(filePath) {
+  // Resolve directory components on disk; the final leaf may not exist yet.
+  for (let hops = 0; hops < 40; hops++) {
+    filePath = path.join(fs.realpathSync.native(path.dirname(filePath)), path.basename(filePath));
+    const previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
+    if (!previous?.isSymbolicLink()) return { filePath, previous };
+    const link = fs.readlinkSync(filePath);
+    if (link.endsWith(path.sep)) throw new Error(`Expected a regular file at ${filePath}`);
+    filePath = path.isAbsolute(link) ? link : `${path.dirname(filePath)}${path.sep}${link}`;
   }
+  throw new Error(`Too many symbolic links resolving ${filePath}`);
+}
+
+function writeFullBlobOutput(filePath, content, previous = fs.lstatSync(filePath, { throwIfNoEntry: false })) {
+  // Only diagnostics are written to unresolved paths: replace links, not their targets.
+  if (previous?.isSymbolicLink()) previous = undefined;
   if (previous) {
     if (!previous.isFile()) throw new Error(`Expected a regular file at ${filePath}`);
     fs.accessSync(filePath, fs.constants.W_OK);
@@ -1177,16 +1173,32 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
           }
           break;
           
-        case 'full-blob':
-          // Full blob outputs
+        case 'full-blob': {
           console.log(`    💾 Generating full-blob formats in: ${targetDir}`);
-          for (const { format, filename } of target.outputFiles) {
-            console.log(`    🔄 Processing ${format} full-blob format...`);
+          const outputs = target.outputFiles.map(({ format, filename }) => {
             const outputPath = path.join(targetDir, filename.replace('{{system}}', systemName));
             try {
+              return { format, outputPath, destination: resolveFullBlobOutput(outputPath) };
+            } catch (error) {
+              return { format, outputPath, error };
+            }
+          });
+          const [{ destination: pretty }, { destination: compact }] = outputs;
+          const sharedDestination = pretty && compact && (
+            pretty.filePath === compact.filePath ||
+            (pretty.previous && compact.previous &&
+              pretty.previous.dev === compact.previous.dev && pretty.previous.ino === compact.previous.ino)
+          );
+          for (const { format, outputPath, destination, error } of outputs) {
+            console.log(`    🔄 Processing ${format} full-blob format...`);
+            try {
+              if (!destination) throw error;
               const compressed = format === 'compressed';
               const blob = ultralink.toFullBlob({ compressed, throwOnError: true });
-              writeFullBlobOutput(outputPath, compressed ? blob : JSON.stringify(blob, null, 2), { followSymlink: true });
+              const content = compressed ? blob : JSON.stringify(blob, null, 2);
+              // Two encodings cannot safely be published through one destination.
+              if (sharedDestination) throw new Error('Full Blob outputs must have distinct destinations');
+              writeFullBlobOutput(destination.filePath, content, destination.previous ?? null);
               recordWrittenFile(false);
               console.log(`      ✅ Saved ${format} blob to: ${outputPath}`);
             } catch (error) {
@@ -1194,6 +1206,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             }
           }
           break;
+        }
           
         case 'manim':
           // Manim animation outputs
