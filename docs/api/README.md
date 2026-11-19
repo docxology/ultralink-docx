@@ -27,9 +27,13 @@ the [API Usage Guide](../API_USAGE.md) for method names and examples.
 
 ## Configuration Options
 
-The [API Usage Guide setup](../API_USAGE.md#getting-started) shows how to pass
-`preventOverwrite`, `timestampEntities`, and `defaultRelationshipType` to the
-constructor.
+Pass `{ allowOverwrite: true }` to `new UltraLink(...)` to let `addEntity`
+replace an existing entity with the same ID. Set `defaultRelationshipType` to
+choose the type used when `addLink` or `addRelationship` is called without one.
+
+The `preventOverwrite` and `timestampEntities` keys shown in the API Usage
+Guide do not control entity creation. Newly added entities always receive
+`metadata.created` and `metadata.modified` timestamps.
 
 ## Design Notes
 
