@@ -866,6 +866,42 @@ describe('UltraLink', () => {
       }
     });
 
+    it('binds an accepted edge after a distinct audit tuple overwrites its provisional compound ID', () => {
+      for (const id of ['a', 'a_b', 'd']) ultralink.addEntity(id, 'node');
+      const draft = ultralink.addLink('a', 'd', 'draft', { weight: 1 });
+      ultralink.updateRelationship(draft.id, { type: 'b_c' });
+      draft.metadata.origin = 'archive';
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          const edge = super.addLink(source, target, type, attributes);
+          super.addRelationship('a_b', 'd', 'c', { audit: true });
+          this.duringHook = this.getBacklinks('d').map(({ id }) => id);
+          if (this.reject) throw new Error('denied');
+          return edge;
+        }
+      }
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new Audited().fromFullBlob(input);
+        const accepted = restored.getRelationship(draft.id);
+        const audit = restored.getRelationship('a_b_c_d');
+        expect(accepted).toEqual(draft);
+        expect(restored.duringHook).toEqual(['a_b_c_d']);
+        expect(audit).toMatchObject({ source: 'a_b', type: 'c', attributes: { audit: true } });
+        expect(audit.metadata).not.toHaveProperty('origin');
+        expect(restored.getBacklinks('d')).toEqual([accepted, audit]);
+        expect(restored.links.get('a').get('d-draft')).toBe(accepted);
+        expect(restored.links.get('a_b').get('d-c')).toBe(audit);
+        expect(restored.deleteLink('a', 'd', 'draft')).toBe(true);
+        expect(restored.getBacklinks('d')).toEqual([audit]);
+
+        const rejected = new Audited();
+        rejected.reject = true;
+        expect(() => rejected.fromFullBlob(input)).toThrow('denied');
+        expect(rejected.getRelationship(draft.id)).toBeNull();
+        expect(rejected.getBacklinks('d').map(({ id }) => id)).toEqual(['a_b_c_d']);
+      }
+    });
+
     it('preserves directional index order and canonical order after live compound ID reuse', () => {
       for (const id of ['a', 'c_d', 'q', 'd', 'a_b', 'other']) ultralink.addEntity(id, 'node');
       ultralink.addLink('a', 'c_d', 'b');
