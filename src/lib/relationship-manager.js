@@ -72,6 +72,14 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId) {
   };
   if (isRecoveredId(id)) recoveredLegacyTypes.set(relationship, String(type));
 
+  indexRelationship.call(this, relationship);
+  return relationship;
+}
+
+function indexRelationship(relationship) {
+  const { id, source: sourceId, target: targetId } = relationship;
+  const key = legacyLinkKey(id, relationship);
+
   // A compound ID can be reused by a different endpoint tuple.
   const previous = this.relationships.get(id);
   if (previous && (previous.source !== sourceId || previous.target !== targetId)) {
@@ -86,14 +94,6 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId) {
       removeLegacyLink(this.links, previousKey, previous);
     }
   }
-
-  indexRelationship.call(this, relationship, previous);
-  return relationship;
-}
-
-function indexRelationship(relationship, previous) {
-  const { id, source: sourceId, target: targetId } = relationship;
-  const key = legacyLinkKey(id, relationship);
 
   // Store the relationship
   this.relationships.set(id, relationship);
