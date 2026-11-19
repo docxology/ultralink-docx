@@ -124,7 +124,7 @@ using RxInfer, Distributions
 
     # Define relationships between variables
     # Relationship: person1 (knows) person2
-    person2_knows ~ Bernoulli(sigmoid(person1))
+    person2_knows ~ Normal(mean = 0.1 * person1, variance = 1.0)
     
     # Relationship: person1 (interested_in) concept1
     concept1_interested_in ~ Normal(mean = 0.1 * person1, variance = 1.0)
@@ -220,7 +220,11 @@ Relationships between entities are translated into factor relationships:
 |------------------|--------|---------|
 | `causes`, `influences`, `affects`, `impacts` | `Normal(mean = source, variance = exp(-2.0 * source))` | Source-dependent standard deviation `exp(-source)` |
 | `related_to`, `connected_to`, `associated_with`, `linked_to` | `Normal(mean = 0.5 * source, variance = 1.0)` | Relationship with a scaled mean and unit variance |
+| `contains`, `includes`, `has_part` | Bernoulli with probability `1 / (1 + exp(-source))` | At source value 1, probability ≈ 0.731 |
+| `depends_on`, `requires`, `needs` | Bernoulli with probability `1 / (1 + exp(-2 * source))` | At source value 1, probability ≈ 0.881 |
 | Unmapped relationship type | `Normal(mean = 0.1 * source, variance = 1.0)` | Fallback with a scaled mean and unit variance |
+
+Both Bernoulli families use the logistic function, with probability 0.5 at source value 0. The exporter keeps exponential arguments nonpositive and computes the small correction near probability 1 with `log1p` and `expm1` before subtracting it from 1. This avoids overflow in the negative tail and premature rounding to 1 in the positive tail. Julia resolves the helpers in the module defining the model; no additional package is needed.
 
 ## Advanced Usage
 

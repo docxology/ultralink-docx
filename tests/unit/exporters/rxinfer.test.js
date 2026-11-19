@@ -65,6 +65,26 @@ describe('RxInferExporter', () => {
     expect(model).toMatch(/^\s*\w+_offset ~ Normal\(mean = 0\.0, variance = 1\.0\)$/m);
   });
 
+  test.each([
+    ['contains', 1],
+    ['includes', 1],
+    ['has_part', 1],
+    ['depends_on', 2],
+    ['requires', 2],
+    ['needs', 2]
+  ])('exports a logistic Bernoulli probability for %s', (type, scale) => {
+    const ultralink = new UltraLink();
+    ultralink.addEntity('parent', 'event');
+    ultralink.addEntity('child', 'event');
+    ultralink.addLink('parent', 'child', type);
+
+    const logit = scale === 1 ? 'parent' : '2.0 * parent';
+    const base = '(@__MODULE__).Base';
+    expect(ultralink.toRxInfer({ includeComments: false })).toContain(
+      ` ~ Bernoulli(${base}.exp(${base}.min(${logit}, 0.0)) * (1.0 + ${base}.expm1(-1.0 * ${base}.log1p(${base}.exp(-1.0 * ${base}.abs(${logit}))))))`
+    );
+  });
+
   test('resolves multivariate Gaussian helpers outside the model variable scope', () => {
     const ultralink = new UltraLink();
     ultralink.addEntity('diageye', 'event').vector = [0.1, 0.2, 0.3];
