@@ -171,7 +171,7 @@ class UltraLink {
    * @returns {Object} The created relationship
    */
   addLink(sourceId, targetId, type = this.config.defaultRelationshipType, attributes = {}, options = {}) {
-    return this.addRelationship(sourceId, targetId, type, attributes, options);
+    return RelationshipManager.delegateLink.call(this, sourceId, targetId, type, attributes, options);
   }
 
   /**

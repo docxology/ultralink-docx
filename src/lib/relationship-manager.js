@@ -13,6 +13,22 @@ const shadowedLegacyLinks = new WeakMap();
 const recoveredLegacyTypes = new WeakMap();
 const activeRestore = new WeakMap();
 
+function delegateLink(source, target, type, attributes, options) {
+  const state = activeRestore.get(this);
+  const start = state?.inserted.length;
+  const result = this.addRelationship(source, target, type, attributes, options);
+  if (state && matchesImportTuple(this, state.row, source, target, type)) {
+    const edge = result === undefined && state.inserted.length === start + 1 ? state.inserted[start] : result;
+    if (state.inserted.includes(edge, start)) state.delegated.add(edge);
+  }
+  return result;
+}
+
+function matchesImportTuple(graph, row, source, target, type) {
+  const inputType = row.type === undefined ? graph.config.defaultRelationshipType : row.type;
+  return source === row.source && target === row.target && type === inputType;
+}
+
 /**
  * Add a relationship between two entities
  * @param {string} sourceId - ID of the source entity
@@ -117,18 +133,28 @@ function indexRelationship(relationship) {
 }
 
 function restoreRelationships(rows, archive) {
-  const state = { accepted: new WeakSet(), reserved: new Set(), nextId: 1, inserted: [] };
+  const state = {
+    accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new WeakSet(),
+    nextId: 1, inserted: [], delegated: new Set()
+  };
   const entries = archive ? reserveArchiveIds(rows, state.reserved) : rows;
   const previous = activeRestore.get(this);
   activeRestore.set(this, state);
   try {
     for (const row of entries) {
+      state.row = row;
       state.inserted.length = 0;
+      state.delegated.clear();
       state.displaced = undefined;
       // Hooks may write other edges before returning or rejecting the row.
       // Do not attach the wire ID or metadata to those writes.
-      const result = this.addLink(row.source, row.target, row.type, row.attributes);
-      const accepted = acceptedRelationship(this, state, result);
+      let accepted;
+      try {
+        const result = this.addLink(row.source, row.target, row.type, row.attributes);
+        accepted = acceptedRelationship(this, state, result);
+      } finally {
+        settleReceiverWrites(this, state, accepted);
+      }
       if (!accepted) continue;
       state.accepted.add(accepted);
       if (archive && row.id !== undefined) bindArchiveId(this, accepted, row, state);
@@ -160,19 +186,37 @@ function restoreRelationships(rows, archive) {
 }
 
 function acceptedRelationship(graph, state, result) {
-  const { inserted, displaced } = state;
-  // A single delegated write is unambiguous, even if the override normalized it.
-  const edge = result === undefined && inserted.length === 1 ? inserted[0] : result;
-  const index = inserted.indexOf(edge);
-  if (index === -1) return;
-  if (graph.relationships.get(edge.id) === edge) return edge;
-  if (!displaced?.has(edge) || !graph.entities.has(edge.source) || !graph.entities.has(edge.target)) return;
-  for (let i = index + 1; i < inserted.length; i++) {
-    const later = inserted[i];
-    if (later.id === edge.id && later.source === edge.source && later.target === edge.target) return;
+  if (result !== undefined) {
+    return state.inserted.includes(result) && retainableWrite(graph, state, result)
+      ? reviveAcceptedWrite(graph, state, result) : undefined;
   }
 
-  // Only the returned edge is revived. Rejection and unrelated side effects
+  // A void hook can accept one exact write, or a normalized write made by
+  // delegating the input tuple through the public addLink implementation.
+  let accepted;
+  for (const edge of state.inserted) {
+    if (!state.delegated.has(edge) && !matchesImportTuple(graph, state.row, edge.source, edge.target, edge.type)) continue;
+    if (!retainableWrite(graph, state, edge)) continue;
+    if (accepted) return;
+    accepted = edge;
+  }
+  if (accepted) return reviveAcceptedWrite(graph, state, accepted);
+}
+
+function retainableWrite(graph, state, edge) {
+  if (graph.relationships.get(edge.id) === edge) return true;
+  if (!state.displaced?.has(edge) || !graph.entities.has(edge.source) || !graph.entities.has(edge.target)) return false;
+  const { inserted } = state;
+  for (let i = inserted.indexOf(edge) + 1; i < inserted.length; i++) {
+    const later = inserted[i];
+    if (later.id === edge.id && later.source === edge.source && later.target === edge.target) return false;
+  }
+  return true;
+}
+
+function reviveAcceptedWrite(graph, state, edge) {
+  if (graph.relationships.get(edge.id) === edge) return edge;
+  // Revive only the identified input write. Rejection and unrelated effects
   // retain ordinary compound-ID replacement semantics.
   const key = legacyLinkKey(edge.id, edge);
   recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
@@ -191,8 +235,8 @@ function bindArchiveId(graph, edge, row, state) {
 
   const previous = graph.relationships.get(id);
   if (previous && previous !== edge) {
-    if (state.accepted.has(previous)) recoverDisplacedEdge(graph, previous, state);
-    else deleteRelationship.call(graph, id);
+    recoverDisplacedEdge(graph, previous, state);
+    if (!state.accepted.has(previous)) state.recoveredEffects.add(previous);
   }
   const oldKey = legacyLinkKey(edge.id, edge);
   if (recovered) recoveredLegacyTypes.set(edge, row.legacyType ?? oldKey.slice(String(edge.target).length + 1));
@@ -203,6 +247,29 @@ function bindArchiveId(graph, edge, row, state) {
   }
   if (edge.id !== id) rekeyRelationship(graph, edge, id, state);
   if (!recovered) recoveredLegacyTypes.delete(edge);
+}
+
+function settleReceiverWrites(graph, state, accepted) {
+  // If binding reserved an audit tuple's ID, later audit writes have a
+  // temporary ID. They still replace the prior write of that exact tuple.
+  for (const edge of state.inserted) {
+    if (edge === accepted || graph.relationships.get(edge.id) !== edge) continue;
+    const outgoing = graph.links.get(edge.source);
+    const key = legacyLinkKey(edge.id, edge);
+    const matches = other => other !== edge && state.recoveredEffects.has(other) && other.target === edge.target;
+    const visible = outgoing.get(key);
+    const previous = matches(visible) ? visible : shadowedLegacyLinks.get(outgoing)?.get(key)?.find(matches);
+    if (previous) {
+      trackImportedOrder(graph, state);
+      const slot = state.slots.get(edge);
+      if (state.slots.get(previous) < slot) {
+        state.order[slot] = previous; // The replaced edge is skipped during replay.
+        rememberImportedSlot(state, edge, previous);
+      }
+      deleteRelationship.call(graph, previous.id);
+    }
+    if (isRecoveredId(edge.id)) state.recoveredEffects.add(edge);
+  }
 }
 
 function reserveArchiveIds(rows, reserved) {
@@ -619,6 +686,7 @@ function getEntityRelationships(entityId, options = {}) {
 
 module.exports = {
   addRelationship,
+  delegateLink,
   restoreRelationships,
   getLegacyLinkOrder,
   getLegacyMapOrder,

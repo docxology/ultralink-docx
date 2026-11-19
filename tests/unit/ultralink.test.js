@@ -902,6 +902,82 @@ describe('UltraLink', () => {
       }
     });
 
+    it('does not treat a void audit-only override as accepting the input', () => {
+      ultralink.addEntity('author_team', 'node');
+      ultralink.addEntity('paper_v1', 'node');
+      const denied = ultralink.addLink('author_team', 'paper_v1', 'denied');
+      denied.metadata.origin = 'producer';
+      class AuditsOnly extends UltraLink {
+        addLink(source, target) {
+          super.addRelationship(source, target, 'audit', { rejected: true });
+        }
+      }
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new AuditsOnly().fromFullBlob(input);
+        expect(restored.getRelationship(denied.id)).toBeNull();
+        const audit = restored.getRelationship('author_team_audit_paper_v1');
+        expect(audit.attributes).toEqual({ rejected: true });
+        expect(audit.metadata).not.toHaveProperty('origin');
+        expect(restored.getBacklinks('paper_v1')).toEqual([audit]);
+        expect(restored.deleteLink('author_team', 'paper_v1', 'audit')).toBe(true);
+        expect(restored.getBacklinks('paper_v1')).toEqual([]);
+      }
+    });
+
+    it('retains the ID occupant and still overwrites subsequent writes of its receiver tuple', () => {
+      for (const id of ['a', 'b']) ultralink.addEntity(id, 'node');
+      const stored = ultralink.addLink('a', 'b', 'audit', { weight: 1 });
+      ultralink.updateRelationship(stored.id, { type: 'reviewed' });
+      stored.metadata.origin = 'archive';
+      const cited = ultralink.addLink('a', 'b', 'cited', { weight: 2 });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          super.addRelationship(source, target, 'audit', { lastAttempt: type });
+          return super.addLink(source, target, type, attributes);
+        }
+      }
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new Audited().fromFullBlob(input);
+        const [audit, reviewed, citation] = restored.getBacklinks('b');
+        expect(audit).toMatchObject({ type: 'audit', attributes: { lastAttempt: 'cited' } });
+        expect(audit.metadata).not.toHaveProperty('origin');
+        expect(reviewed).toEqual(stored);
+        expect(citation).toEqual(cited);
+        expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([audit, reviewed, citation]);
+        expect(restored.deleteLink('a', 'b', 'audit')).toBe(true);
+        expect(restored.getBacklinks('b')).toEqual([audit, citation]);
+        expect(restored.links.get('a').get('b-audit')).toBe(audit);
+        expect(restored.deleteRelationship(audit.id)).toBe(true);
+        expect(restored.links.get('a').has('b-audit')).toBe(false);
+      }
+    });
+
+    it('restores both archived edges from a void hook that writes one input tuple and a trace', () => {
+      for (const id of ['author_team', 'paper_v1', 'trace_v1']) ultralink.addEntity(id, 'node');
+      const draft = ultralink.addLink('author_team', 'paper_v1', 'draft', { weight: 1 });
+      ultralink.updateRelationship(draft.id, { type: 'reviewed' });
+      draft.metadata.origin = 'first draft';
+      const review = ultralink.addLink('author_team', 'paper_v1', 'reviewed', { weight: 2 });
+      review.metadata.origin = 'review';
+      class Traced extends UltraLink {
+        addLink(source, target, type, attributes) {
+          super.addRelationship(source, 'trace_v1', 'trace', { lastWeight: attributes.weight });
+          super.addRelationship(source, target, type, attributes);
+        }
+      }
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const restored = new Traced().fromFullBlob(input);
+        expect(restored.getBacklinks('paper_v1')).toEqual([draft, review]);
+        const [trace] = restored.getBacklinks('trace_v1');
+        expect(trace.attributes).toEqual({ lastWeight: 2 });
+        expect(trace.metadata).not.toHaveProperty('origin');
+        expect(restored.getRelationships('author_team', { direction: 'outgoing' })).toEqual([trace, draft, review]);
+        expect(restored.deleteLink('author_team', 'paper_v1', 'draft')).toBe(true);
+        expect(restored.deleteLink('author_team', 'paper_v1', 'draft')).toBe(false);
+        expect(restored.getBacklinks('paper_v1')).toEqual([review]);
+      }
+    });
+
     it('preserves directional index order and canonical order after live compound ID reuse', () => {
       for (const id of ['a', 'c_d', 'q', 'd', 'a_b', 'other']) ultralink.addEntity(id, 'node');
       ultralink.addLink('a', 'c_d', 'b');

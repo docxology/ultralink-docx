@@ -118,13 +118,18 @@ Both imports use the receiver's public `addEntity`, `addLink`, and
 `addRelationship` methods. Unversioned graphs ignore row IDs and derive IDs
 from the tuples accepted by the receiver. The last row owns each compound ID;
 earlier rows get distinct recovery IDs but keep their `target-type` legacy keys.
-An override that stores an entity under the requested ID or delegates a
-single relationship insertion need not return it. If a relationship override
-inserts multiple edges, it must return the accepted edge to bind archive ID
-and metadata. The returned edge can still be bound if another write collided
-with its compound ID on different endpoints. Other writes keep their ordinary
-overwrite behavior. If the override throws, the error propagates without
-binding that row's archive fields.
+An entity override need not return the entity if it stores it under the
+requested ID. For relationships, the importer uses the edge the hook returns.
+If the hook returns nothing, it binds a unique write of the requested tuple,
+or a unique write made by passing that tuple through `super.addLink` to an
+`addRelationship` override that normalizes it. Other writes are not assumed to
+accept the input. An exact write is indistinguishable from acceptance when the
+hook gives no result; return the accepted edge for ambiguous hooks, or return
+`false` or throw to reject explicitly.
+
+If an accepted archive row needs an ID occupied by a receiver-created edge,
+the archive row takes the stored ID and the other edge stays reachable under
+a recovery ID. Repeated writes to the receiver's same tuple still replace it.
 Imported authored graph metadata replaces matching top-level keys and leaves
 other receiver keys intact. The automatic export summary is ignored.
 
