@@ -1192,6 +1192,110 @@ describe('UltraLink', () => {
       }
     });
 
+    const archiveCarriers = graph => [
+      graph.toJSON({ lossless: true }), graph.toFullBlob({ lossless: true }),
+      JSON.stringify(graph.toFullBlob({ lossless: true })),
+      graph.toFullBlob({ lossless: true, compressed: true })
+    ];
+
+    it('keeps an independent receiver edge at a freed ID when accepting a colliding archive row', () => {
+      for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
+      const first = ultralink.addLink('a', 'd', 'b_c');
+      ultralink.updateRelationship(first.id, { type: 'reviewed' });
+      const second = ultralink.addLink('a', 'c_d', 'draft', { revision: 2 });
+      ultralink.updateRelationship(second.id, { type: 'b' });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          if (type === 'b') {
+            expect(this.deleteRelationship(first.id)).toBe(true);
+            const audit = super.addRelationship('a_b', 'd', 'c', { trace: 'retained' });
+            expect(this.getRelationship(first.id)).toBe(audit);
+          }
+          return super.addLink(source, target, type, attributes);
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        const [audit] = restored.getBacklinks('d');
+        expect(audit).toMatchObject({ id: first.id, source: 'a_b', attributes: { trace: 'retained' } });
+        expect(restored.getRelationship(first.id)).toBe(audit);
+        expect(restored.links.get('a_b').get('d-c')).toBe(audit);
+        expect(restored.getBacklinks('c_d')).toEqual([second]);
+        expect(restored.deleteLink('a_b', 'd', 'c')).toBe(true);
+        expect(restored.getBacklinks('d')).toEqual([]);
+      }
+    });
+
+    it.each([false, true])('never restores displaced writes for a recreated source (new link: %s)', addNewLink => {
+      for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
+      const first = ultralink.addLink('a', 'd', 'b_c');
+      ultralink.updateRelationship(first.id, { type: 'reviewed' });
+      const second = ultralink.addLink('a', 'c_d', 'draft');
+      ultralink.updateRelationship(second.id, { type: 'b' });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          if (type === 'reviewed') super.addRelationship('a_b', 'd', 'c', { audit: 'old' });
+          const accepted = super.addLink(source, target, type, attributes);
+          if (type === 'b') {
+            expect(this.deleteEntity('a_b')).toBe(true);
+            this.addEntity('a_b', 'node', { generation: 'new' });
+            if (addNewLink) super.addRelationship('a_b', 'd', 'new-route', { audit: 'new' });
+          }
+          return accepted;
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        const replacement = restored.getRelationships('a_b', { direction: 'outgoing' });
+        expect(replacement.map(({ type }) => type)).toEqual(addNewLink ? ['new-route'] : []);
+        expect(restored.getEntity('a_b').attributes).toEqual({ generation: 'new' });
+        expect(restored.getBacklinks('d')).toEqual([first, ...replacement]);
+        expect(restored.getBacklinks('c_d')).toEqual([second]);
+      }
+    });
+
+    it('does not let a legacy-only replay row change the visible edge at another legacy key', () => {
+      for (const id of ['a_b-c', 'a', 'd', 'd-b', 'd-f', 'other']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a_b-c', 'other', 'route');
+      ultralink.addLink('a', 'd-b', 'c_f-g');
+      ultralink.addLink('a', 'd', 'b-c_f-g');
+      const peer = ultralink.addLink('a_b-c', 'd', 'draft');
+      ultralink.updateRelationship(peer.id, { type: 'f-g' });
+      ultralink.addLink('a_b-c', 'd-f', 'g');
+      const replayed = new UltraLink().fromFullBlob(ultralink.toJSON());
+      expect(replayed.links.get('a').get('d-b-c_f-g').target).toBe('d');
+      expect(replayed.links.get('a_b-c').get('d-f-g').target).toBe('d-f');
+      for (const input of archiveCarriers(replayed)) {
+        const restored = new UltraLink().fromFullBlob(input);
+        expect([...restored.relationships.values()]).toEqual([...replayed.relationships.values()]);
+        expect(restored.links.get('a').get('d-b-c_f-g').target).toBe('d-b');
+        const visible = restored.links.get('a_b-c').get('d-f-g');
+        expect(visible.target).toBe('d-f');
+        expect(restored.deleteRelationship(visible.id)).toBe(true);
+        expect(restored.links.get('a_b-c').get('d-f-g').target).toBe('d');
+      }
+    });
+
+    it('preserves authored legacy key order in the presence of receiver-added keys', () => {
+      for (const id of ['a', 'c_d', 'd', 'other', 'trace']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b');
+      ultralink.addLink('a', 'other', 'route');
+      ultralink.addLink('a', 'd', 'b_c');
+      expect([...ultralink.links.get('a').keys()]).toEqual(['other-route', 'd-b_c']);
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          const edge = super.addLink(source, target, type, attributes);
+          if (type === 'b_c') super.addRelationship(source, 'trace', 'audit');
+          return edge;
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        expect([...restored.links.get('a').keys()]).toEqual(['other-route', 'trace-audit', 'd-b_c']);
+        expect(restored.getBacklinks('trace')).toEqual([restored.links.get('a').get('trace-audit')]);
+      }
+    });
+
     it('retains the receiver effect behind a newer peer at the same legacy key when accepting the provisional replacement', () => {
       for (const id of ['a', 'a_b', 'd', 'old-route_d', 'd-old']) ultralink.addEntity(id, 'node');
       const first = ultralink.addLink('a', 'd', 'b_old-route', { revision: 1 });

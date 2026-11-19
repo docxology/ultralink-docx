@@ -107,14 +107,15 @@ stored relationships under opaque `legacy:<number>` IDs.
 `legacyType`, when present on a recovered row, stores its original legacy
 key's type across retyping. Use `deleteRelationship(id)` for recovered rows.
 
-In lossless JSON, the optional `legacyLinkOrder` array stores IDs sharing a
-legacy link key in write order from oldest to newest. Import uses it to
-restore the visible value and fallback order without reordering rows.
+In lossless JSON, the optional `legacyLinkOrder` array stores canonical IDs
+sharing a legacy link key in write order from oldest to newest. It omits
+legacy-only slots from unversioned replay. Import uses it to restore the
+visible value and fallback order without reordering rows.
 The optional `legacyMapOrder` stores `sources` in legacy map order, including
 sources with empty maps, and `keys` as `[source, orderedKeys]` pairs. It
 omits orders that can already be inferred from the relationship rows.
-When a key names a legacy-only slot omitted from the archive, import skips it
-without changing the relative order of the remaining live keys.
+Import skips omitted legacy-only keys and restores the relative order of
+archived entries even when receiver hooks add other entries to the same map.
 When directional lookup order differs from row order, `relationshipOrder`
 stores the affected groups of IDs under `outgoing` and `incoming`. A group
 contains all relationship IDs for one endpoint in lookup order.
