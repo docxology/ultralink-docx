@@ -4,25 +4,55 @@
  * Export UltraLink data to JSON format.
  */
 
-const { types: { isBigIntObject } } = require('node:util');
+const { types: { isBigIntObject, isBooleanObject, isNumberObject, isStringObject } } = require('node:util');
 const { getLegacyLinkOrder, getRelationshipOrder } = require('../relationship-manager');
 
 const ARCHIVE_VERSION = 1;
 
-// Runtime metadata was not part of the published rows. Keep JSON-compatible
-// values without letting newly exported BigInts or cycles break the archive.
-function jsonMetadata(metadata) {
-  const ancestors = [];
-  const text = JSON.stringify(metadata, function (_key, value) {
-    if (typeof value === 'bigint') return undefined;
-    if (value === null || typeof value !== 'object') return value;
-    if (isBigIntObject(value)) return undefined;
-    while (ancestors.length && ancestors[ancestors.length - 1] !== this) ancestors.pop();
-    if (ancestors.includes(value)) return undefined;
-    ancestors.push(value);
-    return value;
-  });
-  return text === undefined ? undefined : JSON.parse(text);
+// Snapshot only optional row metadata. An unreadable property or a failed
+// toJSON hook makes that value unavailable, not the containing graph row.
+function jsonMetadata(row) {
+  return jsonProperty(row, 'metadata', new Set(), '');
+}
+
+function jsonProperty(holder, key, ancestors, jsonKey = key) {
+  try {
+    let value = holder[key];
+    const type = typeof value;
+    if (value !== null && (type === 'object' || type === 'function' || type === 'bigint')) {
+      const toJSON = value.toJSON;
+      if (typeof toJSON === 'function') value = Reflect.apply(toJSON, value, [jsonKey]);
+    }
+    return jsonValue(value, ancestors);
+  } catch {
+    return undefined;
+  }
+}
+
+function jsonValue(value, ancestors) {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
+  if (typeof value === 'number') return Number.isFinite(value) ? value || 0 : null;
+  if (typeof value !== 'object' || isBigIntObject(value) || ancestors.has(value)) return undefined;
+  if (isNumberObject(value)) return jsonValue(+value, ancestors);
+  if (isStringObject(value)) return String(value);
+  if (isBooleanObject(value)) return Boolean.prototype.valueOf.call(value);
+
+  ancestors.add(value);
+  try {
+    if (Array.isArray(value)) {
+      return Array.from({ length: value.length }, (_, i) => jsonProperty(value, String(i), ancestors) ?? null);
+    }
+    const result = {};
+    for (const key of Object.keys(value)) {
+      const child = jsonProperty(value, key, ancestors);
+      if (child !== undefined) {
+        Object.defineProperty(result, key, { value: child, enumerable: true, configurable: true, writable: true });
+      }
+    }
+    return result;
+  } finally {
+    ancestors.delete(value);
+  }
 }
 
 /**
@@ -47,7 +77,7 @@ function toJSON(ultralink, options = {}) {
       type: entity.type,
       attributes: entity.attributes || {}
     };
-    if (includeMetadata) entityObj.metadata = jsonMetadata(entity.metadata);
+    if (includeMetadata) entityObj.metadata = jsonMetadata(entity);
     
     if (includeVectors && entity.vector) {
       entityObj.vector = Array.isArray(entity.vector) ? entity.vector : Array.from(entity.vector);
@@ -66,7 +96,7 @@ function toJSON(ultralink, options = {}) {
       attributes: rel.attributes || {}
     };
     if (lossless) record.id = rel.id;
-    if (includeMetadata) record.metadata = jsonMetadata(rel.metadata);
+    if (includeMetadata) record.metadata = jsonMetadata(rel);
     relationships.push(record);
   }
   

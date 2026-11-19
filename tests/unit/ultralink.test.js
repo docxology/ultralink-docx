@@ -710,6 +710,60 @@ describe('UltraLink', () => {
       expect(provenance.self).toBe(provenance);
     });
 
+    it('isolates failing metadata fields without losing serializable siblings in graph archives', () => {
+      const dt = new Date('2025-01-02T03:04:05Z');
+      const unreadable = new Proxy(dt, {});
+      const details = {
+        date: dt,
+        invalid: unreadable,
+        get inaccessible() { throw new Error('metadata getter'); },
+        throwingHook: { toJSON() { throw new Error('metadata hook'); } },
+        projected: { toJSON(key) { return { key, present: true, invalid: unreadable }; } },
+        items: [unreadable, dt]
+      };
+      const author = ultralink.addEntity('a', 'person', { name: 'Author' });
+      ultralink.addEntity('b', 'paper');
+      const edge = ultralink.addLink('a', 'b', 'reviewed', { revision: 1 });
+      author.metadata.details = details;
+      edge.metadata.details = details;
+      const expected = {
+        date: dt.toISOString(), projected: { key: 'projected', present: true }, items: [null, dt.toISOString()]
+      };
+
+      const plain = ultralink.toJSON({ asString: false });
+      expect(plain.entities[0]).not.toHaveProperty('metadata');
+      expect(plain.relationships[0]).toEqual({ source: 'a', target: 'b', type: 'reviewed', attributes: { revision: 1 } });
+      expect(ultralink.toJSON({ asString: false, includeMetadata: true }).entities[0].metadata.details).toEqual(expected);
+
+      for (const archive of [
+        ultralink.toJSON({ lossless: true, asString: false }),
+        ultralink.toJSON({ lossless: true }),
+        ultralink.toFullBlob(),
+        ultralink.toFullBlob({ compressed: true }),
+        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+      ]) {
+        const restored = new UltraLink().fromFullBlob(archive);
+        expect(restored.getEntity('a').attributes).toEqual({ name: 'Author' });
+        expect(restored.getEntity('a').metadata.details).toEqual(expected);
+        expect(restored.getEntity('b').type).toBe('paper');
+        const restoredEdge = restored.getRelationship(edge.id);
+        expect(restoredEdge.attributes).toEqual({ revision: 1 });
+        expect(restoredEdge.metadata.details).toEqual(expected);
+        expect(restored.getBacklinks('b')).toEqual([restoredEdge]);
+        expect(restored.getRelationships('a', { direction: 'outgoing' })).toEqual([restoredEdge]);
+      }
+      expect(details.invalid).toBe(unreadable);
+    });
+
+    it('still reports serialization errors from graph attributes', () => {
+      ultralink.addEntity('a', 'node');
+      ultralink.addEntity('b', 'node');
+      ultralink.addLink('a', 'b', 'reviewed', { invalid: 1n });
+
+      expect(() => ultralink.toJSON({ lossless: true })).toThrow(/BigInt/);
+      expect(() => ultralink.toFullBlob({ compressed: true, throwOnError: true })).toThrow(/BigInt/);
+    });
+
     it('recovers archive rows without stealing explicit or tuple-derived IDs', () => {
       const source = 'author_team';
       const target = 'paper_v1';
