@@ -99,6 +99,8 @@ matches the source, target, and type used to insert the edge, not its current
 type. It returns `false` when that insertion tuple no longer exists, even if
 another edge now has that type. To select by current type, first query the
 relationships, then pass the selected edge's ID to `deleteRelationship(id)`.
+`deleteLink` updates the relationship indexes directly; it does not call
+receiver overrides of `deleteRelationship`.
 
 The legacy `ultralink.links` map retains one entry per `target-insertionType`
 key. If distinct edges share that key, it shows the latest write and restores
@@ -118,8 +120,11 @@ Both imports use the receiver's public `addEntity`, `addLink`, and
 `addRelationship` methods. Unversioned graphs ignore row IDs and derive IDs
 from the tuples accepted by the receiver. The last row owns each compound ID;
 earlier rows get distinct recovery IDs but keep their `target-type` legacy keys.
-An entity override need not return the entity if it stores it under the
-requested ID. For relationships, the importer uses the edge the hook returns.
+`fromFullBlob` decodes and checks the graph records before replacing the
+receiver. A decoding or record-shape error leaves its contents unchanged.
+Entity-row metadata is attached to the stored entity, even when an override
+returns the receiver for chaining or returns nothing. For relationships, the
+importer uses the edge the hook returns.
 If the hook returns nothing, it binds a unique write of the requested tuple,
 or a unique write made by passing that tuple through `super.addLink` to an
 `addRelationship` override that normalizes it. Other writes are not assumed to

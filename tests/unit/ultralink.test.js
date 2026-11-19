@@ -448,6 +448,27 @@ describe('UltraLink', () => {
       expect(ultralink.links.has('s')).toBe(false);
     });
 
+    it('allows an ID deletion override to delegate to the published tuple method', () => {
+      class TupleDeleting extends UltraLink {
+        deleteRelationship(id) {
+          const edge = this.getRelationship(id);
+          return edge ? this.deleteLink(edge.source, edge.target, edge.type) : false;
+        }
+      }
+      const graph = new TupleDeleting();
+      graph.addEntity('author_team', 'person');
+      graph.addEntity('paper_v1', 'document');
+      const edge = graph.addLink('author_team', 'paper_v1', 'reviewed');
+      const peer = graph.addLink('author_team', 'paper_v1', 'cited');
+
+      expect(graph.deleteRelationship(edge.id)).toBe(true);
+      expect(graph.deleteRelationship(edge.id)).toBe(false);
+      expect(graph.getRelationship(edge.id)).toBeNull();
+      expect(graph.getBacklinks('paper_v1')).toEqual([peer]);
+      expect(graph.getRelationships('author_team', { direction: 'outgoing' })).toEqual([peer]);
+      expect([...graph.links.get('author_team').values()]).toEqual([peer]);
+    });
+
     it('preserves legacy map key iteration when a reused ID moves to a different key', () => {
       for (const id of ['a', 'c_d', 'other', 'd']) ultralink.addEntity(id, 'node');
       const old = ultralink.addLink('a', 'c_d', 'b');
@@ -549,6 +570,63 @@ describe('UltraLink', () => {
     
     beforeEach(() => {
       ultralink = new UltraLink({ preventOverwrite: true });
+    });
+
+    it('validates a Full Blob envelope and graph records before replacing the receiver', () => {
+      const previous = ultralink.addEntity('author', 'person');
+      ultralink.addEntity('paper', 'document');
+      const edge = ultralink.addLink('author', 'paper', 'reviewed');
+      ultralink.metadata = { provenance: 'receiver' };
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      try {
+        for (const input of [
+          '{',
+          { 'full-export.json': JSON.stringify({ json: '{' }) },
+          JSON.stringify({ metadata: { provenance: 'other' }, entities: [], relationships: [null] })
+        ]) {
+          expect(ultralink.fromFullBlob(input)).toBe(ultralink);
+          expect(ultralink.getEntity('author')).toBe(previous);
+          expect(ultralink.getBacklinks('paper')).toEqual([edge]);
+          expect(ultralink.metadata).toEqual({ provenance: 'receiver' });
+        }
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
+    it('imports nested stock JSON from root text and Full Blob envelopes', () => {
+      const details = { contributors: [{ name: 'Author', roles: ['writer'] }], metrics: { score: 2 } };
+      ultralink.addEntity('author_team', 'person', { details });
+      ultralink.addEntity('paper_v1', 'document');
+      const edge = ultralink.addLink('author_team', 'paper_v1', 'reviewed');
+      const text = ultralink.toJSON();
+      for (const input of [text, { json: text }, { 'full-export.json': JSON.stringify({ json: text }) }]) {
+        const loaded = new UltraLink().fromFullBlob(input);
+        expect(loaded.getEntity('author_team').attributes.details).toEqual(details);
+        expect(loaded.getBacklinks('paper_v1').map(({ id }) => id)).toEqual([edge.id]);
+      }
+    });
+
+    it('restores metadata on the stored entity when addEntity chains through the receiver', () => {
+      class Chainable extends UltraLink {
+        addEntity(id, type, attributes) {
+          super.addEntity(id, type, { ...attributes, imported: true });
+          return this;
+        }
+      }
+      ultralink.metadata = { title: 'Imported catalog' };
+      ultralink.addEntity('author_team', 'person').metadata.origin = 'archive row';
+      ultralink.addEntity('paper_v1', 'document');
+      const edge = ultralink.addLink('author_team', 'paper_v1', 'reviewed');
+      for (const input of [ultralink.toFullBlob(), ultralink.toFullBlob({ compressed: true })]) {
+        const receiver = new Chainable();
+        receiver.metadata = { provenance: 'receiver catalog' };
+        expect(receiver.fromFullBlob(input)).toBe(receiver);
+        expect(receiver.metadata).toEqual({ provenance: 'receiver catalog', title: 'Imported catalog' });
+        expect(receiver.getEntity('author_team').metadata.origin).toBe('archive row');
+        expect(receiver.getEntity('paper_v1').attributes.imported).toBe(true);
+        expect(receiver.getBacklinks('paper_v1')).toEqual([edge]);
+      }
     });
 
     it('retains receiver metadata when a legacy mapped graph omits it', () => {

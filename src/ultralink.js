@@ -29,12 +29,16 @@ function recordValues(records) {
 }
 
 function parseArchiveText(text) {
-  if (typeof JSON.rawJSON !== 'function') return JSON.parse(text);
+  const parsed = JSON.parse(text);
+  const graph = parsed?.json ?? parsed;
+  if (graph?.ultralinkArchiveVersion !== ARCHIVE_VERSION || typeof JSON.rawJSON !== 'function') {
+    return parsed;
+  }
 
-  // Record only numbers whose original spelling would change on stringify.
-  // Do not replace numbers in ordinary imports, graph attributes or summaries.
+  // Only versioned archives need source tokens. In particular, a reviver's
+  // recursive walk has a lower depth limit than native JSON parsing.
   let tokens;
-  const parsed = JSON.parse(text, function (key, value, context) {
+  const archive = JSON.parse(text, function (key, value, context) {
     if (typeof value === 'number' && context?.source && context.source !== String(value)) {
       tokens ??= new WeakMap();
       let fields = tokens.get(this);
@@ -43,15 +47,15 @@ function parseArchiveText(text) {
     }
     return value;
   });
-  const graph = parsed?.json ?? parsed;
-  if (tokens && graph?.ultralinkArchiveVersion === ARCHIVE_VERSION) {
-    for (const collection of [graph.entities, graph.relationships]) {
+  if (tokens) {
+    const archiveGraph = archive.json ?? archive;
+    for (const collection of [archiveGraph.entities, archiveGraph.relationships]) {
       for (const row of recordValues(collection)) {
         if (row && Object.hasOwn(row, 'metadata')) restoreNumericTokens(row, 'metadata', tokens);
       }
     }
   }
-  return parsed;
+  return archive;
 }
 
 function restoreNumericTokens(holder, key, tokens) {
@@ -64,6 +68,18 @@ function restoreNumericTokens(holder, key, tokens) {
   if (value && typeof value === 'object') {
     for (const child of Object.keys(value)) restoreNumericTokens(value, child, tokens);
   }
+}
+
+function importRecords(records, name) {
+  if (typeof records !== 'object' || records === null) {
+    throw new TypeError(`Expected ${name} records`);
+  }
+  const values = recordValues(records);
+  const rows = Array.isArray(values) ? values : Array.from(values);
+  for (const row of rows) {
+    if (!row || typeof row !== 'object') throw new TypeError(`Invalid ${name} record`);
+  }
+  return rows;
 }
 
 /**
@@ -681,60 +697,40 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
    * @returns {UltraLink} The UltraLink instance for chaining
    */
   fromFullBlob(blob, options = {}) {
-    let data;
-    
+    let data, entities, relationships;
     try {
-      // Handle compressed blobs
-      if (options.compressed) {
-        // Decompress the blob (in a real implementation)
-        // For now, just parse it
+      if (typeof blob === 'string' || (options.compressed && Buffer.isBuffer(blob))) {
         data = parseArchiveText(blob);
-      } 
-      // Handle string blobs
-      else if (typeof blob === 'string') {
-        data = parseArchiveText(blob);
-      }
-      // Handle the case where blob is a files object with 'full-export.json' key
-      else if (blob['full-export.json']) {
+      } else if (blob?.['full-export.json']) {
         data = parseArchiveText(blob['full-export.json']);
       } else {
-        // Use object directly
         data = blob;
       }
+      if (data?.json) {
+        data = typeof data.json === 'string' ? parseArchiveText(data.json) : data.json;
+      }
+      entities = importRecords(data?.entities, 'entity');
+      relationships = importRecords(data.relationships ?? [], 'relationship');
     } catch (error) {
       console.warn('Error parsing full blob:', error);
-      // For backward compatibility, try to use the blob directly
-      data = blob;
+      return this;
     }
-    
-    // Clear existing data
+
     this.clear();
-    
-    // Full Blob wraps the graph in `json`; legacy exports store it at the root.
-    if (data?.json) {
-      data = data.json;
-      if (typeof data === 'string') {
-        try {
-          data = parseArchiveText(data);
-        } catch (error) {
-          console.warn('Error parsing JSON data in blob:', error);
-          data = null;
-        }
-      }
-    }
 
     // Export summaries describe the wire payload, not authored graph metadata.
     const { exportDate, entityCount, relationshipCount, ...metadata } = data?.metadata ?? {};
     if (Object.keys(metadata).length > 0) this.metadata = { ...this.metadata, ...metadata };
-    if (data?.entities) {
-      const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
-        data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
-      for (const { id, type, attributes, metadata } of recordValues(data.entities)) {
-        const entity = this.addEntity(id, type, attributes) ?? this.entities.get(id);
-        if (entity) Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
-      }
-      RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships), archive);
+    const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
+      data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
+    for (const { id, type, attributes, metadata } of entities) {
+      const result = this.addEntity(id, type, attributes);
+      // Overrides may return nothing or the receiver for chaining.
+      const entity = this.entities.get(id) ??
+        (this.entities.get(result?.id) === result ? result : undefined);
+      if (entity) Utils.restoreRowMetadata(entity, metadata, archive !== undefined);
     }
+    RelationshipManager.restoreRelationships.call(this, relationships, archive);
     
     return this;
   }
@@ -748,11 +744,11 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
    */
   deleteLink(sourceId, targetId, type) {
     const id = `${sourceId}_${type}_${targetId}`;
-    const relationship = this.getRelationship(id);
+    const relationship = this.relationships.get(id);
     // Retyping preserves IDs: the insertion tuple still names its original
     // edge, even when another edge now has the requested type.
     if (relationship && relationship.source === sourceId && relationship.target === targetId) {
-      return this.deleteRelationship(id);
+      return RelationshipManager.deleteRelationship.call(this, id);
     }
     return false;
   }
