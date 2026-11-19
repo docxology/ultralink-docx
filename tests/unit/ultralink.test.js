@@ -531,6 +531,29 @@ describe('UltraLink', () => {
       expect(ultralink.toJSON({ asString: false }).metadata).toMatchObject(metadata);
     });
 
+    it.each([
+      ['JSON', graph => graph.toJSON()],
+      ['Full Blob', graph => graph.toFullBlob()]
+    ])('keeps receiver metadata when a stock %s has only the export summary', (_format, exportGraph) => {
+      const source = new UltraLink();
+      source.addEntity('author_team', 'person');
+      source.addEntity('paper_v1', 'document');
+      const edge = source.addLink('author_team', 'paper_v1', 'reviewed', { weight: 2 });
+      const catalog = { name: 'Existing graph catalog', provenance: { source: 'local catalog' } };
+      ultralink.metadata = catalog;
+      ultralink.addEntity('stale', 'person');
+
+      ultralink.fromFullBlob(exportGraph(source));
+      expect(ultralink.getEntity('stale')).toBeNull();
+      expect(ultralink.getBacklinks('paper_v1')).toEqual([edge]);
+      expect(ultralink.toJSON({ asString: false }).metadata).toMatchObject(catalog);
+
+      source.metadata = { name: 'Imported catalog', provenance: { source: 'archive' } };
+      ultralink.fromFullBlob(exportGraph(source));
+      expect(ultralink.getBacklinks('paper_v1')).toEqual([edge]);
+      expect(ultralink.metadata).toEqual(source.metadata);
+    });
+
     it('restores independent retyped edges with stable IDs, metadata and deletion indexes', () => {
       ultralink.metadata = { name: 'Round trip', provenance: { source: 'review' } };
       const author = ultralink.addEntity('author_team', 'person', { name: 'Author' });

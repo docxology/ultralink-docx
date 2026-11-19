@@ -91,8 +91,10 @@ Each relationship is represented as:
 It remains stable after `updateRelationship(id, { type })`. `fromFullBlob()`
 accepts either this JSON graph directly or the JSON component of a Full Blob,
 including legacy object maps of records. It restores stored IDs, attributes,
-and supplied graph, entity, and relationship metadata. If graph-level
-metadata is absent, the receiving graph keeps its existing metadata.
+and supplied graph, entity, and relationship metadata. The automatic
+`exportDate`, `entityCount`, and `relationshipCount` fields are an export
+summary, not imported metadata. Without authored graph metadata, the
+receiving graph keeps its existing metadata.
 A legacy relationship with no usable ID, or whose ID another row already
 claimed, derives its ID from the current tuple. If that also collides,
 import assigns an opaque `legacy:<number>` ID instead of overwriting

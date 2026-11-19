@@ -685,7 +685,9 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       }
     }
 
-    if (data?.metadata != null) this.metadata = { ...data.metadata };
+    // Export summaries describe the wire payload, not authored graph metadata.
+    const { exportDate, entityCount, relationshipCount, ...metadata } = data?.metadata ?? {};
+    if (Object.keys(metadata).length > 0) this.metadata = metadata;
     if (data?.entities) {
       for (const { id, type, attributes, metadata } of recordValues(data.entities)) {
         const entity = this.addEntity(id, type, attributes);
