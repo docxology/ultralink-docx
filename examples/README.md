@@ -136,7 +136,9 @@ a binary archive). To restore the compact file, pass its UTF-8 text to
 `new UltraLink().fromFullBlob(text, { compressed: true })`. A failed Full Blob
 serialization or write leaves the prior file in place and reports a separate
 `ERROR-uncompressed.txt` or `ERROR-compressed.txt` diagnostic.
-If both archive paths refer to the same destination, neither archive is replaced.
+If both archive paths refer to the same destination, neither archive is written.
+This also applies to differently cased redirects to a missing file on a
+case-insensitive filesystem.
 
 ## Documentation
 

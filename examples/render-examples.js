@@ -103,12 +103,49 @@ function resolveFullBlobOutput(filePath) {
   for (let hops = 0; hops < 40; hops++) {
     filePath = path.join(fs.realpathSync.native(path.dirname(filePath)), path.basename(filePath));
     const previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
-    if (!previous?.isSymbolicLink()) return { filePath, previous };
+    if (!previous?.isSymbolicLink()) return { filePath, previous, redirected: hops > 0 };
     const link = fs.readlinkSync(filePath);
     if (link.endsWith(path.sep)) throw new Error(`Expected a regular file at ${filePath}`);
     filePath = path.isAbsolute(link) ? link : `${path.dirname(filePath)}${path.sep}${link}`;
   }
   throw new Error(`Too many symbolic links resolving ${filePath}`);
+}
+
+function shareFullBlobDestination(first, second) {
+  if (!first || !second) return false;
+  if (first.filePath === second.filePath) return true;
+  if (first.previous || second.previous) {
+    return Boolean(first.previous && second.previous &&
+      first.previous.dev === second.previous.dev && first.previous.ino === second.previous.ino);
+  }
+  // The standard pretty and compact filenames are distinct. Redirects can give
+  // their missing leaves different spellings that the filesystem treats as one.
+  if (!first.redirected && !second.redirected) return false;
+  const firstDir = path.dirname(first.filePath);
+  const secondDir = path.dirname(second.filePath);
+  if (firstDir !== secondDir) {
+    const a = fs.statSync(firstDir);
+    const b = fs.statSync(secondDir);
+    if (a.dev !== b.dev || a.ino !== b.ino) return false;
+  }
+  return withFullBlobStaging(firstDir, stagingDir => {
+    fs.writeFileSync(path.join(stagingDir, path.basename(first.filePath)), '', { flag: 'wx' });
+    return Boolean(fs.lstatSync(path.join(stagingDir, path.basename(second.filePath)), { throwIfNoEntry: false }));
+  });
+}
+
+function withFullBlobStaging(directory, use) {
+  const stagingDir = fs.mkdtempSync(path.join(directory, '.full-blob-'));
+  try {
+    return use(stagingDir);
+  } finally {
+    try {
+      fs.rmSync(stagingDir, { recursive: true, force: true });
+    } catch (error) {
+      // Cleanup cannot change the outcome of the operation.
+      console.warn(`    Could not remove Full Blob staging directory ${stagingDir}: ${getErrorMessage(error)}`);
+    }
+  }
 }
 
 function writeFullBlobOutput(filePath, content, previous = fs.lstatSync(filePath, { throwIfNoEntry: false })) {
@@ -120,8 +157,7 @@ function writeFullBlobOutput(filePath, content, previous = fs.lstatSync(filePath
   }
 
   // Stage beside the destination so a failed write cannot truncate a prior blob.
-  const stagingDir = fs.mkdtempSync(path.join(path.dirname(filePath), '.full-blob-'));
-  try {
+  withFullBlobStaging(path.dirname(filePath), stagingDir => {
     const stagedPath = path.join(stagingDir, path.basename(filePath));
     writeOutput(stagedPath, content);
     if (previous) {
@@ -132,14 +168,7 @@ function writeFullBlobOutput(filePath, content, previous = fs.lstatSync(filePath
       fs.chmodSync(stagedPath, previous.mode & 0o777);
     }
     fs.renameSync(stagedPath, filePath);
-  } finally {
-    try {
-      fs.rmSync(stagingDir, { recursive: true, force: true });
-    } catch (error) {
-      // Cleanup cannot change the outcome of the write and rename.
-      console.warn(`    Could not remove Full Blob staging directory ${stagingDir}: ${getErrorMessage(error)}`);
-    }
-  }
+  });
 }
 
 /**
@@ -1184,11 +1213,7 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
             }
           });
           const [{ destination: pretty }, { destination: compact }] = outputs;
-          const sharedDestination = pretty && compact && (
-            pretty.filePath === compact.filePath ||
-            (pretty.previous && compact.previous &&
-              pretty.previous.dev === compact.previous.dev && pretty.previous.ino === compact.previous.ino)
-          );
+          const sharedDestination = shareFullBlobDestination(pretty, compact);
           for (const { format, outputPath, destination, error } of outputs) {
             console.log(`    🔄 Processing ${format} full-blob format...`);
             try {
