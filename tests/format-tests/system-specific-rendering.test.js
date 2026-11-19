@@ -5,10 +5,8 @@
  * for all export formats, with special focus on placeholder-based renderers.
  */
 
-const fs = require('fs');
-const path = require('path');
-const chai = require('chai');
-const expect = chai.expect;
+const { expect } = require('chai');
+const { parseStringPromise } = require('xml2js');
 
 const UltraLink = require('../../src/ultralink');
 const { createProjectCollaborationDataset } = require('../fixtures/Systems/ProjectCollaboration/project-collaboration');
@@ -20,6 +18,12 @@ const SYSTEMS = {
   ProjectCollaboration: createProjectCollaborationDataset,
   DesertEcosystem: createDesertEcosystemDataset,
   ResearchTeam: createResearchTeamDataset
+};
+
+const BAYESIAN_VARIABLES = {
+  ProjectCollaboration: ['system_state'],
+  DesertEcosystem: ['system_state', 'temperature', 'rainfall', 'soil_quality'],
+  ResearchTeam: ['system_state', 'researcher_productivity', 'project_success', 'team_collaboration']
 };
 
 // Copy of the functions from render-examples.js for testing purposes
@@ -331,59 +335,54 @@ describe('System-Specific Rendering', () => {
     });
   });
   
-  // Test Bayesian network exports
+  // Test the actual exporter separately from the example placeholders.
   describe('Bayesian Network Exports', () => {
     Object.entries(SYSTEMS).forEach(([systemName, createDatasetFn]) => {
+      const variables = BAYESIAN_VARIABLES[systemName];
+
       it(`should generate valid Bayesian network JSON for ${systemName}`, () => {
         const ultralink = createDatasetFn();
-        const jsonOutput = ultralink.toBayesianNetwork({ outputFormat: 'json' });
-        
-        // Verify basic structure
+        const jsonOutput = ultralink.toBayesianNetwork({ outputFormat: 'json', systemName });
+
         expect(jsonOutput).to.be.an('object');
-        expect(jsonOutput.metadata).to.be.an('object');
+        expect(jsonOutput.metadata).to.include({ type: systemName });
         expect(jsonOutput.nodes).to.be.an('array');
+        expect(jsonOutput.nodes.map(node => node.id)).to.include.members(variables);
         expect(jsonOutput.edges).to.be.an('array');
-        
-        // Verify some nodes exist
-        expect(jsonOutput.nodes.length).to.be.greaterThan(0);
       });
-      
-      it(`should generate valid BIF XML for ${systemName}`, () => {
+
+      it(`should generate valid BIF XML for ${systemName}`, async () => {
         const ultralink = createDatasetFn();
-        let bifOutput;
-        
-        try {
-          bifOutput = ultralink.toBayesianNetwork({ outputFormat: 'bif' });
-        } catch (error) {
-          // If real generation fails, use placeholder but note it in the test
-          bifOutput = generatePlaceholderBIF(systemName);
-          console.warn(`Using placeholder BIF for ${systemName}`);
+        const bifOutput = ultralink.toBayesianNetwork({ outputFormat: 'bif', systemName });
+
+        expect(bifOutput).to.be.a('string').and.include('<?xml version="1.0"?>');
+        const { BIF } = await parseStringPromise(bifOutput);
+        expect(BIF.$.VERSION).to.equal('0.3');
+        const [network] = BIF.NETWORK;
+        expect(network.n).to.deep.equal([systemName]);
+        expect(network.VARIABLE.map(variable => variable.NAME[0])).to.include.members(variables);
+        expect(network.DEFINITION.map(definition => definition.FOR[0])).to.include.members(variables);
+        for (const variable of network.VARIABLE) {
+          expect(variable.$.TYPE).to.equal('discrete');
+          expect(variable.OUTCOME).to.be.a('array').that.is.not.empty;
         }
-        
-        // Verify basic structure
-        expect(bifOutput).to.be.a('string');
-        expect(bifOutput).to.include('<?xml version="1.0"?>');
-        expect(bifOutput).to.include('<BIF VERSION="0.3">');
-        expect(bifOutput).to.include('<NETWORK>');
-        expect(bifOutput).to.include('</NETWORK>');
-        expect(bifOutput).to.include('</BIF>');
-        
-        // System name should be included
-        expect(bifOutput).to.include(`<n>Generic</n>`);
+        for (const definition of network.DEFINITION) {
+          const probabilities = definition.TABLE[0].trim().split(/\s+/).map(Number);
+          expect(probabilities.every(p => Number.isFinite(p) && p >= 0 && p <= 1)).to.be.true;
+        }
       });
     });
+
+    it('uses the Generic BIF network when no system is specified for an empty graph', async () => {
+      const { BIF } = await parseStringPromise(new UltraLink().toBayesianNetwork({ outputFormat: 'bif' }));
+      expect(BIF.NETWORK[0].n).to.deep.equal(['Generic']);
+    });
   });
-  
-  // Test all standard export formats
+
   describe('Standard Export Formats', () => {
     Object.entries(SYSTEMS).forEach(([systemName, createDatasetFn]) => {
-      let ultralink;
-      
-      beforeEach(() => {
-        ultralink = createDatasetFn();
-      });
-      
       it(`should export valid JSON for ${systemName}`, () => {
+        const ultralink = createDatasetFn();
         const json = ultralink.toJSON({ asString: false });
         expect(json).to.be.an('object');
         expect(json.entities).to.be.an('array');
@@ -405,6 +404,7 @@ describe('System-Specific Rendering', () => {
       });
       
       it(`should export valid GraphML for ${systemName}`, () => {
+        const ultralink = createDatasetFn();
         const graphml = ultralink.toGraphML();
         expect(graphml).to.be.a('string');
         expect(graphml).to.include('<?xml version="1.0" encoding="UTF-8"?>');
@@ -426,6 +426,7 @@ describe('System-Specific Rendering', () => {
       });
       
       it(`should export valid CSV files for ${systemName}`, () => {
+        const ultralink = createDatasetFn();
         const csv = ultralink.toCSV();
         expect(csv).to.be.an('object');
         expect(csv.entities).to.be.a('string');
@@ -453,6 +454,7 @@ describe('System-Specific Rendering', () => {
       });
       
       it(`should export valid Obsidian files for ${systemName}`, () => {
+        const ultralink = createDatasetFn();
         const obsidian = ultralink.toObsidian();
         expect(obsidian).to.be.an('object');
         
@@ -472,6 +474,7 @@ describe('System-Specific Rendering', () => {
       });
       
       it(`should export valid KIF for ${systemName}`, () => {
+        const ultralink = createDatasetFn();
         const kif = ultralink.toKIF();
         expect(kif).to.be.a('string');
         expect(kif).to.include(';; UltraLink Knowledge Interchange Format (KIF) Export');
@@ -490,6 +493,7 @@ describe('System-Specific Rendering', () => {
       });
       
       it(`should export valid HTML website structure for ${systemName}`, () => {
+        const ultralink = createDatasetFn();
         const htmlWebsite = ultralink.toHTMLWebsite({
           title: `${systemName} - UltraLink Knowledge Graph`,
           description: `Interactive exploration of the ${systemName} knowledge graph`

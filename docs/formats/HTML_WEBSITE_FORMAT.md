@@ -374,7 +374,9 @@ The search functionality is implemented using a client-side search index that en
 - **Instant Results**: Real-time search results as you type
 - **Highlighted Matches**: Visual indication of where the match occurred
 
-The search index is pre-built during export to optimize performance.
+The search index is built when the exported page loads. A match on a relationship's type or
+attributes lists both endpoint entities. **Find in graph** re-enables the selected entity's
+type if needed, without changing other type filters.
 
 ## Themes and Customization
 

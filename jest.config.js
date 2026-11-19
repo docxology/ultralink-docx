@@ -3,7 +3,7 @@ module.exports = {
     '^.+\\.js$': ['babel-jest']
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(d3|d3-array|d3-force|d3-hierarchy|d3-selection|d3-zoom|jsdom|sharp|cytoscape|internmap|delaunator)/)'
+    'node_modules/(?!(chai|d3|d3-array|d3-force|d3-hierarchy|d3-selection|d3-zoom|jsdom|sharp|cytoscape|internmap|delaunator)/)'
   ],
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'json'],

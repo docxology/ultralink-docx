@@ -6,6 +6,8 @@
  * the exported data maintains all relationships and attributes.
  */
 
+jest.unmock('d3');
+
 const path = require('path');
 const fs = require('fs');
 const { UltraLink } = require('../../src');
@@ -422,39 +424,16 @@ describe('Research Team Export Tests', () => {
   });
 
   test('Visualization Export', async () => {
-    // Generate SVG visualization - add await here
-    const svgOutput = await ultralink.toVisualization({ format: 'svg' });
-    
-    // Save for inspection
+    const { 'graph.svg': svg } = await ultralink.toVisualization({ format: 'svg' });
     const outputDir = getSystemOutputPath(researchSystem, 'visualization');
-    
-    // Check if svgOutput is an object with graph.svg property
-    let svg;
-    if (typeof svgOutput === 'object' && svgOutput['graph.svg']) {
-      svg = svgOutput['graph.svg'];
-      fs.writeFileSync(path.join(outputDir, 'graph.svg'), svg);
-    } else if (typeof svgOutput === 'string') {
-      svg = String(svgOutput);
-      fs.writeFileSync(path.join(outputDir, 'graph.svg'), svg);
-    } else {
-      // If it's neither a string nor an object with graph.svg, just pass the test
-      // This handles the case where the visualization output format has changed
-      console.log('Visualization output format has changed, skipping detailed checks');
-      return;
-    }
-    
-    // Verify SVG structure if we have a string
-    if (typeof svg === 'string') {
-      expect(svg).toContain('<svg');
-      expect(svg).toContain('</svg>');
-      
-      // Check for specific elements
-      expect(svg).toContain('<g');
-      // The circle element might not be present in all visualizations
-      // expect(svg).toContain('<circle');
-      
-      // Check for style definitions
-      expect(svg).toContain('<style>');
-    }
+    fs.writeFileSync(path.join(outputDir, 'graph.svg'), svg);
+
+    expect(svg).toContain('<svg');
+    expect(svg).toContain('</svg>');
+    expect(svg).toContain('<style>');
+    expect(svg).toContain('Alice Chen');
+    expect(svg.match(/<circle\b/g)).toHaveLength(ultralink.entities.size);
+    expect(svg.match(/<line\b/g)).toHaveLength(ultralink.relationships.size);
+    expect(svg).not.toMatch(/="(?:NaN|undefined)"/);
   });
 }); 

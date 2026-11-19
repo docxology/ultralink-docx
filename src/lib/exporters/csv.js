@@ -23,17 +23,16 @@ function toCSV(ultralink, options = {}) {
   
   // Add all attribute fields to the header
   for (const field of allAttributeFields) {
-    entitiesCSV += `,${field}`;
+    entitiesCSV += `,${encodeCell(field)}`;
   }
   
   // Add entity rows
   for (const entity of ultralink.entities.values()) {
-    let row = `\n${entity.id},${entity.type}`;
+    let row = `\n${encodeCell(entity.id)},${encodeCell(entity.type)}`;
     
     // Add each attribute value
     for (const field of allAttributeFields) {
-      const value = entity.attributes[field] || '';
-      row += `,${typeof value === 'string' ? value.replace(/,/g, ';') : value}`;
+      row += `,${encodeAttribute(entity.attributes, field)}`;
     }
     
     entitiesCSV += row;
@@ -55,17 +54,16 @@ function toCSV(ultralink, options = {}) {
   
   // Add all relationship attribute fields to the header
   for (const field of allRelationshipFields) {
-    relationshipsCSV += `,${field}`;
+    relationshipsCSV += `,${encodeCell(field)}`;
   }
   
   // Add relationship rows
   for (const relationship of ultralink.relationships.values()) {
-    let row = `\n${relationship.source},${relationship.target},${relationship.type}`;
+    let row = `\n${encodeCell(relationship.source)},${encodeCell(relationship.target)},${encodeCell(relationship.type)}`;
     
     // Add each attribute value
     for (const field of allRelationshipFields) {
-      const value = relationship.attributes[field] || '';
-      row += `,${typeof value === 'string' ? value.replace(/,/g, ';') : value}`;
+      row += `,${encodeAttribute(relationship.attributes, field)}`;
     }
     
     relationshipsCSV += row;
@@ -82,6 +80,17 @@ function toCSV(ultralink, options = {}) {
   result.relationships = relationshipsCSV;
   
   return result;
+}
+
+function encodeAttribute(attributes, field) {
+  return attributes && Object.hasOwn(attributes, field) ? encodeCell(attributes[field]) : '';
+}
+
+function encodeCell(value) {
+  if (value == null) return '';
+
+  const text = typeof value === 'object' ? (JSON.stringify(value) ?? '') : String(value);
+  return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 }
 
 module.exports = { toCSV }; 

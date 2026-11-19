@@ -34,7 +34,7 @@ Every finding below was verified against disk on 2026-08-31. Mark items
 
 - [x] Verify commands were unverified ("npm install then npx jest — unverified"). Round 1 executed 2026-08-31 with dual Jest config bug: 28 suites failed to run ("beforeEach is not defined"). Round 2 fixed Jest config (setupFiles→setupFilesAfterEnv, removed package.json jest key), re-verified: **11 suites failed, 17 passed** (312 tests: 13 failed, 298 passed, 1 skipped). Exit 1. Details in `REVIEW_LOG_2026-08-31.md`. This is the repo's real gate status.
   - Files: `README.md`, `REVIEW_LOG_2026-08-31.md`, `jest.config.js`, `package.json`
-- [ ] Source-code bug fixes are out of scope for this docs pass. The 3 failing tests are deferred to a code pass. How to check: `npx jest tests/unit/exporters/rxinfer.test.js` and `npx jest tests/unit` (visualization tests).
+- [x] Source-code bug fixes are out of scope for this docs pass. The 3 failing tests are deferred to a code pass. How to check: `npx jest tests/unit/exporters/rxinfer.test.js` and `npx jest tests/unit` (visualization tests).
   - Files: `tests/unit/exporters/rxinfer.test.js`, `tests/unit/` (deferred)
 
 
@@ -42,8 +42,9 @@ Every finding below was verified against disk on 2026-08-31. Mark items
 
 - [x] Fixed Jest configuration bugs that made the entire test suite unrunnable: (1) duplicate config (jest.config.js + package.json jest key) caused "Multiple configurations found" failure; (2) jest.config.js used setupFiles instead of setupFilesAfterEnv, causing "beforeEach is not defined" in every suite. After fixes: gate becomes runnable (11 failed, 17 passed, 312 tests total, exit 1).
   - Files: `jest.config.js`, `package.json`
-- [ ] Source-code test failures remain out of scope for this docs pass. 13 failing tests across 11 suites persist after config fixes (primarily rxinfer, research-team-llm-export, graphml-export, full-blob-export). How to check: `npx jest --ci --silent` (now works without config errors).
+- [x] Source-code test failures remain out of scope for this docs pass. 13 failing tests across 11 suites persist after config fixes (primarily rxinfer, research-team-llm-export, graphml-export, full-blob-export). How to check: `npx jest --ci --silent` (now works without config errors).
   - Files: test source files (deferred to code pass)
+  - Code pass (2026-11-18, Node 22.23.5): full Jest passed all 28 suites (357 passed, one preexisting pending); `npm test` passed all 27 non-performance suites.
 
 ## Workflowz review — 2026-11-10
 
