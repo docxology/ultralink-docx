@@ -99,11 +99,15 @@ function writeOutput(filePath, content, isJson = false) {
 }
 
 function writeFullBlob(filePath, content) {
+  const previous = fs.statSync(filePath, { throwIfNoEntry: false });
+  if (previous) fs.accessSync(filePath, fs.constants.W_OK);
+
   // Stage beside the destination so a failed write cannot truncate a prior blob.
   const stagingDir = fs.mkdtempSync(path.join(path.dirname(filePath), '.full-blob-'));
   try {
     const stagedPath = path.join(stagingDir, path.basename(filePath));
     writeOutput(stagedPath, content);
+    if (previous) fs.chmodSync(stagedPath, previous.mode & 0o777);
     fs.renameSync(stagedPath, filePath);
   } finally {
     try {
