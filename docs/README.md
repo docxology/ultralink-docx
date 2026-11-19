@@ -68,17 +68,17 @@ mindmap
       Integration Tutorials
     API Reference
       Core API
-      Exporters API
-      Events API
+      Export API
+      Working with Events
     Integration
       Format Integration
-      Tool Integration
+      Database Integration
     Performance
       Benchmarks
       Optimization
     Contributing
       Development Setup
-      Code Standards
+      Code Style
 ```
 
 ## Main Documentation Sections
@@ -125,17 +125,17 @@ Understand UltraLink's core differentiating features:
 
 Understand UltraLink's architecture and design principles:
 
-- [System Overview](./api/overview.md)
-- [Core Components](./architecture/components.md)
-- [Data Flow](./architecture/data-flow.md)
+- [Architecture Overview](./architecture/architecture_overview.md)
+- [Core Components](./architecture/README.md#core-components)
+- [Data Flow Models](./technical/data-flow-models.md)
 
 ### [Technical Documentation](./technical/README.md)
 
 Dive into the technical details of UltraLink:
 
 - [Format Conversion](./technical/format-conversion.md)
-- [Entity Store](./technical/entity-store.md)
-- [Vector Store](./technical/vector-store.md)
+- [Entity Store](./technical/README.md#entity-store)
+- [Vector Store](./technical/README.md#vector-store)
 - [Event System](./architecture/event-system.md)
 
 ### [Tutorials](./tutorials/README.md)
@@ -145,58 +145,56 @@ Step-by-step tutorials to help you master UltraLink:
 - [Getting Started with UltraLink](./tutorials/getting-started.md)
 - [Vector Embeddings and Semantic Search](./tutorials/vector-embeddings.md)
 - [LLM Integration](./tutorials/llm-integration.md)
-- [Extending with Custom Render Formats](./tutorials/custom-formats.md)
-- [Bayesian Networks for Probabilistic Reasoning](./tutorials/bayesian-networks.md)
 
 ### [API Reference](./api/README.md)
 
 Detailed API reference documentation:
 
-- [Core API](./api/core-api.md)
-- [Exporters API](./api/exporters-api.md)
+- [UltraLink Core API](./api/ultralink-core.md)
+- [Data Export Methods](./API_USAGE.md#exporting-data)
 - [Temporal API](./api/temporal-api.md)
-- [Vector API](./api/vector-api.md)
-- [LLM API](./api/llm-api.md)
-- [Events API](./api/events-api.md)
+- [Vector Operations API](./api/README.md#vector-operations-api)
+- [LLM Integration API](./api/README.md#llm-integration-api)
+- [Working with Events](./architecture/event-system.md#working-with-events)
 
 ### [Integration](./integration/README.md)
 
 Guides for integrating UltraLink with other tools and systems:
 
 - [Format Integration Guide](./integration/format-integration.md)
-- [Tool Integration](./integration/tool-integration.md)
+- [Database Integration](./integration/database-integration.md)
 
-### [Performance](./README.md)
+### Performance
 
 Performance considerations and benchmarks:
 
 - [Format Benchmarks](./performance/format-benchmarks.md)
-- [Optimization Strategies](./performance/optimization.md)
+- [Performance Optimization](./advanced/performance.md)
 
 ### [Advanced Topics](./advanced/README.md)
 
 Advanced features and use cases:
 
-- [Custom Entity Types](./advanced/custom-entity-types.md)
-- [Custom Rendering Formats](./advanced/custom-rendering-formats.md)
+- [Entity Schema Validation](./API_USAGE.md#schema-validation)
+- [Creating Custom Exporters](./guides/custom-exporters.md)
 - [Plugin Development](./advanced/plugin-development.md)
-- [Custom Transformations](./advanced/custom-transformations.md)
+- [Format Transformation Patterns](./formats/transformation_patterns.md)
 - [Advanced Query Patterns](./guides/advanced-query-patterns.md)
 
 ### [For Agents](./for-agents/README.md)
 
 Documentation for AI agent integration:
 
-- [Agent Integration Guide](./for-agents/agent-integration.md) 
-- [LLM Compatibility](./for-agents/llm-compatibility.md)
+- [Agent Integration Guide](./for-agents/agent-integration-guide.md)
+- [LLM Compatibility](./for-agents/README.md#llm-compatibility)
 - [Prompt Engineering](./guides/prompt-engineering.md)
 
-### [Contributing](./README.md)
+### [Contributing](../CONTRIBUTING.md)
 
 Guidelines for contributing to UltraLink development:
 
 - [Development Setup](./contributing/development-setup.md)
-- [Coding Standards](./contributing/coding-standards.md)
+- [Code Style](../CONTRIBUTING.md#code-style)
 
 ## Additional Resources
 
@@ -206,7 +204,7 @@ Guidelines for contributing to UltraLink development:
 
 ## Latest Updates
 
-UltraLink is continuously evolving. Check out the [latest updates](./README.md) to see what's new.
+See the [changelog](../CHANGELOG.md#unreleased) for recent changes.
 
 ## Version Information
 
@@ -214,7 +212,7 @@ This documentation applies to UltraLink version 0.1.x (the version in `package.j
 
 ## Contributing to Documentation
 
-We welcome contributions to improve this documentation. Please see the [documentation contribution guide](./contributing/documentation-guide.md) for details on how to help.
+We welcome documentation improvements. See the [documentation section of the contributing guide](../CONTRIBUTING.md#documentation) for details.
 
 ## Documentation Standards
 
