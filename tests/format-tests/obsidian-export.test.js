@@ -97,6 +97,7 @@ describe('Obsidian Markdown Export Tests', () => {
     
     // Should have links
     expect(saguaroContent).toContain('[[aridity|Aridity]]');
+    expect(saguaroContent).toContain('mechanism: Water storage in stem, efficiency: 0.95');
     
     logger.log('Verified basic Obsidian export structure');
   });
@@ -154,12 +155,7 @@ describe('Obsidian Markdown Export Tests', () => {
       backlinks: true,
       includeMetadata: true,
       includeAttributes: true,
-      includeRelationships: true,
-      metadataTemplate: '---\nid: {{id}}\ntype: {{type}}\nname: {{name}}\n---\n',
-      titleTemplate: '# {{name}}\n\n',
-      attributeTemplate: '## Attributes\n\n{{#each attributes}}\n- **{{@key}}**: {{this}}\n{{/each}}\n\n',
-      relationshipTemplate: '## Relationships\n\n{{#each outgoing}}\n- **{{type}}**: [[{{target}}]]\n{{/each}}\n\n',
-      backlinkTemplate: '## Backlinks\n\n{{#each backlinks}}\n- [[{{source}}]] ({{type}})\n{{/each}}\n\n'
+      includeRelationships: true
     });
     
     // Save files for inspection
@@ -188,14 +184,24 @@ describe('Obsidian Markdown Export Tests', () => {
     
     // Check backlinks
     expect(projectContent).toContain('## Backlinks');
-    expect(projectContent).toContain('[[project-a|Project Alpha]]');
+    expect(projectContent).toContain('- [[person-1|Jane Smith]] (manages)');
     
-    // Check task with predecessor - skip backlinks check since they don't appear to be generated
-    // in the actual output
-    expect(task2Content).toBeDefined();
+    expect(task2Content).toContain('- [[project-a|Project Alpha]] (contains)');
+    expect(task2Content).toContain('- [[task-1|Research Requirements]] (precedes)');
+    expect(projectContent).toContain(`created: ${ultralink.getEntity('project-a').metadata.created}`);
     expect(task2Content).toContain('# Design Architecture');
     expect(task2Content).toContain('priority');
     expect(task2Content).toContain('High');
+
+    const minimal = ultralink.toObsidian({
+      backlinks: false,
+      includeMetadata: false,
+      includeAttributes: false,
+      includeRelationships: false
+    })['task-2.md'];
+    expect(minimal).toContain('id: task-2');
+    expect(minimal).toContain('# Design Architecture');
+    expect(minimal).not.toMatch(/created:|^## |\[\[/m);
     
     logger.log('Verified Obsidian export with backlinks and options');
   });

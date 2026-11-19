@@ -308,275 +308,160 @@ class UltraLink {
    * @returns {string} Manim Python code
    */
   toManim(options = {}) {
-    const defaultOptions = {
-      includeDate: true,
-      includeLinks: true,
-      includeLegend: true, 
-      includeAnimations: true,
-      includeTitle: true,
-      systemName: this.systemName // Ensure we use the system name
+    const {
+      animationStyle = 'default',
+      visualTheme = '3b1b',
+      includeNarrationText = true,
+      highlightCentralEntities = true,
+      animationDuration = 30
+    } = options;
+    const systemName = options.systemName || this.systemName || this.config.systemName || 'UltraLink';
+    const themes = {
+      '3b1b': ['#000000', '#ffffff'],
+      dark: ['#242428', '#ece6e2'],
+      light: ['#ffffff', '#202124'],
+      colorful: ['#17233a', '#f8edba']
     };
-    const opts = { ...defaultOptions, ...options };
-    
-    // Make sure the system name is properly set
-    const systemName = opts.systemName || this.systemName || 'UltraLink';
-
-    // Function to safely stringify empty/null/undefined values to empty arrays
-    const safeJsonStringify = (obj) => {
-      if (!obj || Object.keys(obj).length === 0) {
-        return "[]";
-      }
-      return JSON.stringify(Object.values(obj));
+    const [background, foreground] = themes[Object.hasOwn(themes, visualTheme) ? visualTheme : '3b1b'];
+    const narration = {
+      explanatory: 'Follow the entities and their relationships',
+      technical: 'Graph topology and relationships',
+      narrative: 'A story told through connected entities'
     };
+    const subtitle = Object.hasOwn(narration, animationStyle) ? narration[animationStyle] : 'System Visualization';
+    const duration = Number.isFinite(animationDuration) && animationDuration > 0 ? animationDuration : 30;
 
-    // Add sample data if we don't have entities
-    let sampleAdded = false;
-    let sampleEntities = {};
-    let sampleRelationships = {};
-    
-    if (!this.store) {
-      this.store = { entities: {}, relationships: {} };
-    }
-    
-    if (Object.keys(this.store.entities || {}).length === 0) {
-      sampleAdded = true;
-      
-      if (systemName === "USAHistory") {
-        sampleEntities = {
-          "event1": { id: "event1", type: "Event", name: "American Revolution", attributes: { year: 1776 } },
-          "event2": { id: "event2", type: "Event", name: "Civil War", attributes: { year: 1861 } },
-          "event3": { id: "event3", type: "Event", name: "World War II", attributes: { year: 1941 } }
-        };
-        sampleRelationships = {
-          "rel1": { id: "rel1", source: "event1", target: "event2", type: "PRECEDES" },
-          "rel2": { id: "rel2", source: "event2", target: "event3", type: "PRECEDES" }
-        };
-      } else if (systemName === "Car") {
-        sampleEntities = {
-          "sys1": { id: "sys1", type: "System", name: "Engine System" },
-          "comp1": { id: "comp1", type: "Component", name: "Engine Block" },
-          "comp2": { id: "comp2", type: "Component", name: "Transmission" }
-        };
-        sampleRelationships = {
-          "rel1": { id: "rel1", source: "sys1", target: "comp1", type: "CONTAINS" },
-          "rel2": { id: "rel2", source: "comp1", target: "comp2", type: "CONNECTS" }
-        };
-      } else if (systemName === "POMDP") {
-        sampleEntities = {
-          "state1": { id: "state1", type: "State", name: "Hidden State" },
-          "obs1": { id: "obs1", type: "Observation", name: "Sensor Reading" },
-          "action1": { id: "action1", type: "Action", name: "Control Signal" }
-        };
-        sampleRelationships = {
-          "rel1": { id: "rel1", source: "state1", target: "obs1", type: "GENERATES" },
-          "rel2": { id: "rel2", source: "action1", target: "state1", type: "AFFECTS" }
-        };
+    const degrees = highlightCentralEntities ? new Map() : null;
+    const relationships = Array.from(this.relationships.values(), ({ source, target, type }) => {
+      if (degrees) {
+        degrees.set(source, (degrees.get(source) || 0) + 1);
+        degrees.set(target, (degrees.get(target) || 0) + 1);
       }
-      
-      // Use the sample data for the Manim generation
-      this.store.entities = sampleEntities;
-      this.store.relationships = sampleRelationships;
+      return { source, target, type };
+    });
+    let centralEntity;
+    if (degrees) {
+      let highestDegree = 0;
+      for (const [id, degree] of degrees) {
+        if (degree > highestDegree) {
+          centralEntity = id;
+          highestDegree = degree;
+        }
+      }
     }
+    const graph = {
+      systemName,
+      centralEntity,
+      entities: Array.from(this.entities.values(), ({ id, type, attributes }) => ({
+        id,
+        type,
+        label: String(attributes.name || attributes.title || id),
+        formula: typeof attributes.formula === 'string' ? attributes.formula : undefined,
+        year: systemName === 'USAHistory' ? attributes.year ?? attributes.startYear : undefined
+      })),
+      relationships
+    };
+    // Quote the JSON as a Python string rather than embedding JSON values as Python literals.
+    const graphLiteral = JSON.stringify(JSON.stringify(graph));
 
-    const code = `#!/usr/bin/env python
+    return `#!/usr/bin/env python
+import json
 from manim import *
+
+config.background_color = ${JSON.stringify(background)}
 
 class UltraLinkGraph(Scene):
     def construct(self):
-        # Theme setup
-        config.background_color = "BLACK"
-        
-        # Title
-        title = Text("${systemName} Knowledge Graph", color="WHITE")
-        subtitle = Text("System Visualization", font_size=36, color="WHITE")
-        title_group = VGroup(title, subtitle).arrange(DOWN)
-        
-        self.play(
-            Write(title),
-            FadeIn(subtitle, shift=DOWN)
-        )
-        self.wait(1)
-        
-        # Move title to top
-        self.play(
-            title_group.animate.scale(0.6).to_edge(UP)
-        )
-        
-        # Create legend
-        legend_items = VGroup()
-        legend_title = Text("Entity Types", font_size=24, color="WHITE")
-        legend_items.add(legend_title)
+        graph = json.loads(${graphLiteral})
+        system_name = graph["systemName"]
+        text_color = ${JSON.stringify(foreground)}
+        duration = ${duration}
+        beat = duration / 16
 
-        # Position legend
-        legend_items.arrange(DOWN, aligned_edge=LEFT, buff=0.2)
-        legend_items.to_edge(LEFT)
-        self.play(Write(legend_items))
-        
-        # Create entity groups
-        entity_groups = VGroup()
-        
-        # Add entities based on type
+        if not graph["entities"]:
+            self.play(Write(Text("Empty Knowledge Graph", color=text_color)), run_time=beat)
+            self.wait(max(beat, duration - self.time))
+            return
+
+        title = Text(f"{system_name} Knowledge Graph", color=text_color)
+${includeNarrationText ? `        subtitle = Text(${JSON.stringify(subtitle)}, font_size=28, color=text_color)\n` : ''}        title_group = VGroup(title${includeNarrationText ? ', subtitle' : ''}).arrange(DOWN)
+        title_group.scale(min(1, (config.frame_width - 1) / title_group.width))
+        self.play(Write(title_group), run_time=beat)
+        self.wait(beat)
+        self.play(title_group.animate.scale(0.6).to_edge(UP), run_time=beat)
+
+        palette = {"event": YELLOW, "system": RED, "component": GREEN, "space": PURPLE,
+                   "plant": GREEN, "animal": BLUE, "abiotic_factor": GOLD}
         entities = {}
-        for entity in ${safeJsonStringify(this.store.entities)}: 
-            color = BLUE
-            if entity["type"] == "Event":
-                color = YELLOW
-            elif entity["type"] == "System":
-                color = RED
-            elif entity["type"] == "Component":
-                color = GREEN
-            elif entity["type"] == "Space":
-                color = PURPLE
-                
+        entity_groups = VGroup()
+        types = {}
+        for entity in graph["entities"]:
+            entity_type = entity["type"]
+            color = palette.get(entity_type.lower(), BLUE)
+            types[entity_type] = color
             dot = Dot(color=color)
-            label = Text(entity["name"], font_size=20).next_to(dot, RIGHT)
-            entity_group = VGroup(dot, label)
-            entities[entity["id"]] = entity_group
-            entity_groups.add(entity_group)
-        
-        # Position all entity groups
-        if len(entity_groups) > 0:
-            entity_groups.arrange(RIGHT, buff=2)
-            entity_groups.move_to(ORIGIN)
-            
-            # Animate entities appearance
-            for entity_group in entity_groups:
-                self.play(
-                    *[Create(mob) for mob in entity_group],
-                    run_time=0.5
-                )
+            label = Text(entity["label"], font_size=20, color=text_color).next_to(dot, RIGHT)
+            group = VGroup(dot, label)
+            entities[entity["id"]] = group
+            entity_groups.add(group)
 
-        # Add relationships
-        relationships = VGroup()
-        for rel in ${safeJsonStringify(this.store.relationships)}: 
-            if rel["source"] in entities and rel["target"] in entities:
-                start = entities[rel["source"]].get_center()
-                end = entities[rel["target"]].get_center()
-                arrow = Arrow(start, end, color="WHITE")
-                label = Text(rel["type"], font_size=16).next_to(arrow, UP)
-                relationships.add(VGroup(arrow, label))
+        legend = VGroup(Text("Entity Types", font_size=20, color=text_color),
+                        *(Text(kind, font_size=14, color=color) for kind, color in types.items()))
+        legend.arrange(DOWN, aligned_edge=LEFT, buff=0.15).to_corner(UL).shift(DOWN)
+        self.play(Write(legend), run_time=beat)
 
-        # Animate relationships
-        if len(relationships) > 0:
-            for relationship in relationships:
-                self.play(
-                    Create(relationship[0]),  # Arrow
-                    Write(relationship[1]),   # Label
-                    run_time=0.3
-                )
+        entity_groups.arrange_in_grid(cols=min(4, len(entities)), buff=0.8)
+        entity_groups.scale(min(1, (config.frame_width - 4) / entity_groups.width,
+                                (config.frame_height - 3) / entity_groups.height)).shift(RIGHT)
+        self.play(LaggedStart(*(FadeIn(group) for group in entity_groups), lag_ratio=0.12), run_time=2 * beat)
 
-        # System-specific animations
-        if "${systemName}" == "USAHistory":
-            # Timeline-based animation
-            timeline = NumberLine(
-                x_range=[1700, 2024, 50],
-                length=10,
-                include_numbers=True,
-                label_direction=UP,
-                color="WHITE"
-            ).to_edge(DOWN)
-            self.play(Create(timeline))
-            
-            # Add year markers for events
-            event_years = VGroup()
-            for entity in ${safeJsonStringify(this.store.entities)}: 
-                if entity.get("attributes", {}).get("year"):
-                    year_dot = Dot(point=timeline.n2p(entity["attributes"]["year"]), color=YELLOW)
-                    year_label = Text(str(entity["attributes"]["year"]), font_size=16).next_to(year_dot, UP)
-                    event_years.add(VGroup(year_dot, year_label))
-            if len(event_years) > 0:
-                self.play(Create(event_years))
-            
-        elif "${systemName}" == "POMDP":
-            # State transition diagram
-            belief_update = VGroup()
-            
-            # Create state transition cycle
-            state_cycle = Circle(radius=2, color=BLUE)
-            state_label = Text("State Transition", font_size=20).move_to(state_cycle)
-            
-            # Create observation emission
-            obs_arrow = Arrow(state_cycle.get_top(), UP * 2, color=GREEN)
-            obs_label = Text("Observation", font_size=20).next_to(obs_arrow, RIGHT)
-            
-            # Create action influence
-            action_arrow = Arrow(DOWN * 2, state_cycle.get_bottom(), color=RED)
-            action_label = Text("Action", font_size=20).next_to(action_arrow, LEFT)
-            
-            belief_update.add(state_cycle, state_label, obs_arrow, obs_label, action_arrow, action_label)
-            
-            self.play(
-                Create(state_cycle),
-                Write(state_label),
-                Create(obs_arrow),
-                Write(obs_label),
-                Create(action_arrow),
-                Write(action_label)
-            )
-            
-        elif "${systemName}" == "Car":
-            # Component hierarchy animation
-            hierarchy = VGroup()
-            
-            # Create system levels
-            levels = ["System", "Subsystem", "Component"]
-            level_boxes = []
-            
-            for i, level in enumerate(levels):
-                box = Rectangle(height=1, width=3, color=BLUE)
-                text = Text(level, font_size=20)
-                group = VGroup(box, text)
-                group.shift(DOWN * (i * 1.5))
-                hierarchy.add(group)
-                level_boxes.append(box)
-            
-            # Add connecting lines
-            for i in range(len(level_boxes) - 1):
-                line = Line(
-                    level_boxes[i].get_bottom(),
-                    level_boxes[i + 1].get_top(),
-                    color="WHITE"
-                )
-                hierarchy.add(line)
-            
-            self.play(Create(hierarchy))
-            
-        # Final layout adjustments
-        if len(entity_groups) > 0 or len(relationships) > 0:
-            self.play(
-                *[group.animate.scale(0.8) for group in [*entity_groups, relationships] if len(group) > 0]
-            )
-        
-        # Conclusion
-        if True:
-            conclusion_text = Text(
-                f"${systemName} Knowledge Graph Visualization",
-                color="WHITE"
-            )
-            self.play(
-                *[FadeOut(mob) for mob in self.mobjects if mob != title_group],
-                run_time=1
-            )
-            self.play(Write(conclusion_text))
-            self.wait(1)
-            self.play(
-                FadeOut(conclusion_text),
-                FadeOut(title_group)
-            )
-        else:
-            self.wait(2)
-            self.play(
-                *[FadeOut(mob) for mob in self.mobjects]
-            )
+        links = VGroup()
+        for relationship in graph["relationships"]:
+            source = entities[relationship["source"]][0]
+            target = entities[relationship["target"]][0]
+            if source is target:
+                arrow = CurvedArrow(source.get_top(), source.get_right(), color=text_color)
+            else:
+                arrow = Arrow(source.get_center(), target.get_center(), color=text_color, buff=0.12)
+            label = Text(relationship["type"], font_size=14, color=text_color).next_to(arrow, UP, buff=0.08)
+            links.add(VGroup(arrow, label))
+        if len(links):
+            self.play(LaggedStart(*(AnimationGroup(Create(arrow), Write(label)) for arrow, label in links),
+                                  lag_ratio=0.12), run_time=2 * beat)
+        self.wait(beat)
+
+${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph["centralEntity"]]), run_time=beat)\n'}        formulas = VGroup(*(MathTex(entity["formula"], color=text_color)
+                            for entity in graph["entities"] if entity.get("formula")))
+        if len(formulas):
+            formulas.arrange(DOWN).scale(0.7).to_edge(DOWN)
+            self.play(Write(formulas), run_time=beat)
+
+        if system_name == "USAHistory":
+            dates = [entity["year"] for entity in graph["entities"]
+                     if isinstance(entity.get("year"), (int, float))]
+            if dates:
+                start, end = min(dates) // 50 * 50, (max(dates) // 50 + 1) * 50
+                timeline = NumberLine(x_range=[start, end, 50], length=10, include_numbers=True,
+                                      color=text_color).to_edge(DOWN)
+                markers = VGroup(*(Dot(timeline.n2p(year), color=YELLOW) for year in sorted(set(dates))))
+                self.play(Create(timeline), FadeIn(markers), run_time=2 * beat)
+        elif system_name == "POMDP":
+            cycle = Circle(radius=1.2, color=BLUE)
+            label = Text("State Transition", font_size=20, color=text_color).move_to(cycle)
+            observation = Arrow(cycle.get_top(), UP * 2, color=GREEN)
+            action = Arrow(DOWN * 2, cycle.get_bottom(), color=RED)
+            self.play(Create(cycle), Write(label), Create(observation), Create(action), run_time=2 * beat)
+        elif system_name == "Car":
+            levels = VGroup(*(VGroup(Rectangle(height=1, width=3, color=BLUE),
+                                     Text(level, font_size=20, color=text_color))
+                              for level in ["System", "Subsystem", "Component"])).arrange(DOWN, buff=0.4)
+            connectors = VGroup(*(Line(above.get_bottom(), below.get_top(), color=text_color)
+                                  for above, below in zip(levels, levels[1:])))
+            self.play(FadeIn(levels), Create(connectors), run_time=2 * beat)
+
+        self.wait(max(beat, duration - self.time - beat))
+        self.play(*(FadeOut(mob) for mob in self.mobjects), run_time=beat)
 `;
-
-    // Cleanup if we only added sample data
-    if (sampleAdded) {
-      this.store.entities = {};
-      this.store.relationships = {};
-    }
-    
-    return code;
   }
 
   /**

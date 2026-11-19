@@ -85,14 +85,13 @@ describe('HTML Website Features', () => {
     expect(htmlFiles['index.html']).toContain('<button class="zoom-btn" id="zoom-out">−</button>');
     
     // Check for zoom behavior setup
-    expect(htmlFiles['index.html']).toContain('zoom = d3.zoom()');
-    expect(htmlFiles['index.html']).toContain('.scaleExtent([0.1, 4])');
-    expect(htmlFiles['index.html']).toContain('svg.call(zoom)');
-    
-    // Check for zoom event handlers
-    expect(htmlFiles['index.html']).toContain('zoomInBtn.addEventListener');
-    expect(htmlFiles['index.html']).toContain('zoomOutBtn.addEventListener');
-    expect(htmlFiles['index.html']).toContain('zoomResetBtn.addEventListener');
+    const graph = htmlFiles['graph.js'];
+    expect(graph).toContain('zoom = d3.zoom()');
+    expect(graph).toContain('.scaleExtent([0.1, 4])');
+    expect(graph).toContain('svg.call(zoom)');
+    expect(graph).toContain('zoomInBtn.addEventListener');
+    expect(graph).toContain('zoomOutBtn.addEventListener');
+    expect(graph).toContain('zoomResetBtn.addEventListener');
   });
   
   test('should include clear filters button', () => {
@@ -100,26 +99,25 @@ describe('HTML Website Features', () => {
     expect(htmlFiles['index.html']).toContain('<button class="btn" id="clear-filters">Clear Filters</button>');
     
     // Check for event handler
-    expect(htmlFiles['index.html']).toContain('clearFiltersBtn.addEventListener');
-    expect(htmlFiles['index.html']).toContain('Array.from(typeFilters.querySelectorAll(\'input\')).forEach(input => {');
-    expect(htmlFiles['index.html']).toContain('input.checked = true');
+    const graph = htmlFiles['graph.js'];
+    expect(graph).toContain('clearFiltersBtn.addEventListener');
+    expect(graph).toContain('input.checked = true');
+    expect(graph).toContain('updateFilters()');
   });
   
   test('should use responsive SVG with viewBox', () => {
     // Check for responsive SVG attributes
-    expect(htmlFiles['index.html']).toContain('.attr(\'width\', \'100%\')');
-    expect(htmlFiles['index.html']).toContain('.attr(\'height\', \'100%\')');
-    expect(htmlFiles['index.html']).toContain('.attr(\'viewBox\', [0, 0, width, height])');
-    expect(htmlFiles['index.html']).toContain('.attr(\'preserveAspectRatio\', \'xMidYMid meet\')');
-    
-    // Check for responsive media queries
-    expect(htmlFiles['index.html']).toContain('@media (max-width: 768px)');
-    expect(htmlFiles['index.html']).toContain('flex-direction: column');
+    const graph = htmlFiles['graph.js'];
+    expect(graph).toContain(".attr('width', '100%')");
+    expect(graph).toContain(".attr('height', '100%')");
+    expect(graph).toContain(".attr('viewBox', [0, 0, width, height])");
+    expect(graph).toContain(".attr('preserveAspectRatio', 'xMidYMid meet')");
+    expect(htmlFiles['styles.css']).toMatch(/@media \(max-width: 768px\)[\s\S]*flex-direction: column/);
   });
   
   test('should use title as fallback for name', () => {
     // Check index.html for title fallback in entity list rendering
-    expect(htmlFiles['index.html']).toContain('const name = entity.attributes.name || entity.attributes.title || entity.id;');
+    expect(htmlFiles['index.html']).toMatch(/href="entity2.html">\s+Project Alpha\s+</);
     
     // Check entity2.html (project with title but no name)
     expect(htmlFiles['entity2.html']).toContain('<title>Project Alpha - HTML Features Test</title>');
@@ -148,9 +146,10 @@ describe('HTML Website Features', () => {
     });
     
     // Check dark theme specific CSS
-    expect(darkThemeFiles['index.html']).toContain('--text-color: #e8eaed');
-    expect(darkThemeFiles['index.html']).toContain('--bg-color: #202124');
-    expect(darkThemeFiles['index.html']).toContain('background: rgba(32, 33, 36, 0.8)');
+    expect(darkThemeFiles['index.html']).toContain('href="styles/dark.css"');
+    expect(darkThemeFiles['styles/dark.css']).toContain('--text-color: #e8eaed');
+    expect(darkThemeFiles['styles/dark.css']).toContain('--bg-color: #202124');
+    expect(darkThemeFiles['styles/dark.css']).toContain('background: rgba(32, 33, 36, 0.8)');
     
     // Generate HTML website with academic theme
     const academicThemeFiles = ultralink.toHTMLWebsite({
@@ -160,18 +159,17 @@ describe('HTML Website Features', () => {
     });
     
     // Check academic theme specific CSS
-    expect(academicThemeFiles['index.html']).toContain('background-color: #7b1fa2');
-    expect(academicThemeFiles['index.html']).toContain('font-family: \'Palatino Linotype\'');
+    expect(academicThemeFiles['index.html']).toContain('href="styles/academic.css"');
+    expect(academicThemeFiles['styles/academic.css']).toContain('background-color: #7b1fa2');
+    expect(academicThemeFiles['styles/academic.css']).toContain('"Palatino Linotype"');
   });
   
   test('should support interactive relationship navigation', () => {
-    // Check for interactive relationship links
-    expect(htmlFiles['index.html']).toContain('window.selectEntityById = (id) => {');
-    expect(htmlFiles['index.html']).toContain('href="javascript:void(0)" onclick="selectEntityById');
-    
-    // Check that node is highlighted and centered on selection
-    expect(htmlFiles['index.html']).toContain('svg.transition().duration(500)');
-    expect(htmlFiles['index.html']).toContain('const x = width / 2 - scale * selectedNode.x');
+    const graph = htmlFiles['graph.js'];
+    expect(graph).toContain("button.addEventListener('click', () => selectEntityById(id))");
+    expect(graph).toContain("node.classed('selected', d => d.id === id)");
+    expect(graph).toContain('svg.transition().duration(500)');
+    expect(graph).toContain('translate(-entity.x, -entity.y)');
   });
   
   test('should properly handle entities without name or title', () => {

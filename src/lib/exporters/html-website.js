@@ -5,8 +5,21 @@
  * with D3.js visualizations and responsive design.
  */
 
-const { generateRelationshipHTML } = require('./utils/relationship-html');
 const fs = require('fs');
+const path = require('path');
+
+let d3Assets;
+
+function getD3Assets() {
+  if (!d3Assets) {
+    const packageDir = path.resolve(require.resolve('d3'), '../..');
+    d3Assets = {
+      'd3@7.min.js': fs.readFileSync(path.join(packageDir, 'dist/d3.min.js'), 'utf8'),
+      'd3-LICENSE.txt': fs.readFileSync(path.join(packageDir, 'LICENSE'), 'utf8')
+    };
+  }
+  return d3Assets;
+}
 
 /**
  * Export UltraLink data as an interactive HTML website
@@ -16,6 +29,9 @@ const fs = require('fs');
  * @param {string} options.description - Website description
  * @param {string} options.theme - Theme name (default, light, dark, academic)
  * @param {boolean} options.includeSearch - Whether to include search functionality
+ * @param {boolean} options.includeFilters - Whether to include entity type filters
+ * @param {string} options.customCSS - Path to a stylesheet copied into the export
+ * @param {string} options.customJS - Path to a script copied into the export
  * @param {string} options.baseUrl - Base URL for links
  * @param {string} options.staticPath - Static path for resources
  * @param {number} options.nodeRadius - Node radius for visualization
@@ -27,22 +43,9 @@ const fs = require('fs');
  * @returns {Object} Map of filenames to file contents
  */
 function toHTMLWebsite(ultralink, options = {}) {
-  const {
-    title = 'UltraLink Knowledge Graph',
-    description = 'Interactive visualization of knowledge graph',
-    theme = 'default',
-    includeSearch = true,
-    baseUrl = '',
-    staticPath = '',
-    nodeRadius = 10,
-    linkDistance = 100,
-    charge = -500,
-    includeDownloadButtons = true,
-    analyticsId = '',
-    linkOpenNewTab = false
-  } = options;
+  const { theme = 'default', customCSS, customJS } = options;
 
-  const files = {};
+  const files = { ...getD3Assets() };
   
   // Generate CSS
   const css = generateBaseCSS(theme);
@@ -73,16 +76,28 @@ function toHTMLWebsite(ultralink, options = {}) {
   } else if (theme === 'dark') {
     files['styles/dark.css'] = generateDarkCSS();
   }
+
+  if (customCSS) files['custom.css'] = fs.readFileSync(customCSS, 'utf8');
+  if (customJS) files['custom.js'] = fs.readFileSync(customJS, 'utf8');
+
+  const themePath = `styles/${theme}.css`;
+  const stylesheets = ['styles.css'];
+  if (files[themePath]) stylesheets.push(themePath);
+  if (customCSS) stylesheets.push('custom.css');
+  const assets = {
+    styles: stylesheets.map(file => `<link rel="stylesheet" href="${file}">`).join('\n  '),
+    customScript: customJS ? '<script src="custom.js"></script>' : ''
+  };
   
   // Generate entity pages
   const entities = Array.from(ultralink.entities.values());
   entities.forEach(entity => {
-    const entityHtml = generateEntityPage(entity, ultralink, options);
+    const entityHtml = generateEntityPage(entity, ultralink, options, assets);
     files[`${entity.id}.html`] = entityHtml;
   });
   
   // Generate index page
-  files['index.html'] = generateIndexPage(ultralink, options);
+  files['index.html'] = generateIndexPage(ultralink, options, assets);
   
   // Generate D3.js visualization script
   files['graph.js'] = generateVisualizationScript(ultralink);
@@ -198,6 +213,18 @@ h1, h2, h3 {
   border-radius: 8px;
   background: var(--card-bg);
 }
+
+.link {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.node text { fill: var(--text-color); }
+
+.node.hidden, .link.hidden { display: none; }
+.node.selected circle { stroke: var(--link-color); stroke-width: 3px; }
+.node.neighbor circle { stroke: var(--text-color); stroke-width: 2px; }
+.link.highlighted { stroke: var(--link-color); stroke-width: 2px; stroke-opacity: 1; }
 
 .visualization-controls {
   position: absolute;
@@ -581,8 +608,8 @@ function generateDarkCSS() {
   `;
 }
 
-function generateEntityPage(entity, ultralink, options) {
-  const { title, theme } = options;
+function generateEntityPage(entity, ultralink, options, assets) {
+  const { title = 'UltraLink Knowledge Graph' } = options;
   const name = entity.attributes.name || entity.attributes.title || entity.id;
   
   return `
@@ -592,7 +619,7 @@ function generateEntityPage(entity, ultralink, options) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${name} - ${title}</title>
-  <link rel="stylesheet" href="styles.css">
+  ${assets.styles}
   <style>
     .attribute-table th {
       background: rgba(255, 255, 255, 0.05);
@@ -639,6 +666,7 @@ function generateEntityPage(entity, ultralink, options) {
   <footer>
     <p>Generated with UltraLink</p>
   </footer>
+  ${assets.customScript}
 </body>
 </html>`;
 }
@@ -688,39 +716,13 @@ function generateRelationshipItem(rel, ultralink, direction) {
     </div>`;
 }
 
-function generateIndexPage(ultralink, options) {
+function generateIndexPage(ultralink, options, assets) {
   const {
     title = 'UltraLink Knowledge Graph',
     description = 'Interactive visualization of knowledge graph',
-    theme = 'default'
+    includeSearch = true,
+    includeFilters = true
   } = options;
-
-  // Include theme-specific CSS if provided
-  const themeLink = theme !== 'default' 
-    ? `\n      <link rel="stylesheet" href="styles/${theme}.css">` 
-    : '';
-    
-  // Include theme-specific inline CSS variables for test compatibility
-  const themeInlineCSS = theme === 'dark' 
-    ? `\n    <style>
-      :root {
-        --text-color: #e8eaed;
-        --bg-color: #202124;
-      }
-      header {
-        background: rgba(32, 33, 36, 0.8);
-      }
-    </style>` 
-    : theme === 'academic'
-    ? `\n    <style>
-      header {
-        background-color: #7b1fa2;
-      }
-      body {
-        font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-      }
-    </style>`
-    : '';
 
   // Get entity and relationship counts
   const entityCount = ultralink.entities.size;
@@ -729,30 +731,14 @@ function generateIndexPage(ultralink, options) {
   // Generate entity type list HTML
   const entityTypesList = generateEntityTypesList(ultralink);
   
-  // Extract entity data for visualization
-  const entities = Array.from(ultralink.entities.values()).map(entity => ({
-    id: entity.id,
-    type: entity.type,
-    label: entity.attributes.name || entity.attributes.title || entity.id,
-    attributes: { ...entity.attributes }
-  }));
-  
-  // Extract relationship data for visualization
-  const relationships = Array.from(ultralink.relationships.values()).map(rel => ({
-    source: rel.source,
-    target: rel.target,
-    type: rel.type,
-    attributes: { ...rel.attributes }
-  }));
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title}</title>
-  <link rel="stylesheet" href="styles.css">${themeLink}${themeInlineCSS}
-  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity="sha384-LxfWGZyh6PaLjBRPf7NWiEYs9Mn0UQ6ZmqbLLZhxlOBBNWF2a2K0Pfc5efkrNnhQ" crossorigin="anonymous"></script>
+  ${assets.styles}
+  <script src="d3@7.min.js"></script>
 </head>
 <body>
   <header>
@@ -770,11 +756,14 @@ function generateIndexPage(ultralink, options) {
     </section>
     <section class="visualization">
       <div class="visualization-controls">
+        ${includeSearch ? '<label>Search entities <input id="search-box" type="search"></label>' : ''}
+        ${includeFilters ? `
         <div class="control-panel filters">
           <h3>Filter by Type</h3>
           <div id="type-filters"></div>
           <button class="btn" id="clear-filters">Clear Filters</button>
         </div>
+        ` : ''}
         <div class="zoom-controls">
           <button class="zoom-btn" id="zoom-in">+</button>
           <button class="zoom-btn" id="zoom-reset">⟳</button>
@@ -792,126 +781,7 @@ function generateIndexPage(ultralink, options) {
     <p>Generated with UltraLink</p>
   </footer>
   <script src="graph.js"></script>
-  <script>
-    /*
-    The following strings are intentionally included for test compatibility:
-    
-    zoom = d3.zoom()
-    .scaleExtent([0.1, 4])
-    svg.call(zoom)
-    .attr('width', '100%')
-    .attr('height', '100%')
-    .attr('viewBox', [0, 0, width, height])
-    .attr('preserveAspectRatio', 'xMidYMid meet')
-    svg.transition().duration(500)
-    
-    @media (max-width: 768px) {
-      flex-direction: column;
-    }
-    */
-    
-    // Entity selection functionality
-    window.selectEntityById = (id) => {
-      const node = d3.select('[data-id="' + id + '"]');
-      if (node.node()) {
-        // Reset all nodes and links
-        d3.selectAll('.node').classed('selected', false).classed('neighbor', false);
-        d3.selectAll('.link').classed('highlighted', false);
-        
-        // Highlight selected node
-        node.classed('selected', true);
-        
-        // Find and highlight connected nodes and links
-        const links = d3.selectAll('.link');
-        links.each(function(d) {
-          if (d.source.id === id || d.target.id === id) {
-            d3.select(this).classed('highlighted', true);
-            const otherId = d.source.id === id ? d.target.id : d.source.id;
-            d3.select('[data-id="' + otherId + '"]').classed('neighbor', true);
-          }
-        });
-        
-        // Center and zoom to the selected node
-        const transform = d3.zoomTransform(d3.select('svg').node());
-        const bounds = node.node().getBBox();
-        const dx = bounds.x + bounds.width / 2;
-        const dy = bounds.y + bounds.height / 2;
-        const scale = Math.min(2, 0.9 / Math.max(bounds.width / width, bounds.height / height));
-        
-        svg.transition().duration(500)
-          .call(zoom.transform, d3.zoomIdentity
-            .translate(width / 2, height / 2)
-            .scale(scale)
-            .translate(-dx, -dy));
-            
-        // For test compatibility
-        const selectedNode = {x: dx, y: dy};
-        const x = width / 2 - scale * selectedNode.x;
-      }
-    };
-    
-    // For test compatibility
-    const name = entity.attributes.name || entity.attributes.title || entity.id;
-    
-    // Add interactive entity links in the entity list
-    document.querySelectorAll('.entity-item').forEach(function(item) {
-      const link = item.querySelector('a');
-      if (link) {
-        const href = link.getAttribute('href');
-        const entityId = href.replace('.html', '');
-        
-        // Create an interactive link for graph navigation
-        const interactiveLink = document.createElement('a');
-        interactiveLink.setAttribute('href', 'javascript:void(0)');
-        interactiveLink.setAttribute('onclick', 'selectEntityById("' + entityId + '")');
-        interactiveLink.setAttribute('class', 'select-entity');
-        interactiveLink.innerHTML = '🔍';
-        interactiveLink.title = 'Find in graph';
-        
-        // For test compatibility
-        const linkHTML = '<a href="javascript:void(0)" onclick="selectEntityById(\'' + entityId + '\')">Find</a>';
-        
-        // Add it after the main link
-        link.parentNode.insertBefore(interactiveLink, link.nextSibling);
-      }
-    });
-    
-    // Setup zoom buttons using addEventListener for test compatibility
-    const zoomInBtn = document.getElementById('zoom-in');
-    zoomInBtn.addEventListener('click', function() {
-      d3.select('svg')
-        .transition()
-        .duration(300)
-        .call(zoom.scaleBy, 1.5);
-    });
-    
-    const zoomOutBtn = document.getElementById('zoom-out');
-    zoomOutBtn.addEventListener('click', function() {
-      d3.select('svg')
-        .transition()
-        .duration(300)
-        .call(zoom.scaleBy, 0.75);
-    });
-    
-    const zoomResetBtn = document.getElementById('zoom-reset');
-    zoomResetBtn.addEventListener('click', function() {
-      d3.select('svg')
-        .transition()
-        .duration(300)
-        .call(zoom.transform, d3.zoomIdentity);
-    });
-    
-    // Setup clear filters button
-    const clearFiltersBtn = document.getElementById('clear-filters');
-    clearFiltersBtn.addEventListener('click', function() {
-      Array.from(typeFilters.querySelectorAll('input')).forEach(input => {
-        input.checked = true;
-      });
-      updateFilters();
-    });
-    
-    initializeGraph(${JSON.stringify({ nodes: entities, links: relationships })});
-  </script>
+  ${assets.customScript}
 </body>
 </html>`;
 }
@@ -945,112 +815,14 @@ function generateEntityTypesList(ultralink) {
 }
 
 function generateVisualizationScript(ultralink) {
-  // Extract entity data for graph visualization
-  const nodes = Array.from(ultralink.entities.values()).map(entity => ({
-    id: entity.id,
-    type: entity.type,
-    label: entity.attributes.name || entity.attributes.title || entity.id,
-    attributes: { ...entity.attributes }
+  const nodes = Array.from(ultralink.entities.values(), ({ id, type, attributes }) => ({
+    id, type, label: attributes.name || attributes.title || id, attributes
   }));
-  
-  // Extract relationship data for graph visualization
-  const links = [];
-  
-  // Process relationships from the Map-based structure (nested Map)
-  ultralink.relationships.forEach((targetMap, source) => {
-    if (targetMap instanceof Map) {
-      targetMap.forEach((rel, target) => {
-        if (Array.isArray(rel)) {
-          rel.forEach(r => {
-            links.push({
-              source: source,
-              target: target,
-              type: r.type,
-              attributes: { ...r.attributes }
-            });
-          });
-        } else if (rel) {
-          links.push({
-            source: source,
-            target: target,
-            type: rel.type,
-            attributes: { ...rel.attributes }
-          });
-        }
-      });
-    }
-  });
+  const links = Array.from(ultralink.relationships.values(), ({ source, target, type, attributes }) => ({
+    source, target, type, attributes
+  }));
 
-  // Check for relationships in the flat Map structure
-  if (ultralink.relationships instanceof Map) {
-    ultralink.relationships.forEach((rel) => {
-      if (rel && rel.source && rel.target && rel.type) {
-        // Check if this relationship is already in the links array
-        if (!links.some(l => 
-          l.source === rel.source && 
-          l.target === rel.target && 
-          l.type === rel.type
-        )) {
-          links.push({
-            source: rel.source,
-            target: rel.target,
-            type: rel.type,
-            attributes: { ...rel.attributes }
-          });
-        }
-      }
-    });
-  }
-
-  // For backward compatibility with ultralink.store data structure
-  if (ultralink.store && ultralink.store.entities && ultralink.store.relationships) {
-    // Add relationships from store if they're not already included
-    Object.entries(ultralink.store.relationships).forEach(([source, targets]) => {
-      Object.entries(targets).forEach(([target, rels]) => {
-        const relationships = Array.isArray(rels) ? rels : [rels];
-        relationships.forEach(rel => {
-          if (rel && !links.some(l => l.source === source && l.target === target && l.type === rel.type)) {
-            links.push({
-              source: source,
-              target: target,
-              type: rel.type || 'related_to',
-              attributes: { ...rel.attributes }
-            });
-          }
-        });
-      });
-    });
-  }
-  
-  // Add relationships from the getRelationships method if available
-  if (typeof ultralink.getRelationships === 'function') {
-    try {
-      const allRelationships = ultralink.getRelationships();
-      if (Array.isArray(allRelationships)) {
-        allRelationships.forEach(rel => {
-          if (!links.some(l => l.source === rel.source && l.target === rel.target && l.type === rel.type)) {
-            links.push({
-              source: rel.source,
-              target: rel.target,
-              type: rel.type || 'related_to',
-              attributes: { ...rel.attributes }
-            });
-          }
-        });
-      }
-    } catch (error) {
-      console.warn('Error getting relationships:', error.message);
-    }
-  }
-
-  // Prepare the data object
-  const dataObject = {
-    nodes: nodes,
-    links: links
-  };
-  
-  // Stringify the data object for inclusion in the JS file
-  const dataString = JSON.stringify(dataObject, null, 2);
+  const dataString = JSON.stringify({ nodes, links }, null, 2);
 
   return `// Graph visualization data
 const data = ${dataString};
@@ -1267,26 +1039,46 @@ function initializeGraph(data) {
     });
   }
   
-  // Implement node selection functionality
-  node.on('click', (event, d) => {
-    // Reset all nodes and links
-    node.classed('selected', false).classed('neighbor', false);
-    link.classed('highlighted', false);
-    
-    // Highlight selected node
-    d3.select(event.currentTarget).classed('selected', true);
-    
-    // Find and highlight connected nodes and links
-    link.each(function(l) {
-      if ((l.source.id === d.id || l.source === d.id) || 
-          (l.target.id === d.id || l.target === d.id)) {
-        d3.select(this).classed('highlighted', true);
-        const otherId = (l.source.id === d.id || l.source === d.id) ? 
-          (l.target.id || l.target) : (l.source.id || l.source);
-        d3.select('[data-id="' + otherId + '"]').classed('neighbor', true);
-      }
+  function selectEntityById(id) {
+    const selected = node.filter(d => d.id === id);
+    if (selected.empty()) return;
+    const entity = selected.datum();
+
+    node.classed('selected', d => d.id === id);
+    const neighbors = new Set();
+    link.classed('highlighted', d => {
+      if (d.source.id === id) neighbors.add(d.target.id);
+      else if (d.target.id === id) neighbors.add(d.source.id);
+      else return false;
+      return true;
     });
-  });
+    node.classed('neighbor', d => d.id !== id && neighbors.has(d.id));
+    svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity
+      .translate(width / 2, height / 2).scale(2).translate(-entity.x, -entity.y));
+  }
+
+  node.on('click', (event, d) => selectEntityById(d.id));
+
+  const searchBox = document.getElementById('search-box');
+  const entries = searchBox && new Map(data.nodes.map(d => [d.id, d]));
+  const searchItems = [];
+  for (const item of document.querySelectorAll('.entity-item')) {
+    const id = item.querySelector('a').getAttribute('href').slice(0, -5);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'select-entity';
+    button.textContent = 'Find in graph';
+    button.addEventListener('click', () => selectEntityById(id));
+    item.appendChild(button);
+    if (searchBox) searchItems.push({ item, text: JSON.stringify(entries.get(id)).toLowerCase() });
+  }
+
+  if (searchBox) {
+    searchBox.addEventListener('input', () => {
+      const query = searchBox.value.trim().toLowerCase();
+      for (const { item, text } of searchItems) item.hidden = !text.includes(query);
+    });
+  }
   
   // Double-click to open entity page
   node.on('dblclick', (event, d) => {

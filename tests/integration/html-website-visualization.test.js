@@ -121,8 +121,11 @@ describe('HTML Website Visualization Tests', () => {
     // Get index.html content
     const indexHtml = websiteOutput['index.html'];
     
-    // Verify that index.html loads D3.js
-    expect(indexHtml).toContain('<script src="https://cdn.jsdelivr.net/npm/d3@7.9.2/dist/d3.min.js" integrity=');
+    // The page loads the bundled D3 asset rather than requiring a CDN.
+    expect(indexHtml).toContain('<script src="d3@7.min.js"></script>');
+    expect(websiteOutput['d3@7.min.js']).toContain('https://d3js.org');
+    const license = path.resolve(require.resolve('d3'), '../../LICENSE');
+    expect(websiteOutput['d3-LICENSE.txt']).toBe(fs.readFileSync(license, 'utf8'));
     
     // Verify that index.html has the graph container
     expect(indexHtml).toContain('<div id="graph"></div>');

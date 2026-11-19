@@ -25,10 +25,8 @@ function toJSON(ultralink, options = {}) {
       attributes: entity.attributes || {}
     };
     
-    // Add vector embeddings if requested
-    if (includeVectors) {
-      // Generate a sample vector (in a real implementation, this would come from the entity)
-      entityObj.vector = [0.1, 0.2, 0.3];
+    if (includeVectors && entity.vector) {
+      entityObj.vector = Array.isArray(entity.vector) ? entity.vector : Array.from(entity.vector);
     }
     
     entities.push(entityObj);
@@ -48,6 +46,7 @@ function toJSON(ultralink, options = {}) {
   // Create the result object
   const result = {
     metadata: {
+      ...ultralink.metadata,
       exportDate: new Date().toISOString(),
       entityCount: entities.length,
       relationshipCount: relationships.length

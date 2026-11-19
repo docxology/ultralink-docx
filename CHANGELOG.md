@@ -28,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved visualization robustness across all supported systems
 
 ### Fixed
+- Preserve research graph metadata in JSON and round-trip nested CSV and GraphML attributes.
+- Export an offline HTML website with working graph controls, theme assets, and custom CSS and JavaScript files.
+- Render actual graph nodes and edges in SVG and documented wiki-links and backlinks in Obsidian.
+- Generate real graph SVG in synchronous Full Blob exports and runnable Python scenes for Manim.
+- Restore discovered export test entrypoints and include all non-performance suites in `npm test`.
 - Resolved issues with GraphML attribute serialization
 - Fixed relationship counting in Full Blob exports
 - Corrected theme handling in HTML Website exports
