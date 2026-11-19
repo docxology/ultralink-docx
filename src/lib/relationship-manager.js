@@ -69,11 +69,13 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
       // distinct archive ID. Until then, the hook observes a normal overwrite.
       trackImportedOrder(this, state);
       overwritten = snapshotReceiverWrite(this, replaced);
-      overwritten.acceptedSlot = state.order.length;
     }
   }
   const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
   state.inserted.push(relationship);
+  // A temporary overwrite borrows the receiver's slot. If accepted as a
+  // separate row, the write belongs at its own chronological position.
+  if (overwritten) (state.overwriteSlots ??= new WeakMap()).set(relationship, state.order.length);
   if (state.order) rememberImportedSlot(state, relationship, replaced);
   if (overwritten || id !== compoundId || state.recoveredEffects.has(compoundId) || state.provisional.has(compoundId)) {
     recordReceiverWrite(this, state, compoundId, relationship, overwritten);
@@ -284,7 +286,7 @@ function reviveAcceptedWrite(graph, state, edge) {
   recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
   edge.id = nextRecoveryId(graph.relationships, state);
   indexRelationship.call(graph, edge);
-  insertImportedSlot(state, edge, state.slots.get(edge));
+  insertImportedSlot(state, edge, state.overwriteSlots?.get(edge) ?? state.slots.get(edge));
   return edge;
 }
 
@@ -353,7 +355,7 @@ function settleReceiverWrites(graph, state, accepted) {
           recoverDisplacedEdge(graph, edge, state);
           rememberImportedSlot(state, effect, edge);
           restoreReceiverSlot(state, effect, replaces);
-          insertImportedSlot(state, edge, displaced.acceptedSlot);
+          insertImportedSlot(state, edge, state.overwriteSlots.get(edge));
         } else {
           restoreReceiverSlot(state, effect, replaces);
         }

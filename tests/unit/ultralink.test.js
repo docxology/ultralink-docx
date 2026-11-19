@@ -1304,6 +1304,33 @@ describe('UltraLink', () => {
       }
     });
 
+    it.each([false, true])('preserves archived row order when a hook replaces its earlier audit (audit last: %s)', auditLast => {
+      ultralink.addEntity('author', 'node');
+      ultralink.addEntity('paper', 'node');
+      const first = ultralink.addLink('author', 'paper', 'cited', { revision: 1 });
+      const second = ultralink.addLink('author', 'paper', 'draft', { revision: 2 });
+      ultralink.updateRelationship(second.id, { type: 'reviewed' });
+      const auditId = 'author_reviewed_paper';
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          if (type === 'reviewed' && !auditLast) super.addRelationship(source, target, 'reviewed', { audit: 2 });
+          const accepted = super.addLink(source, target, type, attributes);
+          if (type === 'cited' || auditLast) super.addRelationship(source, target, 'reviewed', { audit: attributes.revision });
+          return accepted;
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        const audit = restored.getRelationship(auditId);
+        expect(audit.attributes).toEqual({ audit: 2 });
+        expect(restored.getBacklinks('paper')).toEqual([first, audit, second]);
+        expect(restored.toJSON({ lossless: true, asString: false }).relationships.map(({ id }) => id))
+          .toEqual([first.id, auditId, second.id]);
+        expect(restored.deleteLink('author', 'paper', 'reviewed')).toBe(true);
+        expect(restored.getBacklinks('paper')).toEqual([first, second]);
+      }
+    });
+
     it.each([false, true])('never restores displaced writes for a recreated source (new link: %s)', addNewLink => {
       for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
       const first = ultralink.addLink('a', 'd', 'b_c');
