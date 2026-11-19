@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { parseStringPromise } = require('xml2js');
 const { UltraLink } = require('../../src');
 const { createTestLogger, getSystemOutputPath } = require('../test-utils');
 
@@ -19,15 +20,27 @@ const logger = createTestLogger(logFile);
 // System name for organizing output
 const desertSystem = 'desert-ecosystem';
 
+function attributesByName(keys, element, scope) {
+  return Object.fromEntries(element.data.map(({ $: { key }, _: value }) => {
+    const declaration = keys.find(candidate => candidate.id === key);
+    expect(declaration).toMatchObject({ for: scope, 'attr.type': 'string' });
+    return [declaration['attr.name'], value];
+  }));
+}
+
 // Tests for the GraphML export functionality
-test('Basic GraphML export structure', () => {
+test('Basic GraphML export structure', async () => {
   logger.info('Setting up test dataset');
   
   // Create a sample UltraLink instance
   const ultralink = new UltraLink();
   
   // Add some entities
-  ultralink.addEntity('e1', 'person', { name: 'Alice' });
+  ultralink.addEntity('e1', 'person', {
+    name: 'Alice',
+    role: 'Researcher',
+    relationship_type: 'Research'
+  });
   ultralink.addEntity('e2', 'project', { name: 'ML Research' });
   ultralink.addEntity('e3', 'technology', { name: 'Python' });
   
@@ -46,42 +59,60 @@ test('Basic GraphML export structure', () => {
   
   logger.info(`Saved GraphML to ${outputFile}`);
   
-  // Check the structure of the GraphML
   expect(graphml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
-  expect(graphml).toContain('<graphml xmlns="http://graphml.graphdrawing.org/xmlns"');
-  expect(graphml).toContain('<key id="type" for="node"');
-  expect(graphml).toContain('<key id="attributes" for="node"');
-  expect(graphml).toContain('<key id="relType" for="edge"');
-  expect(graphml).toContain('<key id="relAttributes" for="edge"');
-  expect(graphml).toContain('<graph id="G" edgedefault="directed">');
-  
-  // Check that our entities are in the GraphML
-  expect(graphml).toContain('<node id="e1">');
-  expect(graphml).toContain('<node id="e2">');
-  expect(graphml).toContain('<node id="e3">');
-  
-  // Check that our relationships are in the GraphML
-  expect(graphml).toContain('<edge source="e1" target="e2">');
-  expect(graphml).toContain('<edge source="e2" target="e3">');
+  const { graphml: document } = await parseStringPromise(graphml);
+  expect(document.$.xmlns).toBe('http://graphml.graphdrawing.org/xmlns');
+  const [graph] = document.graph;
+  expect(document.graph).toHaveLength(1);
+  expect(graph.$).toEqual({ id: 'G', edgedefault: 'directed' });
+
+  const keys = document.key.map(({ $ }) => $);
+  expect(graph.key).toBeUndefined();
+  expect(graphml.lastIndexOf('<key ')).toBeLessThan(graphml.indexOf('<graph '));
+  expect(new Set(keys.map(key => key.id)).size).toBe(keys.length);
+
+  expect(graph.node.map(({ $ }) => $.id)).toEqual(['e1', 'e2', 'e3']);
+  expect(graph.node.map(node => attributesByName(keys, node, 'node'))).toEqual([
+    { type: 'person', name: 'Alice', role: 'Researcher', relationship_type: 'Research' },
+    { type: 'project', name: 'ML Research' },
+    { type: 'technology', name: 'Python' }
+  ]);
+
+  expect(graph.edge.map(({ $ }) => $)).toEqual([
+    { source: 'e1', target: 'e2' },
+    { source: 'e2', target: 'e3' }
+  ]);
+  expect(graph.edge.map(edge => attributesByName(keys, edge, 'edge'))).toEqual([
+    { type: 'works_on', role: 'Lead Researcher' },
+    { type: 'uses', proficiency: 'Advanced' }
+  ]);
 });
 
-test('Detailed attribute handling in GraphML', () => {
+test('Detailed attribute handling in GraphML', async () => {
   logger.info('Setting up test dataset with detailed attributes');
   
   // Create a sample UltraLink instance
   const ultralink = new UltraLink();
   
-  // Add an entity with various attribute types
-  ultralink.addEntity('e1', 'dataset', {
-    name: 'Test Dataset',
+  const specialAttribute = 'R&D <label> "status"';
+  const name = 'Test Dataset & "Reference"';
+  const labels = ['test', 'sample', 'example'];
+  const metadata = {
+    created: '2023-01-01',
+    updated: '2023-02-15',
+    source: 'https://example.com/data'
+  };
+  const entityType = 'dataset & collection';
+  const edgeType = 'cites <reference>';
+  ultralink.addEntity('e1', entityType, {
+    name,
     size: 1024,
-    labels: ['test', 'sample', 'example'],
-    metadata: {
-      created: '2023-01-01',
-      updated: '2023-02-15',
-      source: 'https://example.com/data'
-    }
+    labels,
+    metadata,
+    [specialAttribute]: '"Ready" & <verified> \'notes\''
   });
+  ultralink.addEntity('e2', 'reference');
+  ultralink.addLink('e1', 'e2', edgeType, { [specialAttribute]: 'peer reviewed & accepted' });
   
   // Generate GraphML with all attributes
   logger.info('Generating GraphML with full attributes');
@@ -94,11 +125,23 @@ test('Detailed attribute handling in GraphML', () => {
   
   logger.info(`Saved GraphML with attributes to ${outputFile}`);
   
-  // Check that JSON serialization is used for complex attributes
-  expect(graphml).toContain('Test Dataset');
-  expect(graphml).toContain('1024');
-  expect(graphml).toContain('"labels":["test","sample","example"]');
-  expect(graphml).toContain('"metadata":{"created":"2023-01-01","updated":"2023-02-15","source":"https://example.com/data"}');
+  const { graphml: document } = await parseStringPromise(graphml);
+  const keys = document.key.map(({ $ }) => $);
+  const [graph] = document.graph;
+  const node = graph.node.find(({ $ }) => $.id === 'e1');
+  const attrs = attributesByName(keys, node, 'node');
+  expect(attrs).toMatchObject({
+    type: entityType,
+    name,
+    size: '1024',
+    [specialAttribute]: '"Ready" & <verified> \'notes\''
+  });
+  expect(JSON.parse(attrs.labels)).toEqual(labels);
+  expect(JSON.parse(attrs.metadata)).toEqual(metadata);
+  expect(attributesByName(keys, graph.edge[0], 'edge')).toEqual({
+    type: edgeType,
+    [specialAttribute]: 'peer reviewed & accepted'
+  });
 });
 
 // Clean up resources after tests
@@ -106,21 +149,3 @@ afterAll(() => {
   logger.info('Cleaning up test resources');
   // We'll keep the output files for inspection
 });
-
-// Export the test runner
-module.exports = {
-  runGraphMLExportTests
-};
-
-// If this script is run directly, execute the tests
-if (require.main === module) {
-  runGraphMLExportTests()
-    .then(results => {
-      console.log('GraphML Export Tests completed');
-      process.exit(results.failed > 0 ? 1 : 0);
-    })
-    .catch(error => {
-      console.error('Error running GraphML Export Tests:', error);
-      process.exit(1);
-    });
-} 

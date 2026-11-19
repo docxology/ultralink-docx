@@ -4,9 +4,10 @@
  * Runs the test suite with improved reporting and logging
  */
 
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const jest = require.resolve('jest/bin/jest');
 
 // Colors and formatting
 const colors = {
@@ -28,27 +29,32 @@ const colors = {
 const testSuites = [
   { 
     name: 'Performance Tests',
-    command: 'npx jest tests/performance',
+    args: ['/tests/performance/'],
     required: false
   },
   { 
     name: 'Unit Tests',
-    command: 'npx jest tests/unit',
+    args: ['/tests/unit/'],
     required: true
   },
   { 
     name: 'Integration Tests',
-    command: 'npx jest tests/integration',
+    args: ['/tests/integration/'],
     required: true
   },
   { 
     name: 'System Export Tests',
-    command: 'npx jest tests/system',
+    args: ['/tests/system/'],
     required: true
   },
   { 
     name: 'End-to-End Tests',
-    command: 'npx jest tests/e2e',
+    args: ['/tests/e2e/'],
+    required: true
+  },
+  {
+    name: 'Format and Other Tests',
+    args: ['--testPathIgnorePatterns', '/node_modules/|/tests/(unit|integration|system|e2e|performance)/'],
     required: true
   }
 ];
@@ -142,10 +148,12 @@ for (const suite of testSuites) {
     testReport.summary.skipped++;
     continue;
   }
+  const jestArgs = ['--ci', ...suite.args];
+  const command = `jest ${jestArgs.join(' ')}`;
   
   const suiteReport = {
     name: suite.name,
-    command: suite.command,
+    command,
     required: suite.required,
     status: 'pending',
     output: '',
@@ -156,7 +164,7 @@ for (const suite of testSuites) {
   printSectionHeader(`Running ${suite.name}`);
   
   try {
-    const output = execSync(suite.command, { encoding: 'utf-8' });
+    const output = execFileSync(process.execPath, [jest, ...jestArgs], { encoding: 'utf-8' });
     suiteReport.output = output;
     suiteReport.status = 'passed';
     suiteReport.exitCode = 0;
@@ -177,7 +185,7 @@ for (const suite of testSuites) {
     
     // Failure message
     console.log(`\n${colors.bgRed}${colors.bright} FAIL ${colors.reset} ${colors.red}${suite.name} failed with exit code ${error.status}${colors.reset}`);
-    console.log(`   ${colors.dim}Test command:${colors.reset} ${suite.command}`);
+    console.log(`   ${colors.dim}Test command:${colors.reset} ${command}`);
     console.log(`   ${colors.red}Error details:${colors.reset} ${error.message}\n`);
     
     failedSuites.push(suite.name);

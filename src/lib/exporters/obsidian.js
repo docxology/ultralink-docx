@@ -11,7 +11,30 @@
  * @returns {Object} Object containing the exported file data
  */
 function toObsidian(ultralink, options = {}) {
+  const {
+    includeMetadata = true,
+    includeAttributes = true,
+    includeRelationships = true,
+    backlinks = true
+  } = options;
   const files = {};
+  const outgoingBySource = includeRelationships ? new Map() : null;
+  const incomingByTarget = backlinks ? new Map() : null;
+
+  // Use the stored endpoints; lookup indexes can retain an ID after an edge is deleted.
+  if (outgoingBySource || incomingByTarget) {
+    for (const rel of ultralink.relationships.values()) {
+      if (outgoingBySource) {
+        let byType = outgoingBySource.get(rel.source);
+        if (!byType) {
+          byType = new Map();
+          outgoingBySource.set(rel.source, byType);
+        }
+        appendRelationship(byType, rel.type, rel);
+      }
+      if (incomingByTarget) appendRelationship(incomingByTarget, rel.target, rel);
+    }
+  }
   
   // Process each entity
   for (const entity of ultralink.entities.values()) {
@@ -23,53 +46,51 @@ function toObsidian(ultralink, options = {}) {
     content += '---\n';
     content += `type: ${entity.type}\n`;
     content += `id: ${entity.id}\n`;
+    if (includeMetadata && entity.metadata) {
+      const { created, modified } = entity.metadata;
+      if (created) content += `created: ${created}\n`;
+      if (modified) content += `modified: ${modified}\n`;
+    }
     content += '---\n\n';
-    
+
     // Add title
     const title = entity.attributes.name || entity.attributes.title || entity.id;
     content += `# ${title}\n\n`;
     
-    // Add metadata section
-    content += `## Metadata\n\n`;
-    content += `- **Type**: ${entity.type}\n`;
-    content += `- **ID**: ${entity.id}\n\n`;
-    
-    // Add attributes section
-    content += `## Attributes\n\n`;
-    for (const [key, value] of Object.entries(entity.attributes || {})) {
-      if (key !== 'name' && key !== 'title') {
-        content += `- **${key}**: ${value}\n`;
-      }
+    if (includeMetadata) {
+      content += `## Metadata\n\n- **Type**: ${entity.type}\n- **ID**: ${entity.id}\n\n`;
     }
-    content += '\n';
-    
-    // Add relationships section
-    content += `## Relationships\n\n`;
-    
-    // Get relationships where this entity is the source
-    const outgoingRelationships = Array.from(ultralink.relationships.values())
-      .filter(rel => rel.source === entity.id);
-    
-    if (outgoingRelationships.length > 0) {
-      content += `### Outgoing\n\n`;
-      for (const rel of outgoingRelationships) {
-        const targetEntity = ultralink.entities.get(rel.target);
-        const targetName = targetEntity?.attributes?.name || targetEntity?.attributes?.title || rel.target;
-        content += `- **${rel.type}** → [[${rel.target}]] (${targetName})\n`;
+
+    if (includeAttributes) {
+      content += '## Attributes\n\n';
+      for (const [key, value] of Object.entries(entity.attributes)) {
+        if (key !== 'name' && key !== 'title') {
+          content += `- **${key}**: ${formatValue(value)}\n`;
+        }
       }
       content += '\n';
     }
-    
-    // Get relationships where this entity is the target
-    const incomingRelationships = Array.from(ultralink.relationships.values())
-      .filter(rel => rel.target === entity.id);
-    
-    if (incomingRelationships.length > 0) {
-      content += `### Incoming\n\n`;
-      for (const rel of incomingRelationships) {
-        const sourceEntity = ultralink.entities.get(rel.source);
-        const sourceName = sourceEntity?.attributes?.name || sourceEntity?.attributes?.title || rel.source;
-        content += `- **${rel.type}** ← [[${rel.source}]] (${sourceName})\n`;
+
+    if (includeRelationships) content += '## Relationships\n\n';
+    const byType = outgoingBySource?.get(entity.id);
+    if (byType) {
+      for (const [type, relationships] of byType) {
+        content += `### ${type}\n\n`;
+        for (const rel of relationships) {
+          const link = noteLink(ultralink, rel.target);
+          const attributes = formatRelationshipAttributes(rel);
+          content += `- ${link}${attributes ? ` (${attributes})` : ''}\n`;
+        }
+        content += '\n';
+      }
+    }
+
+    const incoming = incomingByTarget?.get(entity.id);
+    if (incoming) {
+      content += '## Backlinks\n\n';
+      for (const rel of incoming) {
+        const attributes = formatRelationshipAttributes(rel);
+        content += `- ${noteLink(ultralink, rel.source)} (${rel.type}${attributes ? `: ${attributes}` : ''})\n`;
       }
       content += '\n';
     }
@@ -106,25 +127,26 @@ function toObsidian(ultralink, options = {}) {
   return files;
 }
 
-/**
- * Helper function to format values for YAML frontmatter
- * @param {any} value - Value to format
- * @returns {string} Formatted value
- */
-function formatYamlValue(value) {
-  if (value === undefined || value === null) {
-    return 'null';
-  } else if (typeof value === 'string') {
-    // Check if we need to quote the string
-    if (value.includes(':') || value.includes('\n') || value.includes("'") || value.includes('"')) {
-      return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
-    }
-    return value;
-  } else if (typeof value === 'object' && value !== null) {
-    return JSON.stringify(value);
-  } else {
-    return String(value);
-  }
+function appendRelationship(groups, key, relationship) {
+  const group = groups.get(key);
+  if (group) group.push(relationship);
+  else groups.set(key, [relationship]);
+}
+
+function noteLink(ultralink, id) {
+  const attributes = ultralink.entities.get(id)?.attributes;
+  const title = attributes?.name || attributes?.title || id;
+  return title === id ? `[[${id}]]` : `[[${id}|${title}]]`;
+}
+
+function formatValue(value) {
+  return typeof value === 'object' ? JSON.stringify(value) : String(value);
+}
+
+function formatRelationshipAttributes(relationship) {
+  return Object.entries(relationship.attributes)
+    .map(([key, value]) => `${key}: ${formatValue(value)}`)
+    .join(', ');
 }
 
 module.exports = { toObsidian }; 

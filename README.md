@@ -82,6 +82,7 @@ channels. Human overview: [docs/README.md](docs/README.md).
 ```bash
 npm install          # once
 npx jest --ci --silent   # full suite; per-suite: npx jest tests/unit
+npm test                # default package route; excludes performance tests
 ```
 
 **What to do next:** the canonical backlog is [TODO.md](TODO.md) (Minor /
@@ -94,10 +95,10 @@ link here instead.
 `docs/AGENTS.md` is the single hub for agent-facing documentation; every other
 agent doc should link to it, not copy it.
 
-**Known local quirks (verified 2026-08-31):**
+**Known local quirks:**
 
-- `test.js` at repo root is a 3-line smoke snippet, not a test — do not use it
-  as the verification gate.
+- `test.js` at repo root is a package smoke test, also runnable as `node test.js`.
+  Use the full Jest command above for verification.
 - `src/index.js.bak` is a stale backup; ignore, do not delete.
 - README badges were trimmed 2026-10-26: the CI/coverage/Discord/Twitter/docs
   badges pointed at a nonexistent `ultralink/ultralink` org or dead domains.

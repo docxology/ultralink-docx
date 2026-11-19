@@ -1,10 +1,20 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+const { JSDOM } = require('jsdom');
 const { UltraLink } = require('../../src');
 const { setupLogging, getSystemOutputPath } = require('../test-utils');
 
 // Set up logging for this test
 const logger = setupLogging('html-website-export-test');
+
+function writeWebsite(directory, files) {
+  for (const [filename, content] of Object.entries(files)) {
+    const destination = path.join(directory, filename);
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, content);
+  }
+}
 
 describe('HTML Website Export', () => {
   // System names for organizing output
@@ -84,10 +94,7 @@ describe('HTML Website Export', () => {
     
     // Save the files for inspection
     const websiteDir = getSystemOutputPath(desertSystem, 'html-website');
-    
-    Object.entries(htmlFiles).forEach(([filename, content]) => {
-      fs.writeFileSync(path.join(websiteDir, filename), content);
-    });
+    writeWebsite(websiteDir, htmlFiles);
     
     logger.info(`Saved HTML Website to ${websiteDir}`);
     
@@ -100,7 +107,13 @@ describe('HTML Website Export', () => {
     expect(htmlFiles['index.html']).toContain('<title>Desert Ecosystem</title>');
     expect(htmlFiles['index.html']).toContain('Interactive visualization of desert ecosystem relationships');
     expect(htmlFiles['index.html']).toContain('d3@7');
-    expect(htmlFiles['index.html']).toContain('const data =');
+    expect(htmlFiles['index.html']).toContain('<script src="graph.js"></script>');
+    const graph = JSON.parse(htmlFiles['graph.js'].match(/^const data = ([\s\S]+?);\n/m)[1]);
+    expect(graph.nodes.map(node => node.id)).toEqual(['desert', 'saguaro', 'kangaroo-rat']);
+    expect(graph.links).toHaveLength(3);
+    expect(graph.links).toContainEqual({
+      source: 'kangaroo-rat', target: 'saguaro', type: 'shelters_near', attributes: {}
+    });
     
     // Check entity page content
     expect(htmlFiles['saguaro.html']).toContain('<title>Saguaro Cactus - Desert Ecosystem</title>');
@@ -166,24 +179,33 @@ describe('HTML Website Export', () => {
       'depends_on'
     );
     
-    // Generate HTML Website with custom options
-    logger.info('Generating HTML Website with custom options');
-    const htmlFiles = ultralink.toHTMLWebsite({
-      title: 'Project Management',
-      description: 'Project task tracking visualization',
-      theme: 'dark',
-      includeSearch: true,
-      includeFilters: true,
-      customCSS: '.task { background-color: rgba(33, 150, 243, 0.1); }',
-      customJS: 'console.log("Custom JS loaded");'
-    });
+    const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'ultralink-custom-'));
+    const customCSS = path.join(temp, 'tasks.css');
+    const customJS = path.join(temp, 'tasks.js');
+    const css = '.task { background-color: rgba(33, 150, 243, 0.1); }';
+    const js = 'document.body.dataset.customLoaded = "yes";';
+    fs.writeFileSync(customCSS, css);
+    fs.writeFileSync(customJS, js);
+    let htmlFiles;
+    try {
+      htmlFiles = ultralink.toHTMLWebsite({
+        title: 'Project Management',
+        description: 'Project task tracking visualization',
+        theme: 'dark',
+        includeSearch: true,
+        includeFilters: true,
+        customCSS,
+        customJS
+      });
+    } finally {
+      fs.unlinkSync(customCSS);
+      fs.unlinkSync(customJS);
+      fs.rmdirSync(temp);
+    }
     
     // Save the files for inspection
     const websiteDir = getSystemOutputPath(projectSystem, 'html-website-custom');
-    
-    Object.entries(htmlFiles).forEach(([filename, content]) => {
-      fs.writeFileSync(path.join(websiteDir, filename), content);
-    });
+    writeWebsite(websiteDir, htmlFiles);
     
     logger.info(`Saved custom HTML Website to ${websiteDir}`);
     
@@ -193,15 +215,25 @@ describe('HTML Website Export', () => {
     expect(Object.keys(htmlFiles)).toContain('task1.html');
     expect(Object.keys(htmlFiles)).toContain('task2.html');
     
-    // Check custom theme and options
-    expect(htmlFiles['index.html']).toContain('--bg-color: #121212');
-    expect(htmlFiles['index.html']).toContain('search-box');
-    expect(htmlFiles['index.html']).toContain('type-filters');
-    expect(htmlFiles['index.html']).toContain('.task { background-color: rgba(33, 150, 243, 0.1); }');
-    expect(htmlFiles['index.html']).toContain('console.log("Custom JS loaded");');
-    
-    // Check entity pages with custom theme
-    expect(htmlFiles['task1.html']).toContain('--bg-color: #121212');
-    expect(htmlFiles['task1.html']).toContain('console.log("Custom JS loaded");');
+    expect(htmlFiles['styles/dark.css']).toContain('--bg-color: #202124');
+    expect(htmlFiles['custom.css']).toBe(css);
+    expect(htmlFiles['custom.js']).toBe(js);
+    for (const filename of ['index.html', 'task1.html']) {
+      const dom = new JSDOM(htmlFiles[filename]);
+      try {
+        const document = dom.window.document;
+        expect([...document.querySelectorAll('link[rel="stylesheet"]')].map(link => link.getAttribute('href')))
+          .toEqual(['styles.css', 'styles/dark.css', 'custom.css']);
+        expect(document.querySelector('script[src="custom.js"]')).not.toBeNull();
+        if (filename === 'index.html') {
+          expect(document.querySelector('input[type="search"]#search-box')).not.toBeNull();
+          expect(document.querySelector('#type-filters')).not.toBeNull();
+        }
+      } finally {
+        dom.window.close();
+      }
+    }
+    const withoutControls = ultralink.toHTMLWebsite({ includeSearch: false, includeFilters: false });
+    expect(withoutControls['index.html']).not.toMatch(/id="(?:search-box|type-filters)"/);
   });
 }); 

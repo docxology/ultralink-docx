@@ -4,10 +4,13 @@
  * Tests for various export formats supported by UltraLink.
  */
 
+jest.unmock('d3');
+
 const fs = require('fs');
 const path = require('path');
 const { UltraLink } = require('../../src');
 const { createTestDataset, getSystemOutputPath } = require('../test-utils');
+const { parseStringPromise } = require('xml2js');
 
 // System names for organizing output
 const desertSystem = 'desert-ecosystem';
@@ -648,26 +651,24 @@ describe('Bayesian Network Export', () => {
 });
 
 describe('Visualization Export', () => {
-  test('SVG format should contain nodes and links', async () => {
-    // Use await since toVisualization is async
-    const svgOutput = await ultralink.toVisualization({ format: 'svg' });
-    
-    // Check if svgOutput is an object with graph.svg property
-    let svg;
-    if (typeof svgOutput === 'object' && svgOutput['graph.svg']) {
-      svg = svgOutput['graph.svg'];
-    } else {
-      svg = String(svgOutput);
+  test.each(['force', 'grid', 'radial'])('SVG %s layout positions real nodes and links', async layout => {
+    const { 'graph.svg': svg } = await ultralink.toVisualization({ format: 'svg', layout });
+    const parsed = (await parseStringPromise(svg)).svg;
+    expect(parsed.$.viewBox).toBe('0,0,800,600');
+    expect(parsed.style[0]).toContain('.node');
+
+    const groups = Object.fromEntries(parsed.g.map(group => [group.$.class, group]));
+    const positions = groups.nodes.circle.map(({ $: { cx, cy } }) => [cx, cy]);
+    expect(positions).toHaveLength(ultralink.entities.size);
+    expect(groups.labels.text.map(label => label._)).toContain('Saguaro Cactus');
+    expect(groups.links.line).toHaveLength(ultralink.relationships.size);
+    for (const point of positions) {
+      expect(point.map(Number).every(Number.isFinite)).toBe(true);
     }
-    
-    // Check SVG structure
-    expect(svg).toContain('<svg');
-    expect(svg).toContain('viewBox');
-    expect(svg).toContain('<style>');
-    
-    // Check that nodes and links are in the SVG
-    expect(svg).toContain('<g class="nodes">');
-    expect(svg).toContain('<g class="links">');
+    for (const { $: { x1, y1, x2, y2 } } of groups.links.line) {
+      expect(positions).toContainEqual([x1, y1]);
+      expect(positions).toContainEqual([x2, y2]);
+    }
   });
   
   test('D3 format should create a valid HTML file with D3 code', async () => {

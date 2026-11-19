@@ -1,186 +1,174 @@
 const { expect } = require('chai');
-const UltraLink = require('../../src/ultralink');
+const { UltraLink } = require('../../src');
 const { createDesertEcosystemDataset } = require('../fixtures/Systems/DesertEcosystem/desert-ecosystem');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
-const { execSync, execFileSync } = require('child_process');
+const { execFileSync, spawnSync } = require('child_process');
+
+function readSceneGraph(code) {
+  const match = code.match(/^\s*graph = json\.loads\((".*")\)$/m);
+  expect(match, 'the scene should load a serialized graph').not.to.be.null;
+  return JSON.parse(JSON.parse(match[1]));
+}
+
+function commandAvailable(command, versionFlag = '--version') {
+  const result = spawnSync(command, [versionFlag], { encoding: 'utf8', timeout: 10000 });
+  if (result.error?.code === 'ENOENT') return false;
+  if (result.error) throw result.error;
+  expect(result.status, `${command} ${versionFlag}: ${result.stderr}`).to.equal(0);
+  return true;
+}
 
 describe('Manim Format', () => {
   let ultralink;
-  let testOutputDir;
 
   beforeEach(() => {
     ultralink = createDesertEcosystemDataset();
-    testOutputDir = path.join(__dirname, '..', 'tmp', 'manim-test');
-    if (!fs.existsSync(testOutputDir)) {
-      fs.mkdirSync(testOutputDir, { recursive: true });
-    }
   });
 
-  afterEach(() => {
-    // Clean up test output directory
-    if (fs.existsSync(testOutputDir)) {
-      fs.rmSync(testOutputDir, { recursive: true, force: true });
-    }
+  it('should generate valid Manim Python code for the actual graph', () => {
+    const code = ultralink.toManim();
+    expect(code).to.be.a('string');
+    expect(code).to.include('from manim import *');
+    expect(code).to.include('class UltraLinkGraph(Scene):');
+    expect(code).to.include('def construct(self):');
+    expect(code).to.include('Text(');
+    expect(code).to.include('self.play(');
+    expect(code).to.include('self.wait(');
+    expect(code).to.include('Arrow(');
+
+    const graph = readSceneGraph(code);
+    const labels = new Map(graph.entities.map(entity => [entity.id, entity.label]));
+    expect(labels.size).to.equal(ultralink.entities.size);
+    expect(labels.get('saguaro')).to.equal('Saguaro Cactus');
+    expect(labels.get('kangaroo_rat')).to.equal("Merriam's Kangaroo Rat");
+    expect(labels.get('aridity')).to.equal('Aridity');
+    expect(graph.relationships).to.deep.equal(Array.from(ultralink.relationships.values(), ({
+      source, target, type
+    }) => ({ source, target, type })));
+    expect(graph.relationships).to.deep.include({ source: 'kangaroo_rat', target: 'aridity', type: 'adapted_to' });
+    expect(graph.relationships).to.deep.include({ source: 'kangaroo_rat', target: 'dune_field', type: 'lives_in' });
   });
 
-  it('should generate valid Manim Python code', () => {
-    const manimCode = ultralink.toManim();
-    
-    // Basic structure checks
-    expect(manimCode).to.be.a('string');
-    expect(manimCode).to.include('from manim import *');
-    expect(manimCode).to.include('class UltraLinkGraph(Scene):');
-    expect(manimCode).to.include('def construct(self):');
-    
-    // Check for essential Manim components
-    expect(manimCode).to.include('Text(');
-    expect(manimCode).to.include('self.play(');
-    expect(manimCode).to.include('self.wait(');
-    
-    // Check for entity representations
-    expect(manimCode).to.include('saguaro');
-    expect(manimCode).to.include('kangaroo-rat');
-    expect(manimCode).to.include('aridity');
-    
-    // Check for relationship animations
-    expect(manimCode).to.include('Arrow(');
-    expect(manimCode).to.include('adapts_to');
-    expect(manimCode).to.include('shares_habitat');
-  });
-
-  it('should generate Manim code with custom options', () => {
-    const manimCode = ultralink.toManim({
+  it('should use the requested Manim theme, duration, narration and highlighting', () => {
+    const code = ultralink.toManim({
       animationStyle: 'explanatory',
       visualTheme: 'dark',
       includeNarrationText: true,
       highlightCentralEntities: true,
       animationDuration: 60
     });
-    
-    // Check for custom options being applied
-    expect(manimCode).to.include('font_color="#ece6e2"'); // Dark theme text color
-    expect(manimCode).to.include('self.wait(2)'); // Animation timing
-    expect(manimCode).to.include('Text('); // Narration text
-    expect(manimCode).to.include('Indicate('); // Entity highlighting
+    expect(code).to.include('text_color = "#ece6e2"');
+    expect(code).to.include('config.background_color = "#242428"');
+    expect(code).to.include('duration = 60');
+    expect(code).to.include('self.wait(max(beat, duration - self.time - beat))');
+    expect(code).to.include('subtitle = Text("Follow the entities and their relationships"');
+    expect(code).to.include('Indicate(entities[graph["centralEntity"]])');
+
+    const { centralEntity, entities, relationships } = readSceneGraph(code);
+    const degree = id => relationships.filter(rel => rel.source === id).length
+      + relationships.filter(rel => rel.target === id).length;
+    expect(degree(centralEntity)).to.equal(Math.max(...entities.map(entity => degree(entity.id))));
+
+    const minimal = ultralink.toManim({ includeNarrationText: false, highlightCentralEntities: false });
+    expect(minimal).not.to.include('subtitle = Text(');
+    expect(minimal).not.to.include('Indicate(');
   });
 
-  it('should handle empty graphs gracefully', () => {
-    const emptyUltralink = new UltraLink();
-    const manimCode = emptyUltralink.toManim();
-    
-    // Should still generate valid Manim code
-    expect(manimCode).to.be.a('string');
-    expect(manimCode).to.include('from manim import *');
-    expect(manimCode).to.include('class UltraLinkGraph(Scene):');
-    expect(manimCode).to.include('def construct(self):');
-    
-    // Should include a message about empty graph
-    expect(manimCode).to.include('Empty Knowledge Graph');
-  });
-
-  it('should include mathematical formulas when relevant', () => {
-    const manimCode = ultralink.toManim();
-    
-    // Check for mathematical formula components
-    expect(manimCode).to.include('MathTex(');
-    expect(manimCode).to.include('VGroup(');
-    expect(manimCode).to.include('arrange(DOWN)');
-  });
-
-  it('should generate valid animation sequences', () => {
-    const manimCode = ultralink.toManim();
-    
-    // Check animation sequence structure
-    const playCommands = (manimCode.match(/self\.play\(/g) || []).length;
-    const waitCommands = (manimCode.match(/self\.wait\(/g) || []).length;
-    
-    // Should have multiple animations and wait commands
-    expect(playCommands).to.be.greaterThan(5);
-    expect(waitCommands).to.be.greaterThan(2);
-    
-    // Should have proper animation order
-    expect(manimCode.indexOf('self.play(')).to.be.lessThan(manimCode.indexOf('self.wait('));
-  });
-
-  it('should generate actual Manim output if Manim is installed', async function() {
-    this.timeout(300000); // Allow 5 minutes for Manim rendering
-    
-    // Check if Manim is installed
-    let manimAvailable = false;
-    try {
-      execSync('manim --version', { stdio: 'ignore' });
-      manimAvailable = true;
-    } catch (error) {
-      console.warn('⚠️ Skipping Manim output test - Manim not installed');
-      this.skip();
-      return;
+  it('should label empty graphs without adding sample graph data', () => {
+    for (const systemName of ['UltraLink', 'Car']) {
+      const empty = new UltraLink();
+      const code = empty.toManim({ systemName });
+      expect(code).to.be.a('string');
+      expect(code).to.include('from manim import *');
+      expect(code).to.include('class UltraLinkGraph(Scene):');
+      expect(code).to.include('def construct(self):');
+      expect(code).to.include('Text("Empty Knowledge Graph"');
+      expect(readSceneGraph(code)).to.deep.equal({ systemName, entities: [], relationships: [] });
+      expect(empty.getStats()).to.include({ entityCount: 0, relationshipCount: 0 });
     }
-    
-    if (manimAvailable) {
-      // Generate Manim code
-      const manimCode = ultralink.toManim({
+  });
+
+  it('should render mathematical attributes as MathTex', () => {
+    const formula = String.raw`Q = \sigma A T^4`;
+    ultralink.addEntity('heat-loss', 'formula', { title: 'Radiative heat loss', formula });
+    const code = ultralink.toManim();
+
+    expect(readSceneGraph(code).entities).to.deep.include({
+      id: 'heat-loss', type: 'formula', label: 'Radiative heat loss', formula
+    });
+    expect(code).to.include('VGroup(*(MathTex(entity["formula"], color=text_color)');
+    expect(code).to.include('for entity in graph["entities"] if entity.get("formula")');
+    expect(code).to.include('formulas.arrange(DOWN)');
+    expect(code).to.include('self.play(Write(formulas)');
+  });
+
+  it('should generate ordered animation stages for the title, nodes and edges', () => {
+    const code = ultralink.toManim();
+    expect(code.match(/self\.play\(/g).length).to.be.greaterThan(5);
+    expect(code.match(/self\.wait\(/g).length).to.be.greaterThan(2);
+    expect(code.indexOf('self.play(')).to.be.lessThan(code.indexOf('self.wait('));
+    expect(code.indexOf('self.play(Write(title_group)')).to.be.lessThan(code.indexOf('FadeIn(group)'));
+    expect(code.indexOf('FadeIn(group)')).to.be.lessThan(code.indexOf('Create(arrow)'));
+  });
+
+  it('should save a Python scene and render media when Manim is installed', () => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'ultralink-manim-'));
+    try {
+      const systemName = 'Desert "Ecosystem"\nVisualization';
+      const code = ultralink.toManim({
+        systemName,
         animationStyle: 'explanatory',
         visualTheme: 'dark',
         includeNarrationText: true,
-        highlightCentralEntities: true
+        highlightCentralEntities: true,
+        animationDuration: 4
       });
-      
-      // Save Python script
-      const pythonFile = path.join(testOutputDir, 'test_animation.py');
-      fs.writeFileSync(pythonFile, manimCode);
-      
-      // Run Manim
-      try {
-        execFileSync('manim', ['-ql', pythonFile, 'UltraLinkGraph'], {
-          stdio: ['ignore', 'pipe', 'pipe'],
-          cwd: testOutputDir
-        });
-        
-        // Check for output files
-        const mediaDir = path.join(testOutputDir, 'media', 'videos');
-        expect(fs.existsSync(mediaDir)).to.be.true;
-        
-        const mp4File = path.join(mediaDir, 'UltraLinkGraph.mp4');
-        expect(fs.existsSync(mp4File)).to.be.true;
-        
-        // Check file size (should be non-zero)
-        const stats = fs.statSync(mp4File);
-        expect(stats.size).to.be.greaterThan(0);
-        
-        // Try to generate GIF
-        try {
-          const gifFile = path.join(testOutputDir, 'test_animation.gif');
-          execFileSync('ffmpeg', ['-i', mp4File, '-vf', 'fps=10,scale=720:-1', gifFile], {
-            stdio: ['ignore', 'pipe', 'pipe']
-          });
-          
-          expect(fs.existsSync(gifFile)).to.be.true;
-          const gifStats = fs.statSync(gifFile);
-          expect(gifStats.size).to.be.greaterThan(0);
-        } catch (error) {
-          console.warn('⚠️ GIF conversion failed - ffmpeg might not be installed');
-        }
-        
-        // Try to extract frames
-        try {
-          const framesDir = path.join(testOutputDir, 'frames');
-          fs.mkdirSync(framesDir, { recursive: true });
-          
-          execFileSync('ffmpeg', ['-i', mp4File, '-vf', 'fps=1', path.join(framesDir, 'frame_%04d.png')], {
-            stdio: ['ignore', 'pipe', 'pipe']
-          });
-          
-          // Check for at least one frame
-          const frames = fs.readdirSync(framesDir);
-          expect(frames.length).to.be.greaterThan(0);
-        } catch (error) {
-          console.warn('⚠️ Frame extraction failed - ffmpeg might not be installed');
-        }
-      } catch (error) {
-        console.error('Error during Manim rendering:', error.message);
-        throw error;
+      const pythonFile = path.join(directory, 'test_animation.py');
+      fs.writeFileSync(pythonFile, code);
+      const saved = fs.readFileSync(pythonFile, 'utf8');
+      const graph = readSceneGraph(saved);
+      expect(graph.systemName).to.equal(systemName);
+      expect(graph.entities).to.have.lengthOf(ultralink.entities.size);
+      expect(graph.relationships).to.have.lengthOf(ultralink.relationships.size);
+
+      if (commandAvailable('python3')) {
+        execFileSync('python3', [
+          '-c', 'import ast, pathlib, sys; ast.parse(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))',
+          pythonFile
+        ], { timeout: 10000 });
       }
+
+      if (commandAvailable('manim')) {
+        const media = path.join(directory, 'media');
+        execFileSync('manim', ['-ql', '--media_dir', media, pythonFile, 'UltraLinkGraph'], {
+          cwd: directory, timeout: 240000
+        });
+        const videos = path.join(media, 'videos');
+        const mp4s = fs.readdirSync(videos, { recursive: true })
+          .filter(relative => path.basename(relative) === 'UltraLinkGraph.mp4');
+        expect(mp4s).to.have.lengthOf(1);
+        const mp4 = path.join(videos, mp4s[0]);
+        expect(fs.statSync(mp4).size).to.be.greaterThan(0);
+
+        if (commandAvailable('ffmpeg', '-version')) {
+          const gif = path.join(directory, 'test_animation.gif');
+          const framesDir = path.join(directory, 'frames');
+          fs.mkdirSync(framesDir);
+          const input = ['-hide_banner', '-loglevel', 'error', '-i', mp4];
+          execFileSync('ffmpeg', [...input, '-vf', 'fps=10,scale=720:-1', gif], { timeout: 30000 });
+          expect(fs.readFileSync(gif).subarray(0, 6).toString()).to.match(/^GIF8[79]a$/);
+          execFileSync('ffmpeg', [
+            ...input, '-vf', 'fps=1', path.join(framesDir, 'frame_%04d.png')
+          ], { timeout: 30000 });
+          const frames = fs.readdirSync(framesDir).filter(name => /^frame_\d+\.png$/.test(name));
+          expect(frames.length).to.be.greaterThan(0);
+          expect(fs.statSync(path.join(framesDir, frames[0])).size).to.be.greaterThan(0);
+        }
+      }
+    } finally {
+      fs.rmSync(directory, { recursive: true });
     }
-  });
-}); 
+  }, 300000);
+});
