@@ -208,8 +208,8 @@ function restoreRelationships(rows, archive) {
       state.accepted.add(accepted);
       if (row.id !== undefined) {
         bindArchiveId(this, accepted, row, state);
-        if (archivedLinks && accepted.id === row.id && accepted.source === row.source && accepted.target === row.target) {
-          archivedLinks.set(row.id, accepted);
+        if (archivedLinks && accepted.id === row.id) {
+          archivedLinks.set(row.id, { edge: accepted, source: row.source, target: row.target });
         }
       }
       restoreRowMetadata(accepted, row.metadata);
@@ -230,8 +230,10 @@ function restoreRelationships(rows, archive) {
 function restoreLegacyLinkOrder(graph, order, archivedLinks) {
   const groups = new Map();
   for (const id of order) {
-    const edge = archivedLinks.get(id);
-    if (!edge || graph.relationships.get(id) !== edge) continue;
+    const entry = archivedLinks.get(id);
+    if (!entry) continue;
+    const { edge, source, target } = entry;
+    if (graph.relationships.get(id) !== edge || edge.source !== source || edge.target !== target) continue;
     const outgoing = graph.links.get(edge.source);
     const key = legacyLinkKey(id, edge);
     const shadowed = shadowedLegacyLinks.get(outgoing)?.get(key);
@@ -595,8 +597,10 @@ function restoreIndexOrder(index, relationships, endpoint, groups, archivedLinks
     let id;
     const surviving = new Set();
     for (const edgeId of order) {
-      const edge = archivedLinks.get(edgeId);
-      if (!edge || relationships.get(edgeId) !== edge) continue;
+      const entry = archivedLinks.get(edgeId);
+      if (!entry) continue;
+      const { edge } = entry;
+      if (relationships.get(edgeId) !== edge || edge[endpoint] !== entry[endpoint]) continue;
       if (!current) {
         id = edge[endpoint];
         current = index.get(id);

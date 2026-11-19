@@ -1273,6 +1273,41 @@ describe('UltraLink', () => {
       }
     });
 
+    it('keeps a recovered edge in the archived order when a hook normalizes its opposite endpoint', () => {
+      for (const id of ['a', 'c_d', 'Q', 'q', 'd', 'a_b', 'OTHER', 'other']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b');
+      const incoming = ultralink.addLink('Q', 'd', 'route');
+      const outgoing = ultralink.addLink('a_b', 'OTHER', 'route');
+      const replacement = ultralink.addLink('a_b', 'd', 'c');
+      const archive = ultralink.toJSON({ lossless: true, asString: false });
+      // An archive may already contain recovered IDs, which survive reimport
+      // even when a public hook normalizes an endpoint.
+      for (const [edge, id, order] of [
+        [incoming, 'legacy:1', archive.relationshipOrder.incoming[0]],
+        [outgoing, 'legacy:2', archive.relationshipOrder.outgoing[0]]
+      ]) {
+        archive.relationships.find(row => row.id === edge.id).id = id;
+        order[order.indexOf(edge.id)] = id;
+      }
+      const producer = new UltraLink().fromFullBlob(archive);
+      class Normalized extends UltraLink {
+        addLink(source, target, type, attributes) {
+          return super.addLink(source.toLowerCase(), target.toLowerCase(), type, attributes);
+        }
+      }
+      for (const input of archiveCarriers(producer)) {
+        const restored = new Normalized().fromFullBlob(input);
+        const normalizedIn = restored.getRelationship('legacy:1');
+        const normalizedOut = restored.getRelationship('legacy:2');
+        expect(normalizedIn.source).toBe('q');
+        expect(normalizedOut.target).toBe('other');
+        expect(restored.getBacklinks('d')).toEqual([normalizedIn, replacement]);
+        expect(restored.getRelationships('a_b', { direction: 'outgoing' })).toEqual([normalizedOut, replacement]);
+        expect(restored.getRelationships('Q', { direction: 'outgoing' })).toEqual([]);
+        expect(restored.getBacklinks('OTHER')).toEqual([]);
+      }
+    });
+
     it('keeps an independent receiver edge at a freed ID when accepting a colliding archive row', () => {
       for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
       const first = ultralink.addLink('a', 'd', 'b_c');
