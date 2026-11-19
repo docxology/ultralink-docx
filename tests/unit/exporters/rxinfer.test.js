@@ -59,6 +59,24 @@ describe('RxInferExporter', () => {
       '    a_peer_review_b_weight_2 ~ Normal(0.0, 1.0)'
     ]);
   });
+
+  test('does not reuse an entity, attribute, or vector name for retyped edge attributes', () => {
+    const graph = new UltraLink();
+    for (const id of ['a', 'b', 'a_authored_b_weight']) graph.addEntity(id, 'measurement');
+    graph.addEntity('a_authored_b', 'measurement', { affinity: 0.4 }).vector = [0.1, 0.2];
+    const authored = graph.addLink('a', 'b', 'authored', { weight: true, affinity: 2, vec: -1 });
+    graph.updateRelationship(authored.id, { type: 'reviewed' });
+
+    const model = graph.toRxInfer({ includeVectors: true });
+    expect(model.match(/^    a_authored_b_(?:weight|affinity|vec)(?:_2)? ~ .*$/gm)).toEqual([
+      '    a_authored_b_weight ~ Normal(0.0, 1.0)',
+      '    a_authored_b_affinity ~ Beta(1.0, 1.0)',
+      '    a_authored_b_vec ~ MvNormal(zeros(2), I)',
+      '    a_authored_b_weight_2 ~ Bernoulli(0.5)',
+      '    a_authored_b_affinity_2 ~ Poisson(1.0)',
+      '    a_authored_b_vec_2 ~ Normal(0.0, 1.0)'
+    ]);
+  });
   
   // Test options handling
   test('should respect export options', () => {

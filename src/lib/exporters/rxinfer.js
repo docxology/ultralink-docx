@@ -143,9 +143,11 @@ class RxInferExporter {
     }
 
     // Add entity variable declarations
+    const occupiedNames = new Set();
     for (const entity of entities) {
       const distribution = this._getDistributionForEntity(entity, distributionMapping);
       const varName = this._sanitizeVariableName(entity.id);
+      occupiedNames.add(varName);
       
       if (includeComments) {
         code += `    # Entity: ${entity.id} (type: ${entity.type})\n`;
@@ -166,6 +168,7 @@ class RxInferExporter {
           // Create variable for meaningful attributes
           if (this._isUsefulAttribute(key, value)) {
             const attrVarName = this._sanitizeVariableName(`${entity.id}_${key}`);
+            occupiedNames.add(attrVarName);
             const attrDist = this._getDistributionForAttribute(key, value);
             code += `    ${attrVarName} ~ ${attrDist}\n`;
           }
@@ -175,6 +178,7 @@ class RxInferExporter {
       // Add vector if requested and available
       if (includeVectors && entity.vector && entity.vector.length > 0) {
         const vecVarName = this._sanitizeVariableName(`${entity.id}_vec`);
+        occupiedNames.add(vecVarName);
         const vecDist = this._getDistributionForVector(entity.vector);
         code += `    ${vecVarName} ~ ${vecDist}\n`;
       }
@@ -185,7 +189,6 @@ class RxInferExporter {
     }
     
     // Add relationship dependencies
-    const relationshipAttributeNames = new Set();
     for (const rel of relationships) {
       const sourceVar = this._sanitizeVariableName(rel.source);
       const targetVar = this._sanitizeVariableName(rel.target);
@@ -210,10 +213,10 @@ class RxInferExporter {
             // current type. Sanitization can still collapse different IDs.
             const baseName = this._sanitizeVariableName(`${rel.id}_${key}`);
             let relAttrVar = baseName;
-            for (let suffix = 2; relationshipAttributeNames.has(relAttrVar); suffix++) {
+            for (let suffix = 2; occupiedNames.has(relAttrVar); suffix++) {
               relAttrVar = `${baseName}_${suffix}`;
             }
-            relationshipAttributeNames.add(relAttrVar);
+            occupiedNames.add(relAttrVar);
             const attrDist = this._getDistributionForAttribute(key, value);
             code += `    ${relAttrVar} ~ ${attrDist}\n`;
           }
