@@ -540,18 +540,21 @@ describe('UltraLink', () => {
       source.addEntity('author_team', 'person');
       source.addEntity('paper_v1', 'document');
       const edge = source.addLink('author_team', 'paper_v1', 'reviewed', { weight: 2 });
+      edge.metadata.created = '2000-01-01T00:00:00.000Z';
+      const { metadata: rowMetadata, ...row } = edge;
+      const expected = _format === 'JSON' ? row : { ...row, metadata: rowMetadata };
       const catalog = { name: 'Existing graph catalog', provenance: { source: 'local catalog' } };
       ultralink.metadata = catalog;
       ultralink.addEntity('stale', 'person');
 
       ultralink.fromFullBlob(exportGraph(source));
       expect(ultralink.getEntity('stale')).toBeNull();
-      expect(ultralink.getBacklinks('paper_v1')).toEqual([edge]);
+      expect(ultralink.getBacklinks('paper_v1')).toMatchObject([expected]);
       expect(ultralink.toJSON({ asString: false }).metadata).toMatchObject(catalog);
 
       source.metadata = { name: 'Imported catalog', provenance: { source: 'archive' } };
       ultralink.fromFullBlob(exportGraph(source));
-      expect(ultralink.getBacklinks('paper_v1')).toEqual([edge]);
+      expect(ultralink.getBacklinks('paper_v1')).toMatchObject([expected]);
       expect(ultralink.metadata).toEqual(source.metadata);
     });
 
@@ -588,7 +591,7 @@ describe('UltraLink', () => {
       expect(rows.entities.find(entity => entity.id === author.id)).toEqual(author);
 
       for (const input of [json, blob, { json }, { 'full-export.json': JSON.stringify(blob) },
-        { entities: { author: rows.entities[0], paper: rows.entities[1] },
+        { ...rows, entities: { author: rows.entities[0], paper: rows.entities[1] },
           relationships: { draft: rows.relationships[0], review: rows.relationships[1] } }]) {
         const restored = new UltraLink().fromFullBlob(input);
         expect(restored.getEntity(author.id)).toEqual(author);
@@ -638,13 +641,72 @@ describe('UltraLink', () => {
       );
     });
 
-    it('preserves ID-less legacy collisions without stealing explicit or tuple-derived IDs', () => {
+    it.each([
+      ['root JSON', graph => JSON.stringify(graph)],
+      ['wrapped graph', graph => ({ json: graph })]
+    ])('derives relationship IDs from the current tuple in unversioned %s', (_format, wrap) => {
+      const payload = {
+        entities: [{ id: 'a', type: 'node' }, { id: 'b', type: 'node' }],
+        relationships: [{ id: 'a_draft_b', source: 'a', target: 'b', type: 'reviewed', attributes: { revision: 1 } }]
+      };
+      ultralink.fromFullBlob(wrap(payload));
+      expect(ultralink.getRelationship('a_draft_b')).toBeNull();
+      expect(ultralink.getRelationship('a_reviewed_b').attributes).toEqual({ revision: 1 });
+      expect(ultralink.deleteLink('a', 'b', 'reviewed')).toBe(true);
+      const replacement = ultralink.addLink('a', 'b', 'reviewed', { revision: 2 });
+      expect(ultralink.getBacklinks('b')).toEqual([replacement]);
+      expect(ultralink.getRelationships('a', { direction: 'outgoing' })).toEqual([replacement]);
+    });
+
+    it('preserves directional index order and canonical order after live compound ID reuse', () => {
+      for (const id of ['a', 'c_d', 'q', 'd', 'a_b', 'other']) ultralink.addEntity(id, 'node');
+      ultralink.addLink('a', 'c_d', 'b');
+      const incoming = ultralink.addLink('q', 'd', 'route');
+      const outgoing = ultralink.addLink('a_b', 'other', 'route');
+      const reused = ultralink.addLink('a_b', 'd', 'c');
+
+      for (const input of [ultralink.toJSON({ lossless: true }), ultralink.toFullBlob()]) {
+        const restored = new UltraLink().fromFullBlob(input);
+        expect([...restored.relationships.values()]).toEqual([reused, incoming, outgoing]);
+        expect(restored.getBacklinks('d')).toEqual([incoming, reused]);
+        expect(restored.getRelationships('a_b', { direction: 'outgoing' })).toEqual([outgoing, reused]);
+        expect(restored.deleteLink('a_b', 'd', 'c')).toBe(true);
+        expect(restored.getBacklinks('d')).toEqual([incoming]);
+        expect(restored.getRelationships('a_b', { direction: 'outgoing' })).toEqual([outgoing]);
+      }
+    });
+
+    it('serializes a Full Blob with JSON-safe metadata beside runtime BigInts and cycles', () => {
+      const author = ultralink.addEntity('a', 'node');
+      ultralink.addEntity('b', 'node');
+      author.metadata.sequence = 100n;
+      author.metadata.locale = 'en';
+      const draft = ultralink.addLink('a', 'b', 'draft', { weight: 2 });
+      ultralink.updateRelationship(draft.id, { type: 'reviewed' });
+      const provenance = { source: 'local', sequence: 100n };
+      provenance.self = provenance;
+      draft.metadata.provenance = provenance;
+
+      const blob = ultralink.toFullBlob({ compressed: true });
+      const restored = new UltraLink().fromFullBlob(blob, { compressed: true });
+      expect(restored.getEntity('a').metadata.locale).toBe('en');
+      expect(restored.getEntity('a').metadata).not.toHaveProperty('sequence');
+      expect(restored.getRelationship(draft.id)).toMatchObject({
+        type: 'reviewed', attributes: { weight: 2 }, metadata: { provenance: { source: 'local' } }
+      });
+      expect(restored.getRelationship(draft.id).metadata.provenance).toEqual({ source: 'local' });
+      expect(author.metadata.sequence).toBe(100n);
+      expect(provenance.self).toBe(provenance);
+    });
+
+    it('recovers archive rows without stealing explicit or tuple-derived IDs', () => {
       const source = 'author_team';
       const target = 'paper_v1';
       const common = { source, target, type: 'reviewed' };
       const explicitId = `${source}_reviewed_${target}`;
       const ordinaryId = `${source}_reviewed~2_${target}`;
       const payload = {
+        ultralinkArchiveVersion: ultralink.toJSON({ asString: false, lossless: true }).ultralinkArchiveVersion,
         entities: { person: { id: source, type: 'person' }, paper: { id: target, type: 'document' } },
         relationships: {
           first: { ...common, attributes: { weight: 1 }, metadata: { created: '2019-08-01T00:00:00.000Z', origin: 'legacy' } },

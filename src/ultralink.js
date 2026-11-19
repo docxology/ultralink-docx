@@ -9,7 +9,7 @@
 const EntityManager = require('./lib/entity-manager');
 const RelationshipManager = require('./lib/relationship-manager');
 const Utils = require('./lib/utils');
-const { toJSON } = require('./lib/exporters/json');
+const { toJSON, ARCHIVE_VERSION } = require('./lib/exporters/json');
 const { toCSV } = require('./lib/exporters/csv');
 const { toGraphML } = require('./lib/exporters/graphml');
 const { toObsidian } = require('./lib/exporters/obsidian');
@@ -693,7 +693,9 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
         const entity = this.addEntity(id, type, attributes);
         entity.metadata = { ...entity.metadata, ...metadata };
       }
-      RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships), data.legacyLinkOrder);
+      const archive = Object.hasOwn(data, 'ultralinkArchiveVersion') &&
+        data.ultralinkArchiveVersion === ARCHIVE_VERSION ? data : undefined;
+      RelationshipManager.restoreRelationships.call(this, recordValues(data.relationships), archive);
     }
     
     return this;

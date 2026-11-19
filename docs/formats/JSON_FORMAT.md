@@ -92,20 +92,27 @@ Default relationship rows contain `source`, `target`, `type`, and `attributes`.
 `id` is the stored relationship ID, not an encoding of the current `type`.
 It remains stable after `updateRelationship(id, { type })`. `fromFullBlob()`
 accepts either this JSON graph directly or the JSON component of a Full Blob,
-including legacy object maps of records. It restores stored IDs, attributes,
-and supplied graph, entity, and relationship metadata. For graph metadata,
-each supplied top-level key takes precedence; omitted keys keep their receiver
-values. The automatic `exportDate`, `entityCount`, and `relationshipCount`
-fields describe the export and are ignored on import.
-Usable stored IDs take precedence. Otherwise, the last row deriving a given
-compound ID owns it, as in the published importer. Earlier rows are kept
-under opaque `legacy:<number>` IDs rather than overwritten. Recovery IDs do
-not match insertion tuples; use `deleteRelationship(id)` for those rows.
-Original insertion IDs are not recoverable from ID-less exports.
+including legacy object maps of records. It restores attributes and supplied
+graph, entity, and relationship metadata. Supplied top-level graph metadata
+keys take precedence; omitted keys keep their receiver values. The automatic
+`exportDate`, `entityCount`, and `relationshipCount` fields are ignored.
+
+Only graphs marked with `"ultralinkArchiveVersion": 1` restore stored
+relationship IDs. Unversioned graphs derive IDs from the current tuples
+even if a row includes an `id`. The last row deriving a compound ID owns it,
+as in the published importer. Earlier rows are kept under opaque
+`legacy:<number>` IDs. Use `deleteRelationship(id)` for those rows.
 
 In lossless JSON, the optional `legacyLinkOrder` array stores IDs sharing a
 legacy link key in write order from oldest to newest. Import uses it to
 restore the visible value and fallback order without reordering rows.
+When directional lookup order differs from row order, `relationshipOrder`
+stores the affected groups of IDs under `outgoing` and `incoming`. A group
+contains all relationship IDs for one endpoint in lookup order.
+
+Row metadata follows JSON conventions: unsupported values such as BigInts
+and circular references are omitted from objects and become `null` in arrays.
+This does not change the live graph.
 
 ## Usage
 
@@ -128,7 +135,7 @@ const jsonWithVectors = ultralink.toJSON({ includeVectors: true, pretty: true })
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `includeVectors` | Boolean | `false` | Include entity vector embeddings |
-| `lossless` | Boolean | `false` | Include stored relationship IDs and legacy link order |
+| `lossless` | Boolean | `false` | Include the archive version, stable relationship IDs, and lookup order |
 | `includeMetadata` | Boolean | value of `lossless` | Include entity and relationship metadata; the graph summary is unchanged |
 | `pretty` | Boolean | `false` | Format JSON with indentation for readability |
 | `asString` | Boolean | `true` | Return serialized JSON; `false` returns the object |
@@ -139,6 +146,12 @@ An example of lossless UltraLink JSON with vector export enabled:
 
 ```json
 {
+  "ultralinkArchiveVersion": 1,
+  "metadata": {
+    "exportDate": "2023-06-15T10:38:00Z",
+    "entityCount": 3,
+    "relationshipCount": 3
+  },
   "entities": [
     {
       "id": "saguaro",
@@ -186,6 +199,7 @@ An example of lossless UltraLink JSON with vector export enabled:
   ],
   "relationships": [
     {
+      "id": "saguaro_adapts_to_aridity",
       "source": "saguaro",
       "target": "aridity",
       "type": "adapts_to",
@@ -199,6 +213,7 @@ An example of lossless UltraLink JSON with vector export enabled:
       }
     },
     {
+      "id": "kangaroo-rat_adapts_to_aridity",
       "source": "kangaroo-rat",
       "target": "aridity",
       "type": "adapts_to",
@@ -212,6 +227,7 @@ An example of lossless UltraLink JSON with vector export enabled:
       }
     },
     {
+      "id": "kangaroo-rat_shares_habitat_saguaro",
       "source": "kangaroo-rat",
       "target": "saguaro",
       "type": "shares_habitat",

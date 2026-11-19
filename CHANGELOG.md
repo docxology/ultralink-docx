@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Render actual graph nodes and edges in SVG and documented wiki-links and backlinks in Obsidian.
 - Keep Obsidian links and backlinks on the correct notes after relationship ID reuse.
 - Keep outgoing relationships and backlinks on the correct entities after deletion and reuse of compound relationship IDs.
-- Keep default JSON rows compatible; use lossless JSON or Full Blob to store stable relationship IDs and row metadata.
+- Keep default JSON rows compatible; use versioned lossless JSON or Full Blob to store stable IDs, lookup order, and JSON-compatible row metadata.
 - Preserve the last legacy compound-ID owner's lookup and deletion behavior while retaining earlier rows.
 - Keep receiver graph metadata keys that JSON or Full Blob imports do not supply.
 - Count each self-loop once in combined lookups. Preserve retry-safe deletion by insertion tuple after retyping.

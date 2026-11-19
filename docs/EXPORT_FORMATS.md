@@ -30,7 +30,7 @@ const jsonOutput = ultralink.toJSON(options);
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `pretty` | boolean | `false` | Whether to format the JSON with indentation |
-| `lossless` | boolean | `false` | Include stored relationship IDs and legacy link order |
+| `lossless` | boolean | `false` | Include the archive version, stable relationship IDs, and lookup order |
 | `includeMetadata` | boolean | value of `lossless` | Include metadata on entity and relationship rows |
 | `includeVectors` | boolean | `false` | Whether to include vector embeddings |
 

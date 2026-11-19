@@ -86,7 +86,7 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId, metad
   return relationship;
 }
 
-function restoreRelationships(rows, legacyLinkOrder) {
+function restoreRelationships(rows, archive) {
   const entries = [];
   const explicit = new Set();
   const lastImplicitById = new Map();
@@ -94,13 +94,13 @@ function restoreRelationships(rows, legacyLinkOrder) {
     const { source, target } = row;
     const type = row.type === undefined ? this.config.defaultRelationshipType : row.type;
     const generatedId = `${source}_${type}_${target}`;
-    const prefix = `${source}_`;
-    const suffix = `_${target}`;
-    // Old formats may contain unrelated IDs. Accept recovered IDs or
-    // compound IDs whose endpoints can be verified without splitting.
-    let id = typeof row.id === 'string' && (isRecoveredId(row.id) ||
-      (row.id.length >= prefix.length + suffix.length &&
-        row.id.startsWith(prefix) && row.id.endsWith(suffix))) ? row.id : undefined;
+    let id;
+    if (archive && typeof row.id === 'string') {
+      const prefix = `${source}_`;
+      const suffix = `_${target}`;
+      if (isRecoveredId(row.id) || (row.id.length >= prefix.length + suffix.length &&
+        row.id.startsWith(prefix) && row.id.endsWith(suffix))) id = row.id;
+    }
     if (id !== undefined && explicit.has(id)) id = undefined;
     const entry = { row, type, generatedId, id };
     if (id === undefined) {
@@ -131,6 +131,11 @@ function restoreRelationships(rows, legacyLinkOrder) {
     storeRelationship.call(this, source, target, type, attributes, id, metadata);
   }
 
+  if (!archive) return;
+  const { legacyLinkOrder, relationshipOrder } = archive;
+  restoreIndexOrder(this.relationshipsBySource, this.relationships, 'source', relationshipOrder?.outgoing);
+  restoreIndexOrder(this.relationshipsByTarget, this.relationships, 'target', relationshipOrder?.incoming);
+
   if (Array.isArray(legacyLinkOrder)) {
     for (const id of legacyLinkOrder) {
       const relationship = this.relationships.get(id);
@@ -156,6 +161,48 @@ function getLegacyLinkOrder() {
     }
   }
   return order;
+}
+
+function getRelationshipOrder() {
+  // A replacement retains its canonical Map slot but joins a changed
+  // endpoint at the end of that endpoint's index.
+  const positions = new Map();
+  for (const id of this.relationships.keys()) positions.set(id, positions.size);
+  const outgoing = nonCanonicalOrder(this.relationshipsBySource, positions);
+  const incoming = nonCanonicalOrder(this.relationshipsByTarget, positions);
+  if (outgoing && incoming) return { outgoing, incoming };
+  if (outgoing) return { outgoing };
+  if (incoming) return { incoming };
+}
+
+function nonCanonicalOrder(index, positions) {
+  let groups;
+  for (const ids of index.values()) {
+    let previous = -1;
+    for (const id of ids) {
+      const position = positions.get(id);
+      if (position < previous) {
+        (groups ??= []).push([...ids]);
+        break;
+      }
+      previous = position;
+    }
+  }
+  return groups;
+}
+
+function restoreIndexOrder(index, relationships, endpoint, groups) {
+  if (!Array.isArray(groups)) return;
+  for (const order of groups) {
+    if (!Array.isArray(order) || order.length < 2) continue;
+    const relationship = relationships.get(order[0]);
+    if (!relationship) continue;
+    const id = relationship[endpoint];
+    const current = index.get(id);
+    if (current.size !== order.length || !order.every(edgeId => current.has(edgeId))) continue;
+    const restored = new Set(order);
+    if (restored.size === current.size) index.set(id, restored);
+  }
 }
 
 function isRecoveredId(id) {
@@ -391,6 +438,7 @@ module.exports = {
   addRelationship,
   restoreRelationships,
   getLegacyLinkOrder,
+  getRelationshipOrder,
   getRelationship,
   updateRelationship,
   deleteRelationship,
