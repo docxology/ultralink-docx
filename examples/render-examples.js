@@ -1943,21 +1943,19 @@ class UltraLinkGraph(Scene):
 `;
 }
 
-// Run the example
-renderAllSystems().catch(error => {
-  console.error('❌ Error rendering systems:', error);
-  process.exit(1);
-}); 
+module.exports = {
+  renderSystem,
+  renderAllSystems,
+  generatePlaceholderD3,
+  generatePlaceholderCytoscape,
+  generatePlaceholderBIF,
+  generatePlaceholderCompressedBlob,
+  SYSTEMS
+};
 
-// Export for testing
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    renderSystem,
-    renderAllSystems,
-    generatePlaceholderD3,
-    generatePlaceholderCytoscape,
-    generatePlaceholderBIF,
-    generatePlaceholderCompressedBlob,
-    SYSTEMS
-  };
-} 
+if (require.main === module) {
+  renderAllSystems().catch(error => {
+    console.error('❌ Error rendering systems:', error);
+    process.exitCode = 1;
+  });
+}

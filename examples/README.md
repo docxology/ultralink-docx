@@ -101,13 +101,17 @@ This comprehensive example shows how to render UltraLink systems in multiple for
   - KIF (Knowledge Interchange Format)
   - Full Blob export (compressed and uncompressed)
 
-The rendered outputs are saved to the `examples/output` directory.
+The rendered outputs are saved to `examples/output/systems`.
 
 Run this example to see UltraLink's comprehensive export capabilities:
 
 ```bash
 node examples/render-examples.js
 ```
+
+Requiring `examples/render-examples.js` does not start rendering. Programmatic
+callers can await `renderAllSystems()` for all bundled systems or
+`renderSystem(name, createDataset)` for a single system.
 
 ## Documentation
 

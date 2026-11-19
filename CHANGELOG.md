@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keep Obsidian links and backlinks on the correct notes after relationship ID reuse.
 - Generate real graph SVG in synchronous Full Blob exports and runnable Python scenes for Manim.
 - Restore discovered export test entrypoints and include all non-performance suites in `npm test`.
+- Importing the example renderer no longer starts rendering; its CLI still renders all bundled systems.
 - Resolved issues with GraphML attribute serialization
 - Fixed relationship counting in Full Blob exports
 - Corrected theme handling in HTML Website exports
