@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and reveal filtered entities when finding them in the graph.
 - Render actual graph nodes and edges in SVG and documented wiki-links and backlinks in Obsidian.
 - Keep Obsidian links and backlinks on the correct notes after relationship ID reuse.
+- Keep outgoing relationships and backlinks on the correct entities after deletion and reuse of compound relationship IDs.
 - Generate real graph SVG in synchronous Full Blob exports and runnable Python scenes for Manim.
 - Restore discovered export test entrypoints and include all non-performance suites in `npm test`.
 - Resolved issues with GraphML attribute serialization

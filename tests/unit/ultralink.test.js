@@ -248,6 +248,77 @@ describe('UltraLink', () => {
       
       expect(result).toBe(false);
     });
+
+    it('keeps live neighbors accurate when a recreated entity reuses relationship IDs', () => {
+      for (const id of ['north', 'north_east', 'east_north', 'depot_hub', 'annex']) {
+        ultralink.addEntity(id, 'location');
+      }
+      const outgoing = id => ultralink.getRelationships(id, { direction: 'outgoing' });
+      const incoming = id => ultralink.getBacklinks(id);
+      const trueOutgoing = ultralink.addLink('north', 'annex', 'route');
+      const trueIncoming = ultralink.addLink('annex', 'north', 'route');
+      const oldOutgoing = ultralink.addLink('north', 'depot_hub', 'east_route');
+      const oldIncoming = ultralink.addLink('depot_hub', 'north', 'route_east');
+      ultralink.addLink('depot_hub', 'depot_hub', 'loop');
+      expect(outgoing('north')).toEqual([trueOutgoing, oldOutgoing]);
+      expect(incoming('north')).toEqual([trueIncoming, oldIncoming]);
+
+      expect(ultralink.deleteEntity('depot_hub')).toBe(true);
+      expect(outgoing('north')).toEqual([trueOutgoing]);
+      expect(incoming('north')).toEqual([trueIncoming]);
+      expect(ultralink.getRelationships('depot_hub')).toEqual([]);
+      expect([...ultralink.links.get('north').values()]).toEqual([trueOutgoing]);
+
+      ultralink.addEntity('depot_hub', 'location');
+      expect(ultralink.getRelationships('depot_hub')).toEqual([]);
+      const newIncoming = ultralink.addLink('north_east', 'depot_hub', 'route');
+      const newOutgoing = ultralink.addRelationship('depot_hub', 'east_north', 'route');
+      const parallel = ultralink.addLink('depot_hub', 'east_north', 'express');
+      const loop = ultralink.addLink('depot_hub', 'depot_hub', 'loop');
+      expect(newIncoming.id).toBe(oldOutgoing.id);
+      expect(newOutgoing.id).toBe(oldIncoming.id);
+      expect(outgoing('north')).toEqual([trueOutgoing]);
+      expect(incoming('north')).toEqual([trueIncoming]);
+      expect(outgoing('north_east')).toEqual([newIncoming]);
+      expect(outgoing('depot_hub')).toEqual([newOutgoing, parallel, loop]);
+      expect(incoming('depot_hub')).toEqual([newIncoming, loop]);
+      expect(incoming('east_north')).toEqual([newOutgoing, parallel]);
+      expect(ultralink.getBacklinks('east_north', { type: 'express' })).toEqual([parallel]);
+
+      expect(ultralink.deleteLink('north', 'depot_hub', 'east_route')).toBe(false);
+      expect(ultralink.deleteLink('depot_hub', 'north', 'route_east')).toBe(false);
+      expect(ultralink.deleteRelationship(loop.id)).toBe(true);
+      expect(ultralink.deleteLink('depot_hub', 'east_north', 'route')).toBe(true);
+      expect(outgoing('depot_hub')).toEqual([parallel]);
+      expect(incoming('east_north')).toEqual([parallel]);
+      expect(incoming('depot_hub')).toEqual([newIncoming]);
+      expect(outgoing('north')).toEqual([trueOutgoing]);
+      expect(incoming('north')).toEqual([trueIncoming]);
+    });
+
+    it('replaces a live compound ID without keeping it indexed under the old endpoints', () => {
+      for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'location');
+      const original = ultralink.addLink('a', 'c_d', 'b');
+      const replacement = ultralink.addLink('a_b', 'd', 'c');
+
+      expect(replacement.id).toBe(original.id);
+      expect(ultralink.getRelationship(original.id)).toEqual(replacement);
+      expect(ultralink.getRelationships('a', { direction: 'outgoing' })).toEqual([]);
+      expect(ultralink.getBacklinks('c_d')).toEqual([]);
+      expect(ultralink.getRelationships('a_b', { direction: 'outgoing' })).toEqual([replacement]);
+      expect(ultralink.getBacklinks('d')).toEqual([replacement]);
+      expect(ultralink.links.get('a')?.get('c_d-b')).toBeUndefined();
+    });
+
+    it('removes a retyped edge from its legacy link entry without removing a parallel edge', () => {
+      const authored = ultralink.addLink('person1', 'document1', 'co_authored');
+      const reviewed = ultralink.addLink('person1', 'document1', 'reviewed');
+      ultralink.updateRelationship(authored.id, { type: 'reviewed' });
+
+      expect(ultralink.deleteRelationship(authored.id)).toBe(true);
+      expect(ultralink.getBacklinks('document1')).toEqual([reviewed]);
+      expect([...ultralink.links.get('person1').values()]).toEqual([reviewed]);
+    });
   });
   
   // Data export

@@ -38,6 +38,18 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
     }
   };
 
+  // A compound ID can be reused by a different endpoint tuple.
+  const previous = this.relationships.get(id);
+  if (previous && (previous.source !== sourceId || previous.target !== targetId)) {
+    if (previous.source !== sourceId) {
+      removeIndexEntry(this.relationshipsBySource, previous.source, id);
+    }
+    if (previous.target !== targetId) {
+      removeIndexEntry(this.relationshipsByTarget, previous.target, id);
+    }
+    removeLegacyLink(this.links, id, previous);
+  }
+
   // Store the relationship
   this.relationships.set(id, relationship);
   
@@ -119,22 +131,31 @@ function deleteRelationship(id) {
   // Remove from the main relationships map
   this.relationships.delete(id);
   
-  // Remove from source and target indices
-  if (this.relationshipsBySource.has(relationship.source)) {
-    this.relationshipsBySource.get(relationship.source).delete(id);
-    if (this.relationshipsBySource.get(relationship.source).size === 0) {
-      this.relationshipsBySource.delete(relationship.source);
-    }
-  }
-  
-  if (this.relationshipsByTarget.has(relationship.target)) {
-    this.relationshipsByTarget.get(relationship.target).delete(id);
-    if (this.relationshipsByTarget.get(relationship.target).size === 0) {
-      this.relationshipsByTarget.delete(relationship.target);
-    }
-  }
+  removeIndexEntry(this.relationshipsBySource, relationship.source, id);
+  removeIndexEntry(this.relationshipsByTarget, relationship.target, id);
+  removeLegacyLink(this.links, id, relationship);
   
   return true;
+}
+
+function removeIndexEntry(index, endpoint, id) {
+  const ids = index?.get(endpoint);
+  if (ids?.delete(id) && ids.size === 0) index.delete(endpoint);
+}
+
+function removeLegacyLink(links, id, relationship) {
+  const { source, target } = relationship;
+  const outgoing = links?.get(source);
+  if (!outgoing) return;
+
+  // Type updates keep the ID and the legacy key from insertion. The stored
+  // endpoints fix both boundaries even when they contain underscores.
+  const typeAtInsertion = id.slice(String(source).length + 1, -String(target).length - 1);
+  const key = `${target}-${typeAtInsertion}`;
+  if (outgoing.get(key) === relationship) {
+    outgoing.delete(key);
+    if (outgoing.size === 0) links.delete(source);
+  }
 }
 
 /**

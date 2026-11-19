@@ -766,31 +766,12 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
    * @returns {boolean} True if the relationship was deleted, false if it didn't exist
    */
   deleteLink(sourceId, targetId, type) {
-    // Generate relationship ID
     const id = `${sourceId}_${type}_${targetId}`;
-    
-    // Delete from relationships map
-    const deleted = this.relationships.delete(id);
-    
-    // Clean up relationship indices
-    if (deleted) {
-      // Clean up relationshipsBySource
-      if (this.relationshipsBySource.has(sourceId)) {
-        this.relationshipsBySource.get(sourceId).delete(id);
-      }
-      
-      // Clean up relationshipsByTarget
-      if (this.relationshipsByTarget.has(targetId)) {
-        this.relationshipsByTarget.get(targetId).delete(id);
-      }
-      
-      // Clean up links map
-      if (this.links.has(sourceId)) {
-        this.links.get(sourceId).delete(`${targetId}-${type}`);
-      }
+    const relationship = this.getRelationship(id);
+    if (!relationship || relationship.source !== sourceId || relationship.target !== targetId) {
+      return false;
     }
-    
-    return deleted;
+    return this.deleteRelationship(id);
   }
 
   /**
