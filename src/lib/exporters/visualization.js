@@ -27,6 +27,7 @@
  * @param {string} [options.style='default'] - Visual styling to apply
  * @param {number} [options.width=800] - Visualization width
  * @param {number} [options.height=600] - Visualization height
+ * @param {boolean} [options.throwOnError=false] - Surface generation errors instead of returning fallback visualization content
  * @returns {Object} Object containing visualization files
  */
 // Use dynamic import for d3 (ES Module)
@@ -75,6 +76,7 @@ async function toVisualization(ultralink, options = {}) {
   const width = options.width || 800;
   const height = options.height || 600;
   const systemName = options.systemName || ''; // Capture system name from options
+  const { throwOnError } = options;
   
   try {
     const graphData = getGraphData(ultralink);
@@ -86,50 +88,29 @@ async function toVisualization(ultralink, options = {}) {
           return { 'graph.svg': await generateSVG(graphData, { layout, style, width, height }) };
         case 'png':
           const result = {};
-          result['graph.png'] = await generatePNG(graphData, { layout, style, width, height, systemName });
-          if (layout === 'radial') {
-            result['graph-radial.png'] = await generatePNG(graphData, { 
-              layout: 'radial', 
-              style: style, 
-              width, 
-              height,
-              systemName
-            });
-          }
-          if (layout === 'grid') {
-            result['graph-grid.png'] = await generatePNG(graphData, { 
-              layout: 'grid', 
-              style: style, 
-              width, 
-              height,
-              systemName
-            });
-          }
-          if (layout === 'cluster') {
-            result['graph-cluster.png'] = await generatePNG(graphData, { 
-              layout: 'cluster', 
-              style: style, 
-              width, 
-              height,
-              systemName
-            });
+          const pngOptions = { layout, style, width, height, systemName, throwOnError };
+          result['graph.png'] = await generatePNG(graphData, pngOptions);
+          if (layout === 'radial' || layout === 'grid' || layout === 'cluster') {
+            result[`graph-${layout}.png`] = await generatePNG(graphData, pngOptions);
           }
           return result;
         case 'd3':
-          const d3Html = await generateD3(graphData, { layout, style, width, height });
+          const d3Html = await generateD3(graphData, { layout, style, width, height, throwOnError });
           return { 'graph-d3.html': d3Html };
         case 'cytoscape':
-          const cytoHtml = generateCytoscape(graphData, { layout, style, width, height });
+          const cytoHtml = generateCytoscape(graphData, { layout, style, width, height, throwOnError });
           return { 'graph-cytoscape.html': cytoHtml };
         default:
           console.warn(`Unsupported visualization format: ${format}, using fallback`);
           return generateFallbackVisualization(format, ultralink.name || 'UltraLink', width, height);
       }
     } catch (error) {
+      if (throwOnError) throw error;
       console.error(`Error generating ${format} visualization:`, error);
       return generateFallbackVisualization(format, ultralink.name || 'UltraLink', width, height);
     }
   } catch (error) {
+    if (throwOnError) throw error;
     console.error('Error preparing graph data:', error);
     return generateFallbackVisualization(format, ultralink.name || 'UltraLink', width, height);
   }
@@ -228,7 +209,8 @@ async function generatePNG(graphData, options) {
         message: 'UltraLink Graph Visualization',
         style: style,
         layout: layout,
-        systemName: systemName
+        systemName: systemName,
+        throwOnError: options.throwOnError
       });
       
       return pngBuffer;
@@ -246,9 +228,11 @@ async function generatePNG(graphData, options) {
       message: 'UltraLink Graph Visualization',
       style: options.style || 'default',  // Pass the style parameter
       layout: options.layout || 'force',  // Pass the layout parameter
-      systemName: options.systemName || '' // Pass the system name
+      systemName: options.systemName || '', // Pass the system name
+      throwOnError: options.throwOnError
     });
   } catch (error) {
+    if (options.throwOnError) throw error;
     console.error('Error generating PNG:', error);
     // Create a proper fallback PNG with a descriptive message
     return await createFallbackPNG(
@@ -296,7 +280,7 @@ function positionNodes(nodes, links, layout, width, height, d3) {
  * @returns {string} D3.js code as string
  */
 async function generateD3(graphData, options) {
-  const { layout = 'force', style = 'default', width = 800, height = 600 } = options;
+  const { width = 800, height = 600, throwOnError } = options;
   
   try {
     // Create a JSON representation of the graph data
@@ -416,6 +400,7 @@ async function generateD3(graphData, options) {
     
     return html;
   } catch (error) {
+    if (throwOnError) throw error;
     console.error('Error generating D3 visualization:', error);
     return `<!DOCTYPE html>
 <html>
@@ -442,7 +427,7 @@ async function generateD3(graphData, options) {
  * @returns {string} HTML content with Cytoscape.js visualization
  */
 function generateCytoscape(graphData, options) {
-  const { width = 800, height = 600 } = options;
+  const { width = 800, height = 600, throwOnError } = options;
   
   try {
     // Ensure graphData has nodes and links
@@ -514,6 +499,7 @@ function generateCytoscape(graphData, options) {
 </body>
 </html>`;
   } catch (error) {
+    if (throwOnError) throw error;
     console.error('Error generating Cytoscape visualization:', error);
     return `<!DOCTYPE html>
 <html>
