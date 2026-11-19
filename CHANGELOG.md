@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   prior Full Blob files intact if serialization or writing fails.
 - Keep the example renderer's Obsidian note filenames as returned by the exporter
   so wiki links resolve without an extra `.md` suffix.
+- Isolate KIF rendering test output from tracked samples and generate the
+  temporary files even when only the KIF validation tests are selected.
 - Resolved issues with GraphML attribute serialization
 - Fixed relationship counting in Full Blob exports
 - Corrected theme handling in HTML Website exports

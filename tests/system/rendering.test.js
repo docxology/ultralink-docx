@@ -7,6 +7,7 @@
  */
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { createDesertEcosystemDataset } = require('../fixtures/Systems/DesertEcosystem/desert-ecosystem');
 const { createResearchTeamDataset } = require('../fixtures/Systems/ResearchTeam/research-team');
@@ -78,6 +79,12 @@ function ensureValidStore(ultralink) {
 
 // Configure paths
 const OUTPUT_DIR = path.join(process.cwd(), 'output/systems');
+let kifOutputDir;
+
+function getOutputPath(systemName, format) {
+  const root = format === 'kif' ? kifOutputDir : OUTPUT_DIR;
+  return path.join(root, systemName, format);
+}
 
 // Define the systems and their dataset creators
 const SYSTEMS = {
@@ -135,14 +142,12 @@ function ensureDirectoryExists(dirPath) {
 
 // Create system output directories
 beforeAll(() => {
+  kifOutputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ultralink-kif-'));
   ensureDirectoryExists(OUTPUT_DIR);
   
   Object.keys(SYSTEMS).forEach(systemName => {
-    const systemDir = path.join(OUTPUT_DIR, systemName);
-    ensureDirectoryExists(systemDir);
-    
     FORMATS.forEach(format => {
-      const formatDir = path.join(systemDir, format);
+      const formatDir = getOutputPath(systemName, format);
       ensureDirectoryExists(formatDir);
       
       // Create visualization subdirectories
@@ -160,6 +165,10 @@ beforeAll(() => {
       }
     });
   });
+});
+
+afterAll(() => {
+  if (kifOutputDir) fs.rmSync(kifOutputDir, { recursive: true, force: true });
 });
 
 // Mock visualization helpers
@@ -207,7 +216,20 @@ describe('System Rendering Tests', () => {
       // Test each format
       FORMATS.forEach(format => {
         describe(`${format} format`, () => {
-          const outputPath = path.join(OUTPUT_DIR, systemName, format);
+          let outputPath;
+          let kifFilePath;
+          beforeAll(() => {
+            outputPath = getOutputPath(systemName, format);
+            if (format === 'kif') {
+              kifFilePath = path.join(outputPath, `${systemName}.kif`);
+              fs.writeFileSync(kifFilePath, system.toKIF({
+                includeMetaKnowledge: true,
+                includeFunctions: true,
+                includeRules: true,
+                prettyPrint: true
+              }));
+            }
+          });
           
           it(`should render ${systemName} to ${format} format`, () => {
             let outputFiles = [];
@@ -253,14 +275,7 @@ describe('System Rendering Tests', () => {
                 break;
                 
               case 'kif':
-                const kifOutputPath = path.join(outputPath, `${systemName.toLowerCase()}.kif`);
-                fs.writeFileSync(kifOutputPath, system.toKIF({
-                  includeMetaKnowledge: true,
-                  includeFunctions: true,
-                  includeRules: true,
-                  prettyPrint: true
-                }));
-                outputFiles.push(kifOutputPath);
+                outputFiles.push(kifFilePath);
                 break;
                 
               case 'html-website':
@@ -459,7 +474,6 @@ describe('System Rendering Tests', () => {
                 break;
 
               case 'kif':
-                const kifFilePath = path.join(outputPath, `${systemName.toLowerCase()}.kif`);
                 expect(fs.existsSync(kifFilePath)).toBe(true);
                 const kifContent = fs.readFileSync(kifFilePath, 'utf8');
                 
