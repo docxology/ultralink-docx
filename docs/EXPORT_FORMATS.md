@@ -567,10 +567,10 @@ using RxInfer, Distributions
     
     # Define relationships between variables
     # Relationship: studied_at (alan_turing → cambridge)
-    alan_turing_studied_at_cambridge ~ Bernoulli(sigmoid(alan_turing))
+    cambridge_studied_at ~ Normal(mean = 0.1 * alan_turing, variance = 1.0)
     
     # Return variables of interest
-    return (alan_turing, cambridge, alan_turing_studied_at_cambridge)
+    return (alan_turing, cambridge)
 end
 ```
 
