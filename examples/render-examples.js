@@ -102,8 +102,14 @@ function writeFullBlobOutput(filePath, content, { followSymlink = false } = {}) 
   let previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
   if (previous?.isSymbolicLink()) {
     if (followSymlink) {
-      filePath = fs.realpathSync(filePath);
-      previous = fs.statSync(filePath);
+      try {
+        filePath = fs.realpathSync(filePath);
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+        // Preserve an existing link when its destination has not been written yet.
+        filePath = path.resolve(fs.realpathSync(path.dirname(filePath)), fs.readlinkSync(filePath));
+      }
+      previous = fs.lstatSync(filePath, { throwIfNoEntry: false });
     } else {
       // Replace a diagnostic link without reading or modifying the target.
       previous = undefined;
@@ -913,6 +919,18 @@ async function renderSystemWithStats(systemName, createDatasetFn, STATS) {
       }
       const errorFilePath = path.join(targetDir, diagnostic);
       try {
+        if (target.name === 'full-blob') {
+          const existing = fs.statSync(errorFilePath, { throwIfNoEntry: false });
+          // Replacing a diagnostic can also clobber an archive that points to it.
+          if (existing && target.outputFiles.some(({ filename }) => {
+            const archive = path.join(targetDir, filename.replace('{{system}}', systemName));
+            if (!fs.lstatSync(archive, { throwIfNoEntry: false })?.isSymbolicLink()) return false;
+            const destination = fs.statSync(archive, { throwIfNoEntry: false });
+            return destination?.ino === existing.ino && destination.dev === existing.dev;
+          })) {
+            throw new Error('Diagnostic path is the target of a Full Blob archive');
+          }
+        }
         const writeDiagnostic = target.name === 'full-blob' ? writeFullBlobOutput : writeOutput;
         writeDiagnostic(errorFilePath, `Error rendering ${target.name} format for ${systemName}:\n${message}${stack ? `\n${stack}` : ''}`);
         recordWrittenFile(true);
