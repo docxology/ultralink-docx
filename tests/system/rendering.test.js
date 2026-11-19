@@ -253,7 +253,7 @@ describe('System Rendering Tests', () => {
                 break;
                 
               case 'kif':
-                const kifOutputPath = path.join(outputPath, `${systemName.toLowerCase()}.kif`);
+                const kifOutputPath = path.join(outputPath, `${systemName}.kif`);
                 fs.writeFileSync(kifOutputPath, system.toKIF({
                   includeMetaKnowledge: true,
                   includeFunctions: true,
@@ -459,7 +459,7 @@ describe('System Rendering Tests', () => {
                 break;
 
               case 'kif':
-                const kifFilePath = path.join(outputPath, `${systemName.toLowerCase()}.kif`);
+                const kifFilePath = path.join(outputPath, `${systemName}.kif`);
                 expect(fs.existsSync(kifFilePath)).toBe(true);
                 const kifContent = fs.readFileSync(kifFilePath, 'utf8');
                 
