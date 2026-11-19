@@ -28,9 +28,23 @@ UltraLink follows a Code of Conduct that all contributors are expected to adhere
    - Click the "Fork" button on the [UltraLink repository](https://github.com/docxology/ultralink-docx).
 
 2. **Clone your fork**
+
+   On your fork's GitHub page, open **Code** and copy the HTTPS clone URL.
+   Substitute your GitHub username (or the fork's organization) for
+   `YOUR-USERNAME`. If you kept the default fork name, run:
+
    ```bash
-   git clone https://github.com/YOUR-USERNAME/ultralink.git
-   cd ultralink
+   git clone https://github.com/YOUR-USERNAME/ultralink-docx.git
+   cd ultralink-docx
+   ```
+
+   If you renamed the fork, use its actual clone URL instead. The final
+   `ultralink-docx` argument sets the local directory name, independently of
+   the name on GitHub:
+
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-FORK-NAME.git ultralink-docx
+   cd ultralink-docx
    ```
 
 3. **Set up the upstream remote**
@@ -47,6 +61,10 @@ UltraLink follows a Code of Conduct that all contributors are expected to adhere
    ```bash
    npm test
    ```
+
+If you only want to run UltraLink locally without contributing, see
+[Development Setup](INSTALLATION.md#development-setup) for cloning upstream
+directly.
 
 ## Development Environment
 
