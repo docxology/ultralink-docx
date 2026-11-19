@@ -56,17 +56,20 @@ function addRelationship(sourceId, targetId, type, attributes = {}, options = {}
   }
   const replaced = previous?.id === id ? previous : undefined;
   let overwritten;
-  if (replaced && (replaced.source !== sourceId || replaced.target !== targetId)) {
-    if (state.inserted.includes(replaced)) {
+  if (replaced) {
+    const differentEndpoints = replaced.source !== sourceId || replaced.target !== targetId;
+    if (differentEndpoints && state.inserted.includes(replaced)) {
       // A hook can explicitly accept a write displaced by a later write.
       (state.displaced ??= new Set()).add(replaced);
       trackImportedOrder(this, state);
     }
-    if (state.reserved.has(compoundId) && !state.accepted.has(replaced)) {
+    const differentArchiveId = state.row.id !== undefined && state.row.id !== compoundId;
+    if ((differentEndpoints || differentArchiveId) && state.reserved.has(compoundId) && !state.accepted.has(replaced)) {
       // The hook freed an archive ID and a receiver edge now owns it.
       // Preserve normal overwrite visibility until we know which row it accepted.
       trackImportedOrder(this, state);
       overwritten = snapshotReceiverWrite(this, replaced);
+      overwritten.acceptedSlot = state.order.length;
     }
   }
   const relationship = storeRelationship.call(this, sourceId, targetId, type, attributes, id);
@@ -258,9 +261,7 @@ function reviveAcceptedWrite(graph, state, edge) {
   recoveredLegacyTypes.set(edge, key.slice(String(edge.target).length + 1));
   edge.id = nextRecoveryId(graph.relationships, state);
   indexRelationship.call(graph, edge);
-  const slot = state.slots.get(edge);
-  state.order.splice(slot, 0, edge);
-  for (let i = slot + 1; i < state.order.length; i++) state.slots.set(state.order[i], i);
+  insertImportedSlot(state, edge, state.slots.get(edge));
   return edge;
 }
 
@@ -321,8 +322,9 @@ function settleReceiverWrites(graph, state, accepted) {
           // The hook previously observed this write at the freed compound ID.
           // Only move the accepted row now, leaving the receiver edge at that ID.
           recoverDisplacedEdge(graph, edge, state);
-          rememberImportedSlot(state, edge);
-          rememberImportedSlot(state, effect, replaces);
+          rememberImportedSlot(state, effect, edge);
+          restoreReceiverSlot(state, effect, replaces);
+          insertImportedSlot(state, edge, displaced.acceptedSlot);
         } else {
           restoreReceiverSlot(state, effect, replaces);
         }
@@ -418,6 +420,11 @@ function rememberImportedSlot(state, edge, replaced) {
   const index = state.slots.get(replaced) ?? state.order.length;
   state.order[index] = edge;
   state.slots.set(edge, index);
+}
+
+function insertImportedSlot(state, edge, index) {
+  state.order.splice(index, 0, edge);
+  for (let i = index; i < state.order.length; i++) state.slots.set(state.order[i], i);
 }
 
 function restoreImportedRowOrder(graph, order) {

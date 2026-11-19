@@ -1211,7 +1211,12 @@ describe('UltraLink', () => {
             const audit = super.addRelationship('a_b', 'd', 'c', { trace: 'retained' });
             expect(this.getRelationship(first.id)).toBe(audit);
           }
-          return super.addLink(source, target, type, attributes);
+          const accepted = super.addLink(source, target, type, attributes);
+          if (type === 'b') {
+            super.addRelationship('a_b', 'c_d', 'citation', { trace: 'later' });
+            expect(this.getBacklinks('c_d')).toEqual([accepted, this.getRelationship('a_b_citation_c_d')]);
+          }
+          return accepted;
         }
       }
       for (const input of archiveCarriers(ultralink)) {
@@ -1220,9 +1225,39 @@ describe('UltraLink', () => {
         expect(audit).toMatchObject({ id: first.id, source: 'a_b', attributes: { trace: 'retained' } });
         expect(restored.getRelationship(first.id)).toBe(audit);
         expect(restored.links.get('a_b').get('d-c')).toBe(audit);
-        expect(restored.getBacklinks('c_d')).toEqual([second]);
+        const trace = restored.getRelationship('a_b_citation_c_d');
+        expect(trace.attributes).toEqual({ trace: 'later' });
+        expect(restored.getBacklinks('c_d')).toEqual([second, trace]);
+        expect(restored.toJSON({ asString: false, lossless: true }).relationships.map(({ id }) => id))
+          .toEqual([audit.id, second.id, trace.id]);
         expect(restored.deleteLink('a_b', 'd', 'c')).toBe(true);
         expect(restored.getBacklinks('d')).toEqual([]);
+      }
+    });
+
+    it('keeps a receiver edge with the same tuple as a distinct accepted archive row', () => {
+      ultralink.addEntity('a', 'node');
+      ultralink.addEntity('b', 'node');
+      const first = ultralink.addLink('a', 'b', 'audit');
+      ultralink.updateRelationship(first.id, { type: 'reviewed' });
+      const second = ultralink.addLink('a', 'b', 'draft', { weight: 2 });
+      ultralink.updateRelationship(second.id, { type: 'audit' });
+      class Audited extends UltraLink {
+        addLink(source, target, type, attributes) {
+          if (type === 'audit') {
+            expect(this.deleteRelationship(first.id)).toBe(true);
+            super.addRelationship(source, target, type, { weight: 1 });
+          }
+          return super.addLink(source, target, type, attributes);
+        }
+      }
+      for (const input of archiveCarriers(ultralink)) {
+        const restored = new Audited().fromFullBlob(input);
+        expect(restored.getBacklinks('b').map(({ id, attributes }) => [id, attributes.weight]))
+          .toEqual([[first.id, 1], [second.id, 2]]);
+        expect(restored.links.get('a').get('b-audit').attributes.weight).toBe(1);
+        expect(restored.deleteLink('a', 'b', 'audit')).toBe(true);
+        expect(restored.getBacklinks('b')).toEqual([second]);
       }
     });
 
