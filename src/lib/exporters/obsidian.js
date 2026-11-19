@@ -18,6 +18,23 @@ function toObsidian(ultralink, options = {}) {
     backlinks = true
   } = options;
   const files = {};
+  const outgoingBySource = includeRelationships ? new Map() : null;
+  const incomingByTarget = backlinks ? new Map() : null;
+
+  // Use the stored endpoints; lookup indexes can retain an ID after an edge is deleted.
+  if (outgoingBySource || incomingByTarget) {
+    for (const rel of ultralink.relationships.values()) {
+      if (outgoingBySource) {
+        let byType = outgoingBySource.get(rel.source);
+        if (!byType) {
+          byType = new Map();
+          outgoingBySource.set(rel.source, byType);
+        }
+        appendRelationship(byType, rel.type, rel);
+      }
+      if (incomingByTarget) appendRelationship(incomingByTarget, rel.target, rel);
+    }
+  }
   
   // Process each entity
   for (const entity of ultralink.entities.values()) {
@@ -54,14 +71,9 @@ function toObsidian(ultralink, options = {}) {
       content += '\n';
     }
 
-    if (includeRelationships) {
-      content += '## Relationships\n\n';
-      const byType = new Map();
-      for (const rel of ultralink.getEntityRelationships(entity.id, { direction: 'outgoing' })) {
-        if (!rel) continue;
-        if (!byType.has(rel.type)) byType.set(rel.type, []);
-        byType.get(rel.type).push(rel);
-      }
+    if (includeRelationships) content += '## Relationships\n\n';
+    const byType = outgoingBySource?.get(entity.id);
+    if (byType) {
       for (const [type, relationships] of byType) {
         content += `### ${type}\n\n`;
         for (const rel of relationships) {
@@ -73,14 +85,14 @@ function toObsidian(ultralink, options = {}) {
       }
     }
 
-    if (backlinks) {
-      let section = '';
-      for (const rel of ultralink.getBacklinks(entity.id)) {
-        if (!rel) continue;
+    const incoming = incomingByTarget?.get(entity.id);
+    if (incoming) {
+      content += '## Backlinks\n\n';
+      for (const rel of incoming) {
         const attributes = formatRelationshipAttributes(rel);
-        section += `- ${noteLink(ultralink, rel.source)} (${rel.type}${attributes ? `: ${attributes}` : ''})\n`;
+        content += `- ${noteLink(ultralink, rel.source)} (${rel.type}${attributes ? `: ${attributes}` : ''})\n`;
       }
-      if (section) content += `## Backlinks\n\n${section}\n`;
+      content += '\n';
     }
     
     // Add the file to the result
@@ -113,6 +125,12 @@ function toObsidian(ultralink, options = {}) {
   files['index.md'] = indexContent;
   
   return files;
+}
+
+function appendRelationship(groups, key, relationship) {
+  const group = groups.get(key);
+  if (group) group.push(relationship);
+  else groups.set(key, [relationship]);
 }
 
 function noteLink(ultralink, id) {

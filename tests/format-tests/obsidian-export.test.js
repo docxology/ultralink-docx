@@ -205,6 +205,27 @@ describe('Obsidian Markdown Export Tests', () => {
     
     logger.log('Verified Obsidian export with backlinks and options');
   });
+
+  test('reused compound relationship IDs only appear in notes for current endpoints', () => {
+    const ultralink = new UltraLink();
+    for (const id of ['north', 'north_east', 'east_north', 'depot']) {
+      ultralink.addEntity(id, 'location');
+    }
+
+    ultralink.addLink('north', 'depot', 'east_route');
+    ultralink.addLink('depot', 'north', 'route_east');
+    ultralink.deleteEntity('depot');
+    ultralink.addEntity('depot', 'location');
+    ultralink.addLink('north_east', 'depot', 'route', { distance: 5 });
+    ultralink.addLink('depot', 'east_north', 'route');
+
+    const notes = ultralink.toObsidian();
+    expect(notes['north.md']).not.toContain('[[');
+    expect(notes['north_east.md']).toContain('### route\n\n- [[depot]] (distance: 5)');
+    expect(notes['east_north.md']).toContain('## Backlinks\n\n- [[depot]] (route)');
+    expect(notes['depot.md']).toContain('### route\n\n- [[east_north]]');
+    expect(notes['depot.md']).toContain('## Backlinks\n\n- [[north_east]] (route: distance: 5)');
+  });
 });
 
 // Cleanup function to run after all tests
