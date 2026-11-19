@@ -21,152 +21,45 @@ This guide helps you diagnose and resolve common issues when working with UltraL
 
 ### Package Installation Fails
 
-```
-npm ERR! code EACCES
-npm ERR! syscall access
-npm ERR! path /usr/local/lib/node_modules
-npm ERR! errno -13
-npm ERR! Error: EACCES: permission denied
-```
-
-**Problem**: Permission issues when installing packages globally.
-
-**Solutions**:
-1. Use a package manager that supports user-level installations:
-   ```bash
-   npm install --user ultralink
-   ```
-
-2. Fix npm permissions:
-   ```bash
-   sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
-   ```
-
-3. Use nvm (Node Version Manager) for permissions-free installations:
-   ```bash
-   nvm install node
-   nvm use node
-   npm install ultralink
-   ```
+If installing the package by name fails, use [Development Setup](../../INSTALLATION.md#development-setup)
+to clone this repository and install its dependencies. No global UltraLink
+install is needed.
 
 ### Dependency Resolution Issues
 
-```
-npm ERR! code ERESOLVE
-npm ERR! ERESOLVE unable to resolve dependency tree
-```
-
-**Problem**: Conflicting dependencies.
-
-**Solutions**:
-1. Use force install (not recommended for production):
-   ```bash
-   npm install --force ultralink
-   ```
-
-2. Use legacy peer dependencies:
-   ```bash
-   npm install --legacy-peer-deps ultralink
-   ```
-
-3. Update your package.json to use compatible versions:
-   ```bash
-   npm install ultralink@0.1.0
-   ```
+If dependency resolution fails in a source checkout, check the first npm error
+and report it with your Node.js and npm versions. Use the repository's
+`package-lock.json` rather than forcing dependency resolution or installing a
+package by name from the registry.
 
 ### Node.js Version Incompatibility
 
-```
-Error: UltraLink requires Node.js v14.0.0 or higher
-```
-
-**Problem**: Your Node.js version is too old.
-
-**Solutions**:
-1. Update Node.js:
-   ```bash
-   # Using nvm
-   nvm install 16
-   nvm use 16
-   
-   # Direct download
-   # Visit https://nodejs.org and download the latest LTS version
-   ```
-
-2. Check your current version:
-   ```bash
-   node --version
-   ```
+If npm reports an unsupported engine or a native dependency fails to load,
+check `node --version` and use a maintained LTS version of Node.js. See
+[Community Support](../contributing/community-support.md) if the problem
+persists after installing the locked dependencies in a clean checkout.
 
 ## Configuration Problems
 
 ### Invalid Configuration Options
 
-```
-Error: Invalid configuration option 'storageType'
-```
-
-**Problem**: Using incorrect configuration property names.
-
-**Solution**: Refer to the [Configuration Reference](./getting-started/installation-guide.md#configuration-reference) for the correct property names:
-
-```javascript
-// Incorrect
-const ultralink = new UltraLink({
-  storageType: 'memory'
-});
-
-// Correct
-const ultralink = new UltraLink({
-  storage: {
-    type: 'memory'
-  }
-});
-```
+For the constructor options used by the shipped API, see
+[Configuration Options](../api/README.md#configuration-options).
+The `storageType` and `storage` examples in older guides do not configure a
+storage backend for `new UltraLink(...)`.
 
 ### Missing Required Configuration
 
-```
-Error: Missing required configuration: storage.database.url
-```
-
-**Problem**: A required configuration property is missing.
-
-**Solution**: Add the missing configuration:
-
-```javascript
-const ultralink = new UltraLink({
-  storage: {
-    type: 'database',
-    database: {
-      type: 'mongodb',
-      url: 'mongodb://localhost:27017/ultralink',
-      // Other options...
-    }
-  }
-});
-```
+`new UltraLink()` starts with an in-memory graph and does not require a
+database URL. If your application reports a missing database URL, check the
+component that raised the error. Adding `storage.database.url` to the
+UltraLink constructor will not configure a database connection.
 
 ### Environment Variables Not Applied
 
-**Problem**: Environment variables don't seem to be affecting configuration.
-
-**Solutions**:
-1. Make sure environment variables are set before application startup:
-   ```bash
-   export ULTRALINK_STORAGE_TYPE=file
-   node your-app.js
-   ```
-
-2. Verify environment variables are being loaded:
-   ```javascript
-   console.log(process.env.ULTRALINK_STORAGE_TYPE);
-   ```
-
-3. If using dotenv, ensure it's configured correctly:
-   ```javascript
-   require('dotenv').config();
-   ```
+UltraLink does not use `ULTRALINK_STORAGE_TYPE` to choose a storage backend.
+If your application reads its own environment variables, check that it loads
+them before initializing the component that uses them.
 
 ## Performance Issues
 
@@ -844,20 +737,15 @@ if (integrityReport.hasIssues) {
 
 If you're still experiencing issues after trying the solutions in this guide:
 
-1. **Check Documentation**: Review the [API Reference](./README.md) for correct usage
-2. **Search Known Issues**: Check [GitHub Issues](https://github.com/docxology/ultralink/issues) for similar problems
-3. **Community Support**: Join the [Discord community](https://discord.gg/ultralink) for real-time help
-4. **Stack Overflow**: Post on [Stack Overflow](https://stackoverflow.com/questions/tagged/ultralink) with the `ultralink` tag
+1. **Check Documentation**: See the [Troubleshooting index](./README.md) or the [API reference](../api/README.md) for current method names.
+2. **Search Known Issues**: Check [GitHub Issues](https://github.com/docxology/ultralink-docx/issues) for similar problems.
+3. **Community Support**: See [Community Support](../contributing/community-support.md) for the project's help and issue-reporting routes.
+4. **Stack Overflow**: Browse [questions tagged `ultralink`](https://stackoverflow.com/questions/tagged/ultralink).
 5. **Contact Support**: Email the maintainers at DanielAriFriedman@gmail.com with:
    - UltraLink version
    - Environment details (Node.js version, browser, OS)
    - Minimal reproducible example
    - Error messages and stack traces
 
-When reporting issues, please include:
-
-```javascript
-// Get version and environment info
-const info = await ultralink.getSystemInfo();
-console.log(JSON.stringify(info, null, 2));
-``` 
+For a Node.js checkout, use `node --version` and `npm --version` to capture
+the versions in your report.
