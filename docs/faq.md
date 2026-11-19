@@ -144,16 +144,14 @@ We welcome contributions! You can:
 - Submit pull requests
 - Create plugins or extensions
 
-See our [Contributing Guide](./contributing/development.md) for more details.
+See the [Contributing Guide](../CONTRIBUTING.md) for more details.
 
 ### Where can I get help if I'm stuck?
 
 If you need assistance:
 - Check the [Troubleshooting Guide](./troubleshooting/troubleshooting.md)
-- Ask in our [Discord community](https://discord.gg/ultralink)
-- Post on [Stack Overflow](https://stackoverflow.com/questions/tagged/ultralink) with the `ultralink` tag
-- Open an issue on [GitHub](https://github.com/ultralink/ultralink/issues) for bugs or feature requests
-- Contact support at support@ultralink.dev for urgent issues
+- Read the [Community Support guide](./contributing/community-support.md#getting-help) for help resources and what to include in a bug report
+- Open an [issue](https://github.com/docxology/ultralink-docx/issues) to report a bug or request a feature
 
 ## Performance and Optimization
 
@@ -194,5 +192,3 @@ We're working on answers to more questions:
 - Enterprise deployment strategies
 - Multi-tenant architecture patterns
 - Scaling to billions of entities and relationships
-
-Don't see your question answered here? Reach out to our community on Discord or open an issue on GitHub. 

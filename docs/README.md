@@ -1,6 +1,6 @@
 # UltraLink Documentation
 
-Welcome to the official documentation for UltraLink, a powerful JavaScript library for creating, managing, and exporting knowledge graphs with advanced vector integration and LLM capabilities. This comprehensive documentation will guide you through all aspects of UltraLink, from basic installation to advanced use cases.
+Welcome to the official documentation for UltraLink, a JavaScript library for creating, managing, and exporting knowledge graphs. Start with installation and basic usage, or explore the available export formats.
 
 > **Documentation Standard**: All diagrams in the UltraLink documentation use Mermaid syntax for consistency, clarity, and maintainability. This ensures diagrams are both visually appealing and can be properly rendered in various documentation formats.
 
@@ -9,8 +9,6 @@ Welcome to the official documentation for UltraLink, a powerful JavaScript libra
 UltraLink is a meta-linking paradigm for managing and analyzing relational content with:
 
 - **Flexible rendering system** that transforms knowledge into multiple target formats
-- **Vector embeddings** for semantic similarity
-- **LLM-generated insights** for advanced content analysis
 - **Deterministic deployment** capabilities
 - **Temporal analysis** to track knowledge evolution
 
@@ -38,9 +36,8 @@ The documentation is organized into the following sections:
 mindmap
   root((UltraLink Docs))
     Getting Started
-      Installation
-      First Steps
-      Quick Tutorial
+      Install from Source
+      First Graph
     Guides
       API User Guide
       Format Selection
@@ -55,37 +52,43 @@ mindmap
       KIF
       Format Overview
     Architecture
-      System Overview
-      Core Components
-      Data Flow
     Technical
       Format Conversion
       Entity Store
-      Vector Store
     Tutorials
       Basic Tutorials
       Advanced Tutorials
       Integration Tutorials
     API Reference
       Core API
-      Exporters API
-      Events API
+      Export API
     Integration
       Format Integration
-      Tool Integration
     Performance
       Benchmarks
-      Optimization
     Contributing
       Development Setup
-      Code Standards
+      Code Style
 ```
 
 ## Main Documentation Sections
 
-### [Getting Started](./getting-started/README.md)
+### Getting Started
 
-Begin your journey with UltraLink by following our getting started guides. Learn the basics of installation, configuration, and creating your first knowledge graph.
+Use Node.js 22.23.5, the version tested for this setup. [Clone the repository and install its dependencies](../INSTALLATION.md#development-setup).
+
+From the repository root, run this example to create two entities, link them, and print the graph as JSON:
+
+```bash
+node <<'JS'
+const { UltraLink } = require('.');
+const graph = new UltraLink();
+graph.addEntity('alice', 'person', { name: 'Alice' });
+graph.addEntity('project', 'project', { name: 'First Graph' });
+graph.addLink('alice', 'project', 'works_on');
+console.log(graph.toJSON({ pretty: true }));
+JS
+```
 
 ### [Guides](./guides/README.md)
 
@@ -117,86 +120,59 @@ Understand UltraLink's core differentiating features:
 
 - [Syntax and Semantics](./core-features/syntax-and-semantics.md) - The fundamental model and syntax of UltraLink
 - [Rendering Flexibility](./core-features/rendering-flexibility.md) - The power of UltraLink's format-agnostic approach
-- [Vector Integration](./core-features/vector-integration.md) - Working with semantic vector embeddings
-- [LLM Capabilities](./core-features/llm-capabilities.md) - Enhancing knowledge graphs with AI
 - [Temporal Analysis](./core-features/temporal-analysis.md) - Tracking knowledge evolution over time
 
 ### [Architecture](./architecture/README.md)
 
-Understand UltraLink's architecture and design principles:
-
-- [System Overview](./api/overview.md)
-- [Core Components](./architecture/components.md)
-- [Data Flow](./architecture/data-flow.md)
+Understand UltraLink's architecture and design principles.
 
 ### [Technical Documentation](./technical/README.md)
 
 Dive into the technical details of UltraLink:
 
 - [Format Conversion](./technical/format-conversion.md)
-- [Entity Store](./technical/entity-store.md)
-- [Vector Store](./technical/vector-store.md)
-- [Event System](./architecture/event-system.md)
+- [Entity Store](./technical/README.md#entity-store)
 
 ### [Tutorials](./tutorials/README.md)
 
-Step-by-step tutorials to help you master UltraLink:
+For a runnable first example, start with [Getting Started](#getting-started) above.
 
-- [Getting Started with UltraLink](./tutorials/getting-started.md)
-- [Vector Embeddings and Semantic Search](./tutorials/vector-embeddings.md)
-- [LLM Integration](./tutorials/llm-integration.md)
-- [Extending with Custom Render Formats](./tutorials/custom-formats.md)
-- [Bayesian Networks for Probabilistic Reasoning](./tutorials/bayesian-networks.md)
+### API Reference
 
-### [API Reference](./api/README.md)
-
-Detailed API reference documentation:
-
-- [Core API](./api/core-api.md)
-- [Exporters API](./api/exporters-api.md)
+- [Creating Entities](./API_USAGE.md#creating-entities)
+- [Data Export Methods](./API_USAGE.md#exporting-data)
 - [Temporal API](./api/temporal-api.md)
-- [Vector API](./api/vector-api.md)
-- [LLM API](./api/llm-api.md)
-- [Events API](./api/events-api.md)
 
 ### [Integration](./integration/README.md)
 
 Guides for integrating UltraLink with other tools and systems:
 
 - [Format Integration Guide](./integration/format-integration.md)
-- [Tool Integration](./integration/tool-integration.md)
 
-### [Performance](./README.md)
-
-Performance considerations and benchmarks:
+### Performance
 
 - [Format Benchmarks](./performance/format-benchmarks.md)
-- [Optimization Strategies](./performance/optimization.md)
 
 ### [Advanced Topics](./advanced/README.md)
 
 Advanced features and use cases:
 
-- [Custom Entity Types](./advanced/custom-entity-types.md)
-- [Custom Rendering Formats](./advanced/custom-rendering-formats.md)
-- [Plugin Development](./advanced/plugin-development.md)
-- [Custom Transformations](./advanced/custom-transformations.md)
 - [Advanced Query Patterns](./guides/advanced-query-patterns.md)
 
 ### [For Agents](./for-agents/README.md)
 
 Documentation for AI agent integration:
 
-- [Agent Integration Guide](./for-agents/agent-integration.md) 
-- [LLM Compatibility](./for-agents/llm-compatibility.md)
+- [Agent Integration Guide](./for-agents/agent-integration-guide.md)
+- [LLM Compatibility](./for-agents/README.md#llm-compatibility)
 - [Prompt Engineering](./guides/prompt-engineering.md)
 
-### [Contributing](./README.md)
+### [Contributing](../CONTRIBUTING.md)
 
 Guidelines for contributing to UltraLink development:
 
-- [Development Setup](./contributing/development-setup.md)
-- [Coding Standards](./contributing/coding-standards.md)
+- [Install from Source](../INSTALLATION.md#development-setup)
+- [Code Style](../CONTRIBUTING.md#code-style)
 
 ## Additional Resources
 
@@ -206,7 +182,7 @@ Guidelines for contributing to UltraLink development:
 
 ## Latest Updates
 
-UltraLink is continuously evolving. Check out the [latest updates](./README.md) to see what's new.
+See the [changelog](../CHANGELOG.md#unreleased) for recent changes.
 
 ## Version Information
 
@@ -214,7 +190,7 @@ This documentation applies to UltraLink version 0.1.x (the version in `package.j
 
 ## Contributing to Documentation
 
-We welcome contributions to improve this documentation. Please see the [documentation contribution guide](./contributing/documentation-guide.md) for details on how to help.
+We welcome documentation improvements. See the [documentation section of the contributing guide](../CONTRIBUTING.md#documentation) for details.
 
 ## Documentation Standards
 

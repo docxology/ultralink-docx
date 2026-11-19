@@ -15,10 +15,10 @@ This document provides detailed examples and usage patterns for the UltraLink kn
 
 ## Getting Started
 
-First, import the UltraLink class and instantiate it:
+Follow the [source checkout setup](./README.md#getting-started). Put this setup block at the top of a `.cjs` file in the repository root, append the example you want to run, and run the file with `node`:
 
 ```javascript
-const { UltraLink } = require('ultralink');
+const { UltraLink } = require('.');
 
 // Create a new UltraLink instance with default config
 const ultralink = new UltraLink();
@@ -34,6 +34,7 @@ const ultralinkWithConfig = new UltraLink({
 ## Creating Entities
 
 Entities are the nodes in your knowledge graph. Each entity has an ID, type, and attributes.
+Start with the [setup block](#getting-started) above.
 
 ```javascript
 // Basic entity creation
@@ -122,13 +123,14 @@ const backlinks = ultralink.getBacklinks('Cambridge University');
 
 ## Exporting Data
 
-UltraLink supports multiple export formats for your knowledge graph.
+Use the `ultralink` instance from [Getting Started](#getting-started) after [adding entities](#creating-entities). The methods below return data in different formats.
 
 ```javascript
 // Export to JSON
 const jsonOutput = ultralink.toJSON({ pretty: true });
 
-// Export to CSV (creates two files: entities.csv and relationships.csv)
+// Return CSV strings keyed by filename, including entities.csv and relationships.csv.
+// This does not write files to disk.
 const csvOutput = ultralink.toCSV();
 
 // Export to GraphML (for graph visualization tools)
@@ -147,8 +149,8 @@ const htmlOutput = ultralink.toHTMLWebsite({
 // Export to KIF (Knowledge Interchange Format)
 const kifOutput = ultralink.toKIF();
 
-// Export to full blob (complete data export)
-const fullBlobOutput = ultralink.toFullBlob({ compress: true });
+// Export the full blob as a JSON string
+const fullBlobOutput = ultralink.toFullBlob({ compressed: true });
 ```
 
 ## Visualization
