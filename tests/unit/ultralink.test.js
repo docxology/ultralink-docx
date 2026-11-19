@@ -10,6 +10,7 @@ const { UltraLink } = require('../../src');
 const { createEnhancedResearchTeamDataset } = require('../fixtures/research-team-llm');
 const fs = require('fs');
 const path = require('path');
+const { runInNewContext } = require('node:vm');
 
 describe('UltraLink', () => {
   // Basic UltraLink instance creation and properties
@@ -676,26 +677,36 @@ describe('UltraLink', () => {
       }
     });
 
-    it('serializes a Full Blob with JSON-safe metadata beside runtime BigInts and cycles', () => {
+    it('archives JSON-safe row metadata beside same- and cross-realm BigInts and cycles', () => {
       const author = ultralink.addEntity('a', 'node');
       ultralink.addEntity('b', 'node');
       author.metadata.sequence = 100n;
+      author.metadata.boxedSequence = Object(13n);
       author.metadata.locale = 'en';
       const draft = ultralink.addLink('a', 'b', 'draft', { weight: 2 });
       ultralink.updateRelationship(draft.id, { type: 'reviewed' });
-      const provenance = { source: 'local', sequence: 100n };
+      const foreign = runInNewContext('Object(21n)');
+      const provenance = { source: 'local', sequence: foreign, samples: [1, foreign, 2] };
       provenance.self = provenance;
       draft.metadata.provenance = provenance;
 
-      const blob = ultralink.toFullBlob({ compressed: true });
-      const restored = new UltraLink().fromFullBlob(blob, { compressed: true });
-      expect(restored.getEntity('a').metadata.locale).toBe('en');
-      expect(restored.getEntity('a').metadata).not.toHaveProperty('sequence');
-      expect(restored.getRelationship(draft.id)).toMatchObject({
-        type: 'reviewed', attributes: { weight: 2 }, metadata: { provenance: { source: 'local' } }
-      });
-      expect(restored.getRelationship(draft.id).metadata.provenance).toEqual({ source: 'local' });
+      for (const archive of [
+        ultralink.toJSON({ lossless: true }),
+        ultralink.toFullBlob(),
+        ultralink.toFullBlob({ compressed: true }),
+        ultralink.toFullBlob({ compressed: true, throwOnError: true })
+      ]) {
+        const restored = new UltraLink().fromFullBlob(archive);
+        expect(restored.getEntity('a').metadata).toMatchObject({ locale: 'en' });
+        expect(restored.getEntity('a').metadata).not.toHaveProperty('sequence');
+        expect(restored.getEntity('a').metadata).not.toHaveProperty('boxedSequence');
+        const edge = restored.getRelationship(draft.id);
+        expect(edge).toMatchObject({ type: 'reviewed', attributes: { weight: 2 } });
+        expect(edge.metadata.provenance).toEqual({ source: 'local', samples: [1, null, 2] });
+        expect(restored.getBacklinks('b')).toEqual([edge]);
+      }
       expect(author.metadata.sequence).toBe(100n);
+      expect(provenance.sequence).toBe(foreign);
       expect(provenance.self).toBe(provenance);
     });
 

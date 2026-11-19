@@ -4,6 +4,7 @@
  * Export UltraLink data to JSON format.
  */
 
+const { types: { isBigIntObject } } = require('node:util');
 const { getLegacyLinkOrder, getRelationshipOrder } = require('../relationship-manager');
 
 const ARCHIVE_VERSION = 1;
@@ -15,7 +16,7 @@ function jsonMetadata(metadata) {
   const text = JSON.stringify(metadata, function (_key, value) {
     if (typeof value === 'bigint') return undefined;
     if (value === null || typeof value !== 'object') return value;
-    if (Object.getPrototypeOf(value) === BigInt.prototype) return undefined;
+    if (isBigIntObject(value)) return undefined;
     while (ancestors.length && ancestors[ancestors.length - 1] !== this) ancestors.pop();
     if (ancestors.includes(value)) return undefined;
     ancestors.push(value);
