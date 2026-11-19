@@ -1148,8 +1148,12 @@ describe('UltraLink', () => {
         addLink(source, target, type, attributes) {
           if (type === 'reviewed') super.addRelationship('a_b', 'd', 'c', { audit: 'old' });
           else {
+            if (removeReplacement) super.addRelationship('a', 'c_d', 'b', { audit: 'intermediate' });
             const replacement = super.addRelationship('a', 'c_d', 'b', { audit: 'latest' });
-            if (removeReplacement) expect(this.deleteRelationship(replacement.id)).toBe(true);
+            if (removeReplacement) {
+              expect(this.deleteRelationship(replacement.id)).toBe(true);
+              expect(this.getBacklinks('c_d')).toEqual([]);
+            }
             this.staleOutgoingDuringImport = this.getRelationships('a_b', { direction: 'outgoing' });
           }
           return super.addLink(source, target, type, attributes);
@@ -1182,24 +1186,30 @@ describe('UltraLink', () => {
       }
     });
 
-    it('keeps the separate receiver effect if the provisional replacement is the accepted archive row', () => {
-      for (const id of ['a', 'a_b', 'd', 'c_d']) ultralink.addEntity(id, 'node');
-      const first = ultralink.addLink('a', 'd', 'b_c', { revision: 1 });
+    it('retains the receiver effect behind a newer peer at the same legacy key when accepting the provisional replacement', () => {
+      for (const id of ['a', 'a_b', 'd', 'old-route_d', 'd-old']) ultralink.addEntity(id, 'node');
+      const first = ultralink.addLink('a', 'd', 'b_old-route', { revision: 1 });
       ultralink.updateRelationship(first.id, { type: 'reviewed' });
-      const second = ultralink.addLink('a', 'c_d', 'draft', { revision: 2 });
+      const second = ultralink.addLink('a', 'old-route_d', 'draft', { revision: 2 });
       ultralink.updateRelationship(second.id, { type: 'b' });
       class Audited extends UltraLink {
         addLink(source, target, type, attributes) {
-          if (type === 'reviewed') super.addRelationship('a_b', 'd', 'c', { trace: 'first' });
-          return super.addLink(source, target, type, attributes);
+          if (type === 'reviewed') super.addRelationship('a_b', 'd', 'old-route', { trace: 'first' });
+          const accepted = super.addLink(source, target, type, attributes);
+          if (type === 'b') super.addRelationship('a_b', 'd-old', 'route', { trace: 'latest' });
+          return accepted;
         }
       }
       const restored = new Audited().fromFullBlob(ultralink.toJSON({ lossless: true }));
       const [trace, reviewed] = restored.getBacklinks('d');
       expect(trace.attributes).toEqual({ trace: 'first' });
       expect(reviewed).toEqual(first);
-      expect(restored.getBacklinks('c_d')).toEqual([second]);
-      expect(restored.links.get('a_b').get('d-c')).toBe(trace);
+      expect(restored.getBacklinks('old-route_d')).toEqual([second]);
+      const [latest] = restored.getBacklinks('d-old');
+      expect(latest.attributes).toEqual({ trace: 'latest' });
+      expect(restored.links.get('a_b').get('d-old-route')).toBe(latest);
+      expect(restored.deleteRelationship(latest.id)).toBe(true);
+      expect(restored.links.get('a_b').get('d-old-route')).toBe(trace);
       expect(restored.deleteRelationship(trace.id)).toBe(true);
       expect(restored.getBacklinks('d')).toEqual([first]);
     });
