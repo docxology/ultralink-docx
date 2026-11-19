@@ -81,7 +81,7 @@ describe('RxInferExporter', () => {
     const logit = scale === 1 ? 'parent' : '2.0 * parent';
     const base = '(@__MODULE__).Base';
     expect(ultralink.toRxInfer({ includeComments: false })).toContain(
-      ` ~ Bernoulli(${base}.exp(${base}.min(${logit}, 0.0)) / (1.0 + ${base}.exp(-1.0 * ${base}.abs(${logit}))))`
+      ` ~ Bernoulli(${base}.exp(${base}.min(${logit}, 0.0)) * (1.0 + ${base}.expm1(-1.0 * ${base}.log1p(${base}.exp(-1.0 * ${base}.abs(${logit}))))))`
     );
   });
 

@@ -429,8 +429,9 @@ class RxInferExporter {
   _getBernoulliConditional(sourceVar, targetVar, scale) {
     const logit = scale === 1 ? sourceVar : `${scale}.0 * ${sourceVar}`;
     const base = '(@__MODULE__).Base';
-    // Keep both exp arguments nonpositive so the negative tail does not overflow.
-    return `${targetVar} ~ Bernoulli(${base}.exp(${base}.min(${logit}, 0.0)) / (1.0 + ${base}.exp(-1.0 * ${base}.abs(${logit}))))`;
+    const logDenominator = `${base}.log1p(${base}.exp(-1.0 * ${base}.abs(${logit})))`;
+    // expm1 computes the small complement before the final subtraction from 1.
+    return `${targetVar} ~ Bernoulli(${base}.exp(${base}.min(${logit}, 0.0)) * (1.0 + ${base}.expm1(-1.0 * ${logDenominator})))`;
   }
   
   /**
