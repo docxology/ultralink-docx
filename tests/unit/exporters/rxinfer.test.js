@@ -65,17 +65,25 @@ describe('RxInferExporter', () => {
     expect(model).toMatch(/^\s*\w+_offset ~ Normal\(mean = 0\.0, variance = 1\.0\)$/m);
   });
 
-  test('keeps identity covariance callable when an entity is named diageye', () => {
+  test('resolves multivariate Gaussian helpers outside the model variable scope', () => {
     const ultralink = new UltraLink();
-    const event = ultralink.addEntity('diageye', 'event');
-    event.vector = [0.1, 0.2, 0.3];
-    ultralink.addEntity('site', 'location');
+    ultralink.addEntity('diageye', 'event').vector = [0.1, 0.2, 0.3];
+    ultralink.addEntity('RxInfer', 'event').vector = [0.1, 0.2, 0.3, 0.4];
+    ultralink.addEntity('Base', 'event');
+    ultralink.addEntity('zeros', 'event');
+    ultralink.addEntity('station', 'place');
 
     const model = ultralink.toRxInfer({ includeVectors: true });
 
-    expect(model).toContain('diageye ~ Bernoulli(0.5)');
-    expect(model).toContain('site ~ MvNormal(mean = zeros(2), covariance = RxInfer.diageye(2))');
-    expect(model).toContain('diageye_vec ~ MvNormal(mean = zeros(3), covariance = RxInfer.diageye(3))');
+    for (const name of ['diageye', 'RxInfer', 'Base', 'zeros']) {
+      expect(model).toContain(`${name} ~ Bernoulli(0.5)`);
+    }
+    for (const [name, dimension] of [['station', 2], ['diageye_vec', 3], ['RxInfer_vec', 4]]) {
+      expect(model).toContain(
+        `${name} ~ MvNormal(mean = (@__MODULE__).Base.zeros(${dimension}), covariance = (@__MODULE__).RxInfer.diageye(${dimension}))`
+      );
+    }
+    expect(model).toContain('return (diageye, RxInfer, Base, zeros, station)');
   });
   
   // Test options handling

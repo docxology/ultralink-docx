@@ -198,7 +198,7 @@ class RxInferExporter {
       // Add vector if requested and available
       if (includeVectors && entity.vector && entity.vector.length > 0) {
         const vecVarName = this._sanitizeVariableName(`${entity.id}_vec`);
-        const vecDist = this._getDistributionForVector(entity.vector);
+        const vecDist = this._getMultivariateNormal(entity.vector.length);
         code += `    ${vecVarName} ~ ${vecDist}\n`;
       }
     }
@@ -360,7 +360,7 @@ class RxInferExporter {
         
       case 'location':
       case 'place':
-        return 'MvNormal(mean = zeros(2), covariance = RxInfer.diageye(2))'; // 2D location
+        return this._getMultivariateNormal(2);
         
       case 'measurement':
       case 'observation':
@@ -416,14 +416,14 @@ class RxInferExporter {
   }
   
   /**
-   * Get appropriate distribution for a vector
+   * Emit a zero-mean Gaussian with identity covariance for the given dimension.
    * @private
-   * @param {Array} vector - Vector array
+   * @param {number} dimension - Location or vector dimension
    * @returns {string} Distribution code
    */
-  _getDistributionForVector(vector) {
-    const dim = vector.length;
-    return `MvNormal(mean = zeros(${dim}), covariance = RxInfer.diageye(${dim}))`;
+  _getMultivariateNormal(dimension) {
+    // Resolve helpers in the defining module rather than the model's variable scope.
+    return `MvNormal(mean = (@__MODULE__).Base.zeros(${dimension}), covariance = (@__MODULE__).RxInfer.diageye(${dimension}))`;
   }
   
   /**

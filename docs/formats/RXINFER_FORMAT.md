@@ -14,7 +14,7 @@ Model construction is verified with Julia 1.13.4, RxInfer 6.1.3, GraphPPL 4.9.0,
 
 Inside `@model`, RxInfer requires [named Gaussian parameters](https://github.com/ReactiveBayes/RxInfer.jl/blob/v6.1.3/docs/src/manuals/model-specification.md#relationships-between-variables): `Normal(mean = μ, variance = σ²)` and `MvNormal(mean = μ, covariance = Σ)`. Variance is the square of the standard deviation used by the positional `Distributions.Normal(μ, σ)` constructor. Ordinary Julia sampling code outside `@model`, such as `rand(Normal(0.0, 1.0))`, still uses the positional constructor.
 
-Location and vector factors use `RxInfer.diageye` for identity covariance so a model variable named `diageye` does not shadow the helper.
+Location and vector factors use Julia's [`@__MODULE__`](https://docs.julialang.org/en/v1/base/base/#Base.@__MODULE__) to resolve `Base.zeros` and `RxInfer.diageye` in the module defining the model, not from model variables. Entity names such as `RxInfer` and `diageye` do not need to be reserved or renamed.
 
 ### Key Features
 
@@ -120,7 +120,7 @@ using RxInfer, Distributions
     # Entity: concept1 (type: concept)
     concept1 ~ Dirichlet([1.0, 1.0, 1.0])
     concept1_relevance ~ Beta(0.7, 0.3)
-    concept1_vec ~ MvNormal(mean = zeros(3), covariance = RxInfer.diageye(3))
+    concept1_vec ~ MvNormal(mean = (@__MODULE__).Base.zeros(3), covariance = (@__MODULE__).RxInfer.diageye(3))
 
     # Define relationships between variables
     # Relationship: person1 (knows) person2
@@ -185,7 +185,7 @@ The RxInfer.jl exporter maps UltraLink entity types to probability distributions
 |-------------|---------------------|-----------|
 | `person` | `Categorical([0.3, 0.3, 0.4])` | Categorical distribution for discrete entity types |
 | `concept` | `Dirichlet([1.0, 1.0, 1.0])` | Dirichlet for concept variables with multiple components |
-| `location` | `MvNormal(mean = zeros(2), covariance = RxInfer.diageye(2))` | Two-dimensional location |
+| `location` | `MvNormal(mean = (@__MODULE__).Base.zeros(2), covariance = (@__MODULE__).RxInfer.diageye(2))` | Two-dimensional location |
 | `event` | `Poisson(5.0)` | Poisson for event count modeling |
 | `document` | `Categorical([0.25, 0.25, 0.25, 0.25])` | Categorical for document type classification |
 | `measurement`, `observation`, `reading`, `score` | `Normal(mean = 0.0, variance = 1.0)` | Continuous value |
@@ -209,7 +209,7 @@ When `includeVectors` is enabled, entity vectors are mapped to multivariate norm
 
 ```julia
 # Entity: concept1 (with vector embedding)
-concept1_vec ~ MvNormal(mean = zeros(3), covariance = RxInfer.diageye(3))
+concept1_vec ~ MvNormal(mean = (@__MODULE__).Base.zeros(3), covariance = (@__MODULE__).RxInfer.diageye(3))
 ```
 
 ## Relationship Factors
