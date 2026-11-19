@@ -67,8 +67,8 @@ UltraLink relationships are represented as wiki-links between notes, with:
 
 The [Obsidian exporter](../../src/lib/exporters/obsidian.js) returns an object
 keyed by filename: entity notes named `<entity-id>.md` and the generated
-`index.md`. Reserve the entity ID `index` for the index file. The exporter
-does not write files.
+`index.md`. Reserve the entity ID `index` in any case (`Index`, `INDEX`, and
+so on). The exporter does not write files.
 
 ```javascript
 // Basic export to Obsidian
@@ -82,14 +82,27 @@ To save the default export, use the returned filenames as-is; they already
 end in `.md`. Use trusted, filesystem-safe entity IDs with no path separators,
 and write into a fresh vault directory you control.
 
+The save step checks IDs before creating the vault: their normalized lowercase
+forms must be distinct, and none may be `index`. Each file is created
+exclusively, so a filesystem-level alias cannot replace an existing note.
+
 ```javascript
 const fs = require('node:fs');
 const path = require('node:path');
 
+const noteIds = new Set(['index']);
+for (const { id } of ultralink.findEntities()) {
+  const key = String(id).normalize('NFC').toLowerCase();
+  if (noteIds.has(key)) {
+    throw new Error(`Cannot save Obsidian note "${id}": choose an ID distinct from "index" and other note IDs, ignoring case.`);
+  }
+  noteIds.add(key);
+}
+
 const vault = './obsidian-vault';
 fs.mkdirSync(vault, { recursive: true });
 for (const [filename, markdown] of Object.entries(obsidian)) {
-  fs.writeFileSync(path.join(vault, filename), markdown, 'utf8');
+  fs.writeFileSync(path.join(vault, filename), markdown, { encoding: 'utf8', flag: 'wx' });
 }
 ```
 

@@ -496,20 +496,31 @@ fs.writeFileSync('visualization.html', htmlContent);
 
 Use the graph built through [Managing Relationships](../API_USAGE.md#managing-relationships)
 to save the Markdown map and KIF text together. For another graph, use trusted,
-filesystem-safe entity IDs with no path separators, reserve `index` for the
-vault index, and use a fresh output directory you control. KIF IDs and types
-also need to be single symbols. Pass the resulting files to your pipeline.
+filesystem-safe entity IDs with no path separators. Reserve `index` in any
+case and use a fresh output directory you control. Before writing anything,
+the example rejects IDs whose normalized lowercase forms collide with each
+other or `index`. KIF IDs and types also need to be single symbols. Pass the
+resulting files to your pipeline.
 
 ```javascript
 const fs = require('node:fs');
 const path = require('node:path');
 
 function batchExport(ultralink, outputDir) {
+  const noteIds = new Set(['index']);
+  for (const { id } of ultralink.findEntities()) {
+    const key = String(id).normalize('NFC').toLowerCase();
+    if (noteIds.has(key)) {
+      throw new Error(`Cannot save Obsidian note "${id}": choose an ID distinct from "index" and other note IDs, ignoring case.`);
+    }
+    noteIds.add(key);
+  }
+
   const vault = path.join(outputDir, 'obsidian');
   fs.mkdirSync(vault, { recursive: true });
 
   for (const [filename, markdown] of Object.entries(ultralink.toObsidian())) {
-    fs.writeFileSync(path.join(vault, filename), markdown, 'utf8');
+    fs.writeFileSync(path.join(vault, filename), markdown, { encoding: 'utf8', flag: 'wx' });
   }
 
   fs.writeFileSync(path.join(outputDir, 'knowledge.kif'), ultralink.toKIF(), 'utf8');
