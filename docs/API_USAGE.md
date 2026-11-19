@@ -120,14 +120,19 @@ Both modes use the receiver's public `addEntity`, `addLink`, and
 `addRelationship` methods. Unversioned graphs ignore stored IDs and metadata.
 The last tuple owns each compound ID. An earlier distinct legacy slot can
 remain readable through `links` but is not a live relationship or backlink.
+`RelationshipManager.replayLinks.call(graph, rows)` replays an iterable or
+object map into an existing graph through its public `addLink` method without
+clearing it.
 `fromFullBlob` decodes and checks the graph records before replacing the
 receiver. A decoding or record-shape error leaves its contents unchanged.
 If built-in insertion validation rejects a duplicate entity or an unresolved
 endpoint, the original graph is restored and the error is thrown. Endpoint
 validation applies to the values passed by the receiver's hooks, not the raw
 record. This does not roll back custom hook side effects.
-Entity-row metadata is attached to the stored entity, even when an override
-returns the receiver for chaining or returns nothing. For relationships, the
+Entity-row metadata is attached to the live entity returned by `addEntity`,
+even when it has a different ID from the archived row. If the hook does not
+return a live entity (for example, it returns the receiver for chaining),
+import uses the entity stored under the row's ID. For relationships, the
 importer uses the edge the hook returns.
 If the hook returns nothing, it binds a unique write of the requested tuple,
 or a unique write made by passing that tuple through `super.addLink` to an

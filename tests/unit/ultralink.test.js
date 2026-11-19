@@ -6,7 +6,7 @@
  * and advanced features.
  */
 
-const { UltraLink } = require('../../src');
+const { UltraLink, RelationshipManager } = require('../..');
 const { createEnhancedResearchTeamDataset } = require('../fixtures/research-team-llm');
 const fs = require('fs');
 const path = require('path');
@@ -310,6 +310,33 @@ describe('UltraLink', () => {
       expect(ultralink.getRelationships('a_b', { direction: 'outgoing' })).toEqual([replacement]);
       expect(ultralink.getBacklinks('d')).toEqual([replacement]);
       expect(ultralink.links.get('a')?.get('c_d-b')).toBeUndefined();
+    });
+
+    it.each([
+      ['iterable', rows => new Set(rows)],
+      ['mapped object', rows => Object.fromEntries(rows.map((row, index) => [index, row]))]
+    ])('replays relationship rows into a live graph through the public manager (%s)', (_format, asRows) => {
+      class Normalized extends UltraLink {
+        addLink(source, target, type, attributes) {
+          return super.addLink(source, target, type.toLowerCase(), attributes);
+        }
+      }
+      const graph = new Normalized();
+      for (const id of ['a', 'a_b', 'd', 'c_d']) graph.addEntity(id, 'node');
+      const independent = graph.addLink('a', 'd', 'route', { retained: true });
+      const shadowed = graph.addLink('a', 'c_d', 'b', { earlier: true });
+      RelationshipManager.replayLinks.call(graph, asRows([
+        { source: 'a_b', target: 'd', type: 'C', attributes: { replayed: true } }
+      ]));
+
+      const replayed = graph.getRelationship(shadowed.id);
+      expect(replayed).toMatchObject({ source: 'a_b', target: 'd', type: 'c', attributes: { replayed: true } });
+      expect(graph.getBacklinks('d')).toEqual([independent, replayed]);
+      expect(graph.getBacklinks('c_d')).toEqual([]);
+      expect(graph.links.get('a').get('c_d-b')).toBe(shadowed);
+      expect(graph.links.get('a_b').get('d-c')).toBe(replayed);
+      expect(graph.deleteLink('a_b', 'd', 'c')).toBe(true);
+      expect(graph.getBacklinks('d')).toEqual([independent]);
     });
 
     it('removes a retyped edge from its legacy link entry without removing a parallel edge', () => {
@@ -674,6 +701,34 @@ describe('UltraLink', () => {
         expect(receiver.getEntity('author_team').metadata.origin).toBe('archive row');
         expect(receiver.getEntity('paper_v1').attributes.imported).toBe(true);
         expect(receiver.getBacklinks('paper_v1')).toEqual([edge]);
+      }
+    });
+
+    it('attaches lossless row metadata to the returned canonical entity instead of its alias', () => {
+      class Aliased extends UltraLink {
+        addEntity(id, type, attributes) {
+          const canonical = super.addEntity(id.toLowerCase(), type, attributes);
+          if (canonical.id !== id) super.addEntity(id, type, { aliasOf: canonical.id });
+          return canonical;
+        }
+
+        addLink(source, target, type, attributes) {
+          return super.addLink(source.toLowerCase(), target.toLowerCase(), type, attributes);
+        }
+      }
+      ultralink.addEntity('ALICE', 'person').metadata.provenance = 'author-v1';
+      ultralink.addEntity('paper', 'document');
+      ultralink.addLink('ALICE', 'paper', 'reviewed');
+      for (const input of [
+        ultralink.toJSON({ lossless: true }),
+        ultralink.toFullBlob({ lossless: true, compressed: true })
+      ]) {
+        const receiver = new Aliased().fromFullBlob(input);
+        expect(receiver.getEntity('alice').metadata.provenance).toBe('author-v1');
+        expect(receiver.getEntity('ALICE').metadata).not.toHaveProperty('provenance');
+        expect(receiver.getEntity('ALICE').attributes).toEqual({ aliasOf: 'alice' });
+        expect(receiver.getBacklinks('paper').map(({ source }) => source)).toEqual(['alice']);
+        expect(receiver.getRelationships('ALICE', { direction: 'outgoing' })).toEqual([]);
       }
     });
 

@@ -754,9 +754,10 @@ ${centralEntity === undefined ? '' : '        self.play(Indicate(entities[graph[
       for (const { id, type, attributes, metadata } of entities) {
         const result = this.addEntity(id, type, attributes);
         if (!archive || metadata === undefined) continue;
-        // Overrides may return nothing or the receiver for chaining.
-        const entity = this.entities.get(id) ??
-          (this.entities.get(result?.id) === result ? result : undefined);
+        // An explicitly returned live entity can differ from the input ID.
+        // Fall back to that ID for overrides that return nothing or chain.
+        const entity = result && result !== this && this.entities.get(result.id) === result
+          ? result : this.entities.get(id);
         if (entity) Utils.restoreRowMetadata(entity, metadata);
       }
       RelationshipManager.restoreRelationships.call(this, relationships, archive);

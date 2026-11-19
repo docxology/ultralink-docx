@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Restore row metadata values and exact numeric tokens in versioned archives; honor public link overrides for all imports.
 - Bind archive fields only to identifiable receiver-accepted edges, preserving independent receiver writes and their overwrite behavior.
 - Preserve the receiver on decode or built-in insertion validation failure; keep entity metadata and tuple deletion compatible with existing overrides.
+- Restore archive metadata to the canonical entity returned by the receiver and retain the public `RelationshipManager.replayLinks` entry point.
 - Read archive text without a recursive reviver and preserve receiver overwrite semantics when distinct tuples share a recovered compound ID.
 - Hide superseded receiver writes during import hooks and preserve live legacy key order even when legacy-only slots are not archived.
 - Retain independent receiver writes when archived IDs are reused, discard detached edges when an endpoint is deleted, and apply archived legacy order to live entries only.

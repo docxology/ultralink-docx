@@ -166,17 +166,22 @@ function indexRelationship(relationship, writeOrder) {
   else setLegacyLink(outgoing, key, relationship, previous, replayedLegacyLinks.get(this.links));
 }
 
-function restoreRelationships(rows, archive) {
-  if (!archive) {
-    const wasReplaying = replayingLegacy.has(this);
-    replayingLegacy.add(this);
-    try {
-      for (const row of rows) this.addLink(row.source, row.target, row.type, row.attributes);
-    } finally {
-      if (!wasReplaying) replayingLegacy.delete(this);
-    }
-    return;
+function replayLinks(rows) {
+  if (typeof rows[Symbol.iterator] !== 'function') {
+    if (typeof rows !== 'object') return;
+    rows = Object.values(rows);
   }
+  const wasReplaying = replayingLegacy.has(this);
+  replayingLegacy.add(this);
+  try {
+    for (const row of rows) this.addLink(row.source, row.target, row.type, row.attributes);
+  } finally {
+    if (!wasReplaying) replayingLegacy.delete(this);
+  }
+}
+
+function restoreRelationships(rows, archive) {
+  if (!archive) return replayLinks.call(this, rows);
 
   const state = {
     accepted: new WeakSet(), reserved: new Set(), recoveredEffects: new Map(),
@@ -882,6 +887,7 @@ function getEntityRelationships(entityId, options = {}) {
 module.exports = {
   addRelationship,
   delegateLink,
+  replayLinks,
   restoreRelationships,
   getLegacyLinkOrder,
   getLegacyMapOrder,
