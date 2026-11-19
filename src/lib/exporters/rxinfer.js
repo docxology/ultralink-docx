@@ -447,7 +447,7 @@ class RxInferExporter {
       case 'contains':
       case 'includes':
       case 'has_part':
-        return `${targetVar} ~ Bernoulli(sigmoid(${sourceVar}))`;
+        return `${targetVar} ~ Bernoulli(1.0 / (1.0 + (@__MODULE__).Base.exp(-1.0 * ${sourceVar})))`;
         
       case 'related_to':
       case 'connected_to':
@@ -458,7 +458,7 @@ class RxInferExporter {
       case 'depends_on':
       case 'requires':
       case 'needs':
-        return `${targetVar} ~ Bernoulli(sigmoid(2.0 * ${sourceVar}))`;
+        return `${targetVar} ~ Bernoulli(1.0 / (1.0 + (@__MODULE__).Base.exp(-2.0 * ${sourceVar})))`;
         
       case 'precedes':
       case 'follows':
