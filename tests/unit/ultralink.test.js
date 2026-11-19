@@ -581,7 +581,7 @@ describe('UltraLink', () => {
       Object.assign(drafted.metadata, { created: '2020-01-02T00:00:00.000Z', provenance: { batch: 1 } });
       const reviewed = ultralink.addLink(author.id, 'paper_v1', 'reviewed', { weight: 2 });
       ultralink.updateRelationship(drafted.id, { type: 'reviewed' });
-      const json = ultralink.toJSON();
+      const json = ultralink.toJSON({ lossless: true });
       const blob = ultralink.toFullBlob();
       const rows = JSON.parse(json);
       expect(rows.relationships).toEqual([drafted, reviewed]);
@@ -602,11 +602,40 @@ describe('UltraLink', () => {
       const restored = new UltraLink().fromFullBlob(blob);
       expect(restored.toJSON({ asString: false }).metadata).toMatchObject(ultralink.metadata);
 
-      const compact = JSON.parse(ultralink.toJSON({ includeMetadata: false }));
+      const compact = JSON.parse(ultralink.toJSON({ lossless: true, includeMetadata: false }));
       expect(compact.entities[0]).not.toHaveProperty('metadata');
       expect(compact.relationships[0]).not.toHaveProperty('metadata');
       expect(new UltraLink().fromFullBlob(compact).getBacklinks('paper_v1').map(({ id }) => id))
         .toEqual([drafted.id, reviewed.id]);
+    });
+
+    describe.each([
+      ['JSON', graph => graph.toJSON()],
+      ['Full Blob JSON', graph => ({ json: JSON.parse(graph.toJSON()) })]
+    ])('legacy %s without stored IDs', (_format, exportGraph) => {
+      it.each([['first_draft', 'reviewed'], ['reviewed', 'first_draft']])(
+        'retains the last compound ID owner for insertion order %s then %s', (first, last) => {
+          const source = 'author_team';
+          const target = 'paper_v1';
+          ultralink.addEntity(source, 'person');
+          ultralink.addEntity(target, 'document');
+          const inserted = {};
+          for (const type of [first, last]) {
+            inserted[type] = ultralink.addLink(source, target, type, { weight: type === 'first_draft' ? 1 : 2 });
+          }
+          ultralink.updateRelationship(inserted.first_draft.id, { type: 'reviewed' });
+
+          const restored = new UltraLink().fromFullBlob(exportGraph(ultralink));
+          const edges = restored.getBacklinks(target);
+          expect(edges.map(edge => edge.attributes.weight)).toEqual([first, last].map(type => inserted[type].attributes.weight));
+          expect(restored.getRelationships(source, { direction: 'outgoing' })).toEqual(edges);
+          expect(restored.getRelationship(inserted.reviewed.id)).toEqual(edges[1]);
+          expect(restored.deleteLink(source, target, 'reviewed')).toBe(true);
+          expect(restored.deleteLink(source, target, 'reviewed')).toBe(false);
+          expect(restored.getRelationships(source, { direction: 'outgoing' })).toEqual([edges[0]]);
+          expect(restored.getBacklinks(target)).toEqual([edges[0]]);
+        }
+      );
     });
 
     it('preserves ID-less legacy collisions without stealing explicit or tuple-derived IDs', () => {
@@ -635,7 +664,7 @@ describe('UltraLink', () => {
       expect(restored.getRelationship('legacy:1').attributes.weight).toBe(5);
       expect(restored.getRelationship(`${source}_edited_${target}`).attributes.weight).toBe(6);
       expect(edges[0].metadata).toMatchObject({ created: '2019-08-01T00:00:00.000Z', origin: 'legacy' });
-      expect(new UltraLink().fromFullBlob(restored.toJSON()).getBacklinks(target)).toEqual(edges);
+      expect(new UltraLink().fromFullBlob(restored.toJSON({ lossless: true })).getBacklinks(target)).toEqual(edges);
       expect(restored.deleteLink(source, target, edges[0].id)).toBe(false);
       const independent = restored.addLink(source, target, edges[0].id, { weight: 7 });
       expect(restored.getBacklinks(target)).toEqual([...edges, independent]);

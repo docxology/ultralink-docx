@@ -46,7 +46,8 @@ graph TD
 
 ### Entity Representation
 
-Each entity in UltraLink is represented as a JSON object with the following structure:
+Default entity rows contain `id`, `type`, and `attributes`. `includeVectors`
+adds `vector` when present; `includeMetadata` adds `metadata`. For example:
 
 ```json
 {
@@ -68,7 +69,8 @@ Each entity in UltraLink is represented as a JSON object with the following stru
 
 ### Relationship Representation
 
-Each relationship is represented as:
+Default relationship rows contain `source`, `target`, `type`, and `attributes`.
+`lossless: true` adds the stored `id` and, by default, metadata:
 
 ```json
 {
@@ -95,16 +97,15 @@ and supplied graph, entity, and relationship metadata. For graph metadata,
 each supplied top-level key takes precedence; omitted keys keep their receiver
 values. The automatic `exportDate`, `entityCount`, and `relationshipCount`
 fields describe the export and are ignored on import.
-A legacy relationship with no usable ID, or whose ID another row already
-claimed, derives its ID from the current tuple. If that also collides,
-import assigns an opaque `legacy:<number>` ID instead of overwriting
-another edge. Recovery IDs do not match insertion tuples, so use
-`deleteRelationship(id)` to select a recovered edge by ID. The original IDs
-are not recoverable from ID-less exports.
+Usable stored IDs take precedence. Otherwise, the last row deriving a given
+compound ID owns it, as in the published importer. Earlier rows are kept
+under opaque `legacy:<number>` IDs rather than overwritten. Recovery IDs do
+not match insertion tuples; use `deleteRelationship(id)` for those rows.
+Original insertion IDs are not recoverable from ID-less exports.
 
-For a shared legacy link key, the optional `legacyLinkOrder` array stores
-IDs in write order from oldest to newest. Import uses it to restore each
-key's visible value and fallback order without reordering relationship rows.
+In lossless JSON, the optional `legacyLinkOrder` array stores IDs sharing a
+legacy link key in write order from oldest to newest. Import uses it to
+restore the visible value and fallback order without reordering rows.
 
 ## Usage
 
@@ -114,15 +115,12 @@ The JSON exporter is implemented in [src/lib/exporters/json.js](../src/lib/expor
 // Basic export to JSON
 const json = ultralink.toJSON();
 
-// Export with specific options
-const jsonWithVectors = ultralink.toJSON({
-  includeVectors: true,
-  includeHistory: true,
-  prettyPrint: true
-});
+// Archive stored relationship IDs and row metadata
+const archive = ultralink.toJSON({ lossless: true });
+const restored = new UltraLink().fromFullBlob(archive);
 
-// Convert to string for storage
-const jsonString = JSON.stringify(json, null, 2);
+// Export vector embeddings with indentation
+const jsonWithVectors = ultralink.toJSON({ includeVectors: true, pretty: true });
 ```
 
 ### Export Options
@@ -130,13 +128,14 @@ const jsonString = JSON.stringify(json, null, 2);
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `includeVectors` | Boolean | `false` | Include entity vector embeddings |
-| `includeHistory` | Boolean | `false` | Include entity and relationship change history |
-| `includeMetadata` | Boolean | `true` | Include entity and relationship metadata; the graph summary is unchanged |
-| `prettyPrint` | Boolean | `false` | Format JSON with indentation for readability |
+| `lossless` | Boolean | `false` | Include stored relationship IDs and legacy link order |
+| `includeMetadata` | Boolean | value of `lossless` | Include entity and relationship metadata; the graph summary is unchanged |
+| `pretty` | Boolean | `false` | Format JSON with indentation for readability |
+| `asString` | Boolean | `true` | Return serialized JSON; `false` returns the object |
 
 ## Complete Example
 
-An example of a complete UltraLink JSON export:
+An example of lossless UltraLink JSON with vector export enabled:
 
 ```json
 {

@@ -13,11 +13,12 @@ const { getLegacyLinkOrder } = require('../relationship-manager');
  * @param {boolean} options.pretty - Whether to pretty-print the JSON (default: false)
  * @param {boolean} options.asString - Whether to return a string or object (default: true)
  * @param {boolean} options.includeVectors - Whether to include vector embeddings (default: false)
- * @param {boolean} options.includeMetadata - Include entity and relationship metadata (default: true)
+ * @param {boolean} options.lossless - Include stored relationship IDs and legacy link order (default: false)
+ * @param {boolean} options.includeMetadata - Include metadata on entity and relationship rows (defaults to lossless)
  * @returns {string|Object} JSON string or object
  */
 function toJSON(ultralink, options = {}) {
-  const { pretty = false, asString = true, includeVectors = false, includeMetadata = true } = options;
+  const { pretty = false, asString = true, includeVectors = false, lossless = false, includeMetadata = lossless } = options;
   
   // Extract entities
   const entities = [];
@@ -40,12 +41,12 @@ function toJSON(ultralink, options = {}) {
   const relationships = [];
   for (const rel of ultralink.relationships.values()) {
     const record = {
-      id: rel.id,
       source: rel.source,
       target: rel.target,
       type: rel.type,
       attributes: rel.attributes || {}
     };
+    if (lossless) record.id = rel.id;
     if (includeMetadata) record.metadata = rel.metadata;
     relationships.push(record);
   }
@@ -61,8 +62,10 @@ function toJSON(ultralink, options = {}) {
     entities,
     relationships
   };
-  const legacyLinkOrder = getLegacyLinkOrder.call(ultralink);
-  if (legacyLinkOrder) result.legacyLinkOrder = legacyLinkOrder;
+  if (lossless) {
+    const legacyLinkOrder = getLegacyLinkOrder.call(ultralink);
+    if (legacyLinkOrder) result.legacyLinkOrder = legacyLinkOrder;
+  }
   
   // Return as string or object based on options
   if (asString) {

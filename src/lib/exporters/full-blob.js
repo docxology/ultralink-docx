@@ -25,7 +25,7 @@ function toFullBlob(ultralink, options = {}) {
   
   // JSON export
   try {
-    blob.json = ultralink.toJSON({ asString: false });
+    blob.json = ultralink.toJSON({ asString: false, lossless: true });
   } catch (error) {
     componentFailed('JSON', error);
     blob.json = { entities: [], relationships: [] };

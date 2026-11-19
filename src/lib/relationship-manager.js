@@ -89,6 +89,7 @@ function storeRelationship(sourceId, targetId, type, attributes, storedId, metad
 function restoreRelationships(rows, legacyLinkOrder) {
   const entries = [];
   const explicit = new Set();
+  const lastImplicitById = new Map();
   for (const row of rows) {
     const { source, target } = row;
     const type = row.type === undefined ? this.config.defaultRelationshipType : row.type;
@@ -97,22 +98,31 @@ function restoreRelationships(rows, legacyLinkOrder) {
     const suffix = `_${target}`;
     // Old formats may contain unrelated IDs. Accept recovered IDs or
     // compound IDs whose endpoints can be verified without splitting.
-    const id = typeof row.id === 'string' && (isRecoveredId(row.id) ||
+    let id = typeof row.id === 'string' && (isRecoveredId(row.id) ||
       (row.id.length >= prefix.length + suffix.length &&
         row.id.startsWith(prefix) && row.id.endsWith(suffix))) ? row.id : undefined;
-    if (id !== undefined) explicit.add(id);
-    entries.push({ row, type, generatedId, id });
+    if (id !== undefined && explicit.has(id)) id = undefined;
+    const entry = { row, type, generatedId, id };
+    if (id === undefined) {
+      // The published importer overwrote this ID on each write. Keep its last
+      // owner and recover the earlier rows without changing their order.
+      lastImplicitById.set(generatedId, entry);
+    } else {
+      explicit.add(id);
+    }
+    entries.push(entry);
   }
 
   let nextRecoveredId = 1;
-  for (const { row, type, generatedId, id: storedId } of entries) {
+  for (const entry of entries) {
+    const { row, type, generatedId, id: storedId } = entry;
     const { source, target, attributes, metadata } = row;
     let id = storedId;
-    if (id === undefined || this.relationships.has(id)) {
-      id = generatedId;
-      if (explicit.has(id) || this.relationships.has(id)) {
-        // Compound IDs always contain at least two underscores. Recovered IDs
-        // cannot alias a later addLink or deleteLink insertion tuple.
+    if (id === undefined) {
+      if (!explicit.has(generatedId) && lastImplicitById.get(generatedId) === entry) {
+        id = generatedId;
+      } else {
+        // Recovered IDs cannot alias a later addLink or deleteLink insertion tuple.
         do {
           id = `legacy:${nextRecoveredId++}`;
         } while (explicit.has(id));
