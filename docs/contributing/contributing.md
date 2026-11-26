@@ -21,7 +21,7 @@ Thank you for your interest in contributing to UltraLink! This document provides
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [UltraLink Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [DanielAriFriedman@gmail.com](mailto:DanielAriFriedman@gmail.com).
+This project and everyone participating in it is governed by the [UltraLink Code of Conduct](../../CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [DanielAriFriedman@gmail.com](mailto:DanielAriFriedman@gmail.com).
 
 ## Getting Started
 
@@ -41,7 +41,7 @@ For detailed setup instructions, see the [Development Setup Guide](development-s
 
 If you find a bug in UltraLink, please report it by creating an issue on GitHub:
 
-1. Check the [existing issues](https://github.com/ultralink/ultralink/issues) to avoid duplicates
+1. Check the [existing issues](https://github.com/docxology/ultralink-docx/issues) to avoid duplicates
 2. Use the bug report template
 3. Include the steps to reproduce the bug
 4. Include the expected behavior
@@ -88,7 +88,7 @@ Add any other context about the problem here.
 
 If you have an idea for an enhancement or a new feature, please create an issue on GitHub:
 
-1. Check the [existing issues](https://github.com/ultralink/ultralink/issues) to avoid duplicates
+1. Check the [existing issues](https://github.com/docxology/ultralink-docx/issues) to avoid duplicates
 2. Use the feature request template
 3. Clearly describe the feature and its benefits
 4. Provide examples of how the feature would be used
@@ -124,7 +124,7 @@ Add any other context or screenshots about the feature request here.
 
 Ready to contribute code? Here's how to submit a pull request:
 
-1. [Fork](https://github.com/ultralink/ultralink/fork) the repository
+1. [Fork](https://github.com/docxology/ultralink-docx/fork) the repository
 2. Clone your fork: `git clone https://github.com/your-username/ultralink.git`
 3. Create a branch with a descriptive name (see [Branching Strategy](#branching-strategy))
 4. Make your changes (see [Development Workflow](#development-workflow))
@@ -132,7 +132,7 @@ Ready to contribute code? Here's how to submit a pull request:
 6. Update documentation as needed
 7. Commit your changes (see [Commit Messages](#commit-messages))
 8. Push to your fork: `git push origin feature/your-feature-name`
-9. [Create a pull request](https://github.com/ultralink/ultralink/compare) from your branch to UltraLink's `main` branch
+9. [Create a pull request](https://github.com/docxology/ultralink-docx/compare) from your branch to UltraLink's `main` branch
 10. Fill out the pull request template
 
 **Pull Request Template**:
@@ -366,7 +366,7 @@ Join the UltraLink community:
 
 We value all contributions, and we recognize contributors in several ways:
 
-- All contributors are listed in the [CONTRIBUTORS.md](CONTRIBUTORS.md) file
+- All contributors are listed in the [CONTRIBUTORS.md](https://github.com/docxology/ultralink-docx/graphs/contributors) file
 - Significant contributions are highlighted in release notes
 - Regular contributors may be invited to join the core team
 

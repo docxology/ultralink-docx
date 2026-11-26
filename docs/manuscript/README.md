@@ -1,10 +1,5 @@
-# manuscript
+# Software manuscript
 
-Auto-expanded 2026-08-29 from on-disk inspection (File_Types doc-fleet pass).
-
-Part of the UltraLink project; see the root `AGENTS.md` for project conventions.
-
-## Files
-
-1 Markdown.
-
+The ordered sections, configuration and bibliography in this directory
+are the authored source. Use the [manuscript build guide](../manuscript-build.md)
+to render PDF and HTML.

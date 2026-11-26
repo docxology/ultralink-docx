@@ -1,0 +1,10 @@
+{
+  "fixture": "docs/getting-started/quick-start.md",
+  "node": "22.23.5",
+  "source": "redwood",
+  "target": "grove",
+  "type": "grows_at",
+  "json": {"entities": 2, "directed_edges": 1},
+  "graphml": {"entities": 2, "directed_edges": 1},
+  "csv": {"entities": 2, "directed_edges": 1}
+}

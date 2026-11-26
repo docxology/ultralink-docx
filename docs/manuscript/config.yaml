@@ -1,0 +1,21 @@
+paper:
+  title: "UltraLink graph export fidelity"
+  subtitle: "Software architecture and a verified multi-format example"
+  version: "0.1.0"
+authors:
+  - name: Daniel Ari Friedman
+    orcid: "0000-0001-6232-9096"
+publication:
+  github_repository: docxology/ultralink-docx
+  repository_url: https://github.com/docxology/ultralink-docx
+manuscript_dir: docs/manuscript
+metadata:
+  license: MIT
+  language: en
+render:
+  formats:
+    pdf: true
+    html: true
+    slides: false
+    docx: false
+    epub: false
