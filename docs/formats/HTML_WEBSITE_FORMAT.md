@@ -69,7 +69,7 @@ UltraLink relationships are represented as:
 
 ## Usage
 
-The HTML Website exporter is implemented in [src/lib/exporters/html-website.js](../src/lib/exporters/html-website.js) and can be used as follows:
+The HTML Website exporter is implemented in [src/lib/exporters/html-website.js](../../src/lib/exporters/html-website.js) and can be used as follows:
 
 ```javascript
 // Basic export to HTML Website
@@ -202,7 +202,7 @@ The main page features:
     
     <footer>
         <p>Generated with UltraLink on 2023-06-15</p>
-        <p><a href="https://github.com/ultralink/ultralink" target="_blank">UltraLink on GitHub</a></p>
+        <p><a href="https://github.com/docxology/ultralink-docx" target="_blank">UltraLink on GitHub</a></p>
     </footer>
     
     <script src="assets/js/main.js"></script>
@@ -330,7 +330,7 @@ The HTML Website format preserves UltraLink semantics in the following way:
 
 ## Technical Implementation
 
-The HTML Website export functionality is implemented in [src/lib/exporters/html-website.js](../src/lib/exporters/html-website.js). The exporter follows these steps:
+The HTML Website export functionality is implemented in [src/lib/exporters/html-website.js](../../src/lib/exporters/html-website.js). The exporter follows these steps:
 
 1. Extract all entities and relationships from the UltraLink data model
 2. Generate JSON data files for interactive components
