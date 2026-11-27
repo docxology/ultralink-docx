@@ -142,7 +142,7 @@ graph TD
     A --- I
 ```
 
-For a deeper understanding of UltraLink's architecture, see the [Architecture Overview](../architecture/overview.md).
+For a deeper understanding of UltraLink's architecture, see the [Architecture overview](../architecture/architecture_overview.md).
 
 ## The Power of Format Flexibility
 

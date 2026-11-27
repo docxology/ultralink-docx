@@ -627,6 +627,3 @@ ultralink.llm.configureResponsibleAI({
 
 1. [Advanced Prompt Engineering](../guides/prompt-engineering.md)
 2. [LLM Security Best Practices](../guides/llm-security.md)
-3. [Cost Optimization Strategies](../guides/llm-cost-optimization.md)
-4. [Fine-tuning UltraLink Models](../guides/llm-fine-tuning.md)
-5. [Multi-modal Integration](../guides/multi-modal.md) 

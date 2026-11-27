@@ -4,7 +4,7 @@ This document details the Visualization rendering target for UltraLink, its stru
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/visualization.js](../src/lib/exporters/visualization.js)
+> - [Implementation in src/lib/exporters/visualization.js](../../src/lib/exporters/visualization.js)
 > - [HTML Website Format](./HTML_WEBSITE_FORMAT.md)
 > - [GraphML Format](./GRAPHML_FORMAT.md)
 
@@ -77,7 +77,7 @@ UltraLink relationships are represented as edges with:
 
 ## Usage
 
-The Visualization exporter is implemented in [src/lib/exporters/visualization.js](../src/lib/exporters/visualization.js) and can be used as follows:
+The Visualization exporter is implemented in [src/lib/exporters/visualization.js](../../src/lib/exporters/visualization.js) and can be used as follows:
 
 ```javascript
 // Basic export to visualization
@@ -596,7 +596,7 @@ The Visualization format preserves UltraLink semantics in the following way:
 
 ## Technical Implementation
 
-The Visualization export functionality is implemented in [src/lib/exporters/visualization.js](../src/lib/exporters/visualization.js). The exporter follows these steps:
+The Visualization export functionality is implemented in [src/lib/exporters/visualization.js](../../src/lib/exporters/visualization.js). The exporter follows these steps:
 
 1. Extract entities and relationships from the UltraLink data model
 2. Transform entities into nodes with visual properties

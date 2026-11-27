@@ -871,4 +871,4 @@ Remember to:
 6. Register your exporter with UltraLink
 7. Write thorough tests
 
-For more information, see the [UltraLink API Reference](../api/exporters-api.md) and the source code for the built-in exporters in the UltraLink repository. 
+For more information, see the [UltraLink API reference](../api/api-reference.md) and the source code for the built-in exporters in the UltraLink repository.

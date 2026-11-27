@@ -436,7 +436,4 @@ ultralink.temporal.monitor({
 
 ## Further Reading
 
-1. [Time Series Analysis](../guides/time-series.md)
-2. [Version Control](../guides/versioning.md)
-3. [Temporal Queries](../guides/temporal-queries.md)
-4. [Impact Analysis](../guides/impact-analysis.md) 
+1. [Temporal queries](../api/temporal-api.md#temporal-queries)

@@ -361,6 +361,5 @@ For optimal UltraLink performance:
 ## Related Resources
 
 - [UltraLink API Reference](../api/README.md)
-- [Configuration Guide](../guides/configuration.md)
-- [Scaling UltraLink](../advanced/scaling.md)
-- [Testing on Large Datasets](../testing/large-datasets.md) 
+- [Configuration reference](../reference/configuration.md)
+- [Large dataset handling](../guides/performance.md#large-dataset-handling)

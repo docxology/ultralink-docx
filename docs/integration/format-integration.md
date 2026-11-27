@@ -128,7 +128,7 @@ ggraph(graph, layout = "fr") +
 
 ### Gephi Integration
 
-1. Build a graph using the [first-graph walkthrough](../README.md#getting-started).
+1. Build a graph using the [first-graph walkthrough](../getting-started/quick-start.md).
    In its Node.js block, after creating the entities and link, add:
 
    ```javascript

@@ -347,4 +347,4 @@ graph TB
 1. [Vector Space Model](./vector-space.md)
 2. [Temporal Evolution](./temporal-evolution.md)
 3. [Network Analysis](./network-analysis.md)
-4. [Implementation Guide](../guides/implementation.md) 
+4. [Implementation patterns](../technical/implementation-patterns.md)

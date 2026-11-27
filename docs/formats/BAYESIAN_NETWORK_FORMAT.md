@@ -69,7 +69,7 @@ UltraLink relationships become edges (conditional dependencies) in the Bayesian 
 
 ## Usage
 
-The Bayesian Network exporter is implemented in [src/lib/exporters/bayesian-network.js](../src/lib/exporters/bayesian-network.js) and can be used as follows:
+The Bayesian Network exporter is implemented in [src/lib/exporters/bayesian-network.js](../../src/lib/exporters/bayesian-network.js) and can be used as follows:
 
 ```javascript
 // Basic export to Bayesian Network
@@ -276,7 +276,7 @@ The Bayesian Network format preserves UltraLink semantics in the following way:
 
 ## Technical Implementation
 
-The Bayesian Network export functionality is implemented in [src/lib/exporters/bayesian-network.js](../src/lib/exporters/bayesian-network.js). The exporter follows these steps:
+The Bayesian Network export functionality is implemented in [src/lib/exporters/bayesian-network.js](../../src/lib/exporters/bayesian-network.js). The exporter follows these steps:
 
 1. Identify nodes (entities) and their possible states
 2. Determine parent-child relationships from UltraLink relationships

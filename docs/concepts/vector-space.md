@@ -386,7 +386,7 @@ ultralink.vectors.monitor({
 
 ## Further Reading
 
-1. [Vector Database Integration](../guides/vector-db.md)
-2. [Advanced Vector Operations](../guides/vector-ops.md)
+1. [Database integration](../integration/database-integration.md)
+2. [Vector operations](../guides/vector-operations.md)
 3. [Performance Tuning](../guides/performance.md)
-4. [Model Selection Guide](../guides/models.md) 
+4. [Embedding model reference](../reference/embedding-models.md)

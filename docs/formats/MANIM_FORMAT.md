@@ -4,7 +4,7 @@ This document details the Manim Animation rendering target for UltraLink, its st
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/manim.js](../src/lib/exporters/manim.js)
+> - [src/ultralink.js](../../src/ultralink.js)
 > - [Visualization Format](./VISUALIZATION_FORMAT.md)
 > - [HTML Website Format](./HTML_WEBSITE_FORMAT.md)
 
@@ -75,7 +75,7 @@ UltraLink relationships are represented as:
 
 ## Usage
 
-The Manim Animation exporter is implemented in [src/lib/exporters/manim.js](../src/lib/exporters/manim.js) and can be used as follows:
+The Manim Animation exporter is implemented by `toManim()` in [src/ultralink.js](../../src/ultralink.js) and can be used as follows:
 
 ```javascript
 // Basic export to Manim
@@ -256,7 +256,7 @@ The Manim Animation format preserves UltraLink semantics in the following ways:
 
 ## Technical Implementation
 
-The Manim Animation export functionality is implemented in [src/lib/exporters/manim.js](../src/lib/exporters/manim.js). The exporter follows these steps:
+The Manim Animation export functionality is implemented by `toManim()` in [src/ultralink.js](../../src/ultralink.js). The exporter follows these steps:
 
 1. Analyze the UltraLink graph structure and properties
 2. Design a scene structure for the animation

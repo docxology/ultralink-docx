@@ -284,13 +284,9 @@ const results = await ultralink.searchSimilar('query text', {
 });
 ```
 
-## Performance Benchmarks
-
-See the [Vector Performance Benchmarks](../performance/vector-benchmarks.md) document for detailed performance metrics across different index configurations, dataset sizes, and hardware environments.
-
 ## Links to Related Documentation
 
 - [Vector Integration Overview](../core-features/vector-integration.md)
-- [Entity Store Technical Details](./entity-store.md)
-- [Storage Backend Configuration](../guides/storage-configuration.md)
-- [Memory Optimization Strategies](../performance/memory-optimization.md) 
+- [Data layer architecture](architecture-details.md#data-layer)
+- [Storage configuration](../reference/configuration.md#storage-configuration)
+- [Memory management](../guides/performance.md#memory-management)

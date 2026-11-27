@@ -566,5 +566,5 @@ flowchart LR
 - [UQL Reference Guide](../reference/query-language-syntax.md)
 - [Query Optimization Guide](../performance/query-optimization.md)
 - [Vector Search Techniques](../guides/vector-search.md)
-- [Temporal Query Patterns](../guides/temporal-queries.md)
+- [Temporal queries](../api/temporal-api.md#temporal-queries)
 - [UltraLink Core Syntax](../core-features/syntax-and-semantics.md) 
