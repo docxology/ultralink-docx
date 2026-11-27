@@ -430,14 +430,16 @@ jest.mock('../../src/lib/exporters/visualization', () => {
 
 #### Running Visualization Tests
 
-To run tests specific to visualization functionality:
+From the repository root, select test filenames containing `visualization` or
+`rendering`.
 
 ```bash
-# Run visualization-related tests
-npm test -- --testPathPattern="visualization|rendering"
+node node_modules/jest/bin/jest.js --runInBand --ci \
+  --testPathPattern='(visualization|rendering)[^/]*\.test\.js$'
 ```
 
-This will run all tests that have "visualization" or "rendering" in their file paths.
+Use the full graphics environment described in the
+[development guide](contributing/development-setup.md) for these suites.
 
 ## Common Issues and Solutions
 

@@ -518,18 +518,29 @@ Test reports are generated in JSON format with the following structure:
 
 ### Debugging Tests
 
-1. **Selective Test Execution**:
+1. **Selective Test Execution**
+
+   Run these commands from the repository root.
+
    ```bash
-   # Run specific test file
-   npm test -- tests/unit/specific-test.js
-   
-   # Run tests matching a pattern
-   npm test -- -t "should validate entity data"
+   # Run the entity test file
+   node node_modules/jest/bin/jest.js --runInBand --ci \
+     --runTestsByPath tests/unit/entity.test.js
+
+   # Run the entity creation test in that file
+   node node_modules/jest/bin/jest.js --runInBand --ci \
+     --runTestsByPath tests/unit/entity.test.js \
+     --testNamePattern='should create an entity with the specified properties'
    ```
 
-2. **Verbose Output**:
+2. **Verbose Output**
+
+   Jest enables verbose output by default in this checkout.
+
    ```bash
-   npm test -- --verbose
+   # Explicitly show individual test names for one file
+   node node_modules/jest/bin/jest.js --runInBand --ci --verbose \
+     --runTestsByPath tests/unit/entity.test.js
    ```
 
 3. **Debug Mode**:
