@@ -92,7 +92,7 @@ For practical examples of how to use these core features, refer to the following
 
 - [Working with Entities and Relationships](../guides/entities-and-relationships.md)
 - [Vector-Based Search and Discovery](../guides/vector-search.md)
-- [Temporal Analysis Guide](../guides/temporal-analysis.md)
+- [Temporal Analysis Guide](temporal-analysis.md)
 - [Format Selection Guide](../guides/choosing-format.md)
 - [LLM Integration Guide](../guides/llm-integration.md)
 

@@ -172,9 +172,9 @@ Feel free to use these examples as templates for your own UltraLink implementati
 
 - [Getting Started Guide](../docs/getting-started.md)
 - [API Reference](../docs/api/README.md)
-- [Visualization Documentation](../docs/reference/visualization.md)
+- [Visualization Documentation](../docs/guides/visualization.md)
 - [Export Formats Documentation](../docs/formats/README.md)
-- [Integrity Checking Guide](../docs/guides/integrity-checking.md)
+- [Integrity checking example](integrity-checking.js)
 
 ## Troubleshooting
 

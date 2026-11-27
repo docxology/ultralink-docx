@@ -1,7 +1,7 @@
 # UltraLink API Reference
 
 Use this index to find examples for the API shipped in the source checkout.
-Start with the [first graph walkthrough](../README.md#getting-started), then use
+Start with the [first graph walkthrough](../getting-started/quick-start.md), then use
 the [API Usage Guide](../API_USAGE.md) for method names and examples.
 
 ## API Structure

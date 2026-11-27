@@ -152,4 +152,4 @@ To get started with UltraLink integration:
 
 - [UltraLink Format Documentation](../formats/README.md)
 - [API Reference](../api/README.md)
-- [Example Integrations](../examples/integrations/) 
+- [Database integration](database-integration.md)

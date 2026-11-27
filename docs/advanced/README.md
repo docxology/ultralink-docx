@@ -49,7 +49,7 @@ Consider exploring these advanced features when:
 
 ## Contributing Advanced Documentation
 
-If you've developed innovative approaches or extensions to UltraLink, we welcome contributions to this documentation. Please see our [contribution guidelines](../contributing.md) for more information on how to submit your documentation.
+If you've developed innovative approaches or extensions to UltraLink, we welcome contributions to this documentation. Please see our [contribution guidelines](../contributing/README.md) for more information on how to submit your documentation.
 
 ## Support for Advanced Features
 

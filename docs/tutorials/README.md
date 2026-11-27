@@ -5,7 +5,7 @@ below to build on your first graph.
 
 ## Getting Started
 
-- [Build your first graph](../README.md#getting-started). Set up a source checkout,
+- [Build your first graph](../getting-started/quick-start.md). Set up a source checkout,
   then run a self-contained Node.js example that creates two entities, connects
   them with a `works_on` relationship, and prints JSON. No API keys or sample data
   are required.
