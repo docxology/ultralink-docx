@@ -581,4 +581,4 @@ ultralink.resetConfiguration();
 - [Quick Start Guide](../getting-started/quick-start.md)
 - [API Reference](../api/README.md)
 - [Performance Optimization](../guides/performance.md)
-- [Extension Development](../guides/extension-development.md) 
+- [Extending UltraLink](../advanced/extending-ultralink.md)

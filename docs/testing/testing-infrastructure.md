@@ -546,4 +546,4 @@ Test reports are generated in JSON format with the following structure:
 - [Jest Documentation](https://jestjs.io/docs/getting-started)
 - [UltraLink API Reference](../api/README.md)
 - [Systems of Interest](./test-suite.md)
-- [Performance Testing Guide](./performance-testing.md) 
+- [Performance optimization guide](../guides/performance.md)

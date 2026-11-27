@@ -15,7 +15,7 @@ This document provides detailed examples and usage patterns for the UltraLink kn
 
 ## Getting Started
 
-Follow the [source checkout setup](./README.md#getting-started). In a `.cjs`
+Follow the [source checkout setup](getting-started/quick-start.md). In a `.cjs`
 file at the repository root, copy this block and the next four blocks (through
 [Exporting Data](#exporting-data)) in order. Run the file with `node`.
 

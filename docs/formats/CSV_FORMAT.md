@@ -4,7 +4,7 @@ This document details the CSV rendering target for UltraLink, its structure, usa
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/csv.js](../src/lib/exporters/csv.js)
+> - [Implementation in src/lib/exporters/csv.js](../../src/lib/exporters/csv.js)
 > - [JSON Format](./JSON_FORMAT.md)
 
 ## Overview
@@ -58,7 +58,7 @@ The relationships CSV file contains one row per relationship, with columns for:
 
 ## Usage
 
-The CSV exporter is implemented in [src/lib/exporters/csv.js](../src/lib/exporters/csv.js) and can be used as follows:
+The CSV exporter is implemented in [src/lib/exporters/csv.js](../../src/lib/exporters/csv.js) and can be used as follows:
 
 ```javascript
 // Basic export to CSV
@@ -142,7 +142,7 @@ The CSV format preserves UltraLink semantics through its tabular structure:
 
 ## Technical Implementation
 
-The CSV export functionality is implemented in [src/lib/exporters/csv.js](../src/lib/exporters/csv.js). The exporter follows these steps:
+The CSV export functionality is implemented in [src/lib/exporters/csv.js](../../src/lib/exporters/csv.js). The exporter follows these steps:
 
 1. Extract all entities and collect all unique attribute names
 2. Create header row with id, type, and all attribute names

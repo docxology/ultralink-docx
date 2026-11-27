@@ -4,7 +4,7 @@ This document details the JSON rendering target for UltraLink, its structure, us
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/json.js](../src/lib/exporters/json.js)
+> - [Implementation in src/lib/exporters/json.js](../../src/lib/exporters/json.js)
 
 ## Overview
 
@@ -142,7 +142,7 @@ relationship metadata, not graph attributes or graph-level metadata.
 
 ## Usage
 
-The JSON exporter is implemented in [src/lib/exporters/json.js](../src/lib/exporters/json.js) and can be used as follows:
+The JSON exporter is implemented in [src/lib/exporters/json.js](../../src/lib/exporters/json.js) and can be used as follows:
 
 ```javascript
 // Basic export to JSON
@@ -286,7 +286,7 @@ The JSON format preserves all UltraLink semantics:
 
 ## Technical Implementation
 
-In the UltraLink codebase, the JSON export functionality is implemented in [src/lib/exporters/json.js](../src/lib/exporters/json.js). The exporter follows these steps:
+In the UltraLink codebase, the JSON export functionality is implemented in [src/lib/exporters/json.js](../../src/lib/exporters/json.js). The exporter follows these steps:
 
 1. Extract entities from the UltraLink data model
 2. Transform each entity into a JSON-friendly object

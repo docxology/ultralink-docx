@@ -764,8 +764,5 @@ ultralink.concurrency.configure({
 
 ## Further Reading
 
-- [Advanced Memory Management](../advanced/memory-management.md)
-- [Vector Database Integration](../advanced/vector-databases.md)
-- [Distributed UltraLink Systems](../advanced/distributed-systems.md)
-- [GPU Acceleration Guide](../advanced/gpu-acceleration.md)
-- [Performance Testing Framework](../advanced/performance-testing.md) 
+- [Database integration](../integration/database-integration.md)
+- [Testing infrastructure](../testing/testing-infrastructure.md)

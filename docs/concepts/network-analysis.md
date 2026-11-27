@@ -462,7 +462,5 @@ ultralink.network.monitor({
 
 ## Further Reading
 
-1. [Graph Theory Basics](../guides/graph-theory.md)
-2. [Network Algorithms](../guides/network-algorithms.md)
-3. [Visualization Techniques](../guides/visualization.md)
-4. [Performance Optimization](../guides/network-performance.md) 
+1. [Visualization Techniques](../guides/visualization.md)
+2. [Performance optimization](../guides/performance.md)

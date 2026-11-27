@@ -860,6 +860,5 @@ graph TD
 
 - [UQL Reference Guide](../reference/query-language-syntax.md)
 - [Advanced Query Patterns](../guides/advanced-query-patterns.md)
-- [Index Management Guide](../guides/index-management.md)
-- [Performance Monitoring](../performance/monitoring.md)
-- [UltraLink Scaling Guide](../performance/scaling.md) 
+- [Vector index optimization](../technical/vector-index-optimization.md)
+- [Large dataset handling](../guides/performance.md#large-dataset-handling)

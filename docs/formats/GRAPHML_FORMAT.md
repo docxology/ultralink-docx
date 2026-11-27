@@ -4,7 +4,7 @@ This document details the GraphML rendering target for UltraLink, its structure,
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/graphml.js](../src/lib/exporters/graphml.js)
+> - [Implementation in src/lib/exporters/graphml.js](../../src/lib/exporters/graphml.js)
 > - [JSON Format](./JSON_FORMAT.md)
 
 ## Overview
@@ -70,7 +70,7 @@ Each UltraLink relationship becomes a GraphML edge:
 
 ## Usage
 
-The GraphML exporter is implemented in [src/lib/exporters/graphml.js](../src/lib/exporters/graphml.js) and can be used as follows:
+The GraphML exporter is implemented in [src/lib/exporters/graphml.js](../../src/lib/exporters/graphml.js) and can be used as follows:
 
 ```javascript
 // Basic export to GraphML
@@ -209,7 +209,7 @@ The GraphML format preserves UltraLink semantics in the following way:
 
 ## Technical Implementation
 
-The GraphML export functionality is implemented in [src/lib/exporters/graphml.js](../src/lib/exporters/graphml.js). The exporter follows these steps:
+The GraphML export functionality is implemented in [src/lib/exporters/graphml.js](../../src/lib/exporters/graphml.js). The exporter follows these steps:
 
 1. Collect all attribute names across entities and relationships
 2. Generate key definitions for each attribute type

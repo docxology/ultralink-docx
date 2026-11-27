@@ -916,9 +916,6 @@ A comprehensive testing framework is essential for ensuring the reliability and 
 
 For specific format testing examples, see the following resources:
 
-- [JSON Format Testing](../formats/json_format_testing.md)
-- [GraphML Format Testing](../formats/graphml_format_testing.md)
-- [CSV Format Testing](../formats/csv_format_testing.md)
-- [Obsidian Format Testing](../formats/obsidian_format_testing.md)
+- [Export format testing](export-testing.md)
 
 For format validation implementation details, see the [Format Validation Guide](../formats/format_validation.md). 

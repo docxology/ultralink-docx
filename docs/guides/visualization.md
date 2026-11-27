@@ -857,8 +857,5 @@ visualization.useExtension('advanced-analytics', {
 
 ## Further Reading
 
-1. [Data Visualization Principles](../guides/visualization-principles.md)
-2. [Advanced Network Visualization](../guides/network-visualization.md)
-3. [Interactive Dashboard Development](../guides/dashboards.md)
-4. [WebGL Rendering Optimization](../guides/webgl-optimization.md)
-5. [Accessibility in Data Visualization](../guides/viz-accessibility.md) 
+1. [Visualization guide](../VISUALIZATION_GUIDE.md)
+2. [Graph visualization format](../formats/VISUALIZATION_FORMAT.md)

@@ -435,5 +435,5 @@ ORDER BY connection_strength DESC
 - [Advanced Query Patterns](../guides/advanced-queries.md)
 - [Query Optimization Guide](../performance/query-optimization.md)
 - [Vector Search Guide](../guides/vector-search.md)
-- [Temporal Query Guide](../guides/temporal-queries.md)
-- [Query Performance Tuning](../performance/query-performance.md) 
+- [Temporal queries](../api/temporal-api.md#temporal-queries)
+- [Query optimization guide](../performance/query-optimization.md)

@@ -559,6 +559,5 @@ try {
 
 - [Configuration Reference](../reference/configuration.md)
 - [API Reference](../api/README.md)
-- [Obsidian Integration](../guides/obsidian-integration.md)
+- [Obsidian export format](../formats/OBSIDIAN_FORMAT.md)
 - [Visualization Guide](../guides/visualization.md)
-- [Data Import Guide](../guides/data-import.md) 

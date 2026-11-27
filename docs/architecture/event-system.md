@@ -427,7 +427,5 @@ ultralink.use(new NotificationPlugin({
 
 ## Related Documentation
 
-- [Events API Reference](../api/events-api.md)
 - [Plugin Development Guide](../advanced/plugin-development.md)
-- [Performance Monitoring](../performance/monitoring.md)
-- [Reactive Applications with UltraLink](../guides/reactive-applications.md) 
+- [Query performance metrics](../performance/query-optimization.md#13-performance-metrics-to-monitor)

@@ -4,7 +4,7 @@ This document details the Full Blob rendering target for UltraLink, its structur
 
 > **Related Documents**: 
 > - [Overview of Rendering Targets](./RENDERING_TARGETS.md)
-> - [Implementation in src/lib/exporters/full-blob.js](../src/lib/exporters/full-blob.js)
+> - [Implementation in src/lib/exporters/full-blob.js](../../src/lib/exporters/full-blob.js)
 > - [JSON Format](./JSON_FORMAT.md)
 
 ## Overview
@@ -78,7 +78,7 @@ graph TD
 
 ## Usage
 
-The Full Blob exporter is implemented in [src/lib/exporters/full-blob.js](../src/lib/exporters/full-blob.js) and can be used as follows:
+The Full Blob exporter is implemented in [src/lib/exporters/full-blob.js](../../src/lib/exporters/full-blob.js) and can be used as follows:
 
 ```javascript
 // Export complete UltraLink graph to Full Blob format
@@ -484,7 +484,7 @@ The encryption process:
 
 ## Technical Implementation
 
-The Full Blob export functionality is implemented in [src/lib/exporters/full-blob.js](../src/lib/exporters/full-blob.js). The exporter follows these steps:
+The Full Blob export functionality is implemented in [src/lib/exporters/full-blob.js](../../src/lib/exporters/full-blob.js). The exporter follows these steps:
 
 1. Collect the complete UltraLink model including all metadata
 2. Construct the multi-layer document structure

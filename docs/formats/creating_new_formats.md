@@ -756,7 +756,7 @@ graph TD
 
 ## Usage
 
-The RDF Turtle exporter is implemented in [src/lib/exporters/rdf-turtle.js](../src/lib/exporters/rdf-turtle.js) and can be used as follows:
+The RDF Turtle exporter in this tutorial is available after adding the example extension above. Use it as follows:
 
 ```javascript
 // Basic export to RDF Turtle

@@ -1151,7 +1151,7 @@ UltraLink's architecture provides a robust foundation for knowledge graph manage
 
 For more details on specific components, refer to the following documentation:
 
-- [Core Components](./components.md)
-- [Data Flow](./data-flow.md)
-- [Storage Systems](../technical/storage.md)
+- [Core components](../technical/architecture-details.md#component-breakdown)
+- [Data flow models](../technical/data-flow-models.md)
+- [Storage configuration](../reference/configuration.md#storage-configuration)
 - [Extension Mechanisms](../advanced/extending-ultralink.md)

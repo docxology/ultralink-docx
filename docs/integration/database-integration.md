@@ -507,7 +507,5 @@ When choosing a database backend for UltraLink, consider the following factors:
 
 ## Links to Related Documentation
 
-- [Storage Configuration Guide](../guides/storage-configuration.md)
+- [Storage configuration](../reference/configuration.md#storage-configuration)
 - [Vector Index Optimization](../technical/vector-index-optimization.md)
-- [Database Performance Benchmarks](../performance/database-benchmarks.md)
-- [Migration Between Databases](../advanced/database-migration.md) 

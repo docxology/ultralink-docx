@@ -51,7 +51,7 @@ If you find a bug in UltraLink, please report it by creating an issue on GitHub:
 
 **Bug Report Template**:
 
-```markdown
+````markdown
 **Description**
 A clear and concise description of the bug.
 
@@ -82,7 +82,7 @@ const ultralink = new UltraLink();
 
 **Additional Context**
 Add any other context about the problem here.
-```
+````
 
 ### Suggesting Enhancements
 
@@ -96,7 +96,7 @@ If you have an idea for an enhancement or a new feature, please create an issue 
 
 **Feature Request Template**:
 
-```markdown
+````markdown
 **Description**
 A clear and concise description of the feature.
 
@@ -118,7 +118,7 @@ A clear and concise description of any alternative solutions or features you've 
 
 **Additional Context**
 Add any other context or screenshots about the feature request here.
-```
+````
 
 ### Pull Requests
 
