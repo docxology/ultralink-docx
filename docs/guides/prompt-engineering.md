@@ -841,7 +841,7 @@ For more detailed information on advanced prompt engineering, refer to:
 
 - [LLM Integration Guide](llm-integration.md) - Complete LLM integration with UltraLink
 - [LLM Security Guide](llm-security.md) - Security considerations for prompts
-- [Custom Templates](../advanced/custom-templates.md) - Creating and managing template libraries
+- [Prompt Templates in UltraLink](#prompt-templates-in-ultralink) - Defining and managing templates
 
 ## Conclusion
 

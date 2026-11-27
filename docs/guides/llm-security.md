@@ -578,9 +578,9 @@ classDiagram
 For more detailed information about specific security aspects, refer to:
 
 - [LLM Integration Guide](llm-integration.md) - Complete integration instructions
-- [Data Privacy Guide](../advanced/data-privacy.md) - Detailed privacy protection strategies
-- [API Security](../advanced/api-security.md) - API security best practices
-- [Compliance Guide](../advanced/compliance.md) - Regulatory compliance information
+- [Data Privacy Concerns](#data-privacy-concerns)
+- [API and Infrastructure Security](#api-and-infrastructure-security)
+- [Compliance Considerations](#compliance-considerations)
 
 ## Conclusion
 
