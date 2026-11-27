@@ -1059,4 +1059,6 @@ class EfficientQueryAgent {
 
 This guide has covered the key patterns, APIs, and best practices for autonomous agents working with UltraLink. By following these patterns, agents can effectively store, retrieve, reason with, and share knowledge.
 
-For more detailed information on specific features, refer to the [UltraLink API Documentation](../api/index.md) and the [Export Formats Guide](../rendering/README.md). 
+For more detailed information on specific features, refer to the
+[UltraLink API Documentation](../api/README.md) and the
+[Export Formats Guide](../formats/README.md).

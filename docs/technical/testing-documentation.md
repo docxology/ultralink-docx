@@ -238,8 +238,11 @@ UltraLink uses a custom test runner built on top of Jest. The test runner provid
 
 - `npm test`: Runs standard tests (excluding performance tests)
 - `npm run test:all`: Runs all tests including performance tests
-- `npm run test:performance`: Runs only performance tests
+- `npm run test:performance` adds the optional performance group to the required suites.
 - `npm run test:help`: Shows help for the test runner
+
+See the [test directory guide](../../tests/README.md#performance-tests) for the
+performance-only Jest command and exit status behavior.
 
 ### Test Runner Implementation
 
