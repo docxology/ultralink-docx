@@ -79,7 +79,7 @@ npx jest tests/unit
 npx jest tests/integration
 
 # Run specific test file
-npm test -- tests/unit/entity.test.js
+node node_modules/jest/bin/jest.js --runInBand --runTestsByPath tests/unit/entity.test.js
 
 # Run with coverage
 npx jest --coverage
