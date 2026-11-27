@@ -545,4 +545,5 @@ async predictFutureState(timeSteps) {
 
 UltraLink provides a powerful foundation for building autonomous agents with sophisticated knowledge representation, reasoning capabilities, and integration options. By leveraging UltraLink's features for knowledge management, you can create agents that understand their environment, make informed decisions, and learn from experience.
 
-For more information, see the [API Reference](../api-reference.md) for detailed documentation of all UltraLink capabilities relevant to agent development. 
+For more information about the library API, see the
+[API Reference](../api/README.md).

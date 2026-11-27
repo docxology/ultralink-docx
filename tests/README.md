@@ -68,7 +68,7 @@ npm test
 # Run all tests including performance tests
 npm run test:all
 
-# Run only performance tests
+# Add the optional performance group to the required suites
 npm run test:performance
 
 # View all test command options
@@ -87,15 +87,15 @@ npx jest --coverage
 
 ### Performance Tests
 
-Performance tests are considered optional and are not run by default to speed up the regular test workflow. These tests are located in the [performance](./performance/) directory and verify the system's performance characteristics under various conditions.
+The [performance group](./performance/) is opt-in. Both
+`npm run test:performance` and `npm run test:all` add it to the required suites.
+The wrapper bases its exit status on the required suites.
 
-To run performance tests, use one of the following commands:
+To run only the performance group and use Jest's exit status, invoke the
+installed Jest binary from the repository root.
+
 ```bash
-# Run only performance tests
-npm run test:performance
-
-# Run all tests including performance tests
-npm run test:all
+node node_modules/jest/bin/jest.js --runInBand --ci --roots tests/performance
 ```
 
 ## Code Coverage

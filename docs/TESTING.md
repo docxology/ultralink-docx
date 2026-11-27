@@ -100,7 +100,7 @@ Key performance test files include:
 
 ## Running Tests
 
-UltraLink provides several npm scripts for running tests:
+Run these commands from the repository root.
 
 ```bash
 # Run the default test suite (excludes performance tests)
@@ -109,12 +109,18 @@ npm test
 # Run all tests including performance tests
 npm run test:all
 
-# Run only performance tests
+# Add the optional performance group to the required suites
 npm run test:performance
+
+# Run only the performance group
+node node_modules/jest/bin/jest.js --runInBand --ci --roots tests/performance
 
 # Run a test category or file directly with Jest
 npx jest tests/unit
 ```
+
+The npm wrapper bases its exit status on the required suites. Direct Jest
+commands return the result of the selected tests.
 
 You can also run individual test files using Jest directly:
 
