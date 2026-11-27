@@ -81,7 +81,7 @@ and other included datasets. It saves files locally; this index does not host
 the rendered outputs.
 
 To build a small graph yourself, start with
-[Build your first graph](../README.md#getting-started).
+[Build your first graph](../getting-started/quick-start.md).
 
 ## Extending the Examples
 
