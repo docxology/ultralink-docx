@@ -699,9 +699,9 @@ await ultralink.initialize();
 
 ## Related Documentation
 
-- [Authentication Configuration](./authentication.md)
-- [Authorization and Access Control](./authorization.md)
-- [Data Encryption Guide](./encryption.md)
-- [Security Hardening Guide](./hardening.md)
-- [Audit Logging Setup](./audit-logging.md)
-- [API Security Best Practices](./api-security.md) 
+- [Authentication System](#authentication-system)
+- [Authorization System](#authorization-system)
+- [Encryption Implementation](#encryption-implementation)
+- [Security Best Practices](#security-best-practices)
+- [Audit Logging](#audit-logging)
+- [API and Infrastructure Security for LLM Integrations](../guides/llm-security.md#api-and-infrastructure-security)
